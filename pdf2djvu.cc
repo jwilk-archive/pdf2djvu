@@ -15,6 +15,9 @@
 class Error
 {};
 
+class OSError : Error
+{};
+
 class MutedSplashOutputDev: public SplashOutputDev
 {
 public:
@@ -38,8 +41,8 @@ void usage()
 void pass_to_stdout(const char *file_name)
 {
   int fd = open(file_name, O_RDONLY);
-  if (fd < 0)
-    throw Error();
+  if (fd == -1)
+    throw OSError();
   while (1)
   {
     char buffer[1 << 12];
@@ -47,9 +50,10 @@ void pass_to_stdout(const char *file_name)
     if (n == 0)
       break;
     else if (n < 0)
-      throw Error();
+      throw OSError();
     else
-      write(STDOUT_FILENO, buffer, n);
+      if (write(STDOUT_FILENO, buffer, n) == -1)
+        throw OSError();
   }
 }
 
@@ -63,10 +67,7 @@ int main(int argc, char **argv)
 
   PDFDoc *doc = new PDFDoc(&file_name);
   if (!doc->isOk())
-  {
-    std::cerr << "Failed to read: " << doc->getFileName()->getCString() << std::endl;
-    return 1;
-  }
+    throw Error();
   
   std::cerr << "About to process: " << doc->getFileName()->getCString() << std::endl;
 
@@ -81,8 +82,8 @@ int main(int argc, char **argv)
   int n_pages = doc->getNumPages();
   char djvu_file_name[] = "/tmp/djvu2pdf.XXXXXX";
   int fd = mkstemp(djvu_file_name);
-  if (fd < 0)
-    return 1;
+  if (fd == -1)
+    throw OSError();
   std::string djvm_command("/usr/bin/djvm -c ");
   std::string *tmp_file_names = new std::string[n_pages + 1];
   djvm_command += djvu_file_name;
@@ -106,8 +107,8 @@ int main(int argc, char **argv)
     std::cerr << "- sep file" << std::endl;
     char sep_file_name[] = "/tmp/djvu2pdf.XXXXXX";
     int fd = mkstemp(sep_file_name);
-    if (fd < 0)
-      return 2;
+    if (fd == -1)
+      throw OSError();
     char buffer[1 << 10];
     int len = sprintf(buffer, "R6 %d %d 216\n", width, height);
     write(fd, buffer, len);
@@ -156,45 +157,51 @@ int main(int argc, char **argv)
       for (int i = 0; i < 4; i++)
       {
         char c = item >> ((3 - i) * 8);
-        write(fd, &c, 1);
+        if (write(fd, &c, 1) == -1)
+          throw OSError();
       }
     }
     std::cerr << "- generate ppm" << std::endl;
     len = sprintf(buffer, "P6 %d %d 255\n", width, height);
-    write(fd, buffer, len);
+    if (write(fd, buffer, len) == -1)
+      throw OSError();
     row1 = data1;
     for (int y = 0; y < height; y++)
     {
-      write(fd, row1, width * 3);
+      if (write(fd, row1, width * 3) == -1)
+        throw OSError();
       row1 += row_size;
     }
-    if (close(fd) != 0)
-      return 3;
+    if (close(fd) == -1)
+      throw OSError();
     char djvu_file_name[] = "/tmp/djvu2pdf.XXXXXX";
     fd = mkstemp(djvu_file_name);
     if (fd < 0)
-      return 4;
-    if (close(fd) != 0)
-      return 5;
+      throw OSError();
+    if (close(fd) == -1)
+      throw OSError();
     std::cerr << "- about to call csepdjvu" << std::endl;
     sprintf(buffer, "/usr/bin/csepdjvu %s %s", sep_file_name, djvu_file_name);
-    if (system(buffer) != 0)
-      return 6;
-    unlink(sep_file_name);
+    if (system(buffer) == -1)
+      throw OSError();
+    if (unlink(sep_file_name) != 0)
+      throw OSError();
     djvm_command += " ";
     djvm_command += djvu_file_name;
     tmp_file_names[n] += djvu_file_name;
     std::cerr << "- done!" << std::endl;
   }
   std::cerr << "About to call djvm" << std::endl;
-  system(djvm_command.c_str());
+  if (system(djvm_command.c_str()) == -1)
+    throw OSError();
   std::cerr << "Done!" << std::endl;
 
   pass_to_stdout(djvu_file_name);
   
   std::cerr << "About to remove temporary files" << std::endl;
   for (int n = 0; n <= n_pages; n++)
-    unlink(tmp_file_names[n].c_str());
+    if (unlink(tmp_file_names[n].c_str()) != 0)
+      throw OSError();
   std::cerr << "Done!" << std::endl;
 
   return 0;
