@@ -12,6 +12,9 @@
 #include "splash/Splash.h"
 #include "SplashOutputDev.h"
 
+class Error
+{};
+
 class MutedSplashOutputDev: public SplashOutputDev
 {
 public:
@@ -30,6 +33,24 @@ void usage()
 {
   std::cerr << "Usage: pdf2djvu <pdf-file>" << std::endl;
   exit(1);
+}
+
+void pass_to_stdout(const char *file_name)
+{
+  int fd = open(file_name, O_RDONLY);
+  if (fd < 0)
+    throw Error();
+  while (1)
+  {
+    char buffer[1 << 12];
+    int n = read(fd, buffer, sizeof buffer);
+    if (n == 0)
+      break;
+    else if (n < 0)
+      throw Error();
+    else
+      write(STDOUT_FILENO, buffer, n);
+  }
 }
 
 int main(int argc, char **argv)
@@ -144,12 +165,7 @@ int main(int argc, char **argv)
     row1 = data1;
     for (int y = 0; y < height; y++)
     {
-      SplashColorPtr p1 = row1;
-      for (int x = 0; x < width; x++)
-      {
-        write(fd, p1, 3);
-        p1 += 3;
-      }
+      write(fd, row1, width * 3);
       row1 += row_size;
     }
     if (close(fd) != 0)
@@ -174,34 +190,12 @@ int main(int argc, char **argv)
   system(djvm_command.c_str());
   std::cerr << "Done!" << std::endl;
 
-  fd = open(djvu_file_name, O_RDONLY);
-  if (fd < 0)
-    return 1;
-  while (1)
-  {
-    char buffer[1 << 12];
-    int n = read(fd, buffer, sizeof buffer);
-    if (n == 0)
-      break;
-    else if (n < 0)
-      return 1;
-    else
-      write(STDOUT_FILENO, buffer, n);
-  }
+  pass_to_stdout(djvu_file_name);
   
   std::cerr << "About to remove temporary files" << std::endl;
   for (int n = 0; n <= n_pages; n++)
     unlink(tmp_file_names[n].c_str());
   std::cerr << "Done!" << std::endl;
-
-  delete out1;
-  delete outm;
-
-  delete doc;
-  delete globalParams;
-
-  Object::memCheck(stderr);
-  gMemReport(stderr);
 
   return 0;
 }
