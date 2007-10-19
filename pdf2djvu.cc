@@ -58,7 +58,6 @@ int main(int argc, char **argv)
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   int n_pages = doc->getNumPages();
-  n_pages = 2; // XXX
   char djvu_file_name[] = "/tmp/djvu2pdf.XXXXXX";
   int fd = mkstemp(djvu_file_name);
   if (fd < 0)
