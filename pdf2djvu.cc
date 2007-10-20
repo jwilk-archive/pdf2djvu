@@ -51,7 +51,7 @@ public:
   { }
 };
 
-void usage()
+static void usage()
 {
   std::cerr 
     << "Usage: pdf2djvu [options] <pdf-file>" << std::endl
@@ -64,7 +64,7 @@ void usage()
   exit(1);
 }
 
-void pass_to_stdout(const char *file_name)
+static void pass_to_stdout(const char *file_name)
 {
   int fd = open(file_name, O_RDONLY);
   if (fd == -1)
@@ -83,11 +83,11 @@ void pass_to_stdout(const char *file_name)
   }
 }
 
-int conf_dpi = 100;
-char *conf_bg_slices = NULL;
-char *file_name;
+static int conf_dpi = 100;
+static char *conf_bg_slices = NULL;
+static char *file_name;
 
-bool read_config(int argc, char **argv)
+static bool read_config(int argc, char **argv)
 {
   static struct option options [] =
   {
@@ -122,7 +122,7 @@ bool read_config(int argc, char **argv)
   return true;
 }
 
-int xmain(int argc, char **argv)
+static int xmain(int argc, char **argv)
 {
   if (!read_config(argc, argv))
     usage();
