@@ -3,6 +3,7 @@
 
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <getopt.h>
 
 #include "goo/gmem.h"
 #include "goo/GooString.h"
@@ -51,7 +52,12 @@ public:
 
 void usage()
 {
-  std::cerr << "Usage: pdf2djvu <pdf-file>" << std::endl;
+  std::cerr 
+    << "Usage: pdf2djvu [options] <pdf-file>" << std::endl
+    << "Options:" << std::endl
+    << " -d, --dpi=resolution" << std::endl
+    << " -h, --help"           << std::endl
+  ;
   exit(1);
 }
 
@@ -75,16 +81,50 @@ void pass_to_stdout(const char *file_name)
 }
 
 int conf_dpi = 100;
+char *file_name;
+
+bool read_config(int argc, char **argv)
+{
+  static struct option options [] =
+  {
+    { "dpi",        1, 0, 'd' },
+    { "help",       0, 0, 'h' },
+    { NULL,         0, 0, '\0' }
+  };
+  int optindex, c;
+  while (true)
+  {
+    optindex = 0;
+    c = getopt_long(argc, argv, "d:h", options, &optindex);
+    if (c < 0)
+      break;
+    if (c == 0)
+      c = options[optindex].val;
+    switch (c)
+    {
+    case 'd': conf_dpi = atoi(optarg); break;
+    case 'h': return false;
+    default: ;
+    }
+  }
+  if (optind == argc - 1)
+    file_name = argv[optind];
+  else
+    return false;
+  if (conf_dpi <= 0)
+    return false;
+  return true;
+}
 
 int xmain(int argc, char **argv)
 {
-  if (argc != 2)
+  if (!read_config(argc, argv))
     usage();
-  GooString file_name(argv[1]);
+  GooString g_file_name(file_name);
 
   globalParams = new GlobalParams(NULL);
 
-  PDFDoc *doc = new PDFDoc(&file_name);
+  PDFDoc *doc = new PDFDoc(&g_file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
   
@@ -200,7 +240,7 @@ int xmain(int argc, char **argv)
     if (close(fd) == -1)
       throw OSError();
     std::cerr << "- about to call csepdjvu" << std::endl;
-    sprintf(buffer, "/usr/bin/csepdjvu %s %s", sep_file_name, djvu_file_name);
+    sprintf(buffer, "/usr/bin/csepdjvu -d %d %s %s", conf_dpi, sep_file_name, djvu_file_name);
     if (system(buffer) == -1)
       throw OSError();
     if (unlink(sep_file_name) != 0)
