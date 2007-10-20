@@ -65,9 +65,9 @@ static void usage()
   exit(1);
 }
 
-static void pass_to_stdout(const char *file_name)
+static void pass_to_stdout(const std::string &file_name)
 {
-  int fd = open(file_name, O_RDONLY);
+  int fd = open(file_name.c_str(), O_RDONLY);
   if (fd == -1)
     throw OSError();
   while (1)
@@ -83,6 +83,7 @@ static void pass_to_stdout(const char *file_name)
         throw OSError();
   }
 }
+
 
 static int conf_dpi = 100;
 static char *conf_bg_slices = NULL;
@@ -139,6 +140,42 @@ static void xsystem(std::string &command)
   }
 } 
 
+class TemporaryFile
+{
+public:
+  const std::string &get_name()
+  {
+    return name;
+  }
+
+  TemporaryFile()
+  {
+    char file_name_buffer[] = "/tmp/djvu2pdf.XXXXXX";
+    fd = mkstemp(file_name_buffer);
+    if (fd == -1)
+      throw OSError();
+    name = std::string(file_name_buffer);
+  }
+
+  ~TemporaryFile()
+  {
+    if (close(fd) == -1)
+      throw OSError();
+    if (unlink(name.c_str()) == -1)
+      throw OSError();
+  }
+
+  void fwrite(const void *buffer, size_t size)
+  {
+    if (write(fd, buffer, size) == -1)
+      throw OSError();
+  }
+
+private:
+  std::string name;
+  int fd;
+};
+
 static int xmain(int argc, char **argv)
 {
   if (!read_config(argc, argv))
@@ -162,16 +199,13 @@ static int xmain(int argc, char **argv)
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   int n_pages = doc->getNumPages();
-  char djvu_file_name[] = "/tmp/djvu2pdf.XXXXXX";
-  int fd = mkstemp(djvu_file_name);
-  if (fd == -1)
-    throw OSError();
+  TemporaryFile output_file;
   std::string djvm_command("/usr/bin/djvm -c ");
-  std::string *tmp_file_names = new std::string[n_pages + 1];
-  djvm_command += djvu_file_name;
-  tmp_file_names[0] += djvu_file_name;
+  TemporaryFile *page_files = new TemporaryFile[n_pages];
+  djvm_command += output_file.get_name();
   for (int n = 1; n <= n_pages; n++)
   {
+    TemporaryFile &page_file = page_files[n - 1];
     std::cerr << "Page #" << n << ":" << std::endl;
     std::cerr << "- render with text" << std::endl;
     doc->displayPage(out1, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
@@ -187,20 +221,17 @@ static int xmain(int argc, char **argv)
     SplashColorPtr datam = bmpm->getDataPtr();
     SplashColorPtr row1, rowm;
     std::cerr << "- sep file" << std::endl;
-    char sep_file_name[] = "/tmp/djvu2pdf.XXXXXX";
-    int fd = mkstemp(sep_file_name);
-    if (fd == -1)
-      throw OSError();
+    TemporaryFile sep_file;
     char buffer[1 << 10];
     int len = sprintf(buffer, "R6 %d %d 216\n", width, height);
-    write(fd, buffer, len);
+    sep_file.fwrite(buffer, len);
     std::cerr << "- rle palette" << std::endl;
     for (int r = 0; r < 6; r++)
     for (int g = 0; g < 6; g++)
     for (int b = 0; b < 6; b++)
     {
       char buffer[] = { 51 * r, 51 * g, 51 * b };
-      write(fd, buffer, 3);
+      sep_file.fwrite(buffer, 3);
     }
     row1 = data1;
     rowm = datam;
@@ -225,7 +256,7 @@ static int xmain(int argc, char **argv)
           for (int i = 0; i < 4; i++)
           {
             char c = item >> ((3 - i) * 8);
-            write(fd, &c, 1);
+            sep_file.fwrite(&c, 1);
           }
           color = new_color;
           length = 1;
@@ -239,55 +270,39 @@ static int xmain(int argc, char **argv)
       for (int i = 0; i < 4; i++)
       {
         char c = item >> ((3 - i) * 8);
-        if (write(fd, &c, 1) == -1)
-          throw OSError();
+        sep_file.fwrite(&c, 1);
       }
     }
     std::cerr << "- generate ppm" << std::endl;
     len = sprintf(buffer, "P6 %d %d 255\n", width, height);
-    if (write(fd, buffer, len) == -1)
-      throw OSError();
+    sep_file.fwrite(buffer, len);
     row1 = data1;
     for (int y = 0; y < height; y++)
     {
-      if (write(fd, row1, width * 3) == -1)
-        throw OSError();
+      sep_file.fwrite(row1, width * 3);
       row1 += row_size;
     }
-    if (close(fd) == -1)
-      throw OSError();
-    char djvu_file_name[] = "/tmp/djvu2pdf.XXXXXX";
-    fd = mkstemp(djvu_file_name);
-    if (fd < 0)
-      throw OSError();
-    if (close(fd) == -1)
-      throw OSError();
     std::cerr << "- about to call csepdjvu" << std::endl;
     std::ostringstream csepdjvu_command;
     csepdjvu_command << "/usr/bin/csepdjvu";
     csepdjvu_command << " -d " << conf_dpi;
     if (conf_bg_slices)
       csepdjvu_command << " -q " << conf_bg_slices;
-    csepdjvu_command << " " << sep_file_name << " " << djvu_file_name;
+    csepdjvu_command << " " << sep_file.get_name() << " " << page_file.get_name();
     std::string csepdjvu_command_str = csepdjvu_command.str();
     xsystem(csepdjvu_command_str);
-    if (unlink(sep_file_name) != 0)
-      throw OSError();
     djvm_command += " ";
-    djvm_command += djvu_file_name;
-    tmp_file_names[n] += djvu_file_name;
+    djvm_command += page_file.get_name();
     std::cerr << "- done!" << std::endl;
   }
   std::cerr << "About to call djvm" << std::endl;
   xsystem(djvm_command);
   std::cerr << "Done!" << std::endl;
 
-  pass_to_stdout(djvu_file_name);
+  pass_to_stdout(output_file.get_name());
   
   std::cerr << "About to remove temporary files" << std::endl;
-  for (int n = 0; n <= n_pages; n++)
-    if (unlink(tmp_file_names[n].c_str()) != 0)
-      throw OSError();
+  delete[] page_files;
   std::cerr << "Done!" << std::endl;
 
   return 0;
