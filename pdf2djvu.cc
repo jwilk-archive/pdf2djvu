@@ -19,7 +19,8 @@ class Error
 {
 public:
   Error() : message("Unknown error") {};
-  Error(std::string message) : message(message) {};
+  Error(const char* message) : message(message) {};
+  Error(const std::string &message) : message(message) {};
   std::string &get_message()
   {
     return message;
@@ -117,10 +118,26 @@ static bool read_config(int argc, char **argv)
     file_name = argv[optind];
   else
     return false;
-  if (conf_dpi <= 0)
+  if (conf_dpi < 25)
     return false;
   return true;
 }
+
+static void xsystem(std::string &command)
+{
+  int retval = system(command.c_str());
+  if (retval == -1)
+    throw OSError();
+  else if (retval != 0)
+  {
+    std::ostringstream message;
+    message << "system(\"";
+    std::string::size_type i = command.find_first_of(' ', 0);
+    message << command.substr(0, i);
+    message << " ...\") failed with exit code " << (retval >> 8);
+    throw Error(message.str());
+  }
+} 
 
 static int xmain(int argc, char **argv)
 {
@@ -252,8 +269,8 @@ static int xmain(int argc, char **argv)
     if (conf_bg_slices)
       csepdjvu_command << " -q " << conf_bg_slices;
     csepdjvu_command << " " << sep_file_name << " " << djvu_file_name;
-    if (system(csepdjvu_command.str().c_str()) == -1)
-      throw OSError();
+    std::string csepdjvu_command_str = csepdjvu_command.str();
+    xsystem(csepdjvu_command_str);
     if (unlink(sep_file_name) != 0)
       throw OSError();
     djvm_command += " ";
@@ -262,8 +279,7 @@ static int xmain(int argc, char **argv)
     std::cerr << "- done!" << std::endl;
   }
   std::cerr << "About to call djvm" << std::endl;
-  if (system(djvm_command.c_str()) == -1)
-    throw OSError();
+  xsystem(djvm_command);
   std::cerr << "Done!" << std::endl;
 
   pass_to_stdout(djvu_file_name);
