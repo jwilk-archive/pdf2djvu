@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <cerrno>
 
 #include <fcntl.h>
@@ -55,8 +56,10 @@ void usage()
   std::cerr 
     << "Usage: pdf2djvu [options] <pdf-file>" << std::endl
     << "Options:" << std::endl
-    << " -d, --dpi=resolution" << std::endl
-    << " -h, --help"           << std::endl
+    << " -d, --dpi=resolution"    << std::endl
+    << " -q, --bg-slices=n,...,n" << std::endl
+    << " -q, --bg-slices=n+...+n" << std::endl
+    << " -h, --help"              << std::endl
   ;
   exit(1);
 }
@@ -81,6 +84,7 @@ void pass_to_stdout(const char *file_name)
 }
 
 int conf_dpi = 100;
+char *conf_bg_slices = NULL;
 char *file_name;
 
 bool read_config(int argc, char **argv)
@@ -88,6 +92,7 @@ bool read_config(int argc, char **argv)
   static struct option options [] =
   {
     { "dpi",        1, 0, 'd' },
+    { "bg-slices",  1, 0, 'q' },
     { "help",       0, 0, 'h' },
     { NULL,         0, 0, '\0' }
   };
@@ -95,7 +100,7 @@ bool read_config(int argc, char **argv)
   while (true)
   {
     optindex = 0;
-    c = getopt_long(argc, argv, "d:h", options, &optindex);
+    c = getopt_long(argc, argv, "d:q:h", options, &optindex);
     if (c < 0)
       break;
     if (c == 0)
@@ -103,6 +108,7 @@ bool read_config(int argc, char **argv)
     switch (c)
     {
     case 'd': conf_dpi = atoi(optarg); break;
+    case 'q': conf_bg_slices = optarg; break;
     case 'h': return false;
     default: ;
     }
@@ -240,8 +246,13 @@ int xmain(int argc, char **argv)
     if (close(fd) == -1)
       throw OSError();
     std::cerr << "- about to call csepdjvu" << std::endl;
-    sprintf(buffer, "/usr/bin/csepdjvu -d %d %s %s", conf_dpi, sep_file_name, djvu_file_name);
-    if (system(buffer) == -1)
+    std::ostringstream csepdjvu_command;
+    csepdjvu_command << "/usr/bin/csepdjvu";
+    csepdjvu_command << " -d " << conf_dpi;
+    if (conf_bg_slices)
+      csepdjvu_command << " -q " << conf_bg_slices;
+    csepdjvu_command << " " << sep_file_name << " " << djvu_file_name;
+    if (system(csepdjvu_command.str().c_str()) == -1)
       throw OSError();
     if (unlink(sep_file_name) != 0)
       throw OSError();
