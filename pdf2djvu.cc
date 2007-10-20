@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cerrno>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -13,10 +14,26 @@
 #include "SplashOutputDev.h"
 
 class Error
-{};
+{
+public:
+  Error() : message("Unknown error") {};
+  Error(std::string message) : message(message) {};
+  std::string &get_message()
+  {
+    return message;
+  }
+protected:
+  std::string message;
+};
 
-class OSError : Error
-{};
+class OSError : public Error
+{
+public:
+  OSError() : Error("")
+  {
+    message += strerror(errno);
+  }
+};
 
 class MutedSplashOutputDev: public SplashOutputDev
 {
@@ -57,7 +74,9 @@ void pass_to_stdout(const char *file_name)
   }
 }
 
-int main(int argc, char **argv)
+int conf_dpi = 100;
+
+int xmain(int argc, char **argv)
 {
   if (argc != 2)
     usage();
@@ -67,7 +86,7 @@ int main(int argc, char **argv)
 
   PDFDoc *doc = new PDFDoc(&file_name);
   if (!doc->isOk())
-    throw Error();
+    throw Error("Unable to load document");
   
   std::cerr << "About to process: " << doc->getFileName()->getCString() << std::endl;
 
@@ -92,9 +111,9 @@ int main(int argc, char **argv)
   {
     std::cerr << "Page #" << n << ":" << std::endl;
     std::cerr << "- render with text" << std::endl;
-    doc->displayPage(out1, n, 300, 300, 0, gTrue, gFalse, gFalse);
+    doc->displayPage(out1, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
     std::cerr << "- render without text" << std::endl;
-    doc->displayPage(outm, n, 300, 300, 0, gTrue, gFalse, gFalse);
+    doc->displayPage(outm, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
     std::cerr << "- render done" << std::endl;
     SplashBitmap* bmp1 = out1->getBitmap();
     SplashBitmap* bmpm = outm->getBitmap();
@@ -205,6 +224,19 @@ int main(int argc, char **argv)
   std::cerr << "Done!" << std::endl;
 
   return 0;
+}
+
+int main(int argc, char **argv)
+{
+  try
+  {
+    xmain(argc, argv);
+  }
+  catch (Error ex)
+  {
+    std::cerr << ex.get_message() << std::endl;
+    exit(1);
+  }
 }
 
 // vim:ts=2 sw=2 et
