@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <cerrno>
+#include <vector>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -38,6 +39,12 @@ public:
   }
 };
 
+class PagesParseError : public Error
+{
+public:
+  PagesParseError() : Error("Unable to parse page numbers") {}
+};
+
 class MutedSplashOutputDev: public SplashOutputDev
 {
 public:
@@ -60,6 +67,7 @@ static void usage()
     << " -d, --dpi=resolution"    << std::endl
     << " -q, --bg-slices=n,...,n" << std::endl
     << " -q, --bg-slices=n+...+n" << std::endl
+    << " -p, --pages=..."         << std::endl
     << " -h, --help"              << std::endl
   ;
   exit(1);
@@ -87,7 +95,43 @@ static void pass_to_stdout(const std::string &file_name)
 
 static int conf_dpi = 100;
 static char *conf_bg_slices = NULL;
+static std::vector< std::pair<int, int> > conf_pages;
 static char *file_name;
+
+void parse_pages(std::string s, std::vector< std::pair<int, int> > &result)
+{
+  int state = 0;
+  int value[2] = { 0, 0 };
+  for (std::string::iterator it = s.begin(); it != s.end(); it++)
+  {
+    if (('0' <= *it) && (*it <= '9'))
+    {
+      value[state] = value[state] * 10 + (int)(*it - '0');
+      if (state == 0)
+        value[1] = value[0];
+    }
+    else if (state == 0 && *it == '-')
+    {
+      state = 1;
+      value[1] = 0;
+    }
+    else if (*it == ',')
+    {
+      if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
+        throw PagesParseError();
+      result.push_back(std::make_pair(value[0], value[1]));
+      value[0] = value[1] = 0;
+      state = 0;
+    }
+    else
+      throw PagesParseError();
+  }
+  if (state == 0)
+    value[1] = value[0];
+  if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
+    throw PagesParseError();
+  result.push_back(std::make_pair(value[0], value[1]));
+}
 
 static bool read_config(int argc, char **argv)
 {
@@ -95,6 +139,7 @@ static bool read_config(int argc, char **argv)
   {
     { "dpi",        1, 0, 'd' },
     { "bg-slices",  1, 0, 'q' },
+    { "pages",      1, 0, 'p' },
     { "help",       0, 0, 'h' },
     { NULL,         0, 0, '\0' }
   };
@@ -102,7 +147,7 @@ static bool read_config(int argc, char **argv)
   while (true)
   {
     optindex = 0;
-    c = getopt_long(argc, argv, "d:q:h", options, &optindex);
+    c = getopt_long(argc, argv, "d:q:p:h", options, &optindex);
     if (c < 0)
       break;
     if (c == 0)
@@ -111,6 +156,18 @@ static bool read_config(int argc, char **argv)
     {
     case 'd': conf_dpi = atoi(optarg); break;
     case 'q': conf_bg_slices = optarg; break;
+    case 'p':
+      {
+        try
+        {
+          parse_pages(optarg, conf_pages);
+        }
+        catch (PagesParseError ex)
+        {
+          return false;
+        }
+        break;
+      }
     case 'h': return false;
     default: ;
     }
@@ -203,7 +260,10 @@ static int xmain(int argc, char **argv)
   std::string djvm_command("/usr/bin/djvm -c ");
   TemporaryFile *page_files = new TemporaryFile[n_pages];
   djvm_command += output_file.get_name();
-  for (int n = 1; n <= n_pages; n++)
+  if (conf_pages.size() == 0)
+    conf_pages.push_back(std::make_pair(1, n_pages));
+  for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
+  for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     TemporaryFile &page_file = page_files[n - 1];
     std::cerr << "Page #" << n << ":" << std::endl;
