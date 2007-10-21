@@ -294,8 +294,8 @@ static int xmain(int argc, char **argv)
     std::cerr << "- render without text" << std::endl;
     doc->displayPage(outm, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
     std::cerr << "- render done" << std::endl;
-    SplashBitmap* bmp1 = out1->getBitmap();
-    SplashBitmap* bmpm = outm->getBitmap();
+    SplashBitmap* bmp1 = out1->takeBitmap();
+    SplashBitmap* bmpm = outm->takeBitmap();
     int width = bmp1->getWidth();
     int height = bmp1->getHeight();
     int row_size = bmp1->getRowSize();
@@ -318,6 +318,8 @@ static int xmain(int argc, char **argv)
     row1 = data1;
     rowm = datam;
     std::cerr << "- generate rle" << std::endl;
+    bool has_background = false;
+    bool has_foreground = false;
     for (int y = 0; y < height; y++)
     {
       SplashColorPtr p1 = row1;
@@ -326,8 +328,14 @@ static int xmain(int argc, char **argv)
       int length = 0;
       for (int x = 0; x < width; x++)
       {
+        if (!has_background && (pm[0] & pm[0] & pm[0]) != 0xff)
+          has_background = true;
         if (p1[0] != pm[0] || p1[1] != pm[1] || p1[2] != pm[2])
+        {
+          if (!has_foreground && (p1[0] || p1[0] || p1[0]))
+            has_foreground = true;
           new_color = (p1[2] / 51) + 6 * ((p1[1] / 51) + 6 * (p1[0] / 51));
+        }
         else
           new_color = 0xfff;
         if (color == new_color)
@@ -355,15 +363,20 @@ static int xmain(int argc, char **argv)
         sep_file.fwrite(&c, 1);
       }
     }
-    std::cerr << "- generate ppm" << std::endl;
-    len = sprintf(buffer, "P6 %d %d 255\n", width, height);
-    sep_file.fwrite(buffer, len);
-    row1 = data1;
-    for (int y = 0; y < height; y++)
+    delete bmpm;
+    if (has_background)
     {
-      sep_file.fwrite(row1, width * 3);
-      row1 += row_size;
+      std::cerr << "- generate ppm" << std::endl;
+      len = sprintf(buffer, "P6 %d %d 255\n", width, height);
+      sep_file.fwrite(buffer, len);
+      row1 = data1;
+      for (int y = 0; y < height; y++)
+      {
+        sep_file.fwrite(row1, width * 3);
+        row1 += row_size;
+      }
     }
+    delete bmp1;
     std::cerr << "- about to call csepdjvu" << std::endl;
     std::ostringstream csepdjvu_command;
     csepdjvu_command << "/usr/bin/csepdjvu";
@@ -384,6 +397,7 @@ static int xmain(int argc, char **argv)
       command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file << " " << rle_file;
       xsystem(command);
     }
+    if (has_background || has_foreground)
     { 
       std::ostringstream command;
       command << "/usr/bin/djvuextract " << page_file << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
@@ -400,9 +414,11 @@ static int xmain(int argc, char **argv)
         << "/usr/bin/djvumake"
         << " " << page_file
         << " INFO=" << width << "," << height << "," << conf_dpi
-        << " Sjbz=" << sjbz_file 
-        << " FGbz=" << fgbz_file
-        << " BG44=" << bg44_file;
+        << " Sjbz=" << sjbz_file;
+      if (has_foreground || has_background)
+        command
+          << " FGbz=" << fgbz_file
+          << " BG44=" << bg44_file;
       xsystem(command);
     }
     std::cerr << "- done!" << std::endl;
