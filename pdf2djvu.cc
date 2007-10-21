@@ -197,6 +197,12 @@ static void xsystem(std::string &command)
   }
 } 
 
+static void xsystem(const std::ostringstream &command_stream)
+{
+  std::string command = command_stream.str();
+  xsystem(command);
+}
+
 class TemporaryFile
 {
 public:
@@ -353,6 +359,36 @@ static int xmain(int argc, char **argv)
     xsystem(csepdjvu_command_str);
     djvm_command += " ";
     djvm_command += page_file.get_name();
+    std::cerr << "- done!" << std::endl;
+    std::cerr << "- about to recompress Sjbz" << std::endl;
+    /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
+    TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file;
+    {
+      std::ostringstream command;
+      command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file.get_name() << " " << rle_file.get_name();
+      xsystem(command);
+    }
+    { 
+      std::ostringstream command;
+      command << "/usr/bin/djvuextract " << page_file.get_name() << " FGbz=" << fgbz_file.get_name() << " BG44=" << bg44_file.get_name();
+      xsystem(command);
+    }
+    {
+      std::ostringstream command;
+      command << "/usr/bin/cjb2 " << rle_file.get_name() << " " << sjbz_file.get_name();
+      xsystem(command);
+    }
+    {
+      std::ostringstream command;
+      command 
+        << "/usr/bin/djvumake"
+        << " " << page_file.get_name()
+        << " INFO=" << width << "," << height << "," << conf_dpi
+        << " Sjbz=" << sjbz_file.get_name() 
+        << " FGbz=" << fgbz_file.get_name()
+        << " BG44=" << bg44_file.get_name();
+      xsystem(command);
+    }
     std::cerr << "- done!" << std::endl;
   }
   std::cerr << "About to call djvm" << std::endl;
