@@ -160,7 +160,11 @@ static bool read_config(int argc, char **argv)
     file_name = argv[optind];
   else
     return false;
-  if (conf_dpi < 25)
+  /* XXX
+   * csepdjvu requires dpi >= 25
+   * djvumake requires dpi >= 72
+   */
+  if (conf_dpi < 72)
     return false;
   return true;
 }
