@@ -73,26 +73,6 @@ static void usage()
   exit(1);
 }
 
-static void pass_to_stdout(const std::string &file_name)
-{
-  int fd = open(file_name.c_str(), O_RDONLY);
-  if (fd == -1)
-    throw OSError();
-  while (1)
-  {
-    char buffer[1 << 12];
-    int n = read(fd, buffer, sizeof buffer);
-    if (n == 0)
-      break;
-    else if (n < 0)
-      throw OSError();
-    else
-      if (write(STDOUT_FILENO, buffer, n) == -1)
-        throw OSError();
-  }
-}
-
-
 static int conf_dpi = 100;
 static char *conf_bg_slices = NULL;
 static std::vector< std::pair<int, int> > conf_pages;
@@ -206,7 +186,7 @@ static void xsystem(const std::ostringstream &command_stream)
 class TemporaryFile
 {
 public:
-  const std::string &get_name()
+  inline const std::string &get_name() const
   {
     return name;
   }
@@ -234,10 +214,40 @@ public:
       throw OSError();
   }
 
+  void pass_to_stdout()
+  {
+    int fd = open(name.c_str(), O_RDONLY);
+    if (fd == -1)
+      throw OSError();
+    while (1)
+    {
+      char buffer[1 << 12];
+      int n = read(fd, buffer, sizeof buffer);
+      if (n == 0)
+        break;
+      else if (n < 0)
+        throw OSError();
+      else
+        if (write(STDOUT_FILENO, buffer, n) == -1)
+          throw OSError();
+    }
+  } 
+
 private:
   std::string name;
   int fd;
 };
+
+std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
+{
+  return out << file.get_name();
+}
+
+void operator+=(std::string &str, const TemporaryFile &file)
+{
+  str += file.get_name();
+}
+
 
 static int xmain(int argc, char **argv)
 {
@@ -265,7 +275,7 @@ static int xmain(int argc, char **argv)
   TemporaryFile output_file;
   std::string djvm_command("/usr/bin/djvm -c ");
   TemporaryFile *page_files = new TemporaryFile[n_pages];
-  djvm_command += output_file.get_name();
+  djvm_command += output_file;
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
   for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
@@ -354,39 +364,39 @@ static int xmain(int argc, char **argv)
     csepdjvu_command << " -d " << conf_dpi;
     if (conf_bg_slices)
       csepdjvu_command << " -q " << conf_bg_slices;
-    csepdjvu_command << " " << sep_file.get_name() << " " << page_file.get_name();
+    csepdjvu_command << " " << sep_file << " " << page_file;
     std::string csepdjvu_command_str = csepdjvu_command.str();
     xsystem(csepdjvu_command_str);
     djvm_command += " ";
-    djvm_command += page_file.get_name();
+    djvm_command += page_file;
     std::cerr << "- done!" << std::endl;
     std::cerr << "- about to recompress Sjbz" << std::endl;
     /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
     TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file;
     {
       std::ostringstream command;
-      command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file.get_name() << " " << rle_file.get_name();
+      command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file << " " << rle_file;
       xsystem(command);
     }
     { 
       std::ostringstream command;
-      command << "/usr/bin/djvuextract " << page_file.get_name() << " FGbz=" << fgbz_file.get_name() << " BG44=" << bg44_file.get_name();
+      command << "/usr/bin/djvuextract " << page_file << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
       xsystem(command);
     }
     {
       std::ostringstream command;
-      command << "/usr/bin/cjb2 " << rle_file.get_name() << " " << sjbz_file.get_name();
+      command << "/usr/bin/cjb2 " << rle_file << " " << sjbz_file;
       xsystem(command);
     }
     {
       std::ostringstream command;
       command 
         << "/usr/bin/djvumake"
-        << " " << page_file.get_name()
+        << " " << page_file
         << " INFO=" << width << "," << height << "," << conf_dpi
-        << " Sjbz=" << sjbz_file.get_name() 
-        << " FGbz=" << fgbz_file.get_name()
-        << " BG44=" << bg44_file.get_name();
+        << " Sjbz=" << sjbz_file 
+        << " FGbz=" << fgbz_file
+        << " BG44=" << bg44_file;
       xsystem(command);
     }
     std::cerr << "- done!" << std::endl;
@@ -395,7 +405,7 @@ static int xmain(int argc, char **argv)
   xsystem(djvm_command);
   std::cerr << "Done!" << std::endl;
 
-  pass_to_stdout(output_file.get_name());
+  output_file.pass_to_stdout();
   
   std::cerr << "About to remove temporary files" << std::endl;
   delete[] page_files;
