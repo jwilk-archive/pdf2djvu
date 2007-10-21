@@ -67,6 +67,7 @@ static void usage()
     << " -d, --dpi=resolution"    << std::endl
     << " -q, --bg-slices=n,...,n" << std::endl
     << " -q, --bg-slices=n+...+n" << std::endl
+    << "     --antialias"         << std::endl
     << " -p, --pages=..."         << std::endl
     << " -h, --help"              << std::endl
   ;
@@ -74,6 +75,7 @@ static void usage()
 }
 
 static int conf_dpi = 100;
+static bool conf_antialias = false;
 static char *conf_bg_slices = NULL;
 static std::vector< std::pair<int, int> > conf_pages;
 static char *file_name;
@@ -119,6 +121,7 @@ static bool read_config(int argc, char **argv)
   {
     { "dpi",        1, 0, 'd' },
     { "bg-slices",  1, 0, 'q' },
+    { "antialias",  0, 0, 'A' },
     { "pages",      1, 0, 'p' },
     { "help",       0, 0, 'h' },
     { NULL,         0, 0, '\0' }
@@ -148,6 +151,7 @@ static bool read_config(int argc, char **argv)
         }
         break;
       }
+    case 'A': conf_antialias = 1; break;
     case 'h': return false;
     default: ;
     }
@@ -256,6 +260,8 @@ static int xmain(int argc, char **argv)
   GooString g_file_name(file_name);
 
   globalParams = new GlobalParams(NULL);
+  if (!globalParams->setAntialias((char*)(conf_antialias ? "yes" : "no")))
+    throw Error();
 
   PDFDoc *doc = new PDFDoc(&g_file_name);
   if (!doc->isOk())
