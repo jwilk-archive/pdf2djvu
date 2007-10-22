@@ -161,8 +161,9 @@ static bool read_config(int argc, char **argv)
   else
     return false;
   /* XXX
-   * csepdjvu requires 25 <= dpi <= 144K
-   * djvumake requires 72 <= dpi <= 144K
+   * csepdjvu requires 25 <= dpi <= 144 000
+   * djvumake requires 72 <= dpi <= 144 000
+   * cpaldjvu requires 25 <= dpi <=   1 200 (but we don't use it)
    */
   if (conf_dpi < 72 || conf_dpi > 144000)
     return false;
