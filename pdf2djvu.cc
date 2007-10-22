@@ -264,7 +264,11 @@ static int xmain(int argc, char **argv)
     usage();
   GooString g_file_name(file_name);
 
+#if POPPLER_VERSION < 6
   globalParams = new GlobalParams(NULL);
+#else
+  globalParams = new GlobalParams();
+#endif
   if (!globalParams->setAntialias((char*)(conf_antialias ? "yes" : "no")))
     throw Error();
 
