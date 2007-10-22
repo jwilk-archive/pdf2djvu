@@ -15,6 +15,13 @@
 #include "splash/SplashBitmap.h"
 #include "splash/Splash.h"
 #include "SplashOutputDev.h"
+#include "UTF8.h"
+
+static int conf_dpi = 100;
+static bool conf_antialias = false;
+static char *conf_bg_slices = NULL;
+static std::vector< std::pair<int, int> > conf_pages;
+static char *file_name;
 
 class Error
 {
@@ -45,18 +52,64 @@ public:
   PagesParseError() : Error("Unable to parse page numbers") {}
 };
 
+static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unicode *unistr, int len)
+{
+  std::ostringstream strstream;
+  strstream
+    << "# T " 
+    <<  x << ":" <<  y << " " 
+    << dx << ":" << dy << " "
+    <<  w << "x" <<  h << "+" << x << "+" << y << " "
+    << "(";
+  static char buffer[8];
+  while (len > 0 && *unistr == ' ')
+    unistr++, len--;
+  if (len == 0)
+    return std::string();
+  for (; len >= 0; len--, unistr++)
+  {
+    int seqlen = mapUTF8(*unistr, buffer, sizeof buffer);
+    buffer[seqlen] = '\0';
+    strstream << buffer;
+  }
+  strstream << ")" << std::endl;
+  return strstream.str();
+}
+
 class MutedSplashOutputDev: public SplashOutputDev
 {
+private:
+  std::vector<std::string> texts;
 public:
-  void drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode code, int nBytes, Unicode *u, int uLen)
+  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
-    return;
+    texts.push_back(text_comment(
+      x / 72 * conf_dpi, 
+      getBitmapHeight() - y / 72 * conf_dpi,
+      dx / 72 * conf_dpi,
+      dy / 72 * conf_dpi,
+      dx / 72 * conf_dpi,
+      10, // FIXME
+      unistr,
+      len
+    ));
   }
+
   virtual GBool useDrawChar() { return gTrue; }
 
   MutedSplashOutputDev(SplashColorMode colorModeA, int bitmapRowPadA, GBool reverseVideoA, SplashColorPtr paperColorA, GBool bitmapTopDownA = gTrue, GBool allowAntialiasA = gTrue) :
     SplashOutputDev(colorModeA, bitmapRowPadA, reverseVideoA, paperColorA, bitmapTopDownA, allowAntialiasA)
   { }
+
+  std::vector<std::string> &get_texts()
+  {
+    return texts;
+  }
+
+  void clear_texts()
+  {
+    texts.clear();
+  }
 };
 
 static void usage()
@@ -73,12 +126,6 @@ static void usage()
   ;
   exit(1);
 }
-
-static int conf_dpi = 100;
-static bool conf_antialias = false;
-static char *conf_bg_slices = NULL;
-static std::vector< std::pair<int, int> > conf_pages;
-static char *file_name;
 
 void parse_pages(std::string s, std::vector< std::pair<int, int> > &result)
 {
@@ -217,6 +264,11 @@ public:
       throw OSError();
   }
 
+  void fwrite(std::string &string)
+  {
+    fwrite(string.data(), string.size());
+  }
+
   void fwrite(const void *buffer, size_t size)
   {
     if (write(fd, buffer, size) == -1)
@@ -283,7 +335,7 @@ static int xmain(int argc, char **argv)
     paper_color[i] = 0xff;
 
   SplashOutputDev *out1 = new SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color);
-  SplashOutputDev *outm = new MutedSplashOutputDev(splashModeRGB8, 4, gFalse, paper_color);
+  MutedSplashOutputDev *outm = new MutedSplashOutputDev(splashModeRGB8, 4, gFalse, paper_color);
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   int n_pages = doc->getNumPages();
@@ -329,6 +381,7 @@ static int xmain(int argc, char **argv)
     std::cerr << "- generate rle" << std::endl;
     bool has_background = false;
     bool has_foreground = false;
+    bool has_text = false;
     for (int y = 0; y < height; y++)
     {
       SplashColorPtr p1 = row1;
@@ -386,6 +439,18 @@ static int xmain(int argc, char **argv)
       }
     }
     delete bmp1;
+    {
+      std::cerr << "- add text layer" << std::endl;
+      std::vector<std::string> &texts = outm->get_texts();
+      for (std::vector<std::string>::iterator it = texts.begin(); it != texts.end(); it++)
+      {
+        if (it->size() == 0)
+          continue;
+        sep_file.fwrite(*it);
+        has_text = true;
+      }
+      outm->clear_texts();
+    }
     std::cerr << "- about to call csepdjvu" << std::endl;
     std::ostringstream csepdjvu_command;
     csepdjvu_command << "/usr/bin/csepdjvu";
@@ -400,7 +465,7 @@ static int xmain(int argc, char **argv)
     std::cerr << "- done!" << std::endl;
     std::cerr << "- about to recompress Sjbz" << std::endl;
     /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
-    TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file;
+    TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file, sed_file;
     {
       std::ostringstream command;
       command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file << " " << rle_file;
@@ -410,6 +475,12 @@ static int xmain(int argc, char **argv)
     { 
       std::ostringstream command;
       command << "/usr/bin/djvuextract " << page_file << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
+      xsystem(command);
+    }
+    if (has_text)
+    {
+      std::ostringstream command;
+      command << "/usr/bin/djvused " << page_file << " -e output-txt > " << sed_file;
       xsystem(command);
     }
     {
@@ -428,6 +499,12 @@ static int xmain(int argc, char **argv)
         command
           << " FGbz=" << fgbz_file
           << " BG44=" << bg44_file;
+      xsystem(command);
+    }
+    if (has_text)
+    {
+      std::ostringstream command;
+      command << "/usr/bin/djvused " << page_file << " -s -f " << sed_file;
       xsystem(command);
     }
     std::cerr << "- done!" << std::endl;
