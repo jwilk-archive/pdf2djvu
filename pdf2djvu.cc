@@ -201,7 +201,7 @@ public:
 
   TemporaryFile()
   {
-    char file_name_buffer[] = "/tmp/djvu2pdf.XXXXXX";
+    char file_name_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     fd = mkstemp(file_name_buffer);
     if (fd == -1)
       throw OSError();
