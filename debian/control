@@ -1,0 +1,11 @@
+Source: pdf2djvu
+Section: graphics
+Priority: extra
+Maintainer: Jakub Wilk <ubanus@users.sf.net>
+Build-Depends: cdbs, debhelper (>= 5), libpoppler-dev
+Standards-Version: 3.7.2
+
+Package: pdf2djvu
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, djvulibre-bin
+Description: PDF to DjVu converter

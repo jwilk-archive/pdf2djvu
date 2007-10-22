@@ -2,8 +2,9 @@ POPPLER_VERSION = $(shell pkg-config --atleast-version=0.6 poppler && echo 6 || 
 POPPLER_CFLAGS = $(shell pkg-config --cflags poppler) -DPOPPLER_VERSION=$(POPPLER_VERSION)
 POPPLER_LDFLAGS = $(shell pkg-config --libs poppler)
 
-LDFLAGS = $(POPPLER_LDFLAGS)
-CXXFLAGS = $(POPPLER_CFLAGS) -O3
+CXXFLAGS ?= -O3
+override LDFLAGS += $(POPPLER_LDFLAGS)
+override CXXFLAGS += $(POPPLER_CFLAGS)
 
 .PHONY: all
 all: pdf2djvu
