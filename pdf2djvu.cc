@@ -550,7 +550,7 @@ static int xmain(int argc, char **argv)
       xsystem(command);
     }
     {
-      std::cerr << "! cjb2 >> sed_file" << std::endl;
+      std::cerr << "! cjb2" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/cjb2 " << rle_file << " " << sjbz_file;
       xsystem(command);
