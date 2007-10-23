@@ -15,6 +15,7 @@
 #include "splash/SplashBitmap.h"
 #include "splash/Splash.h"
 #include "SplashOutputDev.h"
+#include "Link.h"
 #include "UTF8.h"
 
 static int conf_dpi = 100;
@@ -80,6 +81,7 @@ class MutedSplashOutputDev: public SplashOutputDev
 {
 private:
   std::vector<std::string> texts;
+  std::vector<std::string> annotations;
 public:
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
@@ -95,11 +97,57 @@ public:
     ));
   }
 
+  void drawLink(Link *link, Catalog *catalog)
+  {
+    double x1, y1, x2, y2;
+    LinkBorderStyle *border_style;
+    LinkAction *link_action = link->getAction();
+    double border_width;
+    double r, g, b;
+    char border_color[8];
+    std::string uri;
+    link->getRect(&x1, &y1, &x2, &y2);
+    border_style = link->getBorderStyle();
+    border_style->getColor(&r, &g, &b);
+    sprintf(border_color, "#%02x%02x%02x", (int)(r * 0xff), (int)(g * 0xff), (int)(b * 0xff));
+    if (link_action->getKind() == actionURI)
+    {
+      uri += dynamic_cast<LinkURI*>(link_action)->getURI()->getCString();
+    }
+    else
+    {
+      // FIXME
+      return;
+    }
+    int x = x1 / 72 * conf_dpi;
+    int y = y1 / 72 * conf_dpi;
+    int w = (x2 - x1) / 72 * conf_dpi;
+    int h = (y2 - y1) / 72 * conf_dpi;
+    std::ostringstream strstream;
+    strstream << "(maparea " 
+      << " \"" << uri << "\""
+      << " \"\"" 
+      << " (rect " << x << " " << y << " " << w << " " << h << ")"
+      << " (border " << border_color << ")"
+      << ")";
+    annotations.push_back(strstream.str());
+  }
+
   GBool useDrawChar() { return gTrue; }
 
   MutedSplashOutputDev(SplashColorMode colorModeA, int bitmapRowPadA, GBool reverseVideoA, SplashColorPtr paperColorA, GBool bitmapTopDownA = gTrue, GBool allowAntialiasA = gTrue) :
     SplashOutputDev(colorModeA, bitmapRowPadA, reverseVideoA, paperColorA, bitmapTopDownA, allowAntialiasA)
   { }
+
+  std::vector<std::string> &get_annotations()
+  {
+    return annotations;
+  }
+
+  void clear_annotations()
+  {
+    annotations.clear();
+  }
 
   std::vector<std::string> &get_texts()
   {
@@ -353,7 +401,7 @@ static int xmain(int argc, char **argv)
     std::cerr << "- render with text" << std::endl;
     doc->displayPage(out1, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
     std::cerr << "- render without text" << std::endl;
-    doc->displayPage(outm, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
+    doc->displayPage(outm, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gTrue);
     std::cerr << "- render done" << std::endl;
     SplashBitmap* bmp1 = out1->takeBitmap();
     SplashBitmap* bmpm = outm->takeBitmap();
@@ -477,10 +525,22 @@ static int xmain(int argc, char **argv)
       command << "/usr/bin/djvuextract " << page_file << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
       xsystem(command);
     }
+    {
+      std::cerr << "- add annotations" << std::endl;
+      std::vector<std::string> &annotations = outm->get_annotations();
+      sed_file.fwrite("select 1\nset-ant\n", 17); 
+      for (std::vector<std::string>::iterator it = annotations.begin(); it != annotations.end(); it++)
+      {
+        sed_file.fwrite(*it);
+        sed_file.fwrite("\n", 1);
+      }
+      sed_file.fwrite(".\n", 2);
+      outm->clear_annotations();
+    }
     if (has_text)
     {
       std::ostringstream command;
-      command << "/usr/bin/djvused " << page_file << " -e output-txt > " << sed_file;
+      command << "/usr/bin/djvused " << page_file << " -e output-txt >> " << sed_file;
       xsystem(command);
     }
     {
@@ -501,7 +561,6 @@ static int xmain(int argc, char **argv)
           << " BG44=" << bg44_file;
       xsystem(command);
     }
-    if (has_text)
     {
       std::ostringstream command;
       command << "/usr/bin/djvused " << page_file << " -s -f " << sed_file;
