@@ -69,9 +69,14 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unic
     return std::string();
   for (; len >= 0; len--, unistr++)
   {
-    int seqlen = mapUTF8(*unistr, buffer, sizeof buffer);
-    buffer[seqlen] = '\0';
-    strstream << buffer;
+    if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
+      sprintf(buffer, "\\%03o", *unistr);
+    else
+    {
+      int seqlen = mapUTF8(*unistr, buffer, sizeof buffer);
+      buffer[seqlen] = '\0';
+      strstream << buffer;
+    }
   }
   strstream << ")" << std::endl;
   return strstream.str();
