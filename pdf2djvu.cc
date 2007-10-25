@@ -125,15 +125,43 @@ public:
     border_style = link->getBorderStyle();
     border_style->getColor(&r, &g, &b);
     sprintf(border_color, "#%02x%02x%02x", (int)(r * 0xff), (int)(g * 0xff), (int)(b * 0xff));
-    if (link_action->getKind() == actionURI)
+    switch (link_action->getKind())
     {
+    case actionURI:
       uri += dynamic_cast<LinkURI*>(link_action)->getURI()->getCString();
       lisp_escape(uri);
-    }
-    else
+      break;
+    case actionGoTo:
     {
-      // FIXME
-      return;
+      LinkGoTo *goto_link = dynamic_cast<LinkGoTo*>(link_action);
+      LinkDest *dest = goto_link->getDest();
+      if (dest == NULL)
+        dest = catalog->findDest(goto_link->getNamedDest());
+      else
+        dest = dest->copy();
+      if (dest != NULL)
+      {
+        int page;
+        if (dest->isPageRef())
+        {
+          Ref pageref = dest->getPageRef();
+          page = catalog->findPage(pageref.num, pageref.gen);
+        }
+        else 
+          page = dest->getPageNum();
+        delete dest;
+        std::ostringstream strstream;
+        strstream << "\"#" << page << "\"";
+        uri = strstream.str();
+      }
+      else
+      {
+        throw Error("Cannot find link destination");
+      }
+      break;
+    }
+    default:
+      throw Error("Unknown link type");
     }
     int x = x1 / 72 * conf_dpi;
     int y = y1 / 72 * conf_dpi;
