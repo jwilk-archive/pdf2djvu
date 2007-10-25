@@ -18,6 +18,8 @@
 #include "Link.h"
 #include "UTF8.h"
 
+#include <libdjvu/miniexp.h>
+
 static int conf_dpi = 100;
 static bool conf_antialias = false;
 static char *conf_bg_slices = NULL;
@@ -53,6 +55,7 @@ public:
   PagesParseError() : Error("Unable to parse page numbers") {}
 };
 
+
 static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unicode *unistr, int len)
 {
   std::ostringstream strstream;
@@ -80,6 +83,13 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unic
   }
   strstream << ")" << std::endl;
   return strstream.str();
+}
+
+static void lisp_escape(std::string &value)
+{
+  miniexp_t exp = miniexp_string(value.c_str());
+  exp = miniexp_pname(exp, 0);
+  value = miniexp_to_str(exp);
 }
 
 class MutedSplashOutputDev: public SplashOutputDev
@@ -118,6 +128,7 @@ public:
     if (link_action->getKind() == actionURI)
     {
       uri += dynamic_cast<LinkURI*>(link_action)->getURI()->getCString();
+      lisp_escape(uri);
     }
     else
     {
@@ -129,8 +140,8 @@ public:
     int w = (x2 - x1) / 72 * conf_dpi;
     int h = (y2 - y1) / 72 * conf_dpi;
     std::ostringstream strstream;
-    strstream << "(maparea " 
-      << " \"" << uri << "\""
+    strstream << "(maparea" 
+      << " " << uri
       << " \"\"" 
       << " (rect " << x << " " << y << " " << w << " " << h << ")"
       << " (border " << border_color << ")"
