@@ -478,7 +478,7 @@ static int xmain(int argc, char **argv)
   if (!doc->isOk())
     throw Error("Unable to load document");
   
-  std::cerr << "About to process: " << doc->getFileName()->getCString() << std::endl;
+  std::cerr << doc->getFileName()->getCString() << ":" << std::endl;
 
   SplashColor paper_color;
   for (int i = 0; i < 3; i++)
@@ -499,12 +499,12 @@ static int xmain(int argc, char **argv)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     TemporaryFile &page_file = page_files[n - 1];
-    std::cerr << "Page #" << n << ":" << std::endl;
-    std::cerr << "- render with text" << std::endl;
+    std::cerr << "- page #" << n << ":" << std::endl;
+    std::cerr << "  - render with text" << std::endl;
     doc->displayPage(out1, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
-    std::cerr << "- render without text" << std::endl;
+    std::cerr << "  - render without text" << std::endl;
     doc->displayPage(outm, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gTrue);
-    std::cerr << "- take bitmaps" << std::endl;
+    std::cerr << "  - take bitmaps" << std::endl;
     SplashBitmap* bmp1 = out1->takeBitmap();
     SplashBitmap* bmpm = outm->takeBitmap();
     int width = bmp1->getWidth();
@@ -513,12 +513,12 @@ static int xmain(int argc, char **argv)
     SplashColorPtr data1 = bmp1->getDataPtr();
     SplashColorPtr datam = bmpm->getDataPtr();
     SplashColorPtr row1, rowm;
-    std::cerr << "- create sep_file" << std::endl;
+    std::cerr << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
     char buffer[1 << 10];
     int len = sprintf(buffer, "R6 %d %d 216\n", width, height);
     sep_file.fwrite(buffer, len);
-    std::cerr << "- rle palette >> sep_file" << std::endl;
+    std::cerr << "  - rle palette >> sep_file" << std::endl;
     for (int r = 0; r < 6; r++)
     for (int g = 0; g < 6; g++)
     for (int b = 0; b < 6; b++)
@@ -526,7 +526,7 @@ static int xmain(int argc, char **argv)
       char buffer[] = { 51 * r, 51 * g, 51 * b };
       sep_file.fwrite(buffer, 3);
     }
-    std::cerr << "- rle data >> sep_file" << std::endl;
+    std::cerr << "  - rle data >> sep_file" << std::endl;
     row1 = data1;
     rowm = datam;
     bool has_background = false;
@@ -578,7 +578,7 @@ static int xmain(int argc, char **argv)
     delete bmpm;
     if (has_background)
     {
-      std::cerr << "- background pixmap >> sep_file" << std::endl;
+      std::cerr << "  - background pixmap >> sep_file" << std::endl;
       len = sprintf(buffer, "P6 %d %d 255\n", width, height);
       sep_file.fwrite(buffer, len);
       row1 = data1;
@@ -590,7 +590,7 @@ static int xmain(int argc, char **argv)
     }
     delete bmp1;
     {
-      std::cerr << "- text layer >> sep_file" << std::endl;
+      std::cerr << "  - text layer >> sep_file" << std::endl;
       std::vector<std::string> &texts = outm->get_texts();
       for (std::vector<std::string>::iterator it = texts.begin(); it != texts.end(); it++)
       {
@@ -601,7 +601,7 @@ static int xmain(int argc, char **argv)
       }
       outm->clear_texts();
     }
-    std::cerr << "! csepdjvu" << std::endl;
+    std::cerr << "  - !csepdjvu" << std::endl;
     std::ostringstream csepdjvu_command;
     csepdjvu_command << "/usr/bin/csepdjvu";
     csepdjvu_command << " -d " << conf_dpi;
@@ -615,20 +615,20 @@ static int xmain(int argc, char **argv)
     /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
     TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file, sed_file;
     {
-      std::cerr << "! ddjvu" << std::endl;
+      std::cerr << "  - !ddjvu" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file << " " << rle_file;
       xsystem(command);
     }
     if (has_background || has_foreground)
     { 
-      std::cerr << "! djvuextract" << std::endl;
+      std::cerr << "  - !djvuextract" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvuextract " << page_file << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
       xsystem(command);
     }
     {
-      std::cerr << "- annotations >> sed_file" << std::endl;
+      std::cerr << "  - annotations >> sed_file" << std::endl;
       std::vector<std::string> &annotations = outm->get_annotations();
       sed_file.fwrite("select 1\nset-ant\n", 17); 
       for (std::vector<std::string>::iterator it = annotations.begin(); it != annotations.end(); it++)
@@ -641,19 +641,19 @@ static int xmain(int argc, char **argv)
     }
     if (has_text)
     {
-      std::cerr << "! djvused >> sed_file" << std::endl;
+      std::cerr << "  - !djvused >> sed_file" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvused " << page_file << " -e output-txt >> " << sed_file;
       xsystem(command);
     }
     {
-      std::cerr << "! cjb2" << std::endl;
+      std::cerr << "  - !cjb2" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/cjb2 " << rle_file << " " << sjbz_file;
       xsystem(command);
     }
     {
-      std::cerr << "! djvumake" << std::endl;
+      std::cerr << "  - !djvumake" << std::endl;
       std::ostringstream command;
       command 
         << "/usr/bin/djvumake"
@@ -667,18 +667,17 @@ static int xmain(int argc, char **argv)
       xsystem(command);
     }
     {
-      std::cerr << "! djvused < sed_file" << std::endl;
+      std::cerr << "  - !djvused < sed_file" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvused " << page_file << " -s -f " << sed_file;
       xsystem(command);
     }
   }
-  std::cerr << "About to call djvm" << std::endl;
+  std::cerr << "- !djvm" << std::endl;
   xsystem(djvm_command);
-  std::cerr << "Done!" << std::endl;
   {
     TemporaryFile sed_file;
-    std::cerr << "outlines >> sed_file" << std::endl;
+    std::cerr << "- outlines >> sed_file" << std::endl;
     std::ostringstream outline_stream;
     pdf_outline_to_djvu_outline(doc, outline_stream);
     std::string outline_str = outline_stream.str();
@@ -686,7 +685,7 @@ static int xmain(int argc, char **argv)
     sed_file.fwrite(outline_str);
     sed_file.fwrite("\n.\n", 3);
 
-    std::cerr << "! djvused < sed_file" << std::endl;
+    std::cerr << "- !djvused < sed_file" << std::endl;
     std::ostringstream command;
     command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
     xsystem(command);
