@@ -460,6 +460,52 @@ void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream)
   stream << ")";
 }
 
+void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
+{
+  static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", "Producer", NULL };
+  static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
+  Object info;
+  doc->getDocInfo(&info);
+  if (!info.isDict())
+    return;
+  Dict *info_dict = info.getDict();
+  for (const char** pkey = string_keys; *pkey; pkey++)
+  {
+    Object object;
+    if (!info_dict->lookup(*pkey, &object)->isString())
+      continue;
+    std::string value(object.getString()->getCString());
+    lisp_escape(value);
+    stream << *pkey << "\t" << value << std::endl;
+  }
+  for (const char** pkey = date_keys; *pkey; pkey++)
+  {
+    Object object;
+    struct tm tms;
+    char tzs; int tz1, tz2;
+    char buffer[32], tzbuffer[8];
+    if (!info_dict->lookup(*pkey, &object)->isString())
+      continue;
+    char *date_str = object.getString()->getCString();
+    if (date_str[0] == 'D' && date_str[1] == ':')
+      date_str += 2;
+    if (sscanf(date_str, "%4d%2d%2d%2d%2d%2d%c%2d'%2d'", &tms.tm_year, &tms.tm_mon, &tms.tm_mday, &tms.tm_hour, &tms.tm_min, &tms.tm_sec, &tzs, &tz1, &tz2) != 9)
+      throw Error("3");
+    tms.tm_year -= 1900;
+    tms.tm_mon -= 1;
+    tms.tm_wday = tms.tm_yday = tms.tm_isdst = -1;
+    if (mktime(&tms) == (time_t)-1)
+      throw Error("1");
+    if (strftime(buffer, sizeof buffer, "%Y-%m-%d %H:%M:%S", &tms) != 19)
+      throw Error("2");
+    if ((tzs != '+' && tzs != '-') || tz1 > 12 || tz2 >= 60)
+      throw Error("4");
+    if (snprintf(tzbuffer, sizeof tzbuffer, "%c%02d:%02d", tzs, tz1, tz2) != 6)
+      throw Error("3");
+    stream << *pkey << "\t\"" << buffer << tzbuffer << "\"" << std::endl;
+  }
+}
+
 static int xmain(int argc, char **argv)
 {
   if (!read_config(argc, argv))
@@ -677,14 +723,24 @@ static int xmain(int argc, char **argv)
   xsystem(djvm_command);
   {
     TemporaryFile sed_file;
-    std::cerr << "- outlines >> sed_file" << std::endl;
-    std::ostringstream outline_stream;
-    pdf_outline_to_djvu_outline(doc, outline_stream);
-    std::string outline_str = outline_stream.str();
-    sed_file.fwrite("select 1\nset-outline\n", 21);
-    sed_file.fwrite(outline_str);
-    sed_file.fwrite("\n.\n", 3);
-
+    {
+      std::cerr << "- outlines >> sed_file" << std::endl;
+      std::ostringstream outline_stream;
+      pdf_outline_to_djvu_outline(doc, outline_stream);
+      std::string outline_str = outline_stream.str();
+      sed_file.fwrite("set-outline\n", 12);
+      sed_file.fwrite(outline_str);
+      sed_file.fwrite("\n.\n", 3);
+    }
+    {
+      std::cerr << "- metadata >> sed_file" << std::endl;
+      std::ostringstream metadata_stream;
+      pdf_metadata_to_djvu_metadata(doc, metadata_stream);
+      std::string metadata_str = metadata_stream.str();
+      sed_file.fwrite("set-meta\n", 9);
+      sed_file.fwrite(metadata_str);
+      sed_file.fwrite("\n.\n", 3);
+    }
     std::cerr << "- !djvused < sed_file" << std::endl;
     std::ostringstream command;
     command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
