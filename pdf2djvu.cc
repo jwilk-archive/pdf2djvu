@@ -92,6 +92,30 @@ static void lisp_escape(std::string &value)
   value = miniexp_to_str(exp);
 }
 
+static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
+{
+  LinkDest *dest = goto_link->getDest();
+  if (dest == NULL)
+    dest = catalog->findDest(goto_link->getNamedDest());
+  else
+    dest = dest->copy();
+  if (dest != NULL)
+  {
+    int page;
+    if (dest->isPageRef())
+    {
+      Ref pageref = dest->getPageRef();
+      page = catalog->findPage(pageref.num, pageref.gen);
+    }
+    else 
+      page = dest->getPageNum();
+    delete dest;
+    return page;
+  }
+  else
+    throw Error("Cannot find link destination");
+}
+
 class MutedSplashOutputDev: public SplashOutputDev
 {
 private:
@@ -133,31 +157,10 @@ public:
       break;
     case actionGoTo:
     {
-      LinkGoTo *goto_link = dynamic_cast<LinkGoTo*>(link_action);
-      LinkDest *dest = goto_link->getDest();
-      if (dest == NULL)
-        dest = catalog->findDest(goto_link->getNamedDest());
-      else
-        dest = dest->copy();
-      if (dest != NULL)
-      {
-        int page;
-        if (dest->isPageRef())
-        {
-          Ref pageref = dest->getPageRef();
-          page = catalog->findPage(pageref.num, pageref.gen);
-        }
-        else 
-          page = dest->getPageNum();
-        delete dest;
-        std::ostringstream strstream;
-        strstream << "\"#" << page << "\"";
-        uri = strstream.str();
-      }
-      else
-      {
-        throw Error("Cannot find link destination");
-      }
+      int page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+      std::ostringstream strstream;
+      strstream << "\"#" << page << "\"";
+      uri = strstream.str();
       break;
     }
     default:
@@ -401,6 +404,61 @@ void operator+=(std::string &str, const TemporaryFile &file)
   str += file.get_name();
 }
 
+class NoPageForBookmark : public Error
+{
+public:
+  NoPageForBookmark() : Error("No page for a bookmark") {}
+};
+
+void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream)
+{
+  Object current, next;
+  if (!node->dictLookup("First", &current)->isDict())
+    return;
+  while (current.isDict())
+  {
+    Object title;
+    if (current.dictLookup("Title", &title)->isNull())
+      throw Error("No title for a bookmark");
+    std::string title_str = title.getString()->getCString();
+    title.free();
+
+    Object destination;
+    LinkAction *link_action;
+    int page;
+    if (!current.dictLookup("Dest", &destination)->isNull())
+      link_action = LinkAction::parseDest(&destination);
+    else if (!current.dictLookup("A", &destination)->isNull())
+      link_action = LinkAction::parseAction(&destination);
+    else
+      throw NoPageForBookmark();
+    if (link_action->getKind() != actionGoTo)
+      throw NoPageForBookmark();
+    page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+    destination.free();
+    
+    lisp_escape(title_str);
+    stream << "(" << title_str << " \"#" << page << "\"";
+    pdf_outline_to_djvu_outline(&current, catalog, stream);
+    stream << ") ";
+
+    current.dictLookup("Next", &next);
+    current.free();
+    current = next;
+  }
+  current.free();
+}
+
+void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream)
+{
+  Catalog *catalog = doc->getCatalog();
+  Object *outlines = catalog->getOutline();
+  if (!outlines->isDict())
+    return;
+  stream << "(bookmarks ";
+  pdf_outline_to_djvu_outline(outlines, catalog, stream);
+  stream << ")";
+}
 
 static int xmain(int argc, char **argv)
 {
@@ -618,7 +676,21 @@ static int xmain(int argc, char **argv)
   std::cerr << "About to call djvm" << std::endl;
   xsystem(djvm_command);
   std::cerr << "Done!" << std::endl;
+  {
+    TemporaryFile sed_file;
+    std::cerr << "outlines >> sed_file" << std::endl;
+    std::ostringstream outline_stream;
+    pdf_outline_to_djvu_outline(doc, outline_stream);
+    std::string outline_str = outline_stream.str();
+    sed_file.fwrite("select 1\nset-outline\n", 21);
+    sed_file.fwrite(outline_str);
+    sed_file.fwrite("\n.\n", 3);
 
+    std::cerr << "! djvused < sed_file" << std::endl;
+    std::ostringstream command;
+    command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
+    xsystem(command);
+  }
   output_file.pass_to_stdout();
   
   delete[] page_files;
