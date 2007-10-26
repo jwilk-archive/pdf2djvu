@@ -63,7 +63,7 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unic
     << "# T " 
     <<  x << ":" <<  y << " " 
     << dx << ":" << dy << " "
-    <<  w << "x" <<  h << "+" << x << "+" << y << " "
+    <<  w << "x" <<  h << "+" << x << "+" << (y - h) << " "
     << "(";
   static char buffer[8];
   while (len > 0 && *unistr == ' ')
@@ -130,7 +130,7 @@ public:
       dx / 72 * conf_dpi,
       dy / 72 * conf_dpi,
       dx / 72 * conf_dpi,
-      10, // FIXME
+      state->getFontSize() / 72 * conf_dpi,
       unistr,
       len
     ));
