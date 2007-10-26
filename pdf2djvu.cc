@@ -12,6 +12,7 @@
 #include "GlobalParams.h"
 #include "Object.h"
 #include "PDFDoc.h"
+#include "PDFDocEncoding.h"
 #include "splash/SplashBitmap.h"
 #include "splash/Splash.h"
 #include "SplashOutputDev.h"
@@ -410,6 +411,52 @@ public:
   NoPageForBookmark() : Error("No page for a bookmark") {}
 };
 
+std::string pdf_string_to_utf8_string(GooString *from)
+{
+  bool is_unicode = false;
+  Unicode unicode;
+  char *cfrom = from->getCString();
+  std::ostringstream stream;
+  if ((cfrom[0] & 0xff) == 0xfe && (cfrom[1] & 0xff) == 0xff)
+  {
+    static char outbuf[1 << 10];
+    char *outbuf_ptr = outbuf;
+    size_t outbuf_len = sizeof outbuf;
+    size_t inbuf_len = strlen(cfrom);
+    cfrom += 2;
+    iconv_t cd = iconv_open("UTF-16LE", "UTF-8");
+    if (cd == (iconv_t)-1)
+      throw OSError();
+    while (inbuf_len > 0)
+    {
+      size_t n = iconv(cd, &cfrom, &inbuf_len, &outbuf_ptr, &outbuf_len);
+      if (n == -1 && errno == E2BIG)
+      {
+        stream.write(outbuf, outbuf_ptr - outbuf);
+        outbuf_ptr = outbuf;
+        outbuf_len = sizeof outbuf;
+      }
+      else if (n == -1)
+        throw Error();
+    }
+    stream.write(outbuf, outbuf_ptr - outbuf);
+    if (iconv_close(cd) == -1)
+      throw OSError();
+  }
+  else
+  {
+    for (; *cfrom; cfrom++)
+    {
+      static char buffer[8];
+      Unicode unichr = pdfDocEncoding[*cfrom & 0xff];
+      int seqlen = mapUTF8(unichr, buffer, sizeof buffer);
+      buffer[seqlen] = 0;
+      stream.write(buffer, seqlen);
+    }
+  }
+  return stream.str();
+}
+
 void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream)
 {
   Object current, next;
@@ -420,7 +467,7 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
     Object title;
     if (current.dictLookup("Title", &title)->isNull())
       throw Error("No title for a bookmark");
-    std::string title_str = title.getString()->getCString();
+    std::string title_str = pdf_string_to_utf8_string(title.getString());
     title.free();
 
     Object destination;
@@ -474,7 +521,7 @@ void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     Object object;
     if (!info_dict->lookup(*pkey, &object)->isString())
       continue;
-    std::string value(object.getString()->getCString());
+    std::string value = pdf_string_to_utf8_string(object.getString());
     lisp_escape(value);
     stream << *pkey << "\t" << value << std::endl;
   }
