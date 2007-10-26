@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <cerrno>
 #include <vector>
@@ -335,74 +336,60 @@ static void xsystem(const std::ostringstream &command_stream)
   xsystem(command);
 }
 
-class TemporaryFile
+static void xclose(int fd)
+{
+  if (close(fd) == -1)
+    throw OSError();
+}
+
+class TemporaryFile : public std::fstream
 {
 public:
-  inline const std::string &get_name() const
-  {
-    return name;
-  }
-
   TemporaryFile()
   {
     char file_name_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    fd = mkstemp(file_name_buffer);
+    int fd = mkstemp(file_name_buffer);
     if (fd == -1)
       throw OSError();
+    xclose(fd);
     name = std::string(file_name_buffer);
+    this->open(file_name_buffer, std::fstream::in | std::fstream::out | std::fstream::app);
   }
 
   ~TemporaryFile()
   {
-    if (close(fd) == -1)
-      throw OSError();
+    if (this->is_open())
+      this->close();
     if (unlink(name.c_str()) == -1)
       throw OSError();
   }
 
-  void fwrite(std::string &string)
+  void pass(std::ostream &stream)
   {
-    fwrite(string.data(), string.size());
-  }
-
-  void fwrite(const void *buffer, size_t size)
-  {
-    if (write(fd, buffer, size) == -1)
-      throw OSError();
-  }
-
-  void pass_to_stdout()
-  {
-    int fd = open(name.c_str(), O_RDONLY);
-    if (fd == -1)
-      throw OSError();
-    while (1)
+    this->seekg(0, std::ios::beg);
+    char buffer[BUFSIZ];
+    while (! this->eof())
     {
-      char buffer[1 << 12];
-      int n = read(fd, buffer, sizeof buffer);
-      if (n == 0)
-        break;
-      else if (n < 0)
-        throw OSError();
-      else
-        if (write(STDOUT_FILENO, buffer, n) == -1)
-          throw OSError();
+      this->read(buffer, sizeof buffer);
+      stream.write(buffer, this->gcount());
     }
   } 
 
+  friend std::ostream &operator<<(std::ostream &, const TemporaryFile &);
+  friend void operator+=(std::string &, const TemporaryFile &);
+
 private:
   std::string name;
-  int fd;
 };
 
 std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
 {
-  return out << file.get_name();
+  return out << file.name;
 }
 
 void operator+=(std::string &str, const TemporaryFile &file)
 {
-  str += file.get_name();
+  str += file.name;
 }
 
 class NoPageForBookmark : public Error
@@ -608,16 +595,14 @@ static int xmain(int argc, char **argv)
     SplashColorPtr row1, rowm;
     std::cerr << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
-    char buffer[1 << 10];
-    int len = sprintf(buffer, "R6 %d %d 216\n", width, height);
-    sep_file.fwrite(buffer, len);
+    sep_file << "R6 " << width << " " << height << " 216" << std::endl;
     std::cerr << "  - rle palette >> sep_file" << std::endl;
     for (int r = 0; r < 6; r++)
     for (int g = 0; g < 6; g++)
     for (int b = 0; b < 6; b++)
     {
       char buffer[] = { 51 * r, 51 * g, 51 * b };
-      sep_file.fwrite(buffer, 3);
+      sep_file.write(buffer, 3);
     }
     std::cerr << "  - rle data >> sep_file" << std::endl;
     row1 = data1;
@@ -651,7 +636,7 @@ static int xmain(int argc, char **argv)
           for (int i = 0; i < 4; i++)
           {
             char c = item >> ((3 - i) * 8);
-            sep_file.fwrite(&c, 1);
+            sep_file.write(&c, 1);
           }
           color = new_color;
           length = 1;
@@ -665,19 +650,18 @@ static int xmain(int argc, char **argv)
       for (int i = 0; i < 4; i++)
       {
         char c = item >> ((3 - i) * 8);
-        sep_file.fwrite(&c, 1);
+        sep_file.write(&c, 1);
       }
     }
     delete bmpm;
     if (has_background)
     {
       std::cerr << "  - background pixmap >> sep_file" << std::endl;
-      len = sprintf(buffer, "P6 %d %d 255\n", width, height);
-      sep_file.fwrite(buffer, len);
+      sep_file << "P6 " << width << " " << height << " 255" << std::endl;
       row1 = data1;
       for (int y = 0; y < height; y++)
       {
-        sep_file.fwrite(row1, width * 3);
+        sep_file.write(reinterpret_cast<const char*>(row1), width * 3);
         row1 += row_size;
       }
     }
@@ -689,7 +673,7 @@ static int xmain(int argc, char **argv)
       {
         if (it->size() == 0)
           continue;
-        sep_file.fwrite(*it);
+        sep_file << *it;
         has_text = true;
       }
       outm->clear_texts();
@@ -700,6 +684,7 @@ static int xmain(int argc, char **argv)
     csepdjvu_command << " -d " << conf_dpi;
     if (conf_bg_slices)
       csepdjvu_command << " -q " << conf_bg_slices;
+    sep_file.close();
     csepdjvu_command << " " << sep_file << " " << page_file;
     std::string csepdjvu_command_str = csepdjvu_command.str();
     xsystem(csepdjvu_command_str);
@@ -723,13 +708,10 @@ static int xmain(int argc, char **argv)
     {
       std::cerr << "  - annotations >> sed_file" << std::endl;
       std::vector<std::string> &annotations = outm->get_annotations();
-      sed_file.fwrite("select 1\nset-ant\n", 17); 
+      sed_file << "select 1" << std::endl << "set-ant" << std::endl;
       for (std::vector<std::string>::iterator it = annotations.begin(); it != annotations.end(); it++)
-      {
-        sed_file.fwrite(*it);
-        sed_file.fwrite("\n", 1);
-      }
-      sed_file.fwrite(".\n", 2);
+        sed_file << *it << std::endl;
+      sed_file << "." << std::endl;
       outm->clear_annotations();
     }
     if (has_text)
@@ -772,28 +754,23 @@ static int xmain(int argc, char **argv)
     TemporaryFile sed_file;
     {
       std::cerr << "- outlines >> sed_file" << std::endl;
-      std::ostringstream outline_stream;
-      pdf_outline_to_djvu_outline(doc, outline_stream);
-      std::string outline_str = outline_stream.str();
-      sed_file.fwrite("set-outline\n", 12);
-      sed_file.fwrite(outline_str);
-      sed_file.fwrite("\n.\n", 3);
+      sed_file << "set-outline" << std::endl;
+      pdf_outline_to_djvu_outline(doc, sed_file);
+      sed_file << std::endl << "." << std::endl;
     }
     {
       std::cerr << "- metadata >> sed_file" << std::endl;
-      std::ostringstream metadata_stream;
-      pdf_metadata_to_djvu_metadata(doc, metadata_stream);
-      std::string metadata_str = metadata_stream.str();
-      sed_file.fwrite("set-meta\n", 9);
-      sed_file.fwrite(metadata_str);
-      sed_file.fwrite("\n.\n", 3);
+      sed_file << "set-meta" << std::endl;
+      pdf_metadata_to_djvu_metadata(doc, sed_file);
+      sed_file << "." << std::endl;
     }
     std::cerr << "- !djvused < sed_file" << std::endl;
     std::ostringstream command;
+    sed_file.close();
     command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
     xsystem(command);
   }
-  output_file.pass_to_stdout();
+  output_file.pass(std::cout);
   
   delete[] page_files;
 
