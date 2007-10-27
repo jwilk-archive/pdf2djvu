@@ -530,9 +530,10 @@ void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     tms.tm_wday = tms.tm_yday = tms.tm_isdst = -1;
     if (mktime(&tms) == (time_t)-1)
       throw Error("1");
-    if (strftime(buffer, sizeof buffer, "%Y-%m-%d %H:%M:%S", &tms) != 19)
+    // RFC 3339 date format, e.g. "2007-10-27 13:19:59+02:00"
+    if (strftime(buffer, sizeof buffer, "%F %T", &tms) != 19)
       throw Error("2");
-    if ((tzs != '+' && tzs != '-') || tz1 > 12 || tz2 >= 60)
+    if ((tzs != '+' && tzs != '-') || tz1 < 0 || tz1 > 12 || tz2 >= 60 || tz2 < 0)
       throw Error("4");
     if (snprintf(tzbuffer, sizeof tzbuffer, "%c%02d:%02d", tzs, tz1, tz2) != 6)
       throw Error("3");
