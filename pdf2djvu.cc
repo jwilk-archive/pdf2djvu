@@ -347,13 +347,14 @@ class TemporaryFile : public std::fstream
 public:
   TemporaryFile()
   {
+    this->exceptions(std::ifstream::badbit);
     char file_name_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     int fd = mkstemp(file_name_buffer);
     if (fd == -1)
       throw OSError();
     xclose(fd);
     name = std::string(file_name_buffer);
-    this->open(file_name_buffer, std::fstream::in | std::fstream::out | std::fstream::app);
+    this->open(file_name_buffer, std::fstream::in | std::fstream::out | std::fstream::trunc);
   }
 
   ~TemporaryFile()
