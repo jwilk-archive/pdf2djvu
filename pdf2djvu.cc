@@ -8,17 +8,7 @@
 #include <sys/stat.h>
 #include <getopt.h>
 
-#include "goo/gmem.h"
-#include "goo/GooString.h"
-#include "GlobalParams.h"
-#include "Object.h"
-#include "PDFDoc.h"
-#include "PDFDocEncoding.h"
-#include "splash/SplashBitmap.h"
-#include "splash/Splash.h"
-#include "SplashOutputDev.h"
-#include "Link.h"
-#include "UTF8.h"
+#include "compoppler.h"
 
 #include <libdjvu/miniexp.h>
 
@@ -118,7 +108,7 @@ static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
     throw Error("Cannot find link destination");
 }
 
-class MutedSplashOutputDev: public SplashOutputDev
+class MutedRenderer: public Renderer
 {
 private:
   std::vector<std::string> texts;
@@ -127,12 +117,12 @@ public:
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
     texts.push_back(text_comment(
-      x / 72 * conf_dpi, 
-      getBitmapHeight() - y / 72 * conf_dpi,
-      dx / 72 * conf_dpi,
-      dy / 72 * conf_dpi,
-      dx / 72 * conf_dpi,
-      state->getFontSize() / 72 * conf_dpi,
+      (int) (x / 72 * conf_dpi), 
+      (int) (getBitmapHeight() - y / 72 * conf_dpi),
+      (int) (dx / 72 * conf_dpi),
+      (int) (dy / 72 * conf_dpi),
+      (int) (dx / 72 * conf_dpi),
+      (int) (state->getFontSize() / 72 * conf_dpi),
       unistr,
       len
     ));
@@ -168,10 +158,10 @@ public:
     default:
       throw Error("Unknown link type");
     }
-    int x = x1 / 72 * conf_dpi;
-    int y = y1 / 72 * conf_dpi;
-    int w = (x2 - x1) / 72 * conf_dpi;
-    int h = (y2 - y1) / 72 * conf_dpi;
+    int x = (int) (x1 / 72 * conf_dpi);
+    int y = (int) (y1 / 72 * conf_dpi);
+    int w = (int) ((x2 - x1) / 72 * conf_dpi);
+    int h = (int) ((y2 - y1) / 72 * conf_dpi);
     std::ostringstream strstream;
     strstream << "(maparea" 
       << " " << uri
@@ -184,8 +174,7 @@ public:
 
   GBool useDrawChar() { return gTrue; }
 
-  MutedSplashOutputDev(SplashColorMode colorModeA, int bitmapRowPadA, GBool reverseVideoA, SplashColorPtr paperColorA, GBool bitmapTopDownA = gTrue, GBool allowAntialiasA = gTrue) :
-    SplashOutputDev(colorModeA, bitmapRowPadA, reverseVideoA, paperColorA, bitmapTopDownA, allowAntialiasA)
+  MutedRenderer(SplashColor &paper_color) : Renderer(paper_color)
   { }
 
   std::vector<std::string> &get_annotations()
@@ -361,8 +350,8 @@ public:
   {
     if (this->is_open())
       this->close();
-    if (unlink(name.c_str()) == -1)
-      throw OSError();
+/*    if (unlink(name.c_str()) == -1)
+      throw OSError(); */
   }
 
   void pass(std::ostream &stream)
@@ -507,7 +496,7 @@ void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   for (const char** pkey = string_keys; *pkey; pkey++)
   {
     Object object;
-    if (!info_dict->lookup(*pkey, &object)->isString())
+    if (!dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     std::string value = pdf_string_to_utf8_string(object.getString());
     lisp_escape(value);
@@ -519,7 +508,7 @@ void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     struct tm tms;
     char tzs; int tz1, tz2;
     char buffer[32], tzbuffer[8];
-    if (!info_dict->lookup(*pkey, &object)->isString())
+    if (!dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     char *date_str = object.getString()->getCString();
     if (date_str[0] == 'D' && date_str[1] == ':')
@@ -546,28 +535,22 @@ static int xmain(int argc, char **argv)
 {
   if (!read_config(argc, argv))
     usage();
-  GooString g_file_name(file_name);
 
-#if POPPLER_VERSION < 6
-  globalParams = new GlobalParams(NULL);
-#else
-  globalParams = new GlobalParams();
-#endif
-  if (!globalParams->setAntialias((char*)(conf_antialias ? "yes" : "no")))
+  init_global_params();
+  if (!set_antialias(conf_antialias))
     throw Error();
 
-  PDFDoc *doc = new PDFDoc(&g_file_name);
+  PDFDoc *doc = new_document(file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
   
   std::cerr << doc->getFileName()->getCString() << ":" << std::endl;
 
   SplashColor paper_color;
-  for (int i = 0; i < 3; i++)
-    paper_color[i] = 0xff;
+  set_color(paper_color, 0xff, 0xff, 0xff);
 
-  SplashOutputDev *out1 = new SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color);
-  MutedSplashOutputDev *outm = new MutedSplashOutputDev(splashModeRGB8, 4, gFalse, paper_color);
+  Renderer *out1 = new Renderer(paper_color);
+  MutedRenderer *outm = new MutedRenderer(paper_color);
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   int n_pages = doc->getNumPages();
@@ -583,18 +566,15 @@ static int xmain(int argc, char **argv)
     TemporaryFile &page_file = page_files[n - 1];
     std::cerr << "- page #" << n << ":" << std::endl;
     std::cerr << "  - render with text" << std::endl;
-    doc->displayPage(out1, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gFalse);
+    display_page(doc, out1, n, conf_dpi, false);
     std::cerr << "  - render without text" << std::endl;
-    doc->displayPage(outm, n, conf_dpi, conf_dpi, 0, gTrue, gFalse, gTrue);
+    display_page(doc, outm, n, conf_dpi, false);
     std::cerr << "  - take bitmaps" << std::endl;
-    SplashBitmap* bmp1 = out1->takeBitmap();
-    SplashBitmap* bmpm = outm->takeBitmap();
-    int width = bmp1->getWidth();
-    int height = bmp1->getHeight();
-    int row_size = bmp1->getRowSize();
-    SplashColorPtr data1 = bmp1->getDataPtr();
-    SplashColorPtr datam = bmpm->getDataPtr();
-    SplashColorPtr row1, rowm;
+    Pixmap *bmp1 = new Pixmap(out1), *bmpm = new Pixmap(outm);
+    PixmapIterator p1 = bmp1->begin();
+    PixmapIterator pm = bmpm->begin();
+    int width = bmp1->get_width();
+    int height = bmp1->get_height();
     std::cerr << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
     sep_file << "R6 " << width << " " << height << " 216" << std::endl;
@@ -607,20 +587,16 @@ static int xmain(int argc, char **argv)
       sep_file.write(buffer, 3);
     }
     std::cerr << "  - rle data >> sep_file" << std::endl;
-    row1 = data1;
-    rowm = datam;
     bool has_background = false;
     bool has_foreground = false;
     bool has_text = false;
     for (int y = 0; y < height; y++)
     {
-      SplashColorPtr p1 = row1;
-      SplashColorPtr pm = rowm;
       int new_color, color = 0xfff;
       int length = 0;
       for (int x = 0; x < width; x++)
       {
-        if (!has_background && (pm[0] & pm[0] & pm[0]) != 0xff)
+        if (!has_background && (pm[0] & pm[0] & pm[0] & 0xff) != 0xff)
           has_background = true;
         if (p1[0] != pm[0] || p1[1] != pm[1] || p1[2] != pm[2])
         {
@@ -643,11 +619,9 @@ static int xmain(int argc, char **argv)
           color = new_color;
           length = 1;
         }
-        p1 += 3;
-        pm += 3;
+        p1++, pm++;
       }
-      row1 += row_size;
-      rowm += row_size;
+      p1.next_row(), pm.next_row();
       int item = (color << 20) + length;
       for (int i = 0; i < 4; i++)
       {
@@ -660,12 +634,7 @@ static int xmain(int argc, char **argv)
     {
       std::cerr << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << width << " " << height << " 255" << std::endl;
-      row1 = data1;
-      for (int y = 0; y < height; y++)
-      {
-        sep_file.write(reinterpret_cast<const char*>(row1), width * 3);
-        row1 += row_size;
-      }
+      sep_file << *bmp1;
     }
     delete bmp1;
     {
