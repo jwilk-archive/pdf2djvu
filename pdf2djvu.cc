@@ -28,9 +28,16 @@ public:
   {
     return message;
   }
+
+  friend std::ostream &operator<<(std::ostream &, const Error &);
 protected:
   std::string message;
 };
+
+std::ostream &operator<<(std::ostream &stream, const Error &error)
+{
+  return stream << error.message;
+}
 
 class OSError : public Error
 {
@@ -84,6 +91,12 @@ static void lisp_escape(std::string &value)
   value = miniexp_to_str(exp);
 }
 
+class NoLinkDestination : public Error
+{
+public:
+  NoLinkDestination() : Error("Cannot find link destination") {}
+};
+
 static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
 {
   LinkDest *dest = goto_link->getDest();
@@ -105,7 +118,7 @@ static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
     return page;
   }
   else
-    throw Error("Cannot find link destination");
+    throw NoLinkDestination();
 }
 
 class MutedRenderer: public Renderer
@@ -131,16 +144,10 @@ public:
   void drawLink(Link *link, Catalog *catalog)
   {
     double x1, y1, x2, y2;
-    LinkBorderStyle *border_style;
     LinkAction *link_action = link->getAction();
-    double border_width;
-    double r, g, b;
-    char border_color[8];
     std::string uri;
+    std::string border_color = get_link_border_color(link);
     link->getRect(&x1, &y1, &x2, &y2);
-    border_style = link->getBorderStyle();
-    border_style->getColor(&r, &g, &b);
-    sprintf(border_color, "#%02x%02x%02x", (int)(r * 0xff), (int)(g * 0xff), (int)(b * 0xff));
     switch (link_action->getKind())
     {
     case actionURI:
@@ -149,14 +156,23 @@ public:
       break;
     case actionGoTo:
     {
-      int page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+      int page;
+      try
+      {
+        int page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+      }
+      catch (NoLinkDestination &ex)
+      {
+        std::cerr << "[Warning] " << ex << std::endl;
+      }
       std::ostringstream strstream;
       strstream << "\"#" << page << "\"";
       uri = strstream.str();
       break;
     }
     default:
-      throw Error("Unknown link type");
+      std::cerr << "[Warning] Unknown link type" << std::endl;
+      return;
     }
     int x = (int) (x1 / 72 * conf_dpi);
     int y = (int) (y1 / 72 * conf_dpi);
@@ -278,7 +294,7 @@ static bool read_config(int argc, char **argv)
         {
           parse_pages(optarg, conf_pages);
         }
-        catch (PagesParseError ex)
+        catch (PagesParseError &ex)
         {
           return false;
         }
@@ -388,6 +404,18 @@ public:
   NoPageForBookmark() : Error("No page for a bookmark") {}
 };
 
+class NoTitleForBookmark : public Error
+{
+public:
+  NoTitleForBookmark() : Error("No title for a bookmark") {}
+};
+
+class IconvError : public Error
+{
+public:
+  IconvError() : Error("Unable to convert encodings") {} 
+};
+
 std::string pdf_string_to_utf8_string(GooString *from)
 {
   bool is_unicode = false;
@@ -414,7 +442,7 @@ std::string pdf_string_to_utf8_string(GooString *from)
         outbuf_len = sizeof outbuf;
       }
       else if (n == -1)
-        throw Error();
+        throw IconvError();
     }
     stream.write(outbuf, outbuf_ptr - outbuf);
     if (iconv_close(cd) == -1)
@@ -443,7 +471,7 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
   {
     Object title;
     if (!dict_lookup(current, "Title", &title)->isString())
-      throw Error("No title for a bookmark");
+      throw NoTitleForBookmark();
     std::string title_str = pdf_string_to_utf8_string(title.getString());
     title.free();
 
@@ -458,13 +486,24 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
       throw NoPageForBookmark();
     if (link_action->getKind() != actionGoTo)
       throw NoPageForBookmark();
-    page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+    try
+    {
+      page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+    }
+    catch (NoLinkDestination &ex)
+    {
+      std::cerr << "[Warning] " << ex << std::endl;
+      page = -1;
+    }
     destination.free();
-    
-    lisp_escape(title_str);
-    stream << "(" << title_str << " \"#" << page << "\"";
-    pdf_outline_to_djvu_outline(&current, catalog, stream);
-    stream << ") ";
+   
+    if (page >= 0)
+    {
+      lisp_escape(title_str);
+      stream << "(" << title_str << " \"#" << page << "\"";
+      pdf_outline_to_djvu_outline(&current, catalog, stream);
+      stream << ") ";
+    }
 
     dict_lookup(current, "Next", &next);
     current.free();
@@ -483,6 +522,8 @@ void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream)
   pdf_outline_to_djvu_outline(outlines, catalog, stream);
   stream << ")";
 }
+
+class InvalidDateFormat : public Error { };
 
 void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
 {
@@ -503,6 +544,7 @@ void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     stream << *pkey << "\t" << value << std::endl;
   }
   for (const char** pkey = date_keys; *pkey; pkey++)
+  try
   {
     Object object;
     struct tm tms;
@@ -514,20 +556,24 @@ void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     if (date_str[0] == 'D' && date_str[1] == ':')
       date_str += 2;
     if (sscanf(date_str, "%4d%2d%2d%2d%2d%2d%c%2d'%2d'", &tms.tm_year, &tms.tm_mon, &tms.tm_mday, &tms.tm_hour, &tms.tm_min, &tms.tm_sec, &tzs, &tz1, &tz2) != 9)
-      throw Error("3");
+      throw InvalidDateFormat();
     tms.tm_year -= 1900;
     tms.tm_mon -= 1;
     tms.tm_wday = tms.tm_yday = tms.tm_isdst = -1;
     if (mktime(&tms) == (time_t)-1)
-      throw Error("1");
+      throw InvalidDateFormat();
     // RFC 3339 date format, e.g. "2007-10-27 13:19:59+02:00"
     if (strftime(buffer, sizeof buffer, "%F %T", &tms) != 19)
-      throw Error("2");
+      throw InvalidDateFormat();
     if ((tzs != '+' && tzs != '-') || tz1 < 0 || tz1 > 12 || tz2 >= 60 || tz2 < 0)
-      throw Error("4");
+      throw InvalidDateFormat();
     if (snprintf(tzbuffer, sizeof tzbuffer, "%c%02d:%02d", tzs, tz1, tz2) != 6)
-      throw Error("3");
+      throw InvalidDateFormat();
     stream << *pkey << "\t\"" << buffer << tzbuffer << "\"" << std::endl;
+  }
+  catch (InvalidDateFormat &ex)
+  {
+    std::cerr << "[Warning] metadata[" << *pkey << "] is not a valid date" << std::endl;
   }
 }
 
@@ -568,7 +614,7 @@ static int xmain(int argc, char **argv)
     std::cerr << "  - render with text" << std::endl;
     display_page(doc, out1, n, conf_dpi, false);
     std::cerr << "  - render without text" << std::endl;
-    display_page(doc, outm, n, conf_dpi, false);
+    display_page(doc, outm, n, conf_dpi, true);
     std::cerr << "  - take bitmaps" << std::endl;
     Pixmap *bmp1 = new Pixmap(out1), *bmpm = new Pixmap(outm);
     PixmapIterator p1 = bmp1->begin();
@@ -754,9 +800,9 @@ int main(int argc, char **argv)
   {
     xmain(argc, argv);
   }
-  catch (Error ex)
+  catch (Error &ex)
   {
-    std::cerr << ex.get_message() << std::endl;
+    std::cerr << ex << std::endl;
     exit(1);
   }
 }

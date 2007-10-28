@@ -191,4 +191,21 @@ std::fstream &operator<<(std::fstream &stream, const Pixmap &pixmap)
   return stream;
 }
 
+std::string get_link_border_color(Link *link)
+{
+#if POPPLER_VERSION < 6
+  double r, g, b;
+  char buffer[8];
+  LinkBorderStyle *border_style = link->getBorderStyle();
+  border_style->getColor(&r, &g, &b);
+  int size = snprintf(buffer, sizeof buffer, "#%02x%02x%02x", (int)(r * 0xff), (int)(g * 0xff), (int)(b * 0xff));
+  return std::string(buffer, size);
+#else
+  static std::string red("#ff0000");
+  // FIXME: find a way to determine link color
+  return red;
+#endif
+}
+
+
 // vim:ts=2 sw=2 et
