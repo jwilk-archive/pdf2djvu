@@ -350,15 +350,26 @@ static void xclose(int fd)
 class TemporaryFile : public std::fstream
 {
 public:
+  TemporaryFile(const TemporaryFile& clone)
+  {
+    this->ref_counter = clone.ref_counter;
+    this->ref_counter[0]++;
+    this->exceptions(std::ifstream::badbit);
+    this->name = clone.name; 
+    this->open(name.c_str(), std::fstream::in | std::fstream::out);
+  }
+
   TemporaryFile()
   {
+    this->ref_counter = new unsigned int[1];
+    this->ref_counter[0] = 1;
     this->exceptions(std::ifstream::badbit);
     char file_name_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     int fd = mkstemp(file_name_buffer);
     if (fd == -1)
       throw OSError();
     xclose(fd);
-    name = std::string(file_name_buffer);
+    this->name = std::string(file_name_buffer);
     this->open(file_name_buffer, std::fstream::in | std::fstream::out | std::fstream::trunc);
   }
 
@@ -366,8 +377,12 @@ public:
   {
     if (this->is_open())
       this->close();
-    if (unlink(name.c_str()) == -1)
-      throw OSError();
+    if (--this->ref_counter[0] == 0)
+    {
+      if (unlink(name.c_str()) == -1)
+        throw OSError();
+      delete[] this->ref_counter;
+    }
   }
 
   void pass(std::ostream &stream)
@@ -386,6 +401,7 @@ public:
 
 private:
   std::string name;
+  unsigned int *ref_counter;
 };
 
 std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
@@ -600,15 +616,17 @@ static int xmain(int argc, char **argv)
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   int n_pages = doc->getNumPages();
+  int page_counter = 0;
   TemporaryFile output_file;
   std::string djvm_command("/usr/bin/djvm -c ");
-  TemporaryFile *page_files = new TemporaryFile[n_pages];
+  std::vector<TemporaryFile> page_files(n_pages);
   djvm_command += output_file;
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
   for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
+    page_counter++;
     TemporaryFile &page_file = page_files[n - 1];
     std::cerr << "- page #" << n << ":" << std::endl;
     std::cerr << "  - render with text" << std::endl;
@@ -765,6 +783,8 @@ static int xmain(int argc, char **argv)
       xsystem(command);
     }
   }
+  if (page_counter == 0)
+    throw Error("No pages selected");
   std::cerr << "- !djvm" << std::endl;
   xsystem(djvm_command);
   {
@@ -788,9 +808,6 @@ static int xmain(int argc, char **argv)
     xsystem(command);
   }
   output_file.pass(std::cout);
-  
-  delete[] page_files;
-
   return 0;
 }
 
