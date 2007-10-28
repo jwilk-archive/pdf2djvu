@@ -349,20 +349,9 @@ static void xclose(int fd)
 
 class TemporaryFile : public std::fstream
 {
-public:
-  TemporaryFile(const TemporaryFile& clone)
+private:
+  void construct()
   {
-    this->ref_counter = clone.ref_counter;
-    this->ref_counter[0]++;
-    this->exceptions(std::ifstream::badbit);
-    this->name = clone.name; 
-    this->open(name.c_str(), std::fstream::in | std::fstream::out);
-  }
-
-  TemporaryFile()
-  {
-    this->ref_counter = new unsigned int[1];
-    this->ref_counter[0] = 1;
     this->exceptions(std::ifstream::badbit);
     char file_name_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     int fd = mkstemp(file_name_buffer);
@@ -372,17 +361,23 @@ public:
     this->name = std::string(file_name_buffer);
     this->open(file_name_buffer, std::fstream::in | std::fstream::out | std::fstream::trunc);
   }
+public:
+  TemporaryFile(const TemporaryFile& clone)
+  {
+    this->construct();
+  }
+
+  TemporaryFile()
+  {
+    this->construct();
+  }
 
   ~TemporaryFile()
   {
     if (this->is_open())
       this->close();
-    if (--this->ref_counter[0] == 0)
-    {
-      if (unlink(name.c_str()) == -1)
-        throw OSError();
-      delete[] this->ref_counter;
-    }
+    if (unlink(name.c_str()) == -1)
+      throw OSError();
   }
 
   void pass(std::ostream &stream)
@@ -401,7 +396,6 @@ public:
 
 private:
   std::string name;
-  unsigned int *ref_counter;
 };
 
 std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
