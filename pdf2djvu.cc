@@ -437,12 +437,12 @@ std::string pdf_string_to_utf8_string(GooString *from)
 void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream)
 {
   Object current, next;
-  if (!node->dictLookup("First", &current)->isDict())
+  if (!dict_lookup(node, "First", &current)->isDict())
     return;
   while (current.isDict())
   {
     Object title;
-    if (!current.dictLookup("Title", &title)->isString())
+    if (!dict_lookup(current, "Title", &title)->isString())
       throw Error("No title for a bookmark");
     std::string title_str = pdf_string_to_utf8_string(title.getString());
     title.free();
@@ -450,9 +450,9 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
     Object destination;
     LinkAction *link_action;
     int page;
-    if (!current.dictLookup("Dest", &destination)->isNull())
+    if (!dict_lookup(current, "Dest", &destination)->isNull())
       link_action = LinkAction::parseDest(&destination);
-    else if (!current.dictLookup("A", &destination)->isNull())
+    else if (!dict_lookup(current, "A", &destination)->isNull())
       link_action = LinkAction::parseAction(&destination);
     else
       throw NoPageForBookmark();
@@ -466,7 +466,7 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
     pdf_outline_to_djvu_outline(&current, catalog, stream);
     stream << ") ";
 
-    current.dictLookup("Next", &next);
+    dict_lookup(current, "Next", &next);
     current.free();
     current = next;
   }

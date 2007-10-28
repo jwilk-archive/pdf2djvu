@@ -70,13 +70,19 @@ public:
 #endif  
 };
 
+Object *dict_lookup(Object &dict, const char *key, Object *object)
+{
+  return dict.dictLookup((char*) key, object);
+}
+
+Object *dict_lookup(Object *dict, const char *key, Object *object)
+{
+  return dict->dictLookup((char*) key, object);
+}
+
 Object *dict_lookup(Dict *dict, const char *key, Object *object)
 {
-#if POPPLER_VERSION < 5
   return dict->lookup((char*) key, object);
-#else
-  return dict->lookup(key, object);
-#endif
 }
 
 void display_page(PDFDoc *document, Renderer *renderer, int npage, double dpi, bool do_links)
