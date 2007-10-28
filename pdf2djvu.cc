@@ -442,7 +442,7 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
   while (current.isDict())
   {
     Object title;
-    if (current.dictLookup("Title", &title)->isNull())
+    if (!current.dictLookup("Title", &title)->isString())
       throw Error("No title for a bookmark");
     std::string title_str = pdf_string_to_utf8_string(title.getString());
     title.free();
