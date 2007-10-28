@@ -350,8 +350,8 @@ public:
   {
     if (this->is_open())
       this->close();
-/*    if (unlink(name.c_str()) == -1)
-      throw OSError(); */
+    if (unlink(name.c_str()) == -1)
+      throw OSError();
   }
 
   void pass(std::ostream &stream)
