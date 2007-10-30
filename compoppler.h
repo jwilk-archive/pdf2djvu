@@ -14,6 +14,10 @@
 #include "Link.h"
 #include "UTF8.h"
 
+#if POPPLER_VERSION < 5
+#include <endian.h>
+#endif
+
 void init_global_params()
 {
 #if POPPLER_VERSION < 6
@@ -38,7 +42,13 @@ PDFDoc *new_document(std::string file_name)
 void set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
 {
 #if POPPLER_VERSION < 5
+#if BYTE_ORDER == LITTLE_ENDIAN
   result.rgb8 = splashMakeRGB8(r, g, b); 
+#elif BYTE_ORDER == BIG_ENDIAN
+  result.bgr8 = splashMakeBGR8(r, g, b);
+#else
+#error
+#endif
 #else
   result[0] = r;
   result[1] = g;
@@ -50,8 +60,14 @@ class Renderer : public SplashOutputDev
 {
 public:
   Renderer(SplashColor &paper_color) :
-#if POPPLER_VERSION < 5  
+#if POPPLER_VERSION < 5
+#if BYTE_ORDER == LITTLE_ENDIAN
     SplashOutputDev(splashModeRGB8, gFalse, paper_color)
+#elif BYTE_ORDER == BIG_ENDIAN
+    SplashOutputDev(splashModeBGR8, gFalse, paper_color)
+#else
+#error
+#endif
 #else
     SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color)
 #endif
@@ -143,7 +159,13 @@ public:
   {
 #if POPPLER_VERSION < 5    
     bmp = renderer->getBitmap();
+#if BYTE_ORDER == LITTLE_ENDIAN    
     raw_data = (const uint8_t*) bmp->getDataPtr().rgb8;
+#elif BYTE_ORDDER == BIG_ENDIAN
+    raw_data = (const uint8_t*) bmp->getDataPtr().bgr8;
+#else
+#error
+#endif
 #else
     bmp = renderer->takeBitmap();
     raw_data = (const uint8_t*) bmp->getDataPtr();
