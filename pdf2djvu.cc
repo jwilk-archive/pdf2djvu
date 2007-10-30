@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cerrno>
 #include <vector>
+#include <map>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -126,6 +127,7 @@ class MutedRenderer: public Renderer
 private:
   std::vector<std::string> texts;
   std::vector<std::string> annotations;
+  std::map<int, int> &page_map;
 public:
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
@@ -159,14 +161,15 @@ public:
       int page;
       try
       {
-        int page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+        page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
       }
       catch (NoLinkDestination &ex)
       {
         std::cerr << "[Warning] " << ex << std::endl;
+        return;
       }
       std::ostringstream strstream;
-      strstream << "\"#" << page << "\"";
+      strstream << "\"#" << this->page_map[page] << "\"";
       uri = strstream.str();
       break;
     }
@@ -190,7 +193,7 @@ public:
 
   GBool useDrawChar() { return gTrue; }
 
-  MutedRenderer(SplashColor &paper_color) : Renderer(paper_color)
+  MutedRenderer(SplashColor &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
   { }
 
   std::vector<std::string> &get_annotations()
@@ -472,7 +475,7 @@ std::string pdf_string_to_utf8_string(GooString *from)
   return stream.str();
 }
 
-void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream)
+void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream, std::map<int, int> &page_map)
 {
   Object current, next;
   if (!dict_lookup(node, "First", &current)->isDict())
@@ -510,8 +513,8 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
     if (page >= 0)
     {
       lisp_escape(title_str);
-      stream << "(" << title_str << " \"#" << page << "\"";
-      pdf_outline_to_djvu_outline(&current, catalog, stream);
+      stream << "(" << title_str << " \"#" << page_map[page] << "\"";
+      pdf_outline_to_djvu_outline(&current, catalog, stream, page_map);
       stream << ") ";
     }
 
@@ -522,14 +525,14 @@ void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &s
   current.free();
 }
 
-void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream)
+void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int, int> &page_map)
 {
   Catalog *catalog = doc->getCatalog();
   Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
     return;
   stream << "(bookmarks ";
-  pdf_outline_to_djvu_outline(outlines, catalog, stream);
+  pdf_outline_to_djvu_outline(outlines, catalog, stream, page_map);
   stream << ")";
 }
 
@@ -605,10 +608,6 @@ static int xmain(int argc, char **argv)
   SplashColor paper_color;
   set_color(paper_color, 0xff, 0xff, 0xff);
 
-  Renderer *out1 = new Renderer(paper_color);
-  MutedRenderer *outm = new MutedRenderer(paper_color);
-  out1->startDoc(doc->getXRef());
-  outm->startDoc(doc->getXRef());
   int n_pages = doc->getNumPages();
   int page_counter = 0;
   TemporaryFile output_file;
@@ -617,12 +616,24 @@ static int xmain(int argc, char **argv)
   djvm_command += output_file;
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
+  std::map<int, int> page_map;
+  int opage = 1;
+  for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
+  for (int ipage = page_range->first; ipage <= n_pages && ipage <= page_range->second; ipage++)
+  {
+    page_map[ipage] = opage;
+    opage++;
+  }
+  Renderer *out1 = new Renderer(paper_color);
+  MutedRenderer *outm = new MutedRenderer(paper_color, page_map);
+  out1->startDoc(doc->getXRef());
+  outm->startDoc(doc->getXRef());
   for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;
     TemporaryFile &page_file = page_files[n - 1];
-    std::cerr << "- page #" << n << ":" << std::endl;
+    std::cerr << "- page #" << n << " -> #" << page_map[n] << ":" << std::endl;
     std::cerr << "  - render with text" << std::endl;
     display_page(doc, out1, n, conf_dpi, false);
     std::cerr << "  - render without text" << std::endl;
@@ -786,7 +797,7 @@ static int xmain(int argc, char **argv)
     {
       std::cerr << "- outlines >> sed_file" << std::endl;
       sed_file << "set-outline" << std::endl;
-      pdf_outline_to_djvu_outline(doc, sed_file);
+      pdf_outline_to_djvu_outline(doc, sed_file, page_map);
       sed_file << std::endl << "." << std::endl;
     }
     {
