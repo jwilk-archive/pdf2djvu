@@ -232,7 +232,7 @@ static void usage()
   exit(1);
 }
 
-void parse_pages(std::string s, std::vector< std::pair<int, int> > &result)
+static void parse_pages(std::string s, std::vector< std::pair<int, int> > &result)
 {
   int state = 0;
   int value[2] = { 0, 0 };
@@ -429,10 +429,8 @@ public:
   IconvError() : Error("Unable to convert encodings") {} 
 };
 
-std::string pdf_string_to_utf8_string(GooString *from)
+static std::string pdf_string_to_utf8_string(GooString *from)
 {
-  bool is_unicode = false;
-  Unicode unicode;
   char *cfrom = from->getCString();
   std::ostringstream stream;
   if ((cfrom[0] & 0xff) == 0xfe && (cfrom[1] & 0xff) == 0xff)
@@ -448,13 +446,13 @@ std::string pdf_string_to_utf8_string(GooString *from)
     while (inbuf_len > 0)
     {
       size_t n = iconv(cd, &cfrom, &inbuf_len, &outbuf_ptr, &outbuf_len);
-      if (n == -1 && errno == E2BIG)
+      if (n == (size_t) -1 && errno == E2BIG)
       {
         stream.write(outbuf, outbuf_ptr - outbuf);
         outbuf_ptr = outbuf;
         outbuf_len = sizeof outbuf;
       }
-      else if (n == -1)
+      else if (n == (size_t) -1)
         throw IconvError();
     }
     stream.write(outbuf, outbuf_ptr - outbuf);
@@ -475,7 +473,7 @@ std::string pdf_string_to_utf8_string(GooString *from)
   return stream.str();
 }
 
-void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream, std::map<int, int> &page_map)
+static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream, std::map<int, int> &page_map)
 {
   Object current, next;
   if (!dict_lookup(node, "First", &current)->isDict())
@@ -538,7 +536,7 @@ void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int
 
 class InvalidDateFormat : public Error { };
 
-void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
+static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
 {
   static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", "Producer", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
