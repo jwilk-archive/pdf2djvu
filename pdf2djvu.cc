@@ -21,6 +21,7 @@
 
 static int conf_dpi = 100;
 static bool conf_antialias = false;
+static bool conf_no_render = false;
 static char *conf_bg_slices = NULL;
 static std::vector< std::pair<int, int> > conf_pages;
 static char *file_name;
@@ -280,6 +281,7 @@ static bool read_config(int argc, char **argv)
     { "dpi",        1, 0, 'd' },
     { "bg-slices",  1, 0, 'q' },
     { "antialias",  0, 0, 'A' },
+    { "no-render",  0, 0, 'N' },
     { "pages",      1, 0, 'p' },
     { "help",       0, 0, 'h' },
     { NULL,         0, 0, '\0' }
@@ -310,6 +312,7 @@ static bool read_config(int argc, char **argv)
         break;
       }
     case 'A': conf_antialias = 1; break;
+    case 'N': conf_no_render = 1; break;
     case 'h': return false;
     default: ;
     }
@@ -638,16 +641,17 @@ static int xmain(int argc, char **argv)
     page_counter++;
     TemporaryFile &page_file = page_files[n - 1];
     std::cerr << "- page #" << n << " -> #" << page_map[n] << ":" << std::endl;
-    std::cerr << "  - render with text" << std::endl;
-    display_page(doc, out1, n, conf_dpi, false);
-    std::cerr << "  - render without text" << std::endl;
-    display_page(doc, outm, n, conf_dpi, true);
-    std::cerr << "  - take bitmaps" << std::endl;
-    Pixmap *bmp1 = new Pixmap(out1), *bmpm = new Pixmap(outm);
-    PixmapIterator p1 = bmp1->begin();
-    PixmapIterator pm = bmpm->begin();
-    int width = bmp1->get_width();
-    int height = bmp1->get_height();
+    std::cerr << "  - muted render" << std::endl;
+    display_page(doc, outm, n, conf_dpi, false);
+    int width = outm->getBitmapWidth();
+    int height = outm->getBitmapHeight();
+    Pixmap *bmpm = new Pixmap(outm);
+    std::cerr << "  - image size: " << width << "x" << height << std::endl;
+    if (!conf_no_render)
+    {
+      std::cerr << "  - verbose render" << std::endl;
+      display_page(doc, out1, n, conf_dpi, true);
+    }
     std::cerr << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
     sep_file << "R6 " << width << " " << height << " 216" << std::endl;
@@ -659,57 +663,73 @@ static int xmain(int argc, char **argv)
       char buffer[] = { 51 * r, 51 * g, 51 * b };
       sep_file.write(buffer, 3);
     }
-    std::cerr << "  - rle data >> sep_file" << std::endl;
     bool has_background = false;
     bool has_foreground = false;
     bool has_text = false;
-    for (int y = 0; y < height; y++)
+    if (conf_no_render)
     {
-      int new_color, color = 0xfff;
-      int length = 0;
-      for (int x = 0; x < width; x++)
-      {
-        if (!has_background && (pm[0] & pm[0] & pm[0] & 0xff) != 0xff)
-          has_background = true;
-        if (p1[0] != pm[0] || p1[1] != pm[1] || p1[2] != pm[2])
-        {
-          if (!has_foreground && (p1[0] || p1[0] || p1[0]))
-            has_foreground = true;
-          new_color = (p1[2] / 51) + 6 * ((p1[1] / 51) + 6 * (p1[0] / 51));
-        }
-        else
-          new_color = 0xfff;
-        if (color == new_color)
-          length++;
-        else
-        {
-          int item = (color << 20) + length;
-          for (int i = 0; i < 4; i++)
-          {
-            char c = item >> ((3 - i) * 8);
-            sep_file.write(&c, 1);
-          }
-          color = new_color;
-          length = 1;
-        }
-        p1++, pm++;
-      }
-      p1.next_row(), pm.next_row();
-      int item = (color << 20) + length;
+      std::cerr << "  - dummy rle data >> sep_file" << std::endl;
+      int item = (0xfff << 20) + width;
+      for (int y = 0; y < height; y++)
       for (int i = 0; i < 4; i++)
       {
         char c = item >> ((3 - i) * 8);
         sep_file.write(&c, 1);
       }
     }
-    delete bmpm;
+    else
+    {
+      std::cerr << "  - rle data >> sep_file" << std::endl;
+      Pixmap bmp1 = Pixmap(out1);
+      PixmapIterator p1 = bmp1.begin();
+      PixmapIterator pm = bmpm->begin();
+      for (int y = 0; y < height; y++)
+      {
+        int new_color, color = 0xfff;
+        int length = 0;
+        for (int x = 0; x < width; x++)
+        {
+          if (!has_background && (pm[0] & pm[0] & pm[0] & 0xff) != 0xff)
+            has_background = true;
+          if (p1[0] != pm[0] || p1[1] != pm[1] || p1[2] != pm[2])
+          {
+            if (!has_foreground && (p1[0] || p1[0] || p1[0]))
+              has_foreground = true;
+            new_color = (p1[2] / 51) + 6 * ((p1[1] / 51) + 6 * (p1[0] / 51));
+          }
+          else
+            new_color = 0xfff;
+          if (color == new_color)
+            length++;
+          else
+          {
+            int item = (color << 20) + length;
+            for (int i = 0; i < 4; i++)
+            {
+              char c = item >> ((3 - i) * 8);
+              sep_file.write(&c, 1);
+            }
+            color = new_color;
+            length = 1;
+          }
+          p1++, pm++;
+        }
+        p1.next_row(), pm.next_row();
+        int item = (color << 20) + length;
+        for (int i = 0; i < 4; i++)
+        {
+          char c = item >> ((3 - i) * 8);
+          sep_file.write(&c, 1);
+        }
+      }
+    }
     if (has_background)
     {
       std::cerr << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << width << " " << height << " 255" << std::endl;
-      sep_file << *bmp1;
+      sep_file << *bmpm;
     }
-    delete bmp1;
+    delete bmpm;
     {
       std::cerr << "  - text layer >> sep_file" << std::endl;
       std::vector<std::string> &texts = outm->get_texts();
@@ -736,17 +756,22 @@ static int xmain(int argc, char **argv)
     djvm_command += page_file;
     /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
     TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file, sed_file;
+    if (!conf_no_render)
     {
       std::cerr << "  - !ddjvu" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file << " " << rle_file;
       xsystem(command);
     }
-    if (has_background || has_foreground)
+    if (has_background || has_foreground || conf_no_render)
     { 
       std::cerr << "  - !djvuextract" << std::endl;
       std::ostringstream command;
-      command << "/usr/bin/djvuextract " << page_file << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
+      command << "/usr/bin/djvuextract " << page_file;
+      if (has_background || has_foreground)
+        command << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
+      if (conf_no_render)
+        command << " Sjbz=" << sjbz_file;
       xsystem(command);
     }
     {
@@ -765,6 +790,7 @@ static int xmain(int argc, char **argv)
       command << "/usr/bin/djvused " << page_file << " -e output-txt >> " << sed_file;
       xsystem(command);
     }
+    if (!conf_no_render)
     {
       std::cerr << "  - !cjb2" << std::endl;
       std::ostringstream command;
