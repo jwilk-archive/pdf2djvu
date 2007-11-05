@@ -803,9 +803,7 @@ static int xmain(int argc, char **argv)
     xsystem(csepdjvu_command_str);
     djvm_command += " ";
     djvm_command += page_file;
-    /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
-    if (has_background || has_foreground || conf_no_render)
     { 
       std::cerr << "  - !djvuextract" << std::endl;
       std::ostringstream command;
