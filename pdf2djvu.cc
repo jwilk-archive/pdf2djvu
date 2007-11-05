@@ -575,8 +575,13 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     char *date_str = object.getString()->getCString();
     if (date_str[0] == 'D' && date_str[1] == ':')
       date_str += 2;
-    if (sscanf(date_str, "%4d%2d%2d%2d%2d%2d%c%2d'%2d'", &tms.tm_year, &tms.tm_mon, &tms.tm_mday, &tms.tm_hour, &tms.tm_min, &tms.tm_sec, &tzs, &tz1, &tz2) != 9)
+    if (sscanf(date_str, "%4d%2d%2d%2d%2d%2d%c%2d'%2d'", &tms.tm_year, &tms.tm_mon, &tms.tm_mday, &tms.tm_hour, &tms.tm_min, &tms.tm_sec, &tzs, &tz1, &tz2) < 6)
       throw InvalidDateFormat();
+    if (tzs == 'Z')
+    {
+      tzs = '+';
+      tz1 = tz2 = 0;
+    }
     tms.tm_year -= 1900;
     tms.tm_mon -= 1;
     tms.tm_wday = tms.tm_yday = tms.tm_isdst = -1;
