@@ -136,6 +136,12 @@ private:
   std::vector<std::string> annotations;
   std::map<int, int> &page_map;
 public:
+  virtual GBool beginType3Char(GfxState * /*state*/, double /*x*/, double /*y*/,
+			       double /*dx*/, double /*dy*/,
+			       CharCode /*code*/, Unicode * /*u*/, int /*uLen*/)
+  {
+  }
+
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
     texts.push_back(text_comment(
@@ -199,6 +205,10 @@ public:
   }
 
   GBool useDrawChar() { return gTrue; }
+
+  void stroke(GfxState *state) { }
+  void fill(GfxState *state) { }
+  void eoFill(GfxState *state) { }
 
   MutedRenderer(SplashColor &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
   { }
@@ -708,11 +718,14 @@ static int xmain(int argc, char **argv)
             length++;
           else
           {
-            int item = (color << 20) + length;
-            for (int i = 0; i < 4; i++)
+            if (length > 0)
             {
-              char c = item >> ((3 - i) * 8);
-              sep_file.write(&c, 1);
+              int item = (color << 20) + length;
+              for (int i = 0; i < 4; i++)
+              {
+                char c = item >> ((3 - i) * 8);
+                sep_file.write(&c, 1);
+              }
             }
             color = new_color;
             length = 1;
@@ -760,14 +773,7 @@ static int xmain(int argc, char **argv)
     djvm_command += " ";
     djvm_command += page_file;
     /* XXX csepdjvu produces ridiculously large Sjbz chunks. */
-    TemporaryFile rle_file, sjbz_file, fgbz_file, bg44_file, sed_file;
-    if (!conf_no_render)
-    {
-      std::cerr << "  - !ddjvu" << std::endl;
-      std::ostringstream command;
-      command << "/usr/bin/ddjvu -format=rle -mode=mask " << page_file << " " << rle_file;
-      xsystem(command);
-    }
+    TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     if (has_background || has_foreground || conf_no_render)
     { 
       std::cerr << "  - !djvuextract" << std::endl;
@@ -775,8 +781,7 @@ static int xmain(int argc, char **argv)
       command << "/usr/bin/djvuextract " << page_file;
       if (has_background || has_foreground)
         command << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
-      if (conf_no_render)
-        command << " Sjbz=" << sjbz_file;
+      command << " Sjbz=" << sjbz_file;
       xsystem(command);
     }
     {
@@ -793,13 +798,6 @@ static int xmain(int argc, char **argv)
       std::cerr << "  - !djvused >> sed_file" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvused " << page_file << " -e output-txt >> " << sed_file;
-      xsystem(command);
-    }
-    if (!conf_no_render)
-    {
-      std::cerr << "  - !cjb2" << std::endl;
-      std::ostringstream command;
-      command << "/usr/bin/cjb2 " << rle_file << " " << sjbz_file;
       xsystem(command);
     }
     {
