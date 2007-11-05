@@ -136,11 +136,7 @@ private:
   std::vector<std::string> annotations;
   std::map<int, int> &page_map;
 public:
-  virtual GBool beginType3Char(GfxState * /*state*/, double /*x*/, double /*y*/,
-			       double /*dx*/, double /*dy*/,
-			       CharCode /*code*/, Unicode * /*u*/, int /*uLen*/)
-  {
-  }
+  virtual GBool interpretType3Chars() { return gFalse; }
 
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
