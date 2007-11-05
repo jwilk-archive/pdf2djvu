@@ -129,6 +129,12 @@ static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
     throw NoLinkDestination();
 }
 
+static bool is_bilevel_stream(Stream *stream)
+{
+  StreamKind kind = stream->getKind();
+  return (kind == strJBIG2) || (kind == strCCITTFax);
+}
+
 class MutedRenderer: public Renderer
 {
 private:
@@ -136,6 +142,35 @@ private:
   std::vector<std::string> annotations;
   std::map<int, int> &page_map;
 public:
+
+  void drawImageMask(GfxState *state, Object *object, Stream *stream, int width, int height, GBool invert, GBool inline_image)
+  {
+    if (is_bilevel_stream(stream))
+      return;
+    Renderer::drawImageMask(state, object, stream, width, height, invert, inline_image);
+  }
+
+  void drawImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, int *mask_colors, GBool inline_image)
+  {
+    if (is_bilevel_stream(stream))
+      return;
+    Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
+  }
+  
+  virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
+  {
+    if (is_bilevel_stream(stream))
+      return;
+    Renderer::drawMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_invert);
+  }
+  
+  virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
+  {
+    if (is_bilevel_stream(stream))
+      return;
+    Renderer::drawSoftMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_color_map);
+  }
+  
   virtual GBool interpretType3Chars() { return gFalse; }
 
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
