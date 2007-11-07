@@ -1,3 +1,13 @@
+pdf2djvu (0.3) unstable; urgency=low
+
+  * Recognize bilevel images as foreground.
+  * Recognize simple graphics as foreground.
+  * Fix mishandling of color documents.
+  * Fix mishandling of Type3 characters.
+  * Fix some other minor bugs.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Mon, 05 Nov 2007 15:02:21 +0100
+
 pdf2djvu (0.2) unstable; urgency=low
 
   * Include hyperlinks to a particular page.
