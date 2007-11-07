@@ -32,7 +32,7 @@ public:
   Error() : message("Unknown error") {};
   Error(const char* message) : message(message) {};
   Error(const std::string &message) : message(message) {};
-  std::string &get_message()
+  const std::string &get_message() const
   {
     return message;
   }
@@ -62,8 +62,7 @@ public:
   PagesParseError() : Error("Unable to parse page numbers") {}
 };
 
-
-static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unicode *unistr, int len)
+static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
 {
   std::ostringstream strstream;
   strstream
@@ -72,7 +71,7 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, Unic
     << dx << ":" << dy << " "
     <<  w << "x" <<  h << "+" << x << "+" << (y - h) << " "
     << "(";
-  static char buffer[8];
+  char buffer[8];
   while (len > 0 && *unistr == ' ')
     unistr++, len--;
   if (len == 0)
@@ -157,21 +156,21 @@ public:
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
   
-  virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
+  void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
     if (is_bilevel_stream(stream))
       return;
     Renderer::drawMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
   
-  virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
+  void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
   {
     if (is_bilevel_stream(stream))
       return;
     Renderer::drawSoftMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_color_map);
   }
   
-  virtual GBool interpretType3Chars() { return gFalse; }
+  GBool interpretType3Chars() { return gFalse; }
 
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
@@ -244,7 +243,7 @@ public:
   MutedRenderer(SplashColor &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
   { }
 
-  std::vector<std::string> &get_annotations()
+  const std::vector<std::string> &get_annotations() const
   {
     return annotations;
   }
@@ -254,7 +253,7 @@ public:
     annotations.clear();
   }
 
-  std::vector<std::string> &get_texts()
+  const std::vector<std::string> &get_texts() const
   {
     return texts;
   }
@@ -280,11 +279,11 @@ static void usage()
   exit(1);
 }
 
-static void parse_pages(std::string s, std::vector< std::pair<int, int> > &result)
+static void parse_pages(const std::string s, std::vector< std::pair<int, int> > &result)
 {
   int state = 0;
   int value[2] = { 0, 0 };
-  for (std::string::iterator it = s.begin(); it != s.end(); it++)
+  for (std::string::const_iterator it = s.begin(); it != s.end(); it++)
   {
     if (('0' <= *it) && (*it <= '9'))
     {
@@ -315,7 +314,7 @@ static void parse_pages(std::string s, std::vector< std::pair<int, int> > &resul
   result.push_back(std::make_pair(value[0], value[1]));
 }
 
-static bool read_config(int argc, char **argv)
+static bool read_config(int argc, char * const argv[])
 {
   static struct option options [] =
   {
@@ -372,7 +371,7 @@ static bool read_config(int argc, char **argv)
   return true;
 }
 
-static void xsystem(std::string &command)
+static void xsystem(const std::string &command)
 {
   int retval = system(command.c_str());
   if (retval == -1)
@@ -513,7 +512,7 @@ static std::string pdf_string_to_utf8_string(GooString *from)
   {
     for (; *cfrom; cfrom++)
     {
-      static char buffer[8];
+      char buffer[8];
       Unicode unichr = pdfDocEncoding[*cfrom & 0xff];
       int seqlen = mapUTF8(unichr, buffer, sizeof buffer);
       buffer[seqlen] = 0;
@@ -643,7 +642,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   }
 }
 
-static int xmain(int argc, char **argv)
+static int xmain(int argc, char * const argv[])
 {
   if (!read_config(argc, argv))
     usage();
@@ -781,8 +780,8 @@ static int xmain(int argc, char **argv)
     delete bmpm;
     {
       std::cerr << "  - text layer >> sep_file" << std::endl;
-      std::vector<std::string> &texts = outm->get_texts();
-      for (std::vector<std::string>::iterator it = texts.begin(); it != texts.end(); it++)
+      const std::vector<std::string> &texts = outm->get_texts();
+      for (std::vector<std::string>::const_iterator it = texts.begin(); it != texts.end(); it++)
       {
         if (it->size() == 0)
           continue;
@@ -815,9 +814,9 @@ static int xmain(int argc, char **argv)
     }
     {
       std::cerr << "  - annotations >> sed_file" << std::endl;
-      std::vector<std::string> &annotations = outm->get_annotations();
+      const std::vector<std::string> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
-      for (std::vector<std::string>::iterator it = annotations.begin(); it != annotations.end(); it++)
+      for (std::vector<std::string>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
         sed_file << *it << std::endl;
       sed_file << "." << std::endl;
       outm->clear_annotations();
