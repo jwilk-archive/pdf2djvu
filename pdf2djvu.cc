@@ -685,8 +685,18 @@ class PageTemporaryFiles
 private:
   std::vector<TemporaryFile*> data;
   TemporaryDirectory directory;
+  int n_digits;
 public:
-  PageTemporaryFiles(int n) : data(n) { }
+  PageTemporaryFiles(int n) : data(n)
+  { 
+    while (n > 0)
+    {
+      this->n_digits++;
+      n /= 10;
+    }
+    if (this->n_digits < 4)
+      this->n_digits = 4;
+  }
 
   ~PageTemporaryFiles()
   {
@@ -699,13 +709,13 @@ public:
 
   TemporaryFile &operator[](int n)
   {
-    std::vector<TemporaryFile*>::reference tmpfile_ptr = this->data.at(n);
+    std::vector<TemporaryFile*>::reference tmpfile_ptr = this->data.at(n - 1);
     if (tmpfile_ptr == NULL)
     {
       std::ostringstream stream;
       stream 
         << "p" 
-        << std::setfill('0') << std::setw(4) << n
+        << std::setfill('0') << std::setw(this->n_digits) << n
         << ".djvu";
       tmpfile_ptr = new TemporaryFile(this->directory, stream.str());
     }
