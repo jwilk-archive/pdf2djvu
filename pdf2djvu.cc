@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <sstream>
 #include <cerrno>
@@ -399,21 +400,64 @@ static void xclose(int fd)
     throw OSError();
 }
 
+class TemporaryDirectory
+{
+public:
+  TemporaryDirectory()
+  {
+    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+    if (mkdtemp(path_buffer) == NULL)
+      throw OSError();
+    this->name += path_buffer;
+    this->name += "/";
+  }
+
+  ~TemporaryDirectory()
+  {
+    if (rmdir(this->name.c_str()) == -1)
+      throw OSError();
+  }
+
+  friend std::ostream &operator<<(std::ostream &, const TemporaryDirectory &);
+
+private:
+  std::string name;
+};
+
+std::ostream &operator<<(std::ostream &out, const TemporaryDirectory &directory)
+{
+  return out << directory.name;
+}
+
 class TemporaryFile : public std::fstream
 {
 private:
-  void construct()
+  void _open(const char* path)
   {
     this->exceptions(std::ifstream::badbit);
-    char file_name_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    int fd = mkstemp(file_name_buffer);
+    this->name += path;
+    this->open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
+  }
+
+  void construct()
+  {
+    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+    int fd = mkstemp(path_buffer);
     if (fd == -1)
       throw OSError();
     xclose(fd);
-    this->name = std::string(file_name_buffer);
-    this->open(file_name_buffer, std::fstream::in | std::fstream::out | std::fstream::trunc);
+    _open(path_buffer);
   }
+
 public:
+
+  TemporaryFile(const TemporaryDirectory& directory, const std::string name)
+  {
+    std::ostringstream stream;
+    stream << directory << name;
+    _open(stream.str().c_str());
+  }
+
   TemporaryFile(const TemporaryFile& clone)
   {
     this->construct();
@@ -444,7 +488,6 @@ public:
   } 
 
   friend std::ostream &operator<<(std::ostream &, const TemporaryFile &);
-  friend void operator+=(std::string &, const TemporaryFile &);
 
 private:
   std::string name;
@@ -453,11 +496,6 @@ private:
 std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
 {
   return out << file.name;
-}
-
-void operator+=(std::string &str, const TemporaryFile &file)
-{
-  str += file.name;
 }
 
 class NoPageForBookmark : public Error
@@ -642,6 +680,39 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   }
 }
 
+class PageTemporaryFiles
+{
+private:
+  std::vector<TemporaryFile*> data;
+  TemporaryDirectory directory;
+public:
+  PageTemporaryFiles(int n) : data(n) { }
+
+  ~PageTemporaryFiles()
+  {
+    for (std::vector<TemporaryFile*>::iterator it = this->data.begin(); it != this->data.end(); it++)
+    {
+      if (*it != NULL)
+        delete *it;
+    }
+  }
+
+  TemporaryFile &operator[](int n)
+  {
+    std::vector<TemporaryFile*>::reference tmpfile_ptr = this->data.at(n);
+    if (tmpfile_ptr == NULL)
+    {
+      std::ostringstream stream;
+      stream 
+        << "p" 
+        << std::setfill('0') << std::setw(4) << n
+        << ".djvu";
+      tmpfile_ptr = new TemporaryFile(this->directory, stream.str());
+    }
+    return *tmpfile_ptr;
+  }
+};
+
 static int xmain(int argc, char * const argv[])
 {
   if (!read_config(argc, argv))
@@ -662,10 +733,11 @@ static int xmain(int argc, char * const argv[])
 
   int n_pages = doc->getNumPages();
   int page_counter = 0;
+  TemporaryDirectory tmpdir; 
   TemporaryFile output_file;
-  std::string djvm_command("/usr/bin/djvm -c ");
-  std::vector<TemporaryFile> page_files(n_pages);
-  djvm_command += output_file;
+  std::ostringstream djvm_command;
+  djvm_command << "/usr/bin/djvm -c " << output_file;
+  PageTemporaryFiles page_files(n_pages);
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
   std::map<int, int> page_map;
@@ -684,7 +756,7 @@ static int xmain(int argc, char * const argv[])
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;
-    TemporaryFile &page_file = page_files[n - 1];
+    TemporaryFile &page_file = page_files[n];
     std::cerr << "- page #" << n << " -> #" << page_map[n] << ":" << std::endl;
     std::cerr << "  - muted render" << std::endl;
     display_page(doc, outm, n, conf_dpi, false);
@@ -800,8 +872,7 @@ static int xmain(int argc, char * const argv[])
     csepdjvu_command << " " << sep_file << " " << page_file;
     std::string csepdjvu_command_str = csepdjvu_command.str();
     xsystem(csepdjvu_command_str);
-    djvm_command += " ";
-    djvm_command += page_file;
+    djvm_command << " " << page_file;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
       std::cerr << "  - !djvuextract" << std::endl;
@@ -851,8 +922,26 @@ static int xmain(int argc, char * const argv[])
   }
   if (page_counter == 0)
     throw Error("No pages selected");
-  std::cerr << "- !djvm" << std::endl;
-  xsystem(djvm_command);
+  {
+    TemporaryFile dummy_page_file;
+    if (page_counter == 1)
+    {
+      static const char dummy_djvu_data[46] =
+      {
+        0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d,
+        0x00, 0x00, 0x00, 0x22, 0x44, 0x4a, 0x56, 0x55,
+        0x49, 0x4e, 0x46, 0x4f, 0x00, 0x00, 0x00, 0x0a,
+        0x00, 0x01, 0x00, 0x01, 0x18, 0x00, 0x2c, 0x01,
+        0x16, 0x00, 0x53, 0x6a, 0x62, 0x7a, 0x00, 0x00,
+        0x00, 0x04, 0xbc, 0x73, 0x1b, 0xd7
+      };
+      dummy_page_file.write(dummy_djvu_data , sizeof dummy_djvu_data);
+      dummy_page_file.close();
+      djvm_command << " " << dummy_page_file;
+    }
+    std::cerr << "- !djvm" << std::endl;
+    xsystem(djvm_command);
+  }
   {
     TemporaryFile sed_file;
     {
@@ -872,6 +961,13 @@ static int xmain(int argc, char * const argv[])
     sed_file.close();
     command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
     xsystem(command);
+  }
+  if (page_counter == 1)
+  {
+    std::ostringstream djvm_command;
+    djvm_command << "/usr/bin/djvm -d " << output_file << " " << 2;
+    std::cerr << "- !djvm" << std::endl;
+    xsystem(djvm_command);
   }
   output_file.pass(std::cout);
   return 0;
