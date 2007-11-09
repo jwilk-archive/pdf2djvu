@@ -1,3 +1,9 @@
+pdf2djvu (0.3.1) unstable; urgency=low
+
+  * Legible file identifiers.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 09 Nov 2007 21:59:50 +0100
+
 pdf2djvu (0.3) unstable; urgency=low
 
   * Recognize bilevel images as foreground.
@@ -6,7 +12,7 @@ pdf2djvu (0.3) unstable; urgency=low
   * Fix mishandling of Type3 characters.
   * Fix some other minor bugs.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 05 Nov 2007 15:02:21 +0100
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 09 Nov 2007 21:59:42 +0100
 
 pdf2djvu (0.2) unstable; urgency=low
 
