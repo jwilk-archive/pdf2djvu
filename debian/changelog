@@ -1,3 +1,10 @@
+pdf2djvu (0.3.2) unstable; urgency=low
+
+  * Fix a regression which caused hyperlinks not be included into PDF
+    documents.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Sun, 11 Nov 2007 18:07:35 +0100
+
 pdf2djvu (0.3.1) unstable; urgency=low
 
   * Legible file identifiers.
