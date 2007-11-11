@@ -2,6 +2,7 @@ Source: pdf2djvu
 Section: graphics
 Priority: extra
 Maintainer: Jakub Wilk <ubanus@users.sf.net>
+Bugs: mailto:ubanus@users.sf.net
 Build-Depends: cdbs, debhelper (>= 5), libpoppler-dev, libdjvulibre-dev
 Standards-Version: 3.7.2
 
