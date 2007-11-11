@@ -769,7 +769,7 @@ static int xmain(int argc, char * const argv[])
     TemporaryFile &page_file = page_files[n];
     std::cerr << "- page #" << n << " -> #" << page_map[n] << ":" << std::endl;
     std::cerr << "  - muted render" << std::endl;
-    display_page(doc, outm, n, conf_dpi, false);
+    display_page(doc, outm, n, conf_dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     Pixmap *bmpm = new Pixmap(outm);
@@ -777,7 +777,7 @@ static int xmain(int argc, char * const argv[])
     if (!conf_no_render)
     {
       std::cerr << "  - verbose render" << std::endl;
-      display_page(doc, out1, n, conf_dpi, true);
+      display_page(doc, out1, n, conf_dpi, false);
     }
     std::cerr << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
