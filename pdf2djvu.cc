@@ -687,7 +687,7 @@ private:
   TemporaryDirectory directory;
   int n_digits;
 public:
-  PageTemporaryFiles(int n) : data(n)
+  PageTemporaryFiles(int n) : data(n), n_digits(0)
   { 
     while (n > 0)
     {
