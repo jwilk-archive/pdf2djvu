@@ -20,7 +20,7 @@
 
 #include <libdjvu/miniexp.h>
 
-static int conf_dpi = 100;
+static int conf_dpi = 300;
 static bool conf_antialias = false;
 static bool conf_no_render = false;
 static char *conf_bg_slices = NULL;
