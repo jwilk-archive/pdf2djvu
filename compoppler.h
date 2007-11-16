@@ -15,6 +15,8 @@
 #include "PDFDocEncoding.h"
 #include "splash/SplashBitmap.h"
 #include "splash/Splash.h"
+#include "splash/SplashFont.h"
+#include "splash/SplashGlyphBitmap.h"
 #include "GfxState.h"
 #include "SplashOutputDev.h"
 #include "Link.h"
@@ -92,6 +94,11 @@ public:
   
   virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
   virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
+
+  SplashFont *getCurrentFont()
+  {
+    return NULL;
+  }
 #endif  
 };
 

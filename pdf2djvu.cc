@@ -208,13 +208,30 @@ public:
 
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
+    int px = (int) (x / 72 * conf_dpi);
+    int py = (int) (getBitmapHeight() - y / 72 * conf_dpi);
+    int old_render = state->getRender();
+    state->setRender(3);
+    this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
+    state->setRender(old_render);
+    int font_size = (int)(state->getFontSize() / 72 * conf_dpi);
+    SplashFont *font = this->getCurrentFont();
+    if (font != NULL)
+    {
+      SplashGlyphBitmap glyph;
+      if (font->getGlyph(code, 0, 0, &glyph))
+      {
+        font_size = glyph.h;
+        py += glyph.h - glyph.y;
+      }
+    }
     texts.push_back(text_comment(
-      (int) (x / 72 * conf_dpi), 
-      (int) (getBitmapHeight() - y / 72 * conf_dpi),
+      px,
+      py,
       (int) (dx / 72 * conf_dpi),
       (int) (dy / 72 * conf_dpi),
       (int) (dx / 72 * conf_dpi),
-      (int) (state->getFontSize() / 72 * conf_dpi),
+      font_size,
       unistr,
       len
     ));
