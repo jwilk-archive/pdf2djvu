@@ -20,12 +20,35 @@
 
 #include <libdjvu/miniexp.h>
 
+static int conf_verbose = 1;
 static int conf_dpi = 300;
 static bool conf_antialias = false;
 static bool conf_no_render = false;
 static char *conf_bg_slices = NULL;
 static std::vector< std::pair<int, int> > conf_pages;
 static char *file_name;
+
+class DevNull : public std::ostream
+{
+public:
+  DevNull() : std::ostream(0) { }
+};
+
+static DevNull dev_null;
+
+class Debug
+{
+public:
+  std::ostream &operator()(int n)
+  {
+    if (n <= conf_verbose)
+      return std::clog;
+    else
+      return dev_null;
+  }
+};
+
+static Debug debug;
 
 class Error
 {
@@ -209,7 +232,7 @@ public:
       }
       catch (NoLinkDestination &ex)
       {
-        std::cerr << "[Warning] " << ex << std::endl;
+        debug(1) << "[Warning] " << ex << std::endl;
         return;
       }
       std::ostringstream strstream;
@@ -218,7 +241,7 @@ public:
       break;
     }
     default:
-      std::cerr << "[Warning] Unknown link type" << std::endl;
+      debug(1) << "[Warning] Unknown link type" << std::endl;
       return;
     }
     int x = (int) (x1 / 72 * conf_dpi);
@@ -267,12 +290,14 @@ public:
 
 static void usage()
 {
-  std::cerr 
+  debug(0) 
     << "Usage: pdf2djvu [options] <pdf-file>" << std::endl
     << "Options:" << std::endl
     << " -d, --dpi=resolution"    << std::endl
-    << " -q, --bg-slices=n,...,n" << std::endl
-    << " -q, --bg-slices=n+...+n" << std::endl
+    << " -q, --quiet"             << std::endl
+    << " -v, --verbose"           << std::endl
+    << "     --bg-slices=n,...,n" << std::endl
+    << "     --bg-slices=n+...+n" << std::endl
     << "     --antialias"         << std::endl
     << " -p, --pages=..."         << std::endl
     << " -h, --help"              << std::endl
@@ -320,7 +345,9 @@ static bool read_config(int argc, char * const argv[])
   static struct option options [] =
   {
     { "dpi",        1, 0, 'd' },
-    { "bg-slices",  1, 0, 'q' },
+    { "quiet",      0, 0, 'q' },
+    { "verbose",    0, 0, 'v' },
+    { "bg-slices",  1, 0, 'Q' },
     { "antialias",  0, 0, 'A' },
     { "no-render",  0, 0, 'N' },
     { "pages",      1, 0, 'p' },
@@ -331,7 +358,7 @@ static bool read_config(int argc, char * const argv[])
   while (true)
   {
     optindex = 0;
-    c = getopt_long(argc, argv, "d:q:p:h", options, &optindex);
+    c = getopt_long(argc, argv, "d:qvp:h", options, &optindex);
     if (c < 0)
       break;
     if (c == 0)
@@ -339,7 +366,9 @@ static bool read_config(int argc, char * const argv[])
     switch (c)
     {
     case 'd': conf_dpi = atoi(optarg); break;
-    case 'q': conf_bg_slices = optarg; break;
+    case 'q': conf_verbose = 0; break;
+    case 'v': conf_verbose = 2; break;
+    case 'Q': conf_bg_slices = optarg; break;
     case 'p':
       {
         try
@@ -590,7 +619,7 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
     }
     catch (NoLinkDestination &ex)
     {
-      std::cerr << "[Warning] " << ex << std::endl;
+      debug(1) << "[Warning] " << ex << std::endl;
       page = -1;
     }
     destination.free();
@@ -676,7 +705,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   }
   catch (InvalidDateFormat &ex)
   {
-    std::cerr << "[Warning] metadata[" << *pkey << "] is not a valid date" << std::endl;
+    debug(1) << "[Warning] metadata[" << *pkey << "] is not a valid date" << std::endl;
   }
 }
 
@@ -736,7 +765,7 @@ static int xmain(int argc, char * const argv[])
   if (!doc->isOk())
     throw Error("Unable to load document");
   
-  std::cerr << doc->getFileName()->getCString() << ":" << std::endl;
+  debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
 
   SplashColor paper_color;
   set_color(paper_color, 0xff, 0xff, 0xff);
@@ -767,22 +796,24 @@ static int xmain(int argc, char * const argv[])
   {
     page_counter++;
     TemporaryFile &page_file = page_files[n];
-    std::cerr << "- page #" << n << " -> #" << page_map[n] << ":" << std::endl;
-    std::cerr << "  - muted render" << std::endl;
+    debug(1) << "- page #" << n << " -> #" << page_map[n];
+    debug(2) << ":";
+    debug(1) << std::endl;
+    debug(2) << "  - muted render" << std::endl;
     display_page(doc, outm, n, conf_dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     Pixmap *bmpm = new Pixmap(outm);
-    std::cerr << "  - image size: " << width << "x" << height << std::endl;
+    debug(2) << "  - image size: " << width << "x" << height << std::endl;
     if (!conf_no_render)
     {
-      std::cerr << "  - verbose render" << std::endl;
+      debug(2) << "  - verbose render" << std::endl;
       display_page(doc, out1, n, conf_dpi, false);
     }
-    std::cerr << "  - create sep_file" << std::endl;
+    debug(2) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
     sep_file << "R6 " << width << " " << height << " 216" << std::endl;
-    std::cerr << "  - rle palette >> sep_file" << std::endl;
+    debug(2) << "  - rle palette >> sep_file" << std::endl;
     for (int r = 0; r < 6; r++)
     for (int g = 0; g < 6; g++)
     for (int b = 0; b < 6; b++)
@@ -795,7 +826,7 @@ static int xmain(int argc, char * const argv[])
     bool has_text = false;
     if (conf_no_render)
     {
-      std::cerr << "  - dummy rle data >> sep_file" << std::endl;
+      debug(2) << "  - dummy rle data >> sep_file" << std::endl;
       int item = (0xfff << 20) + width;
       for (int y = 0; y < height; y++)
       for (int i = 0; i < 4; i++)
@@ -806,7 +837,7 @@ static int xmain(int argc, char * const argv[])
     }
     else
     {
-      std::cerr << "  - rle data >> sep_file" << std::endl;
+      debug(2) << "  - rle data >> sep_file" << std::endl;
       Pixmap bmp1 = Pixmap(out1);
       PixmapIterator p1 = bmp1.begin();
       PixmapIterator pm = bmpm->begin();
@@ -855,13 +886,13 @@ static int xmain(int argc, char * const argv[])
     }
     if (has_background)
     {
-      std::cerr << "  - background pixmap >> sep_file" << std::endl;
+      debug(2) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << width << " " << height << " 255" << std::endl;
       sep_file << *bmpm;
     }
     delete bmpm;
     {
-      std::cerr << "  - text layer >> sep_file" << std::endl;
+      debug(2) << "  - text layer >> sep_file" << std::endl;
       const std::vector<std::string> &texts = outm->get_texts();
       for (std::vector<std::string>::const_iterator it = texts.begin(); it != texts.end(); it++)
       {
@@ -872,7 +903,7 @@ static int xmain(int argc, char * const argv[])
       }
       outm->clear_texts();
     }
-    std::cerr << "  - !csepdjvu" << std::endl;
+    debug(2) << "  - !csepdjvu" << std::endl;
     std::ostringstream csepdjvu_command;
     csepdjvu_command << "/usr/bin/csepdjvu";
     csepdjvu_command << " -d " << conf_dpi;
@@ -885,16 +916,18 @@ static int xmain(int argc, char * const argv[])
     djvm_command << " " << page_file;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
-      std::cerr << "  - !djvuextract" << std::endl;
+      debug(2) << "  - !djvuextract" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvuextract " << page_file;
       if (has_background || has_foreground)
         command << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
       command << " Sjbz=" << sjbz_file;
+      if (conf_verbose < 2)
+        command << " 2>/dev/null";
       xsystem(command);
     }
     {
-      std::cerr << "  - annotations >> sed_file" << std::endl;
+      debug(2) << "  - annotations >> sed_file" << std::endl;
       const std::vector<std::string> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
       for (std::vector<std::string>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
@@ -904,13 +937,13 @@ static int xmain(int argc, char * const argv[])
     }
     if (has_text)
     {
-      std::cerr << "  - !djvused >> sed_file" << std::endl;
+      debug(2) << "  - !djvused >> sed_file" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvused " << page_file << " -e output-txt >> " << sed_file;
       xsystem(command);
     }
     {
-      std::cerr << "  - !djvumake" << std::endl;
+      debug(2) << "  - !djvumake" << std::endl;
       std::ostringstream command;
       command 
         << "/usr/bin/djvumake"
@@ -924,7 +957,7 @@ static int xmain(int argc, char * const argv[])
       xsystem(command);
     }
     {
-      std::cerr << "  - !djvused < sed_file" << std::endl;
+      debug(2) << "  - !djvused < sed_file" << std::endl;
       std::ostringstream command;
       command << "/usr/bin/djvused " << page_file << " -s -f " << sed_file;
       xsystem(command);
@@ -949,24 +982,24 @@ static int xmain(int argc, char * const argv[])
       dummy_page_file.close();
       djvm_command << " " << dummy_page_file;
     }
-    std::cerr << "- !djvm" << std::endl;
+    debug(2) << "- !djvm" << std::endl;
     xsystem(djvm_command);
   }
   {
     TemporaryFile sed_file;
     {
-      std::cerr << "- outlines >> sed_file" << std::endl;
+      debug(2) << "- outlines >> sed_file" << std::endl;
       sed_file << "set-outline" << std::endl;
       pdf_outline_to_djvu_outline(doc, sed_file, page_map);
       sed_file << std::endl << "." << std::endl;
     }
     {
-      std::cerr << "- metadata >> sed_file" << std::endl;
+      debug(2) << "- metadata >> sed_file" << std::endl;
       sed_file << "set-meta" << std::endl;
       pdf_metadata_to_djvu_metadata(doc, sed_file);
       sed_file << "." << std::endl;
     }
-    std::cerr << "- !djvused < sed_file" << std::endl;
+    debug(2) << "- !djvused < sed_file" << std::endl;
     std::ostringstream command;
     sed_file.close();
     command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
@@ -976,7 +1009,7 @@ static int xmain(int argc, char * const argv[])
   {
     std::ostringstream djvm_command;
     djvm_command << "/usr/bin/djvm -d " << output_file << " " << 2;
-    std::cerr << "- !djvm" << std::endl;
+    debug(2) << "- !djvm" << std::endl;
     xsystem(djvm_command);
   }
   output_file.pass(std::cout);
