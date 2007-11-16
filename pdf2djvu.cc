@@ -4,6 +4,10 @@
  * by the Free Software Foundation.
  */
 
+#ifndef DJVULIBRE_BIN_PATH
+#error You need to define DJVULIBRE_BIN_PATH
+#endif
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -824,7 +828,7 @@ static int xmain(int argc, char * const argv[])
   TemporaryDirectory tmpdir; 
   TemporaryFile output_file;
   std::ostringstream djvm_command;
-  djvm_command << "/usr/bin/djvm -c " << output_file;
+  djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << output_file;
   PageTemporaryFiles page_files(n_pages);
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
@@ -955,7 +959,7 @@ static int xmain(int argc, char * const argv[])
     }
     debug(2) << "  - !csepdjvu" << std::endl;
     std::ostringstream csepdjvu_command;
-    csepdjvu_command << "/usr/bin/csepdjvu";
+    csepdjvu_command << DJVULIBRE_BIN_PATH "/csepdjvu";
     csepdjvu_command << " -d " << conf_dpi;
     if (conf_bg_slices)
       csepdjvu_command << " -q " << conf_bg_slices;
@@ -970,7 +974,7 @@ static int xmain(int argc, char * const argv[])
     { 
       debug(2) << "  - !djvuextract" << std::endl;
       std::ostringstream command;
-      command << "/usr/bin/djvuextract " << page_file;
+      command << DJVULIBRE_BIN_PATH "/djvuextract " << page_file;
       if (has_background || has_foreground)
         command << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
       command << " Sjbz=" << sjbz_file;
@@ -991,14 +995,14 @@ static int xmain(int argc, char * const argv[])
     {
       debug(2) << "  - !djvused >> sed_file" << std::endl;
       std::ostringstream command;
-      command << "/usr/bin/djvused " << page_file << " -e output-txt >> " << sed_file;
+      command << DJVULIBRE_BIN_PATH "/djvused " << page_file << " -e output-txt >> " << sed_file;
       xsystem(command);
     }
     {
       debug(2) << "  - !djvumake" << std::endl;
       std::ostringstream command;
       command 
-        << "/usr/bin/djvumake"
+        << DJVULIBRE_BIN_PATH "/djvumake"
         << " " << page_file
         << " INFO=" << width << "," << height << "," << conf_dpi
         << " Sjbz=" << sjbz_file;
@@ -1011,7 +1015,7 @@ static int xmain(int argc, char * const argv[])
     {
       debug(2) << "  - !djvused < sed_file" << std::endl;
       std::ostringstream command;
-      command << "/usr/bin/djvused " << page_file << " -s -f " << sed_file;
+      command << DJVULIBRE_BIN_PATH "/djvused " << page_file << " -s -f " << sed_file;
       xsystem(command);
     }
   }
@@ -1054,13 +1058,13 @@ static int xmain(int argc, char * const argv[])
     debug(2) << "- !djvused < sed_file" << std::endl;
     std::ostringstream command;
     sed_file.close();
-    command << "/usr/bin/djvused " << output_file << " -s -f " << sed_file;
+    command << DJVULIBRE_BIN_PATH "/djvused " << output_file << " -s -f " << sed_file;
     xsystem(command);
   }
   if (page_counter == 1)
   {
     std::ostringstream djvm_command;
-    djvm_command << "/usr/bin/djvm -d " << output_file << " " << 2;
+    djvm_command << DJVULIBRE_BIN_PATH "/djvm -d " << output_file << " " << 2;
     debug(2) << "- !djvm" << std::endl;
     xsystem(djvm_command);
   }
