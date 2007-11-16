@@ -6,7 +6,7 @@ EXT_LDFLAGS = $(shell pkg-config --libs poppler ddjvuapi)
 
 CXXFLAGS ?= -O3
 override LDFLAGS += $(EXT_LDFLAGS)
-override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_BIN_PATH))"
+override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_BIN_PATH))\""
 
 .PHONY: all
 all: pdf2djvu
