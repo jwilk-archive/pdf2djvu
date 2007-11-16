@@ -754,6 +754,8 @@ public:
 
 static int xmain(int argc, char * const argv[])
 {
+  std::ios_base::sync_with_stdio(false);
+
   if (!read_config(argc, argv))
     usage();
 
