@@ -20,6 +20,12 @@
 
 #include <libdjvu/miniexp.h>
 
+static enum
+{
+  CONF_TEXT_NONE = 0,
+  CONF_TEXT_WORDS,
+  CONF_TEXT_LINES
+} conf_text = CONF_TEXT_WORDS;
 static int conf_verbose = 1;
 static int conf_dpi = 300;
 static bool conf_antialias = false;
@@ -299,6 +305,9 @@ static void usage()
     << "     --bg-slices=n,...,n" << std::endl
     << "     --bg-slices=n+...+n" << std::endl
     << "     --antialias"         << std::endl
+    << "     --no-text"           << std::endl
+    << "     --words"             << std::endl
+    << "     --lines"             << std::endl
     << " -p, --pages=..."         << std::endl
     << " -h, --help"              << std::endl
   ;
@@ -342,16 +351,33 @@ static void parse_pages(const std::string s, std::vector< std::pair<int, int> > 
 
 static bool read_config(int argc, char * const argv[])
 {
+  enum
+  {
+    OPT_ANTIALIAS   = 0x300,
+    OPT_BG_SLICES   = 0x200,
+    OPT_DPI         = 'd',
+    OPT_HELP        = 'h',
+    OPT_NO_RENDER   = 0x400,
+    OPT_PAGES       = 'p',
+    OPT_QUIET       = 'q',
+    OPT_TEXT_LINES  = 0x102,
+    OPT_TEXT_NONE   = 0x100,
+    OPT_TEXT_WORDS  = 0x101,
+    OPT_VERBOSE     = 'v'
+  };
   static struct option options [] =
   {
-    { "dpi",        1, 0, 'd' },
-    { "quiet",      0, 0, 'q' },
-    { "verbose",    0, 0, 'v' },
-    { "bg-slices",  1, 0, 'Q' },
-    { "antialias",  0, 0, 'A' },
-    { "no-render",  0, 0, 'N' },
-    { "pages",      1, 0, 'p' },
-    { "help",       0, 0, 'h' },
+    { "dpi",        1, 0, OPT_DPI },
+    { "quiet",      0, 0, OPT_QUIET },
+    { "verbose",    0, 0, OPT_VERBOSE },
+    { "bg-slices",  1, 0, OPT_BG_SLICES },
+    { "antialias",  0, 0, OPT_ANTIALIAS },
+    { "no-render",  0, 0, OPT_NO_RENDER },
+    { "pages",      1, 0, OPT_PAGES },
+    { "help",       0, 0, OPT_HELP },
+    { "no-text",    0, 0, OPT_TEXT_NONE },
+    { "words",      0, 0, OPT_TEXT_WORDS },
+    { "lines",      0, 0, OPT_TEXT_LINES },
     { NULL,         0, 0, '\0' }
   };
   int optindex, c;
@@ -365,26 +391,47 @@ static bool read_config(int argc, char * const argv[])
       c = options[optindex].val;
     switch (c)
     {
-    case 'd': conf_dpi = atoi(optarg); break;
-    case 'q': conf_verbose = 0; break;
-    case 'v': conf_verbose = 2; break;
-    case 'Q': conf_bg_slices = optarg; break;
-    case 'p':
+    case OPT_DPI:
+      conf_dpi = atoi(optarg);
+      break;
+    case OPT_QUIET:
+      conf_verbose = 0;
+      break;
+    case OPT_VERBOSE:
+      conf_verbose = 2;
+      break;
+    case OPT_BG_SLICES:
+      conf_bg_slices = optarg;
+      break;
+    case OPT_PAGES:
+      try
       {
-        try
-        {
-          parse_pages(optarg, conf_pages);
-        }
-        catch (PagesParseError &ex)
-        {
-          return false;
-        }
-        break;
+        parse_pages(optarg, conf_pages);
       }
-    case 'A': conf_antialias = 1; break;
-    case 'N': conf_no_render = 1; break;
-    case 'h': return false;
-    default: ;
+      catch (PagesParseError &ex)
+      {
+        return false;
+      }
+      break;
+    case OPT_ANTIALIAS:
+      conf_antialias = 1;
+      break;
+    case OPT_NO_RENDER:
+      conf_no_render = 1;
+      break;
+    case OPT_TEXT_NONE:
+      conf_text = CONF_TEXT_NONE;
+      break;
+    case OPT_TEXT_WORDS:
+      conf_text = CONF_TEXT_WORDS;
+      break;
+    case OPT_TEXT_LINES:
+      conf_text = CONF_TEXT_LINES;
+      break;
+    case OPT_HELP:
+      return false;
+    default:
+      ;
     }
   }
   if (optind == argc - 1)
@@ -893,6 +940,7 @@ static int xmain(int argc, char * const argv[])
       sep_file << *bmpm;
     }
     delete bmpm;
+    if (conf_text)
     {
       debug(2) << "  - text layer >> sep_file" << std::endl;
       const std::vector<std::string> &texts = outm->get_texts();
@@ -911,6 +959,8 @@ static int xmain(int argc, char * const argv[])
     csepdjvu_command << " -d " << conf_dpi;
     if (conf_bg_slices)
       csepdjvu_command << " -q " << conf_bg_slices;
+    if (conf_text == CONF_TEXT_LINES)
+      csepdjvu_command << " -t";
     sep_file.close();
     csepdjvu_command << " " << sep_file << " " << page_file;
     std::string csepdjvu_command_str = csepdjvu_command.str();
