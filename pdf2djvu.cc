@@ -605,9 +605,8 @@ static std::string pdf_string_to_utf8_string(GooString *from)
     static char outbuf[1 << 10];
     char *outbuf_ptr = outbuf;
     size_t outbuf_len = sizeof outbuf;
-    size_t inbuf_len = strlen(cfrom);
-    cfrom += 2;
-    iconv_t cd = iconv_open("UTF-16LE", "UTF-8");
+    size_t inbuf_len = from->getLength();
+    iconv_t cd = iconv_open("UTF-8", "UTF-16");
     if (cd == (iconv_t)-1)
       throw OSError();
     while (inbuf_len > 0)
@@ -734,9 +733,17 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     Object object;
     if (!dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
-    std::string value = pdf_string_to_utf8_string(object.getString());
-    lisp_escape(value);
-    stream << *pkey << "\t" << value << std::endl;
+    try
+    {
+      std::string value = pdf_string_to_utf8_string(object.getString());
+      lisp_escape(value);
+      stream << *pkey << "\t" << value << std::endl;
+    }
+    catch (IconvError &ex)
+    {
+      debug(1) << "[Warning] metadata[" << *pkey << "] is not properly encoded" << std::endl;
+      continue;
+    }
   }
   for (const char** pkey = date_keys; *pkey; pkey++)
   try
