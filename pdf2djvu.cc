@@ -703,6 +703,23 @@ void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int
 
 class InvalidDateFormat : public Error { };
 
+static int scan_date_digits(char * &input, int n)
+{
+  int value = 0;
+  for (int i = 0; i < n; i++)
+  {
+    if (*input >= '0' && *input <= '9')
+    {
+      value *= 10;
+      value += *input - '0';
+    }
+    else
+      throw InvalidDateFormat();
+    input++;
+  }
+  return value;
+}
+
 static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
 {
   static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", "Producer", NULL };
@@ -726,31 +743,60 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   {
     Object object;
     struct tm tms;
-    char tzs; int tz1, tz2;
+    char tzs; int tzh, tzm;
     char buffer[32], tzbuffer[8];
     if (!dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
-    char *date_str = object.getString()->getCString();
-    if (date_str[0] == 'D' && date_str[1] == ':')
-      date_str += 2;
-    if (sscanf(date_str, "%4d%2d%2d%2d%2d%2d%c%2d'%2d'", &tms.tm_year, &tms.tm_mon, &tms.tm_mday, &tms.tm_hour, &tms.tm_min, &tms.tm_sec, &tzs, &tz1, &tz2) < 6)
-      throw InvalidDateFormat();
-    if (tzs == 'Z')
+    char *input = object.getString()->getCString();
+    if (input[0] == 'D' && input[1] == ':')
+      input += 2;
+    tms.tm_year = scan_date_digits(input, 4) - 1900;
+    tms.tm_mon = (*input ? scan_date_digits(input, 2) : 1) - 1;
+    tms.tm_mday = *input ? scan_date_digits(input, 2) : 1;
+    tms.tm_hour = *input ? scan_date_digits(input, 2) : 0;
+    tms.tm_min  = *input ? scan_date_digits(input, 2) : 0;
+    tms.tm_sec  = *input ? scan_date_digits(input, 2) : 0;
+    switch (*input)
     {
+    case '\0':
+      tzs = 0;
+      break;
+    case '-':
+    case '+':
+      tzs = *input;
+      input++;
+      tzh = scan_date_digits(input, 2);
+      if (tzh > 23)
+        throw InvalidDateFormat();
+      if (*input == '\'')
+        input++;
+      else
+        throw InvalidDateFormat();
+      tzm = scan_date_digits(input, 2);
+      if (tzm > 59)
+        throw InvalidDateFormat();
+      if (*input == '\'')
+        input++;
+      else
+        throw InvalidDateFormat();
+      break;
+    case 'Z':
+      input++;
       tzs = '+';
-      tz1 = tz2 = 0;
+      tzh = tzm = 0;
+      break;
+    default:
+      throw InvalidDateFormat();
     }
-    tms.tm_year -= 1900;
-    tms.tm_mon -= 1;
-    tms.tm_wday = tms.tm_yday = tms.tm_isdst = -1;
+    if (*input)
+      throw InvalidDateFormat();
     if (mktime(&tms) == (time_t)-1)
       throw InvalidDateFormat();
     // RFC 3339 date format, e.g. "2007-10-27 13:19:59+02:00"
     if (strftime(buffer, sizeof buffer, "%F %T", &tms) != 19)
       throw InvalidDateFormat();
-    if ((tzs != '+' && tzs != '-') || tz1 < 0 || tz1 > 12 || tz2 >= 60 || tz2 < 0)
-      throw InvalidDateFormat();
-    if (snprintf(tzbuffer, sizeof tzbuffer, "%c%02d:%02d", tzs, tz1, tz2) != 6)
+    tzbuffer[0] = '\0';
+    if (tzs && snprintf(tzbuffer, sizeof tzbuffer, "%c%02d:%02d", tzs, tzh, tzm) != 6)
       throw InvalidDateFormat();
     stream << *pkey << "\t\"" << buffer << tzbuffer << "\"" << std::endl;
   }
