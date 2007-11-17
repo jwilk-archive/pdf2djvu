@@ -1,3 +1,14 @@
+pdf2djvu (0.3.3) unstable; urgency=low
+
+  * Find text position more accurately.
+  * Handle UTF-16-encoded strings properly.
+  * Parse dates with respect to PDF Reference.
+  * Add --words, --lines, --no-text options.
+  * Add -v/--verbose, -q/--quiet options.
+  * Don't synchronize C++ I/O streams with C stdio.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 17 Nov 2007 11:56:25 +0100
+
 pdf2djvu (0.3.2) unstable; urgency=low
 
   * Fix a regression which caused hyperlinks not be included into PDF
