@@ -326,9 +326,9 @@ static void usage()
   debug(0) 
     << "Usage: pdf2djvu [options] <pdf-file>" << std::endl
     << "Options:" << std::endl
-    << " -d, --dpi=resolution"    << std::endl
-    << " -q, --quiet"             << std::endl
     << " -v, --verbose"           << std::endl
+    << " -q, --quiet"             << std::endl
+    << " -d, --dpi=resolution"    << std::endl
     << "     --bg-slices=n,...,n" << std::endl
     << "     --bg-slices=n+...+n" << std::endl
     << "     --antialias"         << std::endl

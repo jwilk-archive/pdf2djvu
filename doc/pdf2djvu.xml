@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE refentry PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.docbook.org/xml/4.5/docbookx.dtd' 
+[
+	<!ENTITY p 'pdf2djvu'>
+	<!ENTITY version '0.3.3'>
+]>
+
+<refentry>
+
+<refentryinfo>
+	<title>&p; manual</title>
+	<productname>&p;</productname>
+	<author>
+		<firstname>Jakub</firstname> <surname>Wilk</surname>
+		<affiliation>
+			<address>
+				<email>ubanus@users.sf.net</email>
+			</address>
+		</affiliation>
+	</author>
+	<copyright>
+		<year>2007</year>
+		<holder>Jakub Wilk</holder>
+	</copyright>
+	<date>2007-11-18</date>
+</refentryinfo>
+
+<refmeta>
+	<refentrytitle>&p;</refentrytitle>
+	<manvolnum>1</manvolnum>
+	<refmiscinfo class='version'>&version;</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+	<refname>&p;</refname>
+	<refpurpose>creates DjVu files from PDF files</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+		<command>&p;</command>
+		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
+		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
+	</cmdsynopsis>
+	<cmdsynopsis>
+		<command>&p;</command>
+		<group choice='req'>
+			<arg choice='plain'><option>--help</option></arg>
+			<arg choice='plain'><option>-h</option></arg>
+		</group>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+	<title>Description</title>
+	<para>
+		This program creates a DjVu file from the Portable Document Format file <replaceable>pdf-file</replaceable>.
+	</para>
+</refsect1>
+
+<refsect1>
+	<title>Options</title>
+	<para>
+		<command>&p;</command> accepts the following options:
+	</para>
+
+	<variablelist>
+		<varlistentry>
+			<term><option>-v</option></term>
+			<term><option>--verbose</option></term>
+			<listitem>
+				<para>
+					Display more informational messages while converting the file.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-q</option></term>
+			<term><option>--quiet</option></term>
+			<listitem>
+				<para>
+					Don't display informational messages while converting the file.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-d</option></term>
+			<term><option>--dpi=<replaceable>resolution</replaceable></option></term>
+			<listitem>
+				<para>
+					Specifies the desired resolution to <replaceable>resolution</replaceable> dots per inch. The default
+					is 300 dpi.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>+<replaceable>n</replaceable></option></term>
+			<term><option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</replaceable>,<replaceable>n</replaceable></option></term>
+			<listitem>
+				<para>
+					Specifies the encoding quality of the IW44 background layer. This option is similar to
+					the <option>-slice</option> option of <command>c44</command>. Consult the 
+					<citerefentry>
+						<refentrytitle>c44</refentrytitle>
+						<manvolnum>1</manvolnum>
+					</citerefentry>
+					manual page for details. The default is <literal>72+11+10+10</literal>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--antialias</option></term>
+			<listitem>
+				<para>
+					Enable font anti-aliasing.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--no-metadata</option></term>
+			<listitem>
+				<para>
+					Don't extract the metadata.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--no-outline</option></term>
+			<listitem>
+				<para>
+					Don't extract the document outline.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--no-hyperlinks</option></term>
+			<listitem>
+				<para>
+					Don't extract hyperlinks.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--no-text</option></term>
+			<listitem>
+				<para>
+					Don't extract the text.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry><term>
+			<option>--words</option></term>
+			<listitem>
+				<para>
+					Extract the text. Record the location of every word. This is the default.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--lines</option></term>
+			<listitem>
+				<para>
+					Extract the text. Record the location of every line, rather that every word.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--pages=<replaceable>pages</replaceable></option></term>
+			<listitem>
+				<para>
+					Specifies pages to convert.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-h</option></term>
+			<term><option>--help</option></term>
+			<listitem>
+				<para>Display help and exit.</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</refsect1>
+
+<refsect1>
+	<title>See also</title>
+	<para>
+		<citerefentry>
+			<refentrytitle>djvudigital</refentrytitle>
+			<manvolnum>1</manvolnum>
+		</citerefentry>,
+		<citerefentry>
+			<refentrytitle>csepdjvu</refentrytitle>
+			<manvolnum>1</manvolnum>
+		</citerefentry>
+	</para>
+</refsect1>
+
+</refentry>
+
+<!-- vim:set ts=4 sw=4 tw=120: -->
