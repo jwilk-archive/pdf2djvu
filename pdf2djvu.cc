@@ -34,6 +34,9 @@ static enum
 static int conf_verbose = 1;
 static int conf_dpi = 300;
 static bool conf_antialias = false;
+static bool conf_extract_hyperlinks = true;
+static bool conf_extract_metadata = true;
+static bool conf_extract_outline = true;
 static bool conf_no_render = false;
 static char *conf_bg_slices = NULL;
 static std::vector< std::pair<int, int> > conf_pages;
@@ -240,6 +243,8 @@ public:
 
   void drawLink(Link *link, Catalog *catalog)
   {
+    if (!conf_extract_hyperlinks)
+      return;
     double x1, y1, x2, y2;
     LinkAction *link_action = link->getAction();
     std::string uri;
@@ -327,6 +332,9 @@ static void usage()
     << "     --bg-slices=n,...,n" << std::endl
     << "     --bg-slices=n+...+n" << std::endl
     << "     --antialias"         << std::endl
+    << "     --no-metadata"       << std::endl
+    << "     --no-outline"        << std::endl
+    << "     --no-hyperlinks"     << std::endl
     << "     --no-text"           << std::endl
     << "     --words"             << std::endl
     << "     --lines"             << std::endl
@@ -379,6 +387,9 @@ static bool read_config(int argc, char * const argv[])
     OPT_BG_SLICES   = 0x200,
     OPT_DPI         = 'd',
     OPT_HELP        = 'h',
+    OPT_NO_HLINKS   = 0x401,
+    OPT_NO_METADATA = 0x402,
+    OPT_NO_OUTLINE  = 0x403,
     OPT_NO_RENDER   = 0x400,
     OPT_PAGES       = 'p',
     OPT_QUIET       = 'q',
@@ -389,18 +400,21 @@ static bool read_config(int argc, char * const argv[])
   };
   static struct option options [] =
   {
-    { "dpi",        1, 0, OPT_DPI },
-    { "quiet",      0, 0, OPT_QUIET },
-    { "verbose",    0, 0, OPT_VERBOSE },
-    { "bg-slices",  1, 0, OPT_BG_SLICES },
-    { "antialias",  0, 0, OPT_ANTIALIAS },
-    { "no-render",  0, 0, OPT_NO_RENDER },
-    { "pages",      1, 0, OPT_PAGES },
-    { "help",       0, 0, OPT_HELP },
-    { "no-text",    0, 0, OPT_TEXT_NONE },
-    { "words",      0, 0, OPT_TEXT_WORDS },
-    { "lines",      0, 0, OPT_TEXT_LINES },
-    { NULL,         0, 0, '\0' }
+    { "dpi",            1, 0, OPT_DPI },
+    { "quiet",          0, 0, OPT_QUIET },
+    { "verbose",        0, 0, OPT_VERBOSE },
+    { "bg-slices",      1, 0, OPT_BG_SLICES },
+    { "antialias",      0, 0, OPT_ANTIALIAS },
+    { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
+    { "no-metadata",    0, 0, OPT_NO_METADATA },
+    { "no-outline",     0, 0, OPT_NO_OUTLINE },
+    { "no-render",      0, 0, OPT_NO_RENDER },
+    { "pages",          1, 0, OPT_PAGES },
+    { "help",           0, 0, OPT_HELP },
+    { "no-text",        0, 0, OPT_TEXT_NONE },
+    { "words",          0, 0, OPT_TEXT_WORDS },
+    { "lines",          0, 0, OPT_TEXT_LINES },
+    { NULL,             0, 0, '\0' }
   };
   int optindex, c;
   while (true)
@@ -437,6 +451,15 @@ static bool read_config(int argc, char * const argv[])
       break;
     case OPT_ANTIALIAS:
       conf_antialias = 1;
+      break;
+    case OPT_NO_HLINKS:
+      conf_extract_hyperlinks = false;
+      break;
+    case OPT_NO_METADATA:
+      conf_extract_metadata = false;
+      break;
+    case OPT_NO_OUTLINE:
+      conf_extract_outline = false;
       break;
     case OPT_NO_RENDER:
       conf_no_render = 1;
@@ -1114,12 +1137,15 @@ static int xmain(int argc, char * const argv[])
   }
   {
     TemporaryFile sed_file;
+    if (conf_extract_outline)
     {
       debug(2) << "- outlines >> sed_file" << std::endl;
+      sed_file << "create-shared-ant" << std::endl;
       sed_file << "set-outline" << std::endl;
       pdf_outline_to_djvu_outline(doc, sed_file, page_map);
       sed_file << std::endl << "." << std::endl;
     }
+    if (conf_extract_metadata)
     {
       debug(2) << "- metadata >> sed_file" << std::endl;
       sed_file << "set-meta" << std::endl;
