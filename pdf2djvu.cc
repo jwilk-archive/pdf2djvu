@@ -68,7 +68,6 @@ class Error
 {
 public:
   Error() : message("Unknown error") {};
-  Error(const char* message) : message(message) {};
   Error(const std::string &message) : message(message) {};
   const std::string &get_message() const
   {
@@ -619,16 +618,22 @@ std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
   return out << file.name;
 }
 
-class NoPageForBookmark : public Error
+class BookmarkError : public Error
 {
 public:
-  NoPageForBookmark() : Error("No page for a bookmark") {}
+  BookmarkError(const std::string &message) : Error(message) {}
 };
 
-class NoTitleForBookmark : public Error
+class NoPageForBookmark : public BookmarkError
 {
 public:
-  NoTitleForBookmark() : Error("No title for a bookmark") {}
+  NoPageForBookmark() : BookmarkError("No page for a bookmark") {}
+};
+
+class NoTitleForBookmark : public BookmarkError
+{
+public:
+  NoTitleForBookmark() : BookmarkError("No title for a bookmark") {}
 };
 
 class IconvError : public Error
@@ -687,40 +692,39 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
     return;
   while (current.isDict())
   {
-    Object title;
-    if (!dict_lookup(current, "Title", &title)->isString())
-      throw NoTitleForBookmark();
-    std::string title_str = pdf_string_to_utf8_string(title.getString());
-    title.free();
-
-    Object destination;
-    LinkAction *link_action;
-    int page;
-    if (!dict_lookup(current, "Dest", &destination)->isNull())
-      link_action = LinkAction::parseDest(&destination);
-    else if (!dict_lookup(current, "A", &destination)->isNull())
-      link_action = LinkAction::parseAction(&destination);
-    else
-      throw NoPageForBookmark();
-    if (link_action->getKind() != actionGoTo)
-      throw NoPageForBookmark();
     try
     {
-      page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
-    }
-    catch (NoLinkDestination &ex)
-    {
-      debug(1) << "[Warning] " << ex << std::endl;
-      page = -1;
-    }
-    destination.free();
+      std::string title_str;
+      {
+        XObject title;
+        if (!dict_lookup(current, "Title", &title)->isString())
+          throw NoTitleForBookmark();
+        title_str = pdf_string_to_utf8_string(title.getString());
+      } 
+
+      int page;
+      {
+        XObject destination;
+        LinkAction *link_action;
+        if (!dict_lookup(current, "Dest", &destination)->isNull())
+          link_action = LinkAction::parseDest(&destination);
+        else if (!dict_lookup(current, "A", &destination)->isNull())
+          link_action = LinkAction::parseAction(&destination);
+        else
+          throw NoPageForBookmark();
+        if (link_action->getKind() != actionGoTo)
+          throw NoPageForBookmark();
+        page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+      }
    
-    if (page >= 0)
-    {
       lisp_escape(title_str);
       stream << "(" << title_str << " \"#" << page_map[page] << "\"";
       pdf_outline_to_djvu_outline(&current, catalog, stream, page_map);
       stream << ") ";
+    }
+    catch (BookmarkError &ex)
+    {
+      debug(1) << "[Warning] " << ex << std::endl;
     }
 
     dict_lookup(current, "Next", &next);

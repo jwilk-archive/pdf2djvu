@@ -246,5 +246,13 @@ std::string get_link_border_color(Link *link)
 #endif
 }
 
+class XObject : public Object
+{
+public:
+  ~XObject()
+  {
+    this->free();
+  } 
+};
 
 // vim:ts=2 sw=2 et
