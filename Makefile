@@ -11,6 +11,8 @@ override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_B
 .PHONY: all
 all: pdf2djvu
 
+pdf2djvu: pdf2djvu.cc compoppler.h
+
 .PHONY: clean
 clean:
 	$(RM) pdf2djvu
