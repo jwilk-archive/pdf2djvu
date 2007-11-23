@@ -1,3 +1,13 @@
+pdf2djvu (0.3.4) unstable; urgency=low
+
+  * Turn bookmark errors into warnings.
+  * Add --no-metadata, --no-outline, --no-hyperlinks options.
+  * Fix erroneous color conversion (poppler 0.4 only).
+  * Recognize more link actions.
+  * Provide the manual page.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 23 Nov 2007 13:23:18 +0100
+
 pdf2djvu (0.3.3) unstable; urgency=low
 
   * Find text position more accurately.
