@@ -272,8 +272,14 @@ public:
       uri = strstream.str();
       break;
     }
+    case actionGoToR:
+      debug(1) << "[Warning] Unable to convert link with a remote go-to action" << std::endl;
+      return;
+    case actionNamed:
+      debug(1) << "[Warning] Unable to convert link with a named action" << std::endl;
+      return;
     default:
-      debug(1) << "[Warning] Unknown link type" << std::endl;
+      debug(1) << "[Warning] Unknown link action" << std::endl;
       return;
     }
     int x = (int) (x1 / 72 * conf_dpi);
