@@ -801,7 +801,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   {
     Object object;
     struct tm tms;
-    char tzs; int tzh, tzm;
+    char tzs; int tzh = 0, tzm = 0;
     char buffer[32], tzbuffer[8];
     if (!dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
