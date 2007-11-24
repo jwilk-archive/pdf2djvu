@@ -165,10 +165,9 @@ static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
     throw NoLinkDestination();
 }
 
-static bool is_bilevel_stream(Stream *stream)
+static bool is_foreground_color_map(GfxImageColorMap *color_map)
 {
-  StreamKind kind = stream->getKind();
-  return (kind == strJBIG2) || (kind == strCCITTFax);
+  return (color_map->getNumPixelComps() <= 1 && color_map->getBits() <= 1);
 }
 
 class MutedRenderer: public Renderer
@@ -181,28 +180,26 @@ public:
 
   void drawImageMask(GfxState *state, Object *object, Stream *stream, int width, int height, GBool invert, GBool inline_image)
   {
-    if (is_bilevel_stream(stream))
-      return;
-    Renderer::drawImageMask(state, object, stream, width, height, invert, inline_image);
+    return;
   }
 
   void drawImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, int *mask_colors, GBool inline_image)
   {
-    if (is_bilevel_stream(stream))
+    if (is_foreground_color_map(color_map))
       return;
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
   
   void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
-    if (is_bilevel_stream(stream))
+    if (is_foreground_color_map(color_map))
       return;
     Renderer::drawMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
   
   void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
   {
-    if (is_bilevel_stream(stream))
+    if (is_foreground_color_map(color_map))
       return;
     Renderer::drawSoftMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_color_map);
   }
