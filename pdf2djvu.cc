@@ -106,7 +106,7 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
     << "# T " 
     <<  x << ":" <<  y << " " 
     << dx << ":" << dy << " "
-    <<  w << "x" <<  h << "+" << x << "+" << (y - h) << " "
+    <<  w << "x" <<  h << std::showpos << x << (y - h) << " "
     << "(";
   char buffer[8];
   while (len > 0 && *unistr == ' ')
@@ -208,13 +208,14 @@ public:
 
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
   {
-    int px = (int) (x / 72 * conf_dpi);
-    int py = (int) (getBitmapHeight() - y / 72 * conf_dpi);
+    double px, py, pdx, pdy;
+    state->transform(x, y, &px, &py);
+    state->transformDelta(dx, dy, &pdx, &pdy);
     int old_render = state->getRender();
     state->setRender(3);
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
     state->setRender(old_render);
-    int font_size = (int)(state->getFontSize() / 72 * conf_dpi);
+    int font_size = (int)(state->getTransformedFontSize());
     SplashFont *font = this->getCurrentFont();
     if (font != NULL)
     {
@@ -226,11 +227,11 @@ public:
       }
     }
     texts.push_back(text_comment(
-      px,
-      py,
-      (int) (dx / 72 * conf_dpi),
-      (int) (dy / 72 * conf_dpi),
-      (int) (dx / 72 * conf_dpi),
+      (int) px,
+      (int) py,
+      (int) pdx,
+      (int) pdy,
+      (int) pdx,
       font_size,
       unistr,
       len
