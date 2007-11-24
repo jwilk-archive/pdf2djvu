@@ -280,10 +280,9 @@ public:
       debug(1) << "[Warning] Unknown link action" << std::endl;
       return;
     }
-    int x = (int) (x1 / 72 * conf_dpi);
-    int y = (int) (y1 / 72 * conf_dpi);
-    int w = (int) ((x2 - x1) / 72 * conf_dpi);
-    int h = (int) ((y2 - y1) / 72 * conf_dpi);
+    int x, y, w, h;
+    this->cvtUserToDev(x1, y1, &x, &y);
+    this->cvtUserToDev(x2 - x1, y2 - y1, &w, &h);
     std::ostringstream strstream;
     strstream << "(maparea" 
       << " " << uri
