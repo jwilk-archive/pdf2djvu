@@ -603,7 +603,7 @@ public:
   {
     this->seekg(0, std::ios::beg);
     char buffer[BUFSIZ];
-    while (! this->eof())
+    while (!this->eof())
     {
       this->read(buffer, sizeof buffer);
       stream.write(buffer, this->gcount());
