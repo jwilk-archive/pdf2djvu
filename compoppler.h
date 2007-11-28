@@ -6,7 +6,7 @@
  */
 
 #include <string>
-#include <fstream>
+#include <ostream>
 
 #include "goo/gmem.h"
 #include "goo/GooString.h"
