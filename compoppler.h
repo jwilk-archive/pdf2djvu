@@ -178,10 +178,10 @@ public:
     return PixmapIterator(raw_data, row_size);
   }
 
-  friend std::fstream &operator<<(std::fstream &, const Pixmap &);
+  friend std::ostream &operator<<(std::ostream &, const Pixmap &);
 };
 
-std::fstream &operator<<(std::fstream &stream, const Pixmap &pixmap)
+std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
 {
   int height = pixmap.height;
   int width = pixmap.width;
