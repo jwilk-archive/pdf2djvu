@@ -189,16 +189,7 @@ std::fstream &operator<<(std::fstream &stream, const Pixmap &pixmap)
   const uint8_t *row_ptr = pixmap.raw_data;
   for (int y = 0; y < height; y++)
   {
-#if POPPLER_VERSION < 5    
-    const uint8_t *ptr = row_ptr;
-    for (int x = 0; x < width; x++)
-    {
-      stream.write((const char*) ptr, 3);
-      ptr += 4;
-    }
-#else        
     stream.write((const char*) row_ptr, width * 3);
-#endif
     row_ptr += row_size;
   }
   return stream;
