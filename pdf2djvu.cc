@@ -16,6 +16,7 @@
 #include <cerrno>
 #include <vector>
 #include <map>
+#include <cmath>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -296,7 +297,30 @@ public:
   GBool useDrawChar() { return gTrue; }
 
   void stroke(GfxState *state) { }
-  void fill(GfxState *state) { }
+  void fill(GfxState *state)
+  { 
+    double field = 0.0;
+    {
+      SplashPath path;
+      this->convert_path(state, path);
+      int path_len = path.getLength();
+      double x0, y0, x1, y1, x2, y2;
+      Guchar ch;
+      path.getPoint(0, &x0, &y0, &ch);
+      for (int i = 0; i < path_len - 1; i++)
+      {
+        double x1, y1, x2, y2;
+        path.getPoint(i + 1, &x1, &y1, &ch);
+        path.getPoint(i + 2, &x2, &y2, &ch);
+        x1 -= x0; y1 -= y0;
+        x2 -= x0; y2 -= y0;
+        field += x1 * y2 - x2 * y1;
+      }
+    }
+    field = fabs(field);
+    if (field / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
+      Renderer::fill(state);
+  }
   void eoFill(GfxState *state) { }
 
   MutedRenderer(SplashColor &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
@@ -558,8 +582,13 @@ private:
   void _open(const char* path)
   {
     this->exceptions(std::ifstream::badbit);
-    this->name += path;
-    this->open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
+    if (path == NULL)
+      this->open(this->name.c_str(), std::fstream::in | std::fstream::out);
+    else
+    {
+      this->name = path;
+      this->open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
+    }
   }
 
   void construct()
@@ -597,6 +626,13 @@ public:
       this->close();
     if (unlink(name.c_str()) == -1)
       throw OSError();
+  }
+
+  void reopen()
+  {
+    if (this->is_open())
+      this->close();
+    this->_open(NULL);
   }
 
   void pass(std::ostream &stream)
@@ -976,6 +1012,7 @@ static int xmain(int argc, char * const argv[])
       sep_file.write(buffer, 3);
     }
     bool has_background = false;
+    int background_color[3];
     bool has_foreground = false;
     bool has_text = false;
     if (conf_no_render)
@@ -995,17 +1032,27 @@ static int xmain(int argc, char * const argv[])
       Pixmap bmp1 = Pixmap(out1);
       PixmapIterator p1 = bmp1.begin();
       PixmapIterator pm = bmpm->begin();
+      for (int i = 0; i < 3; i++) 
+        background_color[i] = pm[i];
       for (int y = 0; y < height; y++)
       {
         int new_color, color = 0xfff;
         int length = 0;
         for (int x = 0; x < width; x++)
         {
-          if (!has_background && (pm[0] & pm[0] & pm[0] & 0xff) != 0xff)
-            has_background = true;
+          if (!has_background)
+          {
+            for (int i = 0; i < 3; i++)
+            if (background_color[i] != pm[i])
+            {
+              fprintf(stderr, "%02x%02x%02x -> %02x%02x%02x\n", background_color[0], background_color[1], background_color[2], pm[0], pm[1], pm[2]);
+              has_background = true;
+              break;
+            }
+          }
           if (p1[0] != pm[0] || p1[1] != pm[1] || p1[2] != pm[2])
           {
-            if (!has_foreground && (p1[0] || p1[0] || p1[0]))
+            if (!has_foreground && (p1[0] || p1[1] || p1[2]))
               has_foreground = true;
             new_color = (p1[2] / 51) + 6 * ((p1[1] / 51) + 6 * (p1[0] / 51));
           }
@@ -1038,11 +1085,27 @@ static int xmain(int argc, char * const argv[])
         }
       }
     }
+    bool nonwhite_background_color;
     if (has_background)
     {
       debug(2) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << width << " " << height << " 255" << std::endl;
       sep_file << *bmpm;
+      nonwhite_background_color = false;
+    }
+    else  
+    {
+      nonwhite_background_color = (background_color[0] & background_color[1] & background_color[2] & 0xff) != 0xff;
+      if (nonwhite_background_color)
+      {
+        // Dummy background just to assure FGbz chunks.
+        // It will be replaced later.
+        debug(2) << "  - dummy background pixmap >> sep_file" << std::endl;
+        sep_file << "P6 " << width << " " << height << " 255" << std::endl;
+        for (int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++)
+          sep_file.write("\xff\xff\xff", 3);
+      }
     }
     delete bmpm;
     if (conf_text)
@@ -1076,12 +1139,41 @@ static int xmain(int argc, char * const argv[])
       debug(2) << "  - !djvuextract" << std::endl;
       std::ostringstream command;
       command << DJVULIBRE_BIN_PATH "/djvuextract " << page_file;
-      if (has_background || has_foreground)
+      if (has_background || has_foreground || nonwhite_background_color)
         command << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
       command << " Sjbz=" << sjbz_file;
       if (conf_verbose < 2)
         command << " 2>/dev/null";
       xsystem(command);
+    }
+    if (nonwhite_background_color)
+    {
+      TemporaryFile c44_file;
+      {
+        TemporaryFile ppm_file;
+        debug(2) << "  - !c44" << std::endl;
+        std::ostringstream command;
+        command << DJVULIBRE_BIN_PATH << "/c44 -slice 97 " << ppm_file << " " << c44_file;
+        int bg_width = (width + 11) / 12;
+        int bg_height = (height + 11) / 12;
+        ppm_file << "P6 " << bg_width << " " << bg_height << " 255" << std::endl;
+        for (int y = 0; y < bg_height; y++)
+        for (int x = 0; x < bg_width; x++)
+        for (int i = 0; i < 3; i++)
+        {
+          char c = background_color[i];
+          ppm_file.write(&c, 1);
+        }
+        ppm_file.close();
+        xsystem(command);
+      }
+      {
+        c44_file.reopen();
+        debug(2) << "  - !djvuextract" << std::endl;
+        std::ostringstream command;
+        command << DJVULIBRE_BIN_PATH << "/djvuextract " << c44_file << " BG44=" << bg44_file;
+        xsystem(command);
+      }
     }
     {
       debug(2) << "  - annotations >> sed_file" << std::endl;

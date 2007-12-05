@@ -18,6 +18,7 @@
 #include "splash/Splash.h"
 #include "splash/SplashFont.h"
 #include "splash/SplashGlyphBitmap.h"
+#include "splash/SplashPath.h"
 #include "GfxState.h"
 #include "SplashOutputDev.h"
 #include "Link.h"
@@ -85,6 +86,47 @@ public:
     return NULL;
   }
 #endif  
+
+protected:
+  // copied from <PopplerOutputDev.h>
+  void convert_path(GfxState *state, SplashPath &splash_path)
+  {
+    GfxSubpath *subpath;
+    GfxPath *path = state->getPath();
+    int n_subpaths = path->getNumSubpaths();
+    for (int i = 0; i < n_subpaths; i++) 
+    {
+      subpath = path->getSubpath(i);
+      if (subpath->getNumPoints() > 0) 
+      {
+        double x1, y1, x2, y2, x3, y3;
+        state->transform(subpath->getX(0), subpath->getY(0), &x1, &y1);
+        splash_path.moveTo((SplashCoord)x1, (SplashCoord)y1);
+        int j = 1;
+        int n_points = subpath->getNumPoints();
+        while (j < n_points)
+        {
+          if (subpath->getCurve(j)) 
+          {
+            state->transform(subpath->getX(j), subpath->getY(j), &x1, &y1);
+            state->transform(subpath->getX(j + 1), subpath->getY(j + 1), &x2, &y2);
+            state->transform(subpath->getX(j + 2), subpath->getY(j + 2), &x3, &y3);
+            splash_path.curveTo((SplashCoord)x1, (SplashCoord)y1, (SplashCoord)x2, (SplashCoord)y2, (SplashCoord)x3, (SplashCoord)y3);
+            j += 3;
+          } 
+          else 
+          {
+            state->transform(subpath->getX(j), subpath->getY(j), &x1, &y1);
+            splash_path.lineTo((SplashCoord)x1, (SplashCoord)y1);
+            j++;
+          }
+        }
+        if (subpath->isClosed())
+          splash_path.close();
+      }
+    }
+  }
+
 };
 
 Object *dict_lookup(Object &dict, const char *key, Object *object)
