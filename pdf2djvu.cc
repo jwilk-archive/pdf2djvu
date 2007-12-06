@@ -284,7 +284,10 @@ public:
     }
     int x, y, w, h;
     this->cvtUserToDev(x1, y1, &x, &y);
-    this->cvtUserToDev(x2 - x1, y2 - y1, &w, &h);
+    this->cvtUserToDev(x2, y2, &w, &h);
+    w -= x;
+    h = y - h;
+    y = this->getBitmapHeight() - y;
     std::ostringstream strstream;
     strstream << "(maparea" 
       << " " << uri
