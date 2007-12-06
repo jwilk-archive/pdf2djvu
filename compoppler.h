@@ -87,6 +87,15 @@ public:
   }
 #endif  
 
+#if POPPLER_VERSION >= 600
+  void processLink(Link *link, Catalog *catalog)
+  {
+    this->drawLink(link, catalog);
+  }
+
+  virtual void drawLink(Link *link, Catalog *catalog) { }
+#endif
+
 protected:
   // copied from <PopplerOutputDev.h>
   void convert_path(GfxState *state, SplashPath &splash_path)
@@ -148,8 +157,11 @@ void display_page(PDFDoc *document, Renderer *renderer, int npage, double dpi, b
 {
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, dpi, dpi, 0, gFalse, do_links);
-#else    
+#elif POPPLER_VERSION < 600 
   document->displayPage(renderer, npage, dpi, dpi, 0, gTrue, gFalse, do_links);
+#else
+  document->displayPage(renderer, npage, dpi, dpi, 0, gTrue, gFalse, !do_links);
+  document->processLinks(renderer, npage);
 #endif
 }
 
