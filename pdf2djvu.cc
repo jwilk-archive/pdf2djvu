@@ -700,7 +700,23 @@ static std::string pdf_string_to_utf8_string(GooString *from)
       throw OSError();
     while (inbuf_len > 0)
     {
-      size_t n = iconv(cd, &cfrom, &inbuf_len, &outbuf_ptr, &outbuf_len);
+      struct iconv_adapter 
+      {
+        // http://wang.yuxuan.org/blog/2007/7/9/deal_with_2_versions_of_iconv_h
+        iconv_adapter(const char** s) : s(s) {}
+        iconv_adapter(char** s) : s(const_cast<const char**>(s)) {}
+        operator char**() const
+        {
+          return const_cast<char**>(s);
+        }
+        operator const char**() const
+        {
+          return const_cast<const char**>(s);
+        }
+        const char** s;
+      };
+
+      size_t n = iconv(cd, iconv_adapter(&cfrom), &inbuf_len, &outbuf_ptr, &outbuf_len);
       if (n == (size_t) -1 && errno == E2BIG)
       {
         stream.write(outbuf, outbuf_ptr - outbuf);
