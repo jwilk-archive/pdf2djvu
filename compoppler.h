@@ -26,7 +26,7 @@
 
 void init_global_params()
 {
-#if POPPLER_VERSION < 6
+#if POPPLER_VERSION < 600
   globalParams = new GlobalParams(NULL);
 #else
   globalParams = new GlobalParams();
@@ -47,7 +47,7 @@ PDFDoc *new_document(std::string file_name)
 
 void set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
 {
-#if POPPLER_VERSION < 5
+#if POPPLER_VERSION < 500
   result.rgb8 = splashMakeRGB8(r, g, b); 
 #else
   result[0] = r;
@@ -60,14 +60,14 @@ class Renderer : public SplashOutputDev
 {
 public:
   Renderer(SplashColor &paper_color) :
-#if POPPLER_VERSION < 5
+#if POPPLER_VERSION < 500
     SplashOutputDev(splashModeRGB8Packed, gFalse, paper_color)
 #else
     SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color)
 #endif
   { }
 
-#if POPPLER_VERSION < 5
+#if POPPLER_VERSION < 500
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, Unicode *unistr, int len)
   {
     this->drawChar(state, x, y, dx, dy, origin_x, origin_y, code, -1, unistr, len);
@@ -146,7 +146,7 @@ Object *dict_lookup(Dict *dict, const char *key, Object *object)
 
 void display_page(PDFDoc *document, Renderer *renderer, int npage, double dpi, bool do_links)
 {
-#if POPPLER_VERSION < 5
+#if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, dpi, dpi, 0, gFalse, do_links);
 #else    
   document->displayPage(renderer, npage, dpi, dpi, 0, gTrue, gFalse, do_links);
@@ -196,7 +196,7 @@ public:
 
   Pixmap(Renderer *renderer)
   {
-#if POPPLER_VERSION < 5    
+#if POPPLER_VERSION < 500
     bmp = renderer->getBitmap();
     raw_data = (const uint8_t*) bmp->getDataPtr().rgb8p;
 #else
@@ -210,7 +210,7 @@ public:
 
   ~Pixmap()
   {
-#if POPPLER_VERSION >= 5
+#if POPPLER_VERSION >= 500
     delete bmp;
 #endif
   }
@@ -239,7 +239,7 @@ std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
 
 std::string get_link_border_color(Link *link)
 {
-#if POPPLER_VERSION < 6
+#if POPPLER_VERSION < 600
   double r, g, b;
   char buffer[8];
   LinkBorderStyle *border_style = link->getBorderStyle();
@@ -250,6 +250,18 @@ std::string get_link_border_color(Link *link)
   static std::string red("#ff0000");
   // FIXME: find a way to determine link color
   return red;
+#endif
+}
+
+bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap)
+{
+  if (font == NULL)
+    return false;
+#if POPPLER_VERSION >= 602
+  SplashClipResult clip_result;
+  return font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result); 
+#else
+  return font->getGlyph(code, 0, 0, bitmap); 
 #endif
 }
 

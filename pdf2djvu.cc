@@ -219,14 +219,11 @@ public:
     state->setRender(old_render);
     int font_size = (int)(state->getTransformedFontSize());
     SplashFont *font = this->getCurrentFont();
-    if (font != NULL)
+    SplashGlyphBitmap glyph;
+    if (get_glyph(this->getSplash(), font, code, &glyph))
     {
-      SplashGlyphBitmap glyph;
-      if (font->getGlyph(code, 0, 0, &glyph))
-      {
-        font_size = glyph.h;
-        py += glyph.h - glyph.y;
-      }
+      font_size = glyph.h;
+      py += glyph.h - glyph.y;
     }
     texts.push_back(text_comment(
       (int) px,
