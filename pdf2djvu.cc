@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <getopt.h>
+#include <iconv.h>
 
 #include "compoppler.h"
 
