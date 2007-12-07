@@ -217,7 +217,7 @@ public:
     state->setRender(3);
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
     state->setRender(old_render);
-    int font_size = (int)(state->getTransformedFontSize());
+    int font_size = static_cast<int>(state->getTransformedFontSize());
     SplashFont *font = this->getCurrentFont();
     SplashGlyphBitmap glyph;
     if (get_glyph(this->getSplash(), font, code, &glyph))
@@ -226,11 +226,11 @@ public:
       py += glyph.h - glyph.y;
     }
     texts.push_back(text_comment(
-      (int) px,
-      (int) py,
-      (int) pdx,
-      (int) pdy,
-      (int) pdx,
+      static_cast<int>(px),
+      static_cast<int>(py),
+      static_cast<int>(pdx),
+      static_cast<int>(pdy),
+      static_cast<int>(pdx),
       font_size,
       unistr,
       len
