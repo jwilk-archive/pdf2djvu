@@ -214,7 +214,7 @@ public:
     state->transform(x, y, &px, &py);
     state->transformDelta(dx, dy, &pdx, &pdy);
     int old_render = state->getRender();
-    state->setRender(3);
+    state->setRender(0x103);
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
     state->setRender(old_render);
     int font_size = static_cast<int>(state->getTransformedFontSize());
