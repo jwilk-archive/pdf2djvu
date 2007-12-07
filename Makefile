@@ -1,5 +1,4 @@
-DJVULIBRE_BIN_PATH = /usr/bin
-
+DJVULIBRE_BIN_PATH = $(shell pkg-config --variable exec_prefix ddjvuapi)/bin
 POPPLER_VERSION = $(shell ./tools/get-poppler-version)
 EXT_CFLAGS = $(shell pkg-config --cflags poppler-splash ddjvuapi) -DPOPPLER_VERSION=$(POPPLER_VERSION)
 EXT_LDFLAGS = $(shell pkg-config --libs poppler-splash ddjvuapi)
