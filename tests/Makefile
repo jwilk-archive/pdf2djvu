@@ -14,11 +14,11 @@ clean:
 	../pdf2djvu -v $(<) > $(@)
 
 %.djvused: %.djvu
-	djvused -e output-all $(<) > $(@)
-	diff $(@) $(@).orig
+	djvused -e 'output-all; print-outline' $(<) > $(@)
+	diff $(@) $(@).orig || true
 
 %.djvudump: %.djvu
 	djvudump $(<) > $(@)
-	diff $(@) $(@).orig
+	diff $(@) $(@).orig || true
 
 # vim:ts=4 sw=4 noet
