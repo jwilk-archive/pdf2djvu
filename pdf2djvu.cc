@@ -300,26 +300,10 @@ public:
   void stroke(GfxState *state) { }
   void fill(GfxState *state)
   { 
-    double field = 0.0;
-    {
-      SplashPath path;
-      this->convert_path(state, path);
-      int path_len = path.getLength();
-      double x0, y0, x1, y1, x2, y2;
-      Guchar ch;
-      path.getPoint(0, &x0, &y0, &ch);
-      for (int i = 0; i < path_len - 1; i++)
-      {
-        double x1, y1, x2, y2;
-        path.getPoint(i + 1, &x1, &y1, &ch);
-        path.getPoint(i + 2, &x2, &y2, &ch);
-        x1 -= x0; y1 -= y0;
-        x2 -= x0; y2 -= y0;
-        field += x1 * y2 - x2 * y1;
-      }
-    }
-    field = fabs(field);
-    if (field / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
+    SplashPath path;
+    this->convert_path(state, path);
+    double area = get_path_area(path);
+    if (area / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
       Renderer::fill(state);
   }
   void eoFill(GfxState *state) { }

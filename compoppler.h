@@ -7,6 +7,7 @@
 
 #include <string>
 #include <ostream>
+#include <cmath>
 
 #include "goo/gmem.h"
 #include "goo/GooString.h"
@@ -137,6 +138,27 @@ protected:
   }
 
 };
+
+double get_path_area(SplashPath &path)
+{
+  double area = 0.0;
+#if POPPLER_VERSION >= 500
+  int path_len = path.getLength();
+  double x0, y0, x1, y1, x2, y2;
+  Guchar ch;
+  path.getPoint(0, &x0, &y0, &ch);
+  for (int i = 0; i < path_len - 1; i++)
+  {
+    double x1, y1, x2, y2;
+    path.getPoint(i + 1, &x1, &y1, &ch);
+    path.getPoint(i + 2, &x2, &y2, &ch);
+    x1 -= x0; y1 -= y0;
+    x2 -= x0; y2 -= y0;
+    area += x1 * y2 - x2 * y1;
+  }
+#endif
+  return fabs(area);
+}
 
 Object *dict_lookup(Object &dict, const char *key, Object *object)
 {
