@@ -144,7 +144,7 @@ double get_path_area(SplashPath &path)
   double area = 0.0;
 #if POPPLER_VERSION >= 500
   int path_len = path.getLength();
-  double x0, y0, x1, y1, x2, y2;
+  double x0, y0;
   Guchar ch;
   path.getPoint(0, &x0, &y0, &ch);
   for (int i = 0; i < path_len - 1; i++)
