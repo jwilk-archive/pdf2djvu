@@ -1218,7 +1218,7 @@ static int xmain(int argc, char * const argv[])
         << " " << page_file
         << " INFO=" << width << "," << height << "," << conf_dpi
         << " Sjbz=" << sjbz_file;
-      if (has_foreground || has_background)
+      if (has_foreground || has_background || nonwhite_background_color)
         command
           << " FGbz=" << fgbz_file
           << " BG44=" << bg44_file;
