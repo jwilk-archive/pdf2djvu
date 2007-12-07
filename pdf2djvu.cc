@@ -952,6 +952,7 @@ public:
         << std::setfill('0') << std::setw(this->n_digits) << n
         << ".djvu";
       tmpfile_ptr = new TemporaryFile(this->directory, stream.str());
+      tmpfile_ptr->close();
     }
     return *tmpfile_ptr;
   }
