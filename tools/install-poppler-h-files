@@ -1,0 +1,17 @@
+#!/bin/sh
+if [ $# -ne 1 ]
+then
+  echo "Usage: $0 <poppler-source-directory>" >&2
+  exit 1
+fi
+source_dir=$1
+include_dir=`pkg-config --define-variable=prefix=$HOME/pub/poppler-0.6.2/ --cflags-only-I poppler-splash | sed -n -e 's/^-I\([^ ]\+\) *$/\1/p'`
+echo "$include_dir"
+echo "I will copy header files from $source_dir into $include_dir"
+echo "Press enter to continue"
+read n
+mkdir -p "$include_dir/goo"
+mkdir -p "$include_dir/splash"
+cp "$source_dir/poppler/"*.h "$include_dir"
+cp "$source_dir/goo/"*.h "$include_dir/goo"
+cp "$source_dir/splash/"*.h "$include_dir/splash"
