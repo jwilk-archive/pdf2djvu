@@ -271,7 +271,9 @@ bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bi
     return false;
 #if POPPLER_VERSION >= 602
   SplashClipResult clip_result;
-  return font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result); 
+  if (!font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result))
+    return false;
+  return (clip_result != splashClipAllOutside);
 #else
   return font->getGlyph(code, 0, 0, bitmap); 
 #endif
