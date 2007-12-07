@@ -210,10 +210,10 @@ public:
   {
 #if POPPLER_VERSION < 500
     bmp = renderer->getBitmap();
-    raw_data = (const uint8_t*) bmp->getDataPtr().rgb8p;
+    raw_data = const_cast<const uint8_t*>(bmp->getDataPtr().rgb8p);
 #else
     bmp = renderer->takeBitmap();
-    raw_data = (const uint8_t*) bmp->getDataPtr();
+    raw_data = const_cast<const uint8_t*>(bmp->getDataPtr());
 #endif
     width = bmp->getWidth();
     height = bmp->getHeight();
