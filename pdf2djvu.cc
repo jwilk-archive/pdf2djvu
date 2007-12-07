@@ -1189,6 +1189,8 @@ static int xmain(int argc, char * const argv[])
         debug(2) << "  - !djvuextract" << std::endl;
         std::ostringstream command;
         command << DJVULIBRE_BIN_PATH << "/djvuextract " << c44_file << " BG44=" << bg44_file;
+        if (conf_verbose < 2)
+          command << " 2>/dev/null";
         xsystem(command);
       }
     }
