@@ -1063,7 +1063,6 @@ static int xmain(int argc, char * const argv[])
             for (int i = 0; i < 3; i++)
             if (background_color[i] != pm[i])
             {
-              fprintf(stderr, "%02x%02x%02x -> %02x%02x%02x\n", background_color[0], background_color[1], background_color[2], pm[0], pm[1], pm[2]);
               has_background = true;
               break;
             }
