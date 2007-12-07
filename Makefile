@@ -1,6 +1,6 @@
 DJVULIBRE_BIN_PATH = /usr/bin
 
-POPPLER_VERSION = $(shell { pkg-config --atleast-version=0.6.2 poppler && echo 602; } || { pkg-config --atleast-version=0.6 poppler && echo 600; } || { pkg-config --atleast-version=0.5 poppler && echo 500; } || echo 400)
+POPPLER_VERSION = $(shell ./tools/get-poppler-version)
 EXT_CFLAGS = $(shell pkg-config --cflags poppler ddjvuapi) -DPOPPLER_VERSION=$(POPPLER_VERSION)
 EXT_LDFLAGS = $(shell pkg-config --libs poppler ddjvuapi)
 
