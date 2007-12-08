@@ -532,10 +532,22 @@ static void xclose(int fd)
     throw OSError();
 }
 
-class TemporaryDirectory
+class Directory
+{
+protected:
+  std::string name;
+public: 
+  Directory(const std::string &name)
+  : name(name) 
+  { }
+  virtual ~Directory() {}
+  friend std::ostream &operator<<(std::ostream &, const Directory &);
+};
+
+class TemporaryDirectory : public Directory
 {
 public:
-  TemporaryDirectory()
+  TemporaryDirectory() : Directory("")
   {
     char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     if (mkdtemp(path_buffer) == NULL)
@@ -544,26 +556,23 @@ public:
     this->name += "/";
   }
 
-  ~TemporaryDirectory()
+  virtual ~TemporaryDirectory()
   {
     if (rmdir(this->name.c_str()) == -1)
       throw OSError();
   }
-
-  friend std::ostream &operator<<(std::ostream &, const TemporaryDirectory &);
-
-private:
-  std::string name;
 };
 
-std::ostream &operator<<(std::ostream &out, const TemporaryDirectory &directory)
+std::ostream &operator<<(std::ostream &out, const Directory &directory)
 {
   return out << directory.name;
 }
 
-class TemporaryFile : public std::fstream
+class File : public std::fstream
 {
-private:
+protected:
+  std::string name;
+
   void _open(const char* path)
   {
     this->exceptions(std::ifstream::badbit);
@@ -576,42 +585,17 @@ private:
     }
   }
 
-  void construct()
-  {
-    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    int fd = mkstemp(path_buffer);
-    if (fd == -1)
-      throw OSError();
-    xclose(fd);
-    _open(path_buffer);
-  }
+  File() {}
 
 public:
-
-  TemporaryFile(const TemporaryDirectory& directory, const std::string name)
+  File(const Directory& directory, const std::string name)
   {
     std::ostringstream stream;
     stream << directory << name;
     _open(stream.str().c_str());
   }
 
-  TemporaryFile(const TemporaryFile& clone)
-  {
-    this->construct();
-  }
-
-  TemporaryFile()
-  {
-    this->construct();
-  }
-
-  ~TemporaryFile()
-  {
-    if (this->is_open())
-      this->close();
-    if (unlink(name.c_str()) == -1)
-      throw OSError();
-  }
+  virtual ~File() { }
 
   void reopen()
   {
@@ -631,13 +615,47 @@ public:
     }
   } 
 
-  friend std::ostream &operator<<(std::ostream &, const TemporaryFile &);
-
-private:
-  std::string name;
+  friend std::ostream &operator<<(std::ostream &, const File &);
 };
 
-std::ostream &operator<<(std::ostream &out, const TemporaryFile &file)
+class TemporaryFile : public File
+{
+protected:
+  void construct()
+  {
+    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+    int fd = mkstemp(path_buffer);
+    if (fd == -1)
+      throw OSError();
+    xclose(fd);
+    _open(path_buffer);
+  }
+
+public:
+  TemporaryFile(const Directory& directory, const std::string name) 
+  : File(directory, name) 
+  { }
+
+  TemporaryFile(const TemporaryFile& clone)
+  {
+    this->construct();
+  }
+
+  TemporaryFile()
+  {
+    this->construct();
+  }
+
+  virtual ~TemporaryFile()
+  {
+    if (this->is_open())
+      this->close();
+    if (unlink(this->name.c_str()) == -1)
+      throw OSError();
+  }
+};
+
+std::ostream &operator<<(std::ostream &out, const File &file)
 {
   return out << file.name;
 }
@@ -898,14 +916,14 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   }
 }
 
-class PageTemporaryFiles
+class PageFiles
 {
-private:
-  std::vector<TemporaryFile*> data;
-  TemporaryDirectory directory;
+protected:
+  std::vector<File*> data;
+  TemporaryDirectory *directory;
   int n_digits;
-public:
-  PageTemporaryFiles(int n) : data(n), n_digits(0)
+
+  PageFiles(int n) : data(n), n_digits(0), directory(NULL)
   { 
     while (n > 0)
     {
@@ -916,29 +934,48 @@ public:
       this->n_digits = 4;
   }
 
-  ~PageTemporaryFiles()
+  virtual ~PageFiles()
   {
-    for (std::vector<TemporaryFile*>::iterator it = this->data.begin(); it != this->data.end(); it++)
+    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
     {
       if (*it != NULL)
         delete *it;
     }
+    if (this->directory != NULL)
+      delete this->directory;
   }
 
-  TemporaryFile &operator[](int n)
+  virtual std::string get_file_name(int n) const
   {
-    std::vector<TemporaryFile*>::reference tmpfile_ptr = this->data.at(n - 1);
+    std::ostringstream stream;
+    stream 
+      << "p" 
+      << std::setfill('0') << std::setw(this->n_digits) << n
+      << ".djvu";
+    return stream.str();
+  }
+  
+  virtual File &operator[](int n) = 0;
+};
+
+class PageTemporaryFiles : public PageFiles
+{
+public:
+
+  PageTemporaryFiles(int n) : PageFiles(n)
+  {
+    this->directory = new TemporaryDirectory();
+  }
+
+  virtual TemporaryFile &operator[](int n)
+  {
+    std::vector<File*>::reference tmpfile_ptr = this->data.at(n - 1);
     if (tmpfile_ptr == NULL)
     {
-      std::ostringstream stream;
-      stream 
-        << "p" 
-        << std::setfill('0') << std::setw(this->n_digits) << n
-        << ".djvu";
-      tmpfile_ptr = new TemporaryFile(this->directory, stream.str());
+      tmpfile_ptr = new TemporaryFile(*this->directory, this->get_file_name(n));
       tmpfile_ptr->close();
     }
-    return *tmpfile_ptr;
+    return *dynamic_cast<TemporaryFile*>(tmpfile_ptr);
   }
 };
 
