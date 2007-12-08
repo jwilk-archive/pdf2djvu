@@ -17,6 +17,7 @@
 #include <vector>
 #include <map>
 #include <cmath>
+#include <memory>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -33,6 +34,13 @@ static enum
   CONF_TEXT_WORDS,
   CONF_TEXT_LINES
 } conf_text = CONF_TEXT_WORDS;
+static enum
+{
+  CONF_FORMAT_BUNDLED,
+  CONF_FORMAT_INDIRECT
+} conf_format = CONF_FORMAT_BUNDLED;
+static std::string conf_output;
+static bool conf_output_stdout = true;
 static int conf_verbose = 1;
 static int conf_dpi = 300;
 static bool conf_antialias = false;
@@ -350,6 +358,8 @@ static void usage()
     << "     --words"             << std::endl
     << "     --lines"             << std::endl
     << " -p, --pages=..."         << std::endl
+    << " -i, --indirect"          << std::endl
+    << " -o, --output=..."        << std::endl
     << " -h, --help"              << std::endl
   ;
   exit(1);
@@ -398,10 +408,12 @@ static bool read_config(int argc, char * const argv[])
     OPT_BG_SLICES   = 0x200,
     OPT_DPI         = 'd',
     OPT_HELP        = 'h',
+    OPT_INDIRECT    = 'i',
     OPT_NO_HLINKS   = 0x401,
     OPT_NO_METADATA = 0x402,
     OPT_NO_OUTLINE  = 0x403,
     OPT_NO_RENDER   = 0x400,
+    OPT_OUTPUT      = 'o',
     OPT_PAGES       = 'p',
     OPT_QUIET       = 'q',
     OPT_TEXT_LINES  = 0x102,
@@ -425,13 +437,15 @@ static bool read_config(int argc, char * const argv[])
     { "no-text",        0, 0, OPT_TEXT_NONE },
     { "words",          0, 0, OPT_TEXT_WORDS },
     { "lines",          0, 0, OPT_TEXT_LINES },
+    { "output",         1, 0, OPT_OUTPUT },
+    { "indirect",       0, 0, OPT_INDIRECT },
     { NULL,             0, 0, '\0' }
   };
   int optindex, c;
   while (true)
   {
     optindex = 0;
-    c = getopt_long(argc, argv, "d:qvp:h", options, &optindex);
+    c = getopt_long(argc, argv, "io:d:qvp:h", options, &optindex);
     if (c < 0)
       break;
     if (c == 0)
@@ -483,6 +497,13 @@ static bool read_config(int argc, char * const argv[])
       break;
     case OPT_TEXT_LINES:
       conf_text = CONF_TEXT_LINES;
+      break;
+    case OPT_OUTPUT:
+      conf_output = optarg;
+      conf_output_stdout = false;
+      break;
+    case OPT_INDIRECT:
+      conf_format = CONF_FORMAT_INDIRECT;
       break;
     case OPT_HELP:
       return false;
@@ -588,6 +609,11 @@ protected:
   File() {}
 
 public:
+  File(const std::string name)
+  {
+    _open(name.c_str());
+  }
+
   File(const Directory& directory, const std::string name)
   {
     std::ostringstream stream;
@@ -1001,8 +1027,21 @@ static int xmain(int argc, char * const argv[])
 
   int n_pages = doc->getNumPages();
   int page_counter = 0;
-  TemporaryDirectory tmpdir; 
-  TemporaryFile output_file;
+  std::auto_ptr<File> output_file_ptr;
+  std::auto_ptr<TemporaryDirectory> tmp_dir_ptr;
+  if (conf_format == CONF_FORMAT_BUNDLED)
+  {
+    tmp_dir_ptr.reset(new TemporaryDirectory());
+    if (conf_output_stdout)
+      output_file_ptr.reset(new TemporaryFile());
+    else
+      output_file_ptr.reset(new File(conf_output));
+  }
+  else
+  {
+    throw Error("-i, --indirect: not implemented");
+  }
+  File &output_file = *output_file_ptr;
   std::ostringstream djvm_command;
   djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << output_file;
   PageTemporaryFiles page_files(n_pages);
@@ -1304,7 +1343,8 @@ static int xmain(int argc, char * const argv[])
     debug(2) << "- !djvm" << std::endl;
     xsystem(djvm_command);
   }
-  output_file.pass(std::cout);
+  if (conf_output_stdout)
+    output_file.pass(std::cout);
   return 0;
 }
 
