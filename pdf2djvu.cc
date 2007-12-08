@@ -153,11 +153,15 @@ public:
 
 static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
 {
+  std::auto_ptr<LinkDest> dest_copy;
   LinkDest *dest = goto_link->getDest();
   if (dest == NULL)
     dest = catalog->findDest(goto_link->getNamedDest());
   else
+  {
     dest = dest->copy();
+    dest_copy.reset(dest);
+  }
   if (dest != NULL)
   {
     int page;
@@ -168,7 +172,6 @@ static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
     }
     else 
       page = dest->getPageNum();
-    delete dest;
     return page;
   }
   else
@@ -946,7 +949,7 @@ class PageFiles
 {
 protected:
   std::vector<File*> data;
-  TemporaryDirectory *directory;
+  std::auto_ptr<TemporaryDirectory> directory;
   int n_digits;
 
   PageFiles(int n) : data(n), n_digits(0), directory(NULL)
@@ -967,8 +970,6 @@ protected:
       if (*it != NULL)
         delete *it;
     }
-    if (this->directory != NULL)
-      delete this->directory;
   }
 
   virtual std::string get_file_name(int n) const
@@ -990,7 +991,7 @@ public:
 
   PageTemporaryFiles(int n) : PageFiles(n)
   {
-    this->directory = new TemporaryDirectory();
+    this->directory.reset(new TemporaryDirectory());
   }
 
   virtual TemporaryFile &operator[](int n)
