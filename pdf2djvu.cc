@@ -799,7 +799,7 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
           link_action = LinkAction::parseAction(&destination);
         else
           throw NoPageForBookmark();
-        if (link_action->getKind() != actionGoTo)
+        if (!link_action || link_action->getKind() != actionGoTo)
           throw NoPageForBookmark();
         page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
       }
