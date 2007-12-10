@@ -1006,6 +1006,46 @@ public:
   }
 };
 
+class DjVm
+{
+public:
+  virtual void add(const File &file) = 0;
+  virtual void create() = 0;
+  DjVm &operator <<(const File &file)
+  {
+    this->add(file);
+    return *this;
+  }
+};
+
+class BundledDjVm : public DjVm
+{
+private:
+  const File &output_file;
+  std::ostringstream djvm_command;
+  bool done;
+public:
+  BundledDjVm(const File &output_file) : output_file(output_file), done(false)
+  {
+    djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << output_file;
+  }
+
+  virtual void add(const File &file)
+  {
+    if (this->done)
+      return;
+    djvm_command << " " << file;
+  }
+
+  virtual void create()
+  {
+    if (this->done)
+      return;
+    xsystem(djvm_command);
+    this->done = true;
+  }
+};
+
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
@@ -1043,8 +1083,7 @@ static int xmain(int argc, char * const argv[])
     throw Error("-i, --indirect: not implemented");
   }
   File &output_file = *output_file_ptr;
-  std::ostringstream djvm_command;
-  djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << output_file;
+  BundledDjVm djvm(output_file);
   PageTemporaryFiles page_files(n_pages);
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
@@ -1211,7 +1250,7 @@ static int xmain(int argc, char * const argv[])
     csepdjvu_command << " " << sep_file << " " << page_file;
     std::string csepdjvu_command_str = csepdjvu_command.str();
     xsystem(csepdjvu_command_str);
-    djvm_command << " " << page_file;
+    djvm << page_file;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
       debug(2) << "  - !djvuextract" << std::endl;
@@ -1309,10 +1348,10 @@ static int xmain(int argc, char * const argv[])
       };
       dummy_page_file.write(dummy_djvu_data, sizeof dummy_djvu_data);
       dummy_page_file.close();
-      djvm_command << " " << dummy_page_file;
+      djvm << dummy_page_file;
     }
     debug(2) << "- !djvm" << std::endl;
-    xsystem(djvm_command);
+    djvm.create();
   }
   {
     TemporaryFile sed_file;
