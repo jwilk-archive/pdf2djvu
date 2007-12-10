@@ -202,21 +202,21 @@ public:
       return;
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
-  
+
   void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
     if (is_foreground_color_map(color_map))
       return;
     Renderer::drawMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
-  
+
   void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
   {
     if (is_foreground_color_map(color_map))
       return;
     Renderer::drawSoftMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_color_map);
   }
-  
+
   GBool interpretType3Chars() { return gFalse; }
 
   void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
@@ -803,7 +803,7 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
           throw NoPageForBookmark();
         page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
       }
-   
+
       lisp_escape(title_str);
       stream << "(" << title_str << " \"#" << page_map[page] << "\"";
       pdf_outline_to_djvu_outline(&current, catalog, stream, page_map);
@@ -981,7 +981,7 @@ protected:
       << ".djvu";
     return stream.str();
   }
-  
+
   virtual File &operator[](int n) = 0;
 };
 
@@ -1020,7 +1020,7 @@ static int xmain(int argc, char * const argv[])
   PDFDoc *doc = new_document(file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
-  
+
   debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
 
   SplashColor paper_color;
@@ -1307,7 +1307,7 @@ static int xmain(int argc, char * const argv[])
         0x16, 0x00, 0x53, 0x6a, 0x62, 0x7a, 0x00, 0x00,
         0x00, 0x04, 0xbc, 0x73, 0x1b, 0xd7
       };
-      dummy_page_file.write(dummy_djvu_data , sizeof dummy_djvu_data);
+      dummy_page_file.write(dummy_djvu_data, sizeof dummy_djvu_data);
       dummy_page_file.close();
       djvm_command << " " << dummy_page_file;
     }
