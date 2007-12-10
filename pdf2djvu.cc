@@ -241,7 +241,7 @@ public:
       static_cast<int>(py),
       static_cast<int>(pdx),
       static_cast<int>(pdy),
-      static_cast<int>(pdx),
+      static_cast<int>(pdx < 1 ? 1 : pdx),
       font_size,
       unistr,
       len
