@@ -1428,8 +1428,9 @@ static int xmain(int argc, char * const argv[])
     throw Error("No pages selected");
   {
     TemporaryFile dummy_page_file;
-    if (page_counter == 1)
+    if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
     {
+      // Assure the result document is multi-page
       static const char dummy_djvu_data[46] =
       {
         0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d,
@@ -1469,11 +1470,11 @@ static int xmain(int argc, char * const argv[])
     command << DJVULIBRE_BIN_PATH "/djvused " << *output_file << " -s -f " << sed_file;
     xsystem(command);
   }
-  if (page_counter == 1)
+  if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
   {
     std::ostringstream djvm_command;
     djvm_command << DJVULIBRE_BIN_PATH "/djvm -d " << *output_file << " " << 2;
-    debug(2) << "- !djvm" << std::endl;
+    debug(2) << "- !djvm -d" << std::endl;
     xsystem(djvm_command);
   }
   if (conf_output_stdout)
