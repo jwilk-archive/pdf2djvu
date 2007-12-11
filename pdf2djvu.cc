@@ -26,6 +26,7 @@
 
 #include "compoppler.h"
 
+#include <pstreams/pstream.h>
 #include <libdjvu/miniexp.h>
 
 static enum
@@ -361,8 +362,8 @@ static void usage()
     << "     --words"             << std::endl
     << "     --lines"             << std::endl
     << " -p, --pages=..."         << std::endl
-    << " -i, --indirect"          << std::endl
-    << " -o, --output=..."        << std::endl
+    << " -i, --indirect=DIR"      << std::endl
+    << " -o, --output=FILE"       << std::endl
     << " -h, --help"              << std::endl
   ;
   exit(1);
@@ -448,7 +449,7 @@ static bool read_config(int argc, char * const argv[])
   while (true)
   {
     optindex = 0;
-    c = getopt_long(argc, argv, "io:d:qvp:h", options, &optindex);
+    c = getopt_long(argc, argv, "i:o:d:qvp:h", options, &optindex);
     if (c < 0)
       break;
     if (c == 0)
@@ -502,11 +503,14 @@ static bool read_config(int argc, char * const argv[])
       conf_text = CONF_TEXT_LINES;
       break;
     case OPT_OUTPUT:
+      conf_format = CONF_FORMAT_BUNDLED;
       conf_output = optarg;
       conf_output_stdout = false;
       break;
     case OPT_INDIRECT:
       conf_format = CONF_FORMAT_INDIRECT;
+      conf_output = optarg;
+      conf_output_stdout = false;
       break;
     case OPT_HELP:
       return false;
@@ -577,7 +581,6 @@ public:
     if (mkdtemp(path_buffer) == NULL)
       throw OSError();
     this->name += path_buffer;
-    this->name += "/";
   }
 
   virtual ~TemporaryDirectory()
@@ -599,7 +602,7 @@ protected:
 
   void _open(const char* path)
   {
-    this->exceptions(std::ifstream::badbit);
+    this->exceptions(std::ifstream::failbit | std::ifstream::badbit);
     if (path == NULL)
       this->open(this->name.c_str(), std::fstream::in | std::fstream::out);
     else
@@ -620,7 +623,7 @@ public:
   File(const Directory& directory, const std::string name)
   {
     std::ostringstream stream;
-    stream << directory << name;
+    stream << directory << "/" << name;
     _open(stream.str().c_str());
   }
 
@@ -643,6 +646,11 @@ public:
       stream.write(buffer, this->gcount());
     }
   } 
+
+  operator std::string() const
+  {
+    return this->name;
+  }
 
   friend std::ostream &operator<<(std::ostream &, const File &);
 };
@@ -949,10 +957,9 @@ class PageFiles
 {
 protected:
   std::vector<File*> data;
-  std::auto_ptr<TemporaryDirectory> directory;
   int n_digits;
 
-  PageFiles(int n) : data(n), n_digits(0), directory(NULL)
+  PageFiles(int n) : data(n), n_digits(0)
   { 
     while (n > 0)
     {
@@ -961,15 +968,6 @@ protected:
     }
     if (this->n_digits < 4)
       this->n_digits = 4;
-  }
-
-  virtual ~PageFiles()
-  {
-    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
-    {
-      if (*it != NULL)
-        delete *it;
-    }
   }
 
   virtual std::string get_file_name(int n) const
@@ -982,27 +980,61 @@ protected:
     return stream.str();
   }
 
+public:
   virtual File &operator[](int n) = 0;
+
+  virtual ~PageFiles()
+  {
+    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
+    {
+      if (*it != NULL)
+        delete *it;
+    }
+  }
+
 };
 
 class PageTemporaryFiles : public PageFiles
 {
+protected:
+  const TemporaryDirectory directory;
 public:
 
-  PageTemporaryFiles(int n) : PageFiles(n)
-  {
-    this->directory.reset(new TemporaryDirectory());
-  }
+  PageTemporaryFiles(int n) : PageFiles(n) { }
 
   virtual TemporaryFile &operator[](int n)
   {
     std::vector<File*>::reference tmpfile_ptr = this->data.at(n - 1);
     if (tmpfile_ptr == NULL)
     {
-      tmpfile_ptr = new TemporaryFile(*this->directory, this->get_file_name(n));
+      tmpfile_ptr = new TemporaryFile(this->directory, this->get_file_name(n));
       tmpfile_ptr->close();
     }
     return *dynamic_cast<TemporaryFile*>(tmpfile_ptr);
+  }
+
+  virtual ~PageTemporaryFiles()
+  {
+    delete this->directory;
+  }
+};
+
+class IndirectPageFiles : public PageFiles
+{
+private:
+  const Directory &directory;
+public:
+  IndirectPageFiles(int n, const Directory &directory) : PageFiles(n), directory(directory) {}
+
+  virtual File &operator[](int n)
+  {
+    std::vector<File*>::reference tmpfile_ptr = this->data.at(n - 1);
+    if (tmpfile_ptr == NULL)
+    {
+      tmpfile_ptr = new File(this->directory, this->get_file_name(n));
+      tmpfile_ptr->close();
+    }
+    return *tmpfile_ptr;
   }
 };
 
@@ -1021,28 +1053,74 @@ public:
 class BundledDjVm : public DjVm
 {
 private:
-  const File &output_file;
+  File &output_file;
   std::ostringstream djvm_command;
-  bool done;
 public:
-  BundledDjVm(const File &output_file) : output_file(output_file), done(false)
+  BundledDjVm(File &output_file) : output_file(output_file)
   {
-    djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << output_file;
+    this->djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << this->output_file;
   }
 
   virtual void add(const File &file)
   {
-    if (this->done)
-      return;
-    djvm_command << " " << file;
+    this->djvm_command << " " << file;
   }
 
   virtual void create()
   {
-    if (this->done)
-      return;
-    xsystem(djvm_command);
-    this->done = true;
+    xsystem(this->djvm_command);
+  }
+};
+
+static const char DJVU_BINARY_TEMPLATE[] = "AT&TFORM\0\0\0\0DJVMDIRM\0\0\0";
+static const unsigned char DJVU_VERSION = 1;
+
+class IndirectDjVm : public DjVm
+{
+private:
+  File &index_file;
+  std::vector<std::string> components;
+public:
+  IndirectDjVm(File &index_file) : index_file(index_file) {}
+
+  virtual void add(const File &file)
+  {
+    std::string name = file;
+    size_t pos = name.rfind('/');
+    if (pos != std::string::npos)
+      name.replace(0, pos + 1, "");
+    this->components.push_back(name);
+  }
+
+  virtual void create()
+  {
+    size_t size = this->components.size();
+    index_file.write(DJVU_BINARY_TEMPLATE, sizeof DJVU_BINARY_TEMPLATE);
+    index_file << DJVU_VERSION;
+    for (int i = 1; i >= 0; i--)
+      index_file << static_cast<char>((size >> (8 * i)) & 0xff);
+    std::ostringstream bzz_command;
+    index_file.close();
+    bzz_command << DJVULIBRE_BIN_PATH "/bzz -e - - >> " << index_file;
+    {
+      redi::opstream bzz(bzz_command.str());
+      for (size_t i = 0; i < size; i++)
+        bzz.write("\0\0", 3);
+      for (size_t i = 0; i < size; i++)
+        bzz << '\1';
+      for (std::vector<std::string>::const_iterator it = this->components.begin(); it != this->components.end(); it++)
+        bzz << *it << '\0';
+    }
+    index_file.reopen();
+    index_file.seekg(0, std::ios::end);
+    size = index_file.tellg();
+    index_file.seekg(8, std::ios::beg);
+    for (int i = 3; i >= 0; i--)
+      index_file << static_cast<char>(((size - 12) >> (8 * i)) & 0xff);
+    index_file.seekg(20, std::ios::beg);
+    for (int i = 3; i >= 0; i--)
+      index_file << static_cast<char>(((size - 24) >> (8 * i)) & 0xff);
+    index_file.close();
   }
 };
 
@@ -1068,23 +1146,26 @@ static int xmain(int argc, char * const argv[])
 
   int n_pages = doc->getNumPages();
   int page_counter = 0;
-  std::auto_ptr<File> output_file_ptr;
-  std::auto_ptr<TemporaryDirectory> tmp_dir_ptr;
+  std::auto_ptr<const Directory> output_dir;
+  std::auto_ptr<File> output_file;
+  std::auto_ptr<DjVm> djvm;
+  std::auto_ptr<PageFiles> page_files;
   if (conf_format == CONF_FORMAT_BUNDLED)
   {
-    tmp_dir_ptr.reset(new TemporaryDirectory());
     if (conf_output_stdout)
-      output_file_ptr.reset(new TemporaryFile());
+      output_file.reset(new TemporaryFile());
     else
-      output_file_ptr.reset(new File(conf_output));
+      output_file.reset(new File(conf_output));
+    djvm.reset(new BundledDjVm(*output_file));
+    page_files.reset(new PageTemporaryFiles(n_pages));
   }
   else
   {
-    throw Error("-i, --indirect: not implemented");
+    output_dir.reset(new Directory(conf_output));
+    output_file.reset(new File(*output_dir, "index.djvu"));
+    page_files.reset(new IndirectPageFiles(n_pages, *output_dir));
+    djvm.reset(new IndirectDjVm(*output_file));
   }
-  File &output_file = *output_file_ptr;
-  BundledDjVm djvm(output_file);
-  PageTemporaryFiles page_files(n_pages);
   if (conf_pages.size() == 0)
     conf_pages.push_back(std::make_pair(1, n_pages));
   std::map<int, int> page_map;
@@ -1103,7 +1184,7 @@ static int xmain(int argc, char * const argv[])
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;
-    TemporaryFile &page_file = page_files[n];
+    File &page_file = (*page_files)[n];
     debug(1) << "- page #" << n << " -> #" << page_map[n];
     debug(2) << ":";
     debug(1) << std::endl;
@@ -1250,7 +1331,7 @@ static int xmain(int argc, char * const argv[])
     csepdjvu_command << " " << sep_file << " " << page_file;
     std::string csepdjvu_command_str = csepdjvu_command.str();
     xsystem(csepdjvu_command_str);
-    djvm << page_file;
+    *djvm << page_file;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
       debug(2) << "  - !djvuextract" << std::endl;
@@ -1348,10 +1429,10 @@ static int xmain(int argc, char * const argv[])
       };
       dummy_page_file.write(dummy_djvu_data, sizeof dummy_djvu_data);
       dummy_page_file.close();
-      djvm << dummy_page_file;
+      *djvm << dummy_page_file;
     }
     debug(2) << "- !djvm" << std::endl;
-    djvm.create();
+    djvm->create();
   }
   {
     TemporaryFile sed_file;
@@ -1373,18 +1454,18 @@ static int xmain(int argc, char * const argv[])
     debug(2) << "- !djvused < sed_file" << std::endl;
     std::ostringstream command;
     sed_file.close();
-    command << DJVULIBRE_BIN_PATH "/djvused " << output_file << " -s -f " << sed_file;
+    command << DJVULIBRE_BIN_PATH "/djvused " << *output_file << " -s -f " << sed_file;
     xsystem(command);
   }
   if (page_counter == 1)
   {
     std::ostringstream djvm_command;
-    djvm_command << DJVULIBRE_BIN_PATH "/djvm -d " << output_file << " " << 2;
+    djvm_command << DJVULIBRE_BIN_PATH "/djvm -d " << *output_file << " " << 2;
     debug(2) << "- !djvm" << std::endl;
     xsystem(djvm_command);
   }
   if (conf_output_stdout)
-    output_file.pass(std::cout);
+    output_file->pass(std::cout);
   return 0;
 }
 
@@ -1398,6 +1479,11 @@ int main(int argc, char **argv)
   {
     std::cerr << ex << std::endl;
     exit(1);
+  }
+  catch (std::ios_base::failure &ex)
+  {
+    std::cerr << "I/O error (" << ex.what() << ")" << std::endl;
+    exit(2);
   }
 }
 
