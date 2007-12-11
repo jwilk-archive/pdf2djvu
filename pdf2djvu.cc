@@ -980,34 +980,44 @@ protected:
     return stream.str();
   }
 
+  void clean_files()
+  {
+    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
+    {
+      if (*it != NULL)
+      {
+        delete *it;
+        *it = NULL;
+      }
+    }
+  }
+
 public:
   virtual File &operator[](int n) = 0;
 
   virtual ~PageFiles()
   {
-    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
-    {
-      if (*it != NULL)
-        delete *it;
-    }
+    clean_files();
   }
-
 };
 
 class PageTemporaryFiles : public PageFiles
 {
 protected:
-  const TemporaryDirectory directory;
+  const TemporaryDirectory *directory;
 public:
 
-  PageTemporaryFiles(int n) : PageFiles(n) { }
+  PageTemporaryFiles(int n) : PageFiles(n)
+  { 
+    this->directory = new TemporaryDirectory();
+  }
 
   virtual TemporaryFile &operator[](int n)
   {
     std::vector<File*>::reference tmpfile_ptr = this->data.at(n - 1);
     if (tmpfile_ptr == NULL)
     {
-      tmpfile_ptr = new TemporaryFile(this->directory, this->get_file_name(n));
+      tmpfile_ptr = new TemporaryFile(*this->directory, this->get_file_name(n));
       tmpfile_ptr->close();
     }
     return *dynamic_cast<TemporaryFile*>(tmpfile_ptr);
@@ -1015,6 +1025,7 @@ public:
 
   virtual ~PageTemporaryFiles()
   {
+    this->clean_files();
     delete this->directory;
   }
 };
