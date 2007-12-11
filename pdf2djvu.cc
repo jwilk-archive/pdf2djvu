@@ -1002,13 +1002,13 @@ public:
   }
 };
 
-class PageTemporaryFiles : public PageFiles
+class TemporaryPageFiles : public PageFiles
 {
 protected:
   const TemporaryDirectory *directory;
 public:
 
-  PageTemporaryFiles(int n) : PageFiles(n)
+  TemporaryPageFiles(int n) : PageFiles(n)
   { 
     this->directory = new TemporaryDirectory();
   }
@@ -1024,7 +1024,7 @@ public:
     return *dynamic_cast<TemporaryFile*>(tmpfile_ptr);
   }
 
-  virtual ~PageTemporaryFiles()
+  virtual ~TemporaryPageFiles()
   {
     this->clean_files();
     delete this->directory;
@@ -1169,7 +1169,7 @@ static int xmain(int argc, char * const argv[])
     else
       output_file.reset(new File(conf_output));
     djvm.reset(new BundledDjVm(*output_file));
-    page_files.reset(new PageTemporaryFiles(n_pages));
+    page_files.reset(new TemporaryPageFiles(n_pages));
   }
   else
   {
