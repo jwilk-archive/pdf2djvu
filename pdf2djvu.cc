@@ -532,27 +532,75 @@ static bool read_config(int argc, char * const argv[])
   return true;
 }
 
-static void xsystem(const std::string &command)
+class Command
 {
-  int retval = system(command.c_str());
-  if (retval == -1)
-    throw OSError();
-  else if (retval != 0)
-  {
-    std::ostringstream message;
-    message << "system(\"";
-    std::string::size_type i = command.find_first_of(' ', 0);
-    message << command.substr(0, i);
-    message << " ...\") failed with exit code " << (retval >> 8);
-    throw Error(message.str());
-  }
-} 
+private:
+  std::string command;
+  redi::pstreams::argv_type argv;
 
-static void xsystem(const std::ostringstream &command_stream)
-{
-  std::string command = command_stream.str();
-  xsystem(command);
-}
+  void call(std::ostream *my_stdout, bool quiet = false)
+  {
+    redi::pstreams::pmode pmode = redi::pstream::pstdout | redi::pstream::pstderr;
+    if (!quiet)
+      pmode |= redi::pstream::pstderr;
+    redi::ipstream xsystem(this->command, this->argv, pmode);
+    if (my_stdout != NULL)
+    {
+      std::string stdout_line;
+      xsystem.out();
+      while (std::getline(xsystem, stdout_line))
+        *my_stdout << stdout_line << std::endl;
+    }
+    {
+      std::string stderr_line;
+      xsystem.err();
+      while (std::getline(xsystem, stderr_line))
+        if (!quiet)
+          std::cerr << stderr_line << std::endl;
+    }
+    xsystem.close();
+    int status = xsystem.rdbuf()->status();
+    if (status != 0)
+    {
+      std::ostringstream message;
+      message << "system(\"";
+      message << this->command;
+      message << " ...\") failed";
+      if (WIFEXITED(status))
+        message << " with exit code " << WEXITSTATUS(status);
+      throw Error(message.str());
+    }
+  }
+
+public:
+  Command(const std::string& command) : command(command)
+  {
+    this->argv.push_back(command);
+  }
+
+  Command &operator <<(const std::string& arg)
+  {
+    this->argv.push_back(arg);
+    return *this;
+  }
+
+  Command &operator <<(int i)
+  {
+    std::ostringstream stream;
+    stream << i;
+    return *this << stream.str();
+  }
+
+  void operator()(std::ostream &my_stdout, bool quiet = false)
+  {
+    this->call(&my_stdout, quiet);
+  }
+
+  void operator()(bool quiet = false)
+  {
+    this->call(NULL, quiet);
+  }
+};
 
 static void xclose(int fd)
 {
@@ -648,7 +696,7 @@ public:
     }
   } 
 
-  operator std::string() const
+  operator const std::string& () const
   {
     return this->name;
   }
@@ -1066,21 +1114,21 @@ class BundledDjVm : public DjVm
 {
 private:
   File &output_file;
-  std::ostringstream djvm_command;
+  Command command;
 public:
-  BundledDjVm(File &output_file) : output_file(output_file)
+  BundledDjVm(File &output_file) : output_file(output_file), command(DJVULIBRE_BIN_PATH "/djvm")
   {
-    this->djvm_command << DJVULIBRE_BIN_PATH "/djvm -c " << this->output_file;
+    this->command << "-c" << this->output_file;
   }
 
   virtual void add(const File &file)
   {
-    this->djvm_command << " " << file;
+    this->command << file;
   }
 
   virtual void create()
   {
-    xsystem(this->djvm_command);
+    this->command();
   }
 };
 
@@ -1331,30 +1379,30 @@ static int xmain(int argc, char * const argv[])
       }
       outm->clear_texts();
     }
-    debug(2) << "  - !csepdjvu" << std::endl;
-    std::ostringstream csepdjvu_command;
-    csepdjvu_command << DJVULIBRE_BIN_PATH "/csepdjvu";
-    csepdjvu_command << " -d " << conf_dpi;
-    if (conf_bg_slices)
-      csepdjvu_command << " -q " << conf_bg_slices;
-    if (conf_text == CONF_TEXT_LINES)
-      csepdjvu_command << " -t";
     sep_file.close();
-    csepdjvu_command << " " << sep_file << " " << page_file;
-    std::string csepdjvu_command_str = csepdjvu_command.str();
-    xsystem(csepdjvu_command_str);
+    {
+      debug(2) << "  - !csepdjvu" << std::endl;
+      Command csepdjvu(DJVULIBRE_BIN_PATH "/csepdjvu");
+      csepdjvu << "-d" << conf_dpi;
+      if (conf_bg_slices)
+        csepdjvu << "-q" << conf_bg_slices;
+      if (conf_text == CONF_TEXT_LINES)
+        csepdjvu << "-t";
+      csepdjvu << sep_file << page_file;
+      csepdjvu();
+    }
     *djvm << page_file;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
       debug(2) << "  - !djvuextract" << std::endl;
-      std::ostringstream command;
-      command << DJVULIBRE_BIN_PATH "/djvuextract " << page_file;
+      Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
+      djvuextract << page_file;
       if (has_background || has_foreground || nonwhite_background_color)
-        command << " FGbz=" << fgbz_file << " BG44=" << bg44_file;
-      command << " Sjbz=" << sjbz_file;
-      if (conf_verbose < 2)
-        command << " 2>/dev/null";
-      xsystem(command);
+        djvuextract
+          << std::string("FGbz=") + std::string(fgbz_file)
+          << std::string("BG44=") + std::string(bg44_file);
+      djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
+      djvuextract(conf_verbose < 2);
     }
     if (nonwhite_background_color)
     {
@@ -1362,8 +1410,8 @@ static int xmain(int argc, char * const argv[])
       {
         TemporaryFile ppm_file;
         debug(2) << "  - !c44" << std::endl;
-        std::ostringstream command;
-        command << DJVULIBRE_BIN_PATH << "/c44 -slice 97 " << ppm_file << " " << c44_file;
+        Command c44(DJVULIBRE_BIN_PATH "/c44");
+        c44 << "-slice" << "97" << ppm_file << c44_file;
         int bg_width = (width + 11) / 12;
         int bg_height = (height + 11) / 12;
         ppm_file << "P6 " << bg_width << " " << bg_height << " 255" << std::endl;
@@ -1375,16 +1423,14 @@ static int xmain(int argc, char * const argv[])
           ppm_file.write(&c, 1);
         }
         ppm_file.close();
-        xsystem(command);
+        c44();
       }
       {
         c44_file.reopen();
         debug(2) << "  - !djvuextract" << std::endl;
-        std::ostringstream command;
-        command << DJVULIBRE_BIN_PATH << "/djvuextract " << c44_file << " BG44=" << bg44_file;
-        if (conf_verbose < 2)
-          command << " 2>/dev/null";
-        xsystem(command);
+        Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
+        djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
+        djvuextract(conf_verbose < 2);
       }
     }
     {
@@ -1399,29 +1445,31 @@ static int xmain(int argc, char * const argv[])
     if (has_text)
     {
       debug(2) << "  - !djvused >> sed_file" << std::endl;
-      std::ostringstream command;
-      command << DJVULIBRE_BIN_PATH "/djvused " << page_file << " -e output-txt >> " << sed_file;
-      xsystem(command);
+      Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+      djvused << page_file << "-e" << "output-txt";
+      djvused(sed_file);
     }
+    sed_file.close();
     {
       debug(2) << "  - !djvumake" << std::endl;
-      std::ostringstream command;
-      command 
-        << DJVULIBRE_BIN_PATH "/djvumake"
-        << " " << page_file
-        << " INFO=" << width << "," << height << "," << conf_dpi
-        << " Sjbz=" << sjbz_file;
+      Command djvumake(DJVULIBRE_BIN_PATH "/djvumake");
+      std::ostringstream info;
+      info << "INFO=" << width << "," << height << "," << conf_dpi;
+      djvumake
+        << page_file
+        << info.str()
+        << std::string("Sjbz=") + std::string(sjbz_file);
       if (has_foreground || has_background || nonwhite_background_color)
-        command
-          << " FGbz=" << fgbz_file
-          << " BG44=" << bg44_file;
-      xsystem(command);
+        djvumake
+          << std::string("FGbz=") + std::string(fgbz_file)
+          << std::string("BG44=") + std::string(bg44_file);
+      djvumake();
     }
     {
       debug(2) << "  - !djvused < sed_file" << std::endl;
-      std::ostringstream command;
-      command << DJVULIBRE_BIN_PATH "/djvused " << page_file << " -s -f " << sed_file;
-      xsystem(command);
+      Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+      djvused << page_file << "-s" << "-f" << sed_file;
+      djvused();
     }
   }
   if (page_counter == 0)
@@ -1464,18 +1512,18 @@ static int xmain(int argc, char * const argv[])
       pdf_metadata_to_djvu_metadata(doc, sed_file);
       sed_file << "." << std::endl;
     }
-    debug(2) << "- !djvused < sed_file" << std::endl;
-    std::ostringstream command;
     sed_file.close();
-    command << DJVULIBRE_BIN_PATH "/djvused " << *output_file << " -s -f " << sed_file;
-    xsystem(command);
+    debug(2) << "- !djvused < sed_file" << std::endl;
+    Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+    djvused << *output_file << "-s" << "-f" << sed_file;
+    djvused();
   }
   if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
   {
-    std::ostringstream djvm_command;
-    djvm_command << DJVULIBRE_BIN_PATH "/djvm -d " << *output_file << " " << 2;
+    Command djvm(DJVULIBRE_BIN_PATH "/djvm");
+    djvm << "-d" << *output_file << "2";
     debug(2) << "- !djvm -d" << std::endl;
-    xsystem(djvm_command);
+    djvm();
   }
   if (conf_output_stdout)
     output_file->pass(std::cout);
