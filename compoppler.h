@@ -6,7 +6,9 @@
  */
 
 #include <string>
+#include <iomanip>
 #include <ostream>
+#include <sstream>
 #include <cmath>
 
 #include "goo/gmem.h"
@@ -274,12 +276,17 @@ std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
 std::string get_link_border_color(Link *link)
 {
 #if POPPLER_VERSION < 600
-  double r, g, b;
+  double rgb[3];
   char buffer[8];
   LinkBorderStyle *border_style = link->getBorderStyle();
-  border_style->getColor(&r, &g, &b);
-  int size = snprintf(buffer, sizeof buffer, "#%02x%02x%02x", (int)(r * 0xff), (int)(g * 0xff), (int)(b * 0xff));
-  return std::string(buffer, size);
+  border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
+  std::ostringstream stream;
+  stream << "#";
+  for (int i = 0; i < 3; i++)
+    stream
+      << std::setw(2) << std::setfill('0') << std::hex
+      << static_cast<int>(rgb[i] * 0xff);
+  return stream.str();
 #else
   static std::string red("#ff0000");
   // FIXME: find a way to determine link color
