@@ -610,6 +610,7 @@ protected:
       this->name = path;
       this->open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
     }
+    this->exceptions(std::ifstream::badbit);
   }
 
   File() {}
