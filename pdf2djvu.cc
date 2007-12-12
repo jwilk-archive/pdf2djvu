@@ -158,7 +158,6 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
     << dx << ":" << dy << " "
     <<  w << "x" <<  h << std::showpos << x << (y - h) << " "
     << "(";
-  char buffer[8];
   while (len > 0 && *unistr == ' ')
     unistr++, len--;
   if (len == 0)
@@ -166,12 +165,12 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
   for (; len >= 0; len--, unistr++)
   {
     if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
-      sprintf(buffer, "\\%03o", *unistr);
+      strstream << "\\" << std::oct << std::setfill('0') << std::setw(3) << static_cast<unsigned int>(*unistr);
     else
     {
+      char buffer[8];
       int seqlen = mapUTF8(*unistr, buffer, sizeof buffer);
-      buffer[seqlen] = '\0';
-      strstream << buffer;
+      strstream.write(buffer, seqlen);
     }
   }
   strstream << ")" << std::endl;
