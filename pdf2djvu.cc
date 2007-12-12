@@ -62,19 +62,13 @@ public:
 
 static DevNull dev_null;
 
-class Debug
+static std::ostream &debug(int n)
 {
-public:
-  std::ostream &operator()(int n) const
-  {
-    if (n <= conf_verbose)
-      return std::clog;
-    else
-      return dev_null;
-  }
-};
-
-static Debug debug;
+  if (n <= conf_verbose)
+    return std::clog;
+  else
+    return dev_null;
+}
 
 class Error
 {
