@@ -643,6 +643,18 @@ std::ostream &operator<<(std::ostream &out, const Directory &directory)
   return out << directory.name;
 }
 
+static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek = false)
+{
+  if (seek)
+    istream.seekg(0, std::ios::beg);
+  char buffer[BUFSIZ];
+  while (!istream.eof())
+  {
+    istream.read(buffer, sizeof buffer);
+    ostream.write(buffer, istream.gcount());
+  }
+}
+
 class File : public std::fstream
 {
 protected:
@@ -685,16 +697,6 @@ public:
     this->_open(NULL);
   }
 
-  void pass(std::ostream &stream)
-  {
-    this->seekg(0, std::ios::beg);
-    char buffer[BUFSIZ];
-    while (!this->eof())
-    {
-      this->read(buffer, sizeof buffer);
-      stream.write(buffer, this->gcount());
-    }
-  } 
 
   operator const std::string& () const
   {
@@ -703,6 +705,8 @@ public:
 
   friend std::ostream &operator<<(std::ostream &, const File &);
 };
+
+
 
 class TemporaryFile : public File
 {
@@ -1526,7 +1530,7 @@ static int xmain(int argc, char * const argv[])
     djvm();
   }
   if (conf_output_stdout)
-    output_file->pass(std::cout);
+    copy_stream(*output_file, std::cout, true);
   return 0;
 }
 
