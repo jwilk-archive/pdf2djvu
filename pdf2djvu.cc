@@ -981,7 +981,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     Object object;
     struct tm tms;
     char tzs; int tzh = 0, tzm = 0;
-    char buffer[32], tzbuffer[8];
+    char buffer[32];
     if (!dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     char *input = object.getString()->getCString();
@@ -1032,10 +1032,21 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     // RFC 3339 date format, e.g. "2007-10-27 13:19:59+02:00"
     if (strftime(buffer, sizeof buffer, "%F %T", &tms) != 19)
       throw InvalidDateFormat();
-    tzbuffer[0] = '\0';
-    if (tzs && snprintf(tzbuffer, sizeof tzbuffer, "%c%02d:%02d", tzs, tzh, tzm) != 6)
-      throw InvalidDateFormat();
-    stream << *pkey << "\t\"" << buffer << tzbuffer << "\"" << std::endl;
+    std::string tzstring;
+    if (tzs)
+    {
+      std::ostringstream stream;
+      stream 
+        << tzs
+        << std::setw(2) << std::setfill('0') << tzh
+        << ":"
+        << std::setw(2) << std::setfill('0') << tzm
+      ;
+      if (stream.tellp() != 6)
+        throw InvalidDateFormat();
+      tzstring = stream.str();
+    } 
+    stream << *pkey << "\t\"" << buffer << tzstring << "\"" << std::endl;
   }
   catch (InvalidDateFormat &ex)
   {
