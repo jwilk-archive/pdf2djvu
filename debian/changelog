@@ -1,3 +1,15 @@
+pdf2djvu (0.4.0) unstable; urgency=low
+
+  * Add support for indirect multi-page documents.
+  * Don't crash on broken annotation.
+  * Ensure that each character width is ≥ 1 pixel.
+    Thanks to Victor Ivrii and Christian Ohm for bugreports.
+  * Do process I/O with pstreams, rather than with system(3) calls.
+  * More verbose error messages while option processing.
+  * Include ")" and "\" in the text layer.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Wed, 12 Dec 2007 18:52:59 +0100
+
 pdf2djvu (0.3.6) unstable; urgency=low
 
   * Fix a bug which caused (sometimes) foreground colors to be discarded.
