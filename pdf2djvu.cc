@@ -532,6 +532,18 @@ static bool read_config(int argc, char * const argv[])
   return true;
 }
 
+static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek = false)
+{
+  if (seek)
+    istream.seekg(0, std::ios::beg);
+  char buffer[BUFSIZ];
+  while (!istream.eof())
+  {
+    istream.read(buffer, sizeof buffer);
+    ostream.write(buffer, istream.gcount());
+  }
+}
+
 class Command
 {
 private:
@@ -548,15 +560,12 @@ private:
     {
       std::string stdout_line;
       xsystem.out();
-      while (std::getline(xsystem, stdout_line))
-        *my_stdout << stdout_line << std::endl;
+      copy_stream(xsystem, *my_stdout);
     }
     {
       std::string stderr_line;
       xsystem.err();
-      while (std::getline(xsystem, stderr_line))
-        if (!quiet)
-          std::cerr << stderr_line << std::endl;
+      copy_stream(xsystem, std::cerr);
     }
     xsystem.close();
     int status = xsystem.rdbuf()->status();
@@ -641,18 +650,6 @@ public:
 std::ostream &operator<<(std::ostream &out, const Directory &directory)
 {
   return out << directory.name;
-}
-
-static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek = false)
-{
-  if (seek)
-    istream.seekg(0, std::ios::beg);
-  char buffer[BUFSIZ];
-  while (!istream.eof())
-  {
-    istream.read(buffer, sizeof buffer);
-    ostream.write(buffer, istream.gcount());
-  }
 }
 
 class File : public std::fstream
