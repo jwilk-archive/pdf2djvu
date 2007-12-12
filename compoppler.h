@@ -277,7 +277,6 @@ std::string get_link_border_color(Link *link)
 {
 #if POPPLER_VERSION < 600
   double rgb[3];
-  char buffer[8];
   LinkBorderStyle *border_style = link->getBorderStyle();
   border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
   std::ostringstream stream;
