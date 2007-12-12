@@ -1042,9 +1042,9 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
         << ":"
         << std::setw(2) << std::setfill('0') << tzm
       ;
-      if (stream.tellp() != 6)
-        throw InvalidDateFormat();
       tzstring = stream.str();
+      if (tzstring.length() != 6)
+        throw InvalidDateFormat();
     } 
     stream << *pkey << "\t\"" << buffer << tzstring << "\"" << std::endl;
   }
