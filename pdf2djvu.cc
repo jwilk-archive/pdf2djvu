@@ -18,6 +18,7 @@
 #include <map>
 #include <cmath>
 #include <memory>
+#include <stdexcept>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -99,10 +100,59 @@ public:
   }
 };
 
-class PagesParseError : public Error
+class ConfigurationError : public Error
 {
 public:
-  PagesParseError() : Error("Unable to parse page numbers") {}
+  explicit ConfigurationError(const std::string &message) : Error(message) {};
+  virtual bool is_quiet() const
+  {
+    return false;
+  }
+  virtual bool is_already_printed() const
+  {
+    return false;
+  }
+};
+
+class PagesParseError : public ConfigurationError
+{
+public:
+  PagesParseError() : ConfigurationError("Unable to parse page numbers") {}
+};
+
+class DpiOutsideRange : public ConfigurationError
+{
+public:
+  DpiOutsideRange(int dpi_from, int dpi_to) : ConfigurationError("The specified resolution is outside the allowed range")
+  {
+    std::ostringstream stream;
+    stream << ": " << dpi_from << " .. " << dpi_to;
+    this->message += stream.str();
+  }
+};
+
+class NeedHelp : public ConfigurationError
+{
+public:
+  NeedHelp() : ConfigurationError("") {};
+  virtual bool is_quiet() const
+  {
+    return true;
+  }
+};
+
+class InvalidOption : public ConfigurationError
+{
+public:
+  InvalidOption() : ConfigurationError("") {};
+  virtual bool is_quiet() const
+  {
+    return true;
+  }
+  virtual bool is_already_printed() const
+  {
+    return true;
+  }
 };
 
 static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
@@ -339,11 +389,20 @@ public:
   }
 };
 
-static void usage()
+static void usage(const ConfigurationError &error)
 {
+  if (error.is_already_printed())
+    debug(0) << std::endl;
+  if (!error.is_quiet())
+    debug(0) << error << std::endl << std::endl;
   debug(0) 
-    << "Usage: pdf2djvu [options] <pdf-file>" << std::endl
+    << "Usage: " << std::endl
+    << "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>" << std::endl
+    << "   pdf2djvu  -i <output-directory>  [options] <pdf-file>" << std::endl
+    << std::endl
     << "Options:" << std::endl
+    << " -i, --indirect=DIR"      << std::endl
+    << " -o, --output=FILE"       << std::endl
     << " -v, --verbose"           << std::endl
     << " -q, --quiet"             << std::endl
     << " -d, --dpi=resolution"    << std::endl
@@ -357,8 +416,6 @@ static void usage()
     << "     --words"             << std::endl
     << "     --lines"             << std::endl
     << " -p, --pages=..."         << std::endl
-    << " -i, --indirect=DIR"      << std::endl
-    << " -o, --output=FILE"       << std::endl
     << " -h, --help"              << std::endl
   ;
   exit(1);
@@ -399,7 +456,15 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
   result.push_back(std::make_pair(value[0], value[1]));
 }
 
-static bool read_config(int argc, char * const argv[])
+/* XXX
+ * csepdjvu requires 25 <= dpi <= 144 000
+ * djvumake requires 72 <= dpi <= 144 000
+ * cpaldjvu requires 25 <= dpi <=   1 200 (but we don't use it)
+ */
+static const int DJVU_MIN_DPI = 72;
+static const int DJVU_MAX_DPI = 144000;
+
+static void read_config(int argc, char * const argv[])
 {
   enum
   {
@@ -448,11 +513,13 @@ static bool read_config(int argc, char * const argv[])
     if (c < 0)
       break;
     if (c == 0)
-      c = options[optindex].val;
+      throw Error("");
     switch (c)
     {
     case OPT_DPI:
       conf_dpi = atoi(optarg);
+      if (conf_dpi < DJVU_MIN_DPI || conf_dpi > DJVU_MAX_DPI)
+        throw DpiOutsideRange(DJVU_MIN_DPI, DJVU_MAX_DPI);
       break;
     case OPT_QUIET:
       conf_verbose = 0;
@@ -464,14 +531,7 @@ static bool read_config(int argc, char * const argv[])
       conf_bg_slices = optarg;
       break;
     case OPT_PAGES:
-      try
-      {
-        parse_pages(optarg, conf_pages);
-      }
-      catch (PagesParseError &ex)
-      {
-        return false;
-      }
+      parse_pages(optarg, conf_pages);
       break;
     case OPT_ANTIALIAS:
       conf_antialias = 1;
@@ -508,23 +568,20 @@ static bool read_config(int argc, char * const argv[])
       conf_output_stdout = false;
       break;
     case OPT_HELP:
-      return false;
+      throw NeedHelp();
+    case '?':
+    case ':':
+      throw InvalidOption();
     default:
-      ;
+      throw std::logic_error("Unknown option");
     }
   }
-  if (optind == argc - 1)
-    file_name = argv[optind];
+  if (optind < argc - 1)
+    throw ConfigurationError("Too many arguments were specified");
+  else if (optind > argc - 1)
+    throw ConfigurationError("No input file name was specified");
   else
-    return false;
-  /* XXX
-   * csepdjvu requires 25 <= dpi <= 144 000
-   * djvumake requires 72 <= dpi <= 144 000
-   * cpaldjvu requires 25 <= dpi <=   1 200 (but we don't use it)
-   */
-  if (conf_dpi < 72 || conf_dpi > 144000)
-    return false;
-  return true;
+    file_name = argv[optind];
 }
 
 static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek = false)
@@ -1184,8 +1241,14 @@ static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
 
-  if (!read_config(argc, argv))
-    usage();
+  try
+  {
+    read_config(argc, argv);
+  }
+  catch (const ConfigurationError &ex)
+  {
+    usage(ex);
+  }
 
   init_global_params();
   if (!set_antialias(conf_antialias))
