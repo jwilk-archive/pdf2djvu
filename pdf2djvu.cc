@@ -64,7 +64,7 @@ static DevNull dev_null;
 class Debug
 {
 public:
-  std::ostream &operator()(int n)
+  std::ostream &operator()(int n) const
   {
     if (n <= conf_verbose)
       return std::clog;
@@ -79,12 +79,7 @@ class Error
 {
 public:
   Error() : message("Unknown error") {};
-  Error(const std::string &message) : message(message) {};
-  const std::string &get_message() const
-  {
-    return message;
-  }
-
+  explicit Error(const std::string &message) : message(message) {};
   friend std::ostream &operator<<(std::ostream &, const Error &);
 protected:
   std::string message;
@@ -369,7 +364,7 @@ static void usage()
   exit(1);
 }
 
-static void parse_pages(const std::string s, std::vector< std::pair<int, int> > &result)
+static void parse_pages(const std::string &s, std::vector< std::pair<int, int> > &result)
 {
   int state = 0;
   int value[2] = { 0, 0 };
@@ -579,7 +574,7 @@ private:
   }
 
 public:
-  Command(const std::string& command) : command(command)
+  explicit Command(const std::string& command) : command(command)
   {
     this->argv.push_back(command);
   }
@@ -619,7 +614,7 @@ class Directory
 protected:
   std::string name;
 public: 
-  Directory(const std::string &name)
+  explicit Directory(const std::string &name)
   : name(name) 
   { }
   virtual ~Directory() {}
@@ -628,6 +623,9 @@ public:
 
 class TemporaryDirectory : public Directory
 {
+private:
+  TemporaryDirectory(const TemporaryDirectory&); // not defined
+  TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
 public:
   TemporaryDirectory() : Directory("")
   {
@@ -670,12 +668,12 @@ protected:
   File() {}
 
 public:
-  File(const std::string name)
+  explicit File(const std::string &name)
   {
     _open(name.c_str());
   }
 
-  File(const Directory& directory, const std::string name)
+  File(const Directory& directory, const std::string &name)
   {
     std::ostringstream stream;
     stream << directory << "/" << name;
@@ -691,7 +689,6 @@ public:
     this->_open(NULL);
   }
 
-
   operator const std::string& () const
   {
     return this->name;
@@ -700,10 +697,11 @@ public:
   friend std::ostream &operator<<(std::ostream &, const File &);
 };
 
-
-
 class TemporaryFile : public File
 {
+private:
+  TemporaryFile(const TemporaryFile&); // not defined
+  TemporaryFile& operator=(const TemporaryFile&); // not defined
 protected:
   void construct()
   {
@@ -716,14 +714,9 @@ protected:
   }
 
 public:
-  TemporaryFile(const Directory& directory, const std::string name) 
+  TemporaryFile(const Directory& directory, const std::string &name) 
   : File(directory, name) 
   { }
-
-  TemporaryFile(const TemporaryFile& clone)
-  {
-    this->construct();
-  }
 
   TemporaryFile()
   {
@@ -876,7 +869,7 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
   current.free();
 }
 
-void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int, int> &page_map)
+static void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int, int> &page_map)
 {
   Catalog *catalog = doc->getCatalog();
   Object *outlines = catalog->getOutline();
@@ -1050,11 +1043,14 @@ public:
 
 class TemporaryPageFiles : public PageFiles
 {
+private:
+  TemporaryPageFiles(const TemporaryPageFiles&); // not defined
+  TemporaryPageFiles& operator=(const TemporaryPageFiles&); // not defined
 protected:
   const TemporaryDirectory *directory;
 public:
 
-  TemporaryPageFiles(int n) : PageFiles(n)
+  explicit TemporaryPageFiles(int n) : PageFiles(n)
   { 
     this->directory = new TemporaryDirectory();
   }
@@ -1080,6 +1076,8 @@ public:
 class IndirectPageFiles : public PageFiles
 {
 private:
+  IndirectPageFiles(const IndirectPageFiles&); // not defined
+  IndirectPageFiles& operator=(const IndirectPageFiles&); // not defined
   const Directory &directory;
 public:
   IndirectPageFiles(int n, const Directory &directory) : PageFiles(n), directory(directory) {}
@@ -1114,7 +1112,7 @@ private:
   File &output_file;
   Command command;
 public:
-  BundledDjVm(File &output_file) : output_file(output_file), command(DJVULIBRE_BIN_PATH "/djvm")
+  explicit BundledDjVm(File &output_file) : output_file(output_file), command(DJVULIBRE_BIN_PATH "/djvm")
   {
     this->command << "-c" << this->output_file;
   }
@@ -1139,7 +1137,7 @@ private:
   File &index_file;
   std::vector<std::string> components;
 public:
-  IndirectDjVm(File &index_file) : index_file(index_file) {}
+  explicit IndirectDjVm(File &index_file) : index_file(index_file) {}
 
   virtual void add(const File &file)
   {
