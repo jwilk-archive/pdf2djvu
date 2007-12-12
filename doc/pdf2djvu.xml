@@ -2,7 +2,7 @@
 <!DOCTYPE refentry PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.docbook.org/xml/4.5/docbookx.dtd' 
 [
 	<!ENTITY p 'pdf2djvu'>
-	<!ENTITY version '0.3.3'>
+	<!ENTITY version '0.4.0'>
 ]>
 
 <refentry>
@@ -22,7 +22,7 @@
 		<year>2007</year>
 		<holder>Jakub Wilk</holder>
 	</copyright>
-	<date>2007-11-18</date>
+	<date>2007-12-13</date>
 </refentryinfo>
 
 <refmeta>
@@ -39,6 +39,25 @@
 <refsynopsisdiv>
 	<cmdsynopsis>
 		<command>&p;</command>
+		<arg choice='opt'>
+			<group choice='req'>
+				<arg choice='plain'><option>-o</option></arg>
+				<arg choice='plain'><option>--output</option></arg>
+			</group>
+			<arg choice='plain'><replaceable>djvu-output-file</replaceable></arg>
+		</arg>
+		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
+		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
+	</cmdsynopsis>
+	<cmdsynopsis>
+		<command>&p;</command>
+		<arg choice='plain'>
+			<group choice='req'>
+				<arg choice='plain'><option>-i</option></arg>
+				<arg choice='plain'><option>--indirect</option></arg>
+			</group>
+			<arg choice='plain'><replaceable>output-directory</replaceable></arg>
+		</arg>
 		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
 		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
 	</cmdsynopsis>
@@ -54,7 +73,8 @@
 <refsect1>
 	<title>Description</title>
 	<para>
-		This program creates a DjVu file from the Portable Document Format file <replaceable>pdf-file</replaceable>.
+		This program creates a DjVu file from the Portable Document Format file
+		<filename><replaceable>pdf-file</replaceable></filename>.
 	</para>
 </refsect1>
 
@@ -65,6 +85,27 @@
 	</para>
 
 	<variablelist>
+		<varlistentry>
+			<term><option>-o</option></term>
+			<term><option>--output=<filename><replaceable>output-djvu-file</replaceable></filename></option></term>
+			<listitem>
+				<para>
+					Generate a bundled multi-page document. Write the file into
+					<filename><replaceable>output-djvu-file</replaceable></filename> instead of standard output.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-i</option></term>
+			<term><option>--indirect=<filename><replaceable>output-directory</replaceable></filename></option></term>
+			<listitem>
+				<para>
+					Generate an indirect multi-page document. Put the component files into the
+					<filename><replaceable>output-directory</replaceable></filename> directory. The index file name will
+					be <filename>index.djvu</filename>. The directory must exist and be writable.
+				</para>
+			</listitem>
+		</varlistentry>
 		<varlistentry>
 			<term><option>-v</option></term>
 			<term><option>--verbose</option></term>
@@ -89,7 +130,7 @@
 			<listitem>
 				<para>
 					Specifies the desired resolution to <replaceable>resolution</replaceable> dots per inch. The default
-					is 300 dpi.
+					is 300 dpi. The allowed range is: 72 ≤ <replaceable>resolution</replaceable> ≤ 144000.
 				</para>
 			</listitem>
 		</varlistentry>
