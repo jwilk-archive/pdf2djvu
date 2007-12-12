@@ -608,7 +608,7 @@ private:
     {
       std::string stderr_line;
       xsystem.err();
-      copy_stream(xsystem, std::cerr, false);
+      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
     }
     xsystem.close();
     int status = xsystem.rdbuf()->status();
