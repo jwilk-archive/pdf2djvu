@@ -106,6 +106,7 @@ public:
   {
     return false;
   }
+  virtual ~ConfigurationError() { /* just to shut up compilers */ }
 };
 
 class PagesParseError : public ConfigurationError
@@ -1165,6 +1166,7 @@ public:
     this->add(file);
     return *this;
   }
+  virtual ~DjVm() { /* just to shut up compilers */ }
 };
 
 class BundledDjVm : public DjVm
