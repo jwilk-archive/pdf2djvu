@@ -552,20 +552,17 @@ private:
 
   void call(std::ostream *my_stdout, bool quiet = false)
   {
-    redi::pstreams::pmode pmode = redi::pstream::pstdout | redi::pstream::pstderr;
-    if (!quiet)
-      pmode |= redi::pstream::pstderr;
-    redi::ipstream xsystem(this->command, this->argv, pmode);
+    redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
     if (my_stdout != NULL)
     {
       std::string stdout_line;
       xsystem.out();
-      copy_stream(xsystem, *my_stdout);
+      copy_stream(xsystem, *my_stdout, false);
     }
     {
       std::string stderr_line;
       xsystem.err();
-      copy_stream(xsystem, std::cerr);
+      copy_stream(xsystem, std::cerr, false);
     }
     xsystem.close();
     int status = xsystem.rdbuf()->status();
@@ -1160,19 +1157,19 @@ public:
     index_file << DJVU_VERSION;
     for (int i = 1; i >= 0; i--)
       index_file << static_cast<char>((size >> (8 * i)) & 0xff);
-    std::ostringstream bzz_command;
-    index_file.close();
-    bzz_command << DJVULIBRE_BIN_PATH "/bzz -e - - >> " << index_file;
     {
-      redi::opstream bzz(bzz_command.str());
+      TemporaryFile bzz_file;
       for (size_t i = 0; i < size; i++)
-        bzz.write("\0\0", 3);
+        bzz_file.write("\0\0", 3);
       for (size_t i = 0; i < size; i++)
-        bzz << '\1';
+        bzz_file << '\1';
       for (std::vector<std::string>::const_iterator it = this->components.begin(); it != this->components.end(); it++)
-        bzz << *it << '\0';
+        bzz_file << *it << '\0';
+      bzz_file.close();
+      Command bzz(DJVULIBRE_BIN_PATH "/bzz");
+      bzz << "-e" << bzz_file << "-";
+      bzz(index_file);
     }
-    index_file.reopen();
     index_file.seekg(0, std::ios::end);
     size = index_file.tellg();
     index_file.seekg(8, std::ios::beg);
