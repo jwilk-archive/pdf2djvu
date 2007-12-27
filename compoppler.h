@@ -177,14 +177,14 @@ Object *dict_lookup(Dict *dict, const char *key, Object *object)
   return dict->lookup((char*) key, object);
 }
 
-void display_page(PDFDoc *document, Renderer *renderer, int npage, double dpi, bool do_links)
+void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool do_links)
 {
 #if POPPLER_VERSION < 500
-  document->displayPage(renderer, npage, dpi, dpi, 0, gFalse, do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
 #elif POPPLER_VERSION < 600 
-  document->displayPage(renderer, npage, dpi, dpi, 0, gTrue, gFalse, do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gTrue, gFalse, do_links);
 #else
-  document->displayPage(renderer, npage, dpi, dpi, 0, gTrue, gFalse, !do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gTrue, gFalse, !do_links);
   document->processLinks(renderer, npage);
 #endif
 }

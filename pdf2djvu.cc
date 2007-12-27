@@ -45,6 +45,7 @@ static std::string conf_output;
 static bool conf_output_stdout = true;
 static int conf_verbose = 1;
 static int conf_dpi = 300;
+static int conf_bg_subsample = 3;
 static bool conf_antialias = false;
 static bool conf_extract_hyperlinks = true;
 static bool conf_extract_metadata = true;
@@ -462,22 +463,23 @@ static void read_config(int argc, char * const argv[])
 {
   enum
   {
-    OPT_ANTIALIAS   = 0x300,
-    OPT_BG_SLICES   = 0x200,
-    OPT_DPI         = 'd',
-    OPT_HELP        = 'h',
-    OPT_INDIRECT    = 'i',
-    OPT_NO_HLINKS   = 0x401,
-    OPT_NO_METADATA = 0x402,
-    OPT_NO_OUTLINE  = 0x403,
-    OPT_NO_RENDER   = 0x400,
-    OPT_OUTPUT      = 'o',
-    OPT_PAGES       = 'p',
-    OPT_QUIET       = 'q',
-    OPT_TEXT_LINES  = 0x102,
-    OPT_TEXT_NONE   = 0x100,
-    OPT_TEXT_WORDS  = 0x101,
-    OPT_VERBOSE     = 'v'
+    OPT_ANTIALIAS    = 0x300,
+    OPT_BG_SLICES    = 0x200,
+    OPT_BG_SUBSAMPLE = 0x201,
+    OPT_DPI          = 'd',
+    OPT_HELP         = 'h',
+    OPT_INDIRECT     = 'i',
+    OPT_NO_HLINKS    = 0x401,
+    OPT_NO_METADATA  = 0x402,
+    OPT_NO_OUTLINE   = 0x403,
+    OPT_NO_RENDER    = 0x400,
+    OPT_OUTPUT       = 'o',
+    OPT_PAGES        = 'p',
+    OPT_QUIET        = 'q',
+    OPT_TEXT_LINES   = 0x102,
+    OPT_TEXT_NONE    = 0x100,
+    OPT_TEXT_WORDS   = 0x101,
+    OPT_VERBOSE      = 'v'
   };
   static struct option options [] =
   {
@@ -485,6 +487,7 @@ static void read_config(int argc, char * const argv[])
     { "quiet",          0, 0, OPT_QUIET },
     { "verbose",        0, 0, OPT_VERBOSE },
     { "bg-slices",      1, 0, OPT_BG_SLICES },
+    { "bg-subsample",   1, 0, OPT_BG_SUBSAMPLE },
     { "antialias",      0, 0, OPT_ANTIALIAS },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
     { "no-metadata",    0, 0, OPT_NO_METADATA },
@@ -523,6 +526,11 @@ static void read_config(int argc, char * const argv[])
       break;
     case OPT_BG_SLICES:
       conf_bg_slices = optarg;
+      break;
+    case OPT_BG_SUBSAMPLE:
+      conf_bg_subsample = atoi(optarg);
+      if (conf_bg_subsample < 1 || conf_bg_subsample > 11)
+        throw ConfigurationError("The specified subsampling ratio is outside the allowed range");
       break;
     case OPT_PAGES:
       parse_pages(optarg, conf_pages);
@@ -1314,15 +1322,14 @@ static int xmain(int argc, char * const argv[])
     debug(2) << ":";
     debug(1) << std::endl;
     debug(2) << "  - muted render" << std::endl;
-    display_page(doc, outm, n, conf_dpi, true);
+    display_page(doc, outm, n, conf_dpi, conf_dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
-    Pixmap *bmpm = new Pixmap(outm);
     debug(2) << "  - image size: " << width << "x" << height << std::endl;
     if (!conf_no_render)
     {
       debug(2) << "  - verbose render" << std::endl;
-      display_page(doc, out1, n, conf_dpi, false);
+      display_page(doc, out1, n, conf_dpi, conf_dpi, false);
     }
     debug(2) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -1354,8 +1361,9 @@ static int xmain(int argc, char * const argv[])
     {
       debug(2) << "  - rle data >> sep_file" << std::endl;
       Pixmap bmp1 = Pixmap(out1);
+      Pixmap bmpm = Pixmap(outm);
       PixmapIterator p1 = bmp1.begin();
-      PixmapIterator pm = bmpm->begin();
+      PixmapIterator pm = bmpm.begin();
       for (int i = 0; i < 3; i++) 
         background_color[i] = pm[i];
       for (int y = 0; y < height; y++)
@@ -1411,9 +1419,19 @@ static int xmain(int argc, char * const argv[])
     bool nonwhite_background_color;
     if (has_background)
     {
+      int sub_width = (width + conf_bg_subsample - 1) / conf_bg_subsample;
+      int sub_height = (height + conf_bg_subsample - 1) / conf_bg_subsample;
+      double hdpi = sub_width / doc->getPageMediaWidth(n) * 72.0;
+      double vdpi = sub_height / doc->getPageMediaHeight(n) * 72.0;
+      display_page(doc, out1, n, hdpi, vdpi, true);
+      if (sub_width != out1->getBitmapWidth())
+        throw Error();
+      if (sub_height != out1->getBitmapHeight())
+        throw Error();
+      Pixmap bmp1 = Pixmap(out1);
       debug(2) << "  - background pixmap >> sep_file" << std::endl;
-      sep_file << "P6 " << width << " " << height << " 255" << std::endl;
-      sep_file << *bmpm;
+      sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
+      sep_file << bmp1;
       nonwhite_background_color = false;
     }
     else  
@@ -1423,14 +1441,15 @@ static int xmain(int argc, char * const argv[])
       {
         // Dummy background just to assure FGbz chunks.
         // It will be replaced later.
+        int sub_width = (width + 10) / 11;
+        int sub_height = (height + 10) / 11;
         debug(2) << "  - dummy background pixmap >> sep_file" << std::endl;
-        sep_file << "P6 " << width << " " << height << " 255" << std::endl;
-        for (int x = 0; x < width; x++)
-        for (int y = 0; y < height; y++)
+        sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
+        for (int x = 0; x < sub_width; x++)
+        for (int y = 0; y < sub_height; y++)
           sep_file.write("\xff\xff\xff", 3);
       }
     }
-    delete bmpm;
     if (conf_text)
     {
       debug(2) << "  - text layer >> sep_file" << std::endl;
