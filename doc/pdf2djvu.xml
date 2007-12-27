@@ -150,6 +150,15 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--bg-subsample=<replaceable>n</replaceable></option></term>
+			<listitem>
+				<para>
+					Specifies the background subsampling ratio. The default is 3. Valid values are integers between 1
+					and 11, inclusive.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--antialias</option></term>
 			<listitem>
 				<para>

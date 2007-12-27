@@ -403,6 +403,7 @@ static void usage(const ConfigurationError &error)
     << " -d, --dpi=resolution"    << std::endl
     << "     --bg-slices=n,...,n" << std::endl
     << "     --bg-slices=n+...+n" << std::endl
+    << "     --bg-subsample=n"    << std::endl
     << "     --antialias"         << std::endl
     << "     --no-metadata"       << std::endl
     << "     --no-outline"        << std::endl
