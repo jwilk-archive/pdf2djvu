@@ -9,6 +9,7 @@
 #error You need to define DJVULIBRE_BIN_PATH
 #endif
 
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -587,7 +588,7 @@ static void read_config(int argc, char * const argv[])
     file_name = argv[optind];
 }
 
-static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek = false)
+static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
 {
   if (seek)
     istream.seekg(0, std::ios::beg);
@@ -596,6 +597,20 @@ static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek 
   {
     istream.read(buffer, sizeof buffer);
     ostream.write(buffer, istream.gcount());
+  }
+}
+
+static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit)
+{
+  if (seek)
+    istream.seekg(0, std::ios::beg);
+  char buffer[BUFSIZ];
+  while (!istream.eof() && limit > 0)
+  {
+    std::streamsize chunk_size = std::min(static_cast<std::streamsize>(sizeof buffer), limit);
+    istream.read(buffer, chunk_size);
+    ostream.write(buffer, istream.gcount());
+    limit -= chunk_size;
   }
 }
 
@@ -1175,6 +1190,7 @@ public:
     this->add(file);
     return *this;
   }
+  virtual void set_outline(File &outline_sed_file) = 0;
   virtual ~DjVm() { /* just to shut up compilers */ }
 };
 
@@ -1184,7 +1200,9 @@ private:
   File &output_file;
   Command command;
 public:
-  explicit BundledDjVm(File &output_file) : output_file(output_file), command(DJVULIBRE_BIN_PATH "/djvm")
+  explicit BundledDjVm(File &output_file) 
+  : output_file(output_file),
+    command(DJVULIBRE_BIN_PATH "/djvm")
   {
     this->command << "-c" << this->output_file;
   }
@@ -1192,6 +1210,13 @@ public:
   virtual void add(const File &file)
   {
     this->command << file;
+  }
+
+  virtual void set_outline(File &outlines_sed_file)
+  {
+    Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+    djvused << "-s" << "-f" << outlines_sed_file << output_file;
+    djvused(); // djvused -s -f <outlines-sed-file> <output-djvu-file>
   }
 
   virtual void create()
@@ -1203,13 +1228,40 @@ public:
 static const char DJVU_BINARY_TEMPLATE[] = "AT&TFORM\0\0\0\0DJVMDIRM\0\0\0";
 static const unsigned char DJVU_VERSION = 1;
 
+static const char DJVU_DUMMY_SINGLE_HEAD[12] = 
+{
+  0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d,
+  0x00, 0x00, 0x00, 0x20
+};
+
+static const char DJVU_DUMMY_DOUBLE_HEAD[48] = 
+{
+  0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d, 
+  0x00, 0x00, 0x00, 0x74, 0x44, 0x4a, 0x56, 0x4d,
+  0x44, 0x49, 0x52, 0x4d, 0x00, 0x00, 0x00, 0x18,
+  0x81, 0x00, 0x02, 0x00, 0x00, 0x00, 0x30, 0x00,
+  0x00, 0x00, 0x58, 0xff, 0xff, 0xf2, 0xbf, 0x34,
+  0x7b, 0xf3, 0x10, 0x74, 0x07, 0x45, 0xc5, 0x40
+};
+
+static const char DJVU_DUMMY_DATA[32] =
+{ 0x44, 0x4a, 0x56, 0x55, 0x49, 0x4e, 0x46, 0x4f,
+  0x00, 0x00, 0x00, 0x0a, 0x00, 0x01, 0x00, 0x01,
+  0x18, 0x00, 0x2c, 0x01, 0x16, 0x00, 0x53, 0x6a,
+  0x62, 0x7a, 0x00, 0x00, 0x00, 0x02, 0xbb, 0x7f
+};
+
 class IndirectDjVm : public DjVm
 {
 private:
   File &index_file;
+  File *outline_sed_file;
   std::vector<std::string> components;
 public:
-  explicit IndirectDjVm(File &index_file) : index_file(index_file) {}
+  explicit IndirectDjVm(File &index_file) 
+  : index_file(index_file),
+    outline_sed_file(NULL)
+  {}
 
   virtual void add(const File &file)
   {
@@ -1218,6 +1270,55 @@ public:
     if (pos != std::string::npos)
       name.replace(0, pos + 1, "");
     this->components.push_back(name);
+  }
+
+  virtual void set_outline(File &outlines_sed_file)
+  {
+    TemporaryFile dummy_djvu_file;
+    dummy_djvu_file.write(DJVU_DUMMY_DOUBLE_HEAD, sizeof DJVU_DUMMY_DOUBLE_HEAD);
+    for (int i = 0; i < 2; i++)
+    {
+      dummy_djvu_file.write("FORM", 4);
+      for (int i = 3; i >= 0; i--)
+        dummy_djvu_file << static_cast<char>(((sizeof DJVU_DUMMY_DATA) >> (8 * i)) & 0xff);
+      dummy_djvu_file.write(DJVU_DUMMY_DATA, sizeof DJVU_DUMMY_DATA);
+    }
+    dummy_djvu_file.close();
+    Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+    djvused << "-s" << "-f" << outlines_sed_file << dummy_djvu_file;
+    djvused(); // djvused -s -f <outlines-sed-file> <dummy-djvu-file>
+    dummy_djvu_file.reopen();
+    dummy_djvu_file.seekg(0x30, std::ios::beg);
+    {
+      char buffer[4];
+      dummy_djvu_file.read(buffer, 4);
+      if (std::string(buffer, 4) == std::string("NAVM"))
+      {
+        size_t navm_size = 0, size = 0;
+        for (int i = 3; i >= 0; i--)
+        { 
+          char c;
+          dummy_djvu_file.read(&c, 1);
+          navm_size |= static_cast<size_t>(c) << (8 * i);
+        }
+        navm_size += 8;
+        dummy_djvu_file.seekg(0x30, std::ios::beg);
+        index_file.reopen();
+        this->index_file.seekg(0, std::ios::end);
+        copy_stream(dummy_djvu_file, this->index_file, false, navm_size);
+        this->index_file.seekg(8, std::ios::beg);
+        for (int i = 3; i >= 0; i--)
+        { 
+          char c;
+          this->index_file.read(&c, 1);
+          size |= static_cast<size_t>(c) << (8 * i);
+        }
+        size += navm_size;
+        this->index_file.seekg(8, std::ios::beg);
+        for (int i = 3; i >= 0; i--)
+          this->index_file << static_cast<char>((size >> (8 * i)) & 0xff);
+      }
+    }
   }
 
   virtual void create()
@@ -1566,19 +1667,12 @@ static int xmain(int argc, char * const argv[])
     throw Error("No pages selected");
   {
     TemporaryFile dummy_page_file;
+    TemporaryFile sed_file;
     if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
     {
-      // Assure the result document is multi-page
-      static const char dummy_djvu_data[46] =
-      {
-        0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d,
-        0x00, 0x00, 0x00, 0x22, 0x44, 0x4a, 0x56, 0x55,
-        0x49, 0x4e, 0x46, 0x4f, 0x00, 0x00, 0x00, 0x0a,
-        0x00, 0x01, 0x00, 0x01, 0x18, 0x00, 0x2c, 0x01,
-        0x16, 0x00, 0x53, 0x6a, 0x62, 0x7a, 0x00, 0x00,
-        0x00, 0x04, 0xbc, 0x73, 0x1b, 0xd7
-      };
-      dummy_page_file.write(dummy_djvu_data, sizeof dummy_djvu_data);
+      // Dummy page is necessary to force multi-file document structure.
+      dummy_page_file.write(DJVU_DUMMY_SINGLE_HEAD, sizeof DJVU_DUMMY_SINGLE_HEAD);
+      dummy_page_file.write(DJVU_DUMMY_DATA, sizeof DJVU_DUMMY_DATA);
       dummy_page_file.close();
       *djvm << dummy_page_file;
     }
@@ -1587,14 +1681,6 @@ static int xmain(int argc, char * const argv[])
   }
   {
     TemporaryFile sed_file;
-    if (conf_extract_outline)
-    {
-      debug(2) << "- outlines >> sed_file" << std::endl;
-      sed_file << "create-shared-ant" << std::endl;
-      sed_file << "set-outline" << std::endl;
-      pdf_outline_to_djvu_outline(doc, sed_file, page_map);
-      sed_file << std::endl << "." << std::endl;
-    }
     if (conf_extract_metadata)
     {
       debug(2) << "- metadata >> sed_file" << std::endl;
@@ -1608,8 +1694,25 @@ static int xmain(int argc, char * const argv[])
     djvused << *output_file << "-s" << "-f" << sed_file;
     djvused();
   }
+  if (conf_extract_outline)
+  {
+    TemporaryFile sed_file;
+    debug(2) << "- outlines >> sed_file" << std::endl;
+    if (conf_format == CONF_FORMAT_BUNDLED)
+    {
+      // Shared annotations chunk in necessary to preserve multi-file document structure.
+      // (Single-file documents cannot contain document outline.)
+      sed_file << "create-shared-ant" << std::endl;
+    }
+    sed_file << "set-outline" << std::endl;
+    pdf_outline_to_djvu_outline(doc, sed_file, page_map);
+    sed_file << std::endl << "." << std::endl;
+    sed_file.close();
+    djvm->set_outline(sed_file);
+  }
   if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
   {
+    // Dummy page is redundant now, so remove it.
     Command djvm(DJVULIBRE_BIN_PATH "/djvm");
     djvm << "-d" << *output_file << "2";
     debug(2) << "- !djvm -d" << std::endl;
