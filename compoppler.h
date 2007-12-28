@@ -177,6 +177,28 @@ Object *dict_lookup(Dict *dict, const char *key, Object *object)
   return dict->lookup((char*) key, object);
 }
 
+double get_page_width(PDFDoc *document, int n)
+{
+  double width =
+#if POPPLER_VERSION < 500
+    document->getPageWidth(n);
+#else
+    document->getPageMediaWidth(n);
+#endif
+  return width / 72.0;
+}
+
+double get_page_height(PDFDoc *document, int n)
+{
+  double height =
+#if POPPLER_VERSION < 500
+    document->getPageHeight(n);
+#else
+    document->getPageMediaHeight(n);
+#endif
+  return height / 72.0;
+}
+
 void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool do_links)
 {
 #if POPPLER_VERSION < 500

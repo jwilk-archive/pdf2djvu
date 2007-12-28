@@ -1525,8 +1525,8 @@ static int xmain(int argc, char * const argv[])
     {
       int sub_width = (width + conf_bg_subsample - 1) / conf_bg_subsample;
       int sub_height = (height + conf_bg_subsample - 1) / conf_bg_subsample;
-      double hdpi = sub_width / doc->getPageMediaWidth(n) * 72.0;
-      double vdpi = sub_height / doc->getPageMediaHeight(n) * 72.0;
+      double hdpi = sub_width / get_page_width(doc, n);
+      double vdpi = sub_height / get_page_height(doc, n);
       debug(2) << "  - subsampled render" << std::endl;
       display_page(doc, outs, n, hdpi, vdpi, true);
       if (sub_width != outs->getBitmapWidth())
