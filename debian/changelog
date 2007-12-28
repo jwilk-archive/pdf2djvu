@@ -2,9 +2,10 @@ pdf2djvu (0.4.1) unstable; urgency=low
 
   * Add --bg-subsample option.
   * Work-around djvused bug which make impossible to incorporate document
-    outline into indirect multi-page documents. 
+    outline into indirect multi-page documents.
+  * Tune color quantization a bit.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 28 Dec 2007 21:30:40 +0100
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 28 Dec 2007 21:54:25 +0100
 
 pdf2djvu (0.4.0) unstable; urgency=low
 
