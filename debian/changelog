@@ -1,3 +1,9 @@
+pdf2djvu (0.4.1) unstable; urgency=low
+
+  * Add --bg-subsample option. 
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Thu, 27 Dec 2007 20:27:50 +0100
+
 pdf2djvu (0.4.0) unstable; urgency=low
 
   * Add support for indirect multi-page documents.
