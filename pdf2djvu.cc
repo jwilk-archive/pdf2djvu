@@ -1312,8 +1312,10 @@ static int xmain(int argc, char * const argv[])
   }
   Renderer *out1 = new Renderer(paper_color);
   MutedRenderer *outm = new MutedRenderer(paper_color, page_map);
+  MutedRenderer *outs = new MutedRenderer(paper_color, page_map);
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
+  outs->startDoc(doc->getXRef());
   for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
@@ -1424,16 +1426,19 @@ static int xmain(int argc, char * const argv[])
       int sub_height = (height + conf_bg_subsample - 1) / conf_bg_subsample;
       double hdpi = sub_width / doc->getPageMediaWidth(n) * 72.0;
       double vdpi = sub_height / doc->getPageMediaHeight(n) * 72.0;
-      display_page(doc, out1, n, hdpi, vdpi, true);
-      if (sub_width != out1->getBitmapWidth())
+      debug(2) << "  - subsampled render" << std::endl;
+      display_page(doc, outs, n, hdpi, vdpi, true);
+      if (sub_width != outs->getBitmapWidth())
         throw Error();
-      if (sub_height != out1->getBitmapHeight())
+      if (sub_height != outs->getBitmapHeight())
         throw Error();
-      Pixmap bmp1 = Pixmap(out1);
+      Pixmap bmp = Pixmap(outs);
       debug(2) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
-      sep_file << bmp1;
+      sep_file << bmp;
       nonwhite_background_color = false;
+      outs->clear_texts();
+      outs->clear_annotations();
     }
     else  
     {
