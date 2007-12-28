@@ -1489,7 +1489,7 @@ static int xmain(int argc, char * const argv[])
           {
             if (!has_foreground && (p1[0] || p1[1] || p1[2]))
               has_foreground = true;
-            new_color = (p1[2] / 51) + 6 * ((p1[1] / 51) + 6 * (p1[0] / 51));
+            new_color = ((p1[2] + 1) / 43) + 6 * (((p1[1] + 1) / 43) + 6 * ((p1[0] + 1) / 43));
           }
           else
             new_color = 0xfff;
