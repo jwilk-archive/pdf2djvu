@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Jakub Wilk <ubanus@users.sf.net>
 Bugs: mailto:ubanus@users.sf.net
 Build-Depends: cdbs, debhelper (>= 5), libpoppler-dev, libdjvulibre-dev, libpstreams-dev
-Standards-Version: 3.7.2
+Standards-Version: 3.7.3
 
 Package: pdf2djvu
 Architecture: any
