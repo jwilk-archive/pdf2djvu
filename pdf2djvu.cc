@@ -12,33 +12,18 @@
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
-#include <fstream>
 #include <sstream>
-#include <cerrno>
 #include <vector>
 #include <map>
 #include <cmath>
 #include <memory>
 
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <iconv.h>
-
 #include "compoppler.hh"
 #include "debug.hh"
 #include "config.hh"
+#include "system.hh"
 
-#include <pstreams/pstream.h>
 #include <libdjvu/miniexp.h>
-
-class OSError : public Error
-{
-public:
-  OSError() : Error("")
-  {
-    message += strerror(errno);
-  }
-};
 
 static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
 {
@@ -273,230 +258,6 @@ public:
   }
 };
 
-static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
-{
-  if (seek)
-    istream.seekg(0, std::ios::beg);
-  char buffer[BUFSIZ];
-  while (!istream.eof())
-  {
-    istream.read(buffer, sizeof buffer);
-    ostream.write(buffer, istream.gcount());
-  }
-}
-
-static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit)
-{
-  if (seek)
-    istream.seekg(0, std::ios::beg);
-  char buffer[BUFSIZ];
-  while (!istream.eof() && limit > 0)
-  {
-    std::streamsize chunk_size = std::min(static_cast<std::streamsize>(sizeof buffer), limit);
-    istream.read(buffer, chunk_size);
-    ostream.write(buffer, istream.gcount());
-    limit -= chunk_size;
-  }
-}
-
-class Command
-{
-private:
-  std::string command;
-  redi::pstreams::argv_type argv;
-
-  void call(std::ostream *my_stdout, bool quiet = false)
-  {
-    redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
-    if (my_stdout != NULL)
-    {
-      std::string stdout_line;
-      xsystem.out();
-      copy_stream(xsystem, *my_stdout, false);
-    }
-    {
-      std::string stderr_line;
-      xsystem.err();
-      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
-    }
-    xsystem.close();
-    int status = xsystem.rdbuf()->status();
-    if (status != 0)
-    {
-      std::ostringstream message;
-      message << "system(\"";
-      message << this->command;
-      message << " ...\") failed";
-      if (WIFEXITED(status))
-        message << " with exit code " << WEXITSTATUS(status);
-      throw Error(message.str());
-    }
-  }
-
-public:
-  explicit Command(const std::string& command) : command(command)
-  {
-    this->argv.push_back(command);
-  }
-
-  Command &operator <<(const std::string& arg)
-  {
-    this->argv.push_back(arg);
-    return *this;
-  }
-
-  Command &operator <<(int i)
-  {
-    std::ostringstream stream;
-    stream << i;
-    return *this << stream.str();
-  }
-
-  void operator()(std::ostream &my_stdout, bool quiet = false)
-  {
-    this->call(&my_stdout, quiet);
-  }
-
-  void operator()(bool quiet = false)
-  {
-    this->call(NULL, quiet);
-  }
-};
-
-static void xclose(int fd)
-{
-  if (close(fd) == -1)
-    throw OSError();
-}
-
-class Directory
-{
-protected:
-  std::string name;
-public: 
-  explicit Directory(const std::string &name)
-  : name(name) 
-  { }
-  virtual ~Directory() {}
-  friend std::ostream &operator<<(std::ostream &, const Directory &);
-};
-
-class TemporaryDirectory : public Directory
-{
-private:
-  TemporaryDirectory(const TemporaryDirectory&); // not defined
-  TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
-public:
-  TemporaryDirectory() : Directory("")
-  {
-    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    if (mkdtemp(path_buffer) == NULL)
-      throw OSError();
-    this->name += path_buffer;
-  }
-
-  virtual ~TemporaryDirectory()
-  {
-    if (rmdir(this->name.c_str()) == -1)
-      throw OSError();
-  }
-};
-
-std::ostream &operator<<(std::ostream &out, const Directory &directory)
-{
-  return out << directory.name;
-}
-
-class File : public std::fstream
-{
-protected:
-  std::string name;
-
-  void _open(const char* path)
-  {
-    this->exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    if (path == NULL)
-      this->open(this->name.c_str(), std::fstream::in | std::fstream::out);
-    else
-    {
-      this->name = path;
-      this->open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
-    }
-    this->exceptions(std::ifstream::badbit);
-  }
-
-  File() {}
-
-public:
-  explicit File(const std::string &name)
-  {
-    _open(name.c_str());
-  }
-
-  File(const Directory& directory, const std::string &name)
-  {
-    std::ostringstream stream;
-    stream << directory << "/" << name;
-    _open(stream.str().c_str());
-  }
-
-  virtual ~File() { }
-
-  void reopen()
-  {
-    if (this->is_open())
-      this->close();
-    this->_open(NULL);
-  }
-
-  operator const std::string& () const
-  {
-    return this->name;
-  }
-
-  friend std::ostream &operator<<(std::ostream &, const File &);
-};
-
-class TemporaryFile : public File
-{
-private:
-  TemporaryFile(const TemporaryFile&); // not defined
-  TemporaryFile& operator=(const TemporaryFile&); // not defined
-protected:
-  void construct()
-  {
-    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    int fd = mkstemp(path_buffer);
-    if (fd == -1)
-      throw OSError();
-    xclose(fd);
-    _open(path_buffer);
-  }
-
-public:
-  TemporaryFile(const Directory& directory, const std::string &name) 
-  : File(directory, name) 
-  { }
-
-  TemporaryFile()
-  {
-    this->construct();
-  }
-
-  virtual ~TemporaryFile()
-  {
-    if (this->is_open())
-      this->close();
-    if (unlink(this->name.c_str()) == -1)
-      throw OSError();
-  }
-};
-
-std::ostream &operator<<(std::ostream &out, const File &file)
-{
-  return out << file.name;
-}
-
 class BookmarkError : public Error
 {
 public:
@@ -515,57 +276,12 @@ public:
   NoTitleForBookmark() : BookmarkError("No title for a bookmark") {}
 };
 
-class IconvError : public Error
-{
-public:
-  IconvError() : Error("Unable to convert encodings") {} 
-};
-
 static std::string pdf_string_to_utf8_string(GooString *from)
 {
   char *cfrom = from->getCString();
   std::ostringstream stream;
   if ((cfrom[0] & 0xff) == 0xfe && (cfrom[1] & 0xff) == 0xff)
-  {
-    static char outbuf[1 << 10];
-    char *outbuf_ptr = outbuf;
-    size_t outbuf_len = sizeof outbuf;
-    size_t inbuf_len = from->getLength();
-    iconv_t cd = iconv_open("UTF-8", "UTF-16");
-    if (cd == (iconv_t)-1)
-      throw OSError();
-    while (inbuf_len > 0)
-    {
-      struct iconv_adapter 
-      {
-        // http://wang.yuxuan.org/blog/2007/7/9/deal_with_2_versions_of_iconv_h
-        iconv_adapter(const char** s) : s(s) {}
-        iconv_adapter(char** s) : s(const_cast<const char**>(s)) {}
-        operator char**() const
-        {
-          return const_cast<char**>(s);
-        }
-        operator const char**() const
-        {
-          return const_cast<const char**>(s);
-        }
-        const char** s;
-      };
-
-      size_t n = iconv(cd, iconv_adapter(&cfrom), &inbuf_len, &outbuf_ptr, &outbuf_len);
-      if (n == (size_t) -1 && errno == E2BIG)
-      {
-        stream.write(outbuf, outbuf_ptr - outbuf);
-        outbuf_ptr = outbuf;
-        outbuf_len = sizeof outbuf;
-      }
-      else if (n == (size_t) -1)
-        throw IconvError();
-    }
-    stream.write(outbuf, outbuf_ptr - outbuf);
-    if (iconv_close(cd) == -1)
-      throw OSError();
-  }
+    utf16_to_utf8(cfrom, from->getLength(), stream);
   else
   {
     for (; *cfrom; cfrom++)

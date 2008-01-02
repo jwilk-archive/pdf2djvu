@@ -13,8 +13,9 @@ all: pdf2djvu
 config.o: config.cc config.hh debug.hh
 debug.o: debug.cc debug.hh config.hh
 compoppler.o: compoppler.cc compoppler.hh
-pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh
-pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o
+system.o: system.cc system.hh debug.hh
+pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh
+pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o
 
 .PHONY: clean
 clean:
