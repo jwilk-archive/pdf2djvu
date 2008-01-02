@@ -19,73 +19,17 @@
 #include <map>
 #include <cmath>
 #include <memory>
-#include <stdexcept>
 
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <getopt.h>
 #include <iconv.h>
 
 #include "compoppler.h"
+#include "debug.h"
+#include "config.h"
 
 #include <pstreams/pstream.h>
 #include <libdjvu/miniexp.h>
-
-static enum
-{
-  CONF_TEXT_NONE = 0,
-  CONF_TEXT_WORDS,
-  CONF_TEXT_LINES
-} conf_text = CONF_TEXT_WORDS;
-static enum
-{
-  CONF_FORMAT_BUNDLED,
-  CONF_FORMAT_INDIRECT
-} conf_format = CONF_FORMAT_BUNDLED;
-static std::string conf_output;
-static bool conf_output_stdout = true;
-static int conf_verbose = 1;
-static int conf_dpi = 300;
-static int conf_bg_subsample = 3;
-static bool conf_antialias = false;
-static bool conf_extract_hyperlinks = true;
-static bool conf_extract_metadata = true;
-static bool conf_extract_outline = true;
-static bool conf_no_render = false;
-static char *conf_bg_slices = NULL;
-static std::vector< std::pair<int, int> > conf_pages;
-static char *file_name;
-
-class DevNull : public std::ostream
-{
-public:
-  DevNull() : std::ostream(0) { }
-};
-
-static DevNull dev_null;
-
-static std::ostream &debug(int n)
-{
-  if (n <= conf_verbose)
-    return std::clog;
-  else
-    return dev_null;
-}
-
-class Error
-{
-public:
-  Error() : message("Unknown error") {};
-  explicit Error(const std::string &message) : message(message) {};
-  friend std::ostream &operator<<(std::ostream &, const Error &);
-protected:
-  std::string message;
-};
-
-std::ostream &operator<<(std::ostream &stream, const Error &error)
-{
-  return stream << error.message;
-}
 
 class OSError : public Error
 {
@@ -93,62 +37,6 @@ public:
   OSError() : Error("")
   {
     message += strerror(errno);
-  }
-};
-
-class ConfigurationError : public Error
-{
-public:
-  explicit ConfigurationError(const std::string &message) : Error(message) {};
-  virtual bool is_quiet() const
-  {
-    return false;
-  }
-  virtual bool is_already_printed() const
-  {
-    return false;
-  }
-  virtual ~ConfigurationError() { /* just to shut up compilers */ }
-};
-
-class PagesParseError : public ConfigurationError
-{
-public:
-  PagesParseError() : ConfigurationError("Unable to parse page numbers") {}
-};
-
-class DpiOutsideRange : public ConfigurationError
-{
-public:
-  DpiOutsideRange(int dpi_from, int dpi_to) : ConfigurationError("The specified resolution is outside the allowed range")
-  {
-    std::ostringstream stream;
-    stream << ": " << dpi_from << " .. " << dpi_to;
-    this->message += stream.str();
-  }
-};
-
-class NeedHelp : public ConfigurationError
-{
-public:
-  NeedHelp() : ConfigurationError("") {};
-  virtual bool is_quiet() const
-  {
-    return true;
-  }
-};
-
-class InvalidOption : public ConfigurationError
-{
-public:
-  InvalidOption() : ConfigurationError("") {};
-  virtual bool is_quiet() const
-  {
-    return true;
-  }
-  virtual bool is_already_printed() const
-  {
-    return true;
   }
 };
 
@@ -292,7 +180,7 @@ public:
 
   void drawLink(Link *link, Catalog *catalog)
   {
-    if (!conf_extract_hyperlinks)
+    if (!config::extract_hyperlinks)
       return;
     double x1, y1, x2, y2;
     LinkAction *link_action = link->getAction();
@@ -384,209 +272,6 @@ public:
     texts.clear();
   }
 };
-
-static void usage(const ConfigurationError &error)
-{
-  if (error.is_already_printed())
-    debug(0) << std::endl;
-  if (!error.is_quiet())
-    debug(0) << error << std::endl << std::endl;
-  debug(0) 
-    << "Usage: " << std::endl
-    << "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>" << std::endl
-    << "   pdf2djvu  -i <output-directory>  [options] <pdf-file>" << std::endl
-    << std::endl
-    << "Options:" << std::endl
-    << " -i, --indirect=DIR"      << std::endl
-    << " -o, --output=FILE"       << std::endl
-    << " -v, --verbose"           << std::endl
-    << " -q, --quiet"             << std::endl
-    << " -d, --dpi=resolution"    << std::endl
-    << "     --bg-slices=n,...,n" << std::endl
-    << "     --bg-slices=n+...+n" << std::endl
-    << "     --bg-subsample=n"    << std::endl
-    << "     --antialias"         << std::endl
-    << "     --no-metadata"       << std::endl
-    << "     --no-outline"        << std::endl
-    << "     --no-hyperlinks"     << std::endl
-    << "     --no-text"           << std::endl
-    << "     --words"             << std::endl
-    << "     --lines"             << std::endl
-    << " -p, --pages=..."         << std::endl
-    << " -h, --help"              << std::endl
-  ;
-  exit(1);
-}
-
-static void parse_pages(const std::string &s, std::vector< std::pair<int, int> > &result)
-{
-  int state = 0;
-  int value[2] = { 0, 0 };
-  for (std::string::const_iterator it = s.begin(); it != s.end(); it++)
-  {
-    if (('0' <= *it) && (*it <= '9'))
-    {
-      value[state] = value[state] * 10 + (int)(*it - '0');
-      if (state == 0)
-        value[1] = value[0];
-    }
-    else if (state == 0 && *it == '-')
-    {
-      state = 1;
-      value[1] = 0;
-    }
-    else if (*it == ',')
-    {
-      if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-        throw PagesParseError();
-      result.push_back(std::make_pair(value[0], value[1]));
-      value[0] = value[1] = 0;
-      state = 0;
-    }
-    else
-      throw PagesParseError();
-  }
-  if (state == 0)
-    value[1] = value[0];
-  if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-    throw PagesParseError();
-  result.push_back(std::make_pair(value[0], value[1]));
-}
-
-/* XXX
- * csepdjvu requires 25 <= dpi <= 144 000
- * djvumake requires 72 <= dpi <= 144 000
- * cpaldjvu requires 25 <= dpi <=   1 200 (but we don't use it)
- */
-static const int DJVU_MIN_DPI = 72;
-static const int DJVU_MAX_DPI = 144000;
-
-static void read_config(int argc, char * const argv[])
-{
-  enum
-  {
-    OPT_ANTIALIAS    = 0x300,
-    OPT_BG_SLICES    = 0x200,
-    OPT_BG_SUBSAMPLE = 0x201,
-    OPT_DPI          = 'd',
-    OPT_HELP         = 'h',
-    OPT_INDIRECT     = 'i',
-    OPT_NO_HLINKS    = 0x401,
-    OPT_NO_METADATA  = 0x402,
-    OPT_NO_OUTLINE   = 0x403,
-    OPT_NO_RENDER    = 0x400,
-    OPT_OUTPUT       = 'o',
-    OPT_PAGES        = 'p',
-    OPT_QUIET        = 'q',
-    OPT_TEXT_LINES   = 0x102,
-    OPT_TEXT_NONE    = 0x100,
-    OPT_TEXT_WORDS   = 0x101,
-    OPT_VERBOSE      = 'v'
-  };
-  static struct option options [] =
-  {
-    { "dpi",            1, 0, OPT_DPI },
-    { "quiet",          0, 0, OPT_QUIET },
-    { "verbose",        0, 0, OPT_VERBOSE },
-    { "bg-slices",      1, 0, OPT_BG_SLICES },
-    { "bg-subsample",   1, 0, OPT_BG_SUBSAMPLE },
-    { "antialias",      0, 0, OPT_ANTIALIAS },
-    { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
-    { "no-metadata",    0, 0, OPT_NO_METADATA },
-    { "no-outline",     0, 0, OPT_NO_OUTLINE },
-    { "no-render",      0, 0, OPT_NO_RENDER },
-    { "pages",          1, 0, OPT_PAGES },
-    { "help",           0, 0, OPT_HELP },
-    { "no-text",        0, 0, OPT_TEXT_NONE },
-    { "words",          0, 0, OPT_TEXT_WORDS },
-    { "lines",          0, 0, OPT_TEXT_LINES },
-    { "output",         1, 0, OPT_OUTPUT },
-    { "indirect",       0, 0, OPT_INDIRECT },
-    { NULL,             0, 0, '\0' }
-  };
-  int optindex, c;
-  while (true)
-  {
-    optindex = 0;
-    c = getopt_long(argc, argv, "i:o:d:qvp:h", options, &optindex);
-    if (c < 0)
-      break;
-    if (c == 0)
-      throw Error("");
-    switch (c)
-    {
-    case OPT_DPI:
-      conf_dpi = atoi(optarg);
-      if (conf_dpi < DJVU_MIN_DPI || conf_dpi > DJVU_MAX_DPI)
-        throw DpiOutsideRange(DJVU_MIN_DPI, DJVU_MAX_DPI);
-      break;
-    case OPT_QUIET:
-      conf_verbose = 0;
-      break;
-    case OPT_VERBOSE:
-      conf_verbose = 2;
-      break;
-    case OPT_BG_SLICES:
-      conf_bg_slices = optarg;
-      break;
-    case OPT_BG_SUBSAMPLE:
-      conf_bg_subsample = atoi(optarg);
-      if (conf_bg_subsample < 1 || conf_bg_subsample > 11)
-        throw ConfigurationError("The specified subsampling ratio is outside the allowed range");
-      break;
-    case OPT_PAGES:
-      parse_pages(optarg, conf_pages);
-      break;
-    case OPT_ANTIALIAS:
-      conf_antialias = 1;
-      break;
-    case OPT_NO_HLINKS:
-      conf_extract_hyperlinks = false;
-      break;
-    case OPT_NO_METADATA:
-      conf_extract_metadata = false;
-      break;
-    case OPT_NO_OUTLINE:
-      conf_extract_outline = false;
-      break;
-    case OPT_NO_RENDER:
-      conf_no_render = 1;
-      break;
-    case OPT_TEXT_NONE:
-      conf_text = CONF_TEXT_NONE;
-      break;
-    case OPT_TEXT_WORDS:
-      conf_text = CONF_TEXT_WORDS;
-      break;
-    case OPT_TEXT_LINES:
-      conf_text = CONF_TEXT_LINES;
-      break;
-    case OPT_OUTPUT:
-      conf_format = CONF_FORMAT_BUNDLED;
-      conf_output = optarg;
-      conf_output_stdout = false;
-      break;
-    case OPT_INDIRECT:
-      conf_format = CONF_FORMAT_INDIRECT;
-      conf_output = optarg;
-      conf_output_stdout = false;
-      break;
-    case OPT_HELP:
-      throw NeedHelp();
-    case '?':
-    case ':':
-      throw InvalidOption();
-    default:
-      throw std::logic_error("Unknown option");
-    }
-  }
-  if (optind < argc - 1)
-    throw ConfigurationError("Too many arguments were specified");
-  else if (optind > argc - 1)
-    throw ConfigurationError("No input file name was specified");
-  else
-    file_name = argv[optind];
-}
 
 static void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
 {
@@ -1359,18 +1044,19 @@ static int xmain(int argc, char * const argv[])
 
   try
   {
-    read_config(argc, argv);
+    config::read_config(argc, argv);
   }
-  catch (const ConfigurationError &ex)
+  catch (const config::Error &ex)
   {
-    usage(ex);
+    config::usage(ex);
+    exit(1);
   }
 
   init_global_params();
-  if (!set_antialias(conf_antialias))
+  if (!set_antialias(config::antialias))
     throw Error();
 
-  PDFDoc *doc = new_document(file_name);
+  PDFDoc *doc = new_document(config::file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
 
@@ -1385,27 +1071,27 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<PageFiles> page_files;
-  if (conf_format == CONF_FORMAT_BUNDLED)
+  if (config::format == config::FORMAT_BUNDLED)
   {
-    if (conf_output_stdout)
+    if (config::output_stdout)
       output_file.reset(new TemporaryFile());
     else
-      output_file.reset(new File(conf_output));
+      output_file.reset(new File(config::output));
     djvm.reset(new BundledDjVm(*output_file));
     page_files.reset(new TemporaryPageFiles(n_pages));
   }
   else
   {
-    output_dir.reset(new Directory(conf_output));
+    output_dir.reset(new Directory(config::output));
     output_file.reset(new File(*output_dir, "index.djvu"));
     page_files.reset(new IndirectPageFiles(n_pages, *output_dir));
     djvm.reset(new IndirectDjVm(*output_file));
   }
-  if (conf_pages.size() == 0)
-    conf_pages.push_back(std::make_pair(1, n_pages));
+  if (config::pages.size() == 0)
+    config::pages.push_back(std::make_pair(1, n_pages));
   std::map<int, int> page_map;
   int opage = 1;
-  for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
+  for (std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin(); page_range != config::pages.end(); page_range++)
   for (int ipage = page_range->first; ipage <= n_pages && ipage <= page_range->second; ipage++)
   {
     page_map[ipage] = opage;
@@ -1417,7 +1103,7 @@ static int xmain(int argc, char * const argv[])
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   outs->startDoc(doc->getXRef());
-  for (std::vector< std::pair<int, int> >::iterator page_range = conf_pages.begin(); page_range != conf_pages.end(); page_range++)
+  for (std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin(); page_range != config::pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;
@@ -1426,14 +1112,14 @@ static int xmain(int argc, char * const argv[])
     debug(2) << ":";
     debug(1) << std::endl;
     debug(2) << "  - muted render" << std::endl;
-    display_page(doc, outm, n, conf_dpi, conf_dpi, true);
+    display_page(doc, outm, n, config::dpi, config::dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     debug(2) << "  - image size: " << width << "x" << height << std::endl;
-    if (!conf_no_render)
+    if (!config::no_render)
     {
       debug(2) << "  - verbose render" << std::endl;
-      display_page(doc, out1, n, conf_dpi, conf_dpi, false);
+      display_page(doc, out1, n, config::dpi, config::dpi, false);
     }
     debug(2) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -1450,7 +1136,7 @@ static int xmain(int argc, char * const argv[])
     int background_color[3];
     bool has_foreground = false;
     bool has_text = false;
-    if (conf_no_render)
+    if (config::no_render)
     {
       debug(2) << "  - dummy rle data >> sep_file" << std::endl;
       int item = (0xfff << 20) + width;
@@ -1523,8 +1209,8 @@ static int xmain(int argc, char * const argv[])
     bool nonwhite_background_color;
     if (has_background)
     {
-      int sub_width = (width + conf_bg_subsample - 1) / conf_bg_subsample;
-      int sub_height = (height + conf_bg_subsample - 1) / conf_bg_subsample;
+      int sub_width = (width + config::bg_subsample - 1) / config::bg_subsample;
+      int sub_height = (height + config::bg_subsample - 1) / config::bg_subsample;
       double hdpi = sub_width / get_page_width(doc, n);
       double vdpi = sub_height / get_page_height(doc, n);
       debug(2) << "  - subsampled render" << std::endl;
@@ -1557,7 +1243,7 @@ static int xmain(int argc, char * const argv[])
           sep_file.write("\xff\xff\xff", 3);
       }
     }
-    if (conf_text)
+    if (config::text)
     {
       debug(2) << "  - text layer >> sep_file" << std::endl;
       const std::vector<std::string> &texts = outm->get_texts();
@@ -1574,10 +1260,10 @@ static int xmain(int argc, char * const argv[])
     {
       debug(2) << "  - !csepdjvu" << std::endl;
       Command csepdjvu(DJVULIBRE_BIN_PATH "/csepdjvu");
-      csepdjvu << "-d" << conf_dpi;
-      if (conf_bg_slices)
-        csepdjvu << "-q" << conf_bg_slices;
-      if (conf_text == CONF_TEXT_LINES)
+      csepdjvu << "-d" << config::dpi;
+      if (config::bg_slices)
+        csepdjvu << "-q" << config::bg_slices;
+      if (config::text == config::TEXT_LINES)
         csepdjvu << "-t";
       csepdjvu << sep_file << page_file;
       csepdjvu();
@@ -1593,7 +1279,7 @@ static int xmain(int argc, char * const argv[])
           << std::string("FGbz=") + std::string(fgbz_file)
           << std::string("BG44=") + std::string(bg44_file);
       djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
-      djvuextract(conf_verbose < 2);
+      djvuextract(config::verbose < 2);
     }
     if (nonwhite_background_color)
     {
@@ -1621,7 +1307,7 @@ static int xmain(int argc, char * const argv[])
         debug(2) << "  - !djvuextract" << std::endl;
         Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
         djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
-        djvuextract(conf_verbose < 2);
+        djvuextract(config::verbose < 2);
       }
     }
     {
@@ -1645,7 +1331,7 @@ static int xmain(int argc, char * const argv[])
       debug(2) << "  - !djvumake" << std::endl;
       Command djvumake(DJVULIBRE_BIN_PATH "/djvumake");
       std::ostringstream info;
-      info << "INFO=" << width << "," << height << "," << conf_dpi;
+      info << "INFO=" << width << "," << height << "," << config::dpi;
       djvumake
         << page_file
         << info.str()
@@ -1668,7 +1354,7 @@ static int xmain(int argc, char * const argv[])
   {
     TemporaryFile dummy_page_file;
     TemporaryFile sed_file;
-    if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
+    if (page_counter == 1 && config::format == config::FORMAT_BUNDLED)
     {
       // Dummy page is necessary to force multi-file document structure.
       dummy_page_file.write(DJVU_DUMMY_SINGLE_HEAD, sizeof DJVU_DUMMY_SINGLE_HEAD);
@@ -1681,7 +1367,7 @@ static int xmain(int argc, char * const argv[])
   }
   {
     TemporaryFile sed_file;
-    if (conf_extract_metadata)
+    if (config::extract_metadata)
     {
       debug(2) << "- metadata >> sed_file" << std::endl;
       sed_file << "set-meta" << std::endl;
@@ -1694,11 +1380,11 @@ static int xmain(int argc, char * const argv[])
     djvused << *output_file << "-s" << "-f" << sed_file;
     djvused();
   }
-  if (conf_extract_outline)
+  if (config::extract_outline)
   {
     TemporaryFile sed_file;
     debug(2) << "- outlines >> sed_file" << std::endl;
-    if (conf_format == CONF_FORMAT_BUNDLED)
+    if (config::format == config::FORMAT_BUNDLED)
     {
       // Shared annotations chunk in necessary to preserve multi-file document structure.
       // (Single-file documents cannot contain document outline.)
@@ -1710,7 +1396,7 @@ static int xmain(int argc, char * const argv[])
     sed_file.close();
     djvm->set_outline(sed_file);
   }
-  if (page_counter == 1 && conf_format == CONF_FORMAT_BUNDLED)
+  if (page_counter == 1 && config::format == config::FORMAT_BUNDLED)
   {
     // Dummy page is redundant now, so remove it.
     Command djvm(DJVULIBRE_BIN_PATH "/djvm");
@@ -1718,7 +1404,7 @@ static int xmain(int argc, char * const argv[])
     debug(2) << "- !djvm -d" << std::endl;
     djvm();
   }
-  if (conf_output_stdout)
+  if (config::output_stdout)
     copy_stream(*output_file, std::cout, true);
   return 0;
 }

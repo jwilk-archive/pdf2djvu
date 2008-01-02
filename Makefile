@@ -10,7 +10,10 @@ override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_B
 .PHONY: all
 all: pdf2djvu
 
-pdf2djvu: pdf2djvu.cc compoppler.h
+config.o: config.cc config.h debug.h
+debug.o: debug.cc debug.h config.h
+pdf2djvu.o: pdf2djvu.cc compoppler.h debug.h config.h
+pdf2djvu: pdf2djvu.o debug.o config.o
 
 .PHONY: clean
 clean:
