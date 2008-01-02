@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-#include "debug.h"
+#include "debug.hh"
 
 namespace config
 {

@@ -24,9 +24,9 @@
 #include <sys/stat.h>
 #include <iconv.h>
 
-#include "compoppler.h"
-#include "debug.h"
-#include "config.h"
+#include "compoppler.hh"
+#include "debug.hh"
+#include "config.hh"
 
 #include <pstreams/pstream.h>
 #include <libdjvu/miniexp.h>

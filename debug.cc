@@ -5,8 +5,8 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#include "debug.h"
-#include "config.h"
+#include "debug.hh"
+#include "config.hh"
 
 DevNull dev_null;
 

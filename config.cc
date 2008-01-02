@@ -7,7 +7,7 @@
 
 #include <stdexcept>
 
-#include "config.h"
+#include "config.hh"
 
 #include <getopt.h>
 
