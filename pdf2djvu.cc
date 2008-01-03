@@ -768,6 +768,9 @@ static int xmain(int argc, char * const argv[])
     exit(1);
   }
 
+  if (config::output_stdout && is_stream_a_tty(std::cout))
+    throw Error("I won't write DjVu data to a terminal.");
+
   init_global_params();
   if (!set_antialias(config::antialias))
     throw Error();
