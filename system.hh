@@ -130,6 +130,8 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit);
 
+bool is_stream_a_tty(const std::ostream &ostream);
+
 #endif
 
 // vim:ts=2 sw=2 et

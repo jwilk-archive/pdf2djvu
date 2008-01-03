@@ -9,6 +9,7 @@
 
 #include <cerrno>
 #include <sstream>
+#include <stdexcept>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -186,6 +187,19 @@ void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::s
     istream.read(buffer, chunk_size);
     ostream.write(buffer, istream.gcount());
     limit -= chunk_size;
+  }
+}
+
+bool is_stream_a_tty(const std::ostream &ostream)
+{
+  if (&ostream == &std::cout)
+    return isatty(STDOUT_FILENO);
+  else
+  {
+    // Not implemented for `ostream != std::count`.
+    // See <http://www.ginac.de/~kreckel/fileno/> for a more general
+    // (although terribly unportable) solution.
+    throw std::invalid_argument("is_a_tty(const std::ostream &)");
   }
 }
 
