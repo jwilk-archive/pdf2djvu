@@ -19,7 +19,7 @@ pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o
 
 .PHONY: clean
 clean:
-	$(RM) pdf2djvu
+	$(RM) pdf2djvu *.o
 
 .PHONY: test
 test: pdf2djvu
