@@ -6,6 +6,8 @@ Bugs: mailto:ubanus@users.sf.net
 Build-Depends: cdbs, debhelper (>= 5), libpoppler-dev, libdjvulibre-dev, libpstreams-dev
 Standards-Version: 3.7.3
 Homepage: http://pdf2djvu.googlecode.com/
+Vcs-Svn: http://pdf2djvu.googlecode.com/svn/trunk
+Vcs-Browser: http://pdf2djvu.googlecode.com/svn/trunk
 
 Package: pdf2djvu
 Architecture: any
