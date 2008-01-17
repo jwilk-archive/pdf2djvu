@@ -1,4 +1,4 @@
-pdf2djvu (0.4.2) UNRELEASED; urgency=low
+pdf2djvu (0.4.2) unstable; urgency=low
 
   * Split code into several files.
   * Don't write binary garbage to a terminal. 
