@@ -38,7 +38,7 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
     unistr++, len--;
   if (len == 0)
     return std::string();
-  for (; len >= 0; len--, unistr++)
+  for (; len > 0; len--, unistr++)
   {
     if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
       strstream << "\\" << std::oct << std::setfill('0') << std::setw(3) << static_cast<unsigned int>(*unistr);
