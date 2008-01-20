@@ -16,7 +16,7 @@ compoppler.o: compoppler.cc compoppler.hh
 system.o: system.cc system.hh debug.hh
 pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh
 pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o
-	$(CXX) $(LDFLAGS) $(^) $(LOADLIBES) $(LDLIBS) -o $(@)
+	$(LINK.cc) $(^) -o $(@) 
 
 .PHONY: clean
 clean:
