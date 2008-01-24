@@ -36,6 +36,8 @@ namespace config
   extern int dpi;
   extern int bg_subsample;
   extern bool antialias;
+  extern std::vector<std::string> hyperlinks_options;
+  extern bool hyperlinks_user_border_color;
   extern bool extract_hyperlinks;
   extern bool extract_metadata;
   extern bool extract_outline;
@@ -63,6 +65,12 @@ namespace config
   {
   public:
     PagesParseError() : Error("Unable to parse page numbers") {}
+  };
+
+  class HyperlinksOptionsParseError : public Error
+  {
+  public:
+    HyperlinksOptionsParseError() : Error("Unable to parse hyperlinks options") {}
   };
 
   class DpiOutsideRange : public Error

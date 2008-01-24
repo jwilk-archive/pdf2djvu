@@ -215,9 +215,12 @@ public:
     strstream << "(maparea" 
       << " " << uri
       << " \"\"" 
-      << " (rect " << x << " " << y << " " << w << " " << h << ")"
-      << " (border " << border_color << ")"
-      << ")";
+      << " (rect " << x << " " << y << " " << w << " " << h << ")";
+    for (std::vector<std::string>::const_iterator it = config::hyperlinks_options.begin(); it != config::hyperlinks_options.end(); it++)
+      strstream << " (" << *it << ")";
+    if (!config::hyperlinks_user_border_color)
+      strstream << " (border " << border_color << ")";
+    strstream << ")";
     annotations.push_back(strstream.str());
   }
 

@@ -19,6 +19,8 @@ int config::verbose = 1;
 int config::dpi = 300;
 int config::bg_subsample = 3;
 bool config::antialias = false;
+std::vector<std::string> config::hyperlinks_options;
+bool config::hyperlinks_user_border_color = false;
 bool config::extract_hyperlinks = true;
 bool config::extract_metadata = true;
 bool config::extract_outline = true;
@@ -34,6 +36,46 @@ char *config::file_name = NULL;
  */
 static const int DJVU_MIN_DPI = 72;
 static const int DJVU_MAX_DPI = 144000;
+
+static void split_by_char(char c, const std::string &s, std::vector<std::string> &result)
+{
+  size_t lpos = 0;
+  while (true)
+  {
+    size_t rpos = s.find(c, lpos);
+    result.push_back(s.substr(lpos, rpos - lpos));
+    if (rpos == std::string::npos)
+      break;
+    else
+      lpos = rpos + 1;
+  }
+}
+
+static void parse_hyperlinks_options(const std::string &s, std::vector<std::string> &result, bool &user_border_color)
+{
+  std::vector<std::string> splitted;
+  split_by_char(',', s, splitted);
+  for (std::vector<std::string>::const_iterator it = splitted.begin(); it != splitted.end(); it++)
+  {
+    if (*it == "border-avis" || *it == "border_avis")
+    {
+      result.push_back("border_avis");
+      continue;
+    }
+    else if 
+    (
+      it->length() == 7 &&
+      (*it)[0] == '#' &&
+      it->find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
+    )
+    {
+      result.push_back("border " + *it);
+      user_border_color = true;
+      continue;
+    }
+    throw config::HyperlinksOptionsParseError();
+  }
+}
 
 static void parse_pages(const std::string &s, std::vector< std::pair<int, int> > &result)
 {
@@ -79,6 +121,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_BG_SUBSAMPLE = 0x201,
     OPT_DPI          = 'd',
     OPT_HELP         = 'h',
+    OPT_HYPERLINKS   = 0x501,
     OPT_INDIRECT     = 'i',
     OPT_NO_HLINKS    = 0x401,
     OPT_NO_METADATA  = 0x402,
@@ -100,6 +143,7 @@ void config::read_config(int argc, char * const argv[])
     { "bg-slices",      1, 0, OPT_BG_SLICES },
     { "bg-subsample",   1, 0, OPT_BG_SUBSAMPLE },
     { "antialias",      0, 0, OPT_ANTIALIAS },
+    { "hyperlinks",     1, 0, OPT_HYPERLINKS },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
     { "no-metadata",    0, 0, OPT_NO_METADATA },
     { "no-outline",     0, 0, OPT_NO_OUTLINE },
@@ -148,6 +192,9 @@ void config::read_config(int argc, char * const argv[])
       break;
     case OPT_ANTIALIAS:
       config::antialias = 1;
+      break;
+    case OPT_HYPERLINKS:
+      parse_hyperlinks_options(optarg, config::hyperlinks_options, config::hyperlinks_user_border_color);
       break;
     case OPT_NO_HLINKS:
       config::extract_hyperlinks = false;
