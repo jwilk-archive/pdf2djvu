@@ -261,9 +261,9 @@ void config::usage(const config::Error &error)
     << " -v, --verbose"           << std::endl
     << " -q, --quiet"             << std::endl
     << " -d, --dpi=resolution"    << std::endl
-    << "     --bg-slices=n,...,n" << std::endl
-    << "     --bg-slices=n+...+n" << std::endl
-    << "     --bg-subsample=n"    << std::endl
+    << "     --bg-slices=N,...,N" << std::endl
+    << "     --bg-slices=N+...+N" << std::endl
+    << "     --bg-subsample=N"    << std::endl
     << "     --antialias"         << std::endl
     << "     --no-metadata"       << std::endl
     << "     --no-outline"        << std::endl
