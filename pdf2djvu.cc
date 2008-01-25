@@ -833,20 +833,20 @@ static int xmain(int argc, char * const argv[])
     debug(1) << "- page #" << n << " -> #" << page_map[n];
     debug(2) << ":";
     debug(1) << std::endl;
-    debug(2) << "  - muted render" << std::endl;
+    debug(3) << "  - muted render" << std::endl;
     display_page(doc, outm, n, config::dpi, config::dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     debug(2) << "  - image size: " << width << "x" << height << std::endl;
     if (!config::no_render)
     {
-      debug(2) << "  - verbose render" << std::endl;
+      debug(3) << "  - verbose render" << std::endl;
       display_page(doc, out1, n, config::dpi, config::dpi, false);
     }
-    debug(2) << "  - create sep_file" << std::endl;
+    debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
     sep_file << "R6 " << width << " " << height << " 216" << std::endl;
-    debug(2) << "  - rle palette >> sep_file" << std::endl;
+    debug(3) << "  - rle palette >> sep_file" << std::endl;
     for (int r = 0; r < 6; r++)
     for (int g = 0; g < 6; g++)
     for (int b = 0; b < 6; b++)
@@ -860,7 +860,7 @@ static int xmain(int argc, char * const argv[])
     bool has_text = false;
     if (config::no_render)
     {
-      debug(2) << "  - dummy rle data >> sep_file" << std::endl;
+      debug(3) << "  - dummy rle data >> sep_file" << std::endl;
       int item = (0xfff << 20) + width;
       for (int y = 0; y < height; y++)
       for (int i = 0; i < 4; i++)
@@ -871,7 +871,7 @@ static int xmain(int argc, char * const argv[])
     }
     else
     {
-      debug(2) << "  - rle data >> sep_file" << std::endl;
+      debug(3) << "  - rle data >> sep_file" << std::endl;
       Pixmap bmp1 = Pixmap(out1);
       Pixmap bmpm = Pixmap(outm);
       PixmapIterator p1 = bmp1.begin();
@@ -935,14 +935,14 @@ static int xmain(int argc, char * const argv[])
       int sub_height = (height + config::bg_subsample - 1) / config::bg_subsample;
       double hdpi = sub_width / get_page_width(doc, n);
       double vdpi = sub_height / get_page_height(doc, n);
-      debug(2) << "  - subsampled render" << std::endl;
+      debug(3) << "  - subsampled render" << std::endl;
       display_page(doc, outs, n, hdpi, vdpi, true);
       if (sub_width != outs->getBitmapWidth())
         throw Error();
       if (sub_height != outs->getBitmapHeight())
         throw Error();
       Pixmap bmp = Pixmap(outs);
-      debug(2) << "  - background pixmap >> sep_file" << std::endl;
+      debug(3) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
       sep_file << bmp;
       nonwhite_background_color = false;
@@ -958,7 +958,7 @@ static int xmain(int argc, char * const argv[])
         // It will be replaced later.
         int sub_width = (width + 10) / 11;
         int sub_height = (height + 10) / 11;
-        debug(2) << "  - dummy background pixmap >> sep_file" << std::endl;
+        debug(3) << "  - dummy background pixmap >> sep_file" << std::endl;
         sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
         for (int x = 0; x < sub_width; x++)
         for (int y = 0; y < sub_height; y++)
@@ -967,7 +967,7 @@ static int xmain(int argc, char * const argv[])
     }
     if (config::text)
     {
-      debug(2) << "  - text layer >> sep_file" << std::endl;
+      debug(3) << "  - text layer >> sep_file" << std::endl;
       const std::vector<std::string> &texts = outm->get_texts();
       for (std::vector<std::string>::const_iterator it = texts.begin(); it != texts.end(); it++)
       {
@@ -980,7 +980,7 @@ static int xmain(int argc, char * const argv[])
     }
     sep_file.close();
     {
-      debug(2) << "  - !csepdjvu" << std::endl;
+      debug(3) << "  - !csepdjvu" << std::endl;
       Command csepdjvu(DJVULIBRE_BIN_PATH "/csepdjvu");
       csepdjvu << "-d" << config::dpi;
       if (config::bg_slices)
@@ -993,7 +993,7 @@ static int xmain(int argc, char * const argv[])
     *djvm << page_file;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
-      debug(2) << "  - !djvuextract" << std::endl;
+      debug(3) << "  - !djvuextract" << std::endl;
       Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
       djvuextract << page_file;
       if (has_background || has_foreground || nonwhite_background_color)
@@ -1001,14 +1001,14 @@ static int xmain(int argc, char * const argv[])
           << std::string("FGbz=") + std::string(fgbz_file)
           << std::string("BG44=") + std::string(bg44_file);
       djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
-      djvuextract(config::verbose < 2);
+      djvuextract(config::verbose < 3);
     }
     if (nonwhite_background_color)
     {
       TemporaryFile c44_file;
       {
         TemporaryFile ppm_file;
-        debug(2) << "  - !c44" << std::endl;
+        debug(3) << "  - !c44" << std::endl;
         Command c44(DJVULIBRE_BIN_PATH "/c44");
         c44 << "-slice" << "97" << ppm_file << c44_file;
         int bg_width = (width + 11) / 12;
@@ -1026,14 +1026,14 @@ static int xmain(int argc, char * const argv[])
       }
       {
         c44_file.reopen();
-        debug(2) << "  - !djvuextract" << std::endl;
+        debug(3) << "  - !djvuextract" << std::endl;
         Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
         djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
-        djvuextract(config::verbose < 2);
+        djvuextract(config::verbose < 3);
       }
     }
     {
-      debug(2) << "  - annotations >> sed_file" << std::endl;
+      debug(3) << "  - annotations >> sed_file" << std::endl;
       const std::vector<std::string> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
       for (std::vector<std::string>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
@@ -1043,14 +1043,14 @@ static int xmain(int argc, char * const argv[])
     }
     if (has_text)
     {
-      debug(2) << "  - !djvused >> sed_file" << std::endl;
+      debug(3) << "  - !djvused >> sed_file" << std::endl;
       Command djvused(DJVULIBRE_BIN_PATH "/djvused");
       djvused << page_file << "-e" << "output-txt";
       djvused(sed_file);
     }
     sed_file.close();
     {
-      debug(2) << "  - !djvumake" << std::endl;
+      debug(3) << "  - !djvumake" << std::endl;
       Command djvumake(DJVULIBRE_BIN_PATH "/djvumake");
       std::ostringstream info;
       info << "INFO=" << width << "," << height << "," << config::dpi;
@@ -1065,7 +1065,7 @@ static int xmain(int argc, char * const argv[])
       djvumake();
     }
     {
-      debug(2) << "  - !djvused < sed_file" << std::endl;
+      debug(3) << "  - !djvused < sed_file" << std::endl;
       Command djvused(DJVULIBRE_BIN_PATH "/djvused");
       djvused << page_file << "-s" << "-f" << sed_file;
       djvused();
@@ -1084,20 +1084,20 @@ static int xmain(int argc, char * const argv[])
       dummy_page_file.close();
       *djvm << dummy_page_file;
     }
-    debug(2) << "- !djvm" << std::endl;
+    debug(3) << "- !djvm" << std::endl;
     djvm->create();
   }
   {
     TemporaryFile sed_file;
     if (config::extract_metadata)
     {
-      debug(2) << "- metadata >> sed_file" << std::endl;
+      debug(3) << "- metadata >> sed_file" << std::endl;
       sed_file << "set-meta" << std::endl;
       pdf_metadata_to_djvu_metadata(doc, sed_file);
       sed_file << "." << std::endl;
     }
     sed_file.close();
-    debug(2) << "- !djvused < sed_file" << std::endl;
+    debug(3) << "- !djvused < sed_file" << std::endl;
     Command djvused(DJVULIBRE_BIN_PATH "/djvused");
     djvused << *output_file << "-s" << "-f" << sed_file;
     djvused();
@@ -1105,7 +1105,7 @@ static int xmain(int argc, char * const argv[])
   if (config::extract_outline)
   {
     TemporaryFile sed_file;
-    debug(2) << "- outlines >> sed_file" << std::endl;
+    debug(3) << "- outlines >> sed_file" << std::endl;
     if (config::format == config::FORMAT_BUNDLED)
     {
       // Shared annotations chunk in necessary to preserve multi-file document structure.
@@ -1123,7 +1123,7 @@ static int xmain(int argc, char * const argv[])
     // Dummy page is redundant now, so remove it.
     Command djvm(DJVULIBRE_BIN_PATH "/djvm");
     djvm << "-d" << *output_file << "2";
-    debug(2) << "- !djvm -d" << std::endl;
+    debug(3) << "- !djvm -d" << std::endl;
     djvm();
   }
   if (config::output_stdout)
