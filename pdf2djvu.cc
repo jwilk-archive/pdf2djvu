@@ -1140,7 +1140,7 @@ static int xmain(int argc, char * const argv[])
     size_t djvu_size = output_file->size();
     double bpp = 8.0 * djvu_size / n_pixels;
     double ratio = 1.0 * pdf_size / djvu_size;
-    double percent_saved = (pdf_size - djvu_size) * 100.0 / pdf_size;
+    double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;
     debug(1) 
       << std::fixed << std::setprecision(3) << bpp << " bits/pixel; "
       << std::fixed << std::setprecision(3) << ratio << ":1, "
