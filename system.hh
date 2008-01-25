@@ -77,6 +77,7 @@ public:
   explicit File(const std::string &name);
   File(const Directory& directory, const std::string &name);
   virtual ~File() { }
+  size_t size();
   void reopen();
   operator const std::string& () const;
   friend std::ostream &operator<<(std::ostream &, const File &);

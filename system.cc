@@ -73,6 +73,12 @@ File::File(const Directory& directory, const std::string &name)
   this->_open(stream.str().c_str());
 }
 
+size_t File::size()
+{
+  this->seekg(0, std::ios::end);
+  return this->tellg();
+}
+
 void File::reopen()
 {
   if (this->is_open())

@@ -745,8 +745,7 @@ public:
       bzz << "-e" << bzz_file << "-";
       bzz(index_file);
     }
-    index_file.seekg(0, std::ios::end);
-    size = index_file.tellg();
+    size = index_file.size();
     index_file.seekg(8, std::ios::beg);
     for (int i = 3; i >= 0; i--)
       index_file << static_cast<char>(((size - 12) >> (8 * i)) & 0xff);
@@ -778,6 +777,14 @@ static int xmain(int argc, char * const argv[])
   if (!set_antialias(config::antialias))
     throw Error();
 
+  size_t pdf_size;
+  { 
+    std::ifstream ifs(config::file_name, std::ifstream::in | std::ifstream::binary);
+    ifs.seekg(0, std::ios::end);
+    pdf_size = ifs.tellg();
+    ifs.close();
+  }
+
   PDFDoc *doc = new_document(config::file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
@@ -787,6 +794,7 @@ static int xmain(int argc, char * const argv[])
   SplashColor paper_color;
   set_color(paper_color, 0xff, 0xff, 0xff);
 
+  size_t n_pixels = 0;
   int n_pages = doc->getNumPages();
   int page_counter = 0;
   std::auto_ptr<const Directory> output_dir;
@@ -837,6 +845,7 @@ static int xmain(int argc, char * const argv[])
     display_page(doc, outm, n, config::dpi, config::dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
+    n_pixels += width * height;
     debug(2) << "  - image size: " << width << "x" << height << std::endl;
     if (!config::no_render)
     {
@@ -1125,6 +1134,20 @@ static int xmain(int argc, char * const argv[])
     djvm << "-d" << *output_file << "2";
     debug(3) << "- !djvm -d" << std::endl;
     djvm();
+  }
+  {
+    // TODO: Calculate indirect file sizes correctly
+    size_t djvu_size = output_file->size();
+    double bpp = 8.0 * djvu_size / n_pixels;
+    double ratio = 1.0 * pdf_size / djvu_size;
+    double percent_saved = (pdf_size - djvu_size) * 100.0 / pdf_size;
+    debug(1) 
+      << std::fixed << std::setprecision(3) << bpp << " bits/pixel; "
+      << std::fixed << std::setprecision(3) << ratio << ":1, "
+      << std::fixed << std::setprecision(2) << percent_saved << "% saved, "
+      << pdf_size << " bytes in, "
+      << djvu_size << " bytes out" 
+      << std::endl;
   }
   if (config::output_stdout)
     copy_stream(*output_file, std::cout, true);
