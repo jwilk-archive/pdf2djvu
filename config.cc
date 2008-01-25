@@ -267,6 +267,7 @@ void config::usage(const config::Error &error)
     << "     --antialias"         << std::endl
     << "     --no-metadata"       << std::endl
     << "     --no-outline"        << std::endl
+    << "     --hyperlinks=..."    << std::endl
     << "     --no-hyperlinks"     << std::endl
     << "     --no-text"           << std::endl
     << "     --words"             << std::endl

@@ -183,6 +183,34 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--hyperlinks=<replaceable>options</replaceable></option></term>
+			<listitem>
+				<para>
+					Specifies hyperlink display options. <replaceable>options</replaceable> should be comma separated list
+					of:
+					<variablelist>
+						<varlistentry>
+							<term>border-avis</term>
+							<listitem>
+								<para>
+									Make hyperlinks' borders always visible. (Otherwise, the border will be visible only
+									when the mouse is over the hyperlink.)
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term>#<replaceable>RRGGBB</replaceable></term>
+							<listitem>
+								<para>
+									Set hyperlinks' borders color.
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--no-hyperlinks</option></term>
 			<listitem>
 				<para>
