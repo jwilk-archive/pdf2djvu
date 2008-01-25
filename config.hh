@@ -110,7 +110,6 @@ namespace config
 
   void read_config(int argc, char * const argv[]);
   void usage(const Error &error);
-
 }
 
 #endif

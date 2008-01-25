@@ -25,7 +25,6 @@ class Command
 private:
   std::string command;
   redi::pstreams::argv_type argv;
-
   void call(std::ostream *my_stdout, bool quiet = false);
 public:
   explicit Command(const std::string& command);
