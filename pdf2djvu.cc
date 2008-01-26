@@ -793,6 +793,7 @@ static int xmain(int argc, char * const argv[])
   set_color(paper_color, 0xff, 0xff, 0xff);
 
   size_t n_pixels = 0;
+  size_t djvu_pages_size = 0;
   int n_pages = doc->getNumPages();
   int page_counter = 0;
   std::auto_ptr<const Directory> output_dir;
@@ -1077,6 +1078,14 @@ static int xmain(int argc, char * const argv[])
       djvused << page_file << "-s" << "-f" << sed_file;
       djvused();
     }
+    {
+      size_t page_size;
+      page_file.reopen();
+      page_size = page_file.size();
+      page_file.close();
+      debug(2) << "  - " << page_size << " bytes out";
+      djvu_pages_size += page_size;
+    }
   }
   if (page_counter == 0)
     throw Error("No pages selected");
@@ -1134,8 +1143,10 @@ static int xmain(int argc, char * const argv[])
     djvm();
   }
   {
-    // TODO: Calculate indirect file sizes correctly
     size_t djvu_size = output_file->size();
+    if (config::format == config::FORMAT_INDIRECT)
+      djvu_size += djvu_pages_size;
+      // FIXME `shared_anno.iff` should be taken into consideration
     double bpp = 8.0 * djvu_size / n_pixels;
     double ratio = 1.0 * pdf_size / djvu_size;
     double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;
