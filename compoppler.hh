@@ -48,18 +48,23 @@ public:
   { }
 
 #if POPPLER_VERSION < 500
-  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, Unicode *unistr, int len)
+  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+    CharCode code, Unicode *unistr, int len)
   {
     this->drawChar(state, x, y, dx, dy, origin_x, origin_y, code, -1, unistr, len);
   }
 
-  virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
+  virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+    CharCode code, int n_bytes, Unicode *unistr, int len)
   {
     this->SplashOutputDev::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
   }
   
-  virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
-  virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
+  virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
+    GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
+  virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream,
+    int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
+    int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
 
   SplashFont *getCurrentFont()
   {
