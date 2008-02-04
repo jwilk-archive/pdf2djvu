@@ -106,35 +106,43 @@ private:
   std::map<int, int> &page_map;
 public:
 
-  void drawImageMask(GfxState *state, Object *object, Stream *stream, int width, int height, GBool invert, GBool inline_image)
+  void drawImageMask(GfxState *state, Object *object, Stream *stream, int width, int height, 
+    GBool invert, GBool inline_image)
   {
     return;
   }
 
-  void drawImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, int *mask_colors, GBool inline_image)
+  void drawImage(GfxState *state, Object *object, Stream *stream, int width, int height,
+    GfxImageColorMap *color_map, int *mask_colors, GBool inline_image)
   {
     if (is_foreground_color_map(color_map))
       return;
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
 
-  void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
+  void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
+    GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
     if (is_foreground_color_map(color_map))
       return;
-    Renderer::drawMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_invert);
+    Renderer::drawMaskedImage(state, object, stream, width, height,
+      color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
 
-  void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height, GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
+  void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream,
+    int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
+    int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
   {
     if (is_foreground_color_map(color_map))
       return;
-    Renderer::drawSoftMaskedImage(state, object, stream, width, height, color_map, mask_stream, mask_width, mask_height, mask_color_map);
+    Renderer::drawSoftMaskedImage(state, object, stream, width, height,
+      color_map, mask_stream, mask_width, mask_height, mask_color_map);
   }
 
   GBool interpretType3Chars() { return gFalse; }
 
-  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y, CharCode code, int n_bytes, Unicode *unistr, int len)
+  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+    CharCode code, int n_bytes, Unicode *unistr, int len)
   {
     double px, py, pdx, pdy;
     state->transform(x, y, &px, &py);
@@ -216,7 +224,10 @@ public:
       << " " << uri
       << " \"\"" 
       << " (rect " << x << " " << y << " " << w << " " << h << ")";
-    for (std::vector<std::string>::const_iterator it = config::hyperlinks_options.begin(); it != config::hyperlinks_options.end(); it++)
+    for (
+      std::vector<std::string>::const_iterator it = config::hyperlinks_options.begin();
+      it != config::hyperlinks_options.end(); it++
+    )
       strstream << " (" << *it << ")";
     if (!config::hyperlinks_user_border_color)
       strstream << " (border " << border_color << ")";
@@ -299,7 +310,8 @@ static std::string pdf_string_to_utf8_string(GooString *from)
   return stream.str();
 }
 
-static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream, std::map<int, int> &page_map)
+static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream,
+  std::map<int, int> &page_map)
 {
   Object current, next;
   if (!dict_lookup(node, "First", &current)->isDict())
@@ -820,7 +832,9 @@ static int xmain(int argc, char * const argv[])
     config::pages.push_back(std::make_pair(1, n_pages));
   std::map<int, int> page_map;
   int opage = 1;
-  for (std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin(); page_range != config::pages.end(); page_range++)
+  for (
+    std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
+    page_range != config::pages.end(); page_range++)
   for (int ipage = page_range->first; ipage <= n_pages && ipage <= page_range->second; ipage++)
   {
     page_map[ipage] = opage;
@@ -832,7 +846,9 @@ static int xmain(int argc, char * const argv[])
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   outs->startDoc(doc->getXRef());
-  for (std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin(); page_range != config::pages.end(); page_range++)
+  for (
+    std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
+    page_range != config::pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;

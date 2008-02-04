@@ -68,7 +68,11 @@ void Renderer::convert_path(GfxState *state, SplashPath &splash_path)
           state->transform(subpath->getX(j), subpath->getY(j), &x1, &y1);
           state->transform(subpath->getX(j + 1), subpath->getY(j + 1), &x2, &y2);
           state->transform(subpath->getX(j + 2), subpath->getY(j + 2), &x3, &y3);
-          splash_path.curveTo((SplashCoord)x1, (SplashCoord)y1, (SplashCoord)x2, (SplashCoord)y2, (SplashCoord)x3, (SplashCoord)y3);
+          splash_path.curveTo(
+            (SplashCoord)x1, (SplashCoord)y1,
+            (SplashCoord)x2, (SplashCoord)y2,
+            (SplashCoord)x3, (SplashCoord)y3
+          );
           j += 3;
         } 
         else 
