@@ -1,3 +1,9 @@
+pdf2djvu (0.4.4) unstable; urgency=low
+
+  * Fix an undefined behaviour which led to rendering bugs.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Tue, 05 Feb 2008 23:13:23 +0100
+
 pdf2djvu (0.4.3) unstable; urgency=low
 
   * Fix some linking issues.
