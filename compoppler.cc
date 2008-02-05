@@ -100,7 +100,7 @@ double get_path_area(SplashPath &path)
   {
     double x1, y1, x2, y2;
     path.getPoint(i + 1, &x1, &y1, &ch);
-    path.getPoint(i + 2, &x2, &y2, &ch);
+    path.getPoint((i + 2) % path_len, &x2, &y2, &ch);
     x1 -= x0; y1 -= y0;
     x2 -= x0; y2 -= y0;
     area += x1 * y2 - x2 * y1;
