@@ -1099,7 +1099,7 @@ static int xmain(int argc, char * const argv[])
       page_file.reopen();
       page_size = page_file.size();
       page_file.close();
-      debug(2) << "  - " << page_size << " bytes out";
+      debug(2) << "  - " << page_size << " bytes out" << std::endl;
       djvu_pages_size += page_size;
     }
   }
