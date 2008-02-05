@@ -177,7 +177,7 @@ void config::read_config(int argc, char * const argv[])
       config::verbose = 0;
       break;
     case OPT_VERBOSE:
-      config::verbose = 2;
+      config::verbose++;
       break;
     case OPT_BG_SLICES:
       config::bg_slices = optarg;
