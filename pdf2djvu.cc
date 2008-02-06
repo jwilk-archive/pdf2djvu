@@ -708,7 +708,7 @@ public:
       dummy_djvu_file.read(buffer, 4);
       if (std::string(buffer, 4) == std::string("NAVM"))
       {
-        size_t navm_size = 0, size = 0;
+        size_t navm_size = 0, chunks_size = 0;
         for (int i = 3; i >= 0; i--)
         { 
           char c;
@@ -719,18 +719,22 @@ public:
         dummy_djvu_file.seekg(0x30, std::ios::beg);
         index_file.reopen();
         this->index_file.seekg(0, std::ios::end);
+        size_t file_size = this->index_file.tellg();
+        if (file_size & 1)
+          // Each chunk must begin on an even byte boundary
+          this->index_file << '\0';
         copy_stream(dummy_djvu_file, this->index_file, false, navm_size);
         this->index_file.seekg(8, std::ios::beg);
         for (int i = 3; i >= 0; i--)
         { 
           char c;
           this->index_file.read(&c, 1);
-          size |= static_cast<size_t>(c) << (8 * i);
+          chunks_size |= static_cast<size_t>(c) << (8 * i);
         }
-        size += navm_size;
+        chunks_size += navm_size + (file_size & 1);
         this->index_file.seekg(8, std::ios::beg);
         for (int i = 3; i >= 0; i--)
-          this->index_file << static_cast<char>((size >> (8 * i)) & 0xff);
+          this->index_file << static_cast<char>((chunks_size >> (8 * i)) & 0xff);
       }
     }
   }
