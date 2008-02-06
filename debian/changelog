@@ -1,3 +1,10 @@
+pdf2djvu (0.4.5) UNRELEASED; urgency=low
+
+  * Fix a bug wich was (sometimes) breaking index files for multi-page
+    indirect documents.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Wed, 06 Feb 2008 13:13:58 +0100
+
 pdf2djvu (0.4.4) unstable; urgency=low
 
   * Fix an undefined behaviour which led to rendering bugs.
