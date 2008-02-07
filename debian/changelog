@@ -1,6 +1,6 @@
 pdf2djvu (0.4.5) unstable; urgency=low
 
-  * Fix a bug wich was (sometimes) breaking index files for multi-page
+  * Fix a bug which was (sometimes) breaking index files for multi-page
     indirect documents.
   * pdf2djvu version information is now recorded into metadata.
   * Add the --version option.
