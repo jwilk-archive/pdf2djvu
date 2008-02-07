@@ -146,7 +146,6 @@ void config::read_config(int argc, char * const argv[])
   {
     { "dpi",            1, 0, OPT_DPI },
     { "page-size",      1, 0, OPT_PAGE_SIZE },
-    { "pagesize",       1, 0, OPT_PAGE_SIZE },
     { "quiet",          0, 0, OPT_QUIET },
     { "verbose",        0, 0, OPT_VERBOSE },
     { "bg-slices",      1, 0, OPT_BG_SLICES },
