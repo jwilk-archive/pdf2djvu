@@ -22,6 +22,7 @@
 #include "debug.hh"
 #include "config.hh"
 #include "system.hh"
+#include "version.hh"
 
 #include <libdjvu/miniexp.h>
 
@@ -392,7 +393,7 @@ static int scan_date_digits(char * &input, int n)
 
 static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
 {
-  static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", "Producer", NULL };
+  static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
   Object info;
   doc->getDocInfo(&info);
@@ -415,6 +416,26 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
       debug(1) << "[Warning] metadata[" << *pkey << "] is not properly encoded" << std::endl;
       continue;
     }
+  }
+  {
+    std::string value;
+    Object object;
+    if (dict_lookup(info_dict, "Producer", &object)->isString())
+    {
+      try
+      {
+        value = pdf_string_to_utf8_string(object.getString());
+        if (value.length() > 0)
+          value += "\n";
+      }
+      catch (IconvError &ex)
+      {
+        debug(1) << "[Warning] metadata[Producer] is not properly encoded" << std::endl;
+      }
+    }
+    value += PDF2DJVU_VERSION;
+    lisp_escape(value);
+    stream << "Producer\t" << value << std::endl;
   }
   for (const char** pkey = date_keys; *pkey; pkey++)
   try
