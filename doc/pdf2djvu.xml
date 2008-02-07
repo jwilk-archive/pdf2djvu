@@ -137,6 +137,17 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--page-size=<replaceable>width</replaceable>x<replaceable>height</replaceable></option></term>
+			<listitem>
+				<para>
+					Specifies the preferred page size to <replaceable>width</replaceable> pixels ×
+					<replaceable>height</replaceable> pixels. The actual page size may be altered in order to
+					respect aspect ratio and DjVu limitations on resolution. (This option takes precedence over
+					<option>-d</option>/<option>--dpi</option>.)
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>+<replaceable>n</replaceable></option></term>
 			<term><option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</replaceable>,<replaceable>n</replaceable></option></term>
 			<listitem>
