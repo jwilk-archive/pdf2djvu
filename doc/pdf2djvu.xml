@@ -2,7 +2,7 @@
 <!DOCTYPE refentry PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.docbook.org/xml/4.5/docbookx.dtd' 
 [
 	<!ENTITY p 'pdf2djvu'>
-	<!ENTITY version '0.4.0'>
+	<!ENTITY version '0.4.5'>
 ]>
 
 <refentry>
@@ -20,9 +20,10 @@
 	</author>
 	<copyright>
 		<year>2007</year>
+		<year>2008</year>
 		<holder>Jakub Wilk</holder>
 	</copyright>
-	<date>2007-12-13</date>
+	<date>2008-02-07</date>
 </refentryinfo>
 
 <refmeta>
@@ -64,6 +65,7 @@
 	<cmdsynopsis>
 		<command>&p;</command>
 		<group choice='req'>
+			<arg choice='plain'><option>--version</option></arg>
 			<arg choice='plain'><option>--help</option></arg>
 			<arg choice='plain'><option>-h</option></arg>
 		</group>
@@ -248,6 +250,12 @@
 				<para>
 					Specifies pages to convert.
 				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--version</option></term>
+			<listitem>
+				<para>Output version information and exit.</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>
