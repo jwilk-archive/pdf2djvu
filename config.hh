@@ -34,6 +34,7 @@ namespace config
   extern bool output_stdout;
   extern int verbose;
   extern int dpi;
+  extern std::pair<int, int> preferred_page_size;
   extern int bg_subsample;
   extern bool antialias;
   extern std::vector<std::string> hyperlinks_options;
@@ -65,6 +66,12 @@ namespace config
   {
   public:
     PagesParseError() : Error("Unable to parse page numbers") {}
+  };
+
+  class PageSizeParseError : public Error
+  {
+  public:
+    PageSizeParseError() : Error("Unable to parse page size") {}
   };
 
   class HyperlinksOptionsParseError : public Error

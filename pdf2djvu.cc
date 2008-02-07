@@ -23,6 +23,7 @@
 #include "config.hh"
 #include "system.hh"
 #include "version.hh"
+#include "djvuconst.hh"
 
 #include <libdjvu/miniexp.h>
 
@@ -791,6 +792,24 @@ public:
   }
 };
 
+int calculate_dpi(int page_width, int page_height)
+{
+  if (config::preferred_page_size.first)
+  {
+    double hdpi = config::preferred_page_size.first / page_width;
+    double vdpi = config::preferred_page_size.second / page_height;
+    double dpi = std::min(hdpi, vdpi);
+    if (dpi < djvu::MIN_DPI)
+      return djvu::MIN_DPI;
+    else if (dpi > djvu::MAX_DPI)
+      return djvu::MAX_DPI;
+    else
+      return static_cast<int>(dpi);
+  }
+  else
+    return config::dpi;
+}
+
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
@@ -887,7 +906,10 @@ static int xmain(int argc, char * const argv[])
     debug(2) << ":";
     debug(1) << std::endl;
     debug(3) << "  - muted render" << std::endl;
-    display_page(doc, outm, n, config::dpi, config::dpi, true);
+    double page_width = get_page_width(doc, n);
+    double page_height = get_page_height(doc, n);
+    int dpi = calculate_dpi(page_width, page_height);
+    display_page(doc, outm, n, dpi, dpi, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -895,7 +917,7 @@ static int xmain(int argc, char * const argv[])
     if (!config::no_render)
     {
       debug(3) << "  - verbose render" << std::endl;
-      display_page(doc, out1, n, config::dpi, config::dpi, false);
+      display_page(doc, out1, n, dpi, dpi, false);
     }
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -987,8 +1009,8 @@ static int xmain(int argc, char * const argv[])
     {
       int sub_width = (width + config::bg_subsample - 1) / config::bg_subsample;
       int sub_height = (height + config::bg_subsample - 1) / config::bg_subsample;
-      double hdpi = sub_width / get_page_width(doc, n);
-      double vdpi = sub_height / get_page_height(doc, n);
+      double hdpi = sub_width / page_width;
+      double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
       display_page(doc, outs, n, hdpi, vdpi, true);
       if (sub_width != outs->getBitmapWidth())
@@ -1036,7 +1058,7 @@ static int xmain(int argc, char * const argv[])
     {
       debug(3) << "  - !csepdjvu" << std::endl;
       Command csepdjvu(DJVULIBRE_BIN_PATH "/csepdjvu");
-      csepdjvu << "-d" << config::dpi;
+      csepdjvu << "-d" << dpi;
       if (config::bg_slices)
         csepdjvu << "-q" << config::bg_slices;
       if (config::text == config::TEXT_LINES)
@@ -1107,7 +1129,7 @@ static int xmain(int argc, char * const argv[])
       debug(3) << "  - !djvumake" << std::endl;
       Command djvumake(DJVULIBRE_BIN_PATH "/djvumake");
       std::ostringstream info;
-      info << "INFO=" << width << "," << height << "," << config::dpi;
+      info << "INFO=" << width << "," << height << "," << dpi;
       djvumake
         << page_file
         << info.str()

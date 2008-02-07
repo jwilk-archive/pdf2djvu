@@ -8,6 +8,7 @@
 #include <stdexcept>
 
 #include "config.hh"
+#include "djvuconst.hh"
 
 #include <getopt.h>
 
@@ -17,6 +18,7 @@ std::string config::output;
 bool config::output_stdout = true;
 int config::verbose = 1;
 int config::dpi = 300;
+std::pair<int, int> config::preferred_page_size = std::make_pair(0, 0);
 int config::bg_subsample = 3;
 bool config::antialias = false;
 std::vector<std::string> config::hyperlinks_options;
@@ -28,15 +30,6 @@ bool config::no_render = false;
 char *config::bg_slices = NULL;
 std::vector< std::pair<int, int> > config::pages;
 char *config::file_name = NULL;
-
-/* XXX
- * csepdjvu requires 25 <= dpi <= 144 000
- * djvumake requires 72 <= dpi <= 144 000
- * cpaldjvu requires 25 <= dpi <=   1 200 (but we don't use it)
- */
-static const int DJVU_MIN_DPI = 72;
-static const int DJVU_MAX_DPI = 144000;
-
 static void split_by_char(char c, const std::string &s, std::vector<std::string> &result)
 {
   size_t lpos = 0;
@@ -112,6 +105,18 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
   result.push_back(std::make_pair(value[0], value[1]));
 }
 
+static std::pair<int, int>parse_page_size(const std::string &s)
+{
+  std::istringstream stream(s);
+  int x, y;
+  char c;
+  stream >> x >> c >> y;
+  if (x > 0 &&  y > 0 && c == 'x' && stream.eof() && !stream.fail())
+    return std::make_pair(x, y);
+  else
+    throw config::PageSizeParseError();
+}
+
 void config::read_config(int argc, char * const argv[])
 {
   enum
@@ -129,6 +134,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_NO_RENDER    = 0x400,
     OPT_OUTPUT       = 'o',
     OPT_PAGES        = 'p',
+    OPT_PAGE_SIZE    = 0x700,
     OPT_QUIET        = 'q',
     OPT_TEXT_LINES   = 0x102,
     OPT_TEXT_NONE    = 0x100,
@@ -139,6 +145,8 @@ void config::read_config(int argc, char * const argv[])
   static struct option options [] =
   {
     { "dpi",            1, 0, OPT_DPI },
+    { "page-size",      1, 0, OPT_PAGE_SIZE },
+    { "pagesize",       1, 0, OPT_PAGE_SIZE },
     { "quiet",          0, 0, OPT_QUIET },
     { "verbose",        0, 0, OPT_VERBOSE },
     { "bg-slices",      1, 0, OPT_BG_SLICES },
@@ -172,8 +180,11 @@ void config::read_config(int argc, char * const argv[])
     {
     case OPT_DPI:
       config::dpi = atoi(optarg);
-      if (config::dpi < DJVU_MIN_DPI || config::dpi > DJVU_MAX_DPI)
-        throw DpiOutsideRange(DJVU_MIN_DPI, DJVU_MAX_DPI);
+      if (config::dpi < djvu::MIN_DPI || config::dpi > djvu::MAX_DPI)
+        throw config::DpiOutsideRange(djvu::MIN_DPI, djvu::MAX_DPI);
+      break;
+    case OPT_PAGE_SIZE:
+      config::preferred_page_size = parse_page_size(optarg);
       break;
     case OPT_QUIET:
       config::verbose = 0;
@@ -265,6 +276,7 @@ void config::usage(const config::Error &error)
     << " -v, --verbose"           << std::endl
     << " -q, --quiet"             << std::endl
     << " -d, --dpi=resolution"    << std::endl
+    << "     --page-size=WxH"     << std::endl
     << "     --bg-slices=N,...,N" << std::endl
     << "     --bg-slices=N+...+N" << std::endl
     << "     --bg-subsample=N"    << std::endl
