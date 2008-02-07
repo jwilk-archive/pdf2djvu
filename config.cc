@@ -133,7 +133,8 @@ void config::read_config(int argc, char * const argv[])
     OPT_TEXT_LINES   = 0x102,
     OPT_TEXT_NONE    = 0x100,
     OPT_TEXT_WORDS   = 0x101,
-    OPT_VERBOSE      = 'v'
+    OPT_VERBOSE      = 'v',
+    OPT_VERSION      = 0x600
   };
   static struct option options [] =
   {
@@ -150,6 +151,7 @@ void config::read_config(int argc, char * const argv[])
     { "no-render",      0, 0, OPT_NO_RENDER },
     { "pages",          1, 0, OPT_PAGES },
     { "help",           0, 0, OPT_HELP },
+    { "version",        0, 0, OPT_VERSION },
     { "no-text",        0, 0, OPT_TEXT_NONE },
     { "words",          0, 0, OPT_TEXT_WORDS },
     { "lines",          0, 0, OPT_TEXT_LINES },
@@ -229,6 +231,8 @@ void config::read_config(int argc, char * const argv[])
       break;
     case OPT_HELP:
       throw NeedHelp();
+    case OPT_VERSION:
+      throw NeedVersion();
     case '?':
     case ':':
       throw InvalidOption();
@@ -274,6 +278,7 @@ void config::usage(const config::Error &error)
     << "     --lines"             << std::endl
     << " -p, --pages=..."         << std::endl
     << " -h, --help"              << std::endl
+    << "     --version"           << std::endl
   ;
   exit(1);
 }

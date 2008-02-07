@@ -108,6 +108,12 @@ namespace config
     }
   };
 
+  class NeedVersion : public ::Error
+  {
+  public:
+    NeedVersion() : Error("") {};
+  };
+
   void read_config(int argc, char * const argv[]);
   void usage(const Error &error);
 }

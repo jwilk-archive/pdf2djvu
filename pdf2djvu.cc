@@ -799,6 +799,11 @@ static int xmain(int argc, char * const argv[])
   {
     config::read_config(argc, argv);
   }
+  catch (const config::NeedVersion)
+  {
+    std::cerr << PDF2DJVU_VERSION << std::endl;
+    exit(1);
+  }
   catch (const config::Error &ex)
   {
     config::usage(ex);
