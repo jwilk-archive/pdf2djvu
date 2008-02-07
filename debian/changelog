@@ -3,9 +3,10 @@ pdf2djvu (0.4.5) UNRELEASED; urgency=low
   * Fix a bug wich was (sometimes) breaking index files for multi-page
     indirect documents.
   * pdf2djvu version information is now recorded into metadata.
-  * Add --version option.
+  * Add the --version option.
+  * Add the --page-size option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 07 Feb 2008 11:54:46 +0100
+ -- Jakub Wilk <ubanus@users.sf.net>  Thu, 07 Feb 2008 20:03:12 +0100
 
 pdf2djvu (0.4.4) unstable; urgency=low
 
