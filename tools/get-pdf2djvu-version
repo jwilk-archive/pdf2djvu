@@ -1,0 +1,5 @@
+#!/bin/sh
+pdf2djvu_version=`sed -n -e '1 s/.*(\([0-9.]*\)).*/\1/p' < debian/changelog`
+poppler_version=`pkg-config --modversion poppler-splash`
+djvulibre_version=`pkg-config --modversion ddjvuapi`
+printf '#define PDF2DJVU_VERSION "pdf2djvu %s (DjVuLibre %s, poppler %s)"\n' "$pdf2djvu_version" "$popppler_version" "$djvulibre_version"
