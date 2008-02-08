@@ -11,22 +11,22 @@
 #include <string>
 #include <ostream>
 
-#include "goo/gmem.h"
-#include "goo/GooString.h"
-#include "GlobalParams.h"
-#include "Object.h"
-#include "PDFDoc.h"
-#include "PDFDocEncoding.h"
-#include "GfxState.h"
-#include "SplashOutputDev.h"
-#include "Link.h"
-#include "UTF8.h"
+#include <goo/gmem.h>
+#include <goo/GooString.h>
+#include <GlobalParams.h>
+#include <Object.h>
+#include <PDFDoc.h>
+#include <PDFDocEncoding.h>
+#include <GfxState.h>
+#include <SplashOutputDev.h>
+#include <Link.h>
+#include <UTF8.h>
 
-#include "splash/Splash.h"
-#include "splash/SplashBitmap.h"
-#include "splash/SplashFont.h"
-#include "splash/SplashGlyphBitmap.h"
-#include "splash/SplashPath.h"
+#include <splash/Splash.h>
+#include <splash/SplashBitmap.h>
+#include <splash/SplashFont.h>
+#include <splash/SplashGlyphBitmap.h>
+#include <splash/SplashPath.h>
 
 void init_global_params();
 
