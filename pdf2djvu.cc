@@ -792,7 +792,7 @@ public:
   }
 };
 
-int calculate_dpi(int page_width, int page_height)
+static int calculate_dpi(double page_width, double page_height)
 {
   if (config::preferred_page_size.first)
   {
