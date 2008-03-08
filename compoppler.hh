@@ -21,6 +21,7 @@
 #include <SplashOutputDev.h>
 #include <Link.h>
 #include <UTF8.h>
+#include <UGooString.h>
 
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>
