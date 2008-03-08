@@ -5,7 +5,7 @@ then
   exit 1
 fi
 source_dir=$1
-include_dir=`pkg-config --define-variable=prefix=$HOME/pub/poppler-0.6.2/ --cflags-only-I poppler-splash | sed -n -e 's/^-I\([^ ]\+\) *$/\1/p'`
+include_dir=`pkg-config --cflags-only-I poppler-splash | sed -n -e 's/^-I\([^ ]\+\) *$/\1/p'`
 echo "$include_dir"
 echo "I will copy header files from $source_dir into $include_dir"
 echo "Press enter to continue"
