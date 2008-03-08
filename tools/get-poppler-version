@@ -1,2 +1,3 @@
 #!/bin/sh
-printf '%02d' `pkg-config --modversion poppler-splash | sed -e 's/\(^[0-9]\+[.][0-9]\+$\)/\1.0/; s/[.]/ /g'` | sed -e 's/^0*//g'
+poppler_version=`pkg-config --modversion poppler-splash` || exit 1
+printf '%02d' `echo "$poppler_version" | sed -e 's/\(^[0-9]\+[.][0-9]\+$\)/\1.0/; s/[.]/ /g'` | sed -e 's/^0*//g'
