@@ -24,13 +24,13 @@ void init_global_params()
 
 bool set_antialias(bool value)
 {
-  return globalParams->setAntialias((char*)(value ? "yes" : "no"));
+  return globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no"));
 }
 
 PDFDoc *new_document(std::string file_name)
 {
   GooString *g_file_name = new GooString(file_name.c_str());
-  PDFDoc *doc = new PDFDoc(g_file_name);
+  PDFDoc *doc = new PDFDoc(g_file_name, NULL, NULL);
   return doc;
 }
 
@@ -111,17 +111,17 @@ double get_path_area(SplashPath &path)
 
 Object *dict_lookup(Object &dict, const char *key, Object *object)
 {
-  return dict.dictLookup((char*) key, object);
+  return dict.dictLookup(const_cast<char*>(key), object);
 }
 
 Object *dict_lookup(Object *dict, const char *key, Object *object)
 {
-  return dict->dictLookup((char*) key, object);
+  return dict->dictLookup(const_cast<char*>(key), object);
 }
 
 Object *dict_lookup(Dict *dict, const char *key, Object *object)
 {
-  return dict->lookup((char*) key, object);
+  return dict->lookup(const_cast<char*>(key), object);
 }
 
 double get_page_width(PDFDoc *document, int n)
