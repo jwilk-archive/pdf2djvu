@@ -30,7 +30,7 @@ Compatibility with different poppler versions
 +----------------+----------+-------+-----------+
 
 .. [0] officially supported
-.. [1] from Debian etch
+.. [1] from Debian etch: http://packages.debian.org/source/etch/poppler
 .. [2] pdf2djvu may expose some poppler rendering bugs
 .. [3] http://code.google.com/p/pdf2djvu/issues/detail?id=2
 .. [4] http://code.google.com/p/pdf2djvu/issues/detail?id=1
