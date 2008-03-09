@@ -21,7 +21,9 @@
 #include <SplashOutputDev.h>
 #include <Link.h>
 #include <UTF8.h>
+#if POPPLER_VERSION >= 500 && POPPLER_VERSION < 600
 #include <UGooString.h>
+#endif
 
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>
