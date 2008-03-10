@@ -1,10 +1,10 @@
 DJVULIBRE_BIN_PATH = $(shell pkg-config --variable exec_prefix ddjvuapi)/bin
 POPPLER_VERSION = $(shell ./tools/get-poppler-version)
 EXT_CFLAGS = $(shell pkg-config --cflags poppler-splash ddjvuapi) -DPOPPLER_VERSION=$(POPPLER_VERSION)
-EXT_LDFLAGS = $(shell pkg-config --libs poppler-splash ddjvuapi)
+EXT_LDLIBS = $(shell pkg-config --libs poppler-splash ddjvuapi)
 
 CXXFLAGS ?= -Wall -O3
-override LDFLAGS += $(EXT_LDFLAGS)
+override LDLIBS := $(EXT_LDLIBS) $(LOADLIBES) $(LDLIBS)
 override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_BIN_PATH))\""
 
 .PHONY: all
@@ -16,7 +16,7 @@ compoppler.o: compoppler.cc compoppler.hh
 system.o: system.cc system.hh debug.hh
 pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh
 pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o
-	$(LINK.cc) $(^) -o $(@) 
+	$(LINK.cc) $(^) $(LDLIBS) -o $(@) 
 
 .PHONY: clean
 clean:
