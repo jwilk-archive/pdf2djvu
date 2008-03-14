@@ -10,7 +10,7 @@ Via Cygwin's ``setup.exe``, install the following packages:
 
 DjVuLibre
 ---------
-Build and install *DjVuLibre*::
+Build and install a recent (> 3.5.20-5) version of *DjVuLibre*::
 
     ./configure
     make
