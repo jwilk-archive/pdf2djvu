@@ -1082,6 +1082,7 @@ static int xmain(int argc, char * const argv[])
     if (nonwhite_background_color)
     {
       TemporaryFile c44_file;
+      c44_file.close();
       {
         TemporaryFile ppm_file;
         debug(3) << "  - !c44" << std::endl;
@@ -1101,7 +1102,6 @@ static int xmain(int argc, char * const argv[])
         c44();
       }
       {
-        c44_file.reopen();
         debug(3) << "  - !djvuextract" << std::endl;
         Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
         djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);

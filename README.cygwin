@@ -1,0 +1,47 @@
+Prerequisites
+-------------
+Via Cygwin's ``setup.exe``, install the following packages:
+
+- ``gcc-g++``,
+- ``libfontconfig-devel``,
+- ``libfreetype2-devel``,
+- ``libjpeg-devel``,
+- ``make``.
+
+DjVuLibre
+---------
+Build and install *DjVuLibre*::
+
+    ./configure
+    make
+    make install
+
+poppler
+-------
+Build and install *poppler* [1]_::
+
+    ./configure
+    make
+    make install
+    mkdir -p /usr/local/include/poppler/goo
+    mkdir -p /usr/local/include/poppler/splash
+    cp poppler/*.h /usr/local/include/poppler/
+    cp goo/*.h /usr/local/include/poppler/goo/
+    cp splash/*.h /usr/local/include/poppler/splash/
+
+.. [1] See ``README.build`` for list of co-operative poppler versions.
+
+pstreams
+--------
+Install *pstreams*::
+
+    install -m644 pstream.h /usr/local/include/pstreams/
+
+pdf2djvu
+--------
+Finally, build *pdf2djvu*::
+
+    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+    make LDLIBS="-lfreetype -lfontconfig -ljpeg"
+
+.. vim:ft=rst ts=4 sw=4 et
