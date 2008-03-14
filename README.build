@@ -48,6 +48,8 @@ Compatibility with different poppler versions
 +-----------------+----------+-------+-----------+
 | 0.7.1           | yes      | no    | [3]_ [4]_ |
 +-----------------+----------+-------+-----------+
+| 0.7.2           | yes      | no    | [3]_ [4]_ |
++-----------------+----------+-------+-----------+
 
 .. [0] officially supported
 .. [1] from Debian etch: http://packages.debian.org/source/etch/poppler
