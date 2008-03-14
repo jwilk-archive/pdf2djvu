@@ -24,6 +24,9 @@ void init_global_params()
 
 bool set_antialias(bool value)
 {
+#if POPPLER_VERSION >= 701
+  return false;
+#endif
   return globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no"));
 }
 

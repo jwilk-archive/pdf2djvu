@@ -834,7 +834,7 @@ static int xmain(int argc, char * const argv[])
 
   init_global_params();
   if (!set_antialias(config::antialias))
-    throw Error();
+    throw Error("Unable to set antialias parameter");
 
   size_t pdf_size;
   { 
