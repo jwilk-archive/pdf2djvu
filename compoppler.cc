@@ -191,9 +191,8 @@ std::string get_link_border_color(Link *link)
       << static_cast<int>(rgb[i] * 0xff);
   return stream.str();
 #else
-  static std::string red("#ff0000");
   // FIXME: find a way to determine link color
-  return red;
+  return "";
 #endif
 }
 

@@ -232,7 +232,12 @@ public:
     )
       strstream << " (" << *it << ")";
     if (!config::hyperlinks_user_border_color)
-      strstream << " (border " << border_color << ")";
+    { 
+      if (border_color.empty())
+        strstream << " (xor)";
+      else
+        strstream << " (border " << border_color << ")";
+    };
     strstream << ")";
     annotations.push_back(strstream.str());
   }
