@@ -14,27 +14,31 @@
 
 namespace sexpr
 {
+  typedef miniexp_t Expr;
   class Ref
   {
     minivar_t var;
   public:
-    Ref(const Ref &ref) { this->var = ref.var; }
-    Ref(miniexp_t expr) { this->var = expr; }
+    Ref() : var(miniexp_nil) { }
+    Ref(const Ref &ref) : var(ref.var) { }
+    Ref(miniexp_t expr) : var(expr) { }
     Ref& operator =(miniexp_t expr) { this->var = expr; return *this; }
-    operator miniexp_t&() const { return const_cast<Ref*>(this)->var; }
-    inline const char * repr()
+    operator Expr&() const { return const_cast<Ref*>(this)->var; }
+    inline std::string repr()
     {
-      return miniexp_to_str(miniexp_pname(this->var, 0));
+      Ref pname = miniexp_pname(this->var, 0);
+      std::string result = miniexp_to_str(pname);
+      return result;
     }
     friend std::ostream &operator<<(std::ostream &, const Ref &);
   };
-  static inline miniexp_t cons(miniexp_t car, miniexp_t cdr) { return miniexp_cons(car, cdr); }
-  static inline miniexp_t symbol(const char *name) { return miniexp_symbol(name); }
-  static inline miniexp_t symbol(const std::string &name) { return miniexp_symbol(name.c_str()); }
-  static inline miniexp_t string(const char *value) { return miniexp_string(value); }
-  static inline miniexp_t string(const std::string &value) { return miniexp_string(value.c_str()); }
-  static inline miniexp_t integer(int n) { return miniexp_number(n); }
-  static const miniexp_t nil = miniexp_nil;
+  static inline Expr cons(Expr car, Expr cdr) { return miniexp_cons(car, cdr); }
+  static inline Expr symbol(const char *name) { return miniexp_symbol(name); }
+  static inline Expr symbol(const std::string &name) { return miniexp_symbol(name.c_str()); }
+  static inline Expr string(const char *value) { return miniexp_string(value); }
+  static inline Expr string(const std::string &value) { return miniexp_string(value.c_str()); }
+  static inline Expr integer(int n) { return miniexp_number(n); }
+  static const Expr nil = miniexp_nil;
   static const Ref &empty_string = string("");
 }
 
