@@ -24,7 +24,9 @@ void init_global_params()
 
 bool set_antialias(bool value)
 {
-#if POPPLER_VERSION >= 701
+#if POPPLER_VERSION >= 701 && POPPLER_VERSION < 703
+  // Don't allow poppler bug #15009 to appear.
+  // See <https://bugs.freedesktop.org/show_bug.cgi?id=15009> for details.
   return false;
 #endif
   return globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no"));
