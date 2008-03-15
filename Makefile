@@ -10,12 +10,13 @@ override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_B
 .PHONY: all
 all: pdf2djvu
 
-config.o: config.cc config.hh debug.hh djvuconst.hh
-debug.o: debug.cc debug.hh config.hh
+config.o: config.cc config.hh debug.hh djvuconst.hh sexpr.hh
+debug.o: debug.cc debug.hh config.hh sexpr.hh
 compoppler.o: compoppler.cc compoppler.hh
+sexpr.o: sexpr.cc sexpr.hh
 system.o: system.cc system.hh debug.hh
-pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh
-pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o
+pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh sexpr.hh
+pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o sexpr.o
 	$(LINK.cc) $(^) $(LDLIBS) -o $(@) 
 
 .PHONY: clean
