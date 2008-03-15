@@ -24,8 +24,7 @@
 #include "system.hh"
 #include "version.hh"
 #include "djvuconst.hh"
-
-#include <libdjvu/miniexp.h>
+#include "sexpr.hh"
 
 static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
 {
@@ -57,9 +56,8 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
 
 static void lisp_escape(std::string &value)
 {
-  miniexp_t exp = miniexp_string(value.c_str());
-  exp = miniexp_pname(exp, 0);
-  value = miniexp_to_str(exp);
+  sexpr::Ref ref = sexpr::string(value);
+  value = ref.repr();
 }
 
 class NoLinkDestination : public Error
@@ -104,7 +102,7 @@ class MutedRenderer: public Renderer
 {
 private:
   std::vector<std::string> texts;
-  std::vector<std::string> annotations;
+  std::vector<sexpr::Ref> annotations;
   std::map<int, int> &page_map;
 public:
 
@@ -186,7 +184,6 @@ public:
     {
     case actionURI:
       uri += dynamic_cast<LinkURI*>(link_action)->getURI()->getCString();
-      lisp_escape(uri);
       break;
     case actionGoTo:
     {
@@ -201,7 +198,7 @@ public:
         return;
       }
       std::ostringstream strstream;
-      strstream << "\"#" << this->page_map[page] << "\"";
+      strstream << "#" << this->page_map[page];
       uri = strstream.str();
       break;
     }
@@ -221,25 +218,41 @@ public:
     w -= x;
     h = y - h;
     y = this->getBitmapHeight() - y;
-    std::ostringstream strstream;
-    strstream << "(maparea" 
-      << " " << uri
-      << " \"\"" 
-      << " (rect " << x << " " << y << " " << w << " " << h << ")";
+    sexpr::Ref expr = sexpr::nil;
     for (
-      std::vector<std::string>::const_iterator it = config::hyperlinks_options.begin();
+      std::vector<sexpr::Ref>::const_iterator it = config::hyperlinks_options.begin();
       it != config::hyperlinks_options.end(); it++
     )
-      strstream << " (" << *it << ")";
+      expr = sexpr::cons(*it, expr);
     if (!config::hyperlinks_user_border_color)
     { 
+      static sexpr::Ref symbol_xor = sexpr::symbol("xor");
+      static sexpr::Ref symbol_border = sexpr::symbol("border");
+      sexpr::Ref bexpr = sexpr::nil;
       if (border_color.empty())
-        strstream << " (xor)";
+        bexpr = sexpr::cons(symbol_xor, bexpr);
       else
-        strstream << " (border " << border_color << ")";
+      {
+        bexpr = sexpr::cons(sexpr::symbol(border_color), bexpr);
+        bexpr = sexpr::cons(symbol_border, bexpr);
+      }
+      expr = sexpr::cons(bexpr, expr);
     };
-    strstream << ")";
-    annotations.push_back(strstream.str());
+    static sexpr::Ref symbol_rect = sexpr::symbol("rect");
+    static sexpr::Ref symbol_maparea = sexpr::symbol("maparea");
+    {
+      sexpr::Ref rexpr = sexpr::nil;
+      rexpr = sexpr::cons(sexpr::integer(h), rexpr);
+      rexpr = sexpr::cons(sexpr::integer(w), rexpr);
+      rexpr = sexpr::cons(sexpr::integer(y), rexpr);
+      rexpr = sexpr::cons(sexpr::integer(x), rexpr);
+      rexpr = sexpr::cons(symbol_rect, rexpr);
+      expr = sexpr::cons(rexpr, expr);
+    }
+    expr = sexpr::cons(sexpr::empty_string, expr);
+    expr = sexpr::cons(sexpr::string(uri), expr);
+    expr = sexpr::cons(symbol_maparea, expr);
+    annotations.push_back(expr);
   }
 
   GBool useDrawChar() { return gTrue; }
@@ -258,7 +271,7 @@ public:
   MutedRenderer(SplashColor &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
   { }
 
-  const std::vector<std::string> &get_annotations() const
+  const std::vector<sexpr::Ref> &get_annotations() const
   {
     return annotations;
   }
@@ -1115,9 +1128,9 @@ static int xmain(int argc, char * const argv[])
     }
     {
       debug(3) << "  - annotations >> sed_file" << std::endl;
-      const std::vector<std::string> &annotations = outm->get_annotations();
+      const std::vector<sexpr::Ref> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
-      for (std::vector<std::string>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
+      for (std::vector<sexpr::Ref>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
         sed_file << *it << std::endl;
       sed_file << "." << std::endl;
       outm->clear_annotations();

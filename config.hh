@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 
+#include "sexpr.hh"
 #include "debug.hh"
 
 namespace config
@@ -37,7 +38,7 @@ namespace config
   extern std::pair<int, int> preferred_page_size;
   extern int bg_subsample;
   extern bool antialias;
-  extern std::vector<std::string> hyperlinks_options;
+  extern std::vector<sexpr::Ref> hyperlinks_options;
   extern bool hyperlinks_user_border_color;
   extern bool extract_hyperlinks;
   extern bool extract_metadata;

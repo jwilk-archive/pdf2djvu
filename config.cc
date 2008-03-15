@@ -21,7 +21,7 @@ int config::dpi = 300;
 std::pair<int, int> config::preferred_page_size = std::make_pair(0, 0);
 int config::bg_subsample = 3;
 bool config::antialias = false;
-std::vector<std::string> config::hyperlinks_options;
+std::vector<sexpr::Ref> config::hyperlinks_options;
 bool config::hyperlinks_user_border_color = false;
 bool config::extract_hyperlinks = true;
 bool config::extract_metadata = true;
@@ -44,7 +44,7 @@ static void split_by_char(char c, const std::string &s, std::vector<std::string>
   }
 }
 
-static void parse_hyperlinks_options(const std::string &s, std::vector<std::string> &result, bool &user_border_color)
+static void parse_hyperlinks_options(const std::string &s, std::vector<sexpr::Ref> &result, bool &user_border_color)
 {
   std::vector<std::string> splitted;
   split_by_char(',', s, splitted);
@@ -52,7 +52,8 @@ static void parse_hyperlinks_options(const std::string &s, std::vector<std::stri
   {
     if (*it == "border-avis" || *it == "border_avis")
     {
-      result.push_back("border_avis");
+      sexpr::Ref expr = sexpr::cons(sexpr::symbol("border_avis"), sexpr::nil);
+      result.push_back(expr);
       continue;
     }
     else if 
@@ -62,7 +63,9 @@ static void parse_hyperlinks_options(const std::string &s, std::vector<std::stri
       it->find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
     )
     {
-      result.push_back("border " + *it);
+      sexpr::Ref expr = sexpr::cons(sexpr::symbol(it->c_str()), sexpr::nil);
+      expr = sexpr::cons(sexpr::symbol("border"), expr);
+      result.push_back(expr);
       user_border_color = true;
       continue;
     }
