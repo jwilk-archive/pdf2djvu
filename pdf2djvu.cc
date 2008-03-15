@@ -54,12 +54,6 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
   return strstream.str();
 }
 
-static void lisp_escape(std::string &value)
-{
-  sexpr::Ref ref = sexpr::string(value);
-  value = ref.repr();
-}
-
 class NoLinkDestination : public Error
 {
 public:
@@ -330,12 +324,13 @@ static std::string pdf_string_to_utf8_string(GooString *from)
   return stream.str();
 }
 
-static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ostream &stream,
+static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
   std::map<int, int> &page_map)
 {
   Object current, next;
   if (!dict_lookup(node, "First", &current)->isDict())
-    return;
+    return sexpr::nil;
+  sexpr::Ref list = sexpr::nil;
   while (current.isDict())
   {
     try
@@ -362,11 +357,16 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
           throw NoPageForBookmark();
         page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
       }
-
-      lisp_escape(title_str);
-      stream << "(" << title_str << " \"#" << page_map[page] << "\"";
-      pdf_outline_to_djvu_outline(&current, catalog, stream, page_map);
-      stream << ") ";
+      sexpr::Ref expr = sexpr::nil;
+      expr = pdf_outline_to_djvu_outline(&current, catalog, page_map);
+      {
+        std::ostringstream strstream;
+        strstream << "#" << page_map[page];
+        sexpr::Ref pexpr = sexpr::string(strstream.str());
+        expr = sexpr::cons(pexpr, expr);
+      }
+      expr = sexpr::cons(sexpr::string(title_str), expr);
+      list = sexpr::cons(expr, list);
     }
     catch (BookmarkError &ex)
     {
@@ -378,6 +378,8 @@ static void pdf_outline_to_djvu_outline(Object *node, Catalog *catalog, std::ost
     current = next;
   }
   current.free();
+  list.reverse();
+  return list;
 }
 
 static void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int, int> &page_map)
@@ -386,9 +388,10 @@ static void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::
   Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
     return;
-  stream << "(bookmarks ";
-  pdf_outline_to_djvu_outline(outlines, catalog, stream, page_map);
-  stream << ")";
+  static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
+  sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_map);
+  expr = sexpr::cons(symbol_bookmarks, expr);
+  stream << expr;
 }
 
 class InvalidDateFormat : public Error { };
@@ -427,8 +430,8 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     try
     {
       std::string value = pdf_string_to_utf8_string(object.getString());
-      lisp_escape(value);
-      stream << *pkey << "\t" << value << std::endl;
+      sexpr::Ref esc_value = sexpr::string(value);
+      stream << *pkey << "\t" << esc_value << std::endl;
     }
     catch (IconvError &ex)
     {
@@ -453,8 +456,8 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
       }
     }
     value += PDF2DJVU_VERSION;
-    lisp_escape(value);
-    stream << "Producer\t" << value << std::endl;
+    sexpr::Ref esc_value = sexpr::string(value);
+    stream << "Producer\t" << esc_value << std::endl;
   }
   for (const char** pkey = date_keys; *pkey; pkey++)
   try

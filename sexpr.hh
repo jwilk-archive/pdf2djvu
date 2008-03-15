@@ -24,11 +24,9 @@ namespace sexpr
     Ref(miniexp_t expr) : var(expr) { }
     Ref& operator =(miniexp_t expr) { this->var = expr; return *this; }
     operator Expr&() const { return const_cast<Ref*>(this)->var; }
-    inline std::string repr()
+    inline void reverse()
     {
-      Ref pname = miniexp_pname(this->var, 0);
-      std::string result = miniexp_to_str(pname);
-      return result;
+      this->var = miniexp_reverse(this->var);
     }
     friend std::ostream &operator<<(std::ostream &, const Ref &);
   };
