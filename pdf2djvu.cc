@@ -167,6 +167,7 @@ public:
 
   void drawLink(Link *link, Catalog *catalog)
   {
+    sexpr::GCLock gc_lock; // work-around <http://sourceforge.net/tracker/index.php?func=detail&aid=1915053&group_id=32953&atid=406583>
     if (!config::extract_hyperlinks)
       return;
     double x1, y1, x2, y2;
@@ -327,6 +328,7 @@ static std::string pdf_string_to_utf8_string(GooString *from)
 static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
   std::map<int, int> &page_map)
 {
+  sexpr::GCLock gc_lock; // work-around <http://sourceforge.net/tracker/index.php?func=detail&aid=1915053&group_id=32953&atid=406583>
   Object current, next;
   if (!dict_lookup(node, "First", &current)->isDict())
     return sexpr::nil;
@@ -384,6 +386,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
 
 static void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int, int> &page_map)
 {
+  sexpr::GCLock gc_lock; // work-around <http://sourceforge.net/tracker/index.php?func=detail&aid=1915053&group_id=32953&atid=406583>
   Catalog *catalog = doc->getCatalog();
   Object *outlines = catalog->getOutline();
   if (!outlines->isDict())

@@ -38,6 +38,13 @@ namespace sexpr
   static inline Expr integer(int n) { return miniexp_number(n); }
   static const Expr nil = miniexp_nil;
   static const Ref &empty_string = string("");
+
+  class GCLock
+  {
+  public:
+    GCLock() { minilisp_acquire_gc_lock(0); }
+    ~GCLock() { minilisp_release_gc_lock(0); }
+  };
 }
 
 #endif
