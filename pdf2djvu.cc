@@ -855,6 +855,7 @@ class WebSafeQuantizer : public Quantizer
 protected:
   void output_web_palette(std::ostream &stream)
   {
+    stream << "216" << std::endl;
     for (int r = 0; r < 6; r++)
     for (int g = 0; g < 6; g++)
     for (int b = 0; b < 6; b++)
@@ -867,6 +868,7 @@ public:
   virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
   {
+    stream << "R6 " << width << " " << height << " ";
     output_web_palette(stream);
     Pixmap bmp_fg = Pixmap(out_fg);
     Pixmap bmp_bg = Pixmap(out_bg);
@@ -932,6 +934,7 @@ public:
   virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
   {
+    stream << "R6 " << width << " " << height << " ";
     output_web_palette(stream);
     for (int i = 0; i < 3; i++)
       background_color[i] = 0xff;
@@ -1057,7 +1060,6 @@ static int xmain(int argc, char * const argv[])
     }
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
-    sep_file << "R6 " << width << " " << height << " 216" << std::endl;
     debug(3) << "  - rle data >> sep_file" << std::endl;
     bool has_background = false;
     int background_color[3];
