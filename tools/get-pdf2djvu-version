@@ -2,7 +2,7 @@
 pdf2djvu_version=`sed -n -e '1 s/.*(\([0-9.]*\)).*/\1/p' < debian/changelog`
 poppler_info="poppler `pkg-config --modversion poppler-splash`" || exit 1
 djvulibre_info="DjVuLibre `pkg-config --modversion ddjvuapi`" || exit 1
-gm_info="GraphicsMagick++ `pkg-config --silence-errors --modversion GraphicsMagick++x`" || gm_info=''
+gm_info="GraphicsMagick++ `pkg-config --silence-errors --modversion GraphicsMagick++`" || gm_info=''
 info="$djvulibre_info, $poppler_info"
 if [ -n "$gm_info" ]
 then
