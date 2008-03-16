@@ -4,7 +4,6 @@ Packages required do build *pdf2djvu*
 
 DjVuLibre
 =========
-
 DjVuLibre_ is an open source implementation of DjVu_, including viewers,
 browser plugins, decoders, simple encoders, and utilities.
 
@@ -16,15 +15,15 @@ versions are broken.
 .. _DjVuLibre: http://freshmeat.net/projects/djvulibre/
 .. _DjVu: http://djvu.org/
 
+
 poppler
 =======
-
 Poppler_ is a PDF rendering library derived from xpdf.
 
 .. _poppler: http://freshmeat.net/projects/poppler/?branch_id=69950
 
-Compatibility with different poppler versions
----------------------------------------------
+Compatibility
+-------------
 
 +-----------------+----------+---------+------+
 | version         | compiles | works   | bugs |
@@ -64,14 +63,13 @@ Compatibility with different poppler versions
 
 Header files
 ------------
-
 You will need some ``*.h`` files which are not installed by default
 (``make install``), although some Linux distribution are shipping them.
 You may use ``tools/install-poppler-h-files`` to install those files.
 
+
 PStreams
 ========
-
 PStreams_ allows you to run another program from your C++ application
 and to transfer data between the two programs, similar to shell
 pipelines.
