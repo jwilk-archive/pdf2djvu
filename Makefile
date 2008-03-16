@@ -1,7 +1,9 @@
 DJVULIBRE_BIN_PATH = $(shell pkg-config --variable exec_prefix ddjvuapi)/bin
 POPPLER_VERSION = $(shell ./tools/get-poppler-version)
-EXT_CFLAGS = $(shell pkg-config --cflags poppler-splash ddjvuapi) -DPOPPLER_VERSION=$(POPPLER_VERSION)
-EXT_LDLIBS = $(shell pkg-config --libs poppler-splash ddjvuapi)
+EXT_CFLAGS = $(shell pkg-config --cflags poppler-splash ddjvuapi) -DPOPPLER_VERSION=$(POPPLER_VERSION) $(EXT_CFLAGS_GM)
+EXT_LDLIBS = $(shell pkg-config --libs poppler-splash ddjvuapi) $(EXT_LDLIBS_GM)
+EXT_CFLAGS_GM = $(shell pkg-config --cflags GraphicsMagick++ --silence-errors || true)
+EXT_LDLIBS_GM = $(shell pkg-config --libs GraphicsMagick++ --silence-errors || true)
 
 CXXFLAGS ?= -Wall -O3
 override LDLIBS := $(EXT_LDLIBS) $(LOADLIBES) $(LDLIBS)
