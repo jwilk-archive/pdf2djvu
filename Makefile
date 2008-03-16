@@ -28,6 +28,6 @@ test: pdf2djvu
 	$(MAKE) -C tests/
 
 version.hh:
-	./tools/get-pdf2djvu-version > $(@)
+	./tools/get-pdf2djvu-version > $(@) || $(RM) $(@)
 
 # vim:ts=4 sw=4 noet
