@@ -834,6 +834,117 @@ static int calculate_dpi(double page_width, double page_height)
     return config::dpi;
 }
 
+class Quantizer
+{
+public:
+  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+  {
+    for (int r = 0; r < 6; r++)
+    for (int g = 0; g < 6; g++)
+    for (int b = 0; b < 6; b++)
+    {
+      char buffer[] = { 51 * r, 51 * g, 51 * b };
+      stream.write(buffer, 3);
+    }
+  }
+};
+
+class WebSafeQuantizer : public Quantizer
+{
+protected:
+  void output_web_palette(std::ostream &stream)
+  {
+    for (int r = 0; r < 6; r++)
+    for (int g = 0; g < 6; g++)
+    for (int b = 0; b < 6; b++)
+    {
+      char buffer[] = { 51 * r, 51 * g, 51 * b };
+      stream.write(buffer, 3);
+    }
+  }
+public:
+  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+  {
+    output_web_palette(stream);
+    Pixmap bmp_fg = Pixmap(out_fg);
+    Pixmap bmp_bg = Pixmap(out_bg);
+    PixmapIterator p_fg = bmp_fg.begin();
+    PixmapIterator p_bg = bmp_bg.begin();
+    for (int i = 0; i < 3; i++) 
+      background_color[i] = p_bg[i];
+    for (int y = 0; y < height; y++)
+    {
+      int new_color, color = 0xfff;
+      int length = 0;
+      for (int x = 0; x < width; x++)
+      {
+        if (!has_background)
+        {
+          for (int i = 0; i < 3; i++)
+          if (background_color[i] != p_bg[i])
+          {
+            has_background = true;
+            break;
+          }
+        }
+        if (p_fg[0] != p_bg[0] || p_fg[1] != p_bg[1] || p_fg[2] != p_bg[2])
+        {
+          if (!has_foreground && (p_fg[0] || p_fg[1] || p_fg[2]))
+            has_foreground = true;
+          new_color = ((p_fg[2] + 1) / 43) + 6 * (((p_fg[1] + 1) / 43) + 6 * ((p_fg[0] + 1) / 43));
+        }
+        else
+          new_color = 0xfff;
+        if (color == new_color)
+          length++;
+        else
+        {
+          if (length > 0)
+          {
+            int item = (color << 20) + length;
+            for (int i = 0; i < 4; i++)
+            {
+              char c = item >> ((3 - i) * 8);
+              stream.write(&c, 1);
+            }
+          }
+          color = new_color;
+          length = 1;
+        }
+        p_fg++, p_bg++;
+      }
+      p_fg.next_row(), p_bg.next_row();
+      int item = (color << 20) + length;
+      for (int i = 0; i < 4; i++)
+      {
+        char c = item >> ((3 - i) * 8);
+        stream.write(&c, 1);
+      }
+    }
+  }
+};
+
+class DummyQuantizer : public WebSafeQuantizer
+{
+public:
+  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+  {
+    output_web_palette(stream);
+    for (int i = 0; i < 3; i++)
+      background_color[i] = 0xff;
+    int item = (0xfff << 20) + width;
+    for (int y = 0; y < height; y++)
+    for (int i = 0; i < 4; i++)
+    {
+      char c = item >> ((3 - i) * 8);
+      stream.write(&c, 1);
+    }
+  }
+};
+
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
@@ -885,6 +996,7 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<PageFiles> page_files;
+  std::auto_ptr<Quantizer> quantizer(config::no_render ? new DummyQuantizer() : new WebSafeQuantizer());
   if (config::format == config::FORMAT_BUNDLED)
   {
     if (config::output_stdout)
@@ -946,88 +1058,12 @@ static int xmain(int argc, char * const argv[])
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
     sep_file << "R6 " << width << " " << height << " 216" << std::endl;
-    debug(3) << "  - rle palette >> sep_file" << std::endl;
-    for (int r = 0; r < 6; r++)
-    for (int g = 0; g < 6; g++)
-    for (int b = 0; b < 6; b++)
-    {
-      char buffer[] = { 51 * r, 51 * g, 51 * b };
-      sep_file.write(buffer, 3);
-    }
+    debug(3) << "  - rle data >> sep_file" << std::endl;
     bool has_background = false;
     int background_color[3];
     bool has_foreground = false;
     bool has_text = false;
-    if (config::no_render)
-    {
-      debug(3) << "  - dummy rle data >> sep_file" << std::endl;
-      int item = (0xfff << 20) + width;
-      for (int y = 0; y < height; y++)
-      for (int i = 0; i < 4; i++)
-      {
-        char c = item >> ((3 - i) * 8);
-        sep_file.write(&c, 1);
-      }
-    }
-    else
-    {
-      debug(3) << "  - rle data >> sep_file" << std::endl;
-      Pixmap bmp1 = Pixmap(out1);
-      Pixmap bmpm = Pixmap(outm);
-      PixmapIterator p1 = bmp1.begin();
-      PixmapIterator pm = bmpm.begin();
-      for (int i = 0; i < 3; i++) 
-        background_color[i] = pm[i];
-      for (int y = 0; y < height; y++)
-      {
-        int new_color, color = 0xfff;
-        int length = 0;
-        for (int x = 0; x < width; x++)
-        {
-          if (!has_background)
-          {
-            for (int i = 0; i < 3; i++)
-            if (background_color[i] != pm[i])
-            {
-              has_background = true;
-              break;
-            }
-          }
-          if (p1[0] != pm[0] || p1[1] != pm[1] || p1[2] != pm[2])
-          {
-            if (!has_foreground && (p1[0] || p1[1] || p1[2]))
-              has_foreground = true;
-            new_color = ((p1[2] + 1) / 43) + 6 * (((p1[1] + 1) / 43) + 6 * ((p1[0] + 1) / 43));
-          }
-          else
-            new_color = 0xfff;
-          if (color == new_color)
-            length++;
-          else
-          {
-            if (length > 0)
-            {
-              int item = (color << 20) + length;
-              for (int i = 0; i < 4; i++)
-              {
-                char c = item >> ((3 - i) * 8);
-                sep_file.write(&c, 1);
-              }
-            }
-            color = new_color;
-            length = 1;
-          }
-          p1++, pm++;
-        }
-        p1.next_row(), pm.next_row();
-        int item = (color << 20) + length;
-        for (int i = 0; i < 4; i++)
-        {
-          char c = item >> ((3 - i) * 8);
-          sep_file.write(&c, 1);
-        }
-      }
-    }
+    (*quantizer)(out1, outm, width, height, background_color, has_foreground, has_background, sep_file);
     bool nonwhite_background_color;
     if (has_background)
     {
