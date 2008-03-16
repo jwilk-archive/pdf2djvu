@@ -838,16 +838,7 @@ class Quantizer
 {
 public:
   virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
-    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
-  {
-    for (int r = 0; r < 6; r++)
-    for (int g = 0; g < 6; g++)
-    for (int b = 0; b < 6; b++)
-    {
-      char buffer[] = { 51 * r, 51 * g, 51 * b };
-      stream.write(buffer, 3);
-    }
-  }
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream) = 0;
 };
 
 class WebSafeQuantizer : public Quantizer
