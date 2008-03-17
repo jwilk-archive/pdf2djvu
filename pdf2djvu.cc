@@ -26,6 +26,10 @@
 #include "djvuconst.hh"
 #include "sexpr.hh"
 
+#ifdef HAVE_GRAPHICS_MAGICK
+#include <Magick++.h>
+#endif
+
 static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
 {
   std::ostringstream strstream;
@@ -939,6 +943,103 @@ public:
   }
 };
 
+#ifdef HAVE_GRAPHICS_MAGICK
+class GraphicsMagickQuantizer : public Quantizer
+{
+public:
+  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+  {
+    stream << "R6 " << width << " " << height << " ";
+    Magick::Image image(Magick::Geometry(width, height), Magick::Color());
+    image.type(Magick::TrueColorMatteType);
+    image.modifyImage();
+    Pixmap bmp_fg = Pixmap(out_fg);
+    Pixmap bmp_bg = Pixmap(out_bg);
+    PixmapIterator p_fg = bmp_fg.begin();
+    PixmapIterator p_bg = bmp_bg.begin();
+    for (int i = 0; i < 3; i++) 
+      background_color[i] = p_bg[i];
+    for (int y = 0; y < height; y++)
+    {
+      Magick::PixelPacket* ipixel = image.setPixels(0, y, width, 1);
+      for (int x = 0; x < width; x++)
+      {
+        if (!has_background)
+        {
+          for (int i = 0; i < 3; i++)
+          if (background_color[i] != p_bg[i])
+          {
+            has_background = true;
+            break;
+          }
+        }
+        if (p_fg[0] != p_bg[0] || p_fg[1] != p_bg[1] || p_fg[2] != p_bg[2])
+        {
+          if (!has_foreground && (p_fg[0] || p_fg[1] || p_fg[2]))
+            has_foreground = true;
+          *ipixel = Magick::Color(p_fg[0], p_fg[1], p_fg[2], 0);
+        }
+        else
+          *ipixel = Magick::Color(0, 0, 0, 0xff);
+        p_fg++, p_bg++, ipixel++;
+      }
+      p_fg.next_row(), p_bg.next_row(), image.syncPixels();
+    }
+    image.classType(Magick::PseudoClass);
+    unsigned int n_colors = image.colorMapSize();
+    stream << n_colors << std::endl;
+    for (unsigned int i = 0; i < n_colors; i++)
+    {
+      const Magick::Color &color = image.colorMap(i);
+      char buffer[] = { color.redQuantum(), color.greenQuantum(), color.blueQuantum() };
+      stream.write(buffer, 3);
+    }
+    for (int y = 0; y < height; y++)
+    {
+      int new_color, color = 0xfff;
+      Magick::PixelPacket *ipixel = image.getPixels(0, y, width, 1);
+      Magick::IndexPacket *ppixel = image.getIndexes();
+      int length = 0;
+      for (int x = 0; x < width; x++)
+      {
+        if (ipixel->opacity == 0)
+          new_color = *ppixel;
+        else
+          new_color = 0xfff;
+        if (color == new_color)
+          length++;
+        else
+        {
+          if (length > 0)
+          {
+            int item = (color << 20) + length;
+            for (int i = 0; i < 4; i++)
+            {
+              char c = item >> ((3 - i) * 8);
+              stream.write(&c, 1);
+            }
+          }
+          color = new_color;
+          length = 1;
+        }
+        ipixel++, ppixel++;
+      }
+      int item = (color << 20) + length;
+      for (int i = 0; i < 4; i++)
+      {
+        char c = item >> ((3 - i) * 8);
+        stream.write(&c, 1);
+      }
+    }
+  }
+};
+
+class DefaultQuantizer : public GraphicsMagickQuantizer {};
+#else
+class DefaultQuantizer : public WebSafeQuantizer {};
+#endif
+
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
@@ -990,7 +1091,11 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<PageFiles> page_files;
-  std::auto_ptr<Quantizer> quantizer(config::no_render ? new DummyQuantizer() : new WebSafeQuantizer());
+  std::auto_ptr<Quantizer> quantizer(
+    config::no_render ? 
+    dynamic_cast<Quantizer*>(new DummyQuantizer()) :
+    dynamic_cast<Quantizer*>(new DefaultQuantizer())
+  );
   if (config::format == config::FORMAT_BUNDLED)
   {
     if (config::output_stdout)
