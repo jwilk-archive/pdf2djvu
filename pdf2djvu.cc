@@ -1040,10 +1040,12 @@ public:
     }
   }
 };
-
-class DefaultQuantizer : public GraphicsMagickQuantizer {};
 #else
-class DefaultQuantizer : public WebSafeQuantizer {};
+class GraphicsMagickQuantizer : public Quantizer {}
+{
+public:
+  GraphicsMagickQuantizer() { throw Error("Advanced color quantization is not supported."); }
+}
 #endif
 
 static int xmain(int argc, char * const argv[])
@@ -1097,11 +1099,13 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<PageFiles> page_files;
-  std::auto_ptr<Quantizer> quantizer(
-    config::no_render ? 
-    dynamic_cast<Quantizer*>(new DummyQuantizer()) :
-    dynamic_cast<Quantizer*>(new DefaultQuantizer())
-  );
+  std::auto_ptr<Quantizer> quantizer;
+  if (config::no_render)
+    quantizer.reset(new DummyQuantizer());
+  else if (config::fg_colors > 0)
+    quantizer.reset(new GraphicsMagickQuantizer());
+  else
+    quantizer.reset(new WebSafeQuantizer());
   if (config::format == config::FORMAT_BUNDLED)
   {
     if (config::output_stdout)

@@ -20,7 +20,7 @@ int config::verbose = 1;
 int config::dpi = 300;
 std::pair<int, int> config::preferred_page_size = std::make_pair(0, 0);
 int config::bg_subsample = 3;
-int config::fg_colors = 216;
+int config::fg_colors = -1;
 bool config::antialias = false;
 std::vector<sexpr::Ref> config::hyperlinks_options;
 bool config::hyperlinks_user_border_color = false;
@@ -121,6 +121,16 @@ static std::pair<int, int>parse_page_size(const std::string &s)
     throw config::PageSizeParseError();
 }
 
+static int parse_fg_colors(const std::string &s)
+{
+  if (s == "web")
+    return -1;
+  int n = atoi(s.c_str());
+  if (n < 1 || n > 4080)
+    throw config::Error("The specified number of foreground colors is outside the allowed range");
+  return n;
+}
+
 void config::read_config(int argc, char * const argv[])
 {
   enum
@@ -128,6 +138,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_ANTIALIAS    = 0x300,
     OPT_BG_SLICES    = 0x200,
     OPT_BG_SUBSAMPLE = 0x201,
+    OPT_FG_COLORS    = 0x202,
     OPT_DPI          = 'd',
     OPT_HELP         = 'h',
     OPT_HYPERLINKS   = 0x501,
@@ -154,6 +165,7 @@ void config::read_config(int argc, char * const argv[])
     { "verbose",        0, 0, OPT_VERBOSE },
     { "bg-slices",      1, 0, OPT_BG_SLICES },
     { "bg-subsample",   1, 0, OPT_BG_SUBSAMPLE },
+    { "fg-colors",      1, 0, OPT_FG_COLORS },
     { "antialias",      0, 0, OPT_ANTIALIAS },
     { "hyperlinks",     1, 0, OPT_HYPERLINKS },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
@@ -202,6 +214,9 @@ void config::read_config(int argc, char * const argv[])
       config::bg_subsample = atoi(optarg);
       if (config::bg_subsample < 1 || config::bg_subsample > 11)
         throw config::Error("The specified subsampling ratio is outside the allowed range");
+      break;
+    case OPT_FG_COLORS:
+      config::fg_colors = parse_fg_colors(optarg);
       break;
     case OPT_PAGES:
       parse_pages(optarg, config::pages);
@@ -283,6 +298,8 @@ void config::usage(const config::Error &error)
     << "     --bg-slices=N,...,N" << std::endl
     << "     --bg-slices=N+...+N" << std::endl
     << "     --bg-subsample=N"    << std::endl
+    << "     --fg-colors=web"     << std::endl
+    << "     --fg-colors=N"       << std::endl
     << "     --antialias"         << std::endl
     << "     --no-metadata"       << std::endl
     << "     --no-outline"        << std::endl

@@ -3,6 +3,7 @@ pdf2djvu (0.4.6) UNRELEASED; urgency=low
   * Don't force red hyperlink border if it's unable to determine proper
     colour.
   * Enable compilation on Cygwin.
+  * Add the --fg-colors option.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Sun, 16 Mar 2008 12:03:02 +0100
 
