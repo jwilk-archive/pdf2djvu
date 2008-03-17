@@ -37,6 +37,7 @@ namespace config
   extern int dpi;
   extern std::pair<int, int> preferred_page_size;
   extern int bg_subsample;
+  extern int fg_colors;
   extern bool antialias;
   extern std::vector<sexpr::Ref> hyperlinks_options;
   extern bool hyperlinks_user_border_color;

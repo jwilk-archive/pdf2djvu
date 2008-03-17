@@ -986,7 +986,13 @@ public:
       }
       p_fg.next_row(), p_bg.next_row(), image.syncPixels();
     }
-    image.classType(Magick::PseudoClass);
+    image.quantizeColorSpace(Magick::TransparentColorspace);
+    image.quantizeColors(config::fg_colors);
+    image.quantize();
+    image.colorSpace(Magick::RGBColorspace);
+    image.quantizeColorSpace(Magick::RGBColorspace);
+    image.quantizeColors(9999);
+    image.quantize();
     unsigned int n_colors = image.colorMapSize();
     stream << n_colors << std::endl;
     for (unsigned int i = 0; i < n_colors; i++)
@@ -1003,7 +1009,7 @@ public:
       int length = 0;
       for (int x = 0; x < width; x++)
       {
-        if (ipixel->opacity == 0)
+        if (ipixel->opacity != TransparentOpacity)
           new_color = *ppixel;
         else
           new_color = 0xfff;

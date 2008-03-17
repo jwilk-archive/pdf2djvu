@@ -20,6 +20,7 @@ int config::verbose = 1;
 int config::dpi = 300;
 std::pair<int, int> config::preferred_page_size = std::make_pair(0, 0);
 int config::bg_subsample = 3;
+int config::fg_colors = 216;
 bool config::antialias = false;
 std::vector<sexpr::Ref> config::hyperlinks_options;
 bool config::hyperlinks_user_border_color = false;
