@@ -54,6 +54,8 @@ Compatibility
 +-----------------+          |         |      |
 | 0.7.2           |          |         |      |
 +-----------------+----------+---------+------+
+| 0.7.3           | yes      | yes     | [3]_ |
++-----------------+----------+---------+------+
 
 .. [0] officially supported
 .. [1] from Debian etch: http://packages.debian.org/source/etch/poppler
