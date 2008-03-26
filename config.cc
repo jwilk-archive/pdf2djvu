@@ -9,6 +9,7 @@
 
 #include "config.hh"
 #include "djvuconst.hh"
+#include "version.hh"
 
 #include <getopt.h>
 
@@ -298,8 +299,10 @@ void config::usage(const config::Error &error)
     << "     --bg-slices=N,...,N" << std::endl
     << "     --bg-slices=N+...+N" << std::endl
     << "     --bg-subsample=N"    << std::endl
+#ifdef HAVE_GRAPHICS_MAGICK
     << "     --fg-colors=web"     << std::endl
     << "     --fg-colors=N"       << std::endl
+#endif
     << "     --antialias"         << std::endl
     << "     --no-metadata"       << std::endl
     << "     --no-outline"        << std::endl
