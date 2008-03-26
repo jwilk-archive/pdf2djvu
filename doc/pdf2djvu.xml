@@ -195,6 +195,7 @@
 			<listitem>
 				<para>
 					Enable font anti-aliasing.
+					This option is not recommended.
 				</para>
 			</listitem>
 		</varlistentry>
