@@ -78,4 +78,12 @@ pipelines.
 
 .. _PStreams: http://freshmeat.net/projects/pstreams/
 
+
+GraphicsMagick (optional)
+=========================
+GraphicsMagick_ is a library to read, write, and manipulate images.
+
+.. _GraphicsMagick: http://freshmeat.net/projects/graphicsmagick/
+
+
 .. vim:tw=72 ft=rst
