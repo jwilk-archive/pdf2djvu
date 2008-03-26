@@ -172,6 +172,25 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--fg-colors=web</option></term>
+			<listitem>
+				<para>
+					Reduce foreground layer colors to the web palette (216 colors).
+					This is default.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--fg-colors=<replaceable>n</replaceable></option></term>
+			<listitem>
+				<para>
+					Use GraphicsMagick to reduce number of distinct colors in the foreground layer to
+					<replaceable>n</replaceable>. Valid values are integers between 1 and 4080.
+					This option is not recommended.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--antialias</option></term>
 			<listitem>
 				<para>
