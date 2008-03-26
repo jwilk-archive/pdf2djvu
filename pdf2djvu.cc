@@ -1041,11 +1041,14 @@ public:
   }
 };
 #else
-class GraphicsMagickQuantizer : public Quantizer {}
+class GraphicsMagickQuantizer : public Quantizer
 {
 public:
   GraphicsMagickQuantizer() { throw Error("Advanced color quantization is not supported."); }
-}
+  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+  { /* just to satisfy compilers */ }
+};
 #endif
 
 static int xmain(int argc, char * const argv[])
