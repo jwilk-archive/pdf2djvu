@@ -104,9 +104,9 @@ class PixmapIterator
 private:
   const uint8_t *row_ptr;
   const uint8_t *ptr;
-  int row_size;
+  size_t row_size;
 public:  
-  PixmapIterator(const uint8_t *raw_data, int row_size)
+  PixmapIterator(const uint8_t *raw_data, size_t row_size)
   {
     this->row_ptr = this->ptr = raw_data;
     this->row_size = row_size;
@@ -134,7 +134,7 @@ class Pixmap
 private:
   const uint8_t *raw_data;
   SplashBitmap *bmp;
-  int row_size;
+  size_t row_size;
   int width, height;
 public:
   int get_width() { return width; }
