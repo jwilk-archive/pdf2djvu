@@ -167,7 +167,7 @@ std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
 {
   int height = pixmap.height;
   int width = pixmap.width;
-  int row_size = pixmap.row_size;
+  size_t row_size = pixmap.row_size;
   const uint8_t *row_ptr = pixmap.raw_data;
   for (int y = 0; y < height; y++)
   {
