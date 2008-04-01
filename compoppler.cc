@@ -15,7 +15,7 @@
 
 void init_global_params()
 {
-#if POPPLER_VERSION < 600
+#if POPPLER_VERSION < 509
   globalParams = new GlobalParams(NULL);
 #else
   globalParams = new GlobalParams();
@@ -155,7 +155,7 @@ void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, 
 {
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
-#elif POPPLER_VERSION < 600 
+#elif POPPLER_VERSION < 509 
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gTrue, gFalse, do_links);
 #else
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gTrue, gFalse, !do_links);
@@ -179,7 +179,7 @@ std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
 
 std::string get_link_border_color(Link *link)
 {
-#if POPPLER_VERSION < 600
+#if POPPLER_VERSION < 509
   double rgb[3];
   LinkBorderStyle *border_style = link->getBorderStyle();
   border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
