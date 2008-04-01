@@ -38,7 +38,11 @@ Compatibility
 +-----------------+          |         |      |
 | 0.5.4           |          |         |      |
 +-----------------+----------+---------+------+
-| 0.6             | yes      | yes     | [3]_ |
+| 0.5.9           | yes      | yes     | [5]_ |
++-----------------+          |         |      |
+| 0.5.91          |          |         |      |
++-----------------+----------+---------+------+
+| 0.6             | yes      | yes     | [4]_ |
 +-----------------+          |         |      |
 | 0.6.1           |          |         |      |
 +-----------------+          |         |      |
@@ -50,7 +54,7 @@ Compatibility
 +-----------------+----------+---------+------+
 | 0.7.0           | yes      | yes     | [3]_ |
 +-----------------+----------+---------+------+
-| 0.7.1           | yes      | no [4]_ | [3]_ |
+| 0.7.1           | yes      | no [5]_ | [3]_ |
 +-----------------+          |         |      |
 | 0.7.2           |          |         |      |
 +-----------------+----------+---------+------+
@@ -63,7 +67,8 @@ Compatibility
 .. [1] from Debian etch: http://packages.debian.org/source/etch/poppler
 .. [2] pdf2djvu may expose some poppler rendering bugs
 .. [3] http://code.google.com/p/pdf2djvu/issues/detail?id=2
-.. [4] https://bugs.freedesktop.org/show_bug.cgi?id=15009 
+.. [4] http://code.google.com/p/pdf2djvu/issues/detail?id=3
+.. [5] https://bugs.freedesktop.org/show_bug.cgi?id=15009 
 
 Header files
 ------------
