@@ -7,7 +7,7 @@ Build-Depends: cdbs, debhelper (>= 5), libpoppler-dev, libdjvulibre-dev, libpstr
 Standards-Version: 3.7.3
 Homepage: http://pdf2djvu.googlecode.com/
 Vcs-Svn: http://pdf2djvu.googlecode.com/svn/trunk
-Vcs-Browser: http://pdf2djvu.googlecode.com/svn/trunk
+Vcs-Browser: http://code.google.com/p/pdf2djvu/source/browse
 
 Package: pdf2djvu
 Architecture: any
