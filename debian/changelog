@@ -1,3 +1,9 @@
+pdf2djvu (0.4.7) UNRELEASED; urgency=low
+
+  * Add the --media-box option.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Mon, 07 Apr 2008 18:46:38 +0200
+
 pdf2djvu (0.4.6) unstable; urgency=low
 
   * Don't force red hyperlink border if it's unable to determine proper
