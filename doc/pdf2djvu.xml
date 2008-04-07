@@ -191,7 +191,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--antialias</option></term>
+			<term><option>--anti-alias</option></term>
 			<listitem>
 				<para>
 					Enable font anti-aliasing.

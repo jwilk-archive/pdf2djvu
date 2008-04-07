@@ -168,6 +168,7 @@ void config::read_config(int argc, char * const argv[])
     { "bg-subsample",   1, 0, OPT_BG_SUBSAMPLE },
     { "fg-colors",      1, 0, OPT_FG_COLORS },
     { "antialias",      0, 0, OPT_ANTIALIAS },
+    { "anti-alias",     0, 0, OPT_ANTIALIAS },
     { "hyperlinks",     1, 0, OPT_HYPERLINKS },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
     { "no-metadata",    0, 0, OPT_NO_METADATA },
@@ -303,7 +304,7 @@ void config::usage(const config::Error &error)
     << "     --fg-colors=web"     << std::endl
     << "     --fg-colors=N"       << std::endl
 #endif
-    << "     --antialias"         << std::endl
+    << "     --anti-alias"        << std::endl
     << "     --no-metadata"       << std::endl
     << "     --no-outline"        << std::endl
     << "     --hyperlinks=..."    << std::endl
