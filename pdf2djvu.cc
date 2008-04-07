@@ -332,7 +332,7 @@ static std::string pdf_string_to_utf8_string(GooString *from)
 static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
   std::map<int, int> &page_map)
 {
-  sexpr::GCLock gc_lock; // work-around <http://sourceforge.net/tracker/index.php?func=detail&aid=1915053&group_id=32953&atid=406583>
+  sexpr::GCLock gc_lock; // work-around <http://sourceforge.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   Object current, next;
   if (!dict_lookup(node, "First", &current)->isDict())
     return sexpr::nil;
