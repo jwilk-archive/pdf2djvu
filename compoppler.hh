@@ -94,8 +94,8 @@ Object *dict_lookup(Object &dict, const char *key, Object *object);
 Object *dict_lookup(Object *dict, const char *key, Object *object);
 Object *dict_lookup(Dict *dict, const char *key, Object *object);
 
-double get_page_width(PDFDoc *document, int n);
-double get_page_height(PDFDoc *document, int n);
+double get_page_width(PDFDoc *document, int n, bool crop);
+double get_page_height(PDFDoc *document, int n, bool crop);
 
 void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool do_links);
 

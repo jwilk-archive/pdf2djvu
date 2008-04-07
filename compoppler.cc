@@ -129,24 +129,28 @@ Object *dict_lookup(Dict *dict, const char *key, Object *object)
   return dict->lookup(const_cast<char*>(key), object);
 }
 
-double get_page_width(PDFDoc *document, int n)
+double get_page_width(PDFDoc *document, int n, bool crop)
 {
   double width =
 #if POPPLER_VERSION < 500
     document->getPageWidth(n);
 #else
-    document->getPageCropWidth(n);
+    crop ?
+      document->getPageCropWidth(n) :
+      document->getPageMediaWidth(n);
 #endif
   return width / 72.0;
 }
 
-double get_page_height(PDFDoc *document, int n)
+double get_page_height(PDFDoc *document, int n, bool crop)
 {
   double height =
 #if POPPLER_VERSION < 500
     document->getPageHeight(n);
 #else
-    document->getPageCropHeight(n);
+    crop ?
+      document->getPageCropHeight(n) :
+      document->getPageMediaHeight(n);
 #endif
   return height / 72.0;
 }
