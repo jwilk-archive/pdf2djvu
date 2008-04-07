@@ -135,7 +135,7 @@ double get_page_width(PDFDoc *document, int n)
 #if POPPLER_VERSION < 500
     document->getPageWidth(n);
 #else
-    document->getPageMediaWidth(n);
+    document->getPageCropWidth(n);
 #endif
   return width / 72.0;
 }
@@ -146,7 +146,7 @@ double get_page_height(PDFDoc *document, int n)
 #if POPPLER_VERSION < 500
     document->getPageHeight(n);
 #else
-    document->getPageMediaHeight(n);
+    document->getPageCropHeight(n);
 #endif
   return height / 72.0;
 }
@@ -156,9 +156,9 @@ void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, 
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
 #elif POPPLER_VERSION < 509 
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, gTrue, gFalse, do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, gFalse, do_links);
 #else
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, gTrue, gFalse, !do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, gFalse, !do_links);
   document->processLinks(renderer, npage);
 #endif
 }
