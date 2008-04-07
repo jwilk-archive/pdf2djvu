@@ -155,14 +155,14 @@ double get_page_height(PDFDoc *document, int n, bool crop)
   return height / 72.0;
 }
 
-void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool do_links)
+void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
 #elif POPPLER_VERSION < 509 
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, gFalse, do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, crop, do_links);
 #else
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, gFalse, !do_links);
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, crop, !do_links);
   document->processLinks(renderer, npage);
 #endif
 }
