@@ -36,6 +36,7 @@ namespace config
   extern int verbose;
   extern int dpi;
   extern std::pair<int, int> preferred_page_size;
+  extern bool use_media_box;
   extern int bg_subsample;
   extern int fg_colors;
   extern bool antialias;

@@ -20,6 +20,7 @@ bool config::output_stdout = true;
 int config::verbose = 1;
 int config::dpi = 300;
 std::pair<int, int> config::preferred_page_size = std::make_pair(0, 0);
+bool config::use_media_box = false;
 int config::bg_subsample = 3;
 int config::fg_colors = -1;
 bool config::antialias = false;
@@ -151,6 +152,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_OUTPUT       = 'o',
     OPT_PAGES        = 'p',
     OPT_PAGE_SIZE    = 0x700,
+    OPT_MEDIA_BOX    = 0x701,
     OPT_QUIET        = 'q',
     OPT_TEXT_LINES   = 0x102,
     OPT_TEXT_NONE    = 0x100,
@@ -162,6 +164,7 @@ void config::read_config(int argc, char * const argv[])
   {
     { "dpi",            1, 0, OPT_DPI },
     { "page-size",      1, 0, OPT_PAGE_SIZE },
+    { "media-box",      0, 0, OPT_MEDIA_BOX },
     { "quiet",          0, 0, OPT_QUIET },
     { "verbose",        0, 0, OPT_VERBOSE },
     { "bg-slices",      1, 0, OPT_BG_SLICES },
@@ -202,6 +205,9 @@ void config::read_config(int argc, char * const argv[])
       break;
     case OPT_PAGE_SIZE:
       config::preferred_page_size = parse_page_size(optarg);
+      break;
+    case OPT_MEDIA_BOX:
+      config::use_media_box = true;
       break;
     case OPT_QUIET:
       config::verbose = 0;

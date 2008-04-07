@@ -1144,6 +1144,7 @@ static int xmain(int argc, char * const argv[])
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   outs->startDoc(doc->getXRef());
+  bool crop = !config::use_media_box;
   for (
     std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
     page_range != config::pages.end(); page_range++)
@@ -1155,10 +1156,10 @@ static int xmain(int argc, char * const argv[])
     debug(2) << ":";
     debug(1) << std::endl;
     debug(3) << "  - muted render" << std::endl;
-    double page_width = get_page_width(doc, n, true);
-    double page_height = get_page_height(doc, n, true);
+    double page_width = get_page_width(doc, n, crop);
+    double page_height = get_page_height(doc, n, crop);
     int dpi = calculate_dpi(page_width, page_height);
-    display_page(doc, outm, n, dpi, dpi, true);
+    display_page(doc, outm, n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -1166,7 +1167,7 @@ static int xmain(int argc, char * const argv[])
     if (!config::no_render)
     {
       debug(3) << "  - verbose render" << std::endl;
-      display_page(doc, out1, n, dpi, dpi, false);
+      display_page(doc, out1, n, dpi, dpi, crop, false);
     }
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -1184,7 +1185,7 @@ static int xmain(int argc, char * const argv[])
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
-      display_page(doc, outs, n, hdpi, vdpi, true);
+      display_page(doc, outs, n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
         throw Error();
       if (sub_height != outs->getBitmapHeight())
