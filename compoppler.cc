@@ -30,6 +30,9 @@ bool set_antialias(bool value)
   return false;
 #endif
   return globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no"));
+#if POPPLER_VERSION >= 509
+  return globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no"));
+#endif
 }
 
 PDFDoc *new_document(std::string file_name)
