@@ -1,9 +1,9 @@
-pdf2djvu (0.4.7) UNRELEASED; urgency=low
+pdf2djvu (0.4.7) unstable; urgency=low
 
   * Add the --media-box option.
   * Disable vector anti-aliasing by default.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Tue, 08 Apr 2008 13:11:10 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Wed, 09 Apr 2008 15:43:45 +0200
 
 pdf2djvu (0.4.6) unstable; urgency=low
 
