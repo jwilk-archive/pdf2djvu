@@ -137,6 +137,15 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--media-box</option></term>
+			<listitem>
+				<para>
+					Use <firstterm>MediaBox</firstterm> to dermine page size. <firstterm>CropBox</firstterm> is used by
+					default.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--page-size=<replaceable>width</replaceable>x<replaceable>height</replaceable></option></term>
 			<listitem>
 				<para>

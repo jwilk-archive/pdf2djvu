@@ -302,6 +302,7 @@ void config::usage(const config::Error &error)
     << " -v, --verbose"           << std::endl
     << " -q, --quiet"             << std::endl
     << " -d, --dpi=resolution"    << std::endl
+    << "     --media-box"         << std::endl
     << "     --page-size=WxH"     << std::endl
     << "     --bg-slices=N,...,N" << std::endl
     << "     --bg-slices=N+...+N" << std::endl
