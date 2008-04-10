@@ -12,7 +12,9 @@
 #include <stdexcept>
 
 #include <fcntl.h>
+#include <dirent.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <iconv.h>
 
 OSError::OSError() : Error("")
@@ -46,6 +48,21 @@ void Command::operator()(std::ostream &my_stdout, bool quiet)
 void Command::operator()(bool quiet)
 {
   this->call(NULL, quiet);
+}
+
+void Directory::_open(const char* path)
+{
+  this->posix_dir = opendir(path);
+  if (this->posix_dir == NULL)
+    throw OSError();
+}
+
+void Directory::_close(void)
+{
+  if (this->posix_dir == NULL)
+    return;
+  if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
+    throw OSError();
 }
 
 void File::_open(const char* path)

@@ -38,11 +38,20 @@ class Directory
 {
 protected:
   std::string name;
+  void *posix_dir;
+  void _open(const char *name);
+  void _close();
+  Directory() : name(""), posix_dir(NULL) {}
 public: 
   explicit Directory(const std::string &name)
-  : name(name) 
-  { }
-  virtual ~Directory() {}
+  : name(name), posix_dir(NULL)
+  { 
+    this->_open(name.c_str());
+  }
+  virtual ~Directory()
+  {
+    this->_close();
+  }
   friend std::ostream &operator<<(std::ostream &, const Directory &);
 };
 
@@ -52,7 +61,7 @@ private:
   TemporaryDirectory(const TemporaryDirectory&); // not defined
   TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
 public:
-  TemporaryDirectory() : Directory("")
+  TemporaryDirectory() : Directory()
   {
     char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     if (mkdtemp(path_buffer) == NULL)
