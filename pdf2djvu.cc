@@ -1116,8 +1116,8 @@ static int xmain(int argc, char * const argv[])
       output_file.reset(new TemporaryFile());
     else
       output_file.reset(new File(config::output));
-    djvm.reset(new BundledDjVm(*output_file));
     page_files.reset(new TemporaryPageFiles(n_pages));
+    djvm.reset(new BundledDjVm(*output_file));
   }
   else
   {
