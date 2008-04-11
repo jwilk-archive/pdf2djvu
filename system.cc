@@ -58,22 +58,22 @@ void Command::operator()(bool quiet)
 Directory::Directory(const std::string &name)
 : name(name), posix_dir(NULL)
 { 
-  this->_open(name.c_str());
+  this->open(name.c_str());
 }
 
 Directory::~Directory()
 {
-  this->_close();
+  this->close();
 }
 
-void Directory::_open(const char* path)
+void Directory::open(const char* path)
 {
   this->posix_dir = opendir(path);
   if (this->posix_dir == NULL)
     throw_os_error();
 }
 
-void Directory::_close(void)
+void Directory::close(void)
 {
   if (this->posix_dir == NULL)
     return;
@@ -95,29 +95,29 @@ TemporaryDirectory::~TemporaryDirectory()
     throw_os_error();
 }
 
-void File::_open(const char* path)
+void File::open(const char* path)
 {
   this->exceptions(std::ifstream::failbit | std::ifstream::badbit);
   if (path == NULL)
-    this->open(this->name.c_str(), std::fstream::in | std::fstream::out);
+    this->std::fstream::open(this->name.c_str(), std::fstream::in | std::fstream::out);
   else
   {
     this->name = path;
-    this->open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
+    this->std::fstream::open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
   }
   this->exceptions(std::ifstream::badbit);
 }
 
 File::File(const std::string &name)
 {
-  this->_open(name.c_str());
+  this->open(name.c_str());
 }
 
 File::File(const Directory& directory, const std::string &name)
 {
   std::ostringstream stream;
   stream << directory << "/" << name;
-  this->_open(stream.str().c_str());
+  this->open(stream.str().c_str());
 }
 
 size_t File::size()
@@ -130,7 +130,7 @@ void File::reopen()
 {
   if (this->is_open())
     this->close();
-  this->_open(NULL);
+  this->open(NULL);
 }
 
 File::operator const std::string& () const
@@ -156,7 +156,7 @@ void TemporaryFile::construct()
     throw_os_error();
   if (::close(fd) == -1)
     throw_os_error();
-  this->_open(path_buffer);
+  this->open(path_buffer);
 }
 
 TemporaryFile::TemporaryFile()

@@ -39,8 +39,8 @@ class Directory
 protected:
   std::string name;
   void *posix_dir;
-  void _open(const char *name);
-  void _close();
+  void open(const char *name);
+  void close();
   Directory() : name(""), posix_dir(NULL) {}
 public: 
   explicit Directory(const std::string &name);
@@ -62,7 +62,7 @@ class File : public std::fstream
 {
 protected:
   std::string name;
-  void _open(const char* path);
+  void open(const char* path);
   File() {}
 public:
   explicit File(const std::string &name);
