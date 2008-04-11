@@ -17,6 +17,10 @@
 #include <sys/types.h>
 #include <iconv.h>
 
+/* class OSError : Error
+ * =====================
+ */
+
 OSError::OSError() : Error("")
 {
   message = strerror(errno);
@@ -26,6 +30,11 @@ void throw_os_error(void)
 {
   throw OSError();
 }
+
+
+/* class Command
+ * =============
+ */
 
 Command::Command(const std::string& command) : command(command)
 {
@@ -84,6 +93,10 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
 }
 
+/* class Directory
+ * ===============
+ */
+
 Directory::Directory(const std::string &name)
 : name(name), posix_dir(NULL)
 { 
@@ -110,6 +123,11 @@ void Directory::close(void)
     throw_os_error();
 }
 
+
+/* class TemporaryDirectory : Directory
+ * ====================================
+ */
+
 TemporaryDirectory::TemporaryDirectory() : Directory()
 {
   char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
@@ -123,6 +141,12 @@ TemporaryDirectory::~TemporaryDirectory()
   if (rmdir(this->name.c_str()) == -1)
     throw_os_error();
 }
+
+
+/* class File : std::fstream
+ * =========================
+ */
+
 
 void File::open(const char* path)
 {
@@ -176,6 +200,11 @@ std::ostream &operator<<(std::ostream &out, const File &file)
 {
   return out << file.name;
 }
+
+
+/* class TemporaryFile : File
+ * ==========================
+ */
 
 void TemporaryFile::construct()
 {
@@ -241,6 +270,11 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   if (iconv_close(cd) == -1)
     throw_os_error();
 }
+
+
+/* utility functions
+ * =================
+ */
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
 {
