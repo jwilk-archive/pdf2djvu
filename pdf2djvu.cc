@@ -1120,36 +1120,50 @@ static int xmain(int argc, char * const argv[])
   else
   {
     std::string index_file_name = "index.djvu";
-    bool config_output_not_a_dir = false;
     try
     {
       // For compatibility reasons, check if it's a directory.
       output_dir.reset(new Directory(config::output));
     }
-    catch (NoSuchFileOrDirectory &ex)
+    catch (OSError &no_such_directory_exception)
     {
-      config_output_not_a_dir = true;
-    }
-    catch (NotADirectory &ex)
-    {
-      config_output_not_a_dir = true;
-    }
-    if (config_output_not_a_dir)
-    {
-      // Nope, it's not a directory, it must be a file.
-      std::string output_directory_name;
-      size_t slash_index = config::output.rfind('/');
-      if (slash_index == std::string::npos)
+      bool config_output_not_a_dir = false;
+      try
       {
-        output_directory_name = ".";
-        index_file_name = slash_index;
+        throw;
       }
-      else
+      catch (NoSuchFileOrDirectory &)
       {
-        output_directory_name = config::output.substr(0, slash_index);
-        index_file_name = config::output.substr(slash_index + 1);
+        config_output_not_a_dir = true;
       }
-      output_dir.reset(new Directory(output_directory_name));
+      catch (NotADirectory &)
+      {
+        config_output_not_a_dir = true;
+      }
+      if (!config_output_not_a_dir)
+        throw;
+      if (config_output_not_a_dir)
+      {
+        // Nope, it's not a directory, it must be a file.
+        std::string output_directory_name;
+        size_t slash_index = config::output.rfind('/');
+        if (slash_index == std::string::npos)
+        {
+          output_directory_name = ".";
+          index_file_name = slash_index;
+        }
+        else
+        {
+          output_directory_name = config::output.substr(0, slash_index);
+          index_file_name = config::output.substr(slash_index + 1);
+          if (index_file_name.length() == 0)
+          {
+            // Oops, that was a directory, but a non-existant one.
+            throw no_such_directory_exception;
+          }
+        }
+        output_dir.reset(new Directory(output_directory_name));
+      }
     }
     output_file.reset(new File(*output_dir, index_file_name));
     page_files.reset(new IndirectPageFiles(n_pages, *output_dir));
