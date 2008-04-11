@@ -55,6 +55,17 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
+Directory::Directory(const std::string &name)
+: name(name), posix_dir(NULL)
+{ 
+  this->_open(name.c_str());
+}
+
+Directory::~Directory()
+{
+  this->_close();
+}
+
 void Directory::_open(const char* path)
 {
   this->posix_dir = opendir(path);
@@ -67,6 +78,20 @@ void Directory::_close(void)
   if (this->posix_dir == NULL)
     return;
   if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
+    throw_os_error();
+}
+
+TemporaryDirectory::TemporaryDirectory() : Directory()
+{
+  char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+  if (mkdtemp(path_buffer) == NULL)
+    throw_os_error();
+  this->name += path_buffer;
+}
+
+TemporaryDirectory::~TemporaryDirectory()
+{
+  if (rmdir(this->name.c_str()) == -1)
     throw_os_error();
 }
 
@@ -121,6 +146,30 @@ std::ostream &operator<<(std::ostream &out, const Directory &directory)
 std::ostream &operator<<(std::ostream &out, const File &file)
 {
   return out << file.name;
+}
+
+void TemporaryFile::construct()
+{
+  char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+  int fd = mkstemp(path_buffer);
+  if (fd == -1)
+    throw_os_error();
+  if (::close(fd) == -1)
+    throw_os_error();
+  this->_open(path_buffer);
+}
+
+TemporaryFile::TemporaryFile()
+{
+  this->construct();
+}
+
+TemporaryFile::~TemporaryFile()
+{
+  if (this->is_open())
+    this->close();
+  if (unlink(this->name.c_str()) == -1)
+    throw_os_error();
 }
 
 void Command::call(std::ostream *my_stdout, bool quiet)

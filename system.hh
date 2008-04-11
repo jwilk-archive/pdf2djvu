@@ -20,8 +20,6 @@ public:
   OSError();
 };
 
-void throw_os_error(void);
-
 class Command
 {
 private:
@@ -45,15 +43,8 @@ protected:
   void _close();
   Directory() : name(""), posix_dir(NULL) {}
 public: 
-  explicit Directory(const std::string &name)
-  : name(name), posix_dir(NULL)
-  { 
-    this->_open(name.c_str());
-  }
-  virtual ~Directory()
-  {
-    this->_close();
-  }
+  explicit Directory(const std::string &name);
+  virtual ~Directory();
   friend std::ostream &operator<<(std::ostream &, const Directory &);
 };
 
@@ -63,19 +54,8 @@ private:
   TemporaryDirectory(const TemporaryDirectory&); // not defined
   TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
 public:
-  TemporaryDirectory() : Directory()
-  {
-    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    if (mkdtemp(path_buffer) == NULL)
-      throw_os_error();
-    this->name += path_buffer;
-  }
-
-  virtual ~TemporaryDirectory()
-  {
-    if (rmdir(this->name.c_str()) == -1)
-      throw_os_error();
-  }
+  TemporaryDirectory();
+  virtual ~TemporaryDirectory();
 };
 
 class File : public std::fstream
@@ -100,34 +80,13 @@ private:
   TemporaryFile(const TemporaryFile&); // not defined
   TemporaryFile& operator=(const TemporaryFile&); // not defined
 protected:
-  void construct()
-  {
-    char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
-    int fd = mkstemp(path_buffer);
-    if (fd == -1)
-      throw_os_error();
-    if (::close(fd) == -1)
-      throw_os_error();
-    _open(path_buffer);
-  }
-
+  void construct();
 public:
   TemporaryFile(const Directory& directory, const std::string &name) 
   : File(directory, name) 
   { }
-
-  TemporaryFile()
-  {
-    this->construct();
-  }
-
-  virtual ~TemporaryFile()
-  {
-    if (this->is_open())
-      this->close();
-    if (unlink(this->name.c_str()) == -1)
-      throw_os_error();
-  }
+  TemporaryFile();
+  virtual ~TemporaryFile();
 };
 
 class IconvError : public Error
