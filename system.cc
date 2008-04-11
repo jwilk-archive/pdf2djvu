@@ -55,6 +55,35 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
+void Command::call(std::ostream *my_stdout, bool quiet)
+{
+  redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
+  if (!xsystem.rdbuf()->error())
+  {
+    if (my_stdout != NULL)
+    {
+      xsystem.out();
+      copy_stream(xsystem, *my_stdout, false);
+    }
+    {
+      xsystem.err();
+      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
+    }
+    xsystem.close();
+  }
+  int status = xsystem.rdbuf()->status();
+  if (status != 0)
+  {
+    std::ostringstream message;
+    message << "system(\"";
+    message << this->command;
+    message << " ...\") failed";
+    if (WIFEXITED(status))
+      message << " with exit code " << WEXITSTATUS(status);
+    throw Error(message.str());
+  }
+}
+
 Directory::Directory(const std::string &name)
 : name(name), posix_dir(NULL)
 { 
@@ -170,35 +199,6 @@ TemporaryFile::~TemporaryFile()
     this->close();
   if (unlink(this->name.c_str()) == -1)
     throw_os_error();
-}
-
-void Command::call(std::ostream *my_stdout, bool quiet)
-{
-  redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
-  if (!xsystem.rdbuf()->error())
-  {
-    if (my_stdout != NULL)
-    {
-      xsystem.out();
-      copy_stream(xsystem, *my_stdout, false);
-    }
-    {
-      xsystem.err();
-      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
-    }
-    xsystem.close();
-  }
-  int status = xsystem.rdbuf()->status();
-  if (status != 0)
-  {
-    std::ostringstream message;
-    message << "system(\"";
-    message << this->command;
-    message << " ...\") failed";
-    if (WIFEXITED(status))
-      message << " with exit code " << WEXITSTATUS(status);
-    throw Error(message.str());
-  }
 }
 
 void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
