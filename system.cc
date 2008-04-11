@@ -22,21 +22,24 @@
  * =====================
  */
 
-OSError::OSError() : Error("")
+OSError::OSError(const std::string &context) : Error(context)
 {
-  message = strerror(errno);
+  std::string error_message = strerror(errno);
+  if (this->message.length())
+    this->message += ": ";
+  message += error_message;
 }
 
-void throw_os_error(void)
+void throw_os_error(const std::string &context)
 {
   switch (errno)
   {
   case ENOTDIR:
-    throw NotADirectory();
+    throw NotADirectory(context);
   case ENOENT:
-    throw NoSuchFileOrDirectory();
+    throw NoSuchFileOrDirectory(context);
   default:
-    throw OSError();
+    throw OSError(context);
   }
 }
 
@@ -122,7 +125,7 @@ void Directory::open(const char* path)
 {
   this->posix_dir = opendir(path);
   if (this->posix_dir == NULL)
-    throw_os_error();
+    throw_os_error(path);
 }
 
 void Directory::close(void)
@@ -130,7 +133,7 @@ void Directory::close(void)
   if (this->posix_dir == NULL)
     return;
   if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
-    throw_os_error();
+    throw_os_error(this->name);
 }
 
 
@@ -142,14 +145,14 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
 {
   char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
   if (mkdtemp(path_buffer) == NULL)
-    throw_os_error();
+    throw_os_error(path_buffer);
   this->name += path_buffer;
 }
 
 TemporaryDirectory::~TemporaryDirectory()
 {
   if (rmdir(this->name.c_str()) == -1)
-    throw_os_error();
+    throw_os_error(this->name);
 }
 
 
@@ -220,9 +223,9 @@ void TemporaryFile::construct()
   char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
   int fd = mkstemp(path_buffer);
   if (fd == -1)
-    throw_os_error();
+    throw_os_error(path_buffer);
   if (::close(fd) == -1)
-    throw_os_error();
+    throw_os_error(path_buffer);
   this->open(path_buffer);
 }
 
@@ -236,7 +239,7 @@ TemporaryFile::~TemporaryFile()
   if (this->is_open())
     this->close();
   if (unlink(this->name.c_str()) == -1)
-    throw_os_error();
+    throw_os_error(this->name);
 }
 
 void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
@@ -246,7 +249,7 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   size_t outbuf_len = sizeof outbuf;
   iconv_t cd = iconv_open("UTF-8", "UTF-16");
   if (cd == reinterpret_cast<iconv_t>(-1))
-    throw_os_error();
+    throw_os_error("iconv_open()");
   while (inbuf_len > 0)
   {
     struct iconv_adapter 
@@ -277,7 +280,7 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   }
   stream.write(outbuf, outbuf_ptr - outbuf);
   if (iconv_close(cd) == -1)
-    throw_os_error();
+    throw_os_error("iconv_close()");
 }
 
 

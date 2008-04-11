@@ -17,19 +17,19 @@
 class OSError : public Error
 {
 public:
-  OSError();
+  explicit OSError(const std::string &context);
 };
 
 class NoSuchFileOrDirectory : public OSError
 {
 public:
-  NoSuchFileOrDirectory() : OSError() {}
+  NoSuchFileOrDirectory(const std::string &context) : OSError(context) {}
 };
 
 class NotADirectory : public OSError
 {
 public:
-  NotADirectory() : OSError() {}
+  NotADirectory(const std::string &context) : OSError(context) {}
 };
 
 class Command
