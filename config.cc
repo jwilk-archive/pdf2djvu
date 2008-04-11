@@ -313,7 +313,7 @@ void config::usage(const config::Error &error)
   debug(0) 
     << "Usage: " << std::endl
     << "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>" << std::endl
-    << "   pdf2djvu  -i <output-directory>  [options] <pdf-file>" << std::endl
+    << "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>" << std::endl
     << std::endl
     << "Options:" << std::endl
     << " -i, --indirect=DIR"       << std::endl
