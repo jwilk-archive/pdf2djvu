@@ -1090,8 +1090,6 @@ static int xmain(int argc, char * const argv[])
   if (!doc->isOk())
     throw Error("Unable to load document");
 
-  debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
-
   SplashColor paper_color;
   set_color(paper_color, 0xff, 0xff, 0xff);
 
@@ -1175,6 +1173,7 @@ static int xmain(int argc, char * const argv[])
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   outs->startDoc(doc->getXRef());
+  debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
   bool crop = !config::use_media_box;
   for (
     std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
