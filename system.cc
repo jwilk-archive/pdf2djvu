@@ -18,6 +18,13 @@
 #include <iconv.h>
 
 
+/* constants
+ * =========
+ */
+
+#define TEMPORARY_PATH_TEMPLATE "/tmp/pdf2djvu.XXXXXX"
+
+
 /* class OSError : Error
  * =====================
  */
@@ -143,7 +150,7 @@ void Directory::close(void)
 
 TemporaryDirectory::TemporaryDirectory() : Directory()
 {
-  char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+  char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
   if (mkdtemp(path_buffer) == NULL)
     throw_os_error(path_buffer);
   this->name += path_buffer;
@@ -220,7 +227,7 @@ std::ostream &operator<<(std::ostream &out, const File &file)
 
 void TemporaryFile::construct()
 {
-  char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
+  char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
   int fd = mkstemp(path_buffer);
   if (fd == -1)
     throw_os_error(path_buffer);
