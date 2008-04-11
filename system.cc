@@ -29,7 +29,15 @@ OSError::OSError() : Error("")
 
 void throw_os_error(void)
 {
-  throw OSError();
+  switch (errno)
+  {
+  case ENOTDIR:
+    throw NotADirectory();
+  case ENOENT:
+    throw NoSuchFileOrDirectory();
+  default:
+    throw OSError();
+  }
 }
 
 

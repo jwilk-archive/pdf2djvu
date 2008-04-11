@@ -20,6 +20,18 @@ public:
   OSError();
 };
 
+class NoSuchFileOrDirectory : public OSError
+{
+public:
+  NoSuchFileOrDirectory() : OSError() {}
+};
+
+class NotADirectory : public OSError
+{
+public:
+  NotADirectory() : OSError() {}
+};
+
 class Command
 {
 private:
