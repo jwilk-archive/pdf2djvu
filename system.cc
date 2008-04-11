@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <iconv.h>
 
+
 /* class OSError : Error
  * =====================
  */
@@ -93,6 +94,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
 }
 
+
 /* class Directory
  * ===============
  */
@@ -146,7 +148,6 @@ TemporaryDirectory::~TemporaryDirectory()
 /* class File : std::fstream
  * =========================
  */
-
 
 void File::open(const char* path)
 {
