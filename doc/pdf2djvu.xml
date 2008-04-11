@@ -57,7 +57,7 @@
 				<arg choice='plain'><option>-i</option></arg>
 				<arg choice='plain'><option>--indirect</option></arg>
 			</group>
-			<arg choice='plain'><replaceable>output-directory</replaceable></arg>
+			<arg choice='plain'><replaceable>index-djvu-file</replaceable></arg>
 		</arg>
 		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
 		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
@@ -99,12 +99,12 @@
 		</varlistentry>
 		<varlistentry>
 			<term><option>-i</option></term>
-			<term><option>--indirect=<filename><replaceable>output-directory</replaceable></filename></option></term>
+			<term><option>--indirect=<filename><replaceable>index-djvu-file</replaceable></filename></option></term>
 			<listitem>
 				<para>
-					Generate an indirect multi-page document. Put the component files into the
-					<filename><replaceable>output-directory</replaceable></filename> directory. The index file name will
-					be <filename>index.djvu</filename>. The directory must exist and be writable.
+					Generate an indirect multi-page document. Use
+					<filename><replaceable>index-djvu-file</replaceable></filename> as the index file name; put the
+					component files into the same directory. The directory must exist and be writable.
 				</para>
 			</listitem>
 		</varlistentry>
