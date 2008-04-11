@@ -45,7 +45,7 @@
 				<arg choice='plain'><option>-o</option></arg>
 				<arg choice='plain'><option>--output</option></arg>
 			</group>
-			<arg choice='plain'><replaceable>djvu-output-file</replaceable></arg>
+			<arg choice='plain'><replaceable>output-djvu-file</replaceable></arg>
 		</arg>
 		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
 		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
