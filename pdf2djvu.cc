@@ -550,8 +550,9 @@ class PageFiles
 protected:
   std::vector<File*> data;
   int n_digits;
+  std::string prefix;
 
-  PageFiles(int n) : data(n), n_digits(0)
+  PageFiles(int n, const std::string &prefix = "p") : data(n), n_digits(0), prefix(prefix)
   { 
     while (n > 0)
     {
@@ -566,7 +567,7 @@ protected:
   {
     std::ostringstream stream;
     stream 
-      << "p" 
+      << prefix
       << std::setfill('0') << std::setw(this->n_digits) << n
       << ".djvu";
     return stream.str();
@@ -602,7 +603,7 @@ protected:
   const TemporaryDirectory *directory;
 public:
 
-  explicit TemporaryPageFiles(int n) : PageFiles(n)
+  explicit TemporaryPageFiles(int n, const std::string &prefix = "p") : PageFiles(n, prefix)
   { 
     this->directory = new TemporaryDirectory();
   }
