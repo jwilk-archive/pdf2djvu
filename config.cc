@@ -154,12 +154,12 @@ void config::read_config(int argc, char * const argv[])
     OPT_ANTIALIAS    = 0x300,
     OPT_BG_SLICES    = 0x200,
     OPT_BG_SUBSAMPLE = 0x201,
-    OPT_FG_COLORS    = 0x202,
     OPT_DPI          = 'd',
+    OPT_FG_COLORS    = 0x202,
     OPT_HELP         = 'h',
     OPT_HYPERLINKS   = 0x501,
-    OPT_PREFIX       = 0x502,
     OPT_INDIRECT     = 'i',
+    OPT_MEDIA_BOX    = 0x701,
     OPT_NO_HLINKS    = 0x401,
     OPT_NO_METADATA  = 0x402,
     OPT_NO_OUTLINE   = 0x403,
@@ -167,7 +167,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_OUTPUT       = 'o',
     OPT_PAGES        = 'p',
     OPT_PAGE_SIZE    = 0x700,
-    OPT_MEDIA_BOX    = 0x701,
+    OPT_PREFIX       = 0x502,
     OPT_QUIET        = 'q',
     OPT_TEXT_LINES   = 0x102,
     OPT_TEXT_NONE    = 0x100,
@@ -177,30 +177,30 @@ void config::read_config(int argc, char * const argv[])
   };
   static struct option options [] =
   {
-    { "dpi",            1, 0, OPT_DPI },
-    { "page-size",      1, 0, OPT_PAGE_SIZE },
-    { "media-box",      0, 0, OPT_MEDIA_BOX },
-    { "quiet",          0, 0, OPT_QUIET },
-    { "verbose",        0, 0, OPT_VERBOSE },
+    { "anti-alias",     0, 0, OPT_ANTIALIAS },
+    { "antialias",      0, 0, OPT_ANTIALIAS },
     { "bg-slices",      1, 0, OPT_BG_SLICES },
     { "bg-subsample",   1, 0, OPT_BG_SUBSAMPLE },
+    { "dpi",            1, 0, OPT_DPI },
     { "fg-colors",      1, 0, OPT_FG_COLORS },
-    { "antialias",      0, 0, OPT_ANTIALIAS },
-    { "anti-alias",     0, 0, OPT_ANTIALIAS },
+    { "help",           0, 0, OPT_HELP },
     { "hyperlinks",     1, 0, OPT_HYPERLINKS },
+    { "indirect",       0, 0, OPT_INDIRECT },
+    { "lines",          0, 0, OPT_TEXT_LINES },
+    { "media-box",      0, 0, OPT_MEDIA_BOX },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
     { "no-metadata",    0, 0, OPT_NO_METADATA },
     { "no-outline",     0, 0, OPT_NO_OUTLINE },
     { "no-render",      0, 0, OPT_NO_RENDER },
-    { "pages",          1, 0, OPT_PAGES },
-    { "help",           0, 0, OPT_HELP },
-    { "version",        0, 0, OPT_VERSION },
     { "no-text",        0, 0, OPT_TEXT_NONE },
-    { "words",          0, 0, OPT_TEXT_WORDS },
-    { "lines",          0, 0, OPT_TEXT_LINES },
     { "output",         1, 0, OPT_OUTPUT },
-    { "indirect",       0, 0, OPT_INDIRECT },
+    { "page-size",      1, 0, OPT_PAGE_SIZE },
     { "pageid-prefix",  1, 0, OPT_PREFIX },
+    { "pages",          1, 0, OPT_PAGES },
+    { "quiet",          0, 0, OPT_QUIET },
+    { "verbose",        0, 0, OPT_VERBOSE },
+    { "version",        0, 0, OPT_VERSION },
+    { "words",          0, 0, OPT_TEXT_WORDS },
     { NULL,             0, 0, '\0' }
   };
   int optindex, c;
@@ -316,32 +316,32 @@ void config::usage(const config::Error &error)
     << "   pdf2djvu  -i <output-directory>  [options] <pdf-file>" << std::endl
     << std::endl
     << "Options:" << std::endl
-    << " -i, --indirect=DIR"      << std::endl
-    << " -o, --output=FILE"       << std::endl
-    << "     --pageid-prefix=... "<< std::endl
-    << " -v, --verbose"           << std::endl
-    << " -q, --quiet"             << std::endl
-    << " -d, --dpi=resolution"    << std::endl
-    << "     --media-box"         << std::endl
-    << "     --page-size=WxH"     << std::endl
-    << "     --bg-slices=N,...,N" << std::endl
-    << "     --bg-slices=N+...+N" << std::endl
-    << "     --bg-subsample=N"    << std::endl
+    << " -i, --indirect=DIR"       << std::endl
+    << " -o, --output=FILE"        << std::endl
+    << "     --pageid-prefix=NAME" << std::endl
+    << " -v, --verbose"            << std::endl
+    << " -q, --quiet"              << std::endl
+    << " -d, --dpi=resolution"     << std::endl
+    << "     --media-box"          << std::endl
+    << "     --page-size=WxH"      << std::endl
+    << "     --bg-slices=N,...,N"  << std::endl
+    << "     --bg-slices=N+...+N"  << std::endl
+    << "     --bg-subsample=N"     << std::endl
 #ifdef HAVE_GRAPHICS_MAGICK
-    << "     --fg-colors=web"     << std::endl
-    << "     --fg-colors=N"       << std::endl
+    << "     --fg-colors=web"      << std::endl
+    << "     --fg-colors=N"        << std::endl
 #endif
-    << "     --anti-alias"        << std::endl
-    << "     --no-metadata"       << std::endl
-    << "     --no-outline"        << std::endl
-    << "     --hyperlinks=..."    << std::endl
-    << "     --no-hyperlinks"     << std::endl
-    << "     --no-text"           << std::endl
-    << "     --words"             << std::endl
-    << "     --lines"             << std::endl
-    << " -p, --pages=..."         << std::endl
-    << " -h, --help"              << std::endl
-    << "     --version"           << std::endl
+    << "     --anti-alias"         << std::endl
+    << "     --no-metadata"        << std::endl
+    << "     --no-outline"         << std::endl
+    << "     --hyperlinks=..."     << std::endl
+    << "     --no-hyperlinks"      << std::endl
+    << "     --no-text"            << std::endl
+    << "     --words"              << std::endl
+    << "     --lines"              << std::endl
+    << " -p, --pages=..."          << std::endl
+    << " -h, --help"               << std::endl
+    << "     --version"            << std::endl
   ;
   exit(1);
 }
