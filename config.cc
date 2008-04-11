@@ -319,8 +319,6 @@ void config::usage(const config::Error &error)
     << " -i, --indirect=DIR"       << std::endl
     << " -o, --output=FILE"        << std::endl
     << "     --pageid-prefix=NAME" << std::endl
-    << " -v, --verbose"            << std::endl
-    << " -q, --quiet"              << std::endl
     << " -d, --dpi=resolution"     << std::endl
     << "     --media-box"          << std::endl
     << "     --page-size=WxH"      << std::endl
@@ -340,6 +338,8 @@ void config::usage(const config::Error &error)
     << "     --words"              << std::endl
     << "     --lines"              << std::endl
     << " -p, --pages=..."          << std::endl
+    << " -v, --verbose"            << std::endl
+    << " -q, --quiet"              << std::endl
     << " -h, --help"               << std::endl
     << "     --version"            << std::endl
   ;

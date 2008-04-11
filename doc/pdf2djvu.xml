@@ -109,24 +109,6 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>-v</option></term>
-			<term><option>--verbose</option></term>
-			<listitem>
-				<para>
-					Display more informational messages while converting the file.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>-q</option></term>
-			<term><option>--quiet</option></term>
-			<listitem>
-				<para>
-					Don't display informational messages while converting the file.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
 			<term><option>-d</option></term>
 			<term><option>--dpi=<replaceable>resolution</replaceable></option></term>
 			<listitem>
@@ -289,6 +271,24 @@
 			<listitem>
 				<para>
 					Specifies pages to convert.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-v</option></term>
+			<term><option>--verbose</option></term>
+			<listitem>
+				<para>
+					Display more informational messages while converting the file.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-q</option></term>
+			<term><option>--quiet</option></term>
+			<listitem>
+				<para>
+					Don't display informational messages while converting the file.
 				</para>
 			</listitem>
 		</varlistentry>
