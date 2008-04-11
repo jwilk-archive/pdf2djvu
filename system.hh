@@ -20,6 +20,8 @@ public:
   OSError();
 };
 
+void throw_os_error(void);
+
 class Command
 {
 private:
@@ -65,14 +67,14 @@ public:
   {
     char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     if (mkdtemp(path_buffer) == NULL)
-      throw OSError();
+      throw_os_error();
     this->name += path_buffer;
   }
 
   virtual ~TemporaryDirectory()
   {
     if (rmdir(this->name.c_str()) == -1)
-      throw OSError();
+      throw_os_error();
   }
 };
 
@@ -103,9 +105,9 @@ protected:
     char path_buffer[] = "/tmp/pdf2djvu.XXXXXX";
     int fd = mkstemp(path_buffer);
     if (fd == -1)
-      throw OSError();
+      throw_os_error();
     if (::close(fd) == -1)
-      throw OSError();
+      throw_os_error();
     _open(path_buffer);
   }
 
@@ -124,7 +126,7 @@ public:
     if (this->is_open())
       this->close();
     if (unlink(this->name.c_str()) == -1)
-      throw OSError();
+      throw_os_error();
   }
 };
 

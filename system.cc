@@ -22,6 +22,11 @@ OSError::OSError() : Error("")
   message = strerror(errno);
 }
 
+void throw_os_error(void)
+{
+  throw OSError();
+}
+
 Command::Command(const std::string& command) : command(command)
 {
   this->argv.push_back(command);
@@ -54,7 +59,7 @@ void Directory::_open(const char* path)
 {
   this->posix_dir = opendir(path);
   if (this->posix_dir == NULL)
-    throw OSError();
+    throw_os_error();
 }
 
 void Directory::_close(void)
@@ -62,7 +67,7 @@ void Directory::_close(void)
   if (this->posix_dir == NULL)
     return;
   if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
-    throw OSError();
+    throw_os_error();
 }
 
 void File::_open(const char* path)
@@ -154,7 +159,7 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   size_t outbuf_len = sizeof outbuf;
   iconv_t cd = iconv_open("UTF-8", "UTF-16");
   if (cd == reinterpret_cast<iconv_t>(-1))
-    throw OSError();
+    throw_os_error();
   while (inbuf_len > 0)
   {
     struct iconv_adapter 
@@ -185,7 +190,7 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   }
   stream.write(outbuf, outbuf_ptr - outbuf);
   if (iconv_close(cd) == -1)
-    throw OSError();
+    throw_os_error();
 }
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
