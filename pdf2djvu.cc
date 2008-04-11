@@ -552,7 +552,7 @@ protected:
   int n_digits;
   std::string prefix;
 
-  PageFiles(int n, const std::string &prefix = "p") : data(n), n_digits(0), prefix(prefix)
+  PageFiles(int n, const std::string &prefix) : data(n), n_digits(0), prefix(prefix)
   { 
     while (n > 0)
     {
@@ -603,7 +603,7 @@ protected:
   const TemporaryDirectory *directory;
 public:
 
-  explicit TemporaryPageFiles(int n, const std::string &prefix = "p") : PageFiles(n, prefix)
+  explicit TemporaryPageFiles(int n, const std::string &prefix) : PageFiles(n, prefix)
   { 
     this->directory = new TemporaryDirectory();
   }
@@ -633,7 +633,7 @@ private:
   IndirectPageFiles& operator=(const IndirectPageFiles&); // not defined
   const Directory &directory;
 public:
-  IndirectPageFiles(int n, const Directory &directory) : PageFiles(n), directory(directory) {}
+  IndirectPageFiles(int n, const Directory &directory, const std::string &prefix) : PageFiles(n, prefix), directory(directory) {}
 
   virtual File &operator[](int n)
   {
@@ -1115,7 +1115,7 @@ static int xmain(int argc, char * const argv[])
       output_file.reset(new TemporaryFile());
     else
       output_file.reset(new File(config::output));
-    page_files.reset(new TemporaryPageFiles(n_pages));
+    page_files.reset(new TemporaryPageFiles(n_pages, config::pageid_prefix));
     djvm.reset(new BundledDjVm(*output_file));
   }
   else
@@ -1167,7 +1167,7 @@ static int xmain(int argc, char * const argv[])
       }
     }
     output_file.reset(new File(*output_dir, index_file_name));
-    page_files.reset(new IndirectPageFiles(n_pages, *output_dir));
+    page_files.reset(new IndirectPageFiles(n_pages, *output_dir, config::pageid_prefix));
     djvm.reset(new IndirectDjVm(*output_file));
   }
   if (config::pages.size() == 0)

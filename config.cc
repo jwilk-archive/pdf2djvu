@@ -33,6 +33,8 @@ bool config::no_render = false;
 char *config::bg_slices = NULL;
 std::vector< std::pair<int, int> > config::pages;
 char *config::file_name = NULL;
+std::string config::pageid_prefix = "p";
+
 static void split_by_char(char c, const std::string &s, std::vector<std::string> &result)
 {
   size_t lpos = 0;
@@ -133,6 +135,18 @@ static int parse_fg_colors(const std::string &s)
   return n;
 }
 
+static const std::string& parse_pageid_prefix(const std::string &s)
+{
+  for (std::string::const_iterator it = s.begin(); it != s.end(); it++)
+  {
+    if (isalnum(*it) || *it == '_' || *it == '-' || *it == '+' || *it == '.')
+      ;
+    else
+      throw config::Error("Pageid prefix must consist only of letters, digits, '_', '+', '-' and '.' characters");
+  }
+  return s;
+}
+
 void config::read_config(int argc, char * const argv[])
 {
   enum
@@ -144,6 +158,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_DPI          = 'd',
     OPT_HELP         = 'h',
     OPT_HYPERLINKS   = 0x501,
+    OPT_PREFIX       = 0x502,
     OPT_INDIRECT     = 'i',
     OPT_NO_HLINKS    = 0x401,
     OPT_NO_METADATA  = 0x402,
@@ -185,6 +200,7 @@ void config::read_config(int argc, char * const argv[])
     { "lines",          0, 0, OPT_TEXT_LINES },
     { "output",         1, 0, OPT_OUTPUT },
     { "indirect",       0, 0, OPT_INDIRECT },
+    { "pageid-prefix",  1, 0, OPT_PREFIX },
     { NULL,             0, 0, '\0' }
   };
   int optindex, c;
@@ -266,6 +282,9 @@ void config::read_config(int argc, char * const argv[])
       config::output = optarg;
       config::output_stdout = false;
       break;
+    case OPT_PREFIX:
+      config::pageid_prefix = parse_pageid_prefix(optarg);
+      break;
     case OPT_HELP:
       throw NeedHelp();
     case OPT_VERSION:
@@ -299,6 +318,7 @@ void config::usage(const config::Error &error)
     << "Options:" << std::endl
     << " -i, --indirect=DIR"      << std::endl
     << " -o, --output=FILE"       << std::endl
+    << "     --pageid-prefix=... "<< std::endl
     << " -v, --verbose"           << std::endl
     << " -q, --quiet"             << std::endl
     << " -d, --dpi=resolution"    << std::endl
