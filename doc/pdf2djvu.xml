@@ -72,15 +72,15 @@
 	</cmdsynopsis>
 </refsynopsisdiv>
 
-<refsect1>
+<refsection>
 	<title>Description</title>
 	<para>
 		This program creates a DjVu file from the Portable Document Format file
 		<filename><replaceable>pdf-file</replaceable></filename>.
 	</para>
-</refsect1>
+</refsection>
 
-<refsect1>
+<refsection>
 	<title>Options</title>
 	<para>
 		<command>&p;</command> accepts the following options:
@@ -306,9 +306,9 @@
 			</listitem>
 		</varlistentry>
 	</variablelist>
-</refsect1>
+</refsection>
 
-<refsect1>
+<refsection>
 	<title>See also</title>
 	<para>
 		<citerefentry>
@@ -320,7 +320,7 @@
 			<manvolnum>1</manvolnum>
 		</citerefentry>
 	</para>
-</refsect1>
+</refsection>
 
 </refentry>
 
