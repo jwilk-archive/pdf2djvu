@@ -128,7 +128,7 @@
 			<term><option>--media-box</option></term>
 			<listitem>
 				<para>
-					Use <firstterm>MediaBox</firstterm> to dermine page size. <firstterm>CropBox</firstterm> is used by
+					Use <firstterm>MediaBox</firstterm> to determine page size. <firstterm>CropBox</firstterm> is used by
 					default.
 				</para>
 			</listitem>
