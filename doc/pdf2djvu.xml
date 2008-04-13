@@ -114,7 +114,7 @@
 			<listitem>
 				<para>
 					Specifies the naming scheme for page identifiers: <replaceable>prefix</replaceable>, followed by
-					0-padded page number, followed by the <replaceable>.djvu</replaceable> suffix.
+					0-padded page number, followed by the <literal>.djvu</literal> suffix.
 					<replaceable>prefix</replaceable> must consist only of letters, digits, <literal>_</literal>,
 					<literal>+</literal>, <literal>-</literal> and <literal>.</literal>.
 					The default is <literal>p</literal>. 
