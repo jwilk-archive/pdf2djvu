@@ -3,7 +3,7 @@ pdf2djvu (0.4.8) unstable; urgency=low
   * From now on, --indirect argument means an index file name.
   * Add --pageid-prefix option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 13 Apr 2008 19:33:45 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Sun, 13 Apr 2008 20:21:21 +0200
 
 pdf2djvu (0.4.7) unstable; urgency=low
 
