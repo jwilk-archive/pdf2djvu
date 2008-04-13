@@ -109,6 +109,18 @@
 				</para>
 			</listitem>
 		</varlistentry>
+		<varlistentry>
+			<term><option>--pageid-prefix=<filename><replaceable>prefix</replaceable></filename></option></term>
+			<listitem>
+				<para>
+					Specifies the naming scheme for page identifiers: <replaceable>prefix</replaceable>, followed by
+					0-padded page number, followed by the <replaceable>.djvu</replaceable> suffix.
+					<replaceable>prefix</replaceable> must consist only of letters, digits, <literal>_</literal>,
+					<literal>+</literal>, <literal>-</literal> and <literal>.</literal>.
+					The default is <literal>p</literal>. 
+				</para>
+			</listitem>
+		</varlistentry>
 		</variablelist>
 	</refsection>
 	<refsection>
