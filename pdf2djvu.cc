@@ -157,6 +157,7 @@ public:
       font_size = glyph.h;
       py += glyph.h - glyph.y;
     }
+    NFKC nfkc(unistr, len);
     texts.push_back(text_comment(
       static_cast<int>(px),
       static_cast<int>(py),
@@ -164,8 +165,8 @@ public:
       static_cast<int>(pdy),
       static_cast<int>(pdx < 1 ? 1 : pdx),
       font_size,
-      unistr,
-      len
+      nfkc,
+      nfkc.length()
     ));
   }
 

@@ -184,6 +184,24 @@ public:
   } 
 };
 
+class NFKC
+{
+protected:
+  Unicode* data; 
+  int _length;
+public:
+  explicit NFKC(Unicode *, int length);
+  ~NFKC();
+  size_t length() const
+  {
+    return static_cast<size_t>(this->_length);
+  }
+  operator const Unicode*() const
+  {
+    return this->data;
+  }
+};
+
 #endif
 
 // vim:ts=2 sw=2 et

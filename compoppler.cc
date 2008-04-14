@@ -13,6 +13,8 @@
 
 #include "compoppler.hh"
 
+#include <UnicodeTypeTable.h>
+
 void init_global_params()
 {
 #if POPPLER_VERSION < 509
@@ -214,6 +216,24 @@ bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bi
   return (clip_result != splashClipAllOutside);
 #else
   return font->getGlyph(code, 0, 0, bitmap); 
+#endif
+}
+
+NFKC::NFKC(Unicode *unistr, int length) 
+#if POPPLER_VERSION < 502
+: data(unistr), _length(length)
+{ }
+#else
+: data(NULL), _length(0)
+{
+  data = unicodeNormalizeNFKC(unistr, length, &this->_length, NULL);
+}
+#endif
+
+NFKC::~NFKC()
+{
+#if POPPLER_VERSION >= 502
+  gfree(this->data);
 #endif
 }
 
