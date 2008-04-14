@@ -13,7 +13,7 @@
 class Quantizer
 {
 public:
-  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+  virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream) = 0;
   virtual ~Quantizer() { /* just to shut up compilers */ }
 };
@@ -23,14 +23,14 @@ class WebSafeQuantizer : public Quantizer
 protected:
   void output_web_palette(std::ostream &stream);
 public:
-  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+  virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
 
 class DummyQuantizer : public WebSafeQuantizer
 {
 public:
-  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+  virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
 
@@ -38,7 +38,7 @@ class GraphicsMagickQuantizer : public Quantizer
 {
 public:
   GraphicsMagickQuantizer();
-  virtual void operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+  virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
 

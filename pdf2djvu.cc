@@ -89,7 +89,7 @@ static bool is_foreground_color_map(GfxImageColorMap *color_map)
   return (color_map->getNumPixelComps() <= 1 && color_map->getBits() <= 1);
 }
 
-class MutedRenderer: public Renderer
+class MutedRenderer: public pdf::Renderer
 {
 private:
   std::vector<std::string> texts;
@@ -97,13 +97,13 @@ private:
   std::map<int, int> &page_map;
 public:
 
-  void drawImageMask(GfxState *state, Object *object, Stream *stream, int width, int height, 
+  void drawImageMask(GfxState *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
     GBool invert, GBool inline_image)
   {
     return;
   }
 
-  void drawImage(GfxState *state, Object *object, Stream *stream, int width, int height,
+  void drawImage(GfxState *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     GfxImageColorMap *color_map, int *mask_colors, GBool inline_image)
   {
     if (is_foreground_color_map(color_map))
@@ -111,8 +111,8 @@ public:
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
 
-  void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
-    GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
+  void drawMaskedImage(GfxState *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    GfxImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
     if (is_foreground_color_map(color_map))
       return;
@@ -120,8 +120,8 @@ public:
       color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
 
-  void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream,
-    int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
+  void drawSoftMaskedImage(GfxState *state, pdf::Object *object, pdf::Stream *stream,
+    int width, int height, GfxImageColorMap *color_map, pdf::Stream *mask_stream,
     int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
   {
     if (is_foreground_color_map(color_map))
@@ -150,7 +150,7 @@ public:
       font_size = glyph.h;
       py += glyph.h - glyph.y;
     }
-    NFKC nfkc(unistr, len);
+    pdf::NFKC nfkc(unistr, len);
     texts.push_back(text_comment(
       static_cast<int>(px),
       static_cast<int>(py),
@@ -314,11 +314,11 @@ static std::string pdf_string_to_utf8_string(GooString *from)
   return stream.str();
 }
 
-static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
+static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, Catalog *catalog,
   std::map<int, int> &page_map)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
-  Object current, next;
+  pdf::Object current, next;
   if (!pdf::dict_lookup(node, "First", &current)->isDict())
     return sexpr::nil;
   sexpr::Ref list = sexpr::nil;
@@ -328,7 +328,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
     {
       std::string title_str;
       {
-        XObject title;
+        pdf::OwnedObject title;
         if (!pdf::dict_lookup(current, "Title", &title)->isString())
           throw NoTitleForBookmark();
         title_str = pdf_string_to_utf8_string(title.getString());
@@ -336,7 +336,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
 
       int page;
       {
-        XObject destination;
+        pdf::OwnedObject destination;
         LinkAction *link_action;
         if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
           link_action = LinkAction::parseDest(&destination);
@@ -377,7 +377,7 @@ static void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   Catalog *catalog = doc->getCatalog();
-  Object *outlines = catalog->getOutline();
+  pdf::Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
     return;
   static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
@@ -409,14 +409,14 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
 {
   static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
-  Object info;
+  pdf::Object info;
   doc->getDocInfo(&info);
   if (!info.isDict())
     return;
   Dict *info_dict = info.getDict();
   for (const char** pkey = string_keys; *pkey; pkey++)
   {
-    Object object;
+    pdf::Object object;
     if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     try
@@ -433,7 +433,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   }
   {
     std::string value;
-    Object object;
+    pdf::Object object;
     if (pdf::dict_lookup(info_dict, "Producer", &object)->isString())
     {
       try
@@ -454,7 +454,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   for (const char** pkey = date_keys; *pkey; pkey++)
   try
   {
-    Object object;
+    pdf::Object object;
     struct tm tms;
     char tzs; int tzh = 0, tzm = 0;
     char buffer[32];
@@ -953,7 +953,7 @@ static int xmain(int argc, char * const argv[])
     page_map[ipage] = opage;
     opage++;
   }
-  Renderer *out1 = new Renderer(paper_color);
+  pdf::Renderer *out1 = new pdf::Renderer(paper_color);
   MutedRenderer *outm = new MutedRenderer(paper_color, page_map);
   MutedRenderer *outs = new MutedRenderer(paper_color, page_map);
   out1->startDoc(doc->getXRef());
@@ -1006,7 +1006,7 @@ static int xmain(int argc, char * const argv[])
         throw Error();
       if (sub_height != outs->getBitmapHeight())
         throw Error();
-      Pixmap bmp = Pixmap(outs);
+      pdf::Pixmap bmp = pdf::Pixmap(outs);
       debug(3) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
       sep_file << bmp;

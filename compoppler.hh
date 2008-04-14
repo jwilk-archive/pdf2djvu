@@ -22,158 +22,161 @@
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
 
-class Renderer : public SplashOutputDev
+namespace pdf 
 {
-public:
-  Renderer(SplashColor &paper_color) :
+
+  class Renderer : public SplashOutputDev
+  {
+  public:
+    Renderer(SplashColor &paper_color) :
 #if POPPLER_VERSION < 500
-    SplashOutputDev(splashModeRGB8Packed, gFalse, paper_color)
+      SplashOutputDev(splashModeRGB8Packed, gFalse, paper_color)
 #else
-    SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color)
+      SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color)
 #endif
-  { }
+    { }
 
 #if POPPLER_VERSION < 500
-  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
-    CharCode code, Unicode *unistr, int len)
-  {
-    this->drawChar(state, x, y, dx, dy, origin_x, origin_y, code, -1, unistr, len);
-  }
+    void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+      CharCode code, Unicode *unistr, int len)
+    {
+      this->drawChar(state, x, y, dx, dy, origin_x, origin_y, code, -1, unistr, len);
+    }
 
-  virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
-    CharCode code, int n_bytes, Unicode *unistr, int len)
-  {
-    this->SplashOutputDev::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
-  }
-  
-  virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
-    GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
-  virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream,
-    int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
-    int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
+    virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+      CharCode code, int n_bytes, Unicode *unistr, int len)
+    {
+      this->SplashOutputDev::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
+    }
+    
+    virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
+      GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
+    virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream,
+      int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
+      int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
 
-  SplashFont *getCurrentFont()
-  {
-    return NULL;
-  }
+    SplashFont *getCurrentFont()
+    {
+      return NULL;
+    }
 #endif  
 
 #if POPPLER_VERSION >= 600
-  void processLink(Link *link, Catalog *catalog)
-  {
-    this->drawLink(link, catalog);
-  }
+    void processLink(Link *link, Catalog *catalog)
+    {
+      this->drawLink(link, catalog);
+    }
 
-  virtual void drawLink(Link *link, Catalog *catalog) { }
+    virtual void drawLink(Link *link, Catalog *catalog) { }
 #endif
 
-protected:
-  void convert_path(GfxState *state, SplashPath &splash_path);
-};
+  protected:
+    void convert_path(GfxState *state, SplashPath &splash_path);
+  };
 
-class PixmapIterator
-{
-private:
-  const uint8_t *row_ptr;
-  const uint8_t *ptr;
-  size_t row_size;
-public:  
-  PixmapIterator(const uint8_t *raw_data, size_t row_size)
+  class PixmapIterator
   {
-    this->row_ptr = this->ptr = raw_data;
-    this->row_size = row_size;
-  }
+  private:
+    const uint8_t *row_ptr;
+    const uint8_t *ptr;
+    size_t row_size;
+  public:  
+    PixmapIterator(const uint8_t *raw_data, size_t row_size)
+    {
+      this->row_ptr = this->ptr = raw_data;
+      this->row_size = row_size;
+    }
 
-  PixmapIterator &operator ++(int)
+    PixmapIterator &operator ++(int)
+    {
+      ptr += 3;
+      return *this;
+    }
+
+    void next_row()
+    {
+      ptr = row_ptr = row_ptr + row_size;
+    }
+
+    uint8_t operator[](int n)
+    {
+      return this->ptr[n];
+    }
+  };
+
+  class Pixmap
   {
-    ptr += 3;
-    return *this;
-  }
+  private:
+    const uint8_t *raw_data;
+    SplashBitmap *bmp;
+    size_t row_size;
+    int width, height;
+  public:
+    typedef PixmapIterator iterator;
 
-  void next_row()
-  {
-    ptr = row_ptr = row_ptr + row_size;
-  }
+    int get_width() { return width; }
+    int get_height() { return height; }
 
-  uint8_t operator[](int n)
-  {
-    return this->ptr[n];
-  }
-};
-
-class Pixmap
-{
-private:
-  const uint8_t *raw_data;
-  SplashBitmap *bmp;
-  size_t row_size;
-  int width, height;
-public:
-  typedef PixmapIterator iterator;
-
-  int get_width() { return width; }
-  int get_height() { return height; }
-
-  Pixmap(Renderer *renderer)
-  {
+    Pixmap(Renderer *renderer)
+    {
 #if POPPLER_VERSION < 500
-    bmp = renderer->getBitmap();
-    raw_data = const_cast<const uint8_t*>(bmp->getDataPtr().rgb8p);
+      bmp = renderer->getBitmap();
+      raw_data = const_cast<const uint8_t*>(bmp->getDataPtr().rgb8p);
 #else
-    bmp = renderer->takeBitmap();
-    raw_data = const_cast<const uint8_t*>(bmp->getDataPtr());
+      bmp = renderer->takeBitmap();
+      raw_data = const_cast<const uint8_t*>(bmp->getDataPtr());
 #endif
-    width = bmp->getWidth();
-    height = bmp->getHeight();
-    row_size = bmp->getRowSize();
-  }
-  
-  ~Pixmap()
-  {
+      width = bmp->getWidth();
+      height = bmp->getHeight();
+      row_size = bmp->getRowSize();
+    }
+    
+    ~Pixmap()
+    {
 #if POPPLER_VERSION >= 500
-    delete bmp;
+      delete bmp;
 #endif
-  }
+    }
 
-  PixmapIterator begin()
+    PixmapIterator begin()
+    {
+      return PixmapIterator(raw_data, row_size);
+    }
+
+    friend std::ostream &operator<<(std::ostream &, const Pixmap &);
+  };
+
+  typedef ::Stream Stream;
+
+  typedef ::Object Object;
+
+  class OwnedObject : public Object
   {
-    return PixmapIterator(raw_data, row_size);
-  }
+  public:
+    ~OwnedObject()
+    {
+      this->free();
+    } 
+  };
 
-  friend std::ostream &operator<<(std::ostream &, const Pixmap &);
-};
-
-std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap);
-
-class XObject : public Object
-{
-public:
-  ~XObject()
+  class NFKC
   {
-    this->free();
-  } 
-};
+  protected:
+    Unicode* data; 
+    int _length;
+  public:
+    explicit NFKC(Unicode *, int length);
+    ~NFKC();
+    size_t length() const
+    {
+      return static_cast<size_t>(this->_length);
+    }
+    operator const Unicode*() const
+    {
+      return this->data;
+    }
+  };
 
-class NFKC
-{
-protected:
-  Unicode* data; 
-  int _length;
-public:
-  explicit NFKC(Unicode *, int length);
-  ~NFKC();
-  size_t length() const
-  {
-    return static_cast<size_t>(this->_length);
-  }
-  operator const Unicode*() const
-  {
-    return this->data;
-  }
-};
-
-namespace pdf
-{
   void init_global_params();
   bool set_antialias(bool value);
 

@@ -61,7 +61,7 @@ void pdf::set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
 #endif
 }
 
-void Renderer::convert_path(GfxState *state, SplashPath &splash_path)
+void pdf::Renderer::convert_path(GfxState *state, SplashPath &splash_path)
 {
   // copied from <PopplerOutputDev.h>
   GfxSubpath *subpath;
@@ -125,17 +125,17 @@ double pdf::get_path_area(SplashPath &path)
   return fabs(area);
 }
 
-Object *pdf::dict_lookup(Object &dict, const char *key, Object *object)
+pdf::Object *pdf::dict_lookup(pdf::Object &dict, const char *key, pdf::Object *object)
 {
   return dict.dictLookup(const_cast<char*>(key), object);
 }
 
-Object *pdf::dict_lookup(Object *dict, const char *key, Object *object)
+pdf::Object *pdf::dict_lookup(pdf::Object *dict, const char *key, pdf::Object *object)
 {
   return dict->dictLookup(const_cast<char*>(key), object);
 }
 
-Object *pdf::dict_lookup(Dict *dict, const char *key, Object *object)
+pdf::Object *pdf::dict_lookup(Dict *dict, const char *key, pdf::Object *object)
 {
   return dict->lookup(const_cast<char*>(key), object);
 }
@@ -166,7 +166,7 @@ double pdf::get_page_height(PDFDoc *document, int n, bool crop)
   return height / 72.0;
 }
 
-void pdf::display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
+void pdf::display_page(PDFDoc *document, pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
@@ -178,18 +178,21 @@ void pdf::display_page(PDFDoc *document, Renderer *renderer, int npage, double h
 #endif
 }
 
-std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
+namespace pdf
 {
-  int height = pixmap.height;
-  int width = pixmap.width;
-  size_t row_size = pixmap.row_size;
-  const uint8_t *row_ptr = pixmap.raw_data;
-  for (int y = 0; y < height; y++)
+  std::ostream &operator<<(std::ostream &stream, const pdf::Pixmap &pixmap)
   {
-    stream.write(reinterpret_cast<const char*>(row_ptr), width * 3);
-    row_ptr += row_size;
+    int height = pixmap.height;
+    int width = pixmap.width;
+    size_t row_size = pixmap.row_size;
+    const uint8_t *row_ptr = pixmap.raw_data;
+    for (int y = 0; y < height; y++)
+    {
+      stream.write(reinterpret_cast<const char*>(row_ptr), width * 3);
+      row_ptr += row_size;
+    }
+    return stream;
   }
-  return stream;
 }
 
 std::string pdf::get_link_border_color(Link *link)
@@ -225,7 +228,7 @@ bool pdf::get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitma
 #endif
 }
 
-NFKC::NFKC(Unicode *unistr, int length) 
+pdf::NFKC::NFKC(Unicode *unistr, int length) 
 #if POPPLER_VERSION < 502
 : data(unistr), _length(length)
 { }
@@ -236,7 +239,7 @@ NFKC::NFKC(Unicode *unistr, int length)
 }
 #endif
 
-NFKC::~NFKC()
+pdf::NFKC::~NFKC()
 {
 #if POPPLER_VERSION >= 502
   gfree(this->data);

@@ -25,15 +25,15 @@ void WebSafeQuantizer::output_web_palette(std::ostream &stream)
   }
 }
 
-void WebSafeQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
   stream << "R6 " << width << " " << height << " ";
   output_web_palette(stream);
-  Pixmap bmp_fg = Pixmap(out_fg);
-  Pixmap bmp_bg = Pixmap(out_bg);
-  Pixmap::iterator p_fg = bmp_fg.begin();
-  Pixmap::iterator p_bg = bmp_bg.begin();
+  pdf::Pixmap bmp_fg = pdf::Pixmap(out_fg);
+  pdf::Pixmap bmp_bg = pdf::Pixmap(out_bg);
+  pdf::Pixmap::iterator p_fg = bmp_fg.begin();
+  pdf::Pixmap::iterator p_bg = bmp_bg.begin();
   for (int i = 0; i < 3; i++) 
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
@@ -87,7 +87,7 @@ void WebSafeQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width,
   }
 }
 
-void DummyQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
   stream << "R6 " << width << " " << height << " ";
@@ -105,7 +105,7 @@ void DummyQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width, i
 
 #ifdef HAVE_GRAPHICS_MAGICK
 
-void GraphicsMagickQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
   stream << "R6 " << width << " " << height << " ";
@@ -205,7 +205,7 @@ GraphicsMagickQuantizer::GraphicsMagickQuantizer()
   throw Error("Advanced color quantization is not supported."); 
 }
 
-void GraphicsMagickQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width, int height,
+void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 { /* just to satisfy compilers */ }
 
