@@ -21,7 +21,7 @@
 #include <UGooString.h>
 #endif
 
-void init_global_params()
+void pdf::init_global_params()
 {
 #if POPPLER_VERSION < 509
   globalParams = new GlobalParams(NULL);
@@ -30,7 +30,7 @@ void init_global_params()
 #endif
 }
 
-bool set_antialias(bool value)
+bool pdf::set_antialias(bool value)
 {
 #if POPPLER_VERSION >= 701 && POPPLER_VERSION < 703
   // Don't allow poppler bug #15009 to appear.
@@ -43,14 +43,14 @@ bool set_antialias(bool value)
 #endif
 }
 
-PDFDoc *new_document(std::string file_name)
+PDFDoc *pdf::new_document(std::string file_name)
 {
   GooString *g_file_name = new GooString(file_name.c_str());
   PDFDoc *doc = new PDFDoc(g_file_name, NULL, NULL);
   return doc;
 }
 
-void set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
+void pdf::set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
 {
 #if POPPLER_VERSION < 500
   result.rgb8 = splashMakeRGB8(r, g, b); 
@@ -104,7 +104,7 @@ void Renderer::convert_path(GfxState *state, SplashPath &splash_path)
   }
 }
 
-double get_path_area(SplashPath &path)
+double pdf::get_path_area(SplashPath &path)
 {
   double area = 0.0;
 #if POPPLER_VERSION >= 500
@@ -125,22 +125,22 @@ double get_path_area(SplashPath &path)
   return fabs(area);
 }
 
-Object *dict_lookup(Object &dict, const char *key, Object *object)
+Object *pdf::dict_lookup(Object &dict, const char *key, Object *object)
 {
   return dict.dictLookup(const_cast<char*>(key), object);
 }
 
-Object *dict_lookup(Object *dict, const char *key, Object *object)
+Object *pdf::dict_lookup(Object *dict, const char *key, Object *object)
 {
   return dict->dictLookup(const_cast<char*>(key), object);
 }
 
-Object *dict_lookup(Dict *dict, const char *key, Object *object)
+Object *pdf::dict_lookup(Dict *dict, const char *key, Object *object)
 {
   return dict->lookup(const_cast<char*>(key), object);
 }
 
-double get_page_width(PDFDoc *document, int n, bool crop)
+double pdf::get_page_width(PDFDoc *document, int n, bool crop)
 {
   double width =
 #if POPPLER_VERSION < 500
@@ -153,7 +153,7 @@ double get_page_width(PDFDoc *document, int n, bool crop)
   return width / 72.0;
 }
 
-double get_page_height(PDFDoc *document, int n, bool crop)
+double pdf::get_page_height(PDFDoc *document, int n, bool crop)
 {
   double height =
 #if POPPLER_VERSION < 500
@@ -166,7 +166,7 @@ double get_page_height(PDFDoc *document, int n, bool crop)
   return height / 72.0;
 }
 
-void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
+void pdf::display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
@@ -192,7 +192,7 @@ std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap)
   return stream;
 }
 
-std::string get_link_border_color(Link *link)
+std::string pdf::get_link_border_color(Link *link)
 {
 #if POPPLER_VERSION < 509
   double rgb[3];
@@ -211,7 +211,7 @@ std::string get_link_border_color(Link *link)
 #endif
 }
 
-bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap)
+bool pdf::get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap)
 {
   if (font == NULL)
     return false;

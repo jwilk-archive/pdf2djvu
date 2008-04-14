@@ -145,7 +145,7 @@ public:
     int font_size = static_cast<int>(state->getTransformedFontSize());
     SplashFont *font = this->getCurrentFont();
     SplashGlyphBitmap glyph;
-    if (get_glyph(this->getSplash(), font, code, &glyph))
+    if (pdf::get_glyph(this->getSplash(), font, code, &glyph))
     {
       font_size = glyph.h;
       py += glyph.h - glyph.y;
@@ -171,7 +171,7 @@ public:
     double x1, y1, x2, y2;
     LinkAction *link_action = link->getAction();
     std::string uri;
-    std::string border_color = get_link_border_color(link);
+    std::string border_color = pdf::get_link_border_color(link);
     link->getRect(&x1, &y1, &x2, &y2);
     switch (link_action->getKind())
     {
@@ -255,7 +255,7 @@ public:
   { 
     SplashPath path;
     this->convert_path(state, path);
-    double area = get_path_area(path);
+    double area = pdf::get_path_area(path);
     if (area / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
       Renderer::fill(state);
   }
@@ -319,7 +319,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   Object current, next;
-  if (!dict_lookup(node, "First", &current)->isDict())
+  if (!pdf::dict_lookup(node, "First", &current)->isDict())
     return sexpr::nil;
   sexpr::Ref list = sexpr::nil;
   while (current.isDict())
@@ -329,7 +329,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
       std::string title_str;
       {
         XObject title;
-        if (!dict_lookup(current, "Title", &title)->isString())
+        if (!pdf::dict_lookup(current, "Title", &title)->isString())
           throw NoTitleForBookmark();
         title_str = pdf_string_to_utf8_string(title.getString());
       } 
@@ -338,9 +338,9 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
       {
         XObject destination;
         LinkAction *link_action;
-        if (!dict_lookup(current, "Dest", &destination)->isNull())
+        if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
           link_action = LinkAction::parseDest(&destination);
-        else if (!dict_lookup(current, "A", &destination)->isNull())
+        else if (!pdf::dict_lookup(current, "A", &destination)->isNull())
           link_action = LinkAction::parseAction(&destination);
         else
           throw NoPageForBookmark();
@@ -364,7 +364,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(Object *node, Catalog *catalog,
       debug(1) << "[Warning] " << ex << std::endl;
     }
 
-    dict_lookup(current, "Next", &next);
+    pdf::dict_lookup(current, "Next", &next);
     current.free();
     current = next;
   }
@@ -417,7 +417,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   for (const char** pkey = string_keys; *pkey; pkey++)
   {
     Object object;
-    if (!dict_lookup(info_dict, *pkey, &object)->isString())
+    if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     try
     {
@@ -434,7 +434,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   {
     std::string value;
     Object object;
-    if (dict_lookup(info_dict, "Producer", &object)->isString())
+    if (pdf::dict_lookup(info_dict, "Producer", &object)->isString())
     {
       try
       {
@@ -458,7 +458,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
     struct tm tms;
     char tzs; int tzh = 0, tzm = 0;
     char buffer[32];
-    if (!dict_lookup(info_dict, *pkey, &object)->isString())
+    if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     char *input = object.getString()->getCString();
     if (input[0] == 'D' && input[1] == ':')
@@ -846,8 +846,8 @@ static int xmain(int argc, char * const argv[])
   if (config::output_stdout && is_stream_a_tty(std::cout))
     throw Error("I won't write DjVu data to a terminal.");
 
-  init_global_params();
-  if (!set_antialias(config::antialias))
+  pdf::init_global_params();
+  if (!pdf::set_antialias(config::antialias))
     throw Error("Unable to set antialias parameter");
 
   size_t pdf_size;
@@ -858,12 +858,12 @@ static int xmain(int argc, char * const argv[])
     ifs.close();
   }
 
-  PDFDoc *doc = new_document(config::file_name);
+  PDFDoc *doc = pdf::new_document(config::file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
 
   SplashColor paper_color;
-  set_color(paper_color, 0xff, 0xff, 0xff);
+  pdf::set_color(paper_color, 0xff, 0xff, 0xff);
 
   size_t n_pixels = 0;
   size_t djvu_pages_size = 0;
@@ -972,10 +972,10 @@ static int xmain(int argc, char * const argv[])
     debug(2) << ":";
     debug(1) << std::endl;
     debug(3) << "  - muted render" << std::endl;
-    double page_width = get_page_width(doc, n, crop);
-    double page_height = get_page_height(doc, n, crop);
+    double page_width = pdf::get_page_width(doc, n, crop);
+    double page_height = pdf::get_page_height(doc, n, crop);
     int dpi = calculate_dpi(page_width, page_height);
-    display_page(doc, outm, n, dpi, dpi, crop, true);
+    pdf::display_page(doc, outm, n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -983,7 +983,7 @@ static int xmain(int argc, char * const argv[])
     if (!config::no_render)
     {
       debug(3) << "  - verbose render" << std::endl;
-      display_page(doc, out1, n, dpi, dpi, crop, false);
+      pdf::display_page(doc, out1, n, dpi, dpi, crop, false);
     }
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -1001,7 +1001,7 @@ static int xmain(int argc, char * const argv[])
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
-      display_page(doc, outs, n, hdpi, vdpi, crop, true);
+      pdf::display_page(doc, outs, n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
         throw Error();
       if (sub_height != outs->getBitmapHeight())

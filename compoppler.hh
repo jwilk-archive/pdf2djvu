@@ -22,14 +22,6 @@
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
 
-void init_global_params();
-
-bool set_antialias(bool value);
-
-PDFDoc *new_document(std::string file_name);
-
-void set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b);
-
 class Renderer : public SplashOutputDev
 {
 public:
@@ -78,17 +70,6 @@ public:
 protected:
   void convert_path(GfxState *state, SplashPath &splash_path);
 };
-
-double get_path_area(SplashPath &path);
-
-Object *dict_lookup(Object &dict, const char *key, Object *object);
-Object *dict_lookup(Object *dict, const char *key, Object *object);
-Object *dict_lookup(Dict *dict, const char *key, Object *object);
-
-double get_page_width(PDFDoc *document, int n, bool crop);
-double get_page_height(PDFDoc *document, int n, bool crop);
-
-void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
 
 class PixmapIterator
 {
@@ -162,10 +143,6 @@ public:
 
 std::ostream &operator<<(std::ostream &stream, const Pixmap &pixmap);
 
-std::string get_link_border_color(Link *link);
-
-bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap);
-
 class XObject : public Object
 {
 public:
@@ -195,6 +172,26 @@ public:
 
 namespace pdf
 {
+  void init_global_params();
+  bool set_antialias(bool value);
+
+  PDFDoc *new_document(std::string file_name);
+
+  void set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b);
+
+  Object *dict_lookup(Object &dict, const char *key, Object *object);
+  Object *dict_lookup(Object *dict, const char *key, Object *object);
+  Object *dict_lookup(Dict *dict, const char *key, Object *object);
+
+  double get_page_width(PDFDoc *document, int n, bool crop);
+  double get_page_height(PDFDoc *document, int n, bool crop);
+  void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
+
+  double get_path_area(SplashPath &path);
+  std::string get_link_border_color(Link *link);
+
+  bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap);
+
   void write_as_utf8(std::ostream &stream, Unicode unicode_char);
   void write_as_utf8(std::ostream &stream, char pdf_char);
   void write_as_utf8(std::ostream &stream, const char *pdf_chars);
