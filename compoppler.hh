@@ -11,19 +11,12 @@
 #include <string>
 #include <ostream>
 
-#include <goo/gmem.h>
-#include <goo/GooString.h>
-#include <GlobalParams.h>
-#include <Object.h>
 #include <PDFDoc.h>
 #include <PDFDocEncoding.h>
 #include <GfxState.h>
 #include <SplashOutputDev.h>
 #include <Link.h>
 #include <UTF8.h>
-#if POPPLER_VERSION >= 500 && POPPLER_VERSION < 509
-#include <UGooString.h>
-#endif
 
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>

@@ -13,7 +13,11 @@
 
 #include "compoppler.hh"
 
+#include <GlobalParams.h>
 #include <UnicodeTypeTable.h>
+#if POPPLER_VERSION >= 500 && POPPLER_VERSION < 509
+#include <UGooString.h>
+#endif
 
 void init_global_params()
 {
