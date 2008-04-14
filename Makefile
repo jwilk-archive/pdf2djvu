@@ -12,7 +12,7 @@ override CXXFLAGS += $(EXT_CFLAGS) -DDJVULIBRE_BIN_PATH="\"$(strip $(DJVULIBRE_B
 .PHONY: all
 all: pdf2djvu
 
-config.o: config.cc config.hh debug.hh djvuconst.hh sexpr.hh
+config.o: config.cc config.hh debug.hh djvuconst.hh sexpr.hh version.hh
 debug.o: debug.cc debug.hh config.hh sexpr.hh
 compoppler.o: compoppler.cc compoppler.hh
 sexpr.o: sexpr.cc sexpr.hh
