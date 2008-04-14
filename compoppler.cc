@@ -50,7 +50,7 @@ PDFDoc *pdf::new_document(std::string file_name)
   return doc;
 }
 
-void pdf::set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
+void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
 {
 #if POPPLER_VERSION < 500
   result.rgb8 = splashMakeRGB8(r, g, b); 
@@ -61,7 +61,7 @@ void pdf::set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b)
 #endif
 }
 
-void pdf::Renderer::convert_path(GfxState *state, SplashPath &splash_path)
+void pdf::Renderer::convert_path(GfxState *state, splash::Path &splash_path)
 {
   // copied from <PopplerOutputDev.h>
   GfxSubpath *subpath;
@@ -74,7 +74,7 @@ void pdf::Renderer::convert_path(GfxState *state, SplashPath &splash_path)
     {
       double x1, y1, x2, y2, x3, y3;
       state->transform(subpath->getX(0), subpath->getY(0), &x1, &y1);
-      splash_path.moveTo((SplashCoord)x1, (SplashCoord)y1);
+      splash_path.moveTo((splash::Coord)x1, (splash::Coord)y1);
       int j = 1;
       int n_points = subpath->getNumPoints();
       while (j < n_points)
@@ -85,16 +85,16 @@ void pdf::Renderer::convert_path(GfxState *state, SplashPath &splash_path)
           state->transform(subpath->getX(j + 1), subpath->getY(j + 1), &x2, &y2);
           state->transform(subpath->getX(j + 2), subpath->getY(j + 2), &x3, &y3);
           splash_path.curveTo(
-            (SplashCoord)x1, (SplashCoord)y1,
-            (SplashCoord)x2, (SplashCoord)y2,
-            (SplashCoord)x3, (SplashCoord)y3
+            (splash::Coord)x1, (splash::Coord)y1,
+            (splash::Coord)x2, (splash::Coord)y2,
+            (splash::Coord)x3, (splash::Coord)y3
           );
           j += 3;
         } 
         else 
         {
           state->transform(subpath->getX(j), subpath->getY(j), &x1, &y1);
-          splash_path.lineTo((SplashCoord)x1, (SplashCoord)y1);
+          splash_path.lineTo((splash::Coord)x1, (splash::Coord)y1);
           j++;
         }
       }
@@ -104,7 +104,7 @@ void pdf::Renderer::convert_path(GfxState *state, SplashPath &splash_path)
   }
 }
 
-double pdf::get_path_area(SplashPath &path)
+double pdf::get_path_area(splash::Path &path)
 {
   double area = 0.0;
 #if POPPLER_VERSION >= 500
@@ -214,12 +214,12 @@ std::string pdf::get_link_border_color(Link *link)
 #endif
 }
 
-bool pdf::get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap)
+bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap)
 {
   if (font == NULL)
     return false;
 #if POPPLER_VERSION >= 602
-  SplashClipResult clip_result;
+  splash::ClipResult clip_result;
   if (!font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result))
     return false;
   return (clip_result != splashClipAllOutside);

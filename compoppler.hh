@@ -22,17 +22,30 @@
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
 
+namespace splash
+{
+  typedef ::Splash Splash;
+  typedef ::SplashColor Color;
+  typedef ::SplashFont Font;
+  typedef ::SplashCoord Coord;
+  typedef ::SplashPath Path;
+  typedef ::SplashClipResult ClipResult;
+  typedef ::SplashGlyphBitmap GlyphBitmap;
+  typedef ::SplashBitmap Bitmap;
+  typedef ::SplashOutputDev OutputDevice;
+}
+
 namespace pdf 
 {
 
-  class Renderer : public SplashOutputDev
+  class Renderer : public splash::OutputDevice
   {
   public:
-    Renderer(SplashColor &paper_color) :
+    Renderer(splash::Color &paper_color) :
 #if POPPLER_VERSION < 500
-      SplashOutputDev(splashModeRGB8Packed, gFalse, paper_color)
+      splash::OutputDevice(splashModeRGB8Packed, gFalse, paper_color)
 #else
-      SplashOutputDev(splashModeRGB8, 4, gFalse, paper_color)
+      splash::OutputDevice(splashModeRGB8, 4, gFalse, paper_color)
 #endif
     { }
 
@@ -46,7 +59,7 @@ namespace pdf
     virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
       CharCode code, int n_bytes, Unicode *unistr, int len)
     {
-      this->SplashOutputDev::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
+      this->splash::OutputDevice::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
     }
     
     virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
@@ -55,7 +68,7 @@ namespace pdf
       int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
       int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
 
-    SplashFont *getCurrentFont()
+    splash::Font *getCurrentFont()
     {
       return NULL;
     }
@@ -71,7 +84,7 @@ namespace pdf
 #endif
 
   protected:
-    static void convert_path(GfxState *state, SplashPath &splash_path);
+    static void convert_path(GfxState *state, splash::Path &splash_path);
   };
 
   class PixmapIterator
@@ -108,7 +121,7 @@ namespace pdf
   {
   private:
     const uint8_t *raw_data;
-    SplashBitmap *bmp;
+    splash::Bitmap *bmp;
     size_t row_size;
     int width, height;
   public:
@@ -188,7 +201,7 @@ namespace pdf
 
   PDFDoc *new_document(std::string file_name);
 
-  void set_color(SplashColor &result, uint8_t r, uint8_t g, uint8_t b);
+  void set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
 
   Object *dict_lookup(Object &dict, const char *key, Object *object);
   Object *dict_lookup(Object *dict, const char *key, Object *object);
@@ -198,10 +211,10 @@ namespace pdf
   double get_page_height(PDFDoc *document, int n, bool crop);
   void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
 
-  double get_path_area(SplashPath &path);
+  double get_path_area(splash::Path &path);
   std::string get_link_border_color(Link *link);
 
-  bool get_glyph(Splash *splash, SplashFont *font, int code, SplashGlyphBitmap *bitmap);
+  bool get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap);
 
   void write_as_utf8(std::ostream &stream, Unicode unicode_char);
   void write_as_utf8(std::ostream &stream, char pdf_char);
