@@ -45,11 +45,7 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
     if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
       strstream << "\\" << std::oct << std::setfill('0') << std::setw(3) << static_cast<unsigned int>(*unistr);
     else
-    {
-      char buffer[8];
-      int seqlen = mapUTF8(*unistr, buffer, sizeof buffer);
-      strstream.write(buffer, seqlen);
-    }
+      pdf::write_as_utf8(strstream, *unistr);
   }
   strstream << ")" << std::endl;
   return strstream.str();
@@ -309,21 +305,12 @@ public:
 
 static std::string pdf_string_to_utf8_string(GooString *from)
 {
-  char *cfrom = from->getCString();
+  const char *cfrom = from->getCString();
   std::ostringstream stream;
   if ((cfrom[0] & 0xff) == 0xfe && (cfrom[1] & 0xff) == 0xff)
     utf16_to_utf8(cfrom, from->getLength(), stream);
   else
-  {
-    for (; *cfrom; cfrom++)
-    {
-      char buffer[8];
-      Unicode unichr = pdfDocEncoding[*cfrom & 0xff];
-      int seqlen = mapUTF8(unichr, buffer, sizeof buffer);
-      buffer[seqlen] = 0;
-      stream.write(buffer, seqlen);
-    }
-  }
+    pdf::write_as_utf8(stream, cfrom);
   return stream.str();
 }
 

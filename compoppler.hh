@@ -12,11 +12,9 @@
 #include <ostream>
 
 #include <PDFDoc.h>
-#include <PDFDocEncoding.h>
 #include <GfxState.h>
 #include <SplashOutputDev.h>
 #include <Link.h>
-#include <UTF8.h>
 
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>
@@ -194,6 +192,13 @@ public:
     return this->data;
   }
 };
+
+namespace pdf
+{
+  void write_as_utf8(std::ostream &stream, Unicode unicode_char);
+  void write_as_utf8(std::ostream &stream, char pdf_char);
+  void write_as_utf8(std::ostream &stream, const char *pdf_chars);
+}
 
 #endif
 

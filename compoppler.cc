@@ -14,6 +14,8 @@
 #include "compoppler.hh"
 
 #include <GlobalParams.h>
+#include <PDFDocEncoding.h>
+#include <UTF8.h>
 #include <UnicodeTypeTable.h>
 #if POPPLER_VERSION >= 500 && POPPLER_VERSION < 509
 #include <UGooString.h>
@@ -239,6 +241,24 @@ NFKC::~NFKC()
 #if POPPLER_VERSION >= 502
   gfree(this->data);
 #endif
+}
+
+void pdf::write_as_utf8(std::ostream &stream, Unicode unicode_char)
+{
+  char buffer[8];
+  int seqlen = mapUTF8(unicode_char, buffer, sizeof buffer);
+  stream.write(buffer, seqlen);
+}
+
+void pdf::write_as_utf8(std::ostream &stream, char pdf_char)
+{
+  write_as_utf8(stream, pdfDocEncoding[pdf_char & 0xff]);
+}
+
+void pdf::write_as_utf8(std::ostream &stream, const char *pdf_chars)
+{
+  for (; *pdf_chars; pdf_chars++)
+    write_as_utf8(stream, *pdf_chars);
 }
 
 // vim:ts=2 sw=2 et
