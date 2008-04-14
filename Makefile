@@ -17,8 +17,9 @@ debug.o: debug.cc debug.hh config.hh sexpr.hh
 compoppler.o: compoppler.cc compoppler.hh
 sexpr.o: sexpr.cc sexpr.hh
 system.o: system.cc system.hh debug.hh
-pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh sexpr.hh
-pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o sexpr.o
+quantizer.o: quantizer.cc quantizer.hh
+pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh sexpr.hh quantizer.hh
+pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o sexpr.o quantizer.o
 	$(LINK.cc) $(^) $(LDLIBS) -o $(@) 
 
 .PHONY: clean
