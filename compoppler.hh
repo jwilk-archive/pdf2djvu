@@ -71,7 +71,7 @@ namespace pdf
 #endif
 
   protected:
-    void convert_path(GfxState *state, SplashPath &splash_path);
+    static void convert_path(GfxState *state, SplashPath &splash_path);
   };
 
   class PixmapIterator
@@ -98,7 +98,7 @@ namespace pdf
       ptr = row_ptr = row_ptr + row_size;
     }
 
-    uint8_t operator[](int n)
+    uint8_t operator[](int n) const
     {
       return this->ptr[n];
     }
@@ -114,8 +114,14 @@ namespace pdf
   public:
     typedef PixmapIterator iterator;
 
-    int get_width() { return width; }
-    int get_height() { return height; }
+    int get_width() const 
+    {
+      return width;
+    }
+    int get_height() const
+    {
+      return height;
+    }
 
     Pixmap(Renderer *renderer)
     {
@@ -138,7 +144,7 @@ namespace pdf
 #endif
     }
 
-    PixmapIterator begin()
+    PixmapIterator begin() const
     {
       return PixmapIterator(raw_data, row_size);
     }
