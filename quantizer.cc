@@ -32,8 +32,8 @@ void WebSafeQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int width,
   output_web_palette(stream);
   Pixmap bmp_fg = Pixmap(out_fg);
   Pixmap bmp_bg = Pixmap(out_bg);
-  PixmapIterator p_fg = bmp_fg.begin();
-  PixmapIterator p_bg = bmp_bg.begin();
+  Pixmap::iterator p_fg = bmp_fg.begin();
+  Pixmap::iterator p_bg = bmp_bg.begin();
   for (int i = 0; i < 3; i++) 
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
@@ -114,8 +114,8 @@ void GraphicsMagickQuantizer::operator()(Renderer *out_fg, Renderer *out_bg, int
   image.modifyImage();
   Pixmap bmp_fg = Pixmap(out_fg);
   Pixmap bmp_bg = Pixmap(out_bg);
-  PixmapIterator p_fg = bmp_fg.begin();
-  PixmapIterator p_bg = bmp_bg.begin();
+  Pixmap::iterator p_fg = bmp_fg.begin();
+  Pixmap::iterator p_bg = bmp_bg.begin();
   for (int i = 0; i < 3; i++) 
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)

@@ -109,6 +109,8 @@ private:
   size_t row_size;
   int width, height;
 public:
+  typedef PixmapIterator iterator;
+
   int get_width() { return width; }
   int get_height() { return height; }
 
