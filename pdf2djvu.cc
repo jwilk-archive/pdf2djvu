@@ -688,30 +688,6 @@ public:
   }
 };
 
-static const char DJVU_BINARY_TEMPLATE[] = "AT&TFORM\0\0\0\0DJVMDIRM\0\0\0";
-static const unsigned char DJVU_VERSION = 1;
-
-static const char DJVU_DUMMY_SINGLE_HEAD[12] = 
-{ 0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d,
-  0x00, 0x00, 0x00, 0x20
-};
-
-static const char DJVU_DUMMY_DOUBLE_HEAD[48] = 
-{ 0x41, 0x54, 0x26, 0x54, 0x46, 0x4f, 0x52, 0x4d, 
-  0x00, 0x00, 0x00, 0x74, 0x44, 0x4a, 0x56, 0x4d,
-  0x44, 0x49, 0x52, 0x4d, 0x00, 0x00, 0x00, 0x18,
-  0x81, 0x00, 0x02, 0x00, 0x00, 0x00, 0x30, 0x00,
-  0x00, 0x00, 0x58, 0xff, 0xff, 0xf2, 0xbf, 0x34,
-  0x7b, 0xf3, 0x10, 0x74, 0x07, 0x45, 0xc5, 0x40
-};
-
-static const char DJVU_DUMMY_DATA[32] =
-{ 0x44, 0x4a, 0x56, 0x55, 0x49, 0x4e, 0x46, 0x4f,
-  0x00, 0x00, 0x00, 0x0a, 0x00, 0x01, 0x00, 0x01,
-  0x18, 0x00, 0x2c, 0x01, 0x16, 0x00, 0x53, 0x6a,
-  0x62, 0x7a, 0x00, 0x00, 0x00, 0x02, 0xbb, 0x7f
-};
-
 class IndirectDjVm : public DjVm
 {
 private:
@@ -736,13 +712,13 @@ public:
   virtual void set_outline(File &outlines_sed_file)
   {
     TemporaryFile dummy_djvu_file;
-    dummy_djvu_file.write(DJVU_DUMMY_DOUBLE_HEAD, sizeof DJVU_DUMMY_DOUBLE_HEAD);
+    dummy_djvu_file.write(djvu::DUMMY_DOUBLE_HEAD, sizeof djvu::DUMMY_DOUBLE_HEAD);
     for (int i = 0; i < 2; i++)
     {
       dummy_djvu_file.write("FORM", 4);
       for (int i = 3; i >= 0; i--)
-        dummy_djvu_file << static_cast<char>(((sizeof DJVU_DUMMY_DATA) >> (8 * i)) & 0xff);
-      dummy_djvu_file.write(DJVU_DUMMY_DATA, sizeof DJVU_DUMMY_DATA);
+        dummy_djvu_file << static_cast<char>(((sizeof djvu::DUMMY_DATA) >> (8 * i)) & 0xff);
+      dummy_djvu_file.write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
     }
     dummy_djvu_file.close();
     Command djvused(DJVULIBRE_BIN_PATH "/djvused");
@@ -789,8 +765,8 @@ public:
   virtual void create()
   {
     size_t size = this->components.size();
-    index_file.write(DJVU_BINARY_TEMPLATE, sizeof DJVU_BINARY_TEMPLATE);
-    index_file << DJVU_VERSION;
+    index_file.write(djvu::BINARY_TEMPLATE, sizeof djvu::BINARY_TEMPLATE);
+    index_file << djvu::VERSION;
     for (int i = 1; i >= 0; i--)
       index_file << static_cast<char>((size >> (8 * i)) & 0xff);
     {
@@ -1163,8 +1139,8 @@ static int xmain(int argc, char * const argv[])
     if (page_counter == 1 && config::format == config::FORMAT_BUNDLED)
     {
       // Dummy page is necessary to force multi-file document structure.
-      dummy_page_file.write(DJVU_DUMMY_SINGLE_HEAD, sizeof DJVU_DUMMY_SINGLE_HEAD);
-      dummy_page_file.write(DJVU_DUMMY_DATA, sizeof DJVU_DUMMY_DATA);
+      dummy_page_file.write(djvu::DUMMY_SINGLE_HEAD, sizeof djvu::DUMMY_SINGLE_HEAD);
+      dummy_page_file.write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
       dummy_page_file.close();
       *djvm << dummy_page_file;
     }
