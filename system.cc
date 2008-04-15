@@ -249,6 +249,11 @@ TemporaryFile::~TemporaryFile()
     throw_os_error(this->name);
 }
 
+
+/* utility functions
+ * =================
+ */
+
 void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
 {
   static char outbuf[1 << 10];
@@ -289,11 +294,6 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   if (iconv_close(cd) == -1)
     throw_os_error("iconv_close()");
 }
-
-
-/* utility functions
- * =================
- */
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
 {
