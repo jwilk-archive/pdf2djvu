@@ -52,14 +52,14 @@ bool pdf::set_antialias(bool value)
  * =================
  */
 
-PDFDoc *pdf::new_document(std::string file_name)
+pdf::Document *pdf::new_document(std::string file_name)
 {
-  GooString *g_file_name = new GooString(file_name.c_str());
-  PDFDoc *doc = new PDFDoc(g_file_name, NULL, NULL);
+  pdf::String *g_file_name = new pdf::String(file_name.c_str());
+  pdf::Document *doc = new pdf::Document(g_file_name, NULL, NULL);
   return doc;
 }
 
-void pdf::display_page(PDFDoc *document, pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
+void pdf::display_page(pdf::Document *document, pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
 #if POPPLER_VERSION < 500
   document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
@@ -82,11 +82,11 @@ void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
 #endif
 }
 
-std::string pdf::get_link_border_color(Link *link)
+std::string pdf::get_link_border_color(pdf::link::Link *link)
 {
 #if POPPLER_VERSION < 509
   double rgb[3];
-  LinkBorderStyle *border_style = link->getBorderStyle();
+  pdf::link::BorderStyle *border_style = link->getBorderStyle();
   border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
   std::ostringstream stream;
   stream << "#";
@@ -125,11 +125,11 @@ bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, int code, splash
  * ==============================
  */
 
-void pdf::Renderer::convert_path(GfxState *state, splash::Path &splash_path)
+void pdf::Renderer::convert_path(pdf::gfx::State *state, splash::Path &splash_path)
 {
   // copied from <PopplerOutputDev.h>
-  GfxSubpath *subpath;
-  GfxPath *path = state->getPath();
+  pdf::gfx::Subpath *subpath;
+  pdf::gfx::Path *path = state->getPath();
   int n_subpaths = path->getNumSubpaths();
   for (int i = 0; i < n_subpaths; i++) 
   {
@@ -204,7 +204,7 @@ pdf::Object *pdf::dict_lookup(pdf::Object *dict, const char *key, pdf::Object *o
   return dict->dictLookup(const_cast<char*>(key), object);
 }
 
-pdf::Object *pdf::dict_lookup(Dict *dict, const char *key, pdf::Object *object)
+pdf::Object *pdf::dict_lookup(pdf::Dict *dict, const char *key, pdf::Object *object)
 {
   return dict->lookup(const_cast<char*>(key), object);
 }
@@ -214,7 +214,7 @@ pdf::Object *pdf::dict_lookup(Dict *dict, const char *key, pdf::Object *object)
  * =====================
  */
 
-double pdf::get_page_width(PDFDoc *document, int n, bool crop)
+double pdf::get_page_width(pdf::Document *document, int n, bool crop)
 {
   double width =
 #if POPPLER_VERSION < 500
@@ -227,7 +227,7 @@ double pdf::get_page_width(PDFDoc *document, int n, bool crop)
   return width / 72.0;
 }
 
-double pdf::get_page_height(PDFDoc *document, int n, bool crop)
+double pdf::get_page_height(pdf::Document *document, int n, bool crop)
 {
   double height =
 #if POPPLER_VERSION < 500

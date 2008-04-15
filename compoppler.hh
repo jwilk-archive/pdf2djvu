@@ -35,16 +35,40 @@ namespace splash
   typedef ::SplashOutputDev OutputDevice;
 }
 
+
 namespace pdf 
 {
 
-/* typde definitions
- * =================
+/* type definitions
+ * ================
  */
 
+  typedef ::PDFDoc Document;
   typedef ::Stream Stream;
   typedef ::Object Object;
+  typedef ::Dict Dict;
+  typedef ::Catalog Catalog;
+  typedef ::GooString String;
 
+  namespace link
+  {
+    typedef ::Link Link;
+    typedef ::LinkAction Action;
+    typedef ::LinkDest Destination;
+    typedef ::LinkGoTo GoTo;
+    typedef ::LinkURI URI;
+#if POPPLER_VERSION < 509
+    typedef ::LinkBorderStyle BorderStyle; 
+#endif
+  }
+
+  namespace gfx
+  {
+    typedef ::GfxSubpath Subpath;
+    typedef ::GfxPath Path;
+    typedef ::GfxState State;
+    typedef ::GfxImageColorMap ImageColorMap;
+  }
 
 /* class pdf::Renderer : splash::OutputDevice
  * ==========================================
@@ -62,23 +86,23 @@ namespace pdf
     { }
 
 #if POPPLER_VERSION < 500
-    void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+    void drawChar(gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
       CharCode code, Unicode *unistr, int len)
     {
       this->drawChar(state, x, y, dx, dy, origin_x, origin_y, code, -1, unistr, len);
     }
 
-    virtual void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+    virtual void drawChar(gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
       CharCode code, int n_bytes, Unicode *unistr, int len)
     {
       this->splash::OutputDevice::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
     }
     
-    virtual void drawMaskedImage(GfxState *state, Object *object, Stream *stream, int width, int height,
-      GfxImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
-    virtual void drawSoftMaskedImage(GfxState *state, Object *object, Stream *stream,
-      int width, int height, GfxImageColorMap *color_map, Stream *mask_stream,
-      int mask_width, int mask_height,	GfxImageColorMap *mask_color_map) {}
+    virtual void drawMaskedImage(gfx::State *state, Object *object, Stream *stream, int width, int height,
+      gfx::ImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
+    virtual void drawSoftMaskedImage(gfx::State *state, Object *object, Stream *stream,
+      int width, int height, gfx::ImageColorMap *color_map, Stream *mask_stream,
+      int mask_width, int mask_height,	gfx::ImageColorMap *mask_color_map) {}
 
     splash::Font *getCurrentFont()
     {
@@ -96,7 +120,7 @@ namespace pdf
 #endif
 
   protected:
-    static void convert_path(GfxState *state, splash::Path &splash_path);
+    static void convert_path(gfx::State *state, splash::Path &splash_path);
   };
 
 
@@ -236,8 +260,8 @@ namespace pdf
  * =================
  */
 
-  PDFDoc *new_document(std::string file_name);
-  void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
+  pdf::Document *new_document(std::string file_name);
+  void display_page(pdf::Document *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
   void set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
   std::string get_link_border_color(Link *link);
 
@@ -259,8 +283,8 @@ namespace pdf
  * =====================
  */
 
-  double get_page_width(PDFDoc *document, int n, bool crop);
-  double get_page_height(PDFDoc *document, int n, bool crop);
+  double get_page_width(pdf::Document *document, int n, bool crop);
+  double get_page_height(pdf::Document *document, int n, bool crop);
 
 /* path-related functions
  * ======================

@@ -57,10 +57,10 @@ public:
   NoLinkDestination() : Error("Cannot find link destination") {}
 };
 
-static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
+static int get_page_for_LinkGoTo(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
 {
-  std::auto_ptr<LinkDest> dest_copy;
-  LinkDest *dest = goto_link->getDest();
+  std::auto_ptr<pdf::link::Destination> dest_copy;
+  pdf::link::Destination *dest = goto_link->getDest();
   if (dest == NULL)
     dest = catalog->findDest(goto_link->getNamedDest());
   else
@@ -84,7 +84,7 @@ static int get_page_for_LinkGoTo(LinkGoTo *goto_link, Catalog *catalog)
     throw NoLinkDestination();
 }
 
-static bool is_foreground_color_map(GfxImageColorMap *color_map)
+static bool is_foreground_color_map(pdf::gfx::ImageColorMap *color_map)
 {
   return (color_map->getNumPixelComps() <= 1 && color_map->getBits() <= 1);
 }
@@ -97,22 +97,22 @@ private:
   std::map<int, int> &page_map;
 public:
 
-  void drawImageMask(GfxState *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
+  void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
     GBool invert, GBool inline_image)
   {
     return;
   }
 
-  void drawImage(GfxState *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    GfxImageColorMap *color_map, int *mask_colors, GBool inline_image)
+  void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::gfx::ImageColorMap *color_map, int *mask_colors, GBool inline_image)
   {
     if (is_foreground_color_map(color_map))
       return;
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
 
-  void drawMaskedImage(GfxState *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    GfxImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
+  void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
     if (is_foreground_color_map(color_map))
       return;
@@ -120,9 +120,9 @@ public:
       color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
 
-  void drawSoftMaskedImage(GfxState *state, pdf::Object *object, pdf::Stream *stream,
-    int width, int height, GfxImageColorMap *color_map, pdf::Stream *mask_stream,
-    int mask_width, int mask_height,	GfxImageColorMap *mask_color_map)
+  void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
+    int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream,
+    int mask_width, int mask_height,	pdf::gfx::ImageColorMap *mask_color_map)
   {
     if (is_foreground_color_map(color_map))
       return;
@@ -132,7 +132,7 @@ public:
 
   GBool interpretType3Chars() { return gFalse; }
 
-  void drawChar(GfxState *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+  void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
     CharCode code, int n_bytes, Unicode *unistr, int len)
   {
     double px, py, pdx, pdy;
@@ -163,27 +163,27 @@ public:
     ));
   }
 
-  void drawLink(Link *link, Catalog *catalog)
+  void drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
   {
     sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
     if (!config::extract_hyperlinks)
       return;
     double x1, y1, x2, y2;
-    LinkAction *link_action = link->getAction();
+    pdf::link::Action *link_action = link->getAction();
     std::string uri;
     std::string border_color = pdf::get_link_border_color(link);
     link->getRect(&x1, &y1, &x2, &y2);
     switch (link_action->getKind())
     {
     case actionURI:
-      uri += dynamic_cast<LinkURI*>(link_action)->getURI()->getCString();
+      uri += dynamic_cast<pdf::link::URI*>(link_action)->getURI()->getCString();
       break;
     case actionGoTo:
     {
       int page;
       try
       {
-        page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), catalog);
       }
       catch (NoLinkDestination &ex)
       {
@@ -250,8 +250,8 @@ public:
 
   GBool useDrawChar() { return gTrue; }
 
-  void stroke(GfxState *state) { }
-  void fill(GfxState *state)
+  void stroke(pdf::gfx::State *state) { }
+  void fill(pdf::gfx::State *state)
   { 
     splash::Path path;
     this->convert_path(state, path);
@@ -259,7 +259,7 @@ public:
     if (area / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
       Renderer::fill(state);
   }
-  void eoFill(GfxState *state) { }
+  void eoFill(pdf::gfx::State *state) { }
 
   MutedRenderer(splash::Color &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
   { }
@@ -303,7 +303,7 @@ public:
   NoTitleForBookmark() : BookmarkError("No title for a bookmark") {}
 };
 
-static std::string pdf_string_to_utf8_string(GooString *from)
+static std::string pdf_string_to_utf8_string(pdf::String *from)
 {
   const char *cfrom = from->getCString();
   std::ostringstream stream;
@@ -314,7 +314,7 @@ static std::string pdf_string_to_utf8_string(GooString *from)
   return stream.str();
 }
 
-static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, Catalog *catalog,
+static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
   std::map<int, int> &page_map)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
@@ -337,16 +337,16 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, Catalog *catal
       int page;
       {
         pdf::OwnedObject destination;
-        LinkAction *link_action;
+        pdf::link::Action *link_action;
         if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
-          link_action = LinkAction::parseDest(&destination);
+          link_action = pdf::link::Action::parseDest(&destination);
         else if (!pdf::dict_lookup(current, "A", &destination)->isNull())
-          link_action = LinkAction::parseAction(&destination);
+          link_action = pdf::link::Action::parseAction(&destination);
         else
           throw NoPageForBookmark();
         if (!link_action || link_action->getKind() != actionGoTo)
           throw NoPageForBookmark();
-        page = get_page_for_LinkGoTo(dynamic_cast<LinkGoTo*>(link_action), catalog);
+        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), catalog);
       }
       sexpr::Ref expr = sexpr::nil;
       expr = pdf_outline_to_djvu_outline(&current, catalog, page_map);
@@ -373,10 +373,10 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, Catalog *catal
   return list;
 }
 
-static void pdf_outline_to_djvu_outline(PDFDoc *doc, std::ostream &stream, std::map<int, int> &page_map)
+static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream, std::map<int, int> &page_map)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
-  Catalog *catalog = doc->getCatalog();
+  pdf::Catalog *catalog = doc->getCatalog();
   pdf::Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
     return;
@@ -405,7 +405,7 @@ static int scan_date_digits(char * &input, int n)
   return value;
 }
 
-static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
+static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stream)
 {
   static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
@@ -413,7 +413,7 @@ static void pdf_metadata_to_djvu_metadata(PDFDoc *doc, std::ostream &stream)
   doc->getDocInfo(&info);
   if (!info.isDict())
     return;
-  Dict *info_dict = info.getDict();
+  pdf::Dict *info_dict = info.getDict();
   for (const char** pkey = string_keys; *pkey; pkey++)
   {
     pdf::Object object;
@@ -858,7 +858,7 @@ static int xmain(int argc, char * const argv[])
     ifs.close();
   }
 
-  PDFDoc *doc = pdf::new_document(config::file_name);
+  pdf::Document *doc = pdf::new_document(config::file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
 
