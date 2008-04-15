@@ -303,15 +303,26 @@ public:
   NoTitleForBookmark() : BookmarkError("No title for a bookmark") {}
 };
 
-static std::string pdf_string_to_utf8_string(pdf::String *from)
+namespace pdf
 {
-  const char *cfrom = from->getCString();
-  std::ostringstream stream;
-  if ((cfrom[0] & 0xff) == 0xfe && (cfrom[1] & 0xff) == 0xff)
-    utf16_to_utf8(cfrom, from->getLength(), stream);
-  else
-    pdf::write_as_utf8(stream, cfrom);
-  return stream.str();
+  // FIXME: move the following functions to `compoppler`
+
+  static std::string string_as_utf8(pdf::String *string)
+  {
+    const char *cstring = string->getCString();
+    std::ostringstream stream;
+    if ((cstring[0] & 0xff) == 0xfe && (cstring[1] & 0xff) == 0xff)
+      utf16_to_utf8(cstring, string->getLength(), stream);
+    else
+      pdf::write_as_utf8(stream, cstring);
+    return stream.str();
+  }
+
+  static inline std::string string_as_utf8(pdf::Object &object)
+  {
+    return pdf::string_as_utf8(object.getString());
+  }
+
 }
 
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
@@ -331,7 +342,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
         pdf::OwnedObject title;
         if (!pdf::dict_lookup(current, "Title", &title)->isString())
           throw NoTitleForBookmark();
-        title_str = pdf_string_to_utf8_string(title.getString());
+        title_str = pdf::string_as_utf8(title);
       } 
 
       int page;
@@ -421,7 +432,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
       continue;
     try
     {
-      std::string value = pdf_string_to_utf8_string(object.getString());
+      std::string value = pdf::string_as_utf8(object);
       sexpr::Ref esc_value = sexpr::string(value);
       stream << *pkey << "\t" << esc_value << std::endl;
     }
@@ -438,7 +449,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
     {
       try
       {
-        value = pdf_string_to_utf8_string(object.getString());
+        value = pdf::string_as_utf8(object);
         if (value.length() > 0)
           value += "\n";
       }
