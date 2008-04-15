@@ -21,6 +21,10 @@
 #include <UGooString.h>
 #endif
 
+/* global poppler options
+ * ======================
+ */
+
 void pdf::init_global_params()
 {
 #if POPPLER_VERSION < 509
@@ -43,11 +47,28 @@ bool pdf::set_antialias(bool value)
 #endif
 }
 
+
+/* utility functions
+ * =================
+ */
+
 PDFDoc *pdf::new_document(std::string file_name)
 {
   GooString *g_file_name = new GooString(file_name.c_str());
   PDFDoc *doc = new PDFDoc(g_file_name, NULL, NULL);
   return doc;
+}
+
+void pdf::display_page(PDFDoc *document, pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
+{
+#if POPPLER_VERSION < 500
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
+#elif POPPLER_VERSION < 509 
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, do_links);
+#else
+  document->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links);
+  document->processLinks(renderer, npage);
+#endif
 }
 
 void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
@@ -60,6 +81,49 @@ void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
   result[2] = b;
 #endif
 }
+
+std::string pdf::get_link_border_color(Link *link)
+{
+#if POPPLER_VERSION < 509
+  double rgb[3];
+  LinkBorderStyle *border_style = link->getBorderStyle();
+  border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
+  std::ostringstream stream;
+  stream << "#";
+  for (int i = 0; i < 3; i++)
+    stream
+      << std::setw(2) << std::setfill('0') << std::hex
+      << static_cast<int>(rgb[i] * 0xff);
+  return stream.str();
+#else
+  // FIXME: find a way to determine link color
+  return "";
+#endif
+}
+
+
+/* glyph-related functions
+ * =======================
+ */
+
+bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap)
+{
+  if (font == NULL)
+    return false;
+#if POPPLER_VERSION >= 602
+  splash::ClipResult clip_result;
+  if (!font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result))
+    return false;
+  return (clip_result != splashClipAllOutside);
+#else
+  return font->getGlyph(code, 0, 0, bitmap); 
+#endif
+}
+
+
+/* path-related functions/methods
+ * ==============================
+ */
 
 void pdf::Renderer::convert_path(GfxState *state, splash::Path &splash_path)
 {
@@ -125,6 +189,11 @@ double pdf::get_path_area(splash::Path &path)
   return fabs(area);
 }
 
+
+/* dictionary lookup
+ * =================
+ */
+
 pdf::Object *pdf::dict_lookup(pdf::Object &dict, const char *key, pdf::Object *object)
 {
   return dict.dictLookup(const_cast<char*>(key), object);
@@ -139,6 +208,11 @@ pdf::Object *pdf::dict_lookup(Dict *dict, const char *key, pdf::Object *object)
 {
   return dict->lookup(const_cast<char*>(key), object);
 }
+
+
+/* page width and height
+ * =====================
+ */
 
 double pdf::get_page_width(PDFDoc *document, int n, bool crop)
 {
@@ -166,17 +240,33 @@ double pdf::get_page_height(PDFDoc *document, int n, bool crop)
   return height / 72.0;
 }
 
-void pdf::display_page(PDFDoc *document, pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
+
+/* Unicode → UTF-8 conversion
+ * ==========================
+ */
+
+void pdf::write_as_utf8(std::ostream &stream, Unicode unicode_char)
 {
-#if POPPLER_VERSION < 500
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
-#elif POPPLER_VERSION < 509 
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, do_links);
-#else
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links);
-  document->processLinks(renderer, npage);
-#endif
+  char buffer[8];
+  int seqlen = mapUTF8(unicode_char, buffer, sizeof buffer);
+  stream.write(buffer, seqlen);
 }
+
+void pdf::write_as_utf8(std::ostream &stream, char pdf_char)
+{
+  write_as_utf8(stream, pdfDocEncoding[pdf_char & 0xff]);
+}
+
+void pdf::write_as_utf8(std::ostream &stream, const char *pdf_chars)
+{
+  for (; *pdf_chars; pdf_chars++)
+    write_as_utf8(stream, *pdf_chars);
+}
+
+
+/* class pdf::Pixmap
+ * =================
+ */
 
 namespace pdf
 {
@@ -195,38 +285,10 @@ namespace pdf
   }
 }
 
-std::string pdf::get_link_border_color(Link *link)
-{
-#if POPPLER_VERSION < 509
-  double rgb[3];
-  LinkBorderStyle *border_style = link->getBorderStyle();
-  border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
-  std::ostringstream stream;
-  stream << "#";
-  for (int i = 0; i < 3; i++)
-    stream
-      << std::setw(2) << std::setfill('0') << std::hex
-      << static_cast<int>(rgb[i] * 0xff);
-  return stream.str();
-#else
-  // FIXME: find a way to determine link color
-  return "";
-#endif
-}
 
-bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap)
-{
-  if (font == NULL)
-    return false;
-#if POPPLER_VERSION >= 602
-  splash::ClipResult clip_result;
-  if (!font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result))
-    return false;
-  return (clip_result != splashClipAllOutside);
-#else
-  return font->getGlyph(code, 0, 0, bitmap); 
-#endif
-}
+/* class pdf::NFKC
+ * ===============
+ */
 
 pdf::NFKC::NFKC(Unicode *unistr, int length) 
 #if POPPLER_VERSION < 502
@@ -244,24 +306,6 @@ pdf::NFKC::~NFKC()
 #if POPPLER_VERSION >= 502
   gfree(this->data);
 #endif
-}
-
-void pdf::write_as_utf8(std::ostream &stream, Unicode unicode_char)
-{
-  char buffer[8];
-  int seqlen = mapUTF8(unicode_char, buffer, sizeof buffer);
-  stream.write(buffer, seqlen);
-}
-
-void pdf::write_as_utf8(std::ostream &stream, char pdf_char)
-{
-  write_as_utf8(stream, pdfDocEncoding[pdf_char & 0xff]);
-}
-
-void pdf::write_as_utf8(std::ostream &stream, const char *pdf_chars)
-{
-  for (; *pdf_chars; pdf_chars++)
-    write_as_utf8(stream, *pdf_chars);
 }
 
 // vim:ts=2 sw=2 et

@@ -38,6 +38,18 @@ namespace splash
 namespace pdf 
 {
 
+/* typde definitions
+ * =================
+ */
+
+  typedef ::Stream Stream;
+  typedef ::Object Object;
+
+
+/* class pdf::Renderer : splash::OutputDevice
+ * ==========================================
+ */
+
   class Renderer : public splash::OutputDevice
   {
   public:
@@ -87,6 +99,11 @@ namespace pdf
     static void convert_path(GfxState *state, splash::Path &splash_path);
   };
 
+
+/* class pdf::Pixmap::iterator
+ * ===========================
+ */
+
   class PixmapIterator
   {
   private:
@@ -116,6 +133,11 @@ namespace pdf
       return this->ptr[n];
     }
   };
+
+
+/* class pdf::Pixmap
+ * =================
+ */
 
   class Pixmap
   {
@@ -165,9 +187,10 @@ namespace pdf
     friend std::ostream &operator<<(std::ostream &, const Pixmap &);
   };
 
-  typedef ::Stream Stream;
 
-  typedef ::Object Object;
+/* class pdf::OwnedObject : pdf::Object
+ * ====================================
+ */
 
   class OwnedObject : public Object
   {
@@ -177,6 +200,11 @@ namespace pdf
       this->free();
     } 
   };
+
+
+/* class pdf::NFKC
+ * ===============
+ */
 
   class NFKC
   {
@@ -196,25 +224,53 @@ namespace pdf
     }
   };
 
+
+/* global poppler options
+ * ======================
+ */
+
   void init_global_params();
   bool set_antialias(bool value);
 
-  PDFDoc *new_document(std::string file_name);
+/* utility functions
+ * =================
+ */
 
+  PDFDoc *new_document(std::string file_name);
+  void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
   void set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
+  std::string get_link_border_color(Link *link);
+
+/* glyph-related functions
+ * =======================
+ */
+
+  bool get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap);
+
+/* dictionary lookup
+ * =================
+ */
 
   Object *dict_lookup(Object &dict, const char *key, Object *object);
   Object *dict_lookup(Object *dict, const char *key, Object *object);
   Object *dict_lookup(Dict *dict, const char *key, Object *object);
 
+/* page width and height
+ * =====================
+ */
+
   double get_page_width(PDFDoc *document, int n, bool crop);
   double get_page_height(PDFDoc *document, int n, bool crop);
-  void display_page(PDFDoc *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
+
+/* path-related functions
+ * ======================
+ */
 
   double get_path_area(splash::Path &path);
-  std::string get_link_border_color(Link *link);
 
-  bool get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap);
+/* Unicode → UTF-8 conversion
+ * ==========================
+ */
 
   void write_as_utf8(std::ostream &stream, Unicode unicode_char);
   void write_as_utf8(std::ostream &stream, char pdf_char);
