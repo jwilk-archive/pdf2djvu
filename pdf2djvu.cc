@@ -736,7 +736,7 @@ public:
         { 
           char c;
           dummy_djvu_file.read(&c, 1);
-          navm_size |= static_cast<size_t>(c) << (8 * i);
+          navm_size |= static_cast<size_t>(c & 0xff) << (8 * i);
         }
         navm_size += 8;
         dummy_djvu_file.seekg(0x30, std::ios::beg);
@@ -752,13 +752,15 @@ public:
         { 
           char c;
           this->index_file.read(&c, 1);
-          chunks_size |= static_cast<size_t>(c) << (8 * i);
+          chunks_size |= static_cast<size_t>(c & 0xff) << (8 * i);
         }
         chunks_size += navm_size + (file_size & 1);
         this->index_file.seekg(8, std::ios::beg);
         for (int i = 3; i >= 0; i--)
           this->index_file << static_cast<char>((chunks_size >> (8 * i)) & 0xff);
       }
+      else
+        throw Error();
     }
   }
 
