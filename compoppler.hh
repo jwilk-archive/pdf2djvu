@@ -166,6 +166,8 @@ namespace pdf
   class Pixmap
   {
   private:
+    Pixmap(const Pixmap&); // not defined
+    Pixmap& operator=(const Pixmap&); // not defined
     const uint8_t *raw_data;
     splash::Bitmap *bmp;
     size_t row_size;
@@ -182,7 +184,7 @@ namespace pdf
       return height;
     }
 
-    Pixmap(Renderer *renderer)
+    explicit Pixmap(Renderer *renderer)
     {
 #if POPPLER_VERSION < 500
       bmp = renderer->getBitmap();

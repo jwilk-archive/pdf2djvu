@@ -995,7 +995,7 @@ static int xmain(int argc, char * const argv[])
         throw Error();
       if (sub_height != outs->getBitmapHeight())
         throw Error();
-      pdf::Pixmap bmp = pdf::Pixmap(outs);
+      pdf::Pixmap bmp(outs);
       debug(3) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
       sep_file << bmp;

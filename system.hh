@@ -72,6 +72,9 @@ public:
 
 class File : public std::fstream
 {
+private:
+  File(const File&); // not defined
+  File& operator=(const File&); // not defined
 protected:
   std::string name;
   void open(const char* path);

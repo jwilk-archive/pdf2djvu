@@ -30,8 +30,8 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
 {
   stream << "R6 " << width << " " << height << " ";
   output_web_palette(stream);
-  pdf::Pixmap bmp_fg = pdf::Pixmap(out_fg);
-  pdf::Pixmap bmp_bg = pdf::Pixmap(out_bg);
+  pdf::Pixmap bmp_fg(out_fg);
+  pdf::Pixmap bmp_bg(out_bg);
   pdf::Pixmap::iterator p_fg = bmp_fg.begin();
   pdf::Pixmap::iterator p_bg = bmp_bg.begin();
   for (int i = 0; i < 3; i++) 
