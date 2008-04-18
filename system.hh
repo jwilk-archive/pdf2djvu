@@ -101,6 +101,16 @@ public:
   virtual ~TemporaryFile();
 };
 
+class ExistingFile : public File
+{
+private:
+  ExistingFile(const ExistingFile&); // not defined
+  ExistingFile& operator=(const ExistingFile&); // not defined
+public:
+  explicit ExistingFile(const std::string &name);
+  ExistingFile(const Directory& directory, const std::string &name);
+};
+
 class IconvError : public Error
 {
 public:

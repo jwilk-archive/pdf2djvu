@@ -1191,8 +1191,18 @@ static int xmain(int argc, char * const argv[])
   {
     size_t djvu_size = output_file->size();
     if (config::format == config::FORMAT_INDIRECT)
+    {
       djvu_size += djvu_pages_size;
-      // FIXME `shared_anno.iff` should be taken into consideration
+      try
+      {
+        ExistingFile shared_anno(*output_dir, "shared_anno.iff");
+        djvu_size += shared_anno.size();
+      }
+      catch (std::ios_base::failure &ex)
+      {
+        // Plausibly no shared annotations
+      }
+    }
     double bpp = 8.0 * djvu_size / n_pixels;
     double ratio = 1.0 * pdf_size / djvu_size;
     double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;

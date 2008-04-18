@@ -250,6 +250,27 @@ TemporaryFile::~TemporaryFile()
 }
 
 
+/* class ExistingFile : std::fstream
+ * =================================
+ */
+
+ExistingFile::ExistingFile(const std::string &name) 
+: File()
+{
+  this->name = name;
+  this->open(NULL);
+}
+
+ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
+: File()
+{
+  std::ostringstream stream;
+  stream << directory << "/" << name;
+  this->name = stream.str();
+  this->open(NULL);
+}
+
+
 /* utility functions
  * =================
  */
