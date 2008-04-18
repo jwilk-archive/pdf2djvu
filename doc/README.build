@@ -70,6 +70,17 @@ Compatibility
 .. [4] http://code.google.com/p/pdf2djvu/issues/detail?id=3
 .. [5] https://bugs.freedesktop.org/show_bug.cgi?id=15009 
 
+
+Security warning
+----------------
+Every upstream poppler version prior to 0.6.2 is affected by serious
+security bugs: CVE-2007-4352_, CVE-2007-5392_ and CVE-2007-5393_.  
+**You have been warned**.
+
+.. _CVE-2007-4352: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4352
+.. _CVE-2007-5392: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5392
+.. _CVE-2007-5393: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5393
+
 Header files
 ------------
 You will need some ``*.h`` files which are not installed by default
