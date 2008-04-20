@@ -1,8 +1,11 @@
-pdf2djvu (0.4.9) UNRELEASED; urgency=low
+pdf2djvu (0.4.9) unstable; urgency=low
 
   * Perform NFKC normalization on hidden text. 
+  * Fix a bug which was (sometimes) breaking index files for multi-page
+    indirect documents.
+  * Fix version information. 
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 14 Apr 2008 16:48:56 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 18 Apr 2008 20:04:17 +0200
 
 pdf2djvu (0.4.8) unstable; urgency=low
 
