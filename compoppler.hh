@@ -22,22 +22,23 @@
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
 
-namespace splash
-{
-  typedef ::Splash Splash;
-  typedef ::SplashColor Color;
-  typedef ::SplashFont Font;
-  typedef ::SplashCoord Coord;
-  typedef ::SplashPath Path;
-  typedef ::SplashClipResult ClipResult;
-  typedef ::SplashGlyphBitmap GlyphBitmap;
-  typedef ::SplashBitmap Bitmap;
-  typedef ::SplashOutputDev OutputDevice;
-}
-
-
 namespace pdf 
 {
+
+  namespace splash
+  {
+    typedef ::Splash Splash;
+    typedef ::SplashColor Color;
+    typedef ::SplashFont Font;
+    typedef ::SplashCoord Coord;
+    typedef ::SplashPath Path;
+    typedef ::SplashGlyphBitmap GlyphBitmap;
+    typedef ::SplashBitmap Bitmap;
+    typedef ::SplashOutputDev OutputDevice;
+  #if POPPLER_VERSION >= 602
+    typedef ::SplashClipResult ClipResult;
+  #endif
+  }
 
 /* type definitions
  * ================
@@ -70,18 +71,18 @@ namespace pdf
     typedef ::GfxImageColorMap ImageColorMap;
   }
 
-/* class pdf::Renderer : splash::OutputDevice
- * ==========================================
+/* class pdf::Renderer : pdf::splash::OutputDevice
+ * ===============================================
  */
 
-  class Renderer : public splash::OutputDevice
+  class Renderer : public pdf::splash::OutputDevice
   {
   public:
-    Renderer(splash::Color &paper_color) :
+    Renderer(pdf::splash::Color &paper_color) :
 #if POPPLER_VERSION < 500
-      splash::OutputDevice(splashModeRGB8Packed, gFalse, paper_color)
+      pdf::splash::OutputDevice(splashModeRGB8Packed, gFalse, paper_color)
 #else
-      splash::OutputDevice(splashModeRGB8, 4, gFalse, paper_color)
+      pdf::splash::OutputDevice(splashModeRGB8, 4, gFalse, paper_color)
 #endif
     { }
 
@@ -95,7 +96,7 @@ namespace pdf
     virtual void drawChar(gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
       CharCode code, int n_bytes, Unicode *unistr, int len)
     {
-      this->splash::OutputDevice::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
+      this->(pdf::splash::OutputDevice::drawChar)(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
     }
     
     virtual void drawMaskedImage(gfx::State *state, Object *object, Stream *stream, int width, int height,
@@ -104,7 +105,7 @@ namespace pdf
       int width, int height, gfx::ImageColorMap *color_map, Stream *mask_stream,
       int mask_width, int mask_height,	gfx::ImageColorMap *mask_color_map) {}
 
-    splash::Font *getCurrentFont()
+    pdf::splash::Font *getCurrentFont()
     {
       return NULL;
     }
@@ -120,7 +121,7 @@ namespace pdf
 #endif
 
   protected:
-    static void convert_path(gfx::State *state, splash::Path &splash_path);
+    static void convert_path(gfx::State *state, pdf::splash::Path &splash_path);
   };
 
 
@@ -169,7 +170,7 @@ namespace pdf
     Pixmap(const Pixmap&); // not defined
     Pixmap& operator=(const Pixmap&); // not defined
     const uint8_t *raw_data;
-    splash::Bitmap *bmp;
+    pdf::splash::Bitmap *bmp;
     size_t row_size;
     int width, height;
   public:
@@ -264,14 +265,14 @@ namespace pdf
 
   pdf::Document *new_document(std::string file_name);
   void display_page(pdf::Document *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
-  void set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
+  void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
   std::string get_link_border_color(Link *link);
 
 /* glyph-related functions
  * =======================
  */
 
-  bool get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap);
+  bool get_glyph(pdf::splash::Splash *splash, pdf::splash::Font *font, int code, pdf::splash::GlyphBitmap *bitmap);
 
 /* dictionary lookup
  * =================
@@ -292,7 +293,7 @@ namespace pdf
  * ======================
  */
 
-  double get_path_area(splash::Path &path);
+  double get_path_area(pdf::splash::Path &path);
 
 /* Unicode → UTF-8 conversion
  * ==========================

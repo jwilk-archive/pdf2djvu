@@ -143,8 +143,8 @@ public:
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
     state->setRender(old_render);
     int font_size = static_cast<int>(state->getTransformedFontSize());
-    splash::Font *font = this->getCurrentFont();
-    splash::GlyphBitmap glyph;
+    pdf::splash::Font *font = this->getCurrentFont();
+    pdf::splash::GlyphBitmap glyph;
     if (pdf::get_glyph(this->getSplash(), font, code, &glyph))
     {
       font_size = glyph.h;
@@ -253,7 +253,7 @@ public:
   void stroke(pdf::gfx::State *state) { }
   void fill(pdf::gfx::State *state)
   { 
-    splash::Path path;
+    pdf::splash::Path path;
     this->convert_path(state, path);
     double area = pdf::get_path_area(path);
     if (area / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
@@ -261,7 +261,7 @@ public:
   }
   void eoFill(pdf::gfx::State *state) { }
 
-  MutedRenderer(splash::Color &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
+  MutedRenderer(pdf::splash::Color &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
   { }
 
   const std::vector<sexpr::Ref> &get_annotations() const
@@ -851,7 +851,7 @@ static int xmain(int argc, char * const argv[])
   if (!doc->isOk())
     throw Error("Unable to load document");
 
-  splash::Color paper_color;
+  pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
 
   size_t n_pixels = 0;
