@@ -96,7 +96,7 @@ namespace pdf
     virtual void drawChar(gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
       CharCode code, int n_bytes, Unicode *unistr, int len)
     {
-      this->(pdf::splash::OutputDevice::drawChar)(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
+      this->pdf::splash::OutputDevice::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
     }
     
     virtual void drawMaskedImage(gfx::State *state, Object *object, Stream *stream, int width, int height,
