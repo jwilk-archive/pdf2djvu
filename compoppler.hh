@@ -280,6 +280,7 @@ namespace pdf
 /* utility functions
  * =================
  */
+
   void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
   std::string get_link_border_color(Link *link);
 
