@@ -847,7 +847,7 @@ static int xmain(int argc, char * const argv[])
     ifs.close();
   }
 
-  pdf::Document *doc = pdf::new_document(config::file_name);
+  pdf::Document *doc = new pdf::Document(config::file_name);
   if (!doc->isOk())
     throw Error("Unable to load document");
 
@@ -964,7 +964,7 @@ static int xmain(int argc, char * const argv[])
     double page_width = pdf::get_page_width(doc, n, crop);
     double page_height = pdf::get_page_height(doc, n, crop);
     int dpi = calculate_dpi(page_width, page_height);
-    pdf::display_page(doc, outm, n, dpi, dpi, crop, true);
+    doc->display_page(outm, n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -972,7 +972,7 @@ static int xmain(int argc, char * const argv[])
     if (!config::no_render)
     {
       debug(3) << "  - verbose render" << std::endl;
-      pdf::display_page(doc, out1, n, dpi, dpi, crop, false);
+      doc->display_page(out1, n, dpi, dpi, crop, false);
     }
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -990,7 +990,7 @@ static int xmain(int argc, char * const argv[])
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
-      pdf::display_page(doc, outs, n, hdpi, vdpi, crop, true);
+      doc->display_page(outs, n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
         throw Error();
       if (sub_height != outs->getBitmapHeight())

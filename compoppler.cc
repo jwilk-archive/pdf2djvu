@@ -52,22 +52,19 @@ bool pdf::Environment::set_antialias(bool value)
  * =================
  */
 
-pdf::Document *pdf::new_document(std::string file_name)
-{
-  pdf::String *g_file_name = new pdf::String(file_name.c_str());
-  pdf::Document *doc = new pdf::Document(g_file_name, NULL, NULL);
-  return doc;
-}
+pdf::Document::Document(const std::string &file_name) 
+: ::PDFDoc(new pdf::String(file_name.c_str()), NULL, NULL)
+{ }
 
-void pdf::display_page(pdf::Document *document, pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
+void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
 #if POPPLER_VERSION < 500
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
+  this->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
 #elif POPPLER_VERSION < 509 
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, do_links);
+  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, do_links);
 #else
-  document->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links);
-  document->processLinks(renderer, npage);
+  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links);
+  this->processLinks(renderer, npage);
 #endif
 }
 

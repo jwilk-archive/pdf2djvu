@@ -44,7 +44,6 @@ namespace pdf
  * ================
  */
 
-  typedef ::PDFDoc Document;
   typedef ::Stream Stream;
   typedef ::Object Object;
   typedef ::Dict Dict;
@@ -263,12 +262,22 @@ namespace pdf
     bool set_antialias(bool value);
   };
 
+
+/* class pdf::Environment
+ * ======================
+ */
+
+  class Document : public ::PDFDoc
+  {
+  public:
+    Document(const std::string &file_name);
+    void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
+  };
+
+
 /* utility functions
  * =================
  */
-
-  pdf::Document *new_document(std::string file_name);
-  void display_page(pdf::Document *document, Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
   void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
   std::string get_link_border_color(Link *link);
 
