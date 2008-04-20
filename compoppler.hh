@@ -272,6 +272,8 @@ namespace pdf
   public:
     Document(const std::string &file_name);
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
+    double get_page_width(int n, bool crop);
+    double get_page_height(int n, bool crop);
   };
 
 
@@ -299,8 +301,6 @@ namespace pdf
  * =====================
  */
 
-  double get_page_width(pdf::Document *document, int n, bool crop);
-  double get_page_height(pdf::Document *document, int n, bool crop);
 
 /* path-related functions
  * ======================

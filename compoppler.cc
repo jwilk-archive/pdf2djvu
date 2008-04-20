@@ -68,6 +68,32 @@ void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi
 #endif
 }
 
+double pdf::Document::get_page_width(int n, bool crop)
+{
+  double width =
+#if POPPLER_VERSION < 500
+    this->getPageWidth(n);
+#else
+    crop ?
+      this->getPageCropWidth(n) :
+      this->getPageMediaWidth(n);
+#endif
+  return width / 72.0;
+}
+
+double pdf::Document::get_page_height(int n, bool crop)
+{
+  double height =
+#if POPPLER_VERSION < 500
+    this->getPageHeight(n);
+#else
+    crop ?
+      this->getPageCropHeight(n) :
+      this->getPageMediaHeight(n);
+#endif
+  return height / 72.0;
+}
+
 
 /* utility functions
  * =================
@@ -212,35 +238,6 @@ pdf::Object *pdf::dict_lookup(pdf::Dict *dict, const char *key, pdf::Object *obj
 }
 
 
-/* page width and height
- * =====================
- */
-
-double pdf::get_page_width(pdf::Document *document, int n, bool crop)
-{
-  double width =
-#if POPPLER_VERSION < 500
-    document->getPageWidth(n);
-#else
-    crop ?
-      document->getPageCropWidth(n) :
-      document->getPageMediaWidth(n);
-#endif
-  return width / 72.0;
-}
-
-double pdf::get_page_height(pdf::Document *document, int n, bool crop)
-{
-  double height =
-#if POPPLER_VERSION < 500
-    document->getPageHeight(n);
-#else
-    crop ?
-      document->getPageCropHeight(n) :
-      document->getPageMediaHeight(n);
-#endif
-  return height / 72.0;
-}
 
 
 /* Unicode → UTF-8 conversion
