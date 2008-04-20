@@ -48,8 +48,8 @@ bool pdf::Environment::set_antialias(bool value)
 }
 
 
-/* utility functions
- * =================
+/* class pdf::Document
+ * ===================
  */
 
 pdf::Document::Document(const std::string &file_name) 
@@ -67,6 +67,11 @@ void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi
   this->processLinks(renderer, npage);
 #endif
 }
+
+
+/* utility functions
+ * =================
+ */
 
 void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
 {

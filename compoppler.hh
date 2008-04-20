@@ -263,8 +263,8 @@ namespace pdf
   };
 
 
-/* class pdf::Environment
- * ======================
+/* class pdf::Document
+ * ===================
  */
 
   class Document : public ::PDFDoc
