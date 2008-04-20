@@ -297,11 +297,6 @@ namespace pdf
   Object *dict_lookup(Object *dict, const char *key, Object *object);
   Object *dict_lookup(Dict *dict, const char *key, Object *object);
 
-/* page width and height
- * =====================
- */
-
-
 /* path-related functions
  * ======================
  */
