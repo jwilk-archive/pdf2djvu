@@ -835,8 +835,8 @@ static int xmain(int argc, char * const argv[])
   if (config::output_stdout && is_stream_a_tty(std::cout))
     throw Error("I won't write DjVu data to a terminal.");
 
-  pdf::init_global_params();
-  if (!pdf::set_antialias(config::antialias))
+  pdf::Environment environment;
+  if (!environment.set_antialias(config::antialias))
     throw Error("Unable to set antialias parameter");
 
   size_t pdf_size;

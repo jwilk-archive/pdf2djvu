@@ -21,11 +21,11 @@
 #include <UGooString.h>
 #endif
 
-/* global poppler options
+/* class pdf::Environment
  * ======================
  */
 
-void pdf::init_global_params()
+pdf::Environment::Environment()
 {
 #if POPPLER_VERSION < 509
   globalParams = new GlobalParams(NULL);
@@ -34,7 +34,7 @@ void pdf::init_global_params()
 #endif
 }
 
-bool pdf::set_antialias(bool value)
+bool pdf::Environment::set_antialias(bool value)
 {
 #if POPPLER_VERSION >= 701 && POPPLER_VERSION < 703
   // Don't allow poppler bug #15009 to appear.

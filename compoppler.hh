@@ -252,12 +252,16 @@ namespace pdf
   };
 
 
-/* global poppler options
+/* class pdf::Environment
  * ======================
  */
 
-  void init_global_params();
-  bool set_antialias(bool value);
+  class Environment
+  {
+  public:
+    Environment();
+    bool set_antialias(bool value);
+  };
 
 /* utility functions
  * =================
