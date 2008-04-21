@@ -559,7 +559,7 @@ protected:
       this->n_digits = 4;
   }
 
-  virtual std::string get_file_name(int n) const
+  std::string get_file_name(int n) const
   {
     std::ostringstream stream;
     stream 
