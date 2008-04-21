@@ -89,12 +89,64 @@ static bool is_foreground_color_map(pdf::gfx::ImageColorMap *color_map)
   return (color_map->getNumPixelComps() <= 1 && color_map->getBits() <= 1);
 }
 
+class PageFiles
+{
+protected:
+  std::vector<File*> data;
+  int n_digits;
+  std::string prefix;
+
+  PageFiles(int n, const std::string &prefix) : data(n), n_digits(0), prefix(prefix)
+  { 
+    while (n > 0)
+    {
+      this->n_digits++;
+      n /= 10;
+    }
+    if (this->n_digits < 4)
+      this->n_digits = 4;
+  }
+
+  void clean_files()
+  {
+    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
+    {
+      if (*it != NULL)
+      {
+        delete *it;
+        *it = NULL;
+      }
+    }
+  }
+
+public:
+  virtual File &operator[](int n) = 0;
+
+  std::string get_file_name(int n) const
+  {
+    if (n <= 0)
+      return "";
+    std::ostringstream stream;
+    stream 
+      << prefix
+      << std::setfill('0') << std::setw(this->n_digits) << n
+      << ".djvu";
+    return stream.str();
+  }
+
+  virtual ~PageFiles()
+  {
+    clean_files();
+  }
+};
+
 class MutedRenderer: public pdf::Renderer
 {
 private:
   std::vector<std::string> texts;
   std::vector<sexpr::Ref> annotations;
   std::map<int, int> &page_map;
+  const PageFiles &page_files;
 public:
 
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
@@ -191,7 +243,7 @@ public:
         return;
       }
       std::ostringstream strstream;
-      strstream << "#" << this->page_map[page];
+      strstream << "#" << this->page_files.get_file_name(this->page_map[page]);
       uri = strstream.str();
       break;
     }
@@ -261,7 +313,8 @@ public:
   }
   void eoFill(pdf::gfx::State *state) { }
 
-  MutedRenderer(pdf::splash::Color &paper_color, std::map<int, int> &page_map) : Renderer(paper_color), page_map(page_map)
+  MutedRenderer(pdf::splash::Color &paper_color, std::map<int, int> &page_map, const PageFiles &page_files) 
+  : Renderer(paper_color), page_map(page_map), page_files(page_files)
   { }
 
   const std::vector<sexpr::Ref> &get_annotations() const
@@ -326,7 +379,7 @@ namespace pdf
 }
 
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
-  std::map<int, int> &page_map)
+  std::map<int, int> &page_map, const PageFiles &page_files)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   pdf::Object current, next;
@@ -360,10 +413,10 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
         page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), catalog);
       }
       sexpr::Ref expr = sexpr::nil;
-      expr = pdf_outline_to_djvu_outline(&current, catalog, page_map);
+      expr = pdf_outline_to_djvu_outline(&current, catalog, page_map, page_files);
       {
         std::ostringstream strstream;
-        strstream << "#" << page_map[page];
+        strstream << "#" << page_files.get_file_name(page_map[page]);
         sexpr::Ref pexpr = sexpr::string(strstream.str());
         expr = sexpr::cons(pexpr, expr);
       }
@@ -384,7 +437,8 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
   return list;
 }
 
-static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream, std::map<int, int> &page_map)
+static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream, 
+  std::map<int, int> &page_map, const PageFiles &page_files)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   pdf::Catalog *catalog = doc->getCatalog();
@@ -392,7 +446,7 @@ static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream
   if (!outlines->isDict())
     return;
   static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
-  sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_map);
+  sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_map, page_files);
   expr = sexpr::cons(symbol_bookmarks, expr);
   stream << expr;
 }
@@ -541,54 +595,6 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
   }
 }
 
-class PageFiles
-{
-protected:
-  std::vector<File*> data;
-  int n_digits;
-  std::string prefix;
-
-  PageFiles(int n, const std::string &prefix) : data(n), n_digits(0), prefix(prefix)
-  { 
-    while (n > 0)
-    {
-      this->n_digits++;
-      n /= 10;
-    }
-    if (this->n_digits < 4)
-      this->n_digits = 4;
-  }
-
-  std::string get_file_name(int n) const
-  {
-    std::ostringstream stream;
-    stream 
-      << prefix
-      << std::setfill('0') << std::setw(this->n_digits) << n
-      << ".djvu";
-    return stream.str();
-  }
-
-  void clean_files()
-  {
-    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
-    {
-      if (*it != NULL)
-      {
-        delete *it;
-        *it = NULL;
-      }
-    }
-  }
-
-public:
-  virtual File &operator[](int n) = 0;
-
-  virtual ~PageFiles()
-  {
-    clean_files();
-  }
-};
 
 class TemporaryPageFiles : public PageFiles
 {
@@ -943,8 +949,8 @@ static int xmain(int argc, char * const argv[])
     opage++;
   }
   pdf::Renderer *out1 = new pdf::Renderer(paper_color);
-  MutedRenderer *outm = new MutedRenderer(paper_color, page_map);
-  MutedRenderer *outs = new MutedRenderer(paper_color, page_map);
+  MutedRenderer *outm = new MutedRenderer(paper_color, page_map, *page_files);
+  MutedRenderer *outs = new MutedRenderer(paper_color, page_map, *page_files);
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   outs->startDoc(doc->getXRef());
@@ -1175,7 +1181,7 @@ static int xmain(int argc, char * const argv[])
       sed_file << "create-shared-ant" << std::endl;
     }
     sed_file << "set-outline" << std::endl;
-    pdf_outline_to_djvu_outline(doc, sed_file, page_map);
+    pdf_outline_to_djvu_outline(doc, sed_file, page_map, *page_files);
     sed_file << std::endl << "." << std::endl;
     sed_file.close();
     djvm->set_outline(sed_file);
