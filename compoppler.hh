@@ -110,7 +110,7 @@ namespace pdf
     }
 #endif  
 
-#if POPPLER_VERSION >= 600
+#if POPPLER_VERSION >= 509
     void processLink(Link *link, Catalog *catalog)
     {
       this->drawLink(link, catalog);
