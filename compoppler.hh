@@ -111,13 +111,13 @@ namespace pdf
 #endif  
 
 #if POPPLER_VERSION >= 509
-    void processLink(Link *link, Catalog *catalog)
+    void processLink(pdf::link::Link *link, pdf::Catalog *catalog)
     {
       this->drawLink(link, catalog);
     }
-
-    virtual void drawLink(Link *link, Catalog *catalog) { }
 #endif
+    virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
+    virtual void drawLink(pdf::link::Link *links, const std::string &border_color, pdf::Catalog *catalog)  { }
 
   protected:
     static void convert_path(gfx::State *state, pdf::splash::Path &splash_path);
@@ -282,7 +282,6 @@ namespace pdf
  */
 
   void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
-  std::string get_link_border_color(Link *link);
 
 /* glyph-related functions
  * =======================

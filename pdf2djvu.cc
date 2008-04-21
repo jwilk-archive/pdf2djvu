@@ -215,7 +215,7 @@ public:
     ));
   }
 
-  void drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
+  void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
   {
     sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
     if (!config::extract_hyperlinks)
@@ -223,7 +223,6 @@ public:
     double x1, y1, x2, y2;
     pdf::link::Action *link_action = link->getAction();
     std::string uri;
-    std::string border_color = pdf::get_link_border_color(link);
     link->getRect(&x1, &y1, &x2, &y2);
     switch (link_action->getKind())
     {

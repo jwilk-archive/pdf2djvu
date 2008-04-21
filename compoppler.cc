@@ -110,8 +110,14 @@ void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
 #endif
 }
 
-std::string pdf::get_link_border_color(pdf::link::Link *link)
+
+/* class pdf::Renderer : pdf::splash::OutputDevice
+ * ===============================================
+ */
+
+void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
 {
+  std::string border_color;
 #if POPPLER_VERSION < 509
   double rgb[3];
   pdf::link::BorderStyle *border_style = link->getBorderStyle();
@@ -122,11 +128,11 @@ std::string pdf::get_link_border_color(pdf::link::Link *link)
     stream
       << std::setw(2) << std::setfill('0') << std::hex
       << static_cast<int>(rgb[i] * 0xff);
-  return stream.str();
+  border_color = stream.str();
 #else
   // FIXME: find a way to determine link color
-  return "";
 #endif
+  this->drawLink(link, border_color, catalog);
 }
 
 
