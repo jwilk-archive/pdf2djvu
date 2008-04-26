@@ -50,7 +50,7 @@ namespace config
   extern std::vector< std::pair<int, int> > pages;
   extern char *file_name;
   extern std::string pageid_prefix;
- 
+
   class Error : public ::Error
   {
   public:

@@ -97,7 +97,7 @@ namespace pdf
     {
       this->pdf::splash::OutputDevice::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
     }
-    
+
     virtual void drawMaskedImage(gfx::State *state, Object *object, Stream *stream, int width, int height,
       gfx::ImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
     virtual void drawSoftMaskedImage(gfx::State *state, Object *object, Stream *stream,
@@ -197,7 +197,7 @@ namespace pdf
       height = bmp->getHeight();
       row_size = bmp->getRowSize();
     }
-    
+
     ~Pixmap()
     {
 #if POPPLER_VERSION >= 500
