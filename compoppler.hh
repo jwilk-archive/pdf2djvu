@@ -10,6 +10,7 @@
 
 #include <string>
 #include <ostream>
+#include <vector>
 
 #include <PDFDoc.h>
 #include <GfxState.h>
@@ -50,6 +51,12 @@ namespace pdf
   typedef ::Catalog Catalog;
   typedef ::GooString String;
 
+  namespace ant
+  {
+    typedef ::Annot Annotation;
+    typedef ::AnnotColor Color;
+  }
+
   namespace link
   {
     typedef ::Link Link;
@@ -68,6 +75,10 @@ namespace pdf
     typedef ::GfxPath Path;
     typedef ::GfxState State;
     typedef ::GfxImageColorMap ImageColorMap;
+    typedef ::GfxColorComp ColorComponent;
+    typedef ::GfxColor Color;
+    typedef ::GfxRGB RgbColor;
+    typedef ::GfxDeviceCMYKColorSpace DeviceCmykColorSpace;
   }
 
 /* class pdf::Renderer : pdf::splash::OutputDevice
@@ -117,8 +128,8 @@ namespace pdf
     }
 #endif
     virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
-    virtual void drawLink(pdf::link::Link *links, const std::string &border_color, pdf::Catalog *catalog)  { }
-
+    virtual void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)  { }
+    std::vector<std::string> link_border_colors;
   protected:
     static void convert_path(gfx::State *state, pdf::splash::Path &splash_path);
   };
@@ -282,6 +293,19 @@ namespace pdf
  */
 
   void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
+
+  namespace gfx
+  {
+    static inline double color_component_as_double(pdf::gfx::ColorComponent c)
+    {
+      return ::colToDbl(c);
+    }
+
+    static inline pdf::gfx::ColorComponent double_as_color_component(double x)
+    {
+      return ::dblToCol(x);
+    }
+  }
 
 /* glyph-related functions
  * =======================

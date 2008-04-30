@@ -5,8 +5,10 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
+#include <algorithm>
 #include <string>
 #include <iomanip>
+#include <iostream>
 #include <ostream>
 #include <sstream>
 #include <cmath>
@@ -56,14 +58,77 @@ pdf::Document::Document(const std::string &file_name)
 : ::PDFDoc(new pdf::String(file_name.c_str()), NULL, NULL)
 { }
 
+static void cmyk_to_rgb(double cmyk[], double rgb[])
+{
+  static pdf::gfx::DeviceCmykColorSpace cmyk_space;
+  pdf::gfx::Color cmyk_cc;
+  pdf::gfx::RgbColor rgb_cc;
+  for (int i = 0; i < 4; i++)
+    cmyk_cc.c[i] = pdf::gfx::double_as_color_component(cmyk[i]);
+  cmyk_space.getRGB(&cmyk_cc, &rgb_cc);
+  rgb[0] = pdf::gfx::color_component_as_double(rgb_cc.r);
+  rgb[1] = pdf::gfx::color_component_as_double(rgb_cc.g);
+  rgb[2] = pdf::gfx::color_component_as_double(rgb_cc.b);
+}
+
+static GBool annotations_callback(pdf::ant::Annotation *annotation, void *user_data)
+{
+  std::vector<std::string> &border_colors = *reinterpret_cast<std::vector<std::string>*>(user_data);
+  if (annotation->getType() != pdf::ant::Annotation::typeLink)
+    return true;
+  std::ostringstream stream;
+  pdf::ant::Color *color = annotation->getColor();
+  double *values = color->getValues();
+  switch (color->getSpace())
+  {
+  case pdf::ant::Color::colorTransparent:
+    {
+      double rgb[3];
+      cmyk_to_rgb(values, rgb);
+      stream << "#";
+      for (int i = 0; i < 3; i++)
+        stream
+          << std::setw(2) << std::setfill('0') << std::hex
+          << static_cast<int>(rgb[0] * 0xff);
+    }
+    break;
+  case pdf::ant::Color::colorGray:
+    stream << "#";
+    for (int i = 0; i < 3; i++)
+      stream
+        << std::setw(2) << std::setfill('0') << std::hex
+        << static_cast<int>(values[0] * 0xff);
+  case pdf::ant::Color::colorRGB:
+    stream << "#";
+    for (int i = 0; i < 3; i++)
+      stream
+        << std::setw(2) << std::setfill('0') << std::hex
+        << static_cast<int>(values[i] * 0xff);
+    break;
+  case pdf::ant::Color::colorCMYK:
+    break;
+  }
+  border_colors.push_back(stream.str());
+  return true;
+}
+
 void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
 #if POPPLER_VERSION < 500
   this->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
 #elif POPPLER_VERSION < 509 
   this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, do_links);
-#else
+#elif POPPLER_VERSION < 700
   this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links);
+  this->processLinks(renderer, npage);
+#else
+  renderer->link_border_colors.clear();
+  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links, 
+    NULL, NULL, 
+    do_links ? annotations_callback : NULL,
+    do_links ? &renderer->link_border_colors : NULL
+  );
+  std::reverse(renderer->link_border_colors.begin(), renderer->link_border_colors.end());
   this->processLinks(renderer, npage);
 #endif
 }
@@ -130,7 +195,12 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
       << static_cast<int>(rgb[i] * 0xff);
   border_color = stream.str();
 #else
-  // FIXME: find a way to determine link color
+  // FIXME: find a way to determine link color for 0.5.9 <= poppler < 0.7.0
+  if (this->link_border_colors.size())
+  {
+    border_color = this->link_border_colors.back();
+    this->link_border_colors.pop_back();
+  }
 #endif
   this->drawLink(link, border_color, catalog);
 }
