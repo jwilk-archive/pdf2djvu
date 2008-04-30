@@ -58,19 +58,6 @@ pdf::Document::Document(const std::string &file_name)
 : ::PDFDoc(new pdf::String(file_name.c_str()), NULL, NULL)
 { }
 
-static void cmyk_to_rgb(double cmyk[], double rgb[])
-{
-  static pdf::gfx::DeviceCmykColorSpace cmyk_space;
-  pdf::gfx::Color cmyk_cc;
-  pdf::gfx::RgbColor rgb_cc;
-  for (int i = 0; i < 4; i++)
-    cmyk_cc.c[i] = pdf::gfx::double_as_color_component(cmyk[i]);
-  cmyk_space.getRGB(&cmyk_cc, &rgb_cc);
-  rgb[0] = pdf::gfx::color_component_as_double(rgb_cc.r);
-  rgb[1] = pdf::gfx::color_component_as_double(rgb_cc.g);
-  rgb[2] = pdf::gfx::color_component_as_double(rgb_cc.b);
-}
-
 static std::string html_color(const double rgb[])
 {
   std::ostringstream stream;
@@ -89,6 +76,19 @@ static std::string html_color(double r, double g, double b)
 }
 
 #if POPPLER_VERSION >= 700
+static void cmyk_to_rgb(double cmyk[], double rgb[])
+{
+  static pdf::gfx::DeviceCmykColorSpace cmyk_space;
+  pdf::gfx::Color cmyk_cc;
+  pdf::gfx::RgbColor rgb_cc;
+  for (int i = 0; i < 4; i++)
+    cmyk_cc.c[i] = pdf::gfx::double_as_color_component(cmyk[i]);
+  cmyk_space.getRGB(&cmyk_cc, &rgb_cc);
+  rgb[0] = pdf::gfx::color_component_as_double(rgb_cc.r);
+  rgb[1] = pdf::gfx::color_component_as_double(rgb_cc.g);
+  rgb[2] = pdf::gfx::color_component_as_double(rgb_cc.b);
+}
+
 static GBool annotations_callback(pdf::ant::Annotation *annotation, void *user_data)
 {
   std::vector<std::string> &border_colors = *reinterpret_cast<std::vector<std::string>*>(user_data);

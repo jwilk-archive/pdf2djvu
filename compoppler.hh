@@ -77,10 +77,12 @@ namespace pdf
     typedef ::GfxPath Path;
     typedef ::GfxState State;
     typedef ::GfxImageColorMap ImageColorMap;
+#if POPPLER_VERSION >= 500    
     typedef ::GfxColorComp ColorComponent;
     typedef ::GfxColor Color;
     typedef ::GfxRGB RgbColor;
     typedef ::GfxDeviceCMYKColorSpace DeviceCmykColorSpace;
+#endif
   }
 
 /* class pdf::Renderer : pdf::splash::OutputDevice
@@ -296,6 +298,7 @@ namespace pdf
 
   void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
 
+#if POPPLER_VERSION >= 500
   namespace gfx
   {
     static inline double color_component_as_double(pdf::gfx::ColorComponent c)
@@ -308,6 +311,7 @@ namespace pdf
       return ::dblToCol(x);
     }
   }
+#endif
 
 /* glyph-related functions
  * =======================
