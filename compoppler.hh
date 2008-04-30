@@ -54,7 +54,9 @@ namespace pdf
   namespace ant
   {
     typedef ::Annot Annotation;
+#if POPPLER_VERSION >= 700
     typedef ::AnnotColor Color;
+#endif
   }
 
   namespace link

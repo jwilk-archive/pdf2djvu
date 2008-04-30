@@ -71,46 +71,53 @@ static void cmyk_to_rgb(double cmyk[], double rgb[])
   rgb[2] = pdf::gfx::color_component_as_double(rgb_cc.b);
 }
 
+static std::string html_color(const double rgb[])
+{
+  std::ostringstream stream;
+  stream << "#";
+  for (int i = 0; i < 3; i++)
+    stream
+      << std::setw(2) << std::setfill('0') << std::hex
+      << static_cast<int>(rgb[i] * 0xff);
+  return stream.str();
+}
+
+static std::string html_color(double r, double g, double b)
+{
+  double rgb[] = {r, g, b};
+  return html_color(rgb);
+}
+
+#if POPPLER_VERSION >= 700
 static GBool annotations_callback(pdf::ant::Annotation *annotation, void *user_data)
 {
   std::vector<std::string> &border_colors = *reinterpret_cast<std::vector<std::string>*>(user_data);
+  std::string border_color;
   if (annotation->getType() != pdf::ant::Annotation::typeLink)
     return true;
-  std::ostringstream stream;
   pdf::ant::Color *color = annotation->getColor();
   double *values = color->getValues();
   switch (color->getSpace())
   {
   case pdf::ant::Color::colorTransparent:
+    break;
+  case pdf::ant::Color::colorGray:
+    border_color = html_color(values[0], values[0], values[0]);
+    break;
+  case pdf::ant::Color::colorRGB:
+    border_color = html_color(values);
+    break;
+  case pdf::ant::Color::colorCMYK:
     {
       double rgb[3];
       cmyk_to_rgb(values, rgb);
-      stream << "#";
-      for (int i = 0; i < 3; i++)
-        stream
-          << std::setw(2) << std::setfill('0') << std::hex
-          << static_cast<int>(rgb[0] * 0xff);
+      border_color = html_color(rgb);
     }
-    break;
-  case pdf::ant::Color::colorGray:
-    stream << "#";
-    for (int i = 0; i < 3; i++)
-      stream
-        << std::setw(2) << std::setfill('0') << std::hex
-        << static_cast<int>(values[0] * 0xff);
-  case pdf::ant::Color::colorRGB:
-    stream << "#";
-    for (int i = 0; i < 3; i++)
-      stream
-        << std::setw(2) << std::setfill('0') << std::hex
-        << static_cast<int>(values[i] * 0xff);
-    break;
-  case pdf::ant::Color::colorCMYK:
-    break;
   }
-  border_colors.push_back(stream.str());
+  border_colors.push_back(border_color);
   return true;
 }
+#endif
 
 void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
@@ -187,13 +194,7 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
   double rgb[3];
   pdf::link::BorderStyle *border_style = link->getBorderStyle();
   border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
-  std::ostringstream stream;
-  stream << "#";
-  for (int i = 0; i < 3; i++)
-    stream
-      << std::setw(2) << std::setfill('0') << std::hex
-      << static_cast<int>(rgb[i] * 0xff);
-  border_color = stream.str();
+  border_color = html_color(rgb);
 #else
   // FIXME: find a way to determine link color for 0.5.9 <= poppler < 0.7.0
   if (this->link_border_colors.size())
