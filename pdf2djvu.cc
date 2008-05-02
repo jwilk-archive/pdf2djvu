@@ -145,7 +145,6 @@ class MutedRenderer: public pdf::Renderer
 private:
   std::vector<std::string> texts;
   std::vector<sexpr::Ref> annotations;
-  std::map<int, int> &page_map;
   const PageFiles &page_files;
 public:
 
@@ -242,7 +241,7 @@ public:
         return;
       }
       std::ostringstream strstream;
-      strstream << "#" << this->page_files.get_file_name(this->page_map[page]);
+      strstream << "#" << this->page_files.get_file_name(page);
       uri = strstream.str();
       break;
     }
@@ -312,8 +311,8 @@ public:
   }
   void eoFill(pdf::gfx::State *state) { }
 
-  MutedRenderer(pdf::splash::Color &paper_color, std::map<int, int> &page_map, const PageFiles &page_files) 
-  : Renderer(paper_color), page_map(page_map), page_files(page_files)
+  MutedRenderer(pdf::splash::Color &paper_color, const PageFiles &page_files) 
+  : Renderer(paper_color), page_files(page_files)
   { }
 
   const std::vector<sexpr::Ref> &get_annotations() const
@@ -378,7 +377,7 @@ namespace pdf
 }
 
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
-  std::map<int, int> &page_map, const PageFiles &page_files)
+  const PageFiles &page_files)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   pdf::Object current, next;
@@ -412,10 +411,10 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
         page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), catalog);
       }
       sexpr::Ref expr = sexpr::nil;
-      expr = pdf_outline_to_djvu_outline(&current, catalog, page_map, page_files);
+      expr = pdf_outline_to_djvu_outline(&current, catalog, page_files);
       {
         std::ostringstream strstream;
-        strstream << "#" << page_files.get_file_name(page_map[page]);
+        strstream << "#" << page_files.get_file_name(page);
         sexpr::Ref pexpr = sexpr::string(strstream.str());
         expr = sexpr::cons(pexpr, expr);
       }
@@ -437,7 +436,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
 }
 
 static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream, 
-  std::map<int, int> &page_map, const PageFiles &page_files)
+  const PageFiles &page_files)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
   pdf::Catalog *catalog = doc->getCatalog();
@@ -445,7 +444,7 @@ static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream
   if (!outlines->isDict())
     return;
   static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
-  sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_map, page_files);
+  sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_files);
   expr = sexpr::cons(symbol_bookmarks, expr);
   stream << expr;
 }
@@ -948,8 +947,8 @@ static int xmain(int argc, char * const argv[])
     opage++;
   }
   pdf::Renderer *out1 = new pdf::Renderer(paper_color);
-  MutedRenderer *outm = new MutedRenderer(paper_color, page_map, *page_files);
-  MutedRenderer *outs = new MutedRenderer(paper_color, page_map, *page_files);
+  MutedRenderer *outm = new MutedRenderer(paper_color, *page_files);
+  MutedRenderer *outs = new MutedRenderer(paper_color, *page_files);
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
   outs->startDoc(doc->getXRef());
@@ -1180,7 +1179,7 @@ static int xmain(int argc, char * const argv[])
       sed_file << "create-shared-ant" << std::endl;
     }
     sed_file << "set-outline" << std::endl;
-    pdf_outline_to_djvu_outline(doc, sed_file, page_map, *page_files);
+    pdf_outline_to_djvu_outline(doc, sed_file, *page_files);
     sed_file << std::endl << "." << std::endl;
     sed_file.close();
     djvm->set_outline(sed_file);
