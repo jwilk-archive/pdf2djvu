@@ -8,6 +8,8 @@
 #include "quantizer.hh"
 
 #include "debug.hh"
+#include "config.hh"
+#include "version.hh"
 
 #ifdef HAVE_GRAPHICS_MAGICK
 #include <Magick++.h>
@@ -105,6 +107,9 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 
 #ifdef HAVE_GRAPHICS_MAGICK
 
+GraphicsMagickQuantizer::GraphicsMagickQuantizer()
+{ }
+
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
@@ -112,10 +117,10 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
   Magick::Image image(Magick::Geometry(width, height), Magick::Color());
   image.type(Magick::TrueColorMatteType);
   image.modifyImage();
-  Pixmap bmp_fg = Pixmap(out_fg);
-  Pixmap bmp_bg = Pixmap(out_bg);
-  Pixmap::iterator p_fg = bmp_fg.begin();
-  Pixmap::iterator p_bg = bmp_bg.begin();
+  pdf::Pixmap bmp_fg(out_fg);
+  pdf::Pixmap bmp_bg(out_bg);
+  pdf::Pixmap::iterator p_fg = bmp_fg.begin();
+  pdf::Pixmap::iterator p_bg = bmp_bg.begin();
   for (int i = 0; i < 3; i++) 
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
