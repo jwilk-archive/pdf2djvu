@@ -1,3 +1,12 @@
+pdf2djvu (0.4.10) UNRELEASED; urgency=low
+
+  * Ensure that each character height is ≥ 1 pixel.
+  * Handle rotated PDF pages properly.
+  * Extract hyperlinks border colors (poppler ≥ 0.7 only).
+  * Make page references in the form "#<page-id>", istead of "#<page-no>".
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 02 May 2008 13:38:19 +0200
+
 pdf2djvu (0.4.9) unstable; urgency=low
 
   * Perform NFKC normalization on hidden text. 
