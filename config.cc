@@ -211,7 +211,7 @@ void config::read_config(int argc, char * const argv[])
     if (c < 0)
       break;
     if (c == 0)
-      throw Error("");
+      throw Error("Unable to parse command-line options");
     switch (c)
     {
     case OPT_DPI:

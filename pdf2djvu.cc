@@ -765,7 +765,7 @@ public:
           this->index_file << static_cast<char>((chunks_size >> (8 * i)) & 0xff);
       }
       else
-        throw Error();
+        throw Error("Unexpected output from djvused");
     }
   }
 
@@ -997,9 +997,9 @@ static int xmain(int argc, char * const argv[])
       debug(3) << "  - subsampled render" << std::endl;
       doc->display_page(outs, n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
-        throw Error();
+        throw Error("Unexpected subsampled bitmap width");
       if (sub_height != outs->getBitmapHeight())
-        throw Error();
+        throw Error("Unexpected subsampled bitmap height");
       pdf::Pixmap bmp(outs);
       debug(3) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
