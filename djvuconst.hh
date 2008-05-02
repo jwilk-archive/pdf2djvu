@@ -11,6 +11,10 @@ namespace djvu
    * csepdjvu requires 25 <= dpi <= 144 000
    * djvumake requires 72 <= dpi <= 144 000
    * cpaldjvu requires 25 <= dpi <=   1 200 (but we don't use it)
+   *
+   * See
+   * <http://sf.net/tracker/?func=detail&aid=1956093&group_id=32953&atid=406583>
+   * for details.
    */
   static const int MIN_DPI = 72;
   static const int MAX_DPI = 144000;
