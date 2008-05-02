@@ -1,4 +1,4 @@
-pdf2djvu (0.4.10) UNRELEASED; urgency=low
+pdf2djvu (0.4.10) unstable; urgency=low
 
   * Ensure that each character height is ≥ 1 pixel.
     Thanks to John Goerzen for the bug report.
@@ -8,7 +8,7 @@ pdf2djvu (0.4.10) UNRELEASED; urgency=low
   * Make page references in the form "#<page-id>", istead of "#<page-no>".
   * Fix a regression which disabled the --fg-colors option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 02 May 2008 14:26:49 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 02 May 2008 18:36:02 +0200
 
 pdf2djvu (0.4.9) unstable; urgency=low
 
