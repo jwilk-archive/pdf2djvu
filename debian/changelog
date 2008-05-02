@@ -5,7 +5,7 @@ pdf2djvu (0.4.10) unstable; urgency=low
   * Handle rotated PDF pages properly.
     Thanks to John Goerzen for bug report.
   * Extract hyperlinks border colors (poppler ≥ 0.7 only).
-  * Make page references in the form "#<page-id>", istead of "#<page-no>".
+  * Make page references in the form "#<page-id>", instead of "#<page-no>".
   * Fix a regression which disabled the --fg-colors option.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Fri, 02 May 2008 18:36:02 +0200
