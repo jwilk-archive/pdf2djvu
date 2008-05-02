@@ -140,30 +140,23 @@ void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi
 #endif
 }
 
-double pdf::Document::get_page_width(int n, bool crop)
+void pdf::Document::get_page_size(int n, bool crop, double &width, double &height)
 {
-  double width =
 #if POPPLER_VERSION < 500
-    this->getPageWidth(n);
+  width = this->getPageWidth(n);
+  height = this->getPageHeight(n);
 #else
-    crop ?
+  width = crop ?
       this->getPageCropWidth(n) :
       this->getPageMediaWidth(n);
-#endif
-  return width / 72.0;
-}
-
-double pdf::Document::get_page_height(int n, bool crop)
-{
-  double height =
-#if POPPLER_VERSION < 500
-    this->getPageHeight(n);
-#else
-    crop ?
+  height = crop ?
       this->getPageCropHeight(n) :
       this->getPageMediaHeight(n);
 #endif
-  return height / 72.0;
+  width /= 72.0;
+  height /= 72.0;
+  if ((this->getPageRotate(n) / 90) & 1)
+    std::swap(width, height);
 }
 
 

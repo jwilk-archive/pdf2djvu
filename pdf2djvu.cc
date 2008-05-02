@@ -966,8 +966,8 @@ static int xmain(int argc, char * const argv[])
     debug(2) << ":";
     debug(1) << std::endl;
     debug(3) << "  - muted render" << std::endl;
-    double page_width = doc->get_page_width(n, crop);
-    double page_height = doc->get_page_height(n, crop);
+    double page_width, page_height;
+    doc->get_page_size(n, crop, page_width, page_height);
     int dpi = calculate_dpi(page_width, page_height);
     doc->display_page(outm, n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();

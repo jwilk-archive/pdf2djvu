@@ -287,8 +287,7 @@ namespace pdf
   public:
     Document(const std::string &file_name);
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
-    double get_page_width(int n, bool crop);
-    double get_page_height(int n, bool crop);
+    void get_page_size(int n, bool crop, double &width, double &height);
   };
 
 
