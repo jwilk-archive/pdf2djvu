@@ -10,10 +10,11 @@ browser plugins, decoders, simple encoders, and utilities.
 Compatiblity
 ------------
 Don't use DjVuLibre 3.5.20-4, nor 3.5.20-5, nor Debian's 3.5.20-4. Those
-versions are broken.
+versions are broken_.
 
 .. _DjVuLibre: http://freshmeat.net/projects/djvulibre/
 .. _DjVu: http://djvu.org/
+.. _broken: http://sf.net/tracker/?func=detail&aid=1915337&group_id=32953&atid=406583
 
 
 poppler
