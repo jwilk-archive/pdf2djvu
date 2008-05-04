@@ -132,7 +132,7 @@
 			<listitem>
 				<para>
 					Specifies the desired resolution to <replaceable>resolution</replaceable> dots per inch. The default
-					is 300 dpi. The allowed range is: 72 ≤ <replaceable>resolution</replaceable> ≤ 144000.
+					is 300 dpi. The allowed range is: 72 ≤ <replaceable>resolution</replaceable> ≤ 6000.
 				</para>
 			</listitem>
 		</varlistentry>
