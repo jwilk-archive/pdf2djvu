@@ -316,8 +316,6 @@ pdf::Object *pdf::dict_lookup(pdf::Dict *dict, const char *key, pdf::Object *obj
 }
 
 
-
-
 /* Unicode → UTF-8 conversion
  * ==========================
  */
