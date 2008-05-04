@@ -7,7 +7,6 @@
 
 #include "quantizer.hh"
 
-#include "debug.hh"
 #include "config.hh"
 #include "version.hh"
 
@@ -207,7 +206,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
 
 GraphicsMagickQuantizer::GraphicsMagickQuantizer()
 { 
-  throw Error("Advanced color quantization is not supported."); 
+  throw NotImplementedError();
 }
 
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,

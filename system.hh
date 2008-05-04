@@ -10,14 +10,18 @@
 
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
+
 #include <pstreams/pstream.h>
 
-#include "debug.hh"
-
-class OSError : public Error
+class OSError : public std::runtime_error
 {
+private:
+  static std::string __error_message__(const std::string &context);
 public:
-  explicit OSError(const std::string &context);
+  explicit OSError(const std::string &context) 
+  : std::runtime_error(__error_message__(context))
+  { };
 };
 
 class NoSuchFileOrDirectory : public OSError
@@ -39,6 +43,13 @@ private:
   redi::pstreams::argv_type argv;
   void call(std::ostream *my_stdout, bool quiet = false);
 public:
+  class CommandFailed : public std::runtime_error
+  {
+  public:
+    CommandFailed(const std::string &message) 
+    : std::runtime_error(message)
+    { }
+  };
   explicit Command(const std::string& command);
   Command &operator <<(const std::string& arg);
   Command &operator <<(int i);
@@ -114,10 +125,12 @@ public:
   ExistingFile(const Directory& directory, const std::string &name);
 };
 
-class IconvError : public Error
+class IconvError : public std::runtime_error
 {
 public:
-  IconvError() : Error("Unable to convert encodings") {} 
+  IconvError()
+  : std::runtime_error("Unable to convert encodings")
+  { } 
 };
 
 void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream);

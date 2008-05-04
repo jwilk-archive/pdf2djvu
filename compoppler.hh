@@ -11,6 +11,7 @@
 #include <string>
 #include <ostream>
 #include <vector>
+#include <stdexcept>
 
 #include <PDFDoc.h>
 #include <GfxState.h>
@@ -274,7 +275,14 @@ namespace pdf
   {
   public:
     Environment();
-    bool set_antialias(bool value);
+    void set_antialias(bool value);
+    class UnableToSetParameter : public std::runtime_error
+    {
+    public:
+      UnableToSetParameter(const std::string &message)
+      : std::runtime_error(message)
+      { }
+    };
   };
 
 
@@ -288,6 +296,13 @@ namespace pdf
     Document(const std::string &file_name);
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
     void get_page_size(int n, bool crop, double &width, double &height);
+    class LoadError : public std::runtime_error
+    {
+    public:
+      LoadError()
+      : std::runtime_error("Unable to load document")
+      { }
+    };
   };
 
 

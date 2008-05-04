@@ -6,21 +6,15 @@
  */
 
 #include "debug.hh"
-#include "config.hh"
 
 DevNull dev_null;
 
-std::ostream &debug(int n)
+std::ostream &debug(int n, int threshold)
 {
-  if (n <= config::verbose)
+  if (n <= threshold)
     return std::clog;
   else
     return dev_null;
-}
-
-std::ostream &operator<<(std::ostream &stream, const Error &error)
-{
-  return stream << error.message;
 }
 
 // vim:ts=2 sw=2 et

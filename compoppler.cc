@@ -36,16 +36,21 @@ pdf::Environment::Environment()
 #endif
 }
 
-bool pdf::Environment::set_antialias(bool value)
+void pdf::Environment::set_antialias(bool value)
 {
 #if POPPLER_VERSION >= 701 && POPPLER_VERSION < 703
   // Don't allow poppler bug #15009 to appear.
-  // See <https://bugs.freedesktop.org/show_bug.cgi?id=15009> for details.
-  return false;
+  if (!value)
+    throw UnableToSetParameter(
+      "Refused to disable anti-aliasing. "
+      "See <https://bugs.freedesktop.org/show_bug.cgi?id=15009> for details."
+    );
 #endif
-  return globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no"));
+  if (!globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no")))
+    throw UnableToSetParameter("Unable to set antialias parameter");
 #if POPPLER_VERSION >= 509
-  return globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no"));
+  if (!globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no")))
+    throw UnableToSetParameter("Unable to set vector antialias parameter");
 #endif
 }
 
@@ -56,7 +61,10 @@ bool pdf::Environment::set_antialias(bool value)
 
 pdf::Document::Document(const std::string &file_name) 
 : ::PDFDoc(new pdf::String(file_name.c_str()), NULL, NULL)
-{ }
+{ 
+  if (!this->isOk())
+    throw LoadError();
+}
 
 static std::string html_color(const double rgb[])
 {

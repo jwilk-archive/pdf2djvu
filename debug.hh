@@ -6,11 +6,12 @@
  */
 
 #include <iostream>
+#include <stdexcept>
 
 #ifndef PDF2DJVU_DEBUG_H
 #define PDF2DJVU_DEBUG_H
 
-std::ostream &debug(int n);
+std::ostream &debug(int n, int threshold);
 
 class DevNull : public std::ostream
 {
@@ -20,15 +21,10 @@ public:
 
 extern DevNull dev_null;
 
-class Error
+static inline std::ostream &operator<<(std::ostream &stream, const std::runtime_error &error)
 {
-public:
-  Error() : message("Unknown error") {};
-  explicit Error(const std::string &message) : message(message) {};
-  friend std::ostream &operator<<(std::ostream &, const Error &);
-protected:
-  std::string message;
-};
+  return stream << error.what();
+}
 
 #endif
 

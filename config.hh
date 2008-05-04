@@ -12,9 +12,9 @@
 #include <sstream> 
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 #include "sexpr.hh"
-#include "debug.hh"
 
 namespace config
 {
@@ -51,10 +51,10 @@ namespace config
   extern char *file_name;
   extern std::string pageid_prefix;
 
-  class Error : public ::Error
+  class Error : public std::runtime_error
   {
   public:
-    explicit Error(const std::string &message) : ::Error(message) {};
+    explicit Error(const std::string &message) : std::runtime_error(message) {};
     virtual bool is_quiet() const
     {
       return false;
@@ -63,7 +63,7 @@ namespace config
     {
       return false;
     }
-    virtual ~Error() { /* just to shut up compilers */ }
+    virtual ~Error() throw() { /* just to shut up compilers */ }
   };
 
   class PagesParseError : public Error
@@ -78,6 +78,12 @@ namespace config
     PageSizeParseError() : Error("Unable to parse page size") {}
   };
 
+  class NoPagesSelected : public Error
+  {
+  public:
+    NoPagesSelected() : Error("No pages selected") { }
+  };
+
   class HyperlinksOptionsParseError : public Error
   {
   public:
@@ -86,13 +92,19 @@ namespace config
 
   class DpiOutsideRange : public Error
   {
-  public:
-    DpiOutsideRange(int dpi_from, int dpi_to) : Error("The specified resolution is outside the allowed range")
+  private:
+    static std::string __error_message__(int dpi_from, int dpi_to)
     {
       std::ostringstream stream;
-      stream << ": " << dpi_from << " .. " << dpi_to;
-      this->message += stream.str();
+      stream
+        << "The specified resolution is outside the allowed range: " 
+        << dpi_from << " .. " << dpi_to;
+      return stream.str();
     }
+  public:
+    DpiOutsideRange(int dpi_from, int dpi_to) 
+    : Error(__error_message__(dpi_from, dpi_to))
+    { }
   };
 
   class NeedHelp : public Error
@@ -119,11 +131,8 @@ namespace config
     }
   };
 
-  class NeedVersion : public ::Error
-  {
-  public:
-    NeedVersion() : Error("") {};
-  };
+  class NeedVersion
+  { };
 
   void read_config(int argc, char * const argv[]);
   void usage(const Error &error);

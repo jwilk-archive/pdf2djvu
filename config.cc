@@ -7,6 +7,7 @@
 
 #include <stdexcept>
 
+#include "debug.hh"
 #include "config.hh"
 #include "djvuconst.hh"
 #include "version.hh"
@@ -306,11 +307,12 @@ void config::read_config(int argc, char * const argv[])
 
 void config::usage(const config::Error &error)
 {
+  std::ostream &log = debug(0, config::verbose);
   if (error.is_already_printed())
-    debug(0) << std::endl;
+    log << std::endl;
   if (!error.is_quiet())
-    debug(0) << error << std::endl << std::endl;
-  debug(0) 
+    log << error << std::endl << std::endl;
+  log
     << "Usage: " << std::endl
     << "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>" << std::endl
     << "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>" << std::endl

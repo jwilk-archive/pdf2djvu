@@ -27,6 +27,11 @@
 #include "sexpr.hh"
 #include "quantizer.hh"
 
+static inline std::ostream &debug(int n)
+{
+  return debug(n, config::verbose);
+}
+
 static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
 {
   std::ostringstream strstream;
@@ -51,10 +56,10 @@ static std::string text_comment(int x, int y, int dx, int dy, int w, int h, cons
   return strstream.str();
 }
 
-class NoLinkDestination : public Error
+class NoLinkDestination : public std::runtime_error
 {
 public:
-  NoLinkDestination() : Error("Cannot find link destination") {}
+  NoLinkDestination() : std::runtime_error("Cannot find link destination") {}
 };
 
 static int get_page_for_LinkGoTo(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
@@ -336,10 +341,10 @@ public:
   }
 };
 
-class BookmarkError : public Error
+class BookmarkError : public std::runtime_error
 {
 public:
-  BookmarkError(const std::string &message) : Error(message) {}
+  BookmarkError(const std::string &message) : std::runtime_error(message) {}
 };
 
 class NoPageForBookmark : public BookmarkError
@@ -449,7 +454,13 @@ static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream
   stream << expr;
 }
 
-class InvalidDateFormat : public Error { };
+class InvalidDateFormat : public std::runtime_error
+{ 
+public:
+  InvalidDateFormat()
+  : std::runtime_error("Invalid date format")
+  { }
+};
 
 static int scan_date_digits(char * &input, int n)
 {
@@ -698,6 +709,13 @@ private:
   File &index_file;
   File *outline_sed_file;
   std::vector<std::string> components;
+  class UnexpectedDjvuSedOutput : public std::runtime_error
+  { 
+  public: 
+    UnexpectedDjvuSedOutput() 
+    : std::runtime_error("Unexpected output from djvused") 
+    { };
+  };
 public:
   explicit IndirectDjVm(File &index_file) 
   : index_file(index_file),
@@ -764,7 +782,7 @@ public:
           this->index_file << static_cast<char>((chunks_size >> (8 * i)) & 0xff);
       }
       else
-        throw Error("Unexpected output from djvused");
+        throw UnexpectedDjvuSedOutput();
     }
   }
 
@@ -817,6 +835,14 @@ static int calculate_dpi(double page_width, double page_height)
     return config::dpi;
 }
 
+class StdoutIsATerminal : public std::runtime_error
+{
+public:
+  StdoutIsATerminal() 
+  : std::runtime_error("I won't write DjVu data to a terminal.")
+  { }
+};
+
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
@@ -837,11 +863,10 @@ static int xmain(int argc, char * const argv[])
   }
 
   if (config::output_stdout && is_stream_a_tty(std::cout))
-    throw Error("I won't write DjVu data to a terminal.");
+    throw StdoutIsATerminal();
 
   pdf::Environment environment;
-  if (!environment.set_antialias(config::antialias))
-    throw Error("Unable to set antialias parameter");
+  environment.set_antialias(config::antialias);
 
   size_t pdf_size;
   { 
@@ -852,8 +877,6 @@ static int xmain(int argc, char * const argv[])
   }
 
   pdf::Document *doc = new pdf::Document(config::file_name);
-  if (!doc->isOk())
-    throw Error("Unable to load document");
 
   pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
@@ -996,9 +1019,9 @@ static int xmain(int argc, char * const argv[])
       debug(3) << "  - subsampled render" << std::endl;
       doc->display_page(outs, n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
-        throw Error("Unexpected subsampled bitmap width");
+        throw std::logic_error("Unexpected subsampled bitmap width");
       if (sub_height != outs->getBitmapHeight())
-        throw Error("Unexpected subsampled bitmap height");
+        throw std::logic_error("Unexpected subsampled bitmap height");
       pdf::Pixmap bmp(outs);
       debug(3) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
@@ -1138,7 +1161,7 @@ static int xmain(int argc, char * const argv[])
     }
   }
   if (page_counter == 0)
-    throw Error("No pages selected");
+    throw config::NoPagesSelected();
   {
     TemporaryFile dummy_page_file;
     TemporaryFile sed_file;
@@ -1229,15 +1252,15 @@ int main(int argc, char **argv)
   {
     xmain(argc, argv);
   }
-  catch (Error &ex)
-  {
-    std::cerr << ex << std::endl;
-    exit(1);
-  }
   catch (std::ios_base::failure &ex)
   {
     std::cerr << "I/O error (" << ex.what() << ")" << std::endl;
     exit(2);
+  }
+  catch (std::runtime_error &ex)
+  {
+    std::cerr << ex << std::endl;
+    exit(1);
   }
 }
 

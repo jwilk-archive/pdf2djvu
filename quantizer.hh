@@ -8,6 +8,8 @@
 #ifndef PDF2DJVU_QUANTIZER_H
 #define PDF2DJVU_QUANTIZER_H
 
+#include <stdexcept>
+
 #include "compoppler.hh"
 
 class Quantizer
@@ -40,6 +42,12 @@ public:
   GraphicsMagickQuantizer();
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
+  class NotImplementedError : public std::runtime_error
+  {
+    NotImplementedError()
+    : std::runtime_error("Advanced color quantization is not supported.")
+    { };
+  };
 };
 
 #endif

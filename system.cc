@@ -6,6 +6,7 @@
  */
 
 #include "system.hh"
+#include "debug.hh"
 
 #include <cerrno>
 #include <sstream>
@@ -29,12 +30,12 @@
  * =====================
  */
 
-OSError::OSError(const std::string &context) : Error(context)
+std::string OSError::__error_message__(const std::string &context)
 {
-  std::string error_message = strerror(errno);
-  if (this->message.length())
-    this->message += ": ";
-  message += error_message;
+  std::string message = strerror(errno);
+  if (context.length())
+    message = context + ": " + message;
+  return message;
 }
 
 void throw_os_error(const std::string &context)
@@ -108,7 +109,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     message << " ...\") failed";
     if (WIFEXITED(status))
       message << " with exit code " << WEXITSTATUS(status);
-    throw Error(message.str());
+    throw CommandFailed(message.str());
   }
 }
 
