@@ -5,8 +5,12 @@ then
   exit 1
 fi
 source_dir=$1
-include_dir=`pkg-config --cflags-only-I poppler-splash | sed -n -e 's/^-I\([^ ]\+\) *$/\1/p'`
-echo "$include_dir"
+include_dir=`pkg-config --cflags-only-I poppler-splash | sed -n -e '/^-I/ { s/^-I//; s/ .*//; p; q;}'`
+if [ "x$include_dir" = "x" ]
+then
+  echo "Unable to determine destination directory"
+  exit 1
+fi
 echo "I will copy header files from $source_dir into $include_dir"
 echo "Press enter to continue"
 read n
