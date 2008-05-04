@@ -197,7 +197,7 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
   border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
   border_color = html_color(rgb);
 #else
-  // FIXME: find a way to determine link color for 0.5.9 <= poppler < 0.7.0
+  // [TODO] find a way to determine link color for 0.5.9 <= poppler < 0.7.0
   if (this->link_border_colors.size())
   {
     border_color = this->link_border_colors.back();

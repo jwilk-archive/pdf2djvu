@@ -361,7 +361,7 @@ public:
 
 namespace pdf
 {
-  // FIXME: move the following functions to `compoppler`
+  // [TODO] move the following functions to `compoppler`
 
   static std::string string_as_utf8(pdf::String *string)
   {
