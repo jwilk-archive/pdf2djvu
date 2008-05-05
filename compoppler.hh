@@ -27,6 +27,10 @@
 namespace pdf 
 {
 
+/* type definitions — splash output device
+ * =======================================
+ */
+
   namespace splash
   {
     typedef ::Splash Splash;
@@ -42,8 +46,8 @@ namespace pdf
   #endif
   }
 
-/* type definitions
- * ================
+/* miscellaneous type definitions
+ * ==============================
  */
 
   typedef ::Stream Stream;
@@ -52,6 +56,10 @@ namespace pdf
   typedef ::Catalog Catalog;
   typedef ::GooString String;
 
+/* type definitions — annotations
+ * ==============================
+ */
+
   namespace ant
   {
     typedef ::Annot Annotation;
@@ -59,6 +67,10 @@ namespace pdf
     typedef ::AnnotColor Color;
 #endif
   }
+
+/* type definitions — hyperlinks
+ * =============================
+ */
 
   namespace link
   {
@@ -71,6 +83,10 @@ namespace pdf
     typedef ::LinkBorderStyle BorderStyle; 
 #endif
   }
+
+/* type definitions — rendering subsystem
+ * ======================================
+ */
 
   namespace gfx
   {
@@ -337,9 +353,9 @@ namespace pdf
  * =================
  */
 
-  Object *dict_lookup(Object &dict, const char *key, Object *object);
-  Object *dict_lookup(Object *dict, const char *key, Object *object);
-  Object *dict_lookup(Dict *dict, const char *key, Object *object);
+  pdf::Object *dict_lookup(pdf::Object &dict, const char *key, pdf::Object *object);
+  pdf::Object *dict_lookup(pdf::Object *dict, const char *key, pdf::Object *object);
+  pdf::Object *dict_lookup(pdf::Dict *dict, const char *key, pdf::Object *object);
 
 /* path-related functions
  * ======================
