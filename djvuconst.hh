@@ -7,18 +7,15 @@
 
 namespace djvu
 {
-  /* XXX
-   * csepdjvu requires 25 <= dpi <= 144000 (upper bound does not make sense)
-   * djvumake requires 72 <= dpi <= 144000 (upper bound does not make sense)
-   * cpaldjvu requires 25 <= dpi <=   1200 (but we don't use it)
-   * DjVuInfo::decode(ByteStream&) enforces 25 <= dpi <= 6000.
+  static const int MIN_DPI = 72;
+  static const int MAX_DPI = 6000;
+  /* ``djvumake`` used to require dpi ≥ 72.
+   * The library itself enforces dpi ≤ 6000.
    *
    * See
    * <http://sf.net/tracker/?func=detail&aid=1956093&group_id=32953&atid=406583>
    * for details.
    */
-  static const int MIN_DPI = 72;
-  static const int MAX_DPI = 6000;
 
   static const unsigned char VERSION = 1;
 
