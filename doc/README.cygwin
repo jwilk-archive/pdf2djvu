@@ -20,14 +20,9 @@ poppler
 -------
 Build and install *poppler* [1]_::
 
-    ./configure
+    ./configure --enable-xpdf-headers
     make
     make install
-    mkdir -p /usr/local/include/poppler/goo
-    mkdir -p /usr/local/include/poppler/splash
-    cp poppler/*.h /usr/local/include/poppler/
-    cp goo/*.h /usr/local/include/poppler/goo/
-    cp splash/*.h /usr/local/include/poppler/splash/
 
 .. [1] See ``README.build`` for list of co-operative poppler versions.
 
