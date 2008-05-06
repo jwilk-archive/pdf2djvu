@@ -44,6 +44,7 @@ public:
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
   class NotImplementedError : public std::runtime_error
   {
+  public:
     NotImplementedError()
     : std::runtime_error("Advanced color quantization is not supported.")
     { };
