@@ -318,7 +318,7 @@ void config::usage(const config::Error &error)
     << "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>" << std::endl
     << std::endl
     << "Options:" << std::endl
-    << " -i, --indirect=DIR"       << std::endl
+    << " -i, --indirect=FILE"      << std::endl
     << " -o, --output=FILE"        << std::endl
     << "     --pageid-prefix=NAME" << std::endl
     << " -d, --dpi=resolution"     << std::endl
