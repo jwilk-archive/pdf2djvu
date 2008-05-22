@@ -45,13 +45,11 @@ static std::string text_comment(int ox, int oy, int dx, int dy, int x, int y, in
     unistr++, len--;
   if (len == 0)
     return std::string();
+  stream << std::oct << std::setfill('0');
   for (; len > 0; len--, unistr++)
   {
     if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
-      stream 
-        << "\\" 
-        << std::oct << std::setfill('0') << std::setw(3)
-        << static_cast<unsigned int>(*unistr);
+      stream << "\\" << std::setw(3) << static_cast<unsigned int>(*unistr);
     else
       pdf::write_as_utf8(stream, *unistr);
   }
