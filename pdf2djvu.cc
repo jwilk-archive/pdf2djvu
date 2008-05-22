@@ -34,8 +34,8 @@ static inline std::ostream &debug(int n)
 
 static std::string text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
 {
-  std::ostringstream strstream;
-  strstream
+  std::ostringstream stream;
+  stream
     << "# T " 
     << ox << ":" << oy << " " 
     << dx << ":" << dy << " "
@@ -48,12 +48,15 @@ static std::string text_comment(int ox, int oy, int dx, int dy, int x, int y, in
   for (; len > 0; len--, unistr++)
   {
     if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
-      strstream << "\\" << std::oct << std::setfill('0') << std::setw(3) << static_cast<unsigned int>(*unistr);
+      stream 
+        << "\\" 
+        << std::oct << std::setfill('0') << std::setw(3)
+        << static_cast<unsigned int>(*unistr);
     else
-      pdf::write_as_utf8(strstream, *unistr);
+      pdf::write_as_utf8(stream, *unistr);
   }
-  strstream << ")" << std::endl;
-  return strstream.str();
+  stream << ")" << std::endl;
+  return stream.str();
 }
 
 class NoLinkDestination : public std::runtime_error
