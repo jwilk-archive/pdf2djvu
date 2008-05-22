@@ -205,7 +205,7 @@ public:
     pdf::splash::Font *font = this->getCurrentFont();
     pdf::splash::GlyphBitmap glyph;
     px = pox; py = poy;
-    if (pdf::get_glyph(this->getSplash(), font, x, y, code, &glyph))
+    if (pdf::get_glyph(this->getSplash(), font, pox, poy, code, &glyph))
     {
       px -= glyph.x;
       py -= glyph.y;
