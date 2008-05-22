@@ -200,7 +200,6 @@ public:
     state->transformDelta(dx, dy, &pdx, &pdy);
     int old_render = state->getRender();
     state->setRender(0x103);
-    this->getSplash()->setDebugMode(true);
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
     state->setRender(old_render);
     pdf::splash::Font *font = this->getCurrentFont();
