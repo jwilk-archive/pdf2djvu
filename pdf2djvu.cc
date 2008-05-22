@@ -32,14 +32,14 @@ static inline std::ostream &debug(int n)
   return debug(n, config::verbose);
 }
 
-static std::string text_comment(int x, int y, int dx, int dy, int w, int h, const Unicode *unistr, int len)
+static std::string text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
 {
   std::ostringstream strstream;
   strstream
     << "# T " 
-    <<  x << ":" <<  y << " " 
+    << ox << ":" << oy << " " 
     << dx << ":" << dy << " "
-    <<  w << "x" <<  h << std::showpos << x << (y - h) << " "
+    <<  w << "x" <<  h << std::showpos << x << y << " "
     << "(";
   while (len > 0 && *unistr == ' ')
     unistr++, len--;
@@ -191,29 +191,49 @@ public:
   void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
     CharCode code, int n_bytes, Unicode *unistr, int len)
   {
-    double px, py, pdx, pdy;
-    state->transform(x, y, &px, &py);
+    double pox, poy, pdx, pdy, px, py, pw, ph;
+    x -= origin_x; y -= origin_y;
+    state->transform(x, y, &pox, &poy);
     state->transformDelta(dx, dy, &pdx, &pdy);
     int old_render = state->getRender();
     state->setRender(0x103);
+    this->getSplash()->setDebugMode(true);
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
     state->setRender(old_render);
-    int font_size = static_cast<int>(state->getTransformedFontSize());
     pdf::splash::Font *font = this->getCurrentFont();
     pdf::splash::GlyphBitmap glyph;
-    if (pdf::get_glyph(this->getSplash(), font, code, &glyph))
+    px = pox; py = poy;
+    if (pdf::get_glyph(this->getSplash(), font, x, y, code, &glyph))
     {
-      font_size = glyph.h;
-      py += glyph.h - glyph.y;
+      px -= glyph.x;
+      py -= glyph.y;
+      pw = glyph.w;
+      ph = glyph.h;
     }
+    else
+    {
+      // Ideally, this should not happen. Some heuristics is required to
+      // determine character width/height.
+      pw = pdx; ph = pdy;
+      double font_size = state->getTransformedFontSize();
+      if (pw * 4.0 < font_size)
+        pw = font_size;
+      if (ph * 4.0 < font_size)
+        ph = font_size;
+      py -= ph;
+    }
+    pw = std::max(pw, 1.0);
+    ph = std::max(ph, 1.0);
     pdf::NFKC nfkc(unistr, len);
     texts.push_back(text_comment(
-      static_cast<int>(px),
-      static_cast<int>(py),
+      static_cast<int>(pox),
+      static_cast<int>(poy),
       static_cast<int>(pdx),
       static_cast<int>(pdy),
-      std::max(static_cast<int>(pdx), 1),
-      std::max(font_size, 1),
+      static_cast<int>(px),
+      static_cast<int>(py),
+      static_cast<int>(pw),
+      static_cast<int>(ph),
       nfkc,
       nfkc.length()
     ));

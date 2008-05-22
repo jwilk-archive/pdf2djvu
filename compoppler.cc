@@ -212,13 +212,13 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
  * =======================
  */
 
-bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, int code, splash::GlyphBitmap *bitmap)
+bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, double x, double y, int code, splash::GlyphBitmap *bitmap)
 {
   if (font == NULL)
     return false;
 #if POPPLER_VERSION >= 602
   splash::ClipResult clip_result;
-  if (!font->getGlyph(code, 0, 0, bitmap, 0, 0, splash->getClip(), &clip_result))
+  if (!font->getGlyph(code, 0, 0, bitmap, x, y, splash->getClip(), &clip_result))
     return false;
   return (clip_result != splashClipAllOutside);
 #else

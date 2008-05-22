@@ -347,7 +347,8 @@ namespace pdf
  * =======================
  */
 
-  bool get_glyph(pdf::splash::Splash *splash, pdf::splash::Font *font, int code, pdf::splash::GlyphBitmap *bitmap);
+  bool get_glyph(pdf::splash::Splash *splash, pdf::splash::Font *font, 
+    double x, double y, int code, pdf::splash::GlyphBitmap *bitmap);
 
 /* dictionary lookup
  * =================
