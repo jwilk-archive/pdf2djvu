@@ -212,7 +212,8 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
  * =======================
  */
 
-bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, double x, double y, int code, splash::GlyphBitmap *bitmap)
+bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, 
+  double x, double y, int code, splash::GlyphBitmap *bitmap)
 {
   if (font == NULL)
     return false;

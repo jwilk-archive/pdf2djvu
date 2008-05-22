@@ -348,7 +348,8 @@ namespace pdf
  */
 
   bool get_glyph(pdf::splash::Splash *splash, pdf::splash::Font *font, 
-    double x, double y, int code, pdf::splash::GlyphBitmap *bitmap);
+    double x, double y, // x, y are transformed (i.e. output device) coordinates
+    int code, pdf::splash::GlyphBitmap *bitmap);
 
 /* dictionary lookup
  * =================
