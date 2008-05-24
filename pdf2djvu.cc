@@ -163,7 +163,7 @@ public:
   void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::gfx::ImageColorMap *color_map, int *mask_colors, GBool inline_image)
   {
-    if (is_foreground_color_map(color_map))
+    if (is_foreground_color_map(color_map) || config::no_render)
       return;
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
@@ -171,7 +171,7 @@ public:
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
-    if (is_foreground_color_map(color_map))
+    if (is_foreground_color_map(color_map) || config::no_render)
       return;
     Renderer::drawMaskedImage(state, object, stream, width, height,
       color_map, mask_stream, mask_width, mask_height, mask_invert);
@@ -181,7 +181,7 @@ public:
     int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream,
     int mask_width, int mask_height,	pdf::gfx::ImageColorMap *mask_color_map)
   {
-    if (is_foreground_color_map(color_map))
+    if (is_foreground_color_map(color_map) || config::no_render)
       return;
     Renderer::drawSoftMaskedImage(state, object, stream, width, height,
       color_map, mask_stream, mask_width, mask_height, mask_color_map);
@@ -328,6 +328,8 @@ public:
   void stroke(pdf::gfx::State *state) { }
   void fill(pdf::gfx::State *state)
   { 
+    if (config::no_render)
+      return;
     pdf::splash::Path path;
     this->convert_path(state, path);
     double area = pdf::get_path_area(path);
