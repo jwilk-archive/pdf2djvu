@@ -32,31 +32,6 @@ static inline std::ostream &debug(int n)
   return debug(n, config::verbose);
 }
 
-static std::string text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
-{
-  std::ostringstream stream;
-  stream
-    << "# T " 
-    << ox << ":" << oy << " " 
-    << dx << ":" << dy << " "
-    <<  w << "x" <<  h << std::showpos << x << y << " "
-    << "(";
-  while (len > 0 && *unistr == ' ')
-    unistr++, len--;
-  if (len == 0)
-    return std::string();
-  stream << std::oct << std::setfill('0');
-  for (; len > 0; len--, unistr++)
-  {
-    if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
-      stream << "\\" << std::setw(3) << static_cast<unsigned int>(*unistr);
-    else
-      pdf::write_as_utf8(stream, *unistr);
-  }
-  stream << ")" << std::endl;
-  return stream.str();
-}
-
 class NoLinkDestination : public std::runtime_error
 {
 public:
@@ -149,9 +124,34 @@ public:
 class MutedRenderer: public pdf::Renderer
 {
 private:
-  std::vector<std::string> texts;
+  std::auto_ptr<std::ostringstream> text_comments;
   std::vector<sexpr::Ref> annotations;
   const PageFiles &page_files;
+protected:
+
+  void add_text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
+  {
+    while (len > 0 && *unistr == ' ')
+      unistr++, len--;
+    if (len == 0)
+      return;
+    *(this->text_comments)
+      << std::dec << std::noshowpos
+      << "# T " 
+      << ox << ":" << oy << " " 
+      << dx << ":" << dy << " "
+      <<  w << "x" <<  h << std::showpos << x << y << " "
+      << "("
+      << std::oct;
+    for (; len > 0; len--, unistr++)
+    {
+      if (*unistr < 0x20 || *unistr == ')' || *unistr == '\\')
+        *(this->text_comments) << "\\" << std::setw(3) << static_cast<unsigned int>(*unistr);
+      else
+        pdf::write_as_utf8(*(this->text_comments), *unistr);
+    }
+    *(this->text_comments) << ")" << std::endl;
+  }
 public:
 
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
@@ -225,7 +225,7 @@ public:
     pw = std::max(pw, 1.0);
     ph = std::max(ph, 1.0);
     pdf::NFKC nfkc(unistr, len);
-    texts.push_back(text_comment(
+    add_text_comment(
       static_cast<int>(pox),
       static_cast<int>(poy),
       static_cast<int>(pdx),
@@ -236,7 +236,7 @@ public:
       static_cast<int>(ph),
       nfkc,
       nfkc.length()
-    ));
+    );
   }
 
   void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
@@ -338,7 +338,9 @@ public:
 
   MutedRenderer(pdf::splash::Color &paper_color, const PageFiles &page_files) 
   : Renderer(paper_color), page_files(page_files)
-  { }
+  { 
+    this->clear_texts();
+  }
 
   const std::vector<sexpr::Ref> &get_annotations() const
   {
@@ -350,14 +352,15 @@ public:
     annotations.clear();
   }
 
-  const std::vector<std::string> &get_texts() const
+  const std::string get_texts() const
   {
-    return texts;
+    return this->text_comments->str();
   }
 
   void clear_texts()
   {
-    texts.clear();
+    this->text_comments.reset(new std::ostringstream);
+    *(this->text_comments) << std::setfill('0');
   }
 };
 
@@ -1069,14 +1072,9 @@ static int xmain(int argc, char * const argv[])
     if (config::text)
     {
       debug(3) << "  - text layer >> sep_file" << std::endl;
-      const std::vector<std::string> &texts = outm->get_texts();
-      for (std::vector<std::string>::const_iterator it = texts.begin(); it != texts.end(); it++)
-      {
-        if (it->size() == 0)
-          continue;
-        sep_file << *it;
-        has_text = true;
-      }
+      const std::string &texts = outm->get_texts();
+      sep_file << texts;
+      has_text = texts.length() > 0;
       outm->clear_texts();
     }
     sep_file.close();
