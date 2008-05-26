@@ -3,6 +3,8 @@ DJVU_FILES = $(PDF_FILES:.pdf=.djvu)
 SED_FILES = $(DJVU_FILES:.djvu=.djvused)
 DUMP_FILES = $(DJVU_FILES:.djvu=.djvudump)
 
+.DELETE_ON_ERROR:
+
 .PHONY: all
 all: $(DJVU_FILES) $(SED_FILES) $(DUMP_FILES)
 
@@ -10,8 +12,11 @@ all: $(DJVU_FILES) $(SED_FILES) $(DUMP_FILES)
 clean:
 	$(RM) *.djvu *.djvused *.djvudump
 
+../pdf2djvu:
+	$(MAKE) -C ..
+
 %.djvu: %.pdf ../pdf2djvu
-	../pdf2djvu -v $(<) > $(@)
+	../pdf2djvu $(shell cat $(<:.pdf=.options) 2>/dev/null) -v $(<) > $(@)
 
 %.djvused: %.djvu
 	djvused -e 'output-all; print-outline' $(<) > $(@)
