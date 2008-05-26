@@ -868,6 +868,20 @@ public:
   { }
 };
 
+static void calculate_subsampled_size(int width, int height, int ratio, int &sub_width, int &sub_height)
+{
+  // See <http://sf.net/tracker/?func=detail&aid=1972089&group_id=32953&atid=406583>
+  while (true)
+  {
+    sub_width = (width + ratio - 1) / ratio;
+    sub_height = (height + ratio - 1) / ratio;
+    if ((width + sub_width - 1) / sub_width != (height + sub_height - 1) / sub_height)
+      ratio--;
+    else
+      break;
+  }
+}
+
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
@@ -1037,8 +1051,8 @@ static int xmain(int argc, char * const argv[])
     bool nonwhite_background_color;
     if (has_background)
     {
-      int sub_width = (width + config::bg_subsample - 1) / config::bg_subsample;
-      int sub_height = (height + config::bg_subsample - 1) / config::bg_subsample;
+      int sub_width, sub_height;
+      calculate_subsampled_size(width, height, config::bg_subsample, sub_width, sub_height);
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
@@ -1062,8 +1076,8 @@ static int xmain(int argc, char * const argv[])
       {
         // Dummy background just to assure FGbz chunks.
         // It will be replaced later.
-        int sub_width = (width + 10) / 11;
-        int sub_height = (height + 10) / 11;
+        int sub_width, sub_height;
+        calculate_subsampled_size(width, height, 11, sub_width, sub_height);
         debug(3) << "  - dummy background pixmap >> sep_file" << std::endl;
         sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
         for (int x = 0; x < sub_width; x++)
