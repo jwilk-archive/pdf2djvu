@@ -238,8 +238,8 @@
 			<term><option>--hyperlinks=<replaceable>options</replaceable></option></term>
 			<listitem>
 				<para>
-					Specifies hyperlink display options. <replaceable>options</replaceable> should be comma separated list
-					of:
+					Specifies hyperlink display options. <replaceable>options</replaceable> must be a comma-separated
+					list of:
 					<variablelist>
 						<varlistentry>
 							<term>border-avis</term>
