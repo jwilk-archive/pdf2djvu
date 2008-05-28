@@ -15,6 +15,7 @@
 #include <getopt.h>
 
 config::text_t config::text = config::TEXT_WORDS;
+bool config::text_nfkc = true;
 config::format_t config::format = config::FORMAT_BUNDLED;
 std::string config::output;
 bool config::output_stdout = true;
@@ -173,6 +174,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_TEXT_LINES   = 0x102,
     OPT_TEXT_NONE    = 0x100,
     OPT_TEXT_WORDS   = 0x101,
+    OPT_TEXT_NO_NFKC = 0x111,
     OPT_VERBOSE      = 'v',
     OPT_VERSION      = 0x600
   };
@@ -194,6 +196,7 @@ void config::read_config(int argc, char * const argv[])
     { "no-outline",     0, 0, OPT_NO_OUTLINE },
     { "no-render",      0, 0, OPT_NO_RENDER },
     { "no-text",        0, 0, OPT_TEXT_NONE },
+    { "no-nfkc",        0, 0, OPT_TEXT_NO_NFKC },
     { "output",         1, 0, OPT_OUTPUT },
     { "page-size",      1, 0, OPT_PAGE_SIZE },
     { "pageid-prefix",  1, 0, OPT_PREFIX },
@@ -273,6 +276,9 @@ void config::read_config(int argc, char * const argv[])
     case OPT_TEXT_LINES:
       config::text = config::TEXT_LINES;
       break;
+    case OPT_TEXT_NO_NFKC:
+      config::text_nfkc = false;
+      break;
     case OPT_OUTPUT:
       config::format = config::FORMAT_BUNDLED;
       config::output = optarg;
@@ -339,6 +345,7 @@ void config::usage(const config::Error &error)
     << "     --no-text"            << std::endl
     << "     --words"              << std::endl
     << "     --lines"              << std::endl
+    << "     --no-nfkc"            << std::endl
     << " -p, --pages=..."          << std::endl
     << " -v, --verbose"            << std::endl
     << " -q, --quiet"              << std::endl

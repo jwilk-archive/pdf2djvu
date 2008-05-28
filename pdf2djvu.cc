@@ -190,7 +190,7 @@ public:
   GBool interpretType3Chars() { return gFalse; }
 
   void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
-    CharCode code, int n_bytes, Unicode *unistr, int len)
+    CharCode code, int n_bytes, Unicode *unistr, int length)
   {
     double pox, poy, pdx, pdy, px, py, pw, ph;
     x -= origin_x; y -= origin_y;
@@ -198,7 +198,7 @@ public:
     state->transformDelta(dx, dy, &pdx, &pdy);
     int old_render = state->getRender();
     state->setRender(0x103);
-    this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, len);
+    this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, length);
     state->setRender(old_render);
     pdf::splash::Font *font = this->getCurrentFont();
     pdf::splash::GlyphBitmap glyph;
@@ -224,7 +224,16 @@ public:
     }
     pw = std::max(pw, 1.0);
     ph = std::max(ph, 1.0);
-    pdf::NFKC nfkc(unistr, len);
+    std::auto_ptr<pdf::NFKC> nfkc;
+    const Unicode *const_unistr;
+    if (config::text_nfkc)
+    {
+      nfkc.reset(new pdf::NFKC(unistr, length));
+      const_unistr = *nfkc;
+      length = nfkc->length();
+    }
+    else
+      const_unistr = unistr;
     add_text_comment(
       static_cast<int>(pox),
       static_cast<int>(poy),
@@ -234,8 +243,7 @@ public:
       static_cast<int>(py),
       static_cast<int>(pw),
       static_cast<int>(ph),
-      nfkc,
-      nfkc.length()
+      const_unistr, length
     );
   }
 

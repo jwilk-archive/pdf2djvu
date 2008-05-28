@@ -295,6 +295,14 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--no-nfkc</option></term>
+			<listitem>
+				<para>
+					Don't NFKC-normalize the text.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--pages=<replaceable>pages</replaceable></option></term>
 			<listitem>
 				<para>

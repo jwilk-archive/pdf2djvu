@@ -31,6 +31,7 @@ namespace config
   };
   extern format_t format;
   extern text_t text;
+  extern bool text_nfkc;
   extern std::string output;
   extern bool output_stdout;
   extern int verbose;
