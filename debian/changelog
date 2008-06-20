@@ -1,10 +1,10 @@
-pdf2djvu (0.4.11) UNRELEASED; urgency=low
+pdf2djvu (0.4.11) unstable; urgency=low
 
   * Find text position more accurately (poppler ≥ 0.6 only).
     That should partially fix an issue with rotated text, too.
   * Work around an issue with subsampled image resolution.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 26 May 2008 19:03:49 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 20 Jun 2008 12:33:53 +0200
 
 pdf2djvu (0.4.10) unstable; urgency=low
 
