@@ -20,10 +20,10 @@ clean:
 
 %.djvused: %.djvu
 	djvused -e 'output-all; print-outline' $(<) > $(@)
-	diff $(@) $(@).orig || true
+	diff $(@) $(@).model || true
 
 %.djvudump: %.djvu
 	djvudump $(<) > $(@)
-	diff $(@) $(@).orig || true
+	diff $(@) $(@).model || true
 
 # vim:ts=4 sw=4 noet
