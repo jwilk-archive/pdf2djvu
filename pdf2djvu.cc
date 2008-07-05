@@ -483,6 +483,8 @@ static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream
     return;
   static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
   sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_files);
+  if (expr == sexpr::nil)
+    return;
   expr = sexpr::cons(symbol_bookmarks, expr);
   stream << expr;
 }
