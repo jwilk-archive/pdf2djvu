@@ -104,6 +104,11 @@ static GBool annotations_callback(pdf::ant::Annotation *annotation, void *user_d
   if (annotation->getType() != pdf::ant::Annotation::typeLink)
     return true;
   pdf::ant::Color *color = annotation->getColor();
+  if (color == NULL)
+  {
+    border_colors.push_back("");
+    return true;
+  }
   double *values = color->getValues();
   switch (color->getSpace())
   {
