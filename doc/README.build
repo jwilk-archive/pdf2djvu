@@ -79,6 +79,8 @@ Compatibility
 | 0.8.3           |          |         |      |
 +-----------------+          |         |      |
 | 0.8.4           |          |         |      |
++-----------------+          |         |      |
+| 0.8.5           |          |         |      |
 +-----------------+----------+---------+------+
 
 .. [0] officially supported
@@ -90,13 +92,14 @@ Compatibility
 
 Security warning
 ----------------
-Every upstream poppler version prior to 0.6.2 is affected by serious
-security bugs: CVE-2007-4352_, CVE-2007-5392_ and CVE-2007-5393_.  
-**You have been warned**.
+Every upstream poppler version prior to 0.8.5 is affected by at least
+one serious security bug: CVE-2007-4352_, CVE-2007-5392_, CVE-2007-5393_
+or CVE-2008-2950_. **You have been warned**.
 
 .. _CVE-2007-4352: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4352
 .. _CVE-2007-5392: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5392
 .. _CVE-2007-5393: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5393
+.. _CVE-2008-2950: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2950
 
 
 PStreams
