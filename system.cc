@@ -278,7 +278,7 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
 
 void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
 {
-  static char outbuf[1 << 10];
+  char outbuf[BUFSIZ];
   char *outbuf_ptr = outbuf;
   size_t outbuf_len = sizeof outbuf;
   iconv_t cd = iconv_open("UTF-8", "UTF-16");
