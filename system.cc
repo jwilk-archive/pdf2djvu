@@ -51,6 +51,18 @@ void throw_os_error(const std::string &context)
   }
 }
 
+void warn_os_error(const std::string &context)
+{
+  try
+  {
+    throw_os_error(context); 
+  }
+  catch (const OSError &e)
+  {
+    std::cerr << "[Warning] " << e.what() << std::endl;
+  }
+}
+
 
 /* class Command
  * =============
@@ -160,7 +172,7 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
 TemporaryDirectory::~TemporaryDirectory()
 {
   if (rmdir(this->name.c_str()) == -1)
-    throw_os_error(this->name);
+    warn_os_error(this->name);
 }
 
 
@@ -247,7 +259,7 @@ TemporaryFile::~TemporaryFile()
   if (this->is_open())
     this->close();
   if (unlink(this->name.c_str()) == -1)
-    throw_os_error(this->name);
+    warn_os_error(this->name);
 }
 
 
