@@ -117,7 +117,7 @@ public:
 
   virtual ~PageFiles()
   {
-    clean_files();
+    this->clean_files();
   }
 };
 
