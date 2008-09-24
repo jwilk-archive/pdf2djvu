@@ -91,17 +91,33 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
 void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
-  stream << "R6 " << width << " " << height << " ";
-  output_web_palette(stream);
-  for (int i = 0; i < 3; i++)
-    background_color[i] = 0xff;
-  int item = (0xfff << 20) + width;
-  for (int y = 0; y < height; y++)
-  for (int i = 0; i < 4; i++)
+  static const int MAX_RUN_LENGTH = 0x3fff;
+  stream << "R4 " << width << " " << height << " ";
+  int width_remainder = width % MAX_RUN_LENGTH;
+  if (width_remainder == 0)
+    width_remainder = MAX_RUN_LENGTH;
+  char run[2];
+  int run_length = 1;
+  std::string line;
+  if (width_remainder < 192)
+    run[0] = static_cast<char>(width_remainder);
+  else
   {
-    char c = item >> ((3 - i) * 8);
-    stream.write(&c, 1);
+    run[0] = static_cast<char>(0xc0 + (width_remainder >> 8));
+    run[1] = static_cast<char>(width_remainder & 0xff);
+    run_length++;
   }
+  for (int y = 0; y < height; y++)
+  {
+    int remaining_width = width;
+    while (remaining_width > 0x3fff)
+    {
+      stream.write("\xff\xff", 0);
+      remaining_width -= 0x3fff;
+    }
+    stream.write(run, run_length);
+  }
+  background_color[0] = background_color[1] = background_color[2] = 0xff;
 }
 
 #ifdef HAVE_GRAPHICS_MAGICK
