@@ -353,14 +353,23 @@ namespace pdf
 {
   std::ostream &operator<<(std::ostream &stream, const pdf::Pixmap &pixmap)
   {
-    int height = pixmap.height;
-    int width = pixmap.width;
-    size_t row_size = pixmap.row_size;
     const uint8_t *row_ptr = pixmap.raw_data;
-    for (int y = 0; y < height; y++)
+    if (pixmap.monochrome)
     {
-      stream.write(reinterpret_cast<const char*>(row_ptr), width * 3);
-      row_ptr += row_size;
+      for (int y = 0; y < pixmap.height; y++)
+      {
+        for (int x = 0; x < pixmap.byte_width; x++)
+          stream.put(static_cast<char>(row_ptr[x] ^ 0xff));
+        row_ptr += pixmap.row_size;
+      }
+    }
+    else
+    {
+      for (int y = 0; y < pixmap.height; y++)
+      {
+        stream.write(reinterpret_cast<const char*>(row_ptr), pixmap.byte_width);
+        row_ptr += pixmap.row_size;
+      }
     }
     return stream;
   }

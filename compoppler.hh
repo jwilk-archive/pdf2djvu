@@ -110,11 +110,11 @@ namespace pdf
   class Renderer : public pdf::splash::OutputDevice
   {
   public:
-    Renderer(pdf::splash::Color &paper_color) :
+    Renderer(pdf::splash::Color &paper_color, bool monochrome = false) :
 #if POPPLER_VERSION < 500
-      pdf::splash::OutputDevice(splashModeRGB8Packed, gFalse, paper_color)
+      pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8Packed, gFalse, paper_color)
 #else
-      pdf::splash::OutputDevice(splashModeRGB8, 4, gFalse, paper_color)
+      pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, gFalse, paper_color)
 #endif
     { }
 
@@ -204,6 +204,8 @@ namespace pdf
     const uint8_t *raw_data;
     pdf::splash::Bitmap *bmp;
     size_t row_size;
+    size_t byte_width;
+    bool monochrome;
     int width, height;
   public:
     typedef PixmapIterator iterator;
@@ -229,6 +231,31 @@ namespace pdf
       width = bmp->getWidth();
       height = bmp->getHeight();
       row_size = bmp->getRowSize();
+      this->monochrome = false;
+      switch (bmp->getMode())
+      {
+      case splashModeMono1:
+        this->byte_width = (width + 7) / 8;
+        this->monochrome = true;
+        break;
+      case splashModeMono8:
+        this->byte_width = width;
+        break;
+      case splashModeRGB8:
+#if POPPLER_VERSION >= 500
+      case splashModeBGR8:
+#else
+      case splashModeRGB8Packed:
+      case splashModeBGR8Packed:
+#endif
+        this->byte_width = width * 3;
+        break;
+#if POPPLER_VERSION >= 500
+      case splashModeXBGR8:
+        this->byte_width = width * 4;
+        break;
+#endif
+      }
     }
 
     ~Pixmap()

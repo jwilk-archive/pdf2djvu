@@ -40,6 +40,7 @@ namespace config
   extern bool use_media_box;
   extern int bg_subsample;
   extern int fg_colors;
+  extern bool monochrome;
   extern bool antialias;
   extern std::vector<sexpr::Ref> hyperlinks_options;
   extern bool hyperlinks_user_border_color;

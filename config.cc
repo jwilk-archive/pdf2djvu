@@ -32,6 +32,7 @@ bool config::extract_hyperlinks = true;
 bool config::extract_metadata = true;
 bool config::extract_outline = true;
 bool config::no_render = false;
+bool config::monochrome = false;
 char *config::bg_slices = NULL;
 std::vector< std::pair<int, int> > config::pages;
 char *config::file_name = NULL;
@@ -162,6 +163,7 @@ void config::read_config(int argc, char * const argv[])
     OPT_HYPERLINKS   = 0x501,
     OPT_INDIRECT     = 'i',
     OPT_MEDIA_BOX    = 0x701,
+    OPT_MONOCHROME   = 0x203,
     OPT_NO_HLINKS    = 0x401,
     OPT_NO_METADATA  = 0x402,
     OPT_NO_OUTLINE   = 0x403,
@@ -191,6 +193,7 @@ void config::read_config(int argc, char * const argv[])
     { "indirect",       0, 0, OPT_INDIRECT },
     { "lines",          0, 0, OPT_TEXT_LINES },
     { "media-box",      0, 0, OPT_MEDIA_BOX },
+    { "monochrome",     0, 0, OPT_MONOCHROME },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
     { "no-metadata",    0, 0, OPT_NO_METADATA },
     { "no-outline",     0, 0, OPT_NO_OUTLINE },
@@ -245,6 +248,9 @@ void config::read_config(int argc, char * const argv[])
       break;
     case OPT_FG_COLORS:
       config::fg_colors = parse_fg_colors(optarg);
+      break;
+    case OPT_MONOCHROME:
+      config::monochrome = true;
       break;
     case OPT_PAGES:
       parse_pages(optarg, config::pages);
@@ -337,6 +343,7 @@ void config::usage(const config::Error &error)
     << "     --fg-colors=web"      << std::endl
     << "     --fg-colors=N"        << std::endl
 #endif
+    << "     --monochrome"         << std::endl
     << "     --anti-alias"         << std::endl
     << "     --no-metadata"        << std::endl
     << "     --no-outline"         << std::endl

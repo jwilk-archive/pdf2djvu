@@ -346,8 +346,8 @@ public:
   }
   void eoFill(pdf::gfx::State *state) { }
 
-  MutedRenderer(pdf::splash::Color &paper_color, const PageFiles &page_files) 
-  : Renderer(paper_color), page_files(page_files)
+  MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const PageFiles &page_files) 
+  : Renderer(paper_color, monochrome), page_files(page_files)
   { 
     this->clear_texts();
   }
@@ -939,7 +939,7 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<PageFiles> page_files;
   std::auto_ptr<Quantizer> quantizer;
-  if (config::no_render)
+  if (config::no_render || config::monochrome)
     quantizer.reset(new DummyQuantizer());
   else if (config::fg_colors > 0)
     quantizer.reset(new GraphicsMagickQuantizer());
@@ -1018,12 +1018,19 @@ static int xmain(int argc, char * const argv[])
     page_map[ipage] = opage;
     opage++;
   }
-  pdf::Renderer *out1 = new pdf::Renderer(paper_color);
-  MutedRenderer *outm = new MutedRenderer(paper_color, *page_files);
-  MutedRenderer *outs = new MutedRenderer(paper_color, *page_files);
+
+  pdf::Renderer *out1 = NULL;
+  MutedRenderer *outm = NULL, *outs = NULL;
+  
+  out1 = new pdf::Renderer(paper_color, config::monochrome);
+  outm = new MutedRenderer(paper_color, config::monochrome, *page_files);
   out1->startDoc(doc->getXRef());
   outm->startDoc(doc->getXRef());
-  outs->startDoc(doc->getXRef());
+  if (!config::monochrome)
+  {
+    outs = new MutedRenderer(paper_color, config::monochrome, *page_files);
+    outs->startDoc(doc->getXRef());
+  }
   debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
   bool crop = !config::use_media_box;
   for (
@@ -1128,7 +1135,19 @@ static int xmain(int argc, char * const argv[])
       djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
       djvuextract(config::verbose < 3);
     }
-    if (nonwhite_background_color)
+    if (config::monochrome)
+    {
+      TemporaryFile pbm_file;
+      debug(3) << "  - !cjb2" << std::endl;
+      Command cjb2(DJVULIBRE_BIN_PATH "/cjb2");
+      cjb2 << pbm_file << sjbz_file;
+      pbm_file << "P4 " << width << " " << height << std::endl;
+      pdf::Pixmap bmp(out1);
+      pbm_file << bmp;
+      pbm_file.close();
+      cjb2();
+    }
+    else if (nonwhite_background_color)
     {
       TemporaryFile c44_file;
       c44_file.close();
