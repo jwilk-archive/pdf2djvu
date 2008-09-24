@@ -12,6 +12,7 @@
 #include <ostream>
 #include <vector>
 #include <stdexcept>
+#include <stdint.h>
 
 #include <PDFDoc.h>
 #include <GfxState.h>
