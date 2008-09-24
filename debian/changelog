@@ -1,3 +1,9 @@
+pdf2djvu (0.4.13) UNRELEASED; urgency=low
+
+  * Add --monochrome, --lossy, --loss-level options.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Wed, 24 Sep 2008 23:37:40 +0200
+
 pdf2djvu (0.4.12) unstable; urgency=low
 
   * Convert document outline if it is existent but empty. 
@@ -20,7 +26,7 @@ pdf2djvu (0.4.10) unstable; urgency=low
   * Ensure that each character height is ≥ 1 pixel.
     Thanks to John Goerzen for the bug report.
   * Handle rotated PDF pages properly.
-    Thanks to John Goerzen for bug report.
+    Thanks to John Goerzen for the bug report.
   * Extract hyperlinks border colors (poppler ≥ 0.7 only).
   * Make page references in the form "#<page-id>", instead of "#<page-no>".
   * Fix a regression which disabled the --fg-colors option.
