@@ -41,6 +41,7 @@ namespace config
   extern int bg_subsample;
   extern int fg_colors;
   extern bool monochrome;
+  extern int loss_level;
   extern bool antialias;
   extern std::vector<sexpr::Ref> hyperlinks_options;
   extern bool hyperlinks_user_border_color;

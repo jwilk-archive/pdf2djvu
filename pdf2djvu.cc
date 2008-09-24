@@ -1140,7 +1140,7 @@ static int xmain(int argc, char * const argv[])
       TemporaryFile pbm_file;
       debug(3) << "  - !cjb2" << std::endl;
       Command cjb2(DJVULIBRE_BIN_PATH "/cjb2");
-      cjb2 << pbm_file << sjbz_file;
+      cjb2 << "-losslevel" << config::loss_level << pbm_file << sjbz_file;
       pbm_file << "P4 " << width << " " << height << std::endl;
       pdf::Pixmap bmp(out1);
       pbm_file << bmp;

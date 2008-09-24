@@ -33,6 +33,7 @@ bool config::extract_metadata = true;
 bool config::extract_outline = true;
 bool config::no_render = false;
 bool config::monochrome = false;
+int config::loss_level = 0;
 char *config::bg_slices = NULL;
 std::vector< std::pair<int, int> > config::pages;
 char *config::file_name = NULL;
@@ -162,6 +163,8 @@ void config::read_config(int argc, char * const argv[])
     OPT_HELP         = 'h',
     OPT_HYPERLINKS   = 0x501,
     OPT_INDIRECT     = 'i',
+    OPT_LOSS_100     = 0x251,
+    OPT_LOSS_ANY     = 0x252,
     OPT_MEDIA_BOX    = 0x701,
     OPT_MONOCHROME   = 0x203,
     OPT_NO_HLINKS    = 0x401,
@@ -192,6 +195,9 @@ void config::read_config(int argc, char * const argv[])
     { "hyperlinks",     1, 0, OPT_HYPERLINKS },
     { "indirect",       0, 0, OPT_INDIRECT },
     { "lines",          0, 0, OPT_TEXT_LINES },
+    { "loss-level",     1, 0, OPT_LOSS_ANY },
+    { "losslevel",      1, 0, OPT_LOSS_ANY },
+    { "lossy",          0, 0, OPT_LOSS_100 },
     { "media-box",      0, 0, OPT_MEDIA_BOX },
     { "monochrome",     0, 0, OPT_MONOCHROME },
     { "no-hyperlinks",  0, 0, OPT_NO_HLINKS },
@@ -251,6 +257,16 @@ void config::read_config(int argc, char * const argv[])
       break;
     case OPT_MONOCHROME:
       config::monochrome = true;
+      break;
+    case OPT_LOSS_100:
+      config::loss_level = 100;
+      break;
+    case OPT_LOSS_ANY:
+      config::loss_level = atoi(optarg);
+      if (config::loss_level < 0)
+        config::loss_level = 0;
+      else if (config::loss_level > 200)
+        config::loss_level = 200;
       break;
     case OPT_PAGES:
       parse_pages(optarg, config::pages);
