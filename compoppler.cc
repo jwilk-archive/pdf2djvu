@@ -358,7 +358,7 @@ namespace pdf
     {
       for (int y = 0; y < pixmap.height; y++)
       {
-        for (int x = 0; x < pixmap.byte_width; x++)
+        for (size_t x = 0; x < pixmap.byte_width; x++)
           stream.put(static_cast<char>(row_ptr[x] ^ 0xff));
         row_ptr += pixmap.row_size;
       }
