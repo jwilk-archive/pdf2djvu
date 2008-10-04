@@ -360,6 +360,8 @@ void config::usage(const config::Error &error)
     << "     --fg-colors=N"        << std::endl
 #endif
     << "     --monochrome"         << std::endl
+    << "     --loss-level=N"       << std::endl
+    << "     --lossy"              << std::endl
     << "     --anti-alias"         << std::endl
     << "     --no-metadata"        << std::endl
     << "     --no-outline"         << std::endl
