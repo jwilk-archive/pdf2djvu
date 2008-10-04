@@ -205,6 +205,41 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--monochrome</option></term>
+			<listitem>
+				<para>
+					Render pages as monochrome bitmaps. With this option,
+					<option>--bg-<replaceable>…</replaceable></option> and
+					<option>--fg-<replaceable>…</replaceable></option>
+					options are not respected.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--loss-level=N</option></term>
+			<listitem>
+				<para>
+					Specify the aggressiveness of the lossy compression. The default is 0 (lossless).
+					Valid values are integers between 0 and 200, inclusive. This option is similar to
+					the <option>-losslevel</option> option of <command>cjb2</command>; consult the 
+					<citerefentry>
+						<refentrytitle>cjb2</refentrytitle>
+						<manvolnum>1</manvolnum>
+					</citerefentry>
+					manual page for details. 
+					This option is respected only along with the <option>--monochrome</option> option.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--lossy</option></term>
+			<listitem>
+				<para>
+					Synonym for <option>--loss-level=100</option>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--anti-alias</option></term>
 			<listitem>
 				<para>
