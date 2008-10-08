@@ -263,8 +263,8 @@ TemporaryFile::~TemporaryFile()
 }
 
 
-/* class ExistingFile : std::fstream
- * =================================
+/* class ExistingFile : File
+ * =========================
  */
 
 ExistingFile::ExistingFile(const std::string &name) 
