@@ -1205,7 +1205,7 @@ static int xmain(int argc, char * const argv[])
       if ((has_foreground || has_background || nonwhite_background_color) && (fgbz_file.size() || bg44_file.size()))
         djvumake
           << std::string("FGbz=") + std::string(fgbz_file)
-          << std::string("BG44=") + std::string(bg44_file);
+          << std::string("BG44=") + std::string(bg44_file) + std::string(":99");
       djvumake();
     }
     {
