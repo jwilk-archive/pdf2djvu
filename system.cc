@@ -11,6 +11,8 @@
 #include <cerrno>
 #include <sstream>
 #include <stdexcept>
+#include <cstring>
+#include <cstdlib>
 
 #include <fcntl.h>
 #include <dirent.h>
@@ -18,12 +20,31 @@
 #include <sys/types.h>
 #include <iconv.h>
 
+#ifndef WIFEXITED
+#define WIFEXITED(x) 0
+#endif
+
+#ifndef WEXITSTATUS
+#define WEXITSTATUS(x) (-1)
+#endif
+
+#ifdef WIN32
+
+#include "windows.h"
+
+#endif
 
 /* constants
  * =========
  */
 
+#ifndef WIN32
 #define TEMPORARY_PATH_TEMPLATE "/tmp/pdf2djvu.XXXXXX"
+#define PATH_SEPARATOR "/"
+#else
+#define TEMPORARY_PATH_TEMPLATE "pdf2djvu"
+#define PATH_SEPARATOR "\\"
+#endif
 
 
 /* class OSError : Error
@@ -96,8 +117,91 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
+static const std::string argv_to_command_line(const std::vector<std::string> &argv)
+/* Translate a sequence of arguments into a command line string. */
+{
+  std::ostringstream buffer;
+#ifdef WIN32
+  /* Using the same rules as the MS C runtime:
+   *
+   * 1) Arguments are delimited by white space, which is either a space or a
+   *    tab.
+   *
+   * 2) A string surrounded by double quotation marks is interpreted as a
+   *    single argument, regardless of white space contained within. A
+   *    quoted string can be embedded in an argument.
+   *
+   * 3) A double quotation mark preceded by a backslash is interpreted as a
+   *    literal double quotation mark.
+   *
+   * 4) Backslashes are interpreted literally, unless they immediately
+   *    precede a double quotation mark.
+   *
+   * 5) If backslashes immediately precede a double quotation mark, every
+   *    pair of backslashes is interpreted as a literal backslash.  If the
+   *    number of backslashes is odd, the last backslash escapes the next
+   *    double quotation mark as described in rule 3.
+   *
+   * See <http://msdn.microsoft.com/library/en-us/vccelng/htm/progs_12.asp>.
+   */
+  for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
+  {
+    int backslashed = 0;
+    bool need_quote = parg->find_first_of(" \t") != std::string::npos;
+    if (need_quote)
+      buffer << '"';
+    for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++)
+    {
+      if (*pch == '\\')
+      {
+        backslashed++;
+      }
+      else if (*pch == '"')
+      {
+        for (int i = 0; i < backslashed; i++)
+          buffer << "\\\\";
+        backslashed = 0;
+        buffer << "\\\"";
+      }
+      else
+      {
+        for (int i = 0; i < backslashed; i++)
+          buffer << '\\';
+        backslashed = 0;
+        buffer << *pch;
+      }
+    }
+    for (int i = 0; i < backslashed; i++)
+      buffer << '\\';
+    if (need_quote)
+      buffer << '"';
+    buffer << ' ';
+  }
+#else
+  /* Assume POSIX shell. */
+  for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
+  {
+    buffer << "'";
+    if (parg->find_first_of("\\\'") == std::string::npos) 
+      buffer << *parg;
+    else
+      for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++)
+      {
+        if (*pch == '\\' || *pch == '\'')
+          buffer << "'\"\\" << *pch << "\"'";
+        else
+          buffer << *pch;
+      }
+    buffer << "' ";
+  }
+#endif
+  return buffer.str();
+}
+
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
+  int status;
+#ifdef PSTREAMS
   redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
   if (!xsystem.rdbuf()->error())
   {
@@ -112,7 +216,34 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     }
     xsystem.close();
   }
-  int status = xsystem.rdbuf()->status();
+  status = xsystem.rdbuf()->status();
+#else
+  FILE *file;
+  {
+    const std::string &command_line = argv_to_command_line(this->argv);
+    file = ::popen(command_line.c_str(), "r");
+  }
+  if (file != NULL)
+  {
+    char buffer[BUFSIZ];
+    size_t nbytes;
+    status = 0;
+    while (!feof(file))
+    {
+      nbytes = fread(buffer, 1, sizeof buffer, file);
+      if (ferror(file))
+      {
+        status = -1;
+        break;
+      }
+      if (my_stdout != NULL)
+        my_stdout->write(buffer, nbytes);
+    }
+    status = status || pclose(file);
+  }
+  else
+    status = -1;
+#endif
   if (status != 0)
   {
     std::ostringstream message;
@@ -163,9 +294,22 @@ void Directory::close(void)
 
 TemporaryDirectory::TemporaryDirectory() : Directory()
 {
+#ifndef WIN32
   char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
   if (mkdtemp(path_buffer) == NULL)
     throw_os_error(path_buffer);
+#else
+  char base_path_buffer[PATH_MAX];
+  char path_buffer[PATH_MAX];
+  if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
+    throw_os_error("GetTempPath");
+  if (GetTempFileNameA(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
+    throw_os_error("GetTempFileNameA");
+  if (unlink(path_buffer) < 0)
+    throw_os_error(path_buffer);
+  if (mkdir(path_buffer) < 0)
+    throw_os_error(path_buffer);
+#endif
   this->name += path_buffer;
 }
 
@@ -184,11 +328,11 @@ void File::open(const char* path)
 {
   this->exceptions(std::ifstream::failbit | std::ifstream::badbit);
   if (path == NULL)
-    this->std::fstream::open(this->name.c_str(), std::fstream::in | std::fstream::out);
+    this->std::fstream::open(this->name.c_str(), std::fstream::in | std::fstream::out | std::fstream::binary);
   else
   {
     this->name = path;
-    this->std::fstream::open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
+    this->std::fstream::open(path, std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
   }
   this->exceptions(std::ifstream::badbit);
 }
@@ -201,7 +345,7 @@ File::File(const std::string &name)
 File::File(const Directory& directory, const std::string &name)
 {
   std::ostringstream stream;
-  stream << directory << "/" << name;
+  stream << directory << PATH_SEPARATOR << name;
   this->open(stream.str().c_str());
 }
 
@@ -240,8 +384,18 @@ std::ostream &operator<<(std::ostream &out, const File &file)
 
 void TemporaryFile::construct()
 {
+#ifndef WIN32
   char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
   int fd = mkstemp(path_buffer);
+#else
+  char base_path_buffer[PATH_MAX];
+  char path_buffer[PATH_MAX];
+  if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
+    throw_os_error("GetTempPath");
+  if (GetTempFileNameA(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
+    throw_os_error("GetTempFileNameA");
+  int fd = ::open(path_buffer, O_RDWR | O_BINARY);
+#endif
   if (fd == -1)
     throw_os_error(path_buffer);
   if (::close(fd) == -1)

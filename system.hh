@@ -12,7 +12,16 @@
 #include <fstream>
 #include <stdexcept>
 
+#ifndef WIN32
+#define HAVE_PSTREAMS
+#endif
+
+#ifdef HAVE_PSTREAMS
 #include <pstreams/pstream.h>
+#else
+#include <vector>
+#endif
+
 
 class OSError : public std::runtime_error
 {
@@ -40,7 +49,11 @@ class Command
 {
 private:
   std::string command;
+#ifdef HAVE_PSTREAMS  
   redi::pstreams::argv_type argv;
+#else
+  std::vector<std::string> argv;
+#endif
   void call(std::ostream *my_stdout, bool quiet = false);
 public:
   class CommandFailed : public std::runtime_error

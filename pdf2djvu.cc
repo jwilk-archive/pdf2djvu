@@ -615,7 +615,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
     if (mktime(&tms) == (time_t)-1)
       throw InvalidDateFormat();
     // RFC 3339 date format, e.g. "2007-10-27 13:19:59+02:00"
-    if (strftime(buffer, sizeof buffer, "%F %T", &tms) != 19)
+    if (strftime(buffer, sizeof buffer, "%Y-%m-%d %H:%M:%S", &tms) != 19)
       throw InvalidDateFormat();
     std::string tzstring;
     if (tzs)
