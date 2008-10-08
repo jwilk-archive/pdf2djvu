@@ -224,7 +224,7 @@ bool pdf::get_glyph(splash::Splash *splash, splash::Font *font,
     return false;
 #if POPPLER_VERSION >= 602
   splash::ClipResult clip_result;
-  if (!font->getGlyph(code, 0, 0, bitmap, x, y, splash->getClip(), &clip_result))
+  if (!font->getGlyph(code, 0, 0, bitmap, static_cast<int>(x), static_cast<int>(y), splash->getClip(), &clip_result))
     return false;
   return (clip_result != splashClipAllOutside);
 #else
