@@ -117,6 +117,7 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
+#ifndef HAVE_PSTREAMS
 static const std::string argv_to_command_line(const std::vector<std::string> &argv)
 /* Translate a sequence of arguments into a command line string. */
 {
@@ -197,11 +198,12 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
 #endif
   return buffer.str();
 }
+#endif
 
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
   int status;
-#ifdef PSTREAMS
+#ifdef HAVE_PSTREAMS
   redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
   if (!xsystem.rdbuf()->error())
   {
