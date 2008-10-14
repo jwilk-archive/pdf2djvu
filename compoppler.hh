@@ -42,9 +42,7 @@ namespace pdf
     typedef ::SplashGlyphBitmap GlyphBitmap;
     typedef ::SplashBitmap Bitmap;
     typedef ::SplashOutputDev OutputDevice;
-  #if POPPLER_VERSION >= 602
     typedef ::SplashClipResult ClipResult;
-  #endif
   }
 
 /* miscellaneous type definitions
@@ -64,9 +62,7 @@ namespace pdf
   namespace ant
   {
     typedef ::Annot Annotation;
-#if POPPLER_VERSION >= 700
     typedef ::AnnotColor Color;
-#endif
   }
 
 /* type definitions — hyperlinks
@@ -80,9 +76,6 @@ namespace pdf
     typedef ::LinkDest Destination;
     typedef ::LinkGoTo GoTo;
     typedef ::LinkURI URI;
-#if POPPLER_VERSION < 509
-    typedef ::LinkBorderStyle BorderStyle; 
-#endif
   }
 
 /* type definitions — rendering subsystem
@@ -95,12 +88,10 @@ namespace pdf
     typedef ::GfxPath Path;
     typedef ::GfxState State;
     typedef ::GfxImageColorMap ImageColorMap;
-#if POPPLER_VERSION >= 500    
     typedef ::GfxColorComp ColorComponent;
     typedef ::GfxColor Color;
     typedef ::GfxRGB RgbColor;
     typedef ::GfxDeviceCMYKColorSpace DeviceCmykColorSpace;
-#endif
   }
 
 /* class pdf::Renderer : pdf::splash::OutputDevice
@@ -111,44 +102,14 @@ namespace pdf
   {
   public:
     Renderer(pdf::splash::Color &paper_color, bool monochrome = false) :
-#if POPPLER_VERSION < 500
-      pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8Packed, gFalse, paper_color)
-#else
       pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, gFalse, paper_color)
-#endif
     { }
 
-#if POPPLER_VERSION < 500
-    void drawChar(gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
-      CharCode code, Unicode *unistr, int len)
-    {
-      this->drawChar(state, x, y, dx, dy, origin_x, origin_y, code, -1, unistr, len);
-    }
-
-    virtual void drawChar(gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
-      CharCode code, int n_bytes, Unicode *unistr, int len)
-    {
-      this->pdf::splash::OutputDevice::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, unistr, len);
-    }
-
-    virtual void drawMaskedImage(gfx::State *state, Object *object, Stream *stream, int width, int height,
-      gfx::ImageColorMap *color_map, Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert) {}
-    virtual void drawSoftMaskedImage(gfx::State *state, Object *object, Stream *stream,
-      int width, int height, gfx::ImageColorMap *color_map, Stream *mask_stream,
-      int mask_width, int mask_height,	gfx::ImageColorMap *mask_color_map) {}
-
-    pdf::splash::Font *getCurrentFont()
-    {
-      return NULL;
-    }
-#endif  
-
-#if POPPLER_VERSION >= 509
     void processLink(pdf::link::Link *link, pdf::Catalog *catalog)
     {
       this->drawLink(link, catalog);
     }
-#endif
+
     virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
     virtual void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)  { }
     std::vector<std::string> link_border_colors;
@@ -221,13 +182,8 @@ namespace pdf
 
     explicit Pixmap(Renderer *renderer)
     {
-#if POPPLER_VERSION < 500
-      bmp = renderer->getBitmap();
-      raw_data = const_cast<const uint8_t*>(bmp->getDataPtr().rgb8p);
-#else
       bmp = renderer->takeBitmap();
       raw_data = const_cast<const uint8_t*>(bmp->getDataPtr());
-#endif
       width = bmp->getWidth();
       height = bmp->getHeight();
       row_size = bmp->getRowSize();
@@ -242,27 +198,18 @@ namespace pdf
         this->byte_width = width;
         break;
       case splashModeRGB8:
-#if POPPLER_VERSION >= 500
       case splashModeBGR8:
-#else
-      case splashModeRGB8Packed:
-      case splashModeBGR8Packed:
-#endif
         this->byte_width = width * 3;
         break;
-#if POPPLER_VERSION >= 500
       case splashModeXBGR8:
         this->byte_width = width * 4;
         break;
-#endif
       }
     }
 
     ~Pixmap()
     {
-#if POPPLER_VERSION >= 500
       delete bmp;
-#endif
     }
 
     PixmapIterator begin() const
@@ -356,7 +303,6 @@ namespace pdf
 
   void set_color(pdf::splash::Color &result, uint8_t r, uint8_t g, uint8_t b);
 
-#if POPPLER_VERSION >= 500
   namespace gfx
   {
     static inline double color_component_as_double(pdf::gfx::ColorComponent c)
@@ -369,7 +315,6 @@ namespace pdf
       return ::dblToCol(x);
     }
   }
-#endif
 
 /* glyph-related functions
  * =======================

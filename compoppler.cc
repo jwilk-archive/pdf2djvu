@@ -19,9 +19,6 @@
 #include <PDFDocEncoding.h>
 #include <UTF8.h>
 #include <UnicodeTypeTable.h>
-#if POPPLER_VERSION >= 500 && POPPLER_VERSION < 509
-#include <UGooString.h>
-#endif
 
 /* class pdf::Environment
  * ======================
@@ -29,11 +26,7 @@
 
 pdf::Environment::Environment()
 {
-#if POPPLER_VERSION < 509
-  globalParams = new GlobalParams(NULL);
-#else
   globalParams = new GlobalParams();
-#endif
 }
 
 void pdf::Environment::set_antialias(bool value)
@@ -48,10 +41,8 @@ void pdf::Environment::set_antialias(bool value)
 #endif
   if (!globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no")))
     throw UnableToSetParameter("Unable to set antialias parameter");
-#if POPPLER_VERSION >= 509
   if (!globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no")))
     throw UnableToSetParameter("Unable to set vector antialias parameter");
-#endif
 }
 
 
@@ -83,7 +74,6 @@ static std::string html_color(double r, double g, double b)
   return html_color(rgb);
 }
 
-#if POPPLER_VERSION >= 700
 static void cmyk_to_rgb(double cmyk[], double rgb[])
 {
   static pdf::gfx::DeviceCmykColorSpace cmyk_space;
@@ -130,18 +120,9 @@ static GBool annotations_callback(pdf::ant::Annotation *annotation, void *user_d
   border_colors.push_back(border_color);
   return true;
 }
-#endif
 
 void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
-#if POPPLER_VERSION < 500
-  this->displayPage(renderer, npage, hdpi, vdpi, 0, gFalse, do_links);
-#elif POPPLER_VERSION < 509 
-  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, do_links);
-#elif POPPLER_VERSION < 700
-  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links);
-  this->processLinks(renderer, npage);
-#else
   renderer->link_border_colors.clear();
   this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links, 
     NULL, NULL, 
@@ -150,22 +131,16 @@ void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi
   );
   std::reverse(renderer->link_border_colors.begin(), renderer->link_border_colors.end());
   this->processLinks(renderer, npage);
-#endif
 }
 
 void pdf::Document::get_page_size(int n, bool crop, double &width, double &height)
 {
-#if POPPLER_VERSION < 500
-  width = this->getPageWidth(n);
-  height = this->getPageHeight(n);
-#else
   width = crop ?
       this->getPageCropWidth(n) :
       this->getPageMediaWidth(n);
   height = crop ?
       this->getPageCropHeight(n) :
       this->getPageMediaHeight(n);
-#endif
   width /= 72.0;
   height /= 72.0;
   if ((this->getPageRotate(n) / 90) & 1)
@@ -179,13 +154,9 @@ void pdf::Document::get_page_size(int n, bool crop, double &width, double &heigh
 
 void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
 {
-#if POPPLER_VERSION < 500
-  result.rgb8 = splashMakeRGB8(r, g, b); 
-#else
   result[0] = r;
   result[1] = g;
   result[2] = b;
-#endif
 }
 
 
@@ -196,19 +167,11 @@ void pdf::set_color(splash::Color &result, uint8_t r, uint8_t g, uint8_t b)
 void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
 {
   std::string border_color;
-#if POPPLER_VERSION < 509
-  double rgb[3];
-  pdf::link::BorderStyle *border_style = link->getBorderStyle();
-  border_style->getColor(rgb + 0, rgb + 1, rgb + 2);
-  border_color = html_color(rgb);
-#else
-  // [TODO] find a way to determine link color for 0.5.9 <= poppler < 0.7.0
   if (this->link_border_colors.size())
   {
     border_color = this->link_border_colors.back();
     this->link_border_colors.pop_back();
   }
-#endif
   this->drawLink(link, border_color, catalog);
 }
 
@@ -222,14 +185,10 @@ bool pdf::get_glyph(splash::Splash *splash, splash::Font *font,
 {
   if (font == NULL)
     return false;
-#if POPPLER_VERSION >= 602
   splash::ClipResult clip_result;
   if (!font->getGlyph(code, 0, 0, bitmap, static_cast<int>(x), static_cast<int>(y), splash->getClip(), &clip_result))
     return false;
   return (clip_result != splashClipAllOutside);
-#else
-  return font->getGlyph(code, 0, 0, bitmap); 
-#endif
 }
 
 
@@ -283,7 +242,6 @@ void pdf::Renderer::convert_path(pdf::gfx::State *state, splash::Path &splash_pa
 double pdf::get_path_area(splash::Path &path)
 {
   double area = 0.0;
-#if POPPLER_VERSION >= 500
   int path_len = path.getLength();
   double x0, y0;
   Guchar ch;
@@ -297,7 +255,6 @@ double pdf::get_path_area(splash::Path &path)
     x2 -= x0; y2 -= y0;
     area += x1 * y2 - x2 * y1;
   }
-#endif
   return fabs(area);
 }
 
@@ -381,21 +338,14 @@ namespace pdf
  */
 
 pdf::NFKC::NFKC(Unicode *unistr, int length) 
-#if POPPLER_VERSION < 502
-: data(unistr), _length(length)
-{ }
-#else
 : data(NULL), _length(0)
 {
   data = unicodeNormalizeNFKC(unistr, length, &this->_length, NULL);
 }
-#endif
 
 pdf::NFKC::~NFKC()
 {
-#if POPPLER_VERSION >= 502
   gfree(this->data);
-#endif
 }
 
 // vim:ts=2 sw=2 et
