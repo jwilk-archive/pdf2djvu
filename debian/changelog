@@ -1,3 +1,9 @@
+pdf2djvu (0.5.0) UNRELEASED; urgency=low
+
+  * Drop support for poppler < 0.7.0.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Wed, 15 Oct 2008 20:54:11 +0200
+
 pdf2djvu (0.4.13) unstable; urgency=low
 
   * Add --monochrome, --lossy, --loss-level options.
