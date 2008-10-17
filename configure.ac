@@ -17,7 +17,7 @@ djvulibre_version=`$PKG_CONFIG --modversion ddjvuapi`
 PACKAGE_STRING="$PACKAGE_STRING (DjVuLibre $djvulibre_version"
 AC_DEFINE_UNQUOTED(DJVULIBRE_VERSION_STRING, "$djvulibre_version", Define to the version of DjVuLibre)
 
-PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.7.0)
+PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.7.3)
 poppler_version=`$PKG_CONFIG --modversion poppler-splash`
 AC_DEFINE_UNQUOTED(POPPLER_VERSION_STRING, "$poppler_version", Define to the version of poppler)
 PACKAGE_STRING="$PACKAGE_STRING, poppler $poppler_version"
