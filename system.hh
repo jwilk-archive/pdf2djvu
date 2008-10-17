@@ -12,12 +12,15 @@
 #include <fstream>
 #include <stdexcept>
 
-#ifndef WIN32
-#define HAVE_PSTREAMS
-#endif
+#include "version.hh"
 
 #ifdef HAVE_PSTREAMS
-#include <pstreams/pstream.h>
+#  ifdef HAVE_PSTREAM_H
+#    include <pstream.h>
+#  endif
+#  ifdef HAVE_PSTREAMS_PSTREAM_H
+#    include <pstreams/pstream.h>
+#  endif
 #else
 #include <vector>
 #endif

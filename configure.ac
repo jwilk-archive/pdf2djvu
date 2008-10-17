@@ -39,6 +39,35 @@ PKG_CHECK_MODULES(GRAPHICSMAGICK, GraphicsMagick++,
  
 AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name and version of this package)
 
+AC_MSG_CHECKING(for PStreams)
+have_pstreams=no
+AC_TRY_LINK(
+  [#include <pstream.h>],
+  [redi::ipstream in;],
+  [
+    AC_DEFINE(HAVE_PSTREAM_H, 1, [Define if you have the <pstream.h> file])
+    have_pstreams=yes
+  ]
+)
+if test "$have_pstreams" = "no"
+then
+  AC_TRY_LINK(
+    [#include <pstreams/pstream.h>],
+    [redi::ipstream in;],
+    [
+      AC_DEFINE(HAVE_PSTREAMS_PSTREAM_H, 1, [Define if you have the <pstreams/pstream.h> file])
+      have_pstreams=yes
+    ]
+  )
+fi
+if test "$have_pstreams" = "yes"
+then
+  AC_DEFINE(HAVE_PSTREAMS, 1, [Define if you have PStreams installed and usable])
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no (or not usable))
+fi
+
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.

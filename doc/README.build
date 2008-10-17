@@ -48,8 +48,8 @@ or CVE-2008-2950_. **You have been warned**.
 .. _CVE-2008-2950: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2950
 
 
-PStreams
-========
+PStreams (optional)
+===================
 PStreams_ allows you to run another program from your C++ application
 and to transfer data between the two programs, similar to shell
 pipelines.
