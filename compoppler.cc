@@ -31,14 +31,6 @@ pdf::Environment::Environment()
 
 void pdf::Environment::set_antialias(bool value)
 {
-#if POPPLER_VERSION >= 701 && POPPLER_VERSION < 703
-  // Don't allow poppler bug #15009 to appear.
-  if (!value)
-    throw UnableToSetParameter(
-      "Refused to disable anti-aliasing. "
-      "See <https://bugs.freedesktop.org/show_bug.cgi?id=15009> for details."
-    );
-#endif
   if (!globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no")))
     throw UnableToSetParameter("Unable to set antialias parameter");
   if (!globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no")))

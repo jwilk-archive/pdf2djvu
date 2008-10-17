@@ -1,0 +1,40 @@
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@ @DJVULIBRE_CFLAGS@ @POPPLER_CFLAGS@ @GRAPHICSMAGICK_CFLAGS@
+LDFLAGS = @LDFLAGS@
+LDLIBS = @LIBS@ @DJVULIBRE_LIBS@ @POPPLER_LIBS@ @GRAPHICSMAGICK_LIBS@
+
+INSTALL = @INSTALL@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+
+.PHONY: all
+all: pdf2djvu
+
+config.o: config.cc config.hh debug.hh djvuconst.hh sexpr.hh version.hh
+debug.o: debug.cc debug.hh
+compoppler.o: compoppler.cc compoppler.hh
+sexpr.o: sexpr.cc sexpr.hh
+system.o: system.cc system.hh debug.hh
+quantizer.o: quantizer.cc quantizer.hh compoppler.hh config.hh sexpr.hh version.hh
+pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh sexpr.hh quantizer.hh
+pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o sexpr.o quantizer.o
+	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@) 
+
+.PHONY: clean
+clean:
+	$(RM) pdf2djvu *.o
+
+.PHONY: distclean
+distclean: clean
+	$(RM) version.hh Makefile config.status
+
+.PHONY: test
+test: pdf2djvu
+	$(MAKE) -C tests/
+
+.PHONY: install
+	$(INSTALL) -d $(DESTDIR)$(bindir)
+	$(INSTALL) pdf2djvu $(DESTDIR)$(bindir)
+
+# vim:ts=4 sw=4 noet

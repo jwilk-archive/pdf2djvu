@@ -5,10 +5,6 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#ifndef DJVULIBRE_BIN_PATH
-#error You need to define DJVULIBRE_BIN_PATH
-#endif
-
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
@@ -556,7 +552,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
         debug(1) << "[Warning] metadata[Producer] is not properly encoded" << std::endl;
       }
     }
-    value += PDF2DJVU_VERSION;
+    value += PACKAGE_VERSION;
     sexpr::Ref esc_value = sexpr::string(value);
     stream << "Producer\t" << esc_value << std::endl;
   }
@@ -902,7 +898,7 @@ static int xmain(int argc, char * const argv[])
   }
   catch (const config::NeedVersion)
   {
-    std::cerr << PDF2DJVU_VERSION << std::endl;
+    std::cerr << PACKAGE_VERSION << std::endl;
     exit(1);
   }
   catch (const config::Error &ex)
