@@ -355,7 +355,7 @@ void config::usage(const config::Error &error)
     << "     --bg-slices=N,...,N"  << std::endl
     << "     --bg-slices=N+...+N"  << std::endl
     << "     --bg-subsample=N"     << std::endl
-#ifdef HAVE_GRAPHICS_MAGICK
+#ifdef HAVE_GRAPHICSMAGICK
     << "     --fg-colors=web"      << std::endl
     << "     --fg-colors=N"        << std::endl
 #endif

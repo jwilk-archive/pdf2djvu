@@ -10,7 +10,7 @@
 #include "config.hh"
 #include "version.hh"
 
-#ifdef HAVE_GRAPHICS_MAGICK
+#ifdef HAVE_GRAPHICSMAGICK
 #include <Magick++.h>
 #endif
 
@@ -120,7 +120,7 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
   background_color[0] = background_color[1] = background_color[2] = 0xff;
 }
 
-#ifdef HAVE_GRAPHICS_MAGICK
+#ifdef HAVE_GRAPHICSMAGICK
 
 GraphicsMagickQuantizer::GraphicsMagickQuantizer()
 { }
