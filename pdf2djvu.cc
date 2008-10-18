@@ -1090,7 +1090,7 @@ static int xmain(int argc, char * const argv[])
         // Dummy background just to assure FGbz chunks.
         // It will be replaced later.
         int sub_width, sub_height;
-        calculate_subsampled_size(width, height, 11, sub_width, sub_height);
+        calculate_subsampled_size(width, height, 12, sub_width, sub_height);
         debug(3) << "  - dummy background pixmap >> sep_file" << std::endl;
         sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
         for (int x = 0; x < sub_width; x++)

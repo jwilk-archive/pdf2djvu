@@ -181,7 +181,7 @@
 			<listitem>
 				<para>
 					Specifies the background subsampling ratio. The default is 3. Valid values are integers between 1
-					and 11, inclusive.
+					and 12, inclusive.
 				</para>
 			</listitem>
 		</varlistentry>

@@ -249,7 +249,7 @@ void config::read_config(int argc, char * const argv[])
       break;
     case OPT_BG_SUBSAMPLE:
       config::bg_subsample = atoi(optarg);
-      if (config::bg_subsample < 1 || config::bg_subsample > 11)
+      if (config::bg_subsample < 1 || config::bg_subsample > 12)
         throw config::Error("The specified subsampling ratio is outside the allowed range");
       break;
     case OPT_FG_COLORS:
