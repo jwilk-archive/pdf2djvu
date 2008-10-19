@@ -8,7 +8,26 @@ AC_PROG_CXX
 
 # Checks for libraries.
 
-AC_SEARCH_LIBS(iconv, iconv)
+AC_MSG_CHECKING(for iconv)
+have_iconv=no
+ICONV_LIBS=''
+for lib in "" "-liconv"
+do
+  save_LIBS="$LIBS"
+  LIBS="$LIBS $lib"
+  AC_TRY_LINK(
+    [#include <iconv.h>],
+    [iconv_open("", "");],
+    [have_iconv=yes; ICONV_LIBS="$lib";]
+  )
+  LIBS="$save_LIBS"
+done
+AC_MSG_RESULT($have_iconv)
+if test "$have_iconv" = no
+then
+  AC_MSG_ERROR(iconv not found)
+fi
+AC_SUBST(ICONV_LIBS)
 
 PKG_CHECK_MODULES(DJVULIBRE, ddjvuapi >= 3.5.17)
 djvulibre_bin_path=`$PKG_CONFIG --variable exec_prefix ddjvuapi`/bin
