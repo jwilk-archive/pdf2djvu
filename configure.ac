@@ -42,6 +42,7 @@ for tool in cjb2 c44 csepdjvu ddjvu djvused djvuextract djvumake
 do
   if test ! -x "$djvulibre_bin_path/$tool"
   then
+    AC_MSG_RESULT(icomplete set of tools)
     AC_MSG_ERROR($tool not found)
   fi
 done
@@ -80,9 +81,8 @@ then
     fi
     result="${result}<http://bugs.debian.org/$bug>"
   done
-  AC_MSG_ERROR(buggy.
-
-See $result for details.)
+  AC_MSG_RESULT(buggy)
+  AC_MSG_ERROR(See $result for details.)
 else
   AC_MSG_RESULT(ok)
 fi
