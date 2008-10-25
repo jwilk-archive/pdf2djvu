@@ -552,7 +552,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
         debug(1) << "[Warning] metadata[Producer] is not properly encoded" << std::endl;
       }
     }
-    value += PACKAGE_VERSION;
+    value += PACKAGE_STRING;
     sexpr::Ref esc_value = sexpr::string(value);
     stream << "Producer\t" << esc_value << std::endl;
   }
@@ -898,7 +898,7 @@ static int xmain(int argc, char * const argv[])
   }
   catch (const config::NeedVersion)
   {
-    std::cerr << PACKAGE_VERSION << std::endl;
+    std::cerr << PACKAGE_STRING << std::endl;
     exit(1);
   }
   catch (const config::Error &ex)
