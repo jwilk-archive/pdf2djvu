@@ -1239,7 +1239,24 @@ static int xmain(int argc, char * const argv[])
     TemporaryFile sed_file;
     if (config::extract_metadata)
     {
-      debug(3) << "- metadata >> sed_file" << std::endl;
+      {
+        debug(3) << "- xmp metadata >> sed_file" << std::endl;
+        const std::string &xmp_bytes = doc->get_xmp();
+        if (xmp_bytes.length())
+        {
+          sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
+          static sexpr::Ref xmp_symbol = sexpr::symbol("xmp");
+          sexpr::Ref xmp = sexpr::nil;
+          xmp = sexpr::cons(sexpr::string(xmp_bytes), xmp);
+          xmp = sexpr::cons(xmp_symbol, xmp);
+          sed_file
+            << "create-shared-ant" << std::endl
+            << "set-ant" << std::endl
+            << xmp << std::endl
+            << "." << std::endl;
+        }
+      }
+      debug(3) << "- docinfo metadata >> sed_file" << std::endl;
       sed_file << "set-meta" << std::endl;
       pdf_metadata_to_djvu_metadata(doc, sed_file);
       sed_file << "." << std::endl;

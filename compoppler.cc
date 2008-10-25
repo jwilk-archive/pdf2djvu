@@ -12,6 +12,7 @@
 #include <ostream>
 #include <sstream>
 #include <cmath>
+#include <memory>
 
 #include "compoppler.hh"
 
@@ -137,6 +138,40 @@ void pdf::Document::get_page_size(int n, bool crop, double &width, double &heigh
   height /= 72.0;
   if ((this->getPageRotate(n) / 90) & 1)
     std::swap(width, height);
+}
+
+const std::string pdf::Document::get_xmp()
+{
+  std::auto_ptr<pdf::String> mstring;
+  mstring.reset(this->readMetadata());
+  if (mstring.get() == NULL)
+    return "";
+  const char *cstring = mstring->getCString();
+  if (strncmp(cstring, "<?xpacket begin=", 16) != 0)
+    return "";
+  cstring += 16;
+  while (*cstring && *cstring != '?')
+    cstring++;
+  if (*cstring++ != '?' || *cstring++ != '>')
+    return "";
+  while (*cstring && *cstring != '<')
+    cstring++;
+  const char *endcstring = strrchr(cstring, '>');
+  if (endcstring < cstring + 32)
+    return "";
+  if (*--endcstring != '?')
+    return "";
+  char quote = *--endcstring;
+  if (quote != '\'' & quote != '"')
+    return "";
+  if (*--endcstring != 'w' || *--endcstring != quote)
+    return "";
+  endcstring -= 14;
+  if (strncmp(endcstring, "<?xpacket end=", 14) != 0)
+    return "";
+  while (endcstring > cstring && *endcstring != '>')
+    endcstring--;
+  return std::string(cstring, endcstring - cstring + 1);
 }
 
 

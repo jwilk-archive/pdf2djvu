@@ -289,6 +289,7 @@ namespace pdf
     Document(const std::string &file_name);
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
     void get_page_size(int n, bool crop, double &width, double &height);
+    const std::string get_xmp();
     class LoadError : public std::runtime_error
     {
     public:
