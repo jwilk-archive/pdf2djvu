@@ -162,7 +162,7 @@ const std::string pdf::Document::get_xmp()
   if (*--endcstring != '?')
     return "";
   char quote = *--endcstring;
-  if (quote != '\'' & quote != '"')
+  if ((quote != '\'') && (quote != '"'))
     return "";
   if (*--endcstring != 'w' || *--endcstring != quote)
     return "";
