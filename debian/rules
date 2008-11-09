@@ -2,5 +2,31 @@
 
 LDFLAGS=-Wl,--as-needed
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/autotools.mk
+.PHONY: build
+build: build-stamp
+build-stamp:
+	dh build
+	touch $(@)
+
+.PHONY: clean
+clean:
+	dh clean
+
+.PHONY: install
+install: install-stamp
+install-stamp: build-stamp
+	dh install
+	touch $(@)
+
+.PHONY: binary-arch
+binary-arch: install
+	dh binary-arch
+
+.PHONY: binary-indep
+binary-indep: install
+	:
+
+.PHONY: binary
+binary: binary-arch binary-indep
+
+# vim:ts=4 sw=4 noet
