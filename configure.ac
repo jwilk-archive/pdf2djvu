@@ -54,7 +54,7 @@ done
 "$djvulibre_bin_path/cjb2" conftest.458211.pbm conftest.458211.djvu
 "$djvulibre_bin_path/ddjvu" -format=rle conftest.458211.djvu conftest.458211.sep
 printf 'P6 1 1 255 xxx' >> conftest.458211.sep
-"$djvulibre_bin_path/csepdjvu" conftest.458211.sep conftest.458211.djvu || ddjvulibre_bugs="$djvulibre_bugs 458211"
+"$djvulibre_bin_path/csepdjvu" conftest.458211.sep conftest.458211.djvu 2>/dev/null || djvulibre_bugs="$djvulibre_bugs 458211"
 
 printf 'P1 3 3 0 0 0 0 0 0 0 0 0' > conftest.471149.pbm
 "$djvulibre_bin_path/cjb2" conftest.471149.pbm conftest.471149.djvu
