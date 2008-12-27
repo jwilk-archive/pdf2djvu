@@ -5,6 +5,7 @@ AC_LANG(C++)
 # Checks for programs.
 
 AC_PROG_CXX
+AC_CHECK_TOOL(WINDRES, windres, :)
 
 # Checks for libraries.
 
