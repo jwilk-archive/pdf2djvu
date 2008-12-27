@@ -41,6 +41,7 @@ test: pdf2djvu
 	$(MAKE) -C tests/
 
 .PHONY: install
+install:
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) pdf2djvu $(DESTDIR)$(bindir)
 
