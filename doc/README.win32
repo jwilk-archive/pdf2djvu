@@ -86,8 +86,6 @@ In the MSYS console, execute the following commands::
     tar -xzf djvulibre-*.tar.gz
     cd djvulibre-*
     ./configure
-    sed -e '/define USE_INTEL_ATOMIC_BUILTINS 1/d' -e '/define USE_WIN32_INTERLOCKED 1/d' libdjvu/atomic.cpp > libdjvu/atomic.cpp-
-    mv libdjvu/atomic.cpp- libdjvu/atomic.cpp
     make
     make install
     
