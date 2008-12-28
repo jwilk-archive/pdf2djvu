@@ -1,0 +1,114 @@
+=======================================
+How to compile *pdf2djvu* under Windows
+=======================================
+
+As of *pdf2djvu* 0.5, compilation under Cygwin is discouraged and not
+supported.  Instead, it is possible to compile *pdf2djvu* natively with `MinGW
+<http://mingw.org>`_.
+
+This document contains a detailed compilation instruction.
+
+Development environment
+-----------------------
+
+Use the `Automated MinGW Installer
+<http://downloads.sf.net/mingw/MinGW-5.1.4.exe>`_.
+to install MinGW. Do not select any additional components.
+
+Create the ``C:\msys\1.0\src`` directory.
+
+Install `MSYS 1.0.10 <http://downloads.sf.net/mingw/MSYS-1.0.10.exe>`_. The
+post-install process will ask for the directory where MinGW was installed to;
+enter ``C:/mingw``. Answer *yes* to other questions.
+
+Install the `MSYS Developer Tool Kit
+<http://downloads.sf.net/mingw/msysDTK-1.0.1.exe>`_.
+
+Download:
+
+* `GCC 4.2.1 <http://downloads.sf.net/mingw/gcc-core-4.2.1-sjlj-2.tar.gz>`_ and
+* `G++ 4.2.1 <http://downloads.sf.net/mingw/gcc-g++-4.2.1-sjlj-2.tar.gz>`_
+
+into ``C:\msys\1.0\src``.
+ 
+In the MSYS console, execute the following commands::
+
+    cd /mingw
+    tar -xzf /src/gcc-part-core-*.tar.gz
+    tar -xzf /src/gcc-part-c++-*.tar.gz
+
+Pre-compiled libraries
+----------------------
+
+Create the ``C:\msys\1.0\local`` directory.
+
+From the `GTK+ Project <http://www.gtk.org/download-windows.html>`_ download
+the following libraries:
+
+* GLIB (binaries, dev),
+* zlib (binaries & dev),
+* GNU libiconv (binaries & dev),
+* libjpeg (binaries, dev),
+* pkg-config (tool binaries),
+* freetype (binaries, dev),
+* fontconfig (binaries, dev),
+* libexpat (binaries).
+
+Unpack all the zips into ``C:\msys\1.0\local``.
+
+Compilation
+-----------
+
+Download sources for the following packages:
+
+* poppler (≥ 0.10),
+* DjVuLibre (≥ 3.5.21),
+* pdf2djvu (≥ 0.5.0).
+
+Put all ``*.tar.gz`` files into ``C:\msys\1.0\src\``.
+
+In the MSYS console, execute the following commands::
+
+    export CC=gcc-sjlj
+    export CXX=g++-sjlj
+    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+    export CPATH=/usr/local/include
+    export LDFLAGS=-L/usr/local/lib/
+    
+    cd /src
+    tar -xzf poppler-*.tar.gz 
+    cd poppler-*
+    ./configure --enable-xpdf-headers
+    make
+    make install
+    
+    cd /src
+    tar -xzf djvulibre-*.tar.gz
+    cd djvulibre-*
+    ./configure
+    sed -e '/define USE_INTEL_ATOMIC_BUILTINS 1/d' -e '/define USE_WIN32_INTERLOCKED 1/d' libdjvu/atomic.cpp > libdjvu/atomic.cpp-
+    mv libdjvu/atomic.cpp- libdjvu/atomic.cpp
+    make
+    make install
+    
+    cd /src
+    tar -xzf pdf2djvu-*.tar.gz
+    cd pdf2djvu-*
+    ./configure
+    echo '#undef DJVULIBRE_BIN_PATH' >> version.hh
+    echo '#define DJVULIBRE_BIN_PATH "."' >> version.hh
+    make
+    
+    mkdir ~/pdf2djvu-dist/
+    cp *.exe ~/pdf2djvu-dist/
+    cd ~/pdf2djvu-dist/
+    cp -r /usr/local/etc .
+    cp /usr/local/bin/{djvm,djvused,bzz,csepdjvu,djvuextract,cjb2,c44,djvumake}.exe .
+    cp /usr/local/bin/{freetype*,iconv,jpeg*,libdjvulibre-*,libexpat,libfontconfig-*,libpoppler-*}.dll .
+    cp /mingw/bin/mingwm*.dll .
+    strip *.exe
+
+A stand-alone *pdf2djvu* distribution is now ready in
+``C:\msys\1.0\home\…\pdf2djvu-dist\``.
+
+.. vim:ft=rst ts=4 sw=4 et
