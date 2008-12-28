@@ -3,7 +3,7 @@ Section: text
 Priority: extra
 Maintainer: Jakub Wilk <ubanus@users.sf.net>
 Bugs: mailto:ubanus@users.sf.net
-Build-Depends: debhelper (>= 7), libpoppler-dev, libdjvulibre-dev, djvulibre-bin, libpstreams-dev, libgraphicsmagick++1-dev
+Build-Depends: debhelper (>= 7), libpoppler-dev (>= 0.7.3), libdjvulibre-dev (>= 3.5.21), djvulibre-bin (>= 3.5.21), libpstreams-dev, libgraphicsmagick++1-dev
 Standards-Version: 3.8.0
 Homepage: http://pdf2djvu.googlecode.com/
 Vcs-Svn: http://pdf2djvu.googlecode.com/svn/trunk
@@ -11,8 +11,7 @@ Vcs-Browser: http://code.google.com/p/pdf2djvu/source/browse
 
 Package: pdf2djvu
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, djvulibre-bin
-Conflicts: djvulibre-bin (= 3.5.20-4)
+Depends: ${shlibs:Depends}, ${misc:Depends}, djvulibre-bin (>= 3.5.21)
 Description: PDF to DjVu converter
  pdf2djvu creates DjVu files from PDF files. It's able to extract:
  graphics, text layer, hyperlinks, document outline (bookmarks), and
