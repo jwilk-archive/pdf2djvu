@@ -44,7 +44,7 @@ for tool in cjb2 c44 csepdjvu ddjvu djvused djvuextract djvumake
 do
   if test ! -x "$djvulibre_bin_path/$tool"
   then
-    AC_MSG_RESULT(icomplete set of tools)
+    AC_MSG_RESULT(incomplete set of tools)
     AC_MSG_ERROR($tool not found)
   fi
 done
