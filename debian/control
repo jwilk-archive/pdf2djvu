@@ -3,7 +3,7 @@ Section: text
 Priority: extra
 Maintainer: Jakub Wilk <ubanus@users.sf.net>
 Bugs: mailto:ubanus@users.sf.net
-Build-Depends: debhelper (>= 7), libpoppler-dev, libdjvulibre-dev, libpstreams-dev, libgraphicsmagick++1-dev
+Build-Depends: debhelper (>= 7), libpoppler-dev, libdjvulibre-dev, djvulibre-bin, libpstreams-dev, libgraphicsmagick++1-dev
 Standards-Version: 3.8.0
 Homepage: http://pdf2djvu.googlecode.com/
 Vcs-Svn: http://pdf2djvu.googlecode.com/svn/trunk
