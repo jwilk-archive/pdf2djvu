@@ -41,9 +41,11 @@
 #ifndef WIN32
 #define TEMPORARY_PATH_TEMPLATE "/tmp/pdf2djvu.XXXXXX"
 #define PATH_SEPARATOR "/"
+#define USE_UNIX_PATH_SEPARATOR 1
 #else
 #define TEMPORARY_PATH_TEMPLATE "pdf2djvu"
 #define PATH_SEPARATOR "\\"
+#define USE_UNIX_PATH_SEPARATOR 0
 #endif
 
 
@@ -91,7 +93,21 @@ void warn_os_error(const std::string &context)
 
 Command::Command(const std::string& command) : command(command)
 {
-  this->argv.push_back(command);
+  if (this->argv.size() == 0 && !USE_UNIX_PATH_SEPARATOR)
+  {
+    /* Convert path separators: */
+    std::ostringstream stream;
+    for (std::string::const_iterator it = command.begin(); it != command.end(); it++)
+    {
+      if (*it == '/')
+        stream << PATH_SEPARATOR;
+      else
+        stream << *it;
+    }
+    this->argv.push_back(stream.str());
+  }
+  else
+    this->argv.push_back(command);
 }
 
 Command &Command::operator <<(const std::string& arg)
