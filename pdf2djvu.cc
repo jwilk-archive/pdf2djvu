@@ -111,7 +111,7 @@ public:
     return stream.str();
   }
 
-  virtual ~PageFiles()
+  virtual ~PageFiles() throw ()
   {
     this->clean_files();
   }
@@ -661,7 +661,7 @@ public:
     return *dynamic_cast<TemporaryFile*>(tmpfile_ptr);
   }
 
-  virtual ~TemporaryPageFiles()
+  virtual ~TemporaryPageFiles() throw ()
   {
     this->clean_files();
     delete this->directory;
@@ -700,7 +700,7 @@ public:
     return *this;
   }
   virtual void set_outline(File &outline_sed_file) = 0;
-  virtual ~DjVm() { /* just to shut up compilers */ }
+  virtual ~DjVm() throw () { /* just to shut up compilers */ }
 };
 
 class BundledDjVm : public DjVm
@@ -751,6 +751,9 @@ public:
   explicit IndirectDjVm(File &index_file) 
   : index_file(index_file),
     outline_sed_file(NULL)
+  {}
+
+  virtual ~IndirectDjVm() throw ()
   {}
 
   virtual void add(const File &file)
@@ -1323,21 +1326,19 @@ static int xmain(int argc, char * const argv[])
 }
 
 int main(int argc, char **argv)
+try
 {
-  try
-  {
-    xmain(argc, argv);
-  }
-  catch (std::ios_base::failure &ex)
-  {
-    std::cerr << "I/O error (" << ex.what() << ")" << std::endl;
-    exit(2);
-  }
-  catch (std::runtime_error &ex)
-  {
-    std::cerr << ex << std::endl;
-    exit(1);
-  }
+  xmain(argc, argv);
+}
+catch (std::ios_base::failure &ex)
+{
+  std::cerr << "I/O error (" << ex.what() << ")" << std::endl;
+  exit(2);
+}
+catch (std::runtime_error &ex)
+{
+  std::cerr << ex << std::endl;
+  exit(1);
 }
 
 // vim:ts=2 sw=2 et

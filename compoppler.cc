@@ -370,7 +370,7 @@ pdf::NFKC::NFKC(Unicode *unistr, int length)
   data = unicodeNormalizeNFKC(unistr, length, &this->_length, NULL);
 }
 
-pdf::NFKC::~NFKC()
+pdf::NFKC::~NFKC() throw ()
 {
   gfree(this->data);
 }

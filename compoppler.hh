@@ -209,7 +209,7 @@ namespace pdf
       }
     }
 
-    ~Pixmap()
+    ~Pixmap() throw ()
     {
       delete bmp;
     }
@@ -230,7 +230,7 @@ namespace pdf
   class OwnedObject : public Object
   {
   public:
-    ~OwnedObject()
+    ~OwnedObject() throw ()
     {
       this->free();
     } 
@@ -248,7 +248,7 @@ namespace pdf
     int _length;
   public:
     explicit NFKC(Unicode *, int length);
-    ~NFKC();
+    ~NFKC() throw ();
     size_t length() const
     {
       return static_cast<size_t>(this->_length);

@@ -83,7 +83,7 @@ protected:
   Directory() : name(""), posix_dir(NULL) {}
 public: 
   explicit Directory(const std::string &name);
-  virtual ~Directory();
+  virtual ~Directory() throw ();
   friend std::ostream &operator<<(std::ostream &, const Directory &);
 };
 
@@ -94,7 +94,7 @@ private:
   TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
 public:
   TemporaryDirectory();
-  virtual ~TemporaryDirectory();
+  virtual ~TemporaryDirectory() throw ();
 };
 
 class File : public std::fstream
@@ -109,7 +109,7 @@ protected:
 public:
   explicit File(const std::string &name);
   File(const Directory& directory, const std::string &name);
-  virtual ~File() { }
+  virtual ~File() throw () { }
   size_t size();
   void reopen();
   operator const std::string& () const;
@@ -128,7 +128,7 @@ public:
   : File(directory, name) 
   { }
   TemporaryFile();
-  virtual ~TemporaryFile();
+  virtual ~TemporaryFile() throw ();
 };
 
 class ExistingFile : public File
