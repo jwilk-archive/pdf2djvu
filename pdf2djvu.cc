@@ -994,7 +994,7 @@ static int xmain(int argc, char * const argv[])
           index_file_name = config::output.substr(slash_index + 1);
           if (index_file_name.length() == 0)
           {
-            // Oops, that was a directory, but a non-existant one.
+            // Oops, that was a directory, but a nonexistent one.
             throw no_such_directory_exception;
           }
         }
