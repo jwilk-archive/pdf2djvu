@@ -1325,7 +1325,7 @@ static int xmain(int argc, char * const argv[])
   return 0;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char * const argv[])
 try
 {
   xmain(argc, argv);
