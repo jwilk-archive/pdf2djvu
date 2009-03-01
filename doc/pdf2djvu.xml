@@ -337,10 +337,15 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--pages=<replaceable>pages</replaceable></option></term>
+			<term><option>--pages=<replaceable>page-range</replaceable></option></term>
 			<listitem>
 				<para>
-					Specifies pages to convert.
+					Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of
+					sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous
+					range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1.
+				</para>
+				<para>
+					The default is to convert all pages.
 				</para>
 			</listitem>
 		</varlistentry>
