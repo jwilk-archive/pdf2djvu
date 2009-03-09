@@ -28,24 +28,36 @@
 
 class OSError : public std::runtime_error
 {
-private:
-  static std::string __error_message__(const std::string &context);
-public:
-  explicit OSError(const std::string &context) 
-  : std::runtime_error(__error_message__(context))
+protected:
+  explicit OSError(const std::string &message) 
+  : std::runtime_error(message)
   { };
 };
 
-class NoSuchFileOrDirectory : public OSError
+class POSIXError : public OSError
 {
+private:
+  static std::string __error_message__(const std::string &context);
 public:
-  NoSuchFileOrDirectory(const std::string &context) : OSError(context) {}
+  explicit POSIXError(const std::string &context) 
+  : OSError(__error_message__(context))
+  { };
 };
 
-class NotADirectory : public OSError
+class NoSuchFileOrDirectory : public POSIXError
 {
 public:
-  NotADirectory(const std::string &context) : OSError(context) {}
+  NoSuchFileOrDirectory(const std::string &context)
+  : POSIXError(context)
+  { };
+};
+
+class NotADirectory : public POSIXError
+{
+public:
+  NotADirectory(const std::string &context)
+  : POSIXError(context)
+  { };
 };
 
 class Command

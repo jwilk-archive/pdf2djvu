@@ -49,11 +49,11 @@
 #endif
 
 
-/* class OSError : Error
- * =====================
+/* class POSIXError : OSError
+ * ==========================
  */
 
-std::string OSError::__error_message__(const std::string &context)
+std::string POSIXError::__error_message__(const std::string &context)
 {
   std::string message = strerror(errno);
   if (context.length())
@@ -61,7 +61,7 @@ std::string OSError::__error_message__(const std::string &context)
   return message;
 }
 
-void throw_os_error(const std::string &context)
+static void throw_posix_error(const std::string &context)
 {
   switch (errno)
   {
@@ -70,21 +70,67 @@ void throw_os_error(const std::string &context)
   case ENOENT:
     throw NoSuchFileOrDirectory(context);
   default:
-    throw OSError(context);
+    throw POSIXError(context);
   }
 }
 
-void warn_os_error(const std::string &context)
+static void warn_posix_error(const std::string &context)
 {
   try
   {
-    throw_os_error(context); 
+    throw_posix_error(context); 
   }
-  catch (const OSError &e)
+  catch (const POSIXError &e)
   {
     std::cerr << "[Warning] " << e.what() << std::endl;
   }
 }
+
+#ifdef WIN32
+
+/* class Win32Error : OSError
+ * ==========================
+ */
+
+class Win32Error : public OSError
+{
+private:
+  static std::string __error_message__(const std::string &context);
+public:
+  explicit Win32Error(const std::string &context) 
+  : OSError(__error_message__(context))
+  { };
+};
+
+std::string Win32Error::__error_message__(const std::string &context)
+{
+  char *buffer;
+  std::string message = context + ": ";
+  unsigned long error_code = GetLastError();
+  unsigned long nbytes = FormatMessage(
+    FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+    NULL,
+    error_code,
+    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+    (char*) &buffer,
+    0,
+    NULL
+  );
+  if (nbytes == 0)
+    message.append("possibly memory allocation error");
+  else {
+    message.append(buffer);
+    LocalFree(buffer);
+  }
+  return message;
+}
+
+static void throw_win32_error(const std::string &context)
+{
+  throw Win32Error(context);
+}
+
+#endif
 
 
 /* class Command
@@ -300,7 +346,7 @@ void Directory::open(const char* path)
 {
   this->posix_dir = opendir(path);
   if (this->posix_dir == NULL)
-    throw_os_error(path);
+    throw_posix_error(path);
 }
 
 void Directory::close(void)
@@ -308,7 +354,7 @@ void Directory::close(void)
   if (this->posix_dir == NULL)
     return;
   if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
-    throw_os_error(this->name);
+    throw_posix_error(this->name);
 }
 
 
@@ -321,18 +367,18 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
 #ifndef WIN32
   char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
   if (mkdtemp(path_buffer) == NULL)
-    throw_os_error(path_buffer);
+    throw_posix_error(path_buffer);
 #else
   char base_path_buffer[PATH_MAX];
   char path_buffer[PATH_MAX];
   if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
-    throw_os_error("GetTempPath");
+    throw_win32_error("GetTempPath");
   if (GetTempFileNameA(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
-    throw_os_error("GetTempFileNameA");
+    throw_win32_error("GetTempFileNameA");
   if (unlink(path_buffer) < 0)
-    throw_os_error(path_buffer);
+    throw_posix_error(path_buffer);
   if (mkdir(path_buffer) < 0)
-    throw_os_error(path_buffer);
+    throw_posix_error(path_buffer);
 #endif
   this->name += path_buffer;
 }
@@ -340,7 +386,7 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
 TemporaryDirectory::~TemporaryDirectory() throw ()
 {
   if (rmdir(this->name.c_str()) == -1)
-    warn_os_error(this->name);
+    warn_posix_error(this->name);
 }
 
 
@@ -415,15 +461,15 @@ void TemporaryFile::construct()
   char base_path_buffer[PATH_MAX];
   char path_buffer[PATH_MAX];
   if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
-    throw_os_error("GetTempPath");
+    throw_win32_error("GetTempPath");
   if (GetTempFileNameA(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
-    throw_os_error("GetTempFileNameA");
+    throw_win32_error("GetTempFileNameA");
   int fd = ::open(path_buffer, O_RDWR | O_BINARY);
 #endif
   if (fd == -1)
-    throw_os_error(path_buffer);
+    throw_posix_error(path_buffer);
   if (::close(fd) == -1)
-    throw_os_error(path_buffer);
+    throw_posix_error(path_buffer);
   this->open(path_buffer);
 }
 
@@ -437,7 +483,7 @@ TemporaryFile::~TemporaryFile() throw ()
   if (this->is_open())
     this->close();
   if (unlink(this->name.c_str()) == -1)
-    warn_os_error(this->name);
+    warn_posix_error(this->name);
 }
 
 
@@ -473,7 +519,7 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   size_t outbuf_len = sizeof outbuf;
   iconv_t cd = iconv_open("UTF-8", "UTF-16");
   if (cd == reinterpret_cast<iconv_t>(-1))
-    throw_os_error("iconv_open()");
+    throw_posix_error("iconv_open()");
   while (inbuf_len > 0)
   {
     struct iconv_adapter 
@@ -504,7 +550,7 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
   }
   stream.write(outbuf, outbuf_ptr - outbuf);
   if (iconv_close(cd) == -1)
-    throw_os_error("iconv_close()");
+    throw_posix_error("iconv_close()");
 }
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
