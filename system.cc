@@ -236,10 +236,16 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
   status = xsystem.rdbuf()->status();
 #else
+#ifdef WIN32
+  static const char *popen_mode = "rb";
+#else
+  /* A POSIX system may not support "rb", but will use binary mode anyway. */
+  static const char *popen_mode = "r";
+#endif
   FILE *file;
   {
     const std::string &command_line = argv_to_command_line(this->argv);
-    file = ::popen(command_line.c_str(), "r");
+    file = ::popen(command_line.c_str(), popen_mode);
   }
   if (file != NULL)
   {
