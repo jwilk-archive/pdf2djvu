@@ -262,10 +262,12 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
 }
 #endif
 
+
+#if defined(HAVE_PSTREAMS)
+
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
   int status;
-#ifdef HAVE_PSTREAMS
   redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
   if (!xsystem.rdbuf()->error())
   {
@@ -281,17 +283,111 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     xsystem.close();
   }
   status = xsystem.rdbuf()->status();
+  if (status != 0)
+  {
+    std::ostringstream message;
+    message << "system(\"";
+    message << this->command;
+    message << " ...\") failed";
+    if (WIFEXITED(status))
+      message << " with exit code " << WEXITSTATUS(status);
+    throw CommandFailed(message.str());
+  }
+}
+
+#elif defined(WIN32)
+
+void Command::call(std::ostream *my_stdout, bool quiet)
+{
+  int status = 0;
+  unsigned long rc;
+  HANDLE read_end, write_end, error_handle;
+  {
+    SECURITY_ATTRIBUTES security_attributes;
+    security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
+    security_attributes.lpSecurityDescriptor = NULL;
+    security_attributes.bInheritHandle = true;
+    if (CreatePipe(&read_end, &write_end, &security_attributes, 0) == 0)
+      throw_win32_error("CreatePipe");
+  }
+  if (SetHandleInformation(read_end, HANDLE_FLAG_INHERIT, 0) == 0)
+    throw_win32_error("SetHandleInformation");
+  if (!quiet) {
+    error_handle = GetStdHandle(STD_ERROR_HANDLE);;
+    if (error_handle != INVALID_HANDLE_VALUE) {
+      rc = DuplicateHandle(
+        GetCurrentProcess(), error_handle,
+        GetCurrentProcess(), &error_handle,
+        0, true, DUPLICATE_SAME_ACCESS
+      );
+      if (rc == 0)
+        throw_win32_error("DuplicateHandle");
+    }
+  }
+  else
+    error_handle = INVALID_HANDLE_VALUE;
+  {
+    const std::string &command_line = argv_to_command_line(this->argv);
+    PROCESS_INFORMATION process_info;
+    memset(&process_info, 0, sizeof process_info);
+    STARTUPINFO startup_info;
+    memset(&startup_info, 0, sizeof startup_info);
+    startup_info.cb = sizeof startup_info;
+    startup_info.hStdOutput = write_end;
+    startup_info.hStdError = error_handle;
+    startup_info.dwFlags = STARTF_USESTDHANDLES;
+    char *c_command_line = strdup(command_line.c_str());
+    if (c_command_line == NULL)
+      throw_posix_error("strdup");
+    rc = CreateProcess(
+      NULL, c_command_line,
+      NULL, NULL,
+      true, 0,
+      NULL, NULL,
+      &startup_info,
+      &process_info
+    );
+    free(c_command_line);
+    if (rc == 0)
+      status = -1;
+    else {
+      CloseHandle(process_info.hProcess); /* ignore errors */
+      CloseHandle(process_info.hThread); /* ignore errors */
+    }
+  }
+  if (status == 0) {
+    CloseHandle(write_end); /* ignore errors */
+    while (true)
+    {
+      char buffer[BUFSIZ];
+      unsigned long nbytes;
+      bool success = ReadFile(read_end, buffer, sizeof buffer, &nbytes, NULL);
+      if (!success) {
+        status = -(GetLastError() != ERROR_BROKEN_PIPE);
+        break;
+      }
+      if (my_stdout != NULL)
+        my_stdout->write(buffer, nbytes);
+    }
+  }
+  if (status < 0) {
+    std::ostringstream message;
+    message << "system(\"";
+    message << this->command;
+    message << " ...\") failed";
+    throw Win32Error(message.str());
+  }
+}
+
 #else
-#ifdef WIN32
-  static const char *popen_mode = "rb";
-#else
-  /* A POSIX system may not support "rb", but will use binary mode anyway. */
-  static const char *popen_mode = "r";
-#endif
+
+void Command::call(std::ostream *my_stdout, bool quiet)
+{
+  int status;
   FILE *file;
   {
     const std::string &command_line = argv_to_command_line(this->argv);
-    file = ::popen(command_line.c_str(), popen_mode);
+    file = ::popen(command_line.c_str(), "r");
   }
   if (file != NULL)
   {
@@ -313,18 +409,17 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
   else
     status = -1;
-#endif
-  if (status != 0)
+  if (status < 0)
   {
     std::ostringstream message;
     message << "system(\"";
     message << this->command;
     message << " ...\") failed";
-    if (WIFEXITED(status))
-      message << " with exit code " << WEXITSTATUS(status);
-    throw CommandFailed(message.str());
+    throw POSIXError(message.str());
   }
 }
+
+#endif
 
 
 /* class Directory
