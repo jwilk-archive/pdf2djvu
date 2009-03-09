@@ -510,6 +510,7 @@ File::File(const std::string &name)
 File::File(const Directory& directory, const std::string &name)
 {
   std::ostringstream stream;
+  this->basename = name;
   stream << directory << PATH_SEPARATOR << name;
   this->open(stream.str().c_str());
 }
@@ -525,6 +526,11 @@ void File::reopen()
   if (this->is_open())
     this->close();
   this->open(NULL);
+}
+
+const std::string& File::get_basename() const
+{
+  return this->basename;
 }
 
 File::operator const std::string& () const

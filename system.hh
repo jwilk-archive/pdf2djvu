@@ -116,6 +116,7 @@ private:
   File& operator=(const File&); // not defined
 protected:
   std::string name;
+  std::string basename;
   void open(const char* path);
   File() {}
 public:
@@ -124,6 +125,7 @@ public:
   virtual ~File() throw () { }
   size_t size();
   void reopen();
+  const std::string& get_basename() const;
   operator const std::string& () const;
   friend std::ostream &operator<<(std::ostream &, const File &);
 };

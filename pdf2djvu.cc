@@ -758,11 +758,7 @@ public:
 
   virtual void add(const File &file)
   {
-    std::string name = file;
-    size_t pos = name.rfind('/');
-    if (pos != std::string::npos)
-      name.replace(0, pos + 1, "");
-    this->components.push_back(name);
+    this->components.push_back(file.get_basename());
   }
 
   virtual void set_outline(File &outlines_sed_file)
