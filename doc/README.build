@@ -38,14 +38,17 @@ Poppler 0.7.3 or newer is required.
 
 Security warning
 ----------------
-Every upstream poppler version prior to 0.8.5 is affected by at least
-one serious security bug: CVE-2007-4352_, CVE-2007-5392_, CVE-2007-5393_
-or CVE-2008-2950_. **You have been warned**.
+Every upstream poppler version prior to 0.10.4 is affected by at least
+one serious security bug: CVE-2007-4352_, CVE-2007-5392_,
+CVE-2007-5393_, CVE-2008-2950_, CVE-2009-0755_ or CVE-2009-0756_.
+**You have been warned**.
 
 .. _CVE-2007-4352: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4352
 .. _CVE-2007-5392: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5392
 .. _CVE-2007-5393: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5393
 .. _CVE-2008-2950: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2950
+.. _CVE-2009-0755: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0755
+.. _CVE-2009-0756: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0756
 
 
 PStreams (recommended)
