@@ -458,8 +458,8 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
   char path_buffer[PATH_MAX];
   if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
     throw_win32_error("GetTempPath");
-  if (GetTempFileNameA(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
-    throw_win32_error("GetTempFileNameA");
+  if (GetTempFileName(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
+    throw_win32_error("GetTempFileName");
   if (unlink(path_buffer) < 0)
     throw_posix_error(path_buffer);
   if (mkdir(path_buffer) < 0)
@@ -553,8 +553,8 @@ void TemporaryFile::construct()
   char path_buffer[PATH_MAX];
   if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
     throw_win32_error("GetTempPath");
-  if (GetTempFileNameA(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
-    throw_win32_error("GetTempFileNameA");
+  if (GetTempFileName(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
+    throw_win32_error("GetTempFileName");
   int fd = ::open(path_buffer, O_RDWR | O_BINARY);
 #endif
   if (fd == -1)
