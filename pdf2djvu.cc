@@ -568,6 +568,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
     char *input = object.getString()->getCString();
     if (input[0] == 'D' && input[1] == ':')
       input += 2;
+    tms.tm_isdst = -1;
     tms.tm_year = scan_date_digits(input, 4) - 1900;
     tms.tm_mon = (*input ? scan_date_digits(input, 2) : 1) - 1;
     tms.tm_mday = *input ? scan_date_digits(input, 2) : 1;
