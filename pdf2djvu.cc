@@ -36,16 +36,13 @@ public:
 
 static int get_page_for_LinkGoTo(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
 {
-  std::auto_ptr<pdf::link::Destination> dest_copy;
-  pdf::link::Destination *dest = goto_link->getDest();
-  if (dest == NULL)
-    dest = catalog->findDest(goto_link->getNamedDest());
+  std::auto_ptr<pdf::link::Destination> dest;
+  dest.reset(goto_link->getDest());
+  if (dest.get() == NULL)
+    dest.reset(catalog->findDest(goto_link->getNamedDest()));
   else
-  {
-    dest = dest->copy();
-    dest_copy.reset(dest);
-  }
-  if (dest != NULL)
+    dest.reset(dest.release()->copy());
+  if (dest.get() != NULL)
   {
     int page;
     if (dest->isPageRef())
@@ -433,16 +430,16 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
       int page;
       {
         pdf::OwnedObject destination;
-        pdf::link::Action *link_action;
+        std::auto_ptr<pdf::link::Action> link_action;
         if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
-          link_action = pdf::link::Action::parseDest(&destination);
+          link_action.reset(pdf::link::Action::parseDest(&destination));
         else if (!pdf::dict_lookup(current, "A", &destination)->isNull())
-          link_action = pdf::link::Action::parseAction(&destination);
+          link_action.reset(pdf::link::Action::parseAction(&destination));
         else
           throw NoPageForBookmark();
-        if (!link_action || link_action->getKind() != actionGoTo)
+        if (link_action.get() == NULL || link_action->getKind() != actionGoTo)
           throw NoPageForBookmark();
-        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), catalog);
+        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action.get()), catalog);
       }
       sexpr::Ref expr = sexpr::nil;
       expr = pdf_outline_to_djvu_outline(&current, catalog, page_files);
@@ -521,7 +518,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
   pdf::Dict *info_dict = info.getDict();
   for (const char** pkey = string_keys; *pkey; pkey++)
   {
-    pdf::Object object;
+    pdf::OwnedObject object;
     if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
     try
@@ -538,7 +535,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
   }
   {
     std::string value;
-    pdf::Object object;
+    pdf::OwnedObject object;
     if (pdf::dict_lookup(info_dict, "Producer", &object)->isString())
     {
       try
@@ -559,7 +556,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
   for (const char** pkey = date_keys; *pkey; pkey++)
   try
   {
-    pdf::Object object;
+    pdf::OwnedObject object;
     struct tm tms;
     char tzs; int tzh = 0, tzm = 0;
     char buffer[32];
