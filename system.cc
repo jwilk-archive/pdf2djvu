@@ -20,18 +20,8 @@
 #include <sys/types.h>
 #include <iconv.h>
 
-#ifndef WIFEXITED
-#define WIFEXITED(x) 0
-#endif
-
-#ifndef WEXITSTATUS
-#define WEXITSTATUS(x) (-1)
-#endif
-
 #ifdef WIN32
-
-#include "windows.h"
-
+#include <windows.h>
 #endif
 
 /* constants
