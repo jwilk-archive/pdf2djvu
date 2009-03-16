@@ -12,7 +12,7 @@ Compatiblity
 Don't use DjVuLibre 3.5.20-4, nor 3.5.20-5, nor Debian's 3.5.20-4. Those
 versions are broken_.
 
-.. _DjVuLibre: http://freshmeat.net/projects/djvulibre/
+.. _DjVuLibre: http://djvu.sourceforge.net/
 .. _DjVu: http://djvu.org/
 .. _broken: http://sf.net/tracker/?func=detail&aid=1915337&group_id=32953&atid=406583
 
@@ -21,7 +21,7 @@ poppler
 =======
 Poppler_ is a PDF rendering library derived from xpdf.
 
-.. _poppler: http://freshmeat.net/projects/poppler/?branch_id=69950
+.. _poppler: http://poppler.freedesktop.org/
 
 Header files
 ------------
@@ -57,14 +57,14 @@ PStreams_ allows you to run another program from your C++ application
 and to transfer data between the two programs, similar to shell
 pipelines.
 
-.. _PStreams: http://freshmeat.net/projects/pstreams/
+.. _PStreams: http://pstreams.sourceforge.net/
 
 
 GraphicsMagick (optional)
 =========================
 GraphicsMagick_ is a library to read, write, and manipulate images.
 
-.. _GraphicsMagick: http://freshmeat.net/projects/graphicsmagick/
+.. _GraphicsMagick: http://www.graphicsmagick.org/
 
 
 .. vim:tw=72 ft=rst
