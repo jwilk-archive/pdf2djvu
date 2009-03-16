@@ -1,3 +1,10 @@
+pdf2djvu (0.5.1) UNRELEASED; urgency=low
+
+  * Fix several memory leaks.
+  * Better support for Windows systems.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Mon, 16 Mar 2009 14:48:54 +0100
+
 pdf2djvu (0.5.0) unstable; urgency=low
 
   * Drop support for poppler < 0.7.3.
