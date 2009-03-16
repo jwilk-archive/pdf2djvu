@@ -29,11 +29,9 @@
  */
 
 #ifndef WIN32
-#define TEMPORARY_PATH_TEMPLATE "/tmp/pdf2djvu.XXXXXX"
 #define PATH_SEPARATOR "/"
 #define USE_UNIX_PATH_SEPARATOR 1
 #else
-#define TEMPORARY_PATH_TEMPLATE "pdf2djvu"
 #define PATH_SEPARATOR "\\"
 #define USE_UNIX_PATH_SEPARATOR 0
 #endif
@@ -443,6 +441,36 @@ void Directory::close(void)
 }
 
 
+/* class TemporaryPathTemplate
+ * ===========================
+ */
+
+
+class TemporaryPathTemplate {
+private:
+  char *name;
+public:
+  TemporaryPathTemplate() : name(NULL)
+  {
+    const char *tmpdir = getenv("TMPDIR");
+    if (tmpdir == NULL)
+      tmpdir = "/tmp";
+    name = new char[strlen(tmpdir) + strlen(PACKAGE_NAME) + 9];
+    sprintf(name, "%s%s%s.XXXXXX", tmpdir, PATH_SEPARATOR, PACKAGE_NAME);
+  }
+
+  operator char * ()
+  {
+    return this->name;
+  }
+
+  ~TemporaryPathTemplate()
+  {
+    delete[] this->name;
+  }
+};
+
+
 /* class TemporaryDirectory : Directory
  * ====================================
  */
@@ -450,15 +478,16 @@ void Directory::close(void)
 TemporaryDirectory::TemporaryDirectory() : Directory()
 {
 #ifndef WIN32
-  char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
-  if (mkdtemp(path_buffer) == NULL)
-    throw_posix_error(path_buffer);
+  TemporaryPathTemplate path_buffer;
+  if (mkdtemp(path_buffer) == NULL) {
+    throw_posix_error(static_cast<char*>(path_buffer));
+  }
 #else
   char base_path_buffer[PATH_MAX];
   char path_buffer[PATH_MAX];
   if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
     throw_win32_error("GetTempPath");
-  if (GetTempFileName(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
+  if (GetTempFileName(base_path_buffer, PACKAGE_NAME, 0, path_buffer) == 0)
     throw_win32_error("GetTempFileName");
   if (unlink(path_buffer) < 0)
     throw_posix_error(path_buffer);
@@ -546,21 +575,22 @@ std::ostream &operator<<(std::ostream &out, const File &file)
 void TemporaryFile::construct()
 {
 #ifndef WIN32
-  char path_buffer[] = TEMPORARY_PATH_TEMPLATE;
+  TemporaryPathTemplate path_buffer;
   int fd = mkstemp(path_buffer);
+  if (fd == -1)
+    throw_posix_error(static_cast<char*>(path_buffer));
+  if (::close(fd) == -1)
+    throw_posix_error(static_cast<char*>(path_buffer));
 #else
   char base_path_buffer[PATH_MAX];
   char path_buffer[PATH_MAX];
   if (GetTempPath(PATH_MAX, base_path_buffer) == 0)
     throw_win32_error("GetTempPath");
-  if (GetTempFileName(base_path_buffer, TEMPORARY_PATH_TEMPLATE, 0, path_buffer) == 0)
+  if (GetTempFileName(base_path_buffer, PACKAGE_NAME, 0, path_buffer) == 0)
     throw_win32_error("GetTempFileName");
-  int fd = ::open(path_buffer, O_RDWR | O_BINARY);
+  if (CreateFile(path_buffer, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL) == 0)
+    throw_win32_error("CreateFile");
 #endif
-  if (fd == -1)
-    throw_posix_error(path_buffer);
-  if (::close(fd) == -1)
-    throw_posix_error(path_buffer);
   this->open(path_buffer);
 }
 
