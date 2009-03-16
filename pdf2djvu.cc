@@ -466,11 +466,11 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
   return list;
 }
 
-static void pdf_outline_to_djvu_outline(pdf::Document *doc, std::ostream &stream, 
+static void pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream, 
   const PageFiles &page_files)
 {
   sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
-  pdf::Catalog *catalog = doc->getCatalog();
+  pdf::Catalog *catalog = doc.getCatalog();
   pdf::Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
     return;
@@ -507,12 +507,12 @@ static int scan_date_digits(char * &input, int n)
   return value;
 }
 
-static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stream)
+static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stream)
 {
   static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
   pdf::OwnedObject info;
-  doc->getDocInfo(&info);
+  doc.getDocInfo(&info);
   if (!info.isDict())
     return;
   pdf::Dict *info_dict = info.getDict();
@@ -918,14 +918,14 @@ static int xmain(int argc, char * const argv[])
     ifs.close();
   }
 
-  pdf::Document *doc = new pdf::Document(config::file_name);
+  pdf::Document doc(config::file_name);
 
   pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
 
   size_t n_pixels = 0;
   size_t djvu_pages_size = 0;
-  int n_pages = doc->getNumPages();
+  int n_pages = doc.getNumPages();
   int page_counter = 0;
   std::auto_ptr<const Directory> output_dir;
   std::auto_ptr<File> output_file;
@@ -1012,19 +1012,19 @@ static int xmain(int argc, char * const argv[])
     opage++;
   }
 
-  pdf::Renderer *out1 = NULL;
-  MutedRenderer *outm = NULL, *outs = NULL;
+  std::auto_ptr<pdf::Renderer> out1;
+  std::auto_ptr<MutedRenderer> outm, outs;
   
-  out1 = new pdf::Renderer(paper_color, config::monochrome);
-  outm = new MutedRenderer(paper_color, config::monochrome, *page_files);
-  out1->startDoc(doc->getXRef());
-  outm->startDoc(doc->getXRef());
+  out1.reset(new pdf::Renderer(paper_color, config::monochrome));
+  outm.reset(new MutedRenderer(paper_color, config::monochrome, *page_files));
+  out1->startDoc(doc.getXRef());
+  outm->startDoc(doc.getXRef());
   if (!config::monochrome)
   {
-    outs = new MutedRenderer(paper_color, config::monochrome, *page_files);
-    outs->startDoc(doc->getXRef());
+    outs.reset(new MutedRenderer(paper_color, config::monochrome, *page_files));
+    outs->startDoc(doc.getXRef());
   }
-  debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
+  debug(1) << doc.getFileName()->getCString() << ":" << std::endl;
   bool crop = !config::use_media_box;
   for (
     std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
@@ -1038,9 +1038,9 @@ static int xmain(int argc, char * const argv[])
     debug(1) << std::endl;
     debug(3) << "  - muted render" << std::endl;
     double page_width, page_height;
-    doc->get_page_size(n, crop, page_width, page_height);
+    doc.get_page_size(n, crop, page_width, page_height);
     int dpi = calculate_dpi(page_width, page_height);
-    doc->display_page(outm, n, dpi, dpi, crop, true);
+    doc.display_page(outm.get(), n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -1048,7 +1048,7 @@ static int xmain(int argc, char * const argv[])
     if (!config::no_render)
     {
       debug(3) << "  - verbose render" << std::endl;
-      doc->display_page(out1, n, dpi, dpi, crop, false);
+      doc.display_page(out1.get(), n, dpi, dpi, crop, false);
     }
     debug(3) << "  - create sep_file" << std::endl;
     TemporaryFile sep_file;
@@ -1057,7 +1057,7 @@ static int xmain(int argc, char * const argv[])
     int background_color[3];
     bool has_foreground = false;
     bool has_text = false;
-    (*quantizer)(out1, outm, width, height, background_color, has_foreground, has_background, sep_file);
+    (*quantizer)(out1.get(), outm.get(), width, height, background_color, has_foreground, has_background, sep_file);
     bool nonwhite_background_color;
     if (has_background)
     {
@@ -1066,12 +1066,12 @@ static int xmain(int argc, char * const argv[])
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
-      doc->display_page(outs, n, hdpi, vdpi, crop, true);
+      doc.display_page(outs.get(), n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
         throw std::logic_error("Unexpected subsampled bitmap width");
       if (sub_height != outs->getBitmapHeight())
         throw std::logic_error("Unexpected subsampled bitmap height");
-      pdf::Pixmap bmp(outs);
+      pdf::Pixmap bmp(outs.get());
       debug(3) << "  - background pixmap >> sep_file" << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
       sep_file << bmp;
@@ -1135,7 +1135,7 @@ static int xmain(int argc, char * const argv[])
       Command cjb2(DJVULIBRE_BIN_PATH "/cjb2");
       cjb2 << "-losslevel" << config::loss_level << pbm_file << sjbz_file;
       pbm_file << "P4 " << width << " " << height << std::endl;
-      pdf::Pixmap bmp(out1);
+      pdf::Pixmap bmp(out1.get());
       pbm_file << bmp;
       pbm_file.close();
       cjb2();
@@ -1238,7 +1238,7 @@ static int xmain(int argc, char * const argv[])
     {
       {
         debug(3) << "- xmp metadata >> sed_file" << std::endl;
-        const std::string &xmp_bytes = doc->get_xmp();
+        const std::string &xmp_bytes = doc.get_xmp();
         if (xmp_bytes.length())
         {
           sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
