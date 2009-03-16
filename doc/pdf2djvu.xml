@@ -333,7 +333,7 @@
 			<term><option>--no-nfkc</option></term>
 			<listitem>
 				<para>
-					Don't NFKC-normalize the text.
+					Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize the text.
 				</para>
 			</listitem>
 		</varlistentry>
