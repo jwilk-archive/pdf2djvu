@@ -28,12 +28,11 @@
  * =========
  */
 
+static const char unix_path_separator = '/';
 #ifndef WIN32
-#define PATH_SEPARATOR "/"
-#define USE_UNIX_PATH_SEPARATOR 1
+static const char path_separator = unix_path_separator;
 #else
-#define PATH_SEPARATOR "\\"
-#define USE_UNIX_PATH_SEPARATOR 0
+static const char path_separator = '\\';
 #endif
 
 
@@ -127,14 +126,14 @@ static void throw_win32_error(const std::string &context)
 
 Command::Command(const std::string& command) : command(command)
 {
-  if (this->argv.size() == 0 && !USE_UNIX_PATH_SEPARATOR)
+  if (this->argv.size() == 0 && path_separator != unix_path_separator)
   {
     /* Convert path separators: */
     std::ostringstream stream;
     for (std::string::const_iterator it = command.begin(); it != command.end(); it++)
     {
-      if (*it == '/')
-        stream << PATH_SEPARATOR;
+      if (*it == unix_path_separator)
+        stream << path_separator;
       else
         stream << *it;
     }
@@ -456,7 +455,7 @@ public:
     if (tmpdir == NULL)
       tmpdir = "/tmp";
     name = new char[strlen(tmpdir) + strlen(PACKAGE_NAME) + 9];
-    sprintf(name, "%s%s%s.XXXXXX", tmpdir, PATH_SEPARATOR, PACKAGE_NAME);
+    sprintf(name, "%s%c%s.XXXXXX", tmpdir, path_separator, PACKAGE_NAME);
   }
 
   operator char * ()
@@ -530,7 +529,7 @@ File::File(const Directory& directory, const std::string &name)
 {
   std::ostringstream stream;
   this->basename = name;
-  stream << directory << PATH_SEPARATOR << name;
+  stream << directory << path_separator << name;
   this->open(stream.str().c_str());
 }
 
