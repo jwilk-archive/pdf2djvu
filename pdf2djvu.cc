@@ -511,7 +511,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document *doc, std::ostream &stre
 {
   static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
-  pdf::Object info;
+  pdf::OwnedObject info;
   doc->getDocInfo(&info);
   if (!info.isDict())
     return;
