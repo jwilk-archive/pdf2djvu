@@ -1,0 +1,53 @@
+pdf2djvu vs djvudigital
+=======================
+
+djvudigital, a part of DjVuLibre_, is another PDF to DjVu converter.
+The list below outlines some differences between the converters.
+
+Superiorities of djvudigital
+----------------------------
+
+- djvudigital uses a `sophisticated layer seperation algorithm`_.
+  pdf2djvu uses a simple one.
+
+- djvudigital is typically much faster than pdf2djvu.
+
+- djvudigital can convert PostScript files, too.
+
+Superiorities of pdf2djvu
+-------------------------
+
+- djvudigital internally relies on a `Ghostscript driver`_, which has a
+  license incompatibility issue. pdf2djvu is not affected by any
+  license problem.
+
+- djvudigital cannot extract hidden text.
+
+- djvudigital cannot extract document metadata.
+
+- For some documents, djvudigital cannot extract document outline.
+  See the `bug report`_ for details.
+
+- djvudigital cannot produce indirect multi-page document by itself.
+
+- djvudigital always uses lossless compression for monochrome images.
+
+- With djvudigital, there is no obvious way to convert only some pages
+  of a document.
+
+- With djvudigital, there is no way to customize page identifiers.
+
+
+.. _DjVuLibre:
+   http://freshmeat.net/projects/djvulibre/
+
+.. _sophisticated layer seperation algorithm: 
+   http://leon.bottou.org/papers/bottou-2001
+
+.. _Ghostscript driver:
+   http://djvu.sourceforge.net/gsdjvu.html
+
+.. _bug report:
+   http://sf.net/tracker/index.php?func=detail&aid=1997033&group_id=32953&atid=406583
+
+.. vim:tw=72 ft=rst
