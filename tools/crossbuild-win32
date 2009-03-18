@@ -1,0 +1,326 @@
+#!/bin/sh
+
+# Copyright © 2009 Jakub Wilk
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 dated June, 1991.
+
+set -e
+set -x
+
+# You may want to customize these:
+hostprefix=i586-mingw32msvc-
+docbook_xsl=/usr/share/xml/docbook/stylesheet/nwalsh/xhtml/docbook.xsl
+buildroot=`mktemp -dt pdf2djvu-win32-XXXXXXXX`
+# Note that $buildroot contents will be removed!
+
+version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q}' < doc/changelog.txt`
+
+pwd="$PWD"
+usr="$buildroot"
+mkdir "$usr/" || true
+src="$buildroot/src"
+mkdir "$src/" || true
+
+psrc="$src/pdf2djvu-$version/"
+mkdir "$psrc" || true
+cp *.cc *.hh *.in *.rc configure install-sh "$src/pdf2djvu-$version/"
+cp doc/*.txt doc/*.xml COPYING "$src/pdf2djvu-$version/"
+
+dist="$usr/dist"
+pdist="$dist/pdf2djvu-$version"
+mkdir -p "$pdist" || true
+
+# Download pre-compiled libraries:
+
+cd "$usr"
+
+wget -O - http://www.gtk.org/download-windows.html \
+| grep -E -o \
+  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/dependencies/expat-[0-9.]+[.]zip' \
+  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/dependencies/fontconfig(-dev)?-[0-9.]+-tml-[0-9]+[.]zip' \
+  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/dependencies/freetype(-dev)?-[0-9.]+[.]zip' \
+  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/glib/[0-9.]+/glib(-dev)?_[0-9.-]+_win32[.]zip' \
+  -e 'http://gnuwin32[.]sourceforge[.]net/downlinks/jpeg-(bin|lib)-zip[.]php' \
+  -e 'http://www.zlib.net/zlib[0-9]+-dll[.]zip' \
+  -e 'http://www[.]gimp[.]org/~tml/gimp/win32/libiconv-[0-9.]+[.]bin[.]woe32[.]zip' | \
+wget -c -i -
+for file in *.zip
+do
+  unzip "$file"
+done
+sed -i -e "s!^prefix=.*!prefix=$usr!" lib/pkgconfig/*
+
+( cp /usr/share/doc/mingw32-runtime/mingwm10.dll.gz bin/ && gzip -d bin/*.gz ) || \
+(
+  wget -O - 'http://sourceforge.net/project/showfiles.php?group_id=2435&package_id=11598' \
+  | grep -E -o 'http://downloads[.]sourceforge[.]net/mingw/mingwrt-[0-9.]+-mingw32-dll[.]tar[.]gz' \
+  | head -n1 - \
+  | wget -c -i -
+  tar -xzf mingwrt-*.tar.gz
+)
+
+# Download source libraries:
+
+cd "$src"
+
+(
+  printf 'http://poppler.freedesktop.org/'
+  wget -O - 'http://poppler.freedesktop.org/' \
+  | grep -E -o 'poppler-[0-9.]+[.]tar[.]gz' | head -n 1
+) | wget -c -i -
+tar -xzf poppler-*.tar.gz
+
+wget -O - 'http://packages.debian.org/testing/djvulibre-bin' \
+| grep -E -o \
+  -e 'http://ftp[a-z.]+[.]debian[.]org/debian/pool/main/d/djvulibre/djvulibre_[0-9.]+[.]orig[.]tar[.]gz' \
+  -e 'http://ftp[a-z.]+[.]debian[.]org/debian/pool/main/d/djvulibre/djvulibre_[0-9.]+-[0-9]+[.]diff[.]gz' \
+| wget -c -i -
+tar -xzf djvulibre_*.orig.tar.gz
+zcat djvulibre_*.diff.gz | patch -p0
+ 
+# Setup cross-compilation environment:
+
+export AS="${hostprefix}as"
+export CC="${hostprefix}cc"
+export CXX="${hostprefix}c++"
+export DLLTOOL="${hostprefix}dlltool"
+export NM="${hostprefix}nm"
+export OBJDUMP="${hostprefix}objdump"
+export RANLIB="${hostprefix}ranlib"
+export STRIP="${hostprefix}strip"
+export WINDRES="${hostprefix}windres"
+
+export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
+export CPATH="$usr/include"
+export LDFLAGS="-L$usr/lib"
+ 
+# Compile popppler:
+
+cd "$src/"poppler-*/
+./configure --host=mingw32 --prefix="$usr" \
+  --enable-xpdf-headers \
+  --disable-abiword-output \
+  --disable-cairo-output \
+  --disable-poppler-glib \
+  --disable-poppler-qt \
+  --disable-poppler-qt4
+make
+make install
+ 
+# Compile DjVuLibre:
+
+cd "$src/"djvulibre-*/
+sed -i -e '/LIBS=-lmsvcp60/d' configure
+./configure --host=mingw32 --prefix="$usr"
+sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' libdjvu/atomic.cpp
+make -C libdjvu install
+make -C tools install
+
+# Compile pdf2djvu:
+
+cd "$psrc"
+sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.in
+sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
+./configure --host=mingw32 --prefix="$usr"
+printf '#undef DJVULIBRE_BIN_PATH\n' >> version.hh
+printf '#define DJVULIBRE_BIN_PATH "."\n' >> version.hh
+make
+
+# Prepare the zipball contents:
+
+cd "$pdist"
+cp "$psrc/pdf2djvu" ./pdf2djvu.exe
+for tool in djvm djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
+do
+  cp "$usr/bin/${tool}" "${tool}.exe"
+done
+cp "$usr/bin/"libdjvulibre-*.dll .
+cp "$usr/bin/"libpoppler-*.dll .
+cp "$usr/bin/"libfontconfig-*.dll .
+cp "$usr/bin/"freetype*.dll .
+cp "$usr/bin/"jpeg*.dll .
+cp "$usr/bin/"iconv.dll .
+cp "$usr/bin/"libexpat.dll .
+cp "$usr/bin/"mingwm*dll .
+mkdir etc/ || true
+cp -r "$usr/etc/fonts" etc/
+mkdir doc/ || true
+
+chmod -x *.exe *.dll
+"$STRIP" -s *.exe
+
+# Build pdf2djvu documentation:
+
+cd "$psrc"
+for file in COPYING changelog.txt
+do
+  sed -e 's/$/\r/' < $file > "$pdist/doc/$file"
+done
+rm changelog.txt
+for file in *.txt
+do
+  rst2html $file > "$pdist/doc/${file%%.txt}.html"
+done
+xsltproc --nonet "$docbook_xsl" pdf2djvu.xml > "$pdist/doc/manual-page.html"
+
+# Build libraries licensing documentation:
+
+cat <<EOF | rst2html > "$pdist/doc/COPYING.libraries.html"
+libdjvulibre-\\*.dll
+====================
+Copyright © 2001 AT&T
+
+Copyright © 2002 Leon Bottou and Yann Le Cun.
+
+This software is subject to, and may be distributed under, the GNU General
+Public License, either Version 2 of the license, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+libpoppler-\\*.dll
+==================
+Copyright © 1996-2004 Glyph & Cog, LLC
+Copyright © 2005-2009 \`The Poppler Developers <http://poppler.freedesktop.org>\`_
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; version 2 dated June, 1991.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+freetype\\*.dll
+===============
+The FreeType 2 font engine is copyrighted work and cannot be used legally
+without a software license. In order to make this project usable to a vast
+majority of developers, we distribute it under two mutually exclusive
+open-source licenses.
+
+This means that *you* must choose *one* of the two licenses described below,
+then obey all its terms and conditions when using FreeType 2 in any of your
+projects or products.
+
+- The FreeType License, which is similar to the original BSD license *with* an
+  advertising clause that forces you to explicitly cite the FreeType project in
+  your product's documentation. All details are in the license file. This
+  license is suited to products which don't use the GNU General Public License.
+
+- The GNU General Public License version 2, for programs which already use the
+  GPL. Note that the FTL is incompatible with the GPL due to its advertisement
+  clause.
+
+The contributed PCF driver comes with a license similar to that of the X
+Window System. It is compatible to the above two licenses.
+
+libfontconfig-\\*.dll
+=====================
+Copyright © 2001, 2003 Keith Packard
+
+Permission to use, copy, modify, distribute, and sell this software and its
+documentation for any purpose is hereby granted without fee, provided that the
+above copyright notice appear in all copies and that both that copyright notice
+and this permission notice appear in supporting documentation, and that the
+name of Keith Packard not be used in advertising or publicity pertaining to
+distribution of the software without specific, written prior permission. Keith
+Packard makes no representations about the suitability of this software for any
+purpose. It is provided “as is” without express or implied warranty.
+
+KEITH PACKARD DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL KEITH
+PACKARD BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+jpeg*.dll
+=========
+This software is copyright © 1991-1998, Thomas G. Lane.
+All Rights Reserved except as specified below.
+
+Permission is hereby granted to use, copy, modify, and distribute this
+software (or portions thereof) for any purpose, without fee, subject to these
+conditions:
+
+1) If any part of the source code for this software is distributed, then the
+README file must be included, with this copyright and no-warranty notice
+unaltered; and any additions, deletions, or changes to the original files must
+be clearly indicated in accompanying documentation.
+
+2) If only executable code is distributed, then the accompanying
+documentation must state that “this software is based in part on the work of
+the Independent JPEG Group”.
+
+3) Permission for use of this software is granted only if the user accepts full
+responsibility for any undesirable consequences; the authors accept NO
+LIABILITY for damages of any kind.
+
+These conditions apply to any software derived from or based on the IJG code,
+not just to the unmodified library. If you use our work, you ought to
+acknowledge us.
+
+Permission is NOT granted for the use of any IJG author's name or company name
+in advertising or publicity relating to this software or products derived from
+it. This software may be referred to only as “the Independent JPEG Group's
+software”.
+
+We specifically permit and encourage the use of this software as the basis of
+commercial products, provided that all warranty or liability claims are assumed
+by the product vendor.
+
+libexpat.dll
+============
+Copyright © 1998, 1999, 2000 Thai Open Source Software Center Ltd and Clark
+Cooper
+
+Copyright © 2001, 2002, 2003, 2004, 2005, 2006 Expat maintainers.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+iconv.dll
+=========
+Copyright © 1999-2003 Free Software Foundation, Inc.
+
+The GNU LIBICONV Library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public License as
+published by the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+The GNU LIBICONV Library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU Library General Public License
+for more details.
+EOF
+ 
+# Build the zipball:
+
+cd "$dist/"
+rm -f "$pwd/pdf2djvu-$version.zip"
+zip -9 -X -r "$pwd/pdf2djvu-$version.zip" "pdf2djvu-$version"
+
+# Cleanup:
+
+rm -Rf "$buildroot"
+
+# vim:ts=2 sw=2 et
