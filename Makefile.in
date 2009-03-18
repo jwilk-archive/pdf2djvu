@@ -34,7 +34,7 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	$(RM) version.hh Makefile config.status
+	$(RM) version.hh Makefile config.status config.log
 
 .PHONY: test
 test: pdf2djvu
