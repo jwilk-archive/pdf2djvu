@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Jakub Wilk <ubanus@users.sf.net>
 Bugs: mailto:ubanus@users.sf.net
 Build-Depends: debhelper (>= 7), libpoppler-dev (>= 0.7.3), libdjvulibre-dev (>= 3.5.20-5), djvulibre-bin (>= 3.5.20-5), libpstreams-dev, libgraphicsmagick++1-dev
-Standards-Version: 3.8.0
+Standards-Version: 3.8.1
 Homepage: http://pdf2djvu.googlecode.com/
 Vcs-Svn: http://pdf2djvu.googlecode.com/svn/trunk
 Vcs-Browser: http://code.google.com/p/pdf2djvu/source/browse
