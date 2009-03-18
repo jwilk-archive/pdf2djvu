@@ -10,7 +10,7 @@ set -e
 set -x
 
 # You may want to customize these:
-hostprefix=i586-mingw32msvc-
+host=i586-mingw32msvc
 docbook_xsl=/usr/share/xml/docbook/stylesheet/nwalsh/xhtml/docbook.xsl
 buildroot=`mktemp -dt pdf2djvu-win32-XXXXXXXX`
 # Note that $buildroot contents will be removed!
@@ -83,14 +83,9 @@ zcat djvulibre_*.diff.gz | patch -p0
 # Setup cross-compilation environment:
 
 export AS="${hostprefix}as"
-export CC="${hostprefix}cc"
-export CXX="${hostprefix}c++"
-export DLLTOOL="${hostprefix}dlltool"
-export NM="${hostprefix}nm"
-export OBJDUMP="${hostprefix}objdump"
-export RANLIB="${hostprefix}ranlib"
-export STRIP="${hostprefix}strip"
-export WINDRES="${hostprefix}windres"
+export DLLTOOL="${host}-dlltool"
+export OBJDUMP="${host}-objdump"
+export STRIP="${host}-strip"
 
 export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
 export CPATH="$usr/include"
@@ -99,7 +94,7 @@ export LDFLAGS="-L$usr/lib"
 # Compile popppler:
 
 cd "$src/"poppler-*/
-./configure --host=mingw32 --prefix="$usr" \
+./configure --host="$host" --prefix="$usr" \
   --enable-xpdf-headers \
   --disable-abiword-output \
   --disable-cairo-output \
@@ -112,8 +107,11 @@ make install
 # Compile DjVuLibre:
 
 cd "$src/"djvulibre-*/
-sed -i -e '/LIBS=-lmsvcp60/d' configure
-./configure --host=mingw32 --prefix="$usr"
+sed -i \
+  -e '/LIBS=-lmsvcp60/d' \
+  -e 's/mingw32)/mingw32*)/' \
+  configure
+./configure --host="$host" --prefix="$usr"
 sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' libdjvu/atomic.cpp
 make -C libdjvu install
 make -C tools install
@@ -123,7 +121,7 @@ make -C tools install
 cd "$psrc"
 sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.in
 sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
-./configure --host=mingw32 --prefix="$usr"
+./configure --host="$host" --prefix="$usr"
 printf '#undef DJVULIBRE_BIN_PATH\n' >> version.hh
 printf '#define DJVULIBRE_BIN_PATH "."\n' >> version.hh
 make
