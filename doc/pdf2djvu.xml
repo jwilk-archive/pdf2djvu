@@ -259,6 +259,36 @@
 				<para>
 					Don't extract the metadata.
 				</para>
+				<para>
+					By default:
+					<itemizedlist>
+						<listitem>
+							<para>XMP metadata is extracted.</para>
+						</listitem>
+						<listitem>
+							<para>
+								The following entries of the document information dictionary are extracted:
+								<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>,
+								<literal>Creator</literal>, <literal>Producer</literal>,
+								<literal>CreationDate</literal>, <literal>ModDate</literal>.
+								Timestamps are formatted according to
+								<ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time
+								components separated by a single space.
+							</para>
+						</listitem>
+					</itemizedlist>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--verbatim-metadata</option></term>
+			<listitem>
+				<para>
+					Keep the original metadata intact.
+				</para>
+				<para>
+					By default, the <literal>Producer</literal> entry is extended by the &p; version information.
+				</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>

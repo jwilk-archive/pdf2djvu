@@ -48,6 +48,7 @@ public:
   bool hyperlinks_user_border_color;
   bool extract_hyperlinks;
   bool extract_metadata;
+  bool adjust_metadata;
   bool extract_outline;
   bool no_render;
   char *bg_slices;

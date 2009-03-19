@@ -32,6 +32,7 @@ Config::Config()
   this->hyperlinks_user_border_color = false;
   this->extract_hyperlinks = true;
   this->extract_metadata = true;
+  this->adjust_metadata = true;
   this->extract_outline = true;
   this->no_render = false;
   this->monochrome = false;
@@ -184,6 +185,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_TEXT_NONE,
     OPT_TEXT_WORDS,
     OPT_TEXT_NO_NFKC,
+    OPT_VERBATIM_METADATA,
     OPT_VERSION,
   };
   static struct option options [] =
@@ -214,6 +216,7 @@ void Config::read_config(int argc, char * const argv[])
     { "pageid-prefix", 1, 0, OPT_PREFIX },
     { "pages", 1, 0, OPT_PAGES },
     { "quiet", 0, 0, OPT_QUIET },
+    { "verbatim-metadata", 0, 0, OPT_VERBATIM_METADATA },
     { "verbose", 0, 0, OPT_VERBOSE },
     { "version", 0, 0, OPT_VERSION },
     { "words", 0, 0, OPT_TEXT_WORDS },
@@ -285,6 +288,9 @@ void Config::read_config(int argc, char * const argv[])
       break;
     case OPT_NO_METADATA:
       this->extract_metadata = false;
+      break;
+    case OPT_VERBATIM_METADATA:
+      this->adjust_metadata = false;
       break;
     case OPT_NO_OUTLINE:
       this->extract_outline = false;
@@ -367,6 +373,7 @@ void Config::usage(const Config::Error &error)
     << "     --lossy"              << std::endl
     << "     --anti-alias"         << std::endl
     << "     --no-metadata"        << std::endl
+    << "     --verbatim-metadata"  << std::endl
     << "     --no-outline"         << std::endl
     << "     --hyperlinks=..."     << std::endl
     << "     --no-hyperlinks"      << std::endl

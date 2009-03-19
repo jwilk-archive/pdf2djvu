@@ -536,24 +536,33 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
     }
   }
   {
+    bool have_producer = false;
     std::string value;
     pdf::OwnedObject object;
     if (pdf::dict_lookup(info_dict, "Producer", &object)->isString())
     {
+      have_producer = true;
       try
       {
         value = pdf::string_as_utf8(object);
-        if (value.length() > 0)
-          value += "\n";
+        if (config.adjust_metadata && value.length() > 0)
+          value += "\n" PACKAGE_STRING;
       }
       catch (IconvError &ex)
       {
         debug(1) << "[Warning] metadata[Producer] is not properly encoded" << std::endl;
       }
     }
-    value += PACKAGE_STRING;
-    sexpr::Ref esc_value = sexpr::string(value);
-    stream << "Producer\t" << esc_value << std::endl;
+    else if (config.adjust_metadata)
+    {
+      have_producer = true;
+      value = PACKAGE_STRING;
+    }
+    if (have_producer)
+    {
+      sexpr::Ref esc_value = sexpr::string(value);
+      stream << "Producer\t" << esc_value << std::endl;
+    }
   }
   for (const char** pkey = date_keys; *pkey; pkey++)
   try
