@@ -170,6 +170,8 @@ void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::s
 
 bool is_stream_a_tty(const std::ostream &ostream);
 
+void split_path(const std::string &path, std::string &directory_name, std::string &file_name);
+
 #endif
 
 // vim:ts=2 sw=2 et

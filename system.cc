@@ -439,33 +439,52 @@ void Directory::close(void)
     throw_posix_error(this->name);
 }
 
-
-/* class TemporaryPathTemplate
- * ===========================
+/* class CharArray
+ * ===============
  */
 
-
-class TemporaryPathTemplate {
-private:
-  char *name;
+class CharArray
+{
+protected:
+  char *buffer;
 public:
-  TemporaryPathTemplate() : name(NULL)
+  explicit CharArray(size_t size)
   {
-    const char *tmpdir = getenv("TMPDIR");
-    if (tmpdir == NULL)
-      tmpdir = "/tmp";
-    name = new char[strlen(tmpdir) + strlen(PACKAGE_NAME) + 9];
-    sprintf(name, "%s%c%s.XXXXXX", tmpdir, path_separator, PACKAGE_NAME);
+    buffer = new char[size];
   }
 
   operator char * ()
   {
-    return this->name;
+    return this->buffer;
   }
 
-  ~TemporaryPathTemplate()
+  ~CharArray()
   {
-    delete[] this->name;
+    delete[] this->buffer;
+  }
+};
+
+
+/* class TemporaryPathTemplate : CharArray
+ * =======================================
+ */
+
+
+class TemporaryPathTemplate : public CharArray
+{
+private:
+  static const char *temporary_directory()
+  {
+    const char *result = getenv("TMPDIR");
+    if (result == NULL)
+      result = "/tmp";
+    return result;
+  }
+public:
+  TemporaryPathTemplate()
+  : CharArray(strlen(this->temporary_directory()) + strlen(PACKAGE_NAME) + 9)
+  {
+    sprintf(*this, "%s%c%s.XXXXXX", this->temporary_directory(), path_separator, PACKAGE_NAME);
   }
 };
 
