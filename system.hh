@@ -116,7 +116,7 @@ private:
   File& operator=(const File&); // not defined
 protected:
   std::string name;
-  std::string basename;
+  std::string base_name;
   void open(const char* path);
   File() {}
 public:

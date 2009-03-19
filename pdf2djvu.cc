@@ -976,22 +976,9 @@ static int xmain(int argc, char * const argv[])
       {
         // Nope, it's not a directory, it must be a file.
         std::string output_directory_name;
-        size_t slash_index = config::output.rfind('/');
-        if (slash_index == std::string::npos)
-        {
-          output_directory_name = ".";
-          index_file_name = slash_index;
-        }
-        else
-        {
-          output_directory_name = config::output.substr(0, slash_index);
-          index_file_name = config::output.substr(slash_index + 1);
-          if (index_file_name.length() == 0)
-          {
-            // Oops, that was a directory, but a nonexistent one.
-            throw no_such_directory_exception;
-          }
-        }
+        split_path(config::output, output_directory_name, index_file_name);
+        if (index_file_name.length() == 0)
+          throw no_such_directory_exception;
         output_dir.reset(new Directory(output_directory_name));
       }
     }

@@ -8,6 +8,7 @@
 #include "system.hh"
 #include "debug.hh"
 
+#include <cassert>
 #include <cerrno>
 #include <sstream>
 #include <stdexcept>
@@ -16,6 +17,7 @@
 
 #include <fcntl.h>
 #include <dirent.h>
+#include <libgen.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <iconv.h>
@@ -547,7 +549,7 @@ File::File(const std::string &name)
 File::File(const Directory& directory, const std::string &name)
 {
   std::ostringstream stream;
-  this->basename = name;
+  this->base_name = name;
   stream << directory << path_separator << name;
   this->open(stream.str().c_str());
 }
@@ -567,7 +569,7 @@ void File::reopen()
 
 const std::string& File::get_basename() const
 {
-  return this->basename;
+  return this->base_name;
 }
 
 File::operator const std::string& () const
@@ -728,6 +730,24 @@ bool is_stream_a_tty(const std::ostream &ostream)
     // See <http://www.ginac.de/~kreckel/fileno/> for a more general
     // (although terribly unportable) solution.
     throw std::invalid_argument("is_a_tty(const std::ostream &)");
+  }
+}
+
+void split_path(const std::string &path, std::string &directory_name, std::string &file_name)
+{
+  {
+    CharArray buffer(path.length() + 2);
+    sprintf(buffer, "%s!", path.c_str());
+    directory_name = ::dirname(buffer);
+  }
+  {
+    CharArray buffer(path.length() + 2);
+    sprintf(buffer, "%s!", path.c_str());
+    file_name = ::basename(buffer);
+    size_t length = file_name.length();
+    assert(length > 0);
+    assert(file_name[length - 1] == '!');
+    file_name.erase(length - 1);
   }
 }
 
