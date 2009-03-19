@@ -217,7 +217,7 @@ void Config::read_config(int argc, char * const argv[])
     { "verbose", 0, 0, OPT_VERBOSE },
     { "version", 0, 0, OPT_VERSION },
     { "words", 0, 0, OPT_TEXT_WORDS },
-    { NULL,             0, 0, '\0' }
+    { NULL, 0, 0, '\0' }
   };
   int optindex, c;
   while (true)
