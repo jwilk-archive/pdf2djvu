@@ -1,6 +1,7 @@
 pdf2djvu (0.5.1) unstable; urgency=low
 
   * Fix several memory leaks.
+  * On Unix systems, respect the TMPDIR variable.
   * Better support for Windows systems.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Mon, 16 Mar 2009 20:26:58 +0100
