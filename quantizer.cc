@@ -122,9 +122,6 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 
 #ifdef HAVE_GRAPHICSMAGICK
 
-GraphicsMagickQuantizer::GraphicsMagickQuantizer()
-{ }
-
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
@@ -165,7 +162,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
     p_fg.next_row(), p_bg.next_row(), image.syncPixels();
   }
   image.quantizeColorSpace(Magick::TransparentColorspace);
-  image.quantizeColors(config::fg_colors);
+  image.quantizeColors(this->config.fg_colors);
   image.quantize();
   image.colorSpace(Magick::RGBColorspace);
   image.quantizeColorSpace(Magick::RGBColorspace);

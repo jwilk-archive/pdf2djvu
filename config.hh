@@ -16,8 +16,9 @@
 
 #include "sexpr.hh"
 
-namespace config
+class Config
 {
+public:
   enum text_t
   {
     TEXT_NONE = 0,
@@ -29,30 +30,35 @@ namespace config
     FORMAT_BUNDLED,
     FORMAT_INDIRECT
   };
-  extern format_t format;
-  extern text_t text;
-  extern bool text_nfkc;
-  extern std::string output;
-  extern bool output_stdout;
-  extern int verbose;
-  extern int dpi;
-  extern std::pair<int, int> preferred_page_size;
-  extern bool use_media_box;
-  extern int bg_subsample;
-  extern int fg_colors;
-  extern bool monochrome;
-  extern int loss_level;
-  extern bool antialias;
-  extern std::vector<sexpr::Ref> hyperlinks_options;
-  extern bool hyperlinks_user_border_color;
-  extern bool extract_hyperlinks;
-  extern bool extract_metadata;
-  extern bool extract_outline;
-  extern bool no_render;
-  extern char *bg_slices;
-  extern std::vector< std::pair<int, int> > pages;
-  extern char *file_name;
-  extern std::string pageid_prefix;
+  format_t format;
+  text_t text;
+  bool text_nfkc;
+  std::string output;
+  bool output_stdout;
+  int verbose;
+  int dpi;
+  std::pair<int, int> preferred_page_size;
+  bool use_media_box;
+  int bg_subsample;
+  int fg_colors;
+  bool monochrome;
+  int loss_level;
+  bool antialias;
+  std::vector<sexpr::Ref> hyperlinks_options;
+  bool hyperlinks_user_border_color;
+  bool extract_hyperlinks;
+  bool extract_metadata;
+  bool extract_outline;
+  bool no_render;
+  char *bg_slices;
+  std::vector< std::pair<int, int> > pages;
+  char *file_name;
+  std::string pageid_prefix;
+
+  Config();
+
+  class NeedVersion
+  { };
 
   class Error : public std::runtime_error
   {
@@ -134,12 +140,9 @@ namespace config
     }
   };
 
-  class NeedVersion
-  { };
-
   void read_config(int argc, char * const argv[]);
   void usage(const Error &error);
-}
+};
 
 #endif
 

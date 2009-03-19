@@ -16,30 +16,30 @@
 
 #include <getopt.h>
 
-config::text_t config::text = config::TEXT_WORDS;
-bool config::text_nfkc = true;
-config::format_t config::format = config::FORMAT_BUNDLED;
-std::string config::output;
-bool config::output_stdout = true;
-int config::verbose = 1;
-int config::dpi = 300;
-std::pair<int, int> config::preferred_page_size = std::make_pair(0, 0);
-bool config::use_media_box = false;
-int config::bg_subsample = 3;
-int config::fg_colors = -1;
-bool config::antialias = false;
-std::vector<sexpr::Ref> config::hyperlinks_options;
-bool config::hyperlinks_user_border_color = false;
-bool config::extract_hyperlinks = true;
-bool config::extract_metadata = true;
-bool config::extract_outline = true;
-bool config::no_render = false;
-bool config::monochrome = false;
-int config::loss_level = 0;
-char *config::bg_slices = NULL;
-std::vector< std::pair<int, int> > config::pages;
-char *config::file_name = NULL;
-std::string config::pageid_prefix = "p";
+Config::Config()
+{
+  this->text = this->TEXT_WORDS;
+  this->text_nfkc = true;
+  this->format = this->FORMAT_BUNDLED;
+  this->output_stdout = true;
+  this->verbose = 1;
+  this->dpi = 300;
+  this->preferred_page_size = std::make_pair(0, 0);
+  this->use_media_box = false;
+  this->bg_subsample = 3;
+  this->fg_colors = -1;
+  this->antialias = false;
+  this->hyperlinks_user_border_color = false;
+  this->extract_hyperlinks = true;
+  this->extract_metadata = true;
+  this->extract_outline = true;
+  this->no_render = false;
+  this->monochrome = false;
+  this->loss_level = 0;
+  this->bg_slices = NULL;
+  this->file_name = NULL;
+  this->pageid_prefix = "p";
+}
 
 static void split_by_char(char c, const std::string &s, std::vector<std::string> &result)
 {
@@ -80,7 +80,7 @@ static void parse_hyperlinks_options(const std::string &s, std::vector<sexpr::Re
       user_border_color = true;
       continue;
     }
-    throw config::HyperlinksOptionsParseError();
+    throw Config::HyperlinksOptionsParseError();
   }
 }
 
@@ -104,18 +104,18 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
     else if (*it == ',')
     {
       if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-        throw config::PagesParseError();
+        throw Config::PagesParseError();
       result.push_back(std::make_pair(value[0], value[1]));
       value[0] = value[1] = 0;
       state = 0;
     }
     else
-      throw config::PagesParseError();
+      throw Config::PagesParseError();
   }
   if (state == 0)
     value[1] = value[0];
   if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-    throw config::PagesParseError();
+    throw Config::PagesParseError();
   result.push_back(std::make_pair(value[0], value[1]));
 }
 
@@ -128,7 +128,7 @@ static std::pair<int, int>parse_page_size(const std::string &s)
   if (x > 0 &&  y > 0 && c == 'x' && stream.eof() && !stream.fail())
     return std::make_pair(x, y);
   else
-    throw config::PageSizeParseError();
+    throw Config::PageSizeParseError();
 }
 
 static int parse_fg_colors(const std::string &s)
@@ -137,7 +137,7 @@ static int parse_fg_colors(const std::string &s)
     return -1;
   int n = atoi(s.c_str());
   if (n < 1 || n > 4080)
-    throw config::Error("The specified number of foreground colors is outside the allowed range");
+    throw Config::Error("The specified number of foreground colors is outside the allowed range");
   return n;
 }
 
@@ -148,12 +148,12 @@ static const std::string& parse_pageid_prefix(const std::string &s)
     if (isalnum(*it) || *it == '_' || *it == '-' || *it == '+' || *it == '.')
       ;
     else
-      throw config::Error("Pageid prefix must consist only of letters, digits, '_', '+', '-' and '.' characters");
+      throw Config::Error("Pageid prefix must consist only of letters, digits, '_', '+', '-' and '.' characters");
   }
   return s;
 }
 
-void config::read_config(int argc, char * const argv[])
+void Config::read_config(int argc, char * const argv[])
 {
   enum
   {
@@ -231,91 +231,91 @@ void config::read_config(int argc, char * const argv[])
     switch (c)
     {
     case OPT_DPI:
-      config::dpi = atoi(optarg);
-      if (config::dpi < djvu::MIN_DPI || config::dpi > djvu::MAX_DPI)
-        throw config::DpiOutsideRange(djvu::MIN_DPI, djvu::MAX_DPI);
+      this->dpi = atoi(optarg);
+      if (this->dpi < djvu::MIN_DPI || this->dpi > djvu::MAX_DPI)
+        throw Config::DpiOutsideRange(djvu::MIN_DPI, djvu::MAX_DPI);
       break;
     case OPT_PAGE_SIZE:
-      config::preferred_page_size = parse_page_size(optarg);
+      this->preferred_page_size = parse_page_size(optarg);
       break;
     case OPT_MEDIA_BOX:
-      config::use_media_box = true;
+      this->use_media_box = true;
       break;
     case OPT_QUIET:
-      config::verbose = 0;
+      this->verbose = 0;
       break;
     case OPT_VERBOSE:
-      config::verbose++;
+      this->verbose++;
       break;
     case OPT_BG_SLICES:
-      config::bg_slices = optarg;
+      this->bg_slices = optarg;
       break;
     case OPT_BG_SUBSAMPLE:
-      config::bg_subsample = atoi(optarg);
-      if (config::bg_subsample < 1 || config::bg_subsample > 12)
-        throw config::Error("The specified subsampling ratio is outside the allowed range");
+      this->bg_subsample = atoi(optarg);
+      if (this->bg_subsample < 1 || this->bg_subsample > 12)
+        throw Config::Error("The specified subsampling ratio is outside the allowed range");
       break;
     case OPT_FG_COLORS:
-      config::fg_colors = parse_fg_colors(optarg);
+      this->fg_colors = parse_fg_colors(optarg);
       break;
     case OPT_MONOCHROME:
-      config::monochrome = true;
+      this->monochrome = true;
       break;
     case OPT_LOSS_100:
-      config::loss_level = 100;
+      this->loss_level = 100;
       break;
     case OPT_LOSS_ANY:
-      config::loss_level = atoi(optarg);
-      if (config::loss_level < 0)
-        config::loss_level = 0;
-      else if (config::loss_level > 200)
-        config::loss_level = 200;
+      this->loss_level = atoi(optarg);
+      if (this->loss_level < 0)
+        this->loss_level = 0;
+      else if (this->loss_level > 200)
+        this->loss_level = 200;
       break;
     case OPT_PAGES:
-      parse_pages(optarg, config::pages);
+      parse_pages(optarg, this->pages);
       break;
     case OPT_ANTIALIAS:
-      config::antialias = 1;
+      this->antialias = 1;
       break;
     case OPT_HYPERLINKS:
-      parse_hyperlinks_options(optarg, config::hyperlinks_options, config::hyperlinks_user_border_color);
+      parse_hyperlinks_options(optarg, this->hyperlinks_options, this->hyperlinks_user_border_color);
       break;
     case OPT_NO_HLINKS:
-      config::extract_hyperlinks = false;
+      this->extract_hyperlinks = false;
       break;
     case OPT_NO_METADATA:
-      config::extract_metadata = false;
+      this->extract_metadata = false;
       break;
     case OPT_NO_OUTLINE:
-      config::extract_outline = false;
+      this->extract_outline = false;
       break;
     case OPT_NO_RENDER:
-      config::no_render = 1;
+      this->no_render = 1;
       break;
     case OPT_TEXT_NONE:
-      config::text = config::TEXT_NONE;
+      this->text = this->TEXT_NONE;
       break;
     case OPT_TEXT_WORDS:
-      config::text = config::TEXT_WORDS;
+      this->text = this->TEXT_WORDS;
       break;
     case OPT_TEXT_LINES:
-      config::text = config::TEXT_LINES;
+      this->text = this->TEXT_LINES;
       break;
     case OPT_TEXT_NO_NFKC:
-      config::text_nfkc = false;
+      this->text_nfkc = false;
       break;
     case OPT_OUTPUT:
-      config::format = config::FORMAT_BUNDLED;
-      config::output = optarg;
-      config::output_stdout = false;
+      this->format = this->FORMAT_BUNDLED;
+      this->output = optarg;
+      this->output_stdout = false;
       break;
     case OPT_INDIRECT:
-      config::format = config::FORMAT_INDIRECT;
-      config::output = optarg;
-      config::output_stdout = false;
+      this->format = this->FORMAT_INDIRECT;
+      this->output = optarg;
+      this->output_stdout = false;
       break;
     case OPT_PREFIX:
-      config::pageid_prefix = parse_pageid_prefix(optarg);
+      this->pageid_prefix = parse_pageid_prefix(optarg);
       break;
     case OPT_HELP:
       throw NeedHelp();
@@ -329,16 +329,16 @@ void config::read_config(int argc, char * const argv[])
     }
   }
   if (optind < argc - 1)
-    throw config::Error("Too many arguments were specified");
+    throw Config::Error("Too many arguments were specified");
   else if (optind > argc - 1)
-    throw config::Error("No input file name was specified");
+    throw Config::Error("No input file name was specified");
   else
-    config::file_name = argv[optind];
+    this->file_name = argv[optind];
 }
 
-void config::usage(const config::Error &error)
+void Config::usage(const Config::Error &error)
 {
-  std::ostream &log = debug(0, config::verbose);
+  std::ostream &log = debug(0, this->verbose);
   if (error.is_already_printed())
     log << std::endl;
   if (!error.is_quiet())

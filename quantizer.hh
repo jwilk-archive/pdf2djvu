@@ -10,13 +10,17 @@
 
 #include <stdexcept>
 
+#include "config.hh"
 #include "compoppler.hh"
 
 class Quantizer
 {
+protected:
+  const Config &config;
 public:
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream) = 0;
+  explicit Quantizer(const Config &config) : config(config) { }
   virtual ~Quantizer() throw () { /* just to shut up compilers */ }
 };
 
@@ -25,6 +29,7 @@ class WebSafeQuantizer : public Quantizer
 protected:
   void output_web_palette(std::ostream &stream);
 public:
+  explicit WebSafeQuantizer(const Config &config) : Quantizer(config) { }
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
@@ -32,6 +37,7 @@ public:
 class DummyQuantizer : public WebSafeQuantizer
 {
 public:
+  explicit DummyQuantizer(const Config &config) : WebSafeQuantizer(config) { }
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
@@ -39,7 +45,7 @@ public:
 class GraphicsMagickQuantizer : public Quantizer
 {
 public:
-  GraphicsMagickQuantizer();
+  explicit GraphicsMagickQuantizer(const Config &config) : Quantizer(config) { }
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
   class NotImplementedError : public std::runtime_error

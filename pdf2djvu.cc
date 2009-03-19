@@ -23,9 +23,11 @@
 #include "sexpr.hh"
 #include "quantizer.hh"
 
+Config config;
+
 static inline std::ostream &debug(int n)
 {
-  return debug(n, config::verbose);
+  return debug(n, config.verbose);
 }
 
 class NoLinkDestination : public std::runtime_error
@@ -156,7 +158,7 @@ public:
   void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::gfx::ImageColorMap *color_map, int *mask_colors, GBool inline_image)
   {
-    if (is_foreground_color_map(color_map) || config::no_render)
+    if (is_foreground_color_map(color_map) || config.no_render)
       return;
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
@@ -164,7 +166,7 @@ public:
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
   {
-    if (is_foreground_color_map(color_map) || config::no_render)
+    if (is_foreground_color_map(color_map) || config.no_render)
       return;
     Renderer::drawMaskedImage(state, object, stream, width, height,
       color_map, mask_stream, mask_width, mask_height, mask_invert);
@@ -174,7 +176,7 @@ public:
     int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream,
     int mask_width, int mask_height,	pdf::gfx::ImageColorMap *mask_color_map)
   {
-    if (is_foreground_color_map(color_map) || config::no_render)
+    if (is_foreground_color_map(color_map) || config.no_render)
       return;
     Renderer::drawSoftMaskedImage(state, object, stream, width, height,
       color_map, mask_stream, mask_width, mask_height, mask_color_map);
@@ -219,7 +221,7 @@ public:
     ph = std::max(ph, 1.0);
     std::auto_ptr<pdf::NFKC> nfkc;
     const Unicode *const_unistr;
-    if (config::text_nfkc)
+    if (config.text_nfkc)
     {
       nfkc.reset(new pdf::NFKC(unistr, length));
       const_unistr = *nfkc;
@@ -243,7 +245,7 @@ public:
   void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
   {
     sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
-    if (!config::extract_hyperlinks)
+    if (!config.extract_hyperlinks)
       return;
     double x1, y1, x2, y2;
     pdf::link::Action *link_action = link->getAction();
@@ -289,11 +291,11 @@ public:
     y = this->getBitmapHeight() - y;
     sexpr::Ref expr = sexpr::nil;
     for (
-      std::vector<sexpr::Ref>::const_iterator it = config::hyperlinks_options.begin();
-      it != config::hyperlinks_options.end(); it++
+      std::vector<sexpr::Ref>::const_iterator it = config.hyperlinks_options.begin();
+      it != config.hyperlinks_options.end(); it++
     )
       expr = sexpr::cons(*it, expr);
-    if (!config::hyperlinks_user_border_color)
+    if (!config.hyperlinks_user_border_color)
     { 
       static sexpr::Ref symbol_xor = sexpr::symbol("xor");
       static sexpr::Ref symbol_border = sexpr::symbol("border");
@@ -329,7 +331,7 @@ public:
   void stroke(pdf::gfx::State *state) { }
   void fill(pdf::gfx::State *state)
   { 
-    if (config::no_render)
+    if (config.no_render)
       return;
     pdf::splash::Path path;
     this->convert_path(state, path);
@@ -847,10 +849,10 @@ public:
 
 static int calculate_dpi(double page_width, double page_height)
 {
-  if (config::preferred_page_size.first)
+  if (config.preferred_page_size.first)
   {
-    double hdpi = config::preferred_page_size.first / page_width;
-    double vdpi = config::preferred_page_size.second / page_height;
+    double hdpi = config.preferred_page_size.first / page_width;
+    double vdpi = config.preferred_page_size.second / page_height;
     double dpi = std::min(hdpi, vdpi);
     if (dpi < djvu::MIN_DPI)
       return djvu::MIN_DPI;
@@ -860,7 +862,7 @@ static int calculate_dpi(double page_width, double page_height)
       return static_cast<int>(dpi);
   }
   else
-    return config::dpi;
+    return config.dpi;
 }
 
 class StdoutIsATerminal : public std::runtime_error
@@ -891,34 +893,34 @@ static int xmain(int argc, char * const argv[])
 
   try
   {
-    config::read_config(argc, argv);
+    config.read_config(argc, argv);
   }
-  catch (const config::NeedVersion)
+  catch (const Config::NeedVersion)
   {
     std::cerr << PACKAGE_STRING << std::endl;
     exit(1);
   }
-  catch (const config::Error &ex)
+  catch (const Config::Error &ex)
   {
-    config::usage(ex);
+    config.usage(ex);
     exit(1);
   }
 
-  if (config::output_stdout && is_stream_a_tty(std::cout))
+  if (config.output_stdout && is_stream_a_tty(std::cout))
     throw StdoutIsATerminal();
 
   pdf::Environment environment;
-  environment.set_antialias(config::antialias);
+  environment.set_antialias(config.antialias);
 
   size_t pdf_size;
   { 
-    std::ifstream ifs(config::file_name, std::ifstream::in | std::ifstream::binary);
+    std::ifstream ifs(config.file_name, std::ifstream::in | std::ifstream::binary);
     ifs.seekg(0, std::ios::end);
     pdf_size = ifs.tellg();
     ifs.close();
   }
 
-  pdf::Document doc(config::file_name);
+  pdf::Document doc(config.file_name);
 
   pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
@@ -932,19 +934,19 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<PageFiles> page_files;
   std::auto_ptr<Quantizer> quantizer;
-  if (config::no_render || config::monochrome)
-    quantizer.reset(new DummyQuantizer());
-  else if (config::fg_colors > 0)
-    quantizer.reset(new GraphicsMagickQuantizer());
+  if (config.no_render || config.monochrome)
+    quantizer.reset(new DummyQuantizer(config));
+  else if (config.fg_colors > 0)
+    quantizer.reset(new GraphicsMagickQuantizer(config));
   else
-    quantizer.reset(new WebSafeQuantizer());
-  if (config::format == config::FORMAT_BUNDLED)
+    quantizer.reset(new WebSafeQuantizer(config));
+  if (config.format == config.FORMAT_BUNDLED)
   {
-    if (config::output_stdout)
+    if (config.output_stdout)
       output_file.reset(new TemporaryFile());
     else
-      output_file.reset(new File(config::output));
-    page_files.reset(new TemporaryPageFiles(n_pages, config::pageid_prefix));
+      output_file.reset(new File(config.output));
+    page_files.reset(new TemporaryPageFiles(n_pages, config.pageid_prefix));
     djvm.reset(new BundledDjVm(*output_file));
   }
   else
@@ -953,7 +955,7 @@ static int xmain(int argc, char * const argv[])
     try
     {
       // For compatibility reasons, check if it's a directory.
-      output_dir.reset(new Directory(config::output));
+      output_dir.reset(new Directory(config.output));
     }
     catch (OSError &no_such_directory_exception)
     {
@@ -976,23 +978,23 @@ static int xmain(int argc, char * const argv[])
       {
         // Nope, it's not a directory, it must be a file.
         std::string output_directory_name;
-        split_path(config::output, output_directory_name, index_file_name);
+        split_path(config.output, output_directory_name, index_file_name);
         if (index_file_name.length() == 0)
           throw no_such_directory_exception;
         output_dir.reset(new Directory(output_directory_name));
       }
     }
     output_file.reset(new File(*output_dir, index_file_name));
-    page_files.reset(new IndirectPageFiles(n_pages, *output_dir, config::pageid_prefix));
+    page_files.reset(new IndirectPageFiles(n_pages, *output_dir, config.pageid_prefix));
     djvm.reset(new IndirectDjVm(*output_file));
   }
-  if (config::pages.size() == 0)
-    config::pages.push_back(std::make_pair(1, n_pages));
+  if (config.pages.size() == 0)
+    config.pages.push_back(std::make_pair(1, n_pages));
   std::map<int, int> page_map;
   int opage = 1;
   for (
-    std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
-    page_range != config::pages.end(); page_range++)
+    std::vector< std::pair<int, int> >::iterator page_range = config.pages.begin();
+    page_range != config.pages.end(); page_range++)
   for (int ipage = page_range->first; ipage <= n_pages && ipage <= page_range->second; ipage++)
   {
     page_map[ipage] = opage;
@@ -1002,20 +1004,20 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<pdf::Renderer> out1;
   std::auto_ptr<MutedRenderer> outm, outs;
   
-  out1.reset(new pdf::Renderer(paper_color, config::monochrome));
-  outm.reset(new MutedRenderer(paper_color, config::monochrome, *page_files));
+  out1.reset(new pdf::Renderer(paper_color, config.monochrome));
+  outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
   out1->startDoc(doc.getXRef());
   outm->startDoc(doc.getXRef());
-  if (!config::monochrome)
+  if (!config.monochrome)
   {
-    outs.reset(new MutedRenderer(paper_color, config::monochrome, *page_files));
+    outs.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
     outs->startDoc(doc.getXRef());
   }
   debug(1) << doc.getFileName()->getCString() << ":" << std::endl;
-  bool crop = !config::use_media_box;
+  bool crop = !config.use_media_box;
   for (
-    std::vector< std::pair<int, int> >::iterator page_range = config::pages.begin();
-    page_range != config::pages.end(); page_range++)
+    std::vector< std::pair<int, int> >::iterator page_range = config.pages.begin();
+    page_range != config.pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;
@@ -1032,7 +1034,7 @@ static int xmain(int argc, char * const argv[])
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
     debug(2) << "  - image size: " << width << "x" << height << std::endl;
-    if (!config::no_render)
+    if (!config.no_render)
     {
       debug(3) << "  - verbose render" << std::endl;
       doc.display_page(out1.get(), n, dpi, dpi, crop, false);
@@ -1049,7 +1051,7 @@ static int xmain(int argc, char * const argv[])
     if (has_background)
     {
       int sub_width, sub_height;
-      calculate_subsampled_size(width, height, config::bg_subsample, sub_width, sub_height);
+      calculate_subsampled_size(width, height, config.bg_subsample, sub_width, sub_height);
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << "  - subsampled render" << std::endl;
@@ -1082,7 +1084,7 @@ static int xmain(int argc, char * const argv[])
           sep_file.write("\xff\xff\xff", 3);
       }
     }
-    if (config::text)
+    if (config.text)
     {
       debug(3) << "  - text layer >> sep_file" << std::endl;
       const std::string &texts = outm->get_texts();
@@ -1095,9 +1097,9 @@ static int xmain(int argc, char * const argv[])
       debug(3) << "  - !csepdjvu" << std::endl;
       Command csepdjvu(DJVULIBRE_BIN_PATH "/csepdjvu");
       csepdjvu << "-d" << dpi;
-      if (config::bg_slices)
-        csepdjvu << "-q" << config::bg_slices;
-      if (config::text == config::TEXT_LINES)
+      if (config.bg_slices)
+        csepdjvu << "-q" << config.bg_slices;
+      if (config.text == config.TEXT_LINES)
         csepdjvu << "-t";
       csepdjvu << sep_file << page_file;
       csepdjvu();
@@ -1113,14 +1115,14 @@ static int xmain(int argc, char * const argv[])
           << std::string("FGbz=") + std::string(fgbz_file)
           << std::string("BG44=") + std::string(bg44_file);
       djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
-      djvuextract(config::verbose < 3);
+      djvuextract(config.verbose < 3);
     }
-    if (config::monochrome)
+    if (config.monochrome)
     {
       TemporaryFile pbm_file;
       debug(3) << "  - !cjb2" << std::endl;
       Command cjb2(DJVULIBRE_BIN_PATH "/cjb2");
-      cjb2 << "-losslevel" << config::loss_level << pbm_file << sjbz_file;
+      cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
       pbm_file << "P4 " << width << " " << height << std::endl;
       pdf::Pixmap bmp(out1.get());
       pbm_file << bmp;
@@ -1153,7 +1155,7 @@ static int xmain(int argc, char * const argv[])
         debug(3) << "  - !djvuextract" << std::endl;
         Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
         djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
-        djvuextract(config::verbose < 3);
+        djvuextract(config.verbose < 3);
       }
     }
     {
@@ -1204,11 +1206,11 @@ static int xmain(int argc, char * const argv[])
     }
   }
   if (page_counter == 0)
-    throw config::NoPagesSelected();
+    throw Config::NoPagesSelected();
   {
     TemporaryFile dummy_page_file;
     TemporaryFile sed_file;
-    if (page_counter == 1 && config::format == config::FORMAT_BUNDLED)
+    if (page_counter == 1 && config.format == config.FORMAT_BUNDLED)
     {
       // Dummy page is necessary to force multi-file document structure.
       dummy_page_file.write(djvu::DUMMY_SINGLE_HEAD, sizeof djvu::DUMMY_SINGLE_HEAD);
@@ -1221,7 +1223,7 @@ static int xmain(int argc, char * const argv[])
   }
   {
     TemporaryFile sed_file;
-    if (config::extract_metadata)
+    if (config.extract_metadata)
     {
       {
         debug(3) << "- xmp metadata >> sed_file" << std::endl;
@@ -1251,11 +1253,11 @@ static int xmain(int argc, char * const argv[])
     djvused << *output_file << "-s" << "-f" << sed_file;
     djvused();
   }
-  if (config::extract_outline)
+  if (config.extract_outline)
   {
     TemporaryFile sed_file;
     debug(3) << "- outlines >> sed_file" << std::endl;
-    if (config::format == config::FORMAT_BUNDLED)
+    if (config.format == config.FORMAT_BUNDLED)
     {
       // Shared annotations chunk in necessary to preserve multi-file document structure.
       // (Single-file documents cannot contain document outline.)
@@ -1267,7 +1269,7 @@ static int xmain(int argc, char * const argv[])
     sed_file.close();
     djvm->set_outline(sed_file);
   }
-  if (page_counter == 1 && config::format == config::FORMAT_BUNDLED)
+  if (page_counter == 1 && config.format == config.FORMAT_BUNDLED)
   {
     // Dummy page is redundant now, so remove it.
     Command djvm(DJVULIBRE_BIN_PATH "/djvm");
@@ -1277,7 +1279,7 @@ static int xmain(int argc, char * const argv[])
   }
   {
     size_t djvu_size = output_file->size();
-    if (config::format == config::FORMAT_INDIRECT)
+    if (config.format == config.FORMAT_INDIRECT)
     {
       djvu_size += djvu_pages_size;
       try
@@ -1301,7 +1303,7 @@ static int xmain(int argc, char * const argv[])
       << djvu_size << " bytes out" 
       << std::endl;
   }
-  if (config::output_stdout)
+  if (config.output_stdout)
     copy_stream(*output_file, std::cout, true);
   return 0;
 }
