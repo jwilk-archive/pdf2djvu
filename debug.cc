@@ -7,14 +7,24 @@
 
 #include "debug.hh"
 
-DevNull dev_null;
+class DevNull : public std::ostream
+{
+public:
+  DevNull() : std::ostream(0) { }
+};
 
-std::ostream &debug(int n, int threshold)
+static DevNull static_dev_null;
+std::ostream &dev_null = static_dev_null;
+
+static DebugStream null_debug(dev_null);
+static DebugStream full_debug(std::clog);
+
+DebugStream &debug(int n, int threshold)
 {
   if (n <= threshold)
-    return std::clog;
+    return full_debug;
   else
-    return dev_null;
+    return null_debug;
 }
 
 // vim:ts=2 sw=2 et

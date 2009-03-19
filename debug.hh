@@ -11,19 +11,63 @@
 #ifndef PDF2DJVU_DEBUG_H
 #define PDF2DJVU_DEBUG_H
 
-std::ostream &debug(int n, int threshold);
+class DebugStream;
 
-class DevNull : public std::ostream
+template <typename tp>
+static inline DebugStream &operator<<(DebugStream &, const tp &object);
+static inline DebugStream &operator<<(DebugStream &stream, std::ostream& (*)(std::ostream&));
+
+class DebugStream
 {
+protected:
+  unsigned int indent;
+  bool started;
+  std::ostream &ostream;
 public:
-  DevNull() : std::ostream(0) { }
+  explicit DebugStream(std::ostream &ostream)
+  : indent(0), started(false), ostream(ostream)
+  { }
+  void operator ++(int) { this->indent++; }
+  void operator --(int) { this->indent--; }
+  template <typename tp>
+    friend DebugStream &operator<<(DebugStream &, const tp &);
+  friend DebugStream &operator<<(DebugStream &stream, std::ostream& (*)(std::ostream&));
 };
 
-extern DevNull dev_null;
+template <typename tp>
+static inline DebugStream &operator<<(DebugStream &stream, const tp &object)
+{
+  if (!stream.started)
+  {
+    unsigned int indent = stream.indent;
+    if (indent > 0)
+    {
+      while (indent-- > 1)
+        stream.ostream << "  ";
+      stream.ostream << "- ";
+    }
+    stream.started = true;
+  }
+  stream.ostream << object;
+  return stream;
+}
+
+static inline DebugStream &operator<<(DebugStream &stream, std::ostream& (*pf)(std::ostream&))
+{
+  if (pf == static_cast<std::ostream& (*)(std::ostream&)>(std::endl))
+    stream.started = false;
+  stream.ostream << pf;
+  return stream;
+}
+
+DebugStream &debug(int n, int threshold);
+
+extern std::ostream &dev_null;
 
 static inline std::ostream &operator<<(std::ostream &stream, const std::runtime_error &error)
 {
-  return stream << error.what();
+  stream << error.what();
+  return stream;
 }
 
 #endif

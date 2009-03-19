@@ -344,7 +344,7 @@ void Config::read_config(int argc, char * const argv[])
 
 void Config::usage(const Config::Error &error)
 {
-  std::ostream &log = debug(0, this->verbose);
+  DebugStream &log = debug(0, this->verbose);
   if (error.is_already_printed())
     log << std::endl;
   if (!error.is_quiet())
