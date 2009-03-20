@@ -61,6 +61,7 @@ static inline DebugStream &operator<<(DebugStream &stream, std::ostream& (*pf)(s
 }
 
 DebugStream &debug(int n, int threshold);
+extern DebugStream error_log;
 
 extern std::ostream &dev_null;
 

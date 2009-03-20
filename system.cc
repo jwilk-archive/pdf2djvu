@@ -71,7 +71,7 @@ static void warn_posix_error(const std::string &context)
   }
   catch (const POSIXError &e)
   {
-    std::cerr << "[Warning] " << e.what() << std::endl;
+    error_log << "[Warning] " << e.what() << std::endl;
   }
 }
 

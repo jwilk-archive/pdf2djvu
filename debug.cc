@@ -16,6 +16,7 @@ public:
 static DevNull static_dev_null;
 std::ostream &dev_null = static_dev_null;
 
+DebugStream error_log(std::cerr);
 static DebugStream null_debug(dev_null);
 static DebugStream full_debug(std::clog);
 

@@ -906,7 +906,7 @@ static int xmain(int argc, char * const argv[])
   }
   catch (const Config::NeedVersion)
   {
-    std::cerr << PACKAGE_STRING << std::endl;
+    error_log << PACKAGE_STRING << std::endl;
     exit(1);
   }
   catch (const Config::Error &ex)
@@ -1328,12 +1328,12 @@ try
 }
 catch (std::ios_base::failure &ex)
 {
-  std::cerr << "I/O error (" << ex.what() << ")" << std::endl;
+  error_log << "I/O error (" << ex.what() << ")" << std::endl;
   exit(2);
 }
 catch (std::runtime_error &ex)
 {
-  std::cerr << ex << std::endl;
+  error_log << ex << std::endl;
   exit(1);
 }
 
