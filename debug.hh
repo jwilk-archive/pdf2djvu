@@ -11,6 +11,11 @@
 #include <iostream>
 #include <stdexcept>
 
+#ifdef WIN32
+#include <sstream>
+#include "system.hh"
+#endif
+
 class DebugStream;
 
 template <typename tp>
@@ -53,7 +58,14 @@ static inline DebugStream &operator<<(DebugStream &stream, const tp &object)
     stream.indent();
     stream.started = true;
   }
+#ifdef WIN32
+  std::ostringstream buffer;
+  buffer.copyfmt(stream.ostream);
+  buffer << object;
+  ansi_to_oem(buffer.str(), stream.ostream);
+#else
   stream.ostream << object;
+#endif
   return stream;
 }
 

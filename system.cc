@@ -701,6 +701,23 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
     throw_posix_error("iconv_close()");
 }
 
+#ifdef WIN32
+void ansi_to_oem(const std::string &string, std::ostream &stream)
+{
+  int rc;
+  size_t length = string.length();
+  CharArray buffer(length);
+  string.copy(buffer, length);
+  rc = CharToOemBuff(buffer, buffer, length);
+  if (rc == 0)
+  {
+    // This should actually never happen.
+    throw_win32_error("CharToOemBuff");
+  }
+  stream.write(buffer, length);
+}
+#endif
+
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
 {
   if (seek)
