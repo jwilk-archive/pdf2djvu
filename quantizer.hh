@@ -45,7 +45,7 @@ public:
 class GraphicsMagickQuantizer : public Quantizer
 {
 public:
-  explicit GraphicsMagickQuantizer(const Config &config) : Quantizer(config) { }
+  explicit GraphicsMagickQuantizer(const Config &config);
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
   class NotImplementedError : public std::runtime_error

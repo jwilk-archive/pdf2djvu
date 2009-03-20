@@ -123,6 +123,10 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 
 #ifdef HAVE_GRAPHICSMAGICK
 
+GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
+: Quantizer(config)
+{ }
+
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
@@ -218,7 +222,8 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
 
 #else
 
-GraphicsMagickQuantizer::GraphicsMagickQuantizer()
+GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
+: Quantizer(config)
 { 
   throw NotImplementedError();
 }
