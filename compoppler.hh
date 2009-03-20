@@ -26,8 +26,6 @@
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
 
-#include "version.hh"
-
 namespace pdf 
 {
 
