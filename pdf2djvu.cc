@@ -6,22 +6,22 @@
  */
 
 #include <algorithm>
-#include <iostream>
+#include <cmath>
 #include <iomanip>
+#include <iostream>
+#include <map>
+#include <memory>
 #include <sstream>
 #include <vector>
-#include <map>
-#include <cmath>
-#include <memory>
 
 #include "compoppler.hh"
-#include "debug.hh"
 #include "config.hh"
+#include "debug.hh"
+#include "djvuconst.hh"
+#include "quantizer.hh"
+#include "sexpr.hh"
 #include "system.hh"
 #include "version.hh"
-#include "djvuconst.hh"
-#include "sexpr.hh"
-#include "quantizer.hh"
 
 Config config;
 

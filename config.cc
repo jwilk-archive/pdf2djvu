@@ -5,16 +5,17 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
+#include <climits>
+#include <cstdlib>
 #include <stdexcept>
 
-#include "debug.hh"
+#include <getopt.h>
+
 #include "config.hh"
+
+#include "debug.hh"
 #include "djvuconst.hh"
 #include "version.hh"
-
-#include <climits>
-
-#include <getopt.h>
 
 Config::Config()
 {

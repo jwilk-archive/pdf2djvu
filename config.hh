@@ -8,11 +8,10 @@
 #ifndef PDF2DJVU_CONFIG_H
 #define PDF2DJVU_CONFIG_H
 
-#include <algorithm>
 #include <sstream> 
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <stdexcept>
 
 #include "sexpr.hh"
 

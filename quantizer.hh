@@ -10,8 +10,8 @@
 
 #include <stdexcept>
 
-#include "config.hh"
 #include "compoppler.hh"
+#include "config.hh"
 
 class Quantizer
 {

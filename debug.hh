@@ -5,11 +5,11 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#include <iostream>
-#include <stdexcept>
-
 #ifndef PDF2DJVU_DEBUG_H
 #define PDF2DJVU_DEBUG_H
+
+#include <iostream>
+#include <stdexcept>
 
 class DebugStream;
 

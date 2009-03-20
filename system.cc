@@ -5,15 +5,12 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#include "system.hh"
-#include "debug.hh"
-
 #include <cassert>
 #include <cerrno>
+#include <cstdlib>
+#include <cstring>
 #include <sstream>
 #include <stdexcept>
-#include <cstring>
-#include <cstdlib>
 
 #include <fcntl.h>
 #include <dirent.h>
@@ -25,6 +22,10 @@
 #ifdef WIN32
 #include <windows.h>
 #endif
+
+#include "system.hh"
+#include "debug.hh"
+
 
 /* constants
  * =========

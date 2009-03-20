@@ -6,13 +6,13 @@
  */
 
 #include <algorithm>
-#include <string>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <memory>
 #include <ostream>
 #include <sstream>
-#include <cmath>
-#include <memory>
+#include <string>
 
 #include "compoppler.hh"
 

@@ -5,14 +5,15 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#include "quantizer.hh"
-
-#include "config.hh"
 #include "version.hh"
 
 #ifdef HAVE_GRAPHICSMAGICK
 #include <Magick++.h>
 #endif
+
+#include "quantizer.hh"
+
+#include "config.hh"
 
 void WebSafeQuantizer::output_web_palette(std::ostream &stream)
 {

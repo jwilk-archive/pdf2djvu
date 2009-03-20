@@ -8,16 +8,17 @@
 #ifndef PDF2DJVU_COMPOPPLER_H
 #define PDF2DJVU_COMPOPPLER_H
 
-#include <string>
 #include <ostream>
-#include <vector>
 #include <stdexcept>
+#include <string>
+#include <vector>
+
 #include <stdint.h>
 
-#include <PDFDoc.h>
 #include <GfxState.h>
-#include <SplashOutputDev.h>
 #include <Link.h>
+#include <PDFDoc.h>
+#include <SplashOutputDev.h>
 
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>

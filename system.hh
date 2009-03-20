@@ -8,8 +8,8 @@
 #ifndef PDF2DJVU_SYSTEM_HH
 #define PDF2DJVU_SYSTEM_HH
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <stdexcept>
 
 #include "version.hh"
