@@ -108,7 +108,8 @@ std::string Win32Error::__error_message__(const std::string &context)
   );
   if (nbytes == 0)
     message.append("possibly memory allocation error");
-  else {
+  else
+  {
     message.append(buffer);
     LocalFree(buffer);
   }
@@ -302,9 +303,11 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
   if (SetHandleInformation(read_end, HANDLE_FLAG_INHERIT, 0) == 0)
     throw_win32_error("SetHandleInformation");
-  if (!quiet) {
+  if (!quiet)
+  {
     error_handle = GetStdHandle(STD_ERROR_HANDLE);;
-    if (error_handle != INVALID_HANDLE_VALUE) {
+    if (error_handle != INVALID_HANDLE_VALUE)
+    {
       rc = DuplicateHandle(
         GetCurrentProcess(), error_handle,
         GetCurrentProcess(), &error_handle,
@@ -340,19 +343,22 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     free(c_command_line);
     if (rc == 0)
       status = -1;
-    else {
+    else
+    {
       CloseHandle(process_info.hProcess); /* ignore errors */
       CloseHandle(process_info.hThread); /* ignore errors */
     }
   }
-  if (status == 0) {
+  if (status == 0)
+  {
     CloseHandle(write_end); /* ignore errors */
     while (true)
     {
       char buffer[BUFSIZ];
       unsigned long nbytes;
       bool success = ReadFile(read_end, buffer, sizeof buffer, &nbytes, NULL);
-      if (!success) {
+      if (!success)
+      {
         status = -(GetLastError() != ERROR_BROKEN_PIPE);
         break;
       }
@@ -360,7 +366,8 @@ void Command::call(std::ostream *my_stdout, bool quiet)
         my_stdout->write(buffer, nbytes);
     }
   }
-  if (status < 0) {
+  if (status < 0)
+  {
     std::ostringstream message;
     message << "system(\"";
     message << this->command;
@@ -500,9 +507,8 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
 {
 #ifndef WIN32
   TemporaryPathTemplate path_buffer;
-  if (mkdtemp(path_buffer) == NULL) {
+  if (mkdtemp(path_buffer) == NULL)
     throw_posix_error(static_cast<char*>(path_buffer));
-  }
 #else
   char base_path_buffer[PATH_MAX];
   char path_buffer[PATH_MAX];
