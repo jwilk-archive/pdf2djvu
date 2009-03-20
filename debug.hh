@@ -14,51 +14,25 @@
 class DebugStream;
 
 template <typename tp>
-static inline DebugStream &operator<<(DebugStream &, const tp &object);
-static inline DebugStream &operator<<(DebugStream &stream, std::ostream& (*)(std::ostream&));
+static inline DebugStream &operator<<(DebugStream &, const tp &);
 
 class DebugStream
 {
 protected:
-  unsigned int indent;
+  unsigned int level;
   bool started;
   std::ostream &ostream;
+  void indent();
 public:
   explicit DebugStream(std::ostream &ostream)
-  : indent(0), started(false), ostream(ostream)
+  : level(0), started(false), ostream(ostream)
   { }
-  void operator ++(int) { this->indent++; }
-  void operator --(int) { this->indent--; }
+  void operator ++(int) { this->level++; }
+  void operator --(int) { this->level--; }
   template <typename tp>
     friend DebugStream &operator<<(DebugStream &, const tp &);
   friend DebugStream &operator<<(DebugStream &stream, std::ostream& (*)(std::ostream&));
 };
-
-template <typename tp>
-static inline DebugStream &operator<<(DebugStream &stream, const tp &object)
-{
-  if (!stream.started)
-  {
-    unsigned int indent = stream.indent;
-    if (indent > 0)
-    {
-      while (indent-- > 1)
-        stream.ostream << "  ";
-      stream.ostream << "- ";
-    }
-    stream.started = true;
-  }
-  stream.ostream << object;
-  return stream;
-}
-
-static inline DebugStream &operator<<(DebugStream &stream, std::ostream& (*pf)(std::ostream&))
-{
-  if (pf == static_cast<std::ostream& (*)(std::ostream&)>(std::endl))
-    stream.started = false;
-  stream.ostream << pf;
-  return stream;
-}
 
 DebugStream &debug(int n, int threshold);
 extern DebugStream error_log;
@@ -68,6 +42,18 @@ extern std::ostream &dev_null;
 static inline std::ostream &operator<<(std::ostream &stream, const std::runtime_error &error)
 {
   stream << error.what();
+  return stream;
+}
+
+template <typename tp>
+static inline DebugStream &operator<<(DebugStream &stream, const tp &object)
+{
+  if (!stream.started)
+  {
+    stream.indent();
+    stream.started = true;
+  }
+  stream.ostream << object;
   return stream;
 }
 

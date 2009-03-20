@@ -28,4 +28,23 @@ DebugStream &debug(int n, int threshold)
     return null_debug;
 }
 
+void DebugStream::indent()
+{
+  unsigned int level = this->level;
+  if (level > 0)
+  {
+    while (level-- > 1)
+      this->ostream << "  ";
+    this->ostream << "- ";
+  }
+}
+
+DebugStream &operator<<(DebugStream &stream, std::ostream& (*pf)(std::ostream&))
+{
+  if (pf == static_cast<std::ostream& (*)(std::ostream&)>(std::endl))
+    stream.started = false;
+  stream.ostream << pf;
+  return stream;
+}
+
 // vim:ts=2 sw=2 et
