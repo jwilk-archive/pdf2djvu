@@ -15,6 +15,8 @@
 #include <string>
 
 #include "compoppler.hh"
+#include "debug.hh"
+#include "system.hh"
 
 #include <GlobalParams.h>
 #include <PDFDocEncoding.h>
@@ -25,9 +27,22 @@
  * ======================
  */
 
+static void poppler_error_handler(int pos, char *message, va_list args)
+{
+  error_log << "PDF error";
+  if (pos >= 0)
+    error_log << " (" << pos << ")";
+  error_log << ": ";
+  std::ostringstream stream;
+  stream_printf(stream, message, args);
+  error_log << stream.str();
+  error_log << std::endl;
+}
+
 pdf::Environment::Environment()
 {
   globalParams = new GlobalParams();
+  setErrorFunction(poppler_error_handler);
 }
 
 void pdf::Environment::set_antialias(bool value)

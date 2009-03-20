@@ -168,6 +168,8 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit);
 
+void stream_printf(std::ostream &stream, char *message, va_list args);
+
 bool is_stream_a_tty(const std::ostream &ostream);
 
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name);

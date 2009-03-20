@@ -758,4 +758,18 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
   }
 }
 
+void stream_printf(std::ostream &stream, char *message, va_list args)
+{
+  int length = vsnprintf(NULL, 0, message, args);
+  assert(length >= 0);
+  if (length < 0)
+    throw_posix_error("vsnprintf");
+  CharArray buffer(length + 1);
+  length = vsprintf(buffer, message, args);
+  assert(length >= 0);
+  if (length < 0)
+    throw_posix_error("vsprintf");
+  stream << static_cast<char*>(buffer);
+}
+
 // vim:ts=2 sw=2 et

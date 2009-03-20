@@ -20,7 +20,7 @@ endif
 
 config.o: config.cc config.hh debug.hh djvuconst.hh sexpr.hh version.hh
 debug.o: debug.cc debug.hh
-compoppler.o: compoppler.cc compoppler.hh version.hh
+compoppler.o: compoppler.cc compoppler.hh debug.hh system.hh version.hh
 sexpr.o: sexpr.cc sexpr.hh
 system.o: system.cc system.hh debug.hh version.hh
 quantizer.o: quantizer.cc quantizer.hh compoppler.hh config.hh sexpr.hh version.hh
