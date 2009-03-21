@@ -178,6 +178,8 @@ bool is_stream_a_tty(const std::ostream &ostream);
 
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name);
 
+std::string absolute_path(const std::string &path, const std::string &dir_name);
+
 #endif
 
 // vim:ts=2 sw=2 et

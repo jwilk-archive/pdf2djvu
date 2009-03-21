@@ -775,6 +775,22 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
   }
 }
 
+std::string absolute_path(const std::string &path, const std::string &dir_name)
+{
+  if (path.length() == 0)
+    return path;
+  if (path[0] != '.')
+    return path;
+  if (path.length() == 1 || (path.length() >= 2 && (path[1] == unix_path_separator || path[1] == path_separator)))
+    return dir_name + path_separator + path.substr(std::min(static_cast<size_t>(2), path.length()));
+  assert(path.length() >= 2);
+  if (path[1] != '.')
+    return path;
+  if (path.length() == 2 || (path.length() >= 3 && (path[2] == unix_path_separator || path[2] == path_separator)))
+    return dir_name + path_separator + path;
+  return path;
+}
+
 void stream_printf(std::ostream &stream, char *message, va_list args)
 {
   int length = vsnprintf(NULL, 0, message, args);
