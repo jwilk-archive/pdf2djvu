@@ -701,17 +701,26 @@ public:
 class DjVuCommand : public Command
 {
 protected:
+  static std::string dir_name;
   static std::string full_path(const std::string &base_name)
   {
-    std::string result = base_name;
-    result.insert(0, DJVULIBRE_BIN_PATH "/");
-    return result;
+    return DjVuCommand::dir_name + "/" + base_name;
   } 
 public:
+  static void set_argv0(const char *argv0);
   explicit DjVuCommand(const std::string &base_name)
   : Command(full_path(base_name))
   { }
 };
+
+std::string DjVuCommand::dir_name("");
+
+void DjVuCommand::set_argv0(const char *argv0)
+{
+  std::string argv0_dir_name, argv0_file_name;
+  split_path(argv0, argv0_dir_name, argv0_file_name);
+  DjVuCommand::dir_name = absolute_path(DJVULIBRE_BIN_PATH, argv0_dir_name);
+}
 
 class DjVm
 {
@@ -914,6 +923,7 @@ static void calculate_subsampled_size(int width, int height, int ratio, int &sub
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
+  DjVuCommand::set_argv0(argv[0]);
 
   try
   {
