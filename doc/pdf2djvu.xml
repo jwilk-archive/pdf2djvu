@@ -421,6 +421,58 @@
 </refsection>
 
 <refsection>
+	<title>Implementation defails</title>
+	<refsection>
+		<title>Layer separation algorithm</title>
+		<para>
+			Unless the <option>--monochrome</option> option is on,
+			&p; uses the following naïve layer separation algorithm:
+			<orderedlist>
+				<listitem>
+					<para>
+						For each page, do the following:
+						<orderedlist>
+							<listitem>
+								<para>
+									Raster the page into a pixmap, in the usual manner.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Raster the page into another pixmap, omitting the following page elements:
+									<itemizedlist>
+										<listitem><para>text,</para></listitem>
+										<listitem><para>1 bit-per-pixel raster images,</para></listitem>
+										<listitem><para>vector elements (except fills of large areas).</para></listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Compare both pixmaps, pixel by pixel:
+									<orderedlist>
+										<listitem>
+											<para>
+												If their colors match, classify the pixel as a part of the background layer.
+											</para>
+										</listitem>
+										<listitem>
+											<para>
+												Otherwise, classify the pixel as a part of the foreground layer.
+											</para>
+										</listitem>
+									</orderedlist>
+								</para>
+							</listitem>
+						</orderedlist>
+					</para>
+				</listitem>
+			</orderedlist>
+		</para>
+	</refsection>
+</refsection>
+
+<refsection>
 	<title>See also</title>
 	<para>
 		<citerefentry>
