@@ -315,8 +315,8 @@ EOF
 # Build the zipball:
 
 cd "$dist/"
-rm -f "$pwd/pdf2djvu-$version.zip"
-zip -9 -X -r "$pwd/pdf2djvu-$version.zip" "pdf2djvu-$version"
+rm -f "$pwd/pdf2djvu-win32_$version.zip"
+zip -9 -X -r "$pwd/pdf2djvu-win32_$version.zip" "pdf2djvu-$version"
 
 # Cleanup:
 
