@@ -698,6 +698,21 @@ public:
   }
 };
 
+class DjVuCommand : public Command
+{
+protected:
+  static std::string full_path(const std::string &base_name)
+  {
+    std::string result = base_name;
+    result.insert(0, DJVULIBRE_BIN_PATH "/");
+    return result;
+  } 
+public:
+  explicit DjVuCommand(const std::string &base_name)
+  : Command(full_path(base_name))
+  { }
+};
+
 class DjVm
 {
 public:
@@ -716,11 +731,11 @@ class BundledDjVm : public DjVm
 {
 private:
   File &output_file;
-  Command command;
+  DjVuCommand command;
 public:
   explicit BundledDjVm(File &output_file) 
   : output_file(output_file),
-    command(DJVULIBRE_BIN_PATH "/djvm")
+    command("djvm")
   {
     this->command << "-c" << this->output_file;
   }
@@ -732,7 +747,7 @@ public:
 
   virtual void set_outline(File &outlines_sed_file)
   {
-    Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+    DjVuCommand djvused("djvused");
     djvused << "-s" << "-f" << outlines_sed_file << output_file;
     djvused(); // djvused -s -f <outlines-sed-file> <output-djvu-file>
   }
@@ -782,7 +797,7 @@ public:
       dummy_djvu_file.write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
     }
     dummy_djvu_file.close();
-    Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+    DjVuCommand djvused("djvused");
     djvused << "-s" << "-f" << outlines_sed_file << dummy_djvu_file;
     djvused(); // djvused -s -f <outlines-sed-file> <dummy-djvu-file>
     dummy_djvu_file.reopen();
@@ -841,7 +856,7 @@ public:
       for (std::vector<std::string>::const_iterator it = this->components.begin(); it != this->components.end(); it++)
         bzz_file << *it << '\0';
       bzz_file.close();
-      Command bzz(DJVULIBRE_BIN_PATH "/bzz");
+      DjVuCommand bzz("bzz");
       bzz << "-e" << bzz_file << "-";
       bzz(index_file);
     }
@@ -1106,7 +1121,7 @@ static int xmain(int argc, char * const argv[])
     sep_file.close();
     {
       debug(3) << "!csepdjvu" << std::endl;
-      Command csepdjvu(DJVULIBRE_BIN_PATH "/csepdjvu");
+      DjVuCommand csepdjvu("csepdjvu");
       csepdjvu << "-d" << dpi;
       if (config.bg_slices)
         csepdjvu << "-q" << config.bg_slices;
@@ -1119,7 +1134,7 @@ static int xmain(int argc, char * const argv[])
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
       debug(3) << "!djvuextract" << std::endl;
-      Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
+      DjVuCommand djvuextract("djvuextract");
       djvuextract << page_file;
       if (has_background || has_foreground || nonwhite_background_color)
         djvuextract
@@ -1132,7 +1147,7 @@ static int xmain(int argc, char * const argv[])
     {
       TemporaryFile pbm_file;
       debug(3) << "!cjb2" << std::endl;
-      Command cjb2(DJVULIBRE_BIN_PATH "/cjb2");
+      DjVuCommand cjb2("cjb2");
       cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
       pbm_file << "P4 " << width << " " << height << std::endl;
       pdf::Pixmap bmp(out1.get());
@@ -1147,7 +1162,7 @@ static int xmain(int argc, char * const argv[])
       {
         TemporaryFile ppm_file;
         debug(3) << "!c44" << std::endl;
-        Command c44(DJVULIBRE_BIN_PATH "/c44");
+        DjVuCommand c44("c44");
         c44 << "-slice" << "97" << ppm_file << c44_file;
         int bg_width = (width + 11) / 12;
         int bg_height = (height + 11) / 12;
@@ -1164,7 +1179,7 @@ static int xmain(int argc, char * const argv[])
       }
       {
         debug(3) << "!djvuextract" << std::endl;
-        Command djvuextract(DJVULIBRE_BIN_PATH "/djvuextract");
+        DjVuCommand djvuextract("djvuextract");
         djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
         djvuextract(config.verbose < 3);
       }
@@ -1181,14 +1196,14 @@ static int xmain(int argc, char * const argv[])
     if (has_text)
     {
       debug(3) << "!djvused >> sed_file" << std::endl;
-      Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+      DjVuCommand djvused("djvused");
       djvused << page_file << "-e" << "output-txt";
       djvused(sed_file);
     }
     sed_file.close();
     {
       debug(3) << "!djvumake" << std::endl;
-      Command djvumake(DJVULIBRE_BIN_PATH "/djvumake");
+      DjVuCommand djvumake("djvumake");
       std::ostringstream info;
       info << "INFO=" << width << "," << height << "," << dpi;
       djvumake
@@ -1203,7 +1218,7 @@ static int xmain(int argc, char * const argv[])
     }
     {
       debug(3) << "!djvused < sed_file" << std::endl;
-      Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+      DjVuCommand djvused("djvused");
       djvused << page_file << "-s" << "-f" << sed_file;
       djvused();
     }
@@ -1261,7 +1276,7 @@ static int xmain(int argc, char * const argv[])
     }
     sed_file.close();
     debug(3) << "!djvused < sed_file" << std::endl;
-    Command djvused(DJVULIBRE_BIN_PATH "/djvused");
+    DjVuCommand djvused("djvused");
     djvused << *output_file << "-s" << "-f" << sed_file;
     djvused();
   }
@@ -1284,7 +1299,7 @@ static int xmain(int argc, char * const argv[])
   if (page_counter == 1 && config.format == config.FORMAT_BUNDLED)
   {
     // Dummy page is redundant now, so remove it.
-    Command djvm(DJVULIBRE_BIN_PATH "/djvm");
+    DjVuCommand djvm("djvm");
     djvm << "-d" << *output_file << "2";
     debug(3) << "!djvm -d" << std::endl;
     djvm();
