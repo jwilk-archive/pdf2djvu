@@ -219,7 +219,7 @@
 			<term><option>--loss-level=N</option></term>
 			<listitem>
 				<para>
-					Specify the aggressiveness of the lossy compression. The default is 0 (lossless).
+					Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).
 					Valid values are integers between 0 and 200, inclusive. This option is similar to
 					the <option>-losslevel</option> option of <command>cjb2</command>; consult the 
 					<citerefentry>
