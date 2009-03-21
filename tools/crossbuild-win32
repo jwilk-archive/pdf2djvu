@@ -154,7 +154,7 @@ chmod -x *.exe *.dll
 cd "$psrc"
 for file in COPYING changelog.txt
 do
-  sed -e 's/$/\r/' < $file > "$pdist/doc/$file"
+  sed -e 's/$/\r/' < $file > "$pdist/doc/${file%%.txt}.txt"
 done
 rm changelog.txt
 for file in *.txt
