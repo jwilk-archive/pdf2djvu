@@ -1,9 +1,9 @@
-pdf2djvu (0.5.2) UNRELEASED; urgency=low
+pdf2djvu (0.5.2) unstable; urgency=low
 
   * Add --verbatim-metadata option.
   * Better support for Windows systems.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 19 Mar 2009 18:20:23 +0100
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 21 Mar 2009 16:28:18 +0100
 
 pdf2djvu (0.5.1) unstable; urgency=low
 
