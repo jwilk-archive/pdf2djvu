@@ -487,7 +487,7 @@ private:
   {
     const char *result = getenv("TMPDIR");
     if (result == NULL)
-      result = "/tmp";
+      result = P_tmpdir;
     return result;
   }
 public:
