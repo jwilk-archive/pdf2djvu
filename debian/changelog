@@ -1,3 +1,9 @@
+pdf2djvu (0.5.3) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Sun, 22 Mar 2009 10:41:29 +0100
+
 pdf2djvu (0.5.2) unstable; urgency=low
 
   * Add --verbatim-metadata option.
