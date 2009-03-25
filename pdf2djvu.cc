@@ -771,7 +771,6 @@ class IndirectDjVm : public DjVm
 {
 private:
   File &index_file;
-  File *outline_sed_file;
   std::vector<std::string> components;
   class UnexpectedDjvuSedOutput : public std::runtime_error
   { 
@@ -782,8 +781,7 @@ private:
   };
 public:
   explicit IndirectDjVm(File &index_file) 
-  : index_file(index_file),
-    outline_sed_file(NULL)
+  : index_file(index_file)
   {}
 
   virtual ~IndirectDjVm() throw ()
