@@ -244,7 +244,7 @@ public:
 
   void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
   {
-    sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
+    sexpr::GCLock gc_lock;
     if (!config.extract_hyperlinks)
       return;
     double x1, y1, x2, y2;
@@ -412,7 +412,7 @@ namespace pdf
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
   const PageFiles &page_files)
 {
-  sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
+  sexpr::GCLock gc_lock;
   pdf::Object current, next;
   if (!pdf::dict_lookup(node, "First", &current)->isDict())
     return sexpr::nil;
@@ -471,7 +471,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
 static void pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream, 
   const PageFiles &page_files)
 {
-  sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
+  sexpr::GCLock gc_lock;
   pdf::Catalog *catalog = doc.getCatalog();
   pdf::Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
@@ -1267,7 +1267,7 @@ static int xmain(int argc, char * const argv[])
         const std::string &xmp_bytes = doc.get_xmp();
         if (xmp_bytes.length())
         {
-          sexpr::GCLock gc_lock; // work-around <http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583>
+          sexpr::GCLock gc_lock;
           static sexpr::Ref xmp_symbol = sexpr::symbol("xmp");
           sexpr::Ref xmp = sexpr::nil;
           xmp = sexpr::cons(sexpr::string(xmp_bytes), xmp);
