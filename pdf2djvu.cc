@@ -727,6 +727,7 @@ class DjVm
 public:
   virtual void add(const File &file) = 0;
   virtual void create() = 0;
+  virtual void commit() = 0;
   DjVm &operator <<(const File &file)
   {
     this->add(file);
@@ -741,16 +742,19 @@ class BundledDjVm : public DjVm
 private:
   File &output_file;
   DjVuCommand command;
+  unsigned int page_counter;
 public:
   explicit BundledDjVm(File &output_file) 
   : output_file(output_file),
-    command("djvm")
+    command("djvm"),
+    page_counter(0)
   {
     this->command << "-c" << this->output_file;
   }
 
   virtual void add(const File &file)
   {
+    page_counter++;
     this->command << file;
   }
 
@@ -763,7 +767,35 @@ public:
 
   virtual void create()
   {
+    std::auto_ptr<TemporaryFile> dummy_page_file;
+    if (this->page_counter == 1)
+    {
+      /* An additional, dummy page is necessary to force multi-file document structure. */
+      dummy_page_file.reset(new TemporaryFile());
+      dummy_page_file->write(djvu::DUMMY_SINGLE_HEAD, sizeof djvu::DUMMY_SINGLE_HEAD);
+      dummy_page_file->write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
+      dummy_page_file->close();
+      this->command << *dummy_page_file;
+    }
+    debug(3) << "creating a multi-page document (" << this->page_counter << " ";
+    if (this->page_counter == 1)
+      debug(3) << "page + a dummy page";
+    else
+      debug(3) << "pages";
+    debug(3) << ") with djvm" << std::endl;
     this->command();
+  }
+
+  virtual void commit()
+  {
+    if (this->page_counter == 1)
+    {
+      /* The dummy page is redundant now, so remove it. */
+      DjVuCommand djvm("djvm");
+      djvm << "-d" << this->output_file << "2";
+      debug(3) << "!djvm -d" << std::endl;
+      djvm();
+    }
   }
 };
 
@@ -876,6 +908,9 @@ public:
       index_file << static_cast<char>(((size - 24) >> (8 * i)) & 0xff);
     index_file.close();
   }
+
+  virtual void commit()
+  { }
 };
 
 static int calculate_dpi(double page_width, double page_height)
@@ -960,7 +995,7 @@ static int xmain(int argc, char * const argv[])
   size_t n_pixels = 0;
   size_t djvu_pages_size = 0;
   int n_pages = doc.getNumPages();
-  int page_counter = 0;
+  unsigned int page_counter = 0;
   std::auto_ptr<const Directory> output_dir;
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
@@ -1245,15 +1280,6 @@ static int xmain(int argc, char * const argv[])
   {
     TemporaryFile dummy_page_file;
     TemporaryFile sed_file;
-    if (page_counter == 1 && config.format == config.FORMAT_BUNDLED)
-    {
-      // Dummy page is necessary to force multi-file document structure.
-      dummy_page_file.write(djvu::DUMMY_SINGLE_HEAD, sizeof djvu::DUMMY_SINGLE_HEAD);
-      dummy_page_file.write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
-      dummy_page_file.close();
-      *djvm << dummy_page_file;
-    }
-    debug(3) << "!djvm" << std::endl;
     djvm->create();
   }
   {
@@ -1304,14 +1330,7 @@ static int xmain(int argc, char * const argv[])
     sed_file.close();
     djvm->set_outline(sed_file);
   }
-  if (page_counter == 1 && config.format == config.FORMAT_BUNDLED)
-  {
-    // Dummy page is redundant now, so remove it.
-    DjVuCommand djvm("djvm");
-    djvm << "-d" << *output_file << "2";
-    debug(3) << "!djvm -d" << std::endl;
-    djvm();
-  }
+  djvm->commit();
   {
     size_t djvu_size = output_file->size();
     if (config.format == config.FORMAT_INDIRECT)
