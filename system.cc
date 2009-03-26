@@ -762,6 +762,11 @@ bool is_stream_a_tty(const std::ostream &ostream)
 
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name)
 {
+  /* POSIX-compliant ``basename()`` and ``dirname()`` would split ``/foo/bar/``
+   * into ``/foo`` and ``"bar"``, instead of desired ``"foo/bar"`` and an empty
+   * string. To deal with this weirdness, a trailing ``!`` character is
+   * appended to the splitted path.
+   */
   {
     CharArray buffer(path.length() + 2);
     sprintf(buffer, "%s!", path.c_str());
