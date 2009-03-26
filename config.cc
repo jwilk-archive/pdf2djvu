@@ -138,7 +138,7 @@ static int parse_fg_colors(const std::string &s)
   if (s == "web")
     return -1;
   int n = atoi(s.c_str());
-  if (n < 1 || n > 4080)
+  if (n < 1 || n > djvu::max_fg_colors)
     throw Config::Error("The specified number of foreground colors is outside the allowed range");
   return n;
 }
@@ -256,7 +256,7 @@ void Config::read_config(int argc, char * const argv[])
       break;
     case OPT_BG_SUBSAMPLE:
       this->bg_subsample = atoi(optarg);
-      if (this->bg_subsample < 1 || this->bg_subsample > 12)
+      if (this->bg_subsample < 1 || this->bg_subsample > djvu::max_subsample_ratio)
         throw Config::Error("The specified subsampling ratio is outside the allowed range");
       break;
     case OPT_FG_COLORS:
