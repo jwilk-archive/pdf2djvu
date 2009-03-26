@@ -734,6 +734,7 @@ public:
     return *this;
   }
   virtual void set_outline(File &outline_sed_file) = 0;
+  virtual void set_metadata(File &metadata_sed_file) = 0;
   virtual ~DjVm() throw () { /* just to shut up compilers */ }
 };
 
@@ -763,6 +764,14 @@ public:
     DjVuCommand djvused("djvused");
     djvused << "-s" << "-f" << outlines_sed_file << output_file;
     djvused(); // djvused -s -f <outlines-sed-file> <output-djvu-file>
+  }
+
+  virtual void set_metadata(File &metadata_sed_file)
+  {
+    debug(3) << "setting metadata with `djvused`" << std::endl;
+    DjVuCommand djvused("djvused");
+    djvused << "-s" << "-f" << metadata_sed_file << this->output_file;
+    djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
   }
 
   virtual void create()
@@ -879,6 +888,14 @@ public:
       else
         throw UnexpectedDjvuSedOutput();
     }
+  }
+
+  virtual void set_metadata(File &metadata_sed_file)
+  {
+    debug(3) << "setting metadata with `djvused` (may take much time)" << std::endl;
+    DjVuCommand djvused("djvused");
+    djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
+    djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
   }
 
   virtual void create()
@@ -1317,10 +1334,7 @@ static int xmain(int argc, char * const argv[])
     pdf_metadata_to_djvu_metadata(doc, sed_file);
     sed_file << "." << std::endl;
     sed_file.close();
-    debug(3) << "setting metadata with `djvused`" << std::endl;
-    DjVuCommand djvused("djvused");
-    djvused << *output_file << "-s" << "-f" << sed_file;
-    djvused();
+    djvm->set_metadata(sed_file);
   }
   if (config.extract_outline)
   {
