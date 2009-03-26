@@ -143,7 +143,7 @@ pdf2djvu (0.4.2) unstable; urgency=low
 pdf2djvu (0.4.1) unstable; urgency=low
 
   * Add --bg-subsample option.
-  * Work-around djvused bug which made impossible to incorporate document
+  * Work around djvused bug which made impossible to incorporate document
     outline into indirect multi-page documents.
     Thanks to Janusz S. Bień for the bug report.
   * Tune color quantization a bit.
