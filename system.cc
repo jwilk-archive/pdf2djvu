@@ -673,11 +673,16 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
     throw_posix_error("iconv_open()");
   while (inbuf_len > 0)
   {
+    /* Mac OS X provides a ``iconv()`` prototype which is not POSIX-compliant.
+     * To work around this bug, a special wrapper is used, which adapts itself
+     * to the expected type.
+     *
+     * The idea is taken from:
+     * http://wang.yuxuan.org/blog/2007/7/9/deal_with_2_versions_of_iconv_h
+     */
     struct iconv_adapter 
     {
-      // http://wang.yuxuan.org/blog/2007/7/9/deal_with_2_versions_of_iconv_h
       iconv_adapter(const char** s) : s(s) {}
-      iconv_adapter(char** s) : s(const_cast<const char**>(s)) {}
       operator char**() const
       {
         return const_cast<char**>(s);
