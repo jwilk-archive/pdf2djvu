@@ -535,15 +535,18 @@ TemporaryDirectory::~TemporaryDirectory() throw ()
  * =========================
  */
 
-void File::open(const char* path)
+void File::open(const char* path, bool truncate)
 {
+  std::fstream::openmode mode = std::fstream::in | std::fstream::out | std::fstream::binary;
+  if (truncate)
+    mode |= std::fstream::trunc;
   this->exceptions(std::ifstream::failbit | std::ifstream::badbit);
   if (path == NULL)
-    this->std::fstream::open(this->name.c_str(), std::fstream::in | std::fstream::out | std::fstream::binary);
+    this->std::fstream::open(this->name.c_str(), mode);
   else
   {
     this->name = path;
-    this->std::fstream::open(path, std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+    this->std::fstream::open(path, mode);
   }
   this->exceptions(std::ifstream::badbit);
 }
@@ -567,11 +570,11 @@ size_t File::size()
   return this->tellg();
 }
 
-void File::reopen()
+void File::reopen(bool truncate)
 {
   if (this->is_open())
     this->close();
-  this->open(NULL);
+  this->open(NULL, truncate);
 }
 
 const std::string& File::get_basename() const
@@ -643,7 +646,7 @@ ExistingFile::ExistingFile(const std::string &name)
 : File()
 {
   this->name = name;
-  this->open(NULL);
+  this->open(NULL, false);
 }
 
 ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
@@ -652,7 +655,7 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
   std::ostringstream stream;
   stream << directory << "/" << name;
   this->name = stream.str();
-  this->open(NULL);
+  this->open(NULL, false);
 }
 
 

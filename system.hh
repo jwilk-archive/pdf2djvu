@@ -117,14 +117,14 @@ private:
 protected:
   std::string name;
   std::string base_name;
-  void open(const char* path);
+  void open(const char* path, bool truncate = true);
   File() {}
 public:
   explicit File(const std::string &name);
   File(const Directory& directory, const std::string &name);
   virtual ~File() throw () { }
   size_t size();
-  void reopen();
+  void reopen(bool truncate = false);
   const std::string& get_basename() const;
   operator const std::string& () const;
   friend std::ostream &operator<<(std::ostream &, const File &);
