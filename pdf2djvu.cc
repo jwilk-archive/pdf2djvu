@@ -761,6 +761,7 @@ public:
 
   virtual void set_outline(File &outlines_sed_file)
   {
+    debug(3) << "creating document outline with `djvused`" << std::endl;
     DjVuCommand djvused("djvused");
     djvused << "-s" << "-f" << outlines_sed_file << output_file;
     djvused(); // djvused -s -f <outlines-sed-file> <output-djvu-file>
