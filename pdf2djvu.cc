@@ -755,7 +755,7 @@ public:
 
   virtual void add(const File &file)
   {
-    page_counter++;
+    this->page_counter++;
     this->command << file;
   }
 
@@ -763,7 +763,7 @@ public:
   {
     debug(3) << "creating document outline with `djvused`" << std::endl;
     DjVuCommand djvused("djvused");
-    djvused << "-s" << "-f" << outlines_sed_file << output_file;
+    djvused << "-s" << "-f" << outlines_sed_file << this->output_file;
     djvused(); // djvused -s -f <outlines-sed-file> <output-djvu-file>
   }
 
@@ -902,8 +902,8 @@ public:
   virtual void create()
   {
     size_t size = this->components.size();
-    index_file.write(djvu::BINARY_TEMPLATE, sizeof djvu::BINARY_TEMPLATE);
-    index_file << djvu::VERSION;
+    this->index_file.write(djvu::BINARY_TEMPLATE, sizeof djvu::BINARY_TEMPLATE);
+    this->index_file << djvu::VERSION;
     debug(3)
       << "creating multi-page indirect document "
       << "(" << size << " " << (size == 1 ? "page" : "pages") << ")"
@@ -923,14 +923,14 @@ public:
       bzz << "-e" << bzz_file << "-";
       bzz(index_file);
     }
-    size = index_file.size();
-    index_file.seekg(8, std::ios::beg);
+    size = this->index_file.size();
+    this->index_file.seekg(8, std::ios::beg);
     for (int i = 3; i >= 0; i--)
-      index_file << static_cast<char>(((size - 12) >> (8 * i)) & 0xff);
-    index_file.seekg(20, std::ios::beg);
+      this->index_file << static_cast<char>(((size - 12) >> (8 * i)) & 0xff);
+    this->index_file.seekg(20, std::ios::beg);
     for (int i = 3; i >= 0; i--)
-      index_file << static_cast<char>(((size - 24) >> (8 * i)) & 0xff);
-    index_file.close();
+      this->index_file << static_cast<char>(((size - 24) >> (8 * i)) & 0xff);
+    this->index_file.close();
   }
 
   virtual void commit()
