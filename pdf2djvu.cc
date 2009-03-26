@@ -821,7 +821,7 @@ private:
     : std::runtime_error("Unexpected output from djvused") 
     { };
   };
-  void do_create(const std::vector<std::string> &components);
+  void do_create(const std::vector<std::string> &components, bool shared_ant = false);
 public:
   explicit IndirectDjVm(File &index_file) 
   : index_file(index_file)
@@ -914,19 +914,23 @@ public:
   { }
 };
 
-void IndirectDjVm::do_create(const std::vector<std::string> &components)
+void IndirectDjVm::do_create(const std::vector<std::string> &components, bool shared_ant)
 {
   size_t size = components.size();
   this->index_file.write(djvu::BINARY_TEMPLATE, sizeof djvu::BINARY_TEMPLATE);
   this->index_file << djvu::VERSION;
   for (int i = 1; i >= 0; i--)
-    index_file << static_cast<char>((size >> (8 * i)) & 0xff);
+    index_file << static_cast<char>(((size + shared_ant) >> (8 * i)) & 0xff);
   {
     TemporaryFile bzz_file;
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < size + shared_ant; i++)
       bzz_file.write("\0\0", 3);
+    if (shared_ant)
+      bzz_file << '\3';
     for (size_t i = 0; i < size; i++)
       bzz_file << '\1';
+    if (shared_ant)
+      bzz_file << "shared_anno.iff" << '\0';
     for (std::vector<std::string>::const_iterator it = components.begin(); it != components.end(); it++)
       bzz_file << *it << '\0';
     bzz_file.close();
