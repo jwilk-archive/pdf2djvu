@@ -901,10 +901,58 @@ public:
 
   virtual void set_metadata(File &metadata_sed_file)
   {
-    debug(3) << "setting metadata with `djvused` (may take much time)" << std::endl;
-    DjVuCommand djvused("djvused");
-    djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
-    djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
+    size_t size = this->components.size();
+    if (size <= 2)
+    {
+      debug(3) << "setting metadata with `djvused`" << std::endl;
+      DjVuCommand djvused("djvused");
+      djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
+      djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
+    }
+    else
+    {
+      /* Using ``djvused`` to add shared annotations to a indirect multi-page
+       * document could be unacceptably slow:
+       * http://sf.net/tracker/?func=detail&aid=1935916&group_id=32953&atid=406583
+       *
+       * We need to work around this bug.
+       */
+      debug(3) << "setting metadata with `djvused` (working around a DjVuLibre bug)" << std::endl;
+      std::vector<std::string> dummy_components;
+      dummy_components.push_back("");
+      TemporaryFile dummy_sed_file;
+      /* For an indirect document, ``create-shared-ant`` is, surprisingly, not
+       * enough to create a shared annotations chunk. The dummy shared
+       * annotation is actually required.
+       */
+      dummy_sed_file
+        << "create-shared-ant" << std::endl
+        << "set-ant" << std::endl
+        << "(x)" << std::endl
+        << "." << std::endl;
+      dummy_sed_file.close();
+      for (size_t i = 0; i < size - 1; i++)
+      {
+        /* To make the page include the annotations chunk:
+         * - Create an emphemeric indirect multi-page document with just this
+         *   single page.
+         * - Add the dummy shared annotation.
+         */
+        dummy_components[0] = this->components[i];
+        this->do_create(dummy_components);
+        DjVuCommand djvused("djvused");
+        djvused << "-s" << "-f" << dummy_sed_file << this->index_file;
+        djvused(); // djvused -s -f <dummy-sed-file> <output-djvu-file>
+      }
+      /* For the last page, use the desired annotations. */
+      dummy_components[0] = this->components[size - 1];
+      this->do_create(dummy_components);
+      DjVuCommand djvused("djvused");
+      djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
+      djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
+      /* Finally, recreate the index. */
+      this->do_create(this->components, true /* include shared annotations */);
+    }
   }
 
   virtual void create()
@@ -924,6 +972,7 @@ public:
 void IndirectDjVm::do_create(const std::vector<std::string> &components, bool shared_ant)
 {
   size_t size = components.size();
+  this->index_file.reopen(true); // (re)open and truncate
   this->index_file.write(djvu::BINARY_TEMPLATE, sizeof djvu::BINARY_TEMPLATE);
   this->index_file << djvu::VERSION;
   for (int i = 1; i >= 0; i--)
