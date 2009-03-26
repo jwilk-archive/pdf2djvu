@@ -789,8 +789,8 @@ public:
     {
       /* An additional, dummy page is necessary to force multi-file document structure. */
       dummy_page_file.reset(new TemporaryFile());
-      dummy_page_file->write(djvu::DUMMY_SINGLE_HEAD, sizeof djvu::DUMMY_SINGLE_HEAD);
-      dummy_page_file->write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
+      dummy_page_file->write(djvu::binary::dummy_head, sizeof djvu::binary::dummy_head);
+      dummy_page_file->write(djvu::binary::dummy_page_data, sizeof djvu::binary::dummy_page_data);
       dummy_page_file->close();
       this->command << *dummy_page_file;
     }
@@ -845,13 +845,13 @@ public:
   virtual void set_outline(File &outlines_sed_file)
   {
     TemporaryFile dummy_djvu_file;
-    dummy_djvu_file.write(djvu::DUMMY_DOUBLE_HEAD, sizeof djvu::DUMMY_DOUBLE_HEAD);
+    dummy_djvu_file.write(djvu::binary::dummy_double_head, sizeof djvu::binary::dummy_double_head);
     for (int i = 0; i < 2; i++)
     {
       dummy_djvu_file.write("FORM", 4);
       for (int i = 3; i >= 0; i--)
-        dummy_djvu_file << static_cast<char>(((sizeof djvu::DUMMY_DATA) >> (8 * i)) & 0xff);
-      dummy_djvu_file.write(djvu::DUMMY_DATA, sizeof djvu::DUMMY_DATA);
+        dummy_djvu_file << static_cast<char>(((sizeof djvu::binary::dummy_page_data) >> (8 * i)) & 0xff);
+      dummy_djvu_file.write(djvu::binary::dummy_page_data, sizeof djvu::binary::dummy_page_data);
     }
     dummy_djvu_file.close();
     debug(3) << "creating outline with `djvused`" << std::endl;
@@ -973,8 +973,8 @@ void IndirectDjVm::do_create(const std::vector<std::string> &components, bool sh
 {
   size_t size = components.size();
   this->index_file.reopen(true); // (re)open and truncate
-  this->index_file.write(djvu::BINARY_TEMPLATE, sizeof djvu::BINARY_TEMPLATE);
-  this->index_file << djvu::VERSION;
+  this->index_file.write(djvu::binary::djvm_head, sizeof djvu::binary::djvm_head);
+  this->index_file << djvu::binary::version;
   for (int i = 1; i >= 0; i--)
     index_file << static_cast<char>(((size + shared_ant) >> (8 * i)) & 0xff);
   {
@@ -1011,10 +1011,10 @@ static int calculate_dpi(double page_width, double page_height)
     double hdpi = config.preferred_page_size.first / page_width;
     double vdpi = config.preferred_page_size.second / page_height;
     double dpi = std::min(hdpi, vdpi);
-    if (dpi < djvu::MIN_DPI)
-      return djvu::MIN_DPI;
-    else if (dpi > djvu::MAX_DPI)
-      return djvu::MAX_DPI;
+    if (dpi < djvu::min_dpi)
+      return djvu::min_dpi;
+    else if (dpi > djvu::max_dpi)
+      return djvu::max_dpi;
     else
       return static_cast<int>(dpi);
   }

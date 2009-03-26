@@ -236,8 +236,8 @@ void Config::read_config(int argc, char * const argv[])
     {
     case OPT_DPI:
       this->dpi = atoi(optarg);
-      if (this->dpi < djvu::MIN_DPI || this->dpi > djvu::MAX_DPI)
-        throw Config::DpiOutsideRange(djvu::MIN_DPI, djvu::MAX_DPI);
+      if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
+        throw Config::DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
       break;
     case OPT_PAGE_SIZE:
       this->preferred_page_size = parse_page_size(optarg);
