@@ -468,20 +468,27 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
   return list;
 }
 
-static void pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream, 
+static bool pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream,
   const PageFiles &page_files)
+/* Convert the PDF outline to DjVu outline. Save the resulting S-expression
+ * into the stream.
+ *
+ * Return ``true`` if the outline exist and is non-empty.
+ * Return ``false`` otherwise.
+ */
 {
   sexpr::GCLock gc_lock;
   pdf::Catalog *catalog = doc.getCatalog();
   pdf::Object *outlines = catalog->getOutline();
   if (!outlines->isDict())
-    return;
+    return false;
   static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
   sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_files);
   if (expr == sexpr::nil)
-    return;
+    return false;
   expr = sexpr::cons(symbol_bookmarks, expr);
   stream << expr;
+  return true;
 }
 
 class InvalidDateFormat : public std::runtime_error
@@ -1350,6 +1357,7 @@ static int xmain(int argc, char * const argv[])
   }
   if (config.extract_outline)
   {
+    bool nonempty_outline;
     TemporaryFile sed_file;
     debug(3) << "extracting document outline" << std::endl;
     if (config.format == config.FORMAT_BUNDLED)
@@ -1359,10 +1367,11 @@ static int xmain(int argc, char * const argv[])
       sed_file << "create-shared-ant" << std::endl;
     }
     sed_file << "set-outline" << std::endl;
-    pdf_outline_to_djvu_outline(doc, sed_file, *page_files);
+    nonempty_outline = pdf_outline_to_djvu_outline(doc, sed_file, *page_files);
     sed_file << std::endl << "." << std::endl;
     sed_file.close();
-    djvm->set_outline(sed_file);
+    if (nonempty_outline)
+      djvm->set_outline(sed_file);
   }
   djvm->commit();
   {

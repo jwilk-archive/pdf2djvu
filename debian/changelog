@@ -1,6 +1,7 @@
 pdf2djvu (0.5.3) UNRELEASED; urgency=low
 
-  * 
+  * Don't die with an error while trying to add empty outline to an indirect
+    multi-page document.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Sun, 22 Mar 2009 10:41:29 +0100
 
