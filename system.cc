@@ -680,8 +680,11 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
      * The idea is taken from:
      * http://wang.yuxuan.org/blog/2007/7/9/deal_with_2_versions_of_iconv_h
      */
-    struct iconv_adapter 
+    class iconv_adapter
     {
+    protected:
+      const char** s;
+    public:
       iconv_adapter(const char** s) : s(s) {}
       operator char**() const
       {
@@ -691,7 +694,6 @@ void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
       {
         return const_cast<const char**>(s);
       }
-      const char** s;
     };
 
     size_t n = iconv(cd, iconv_adapter(&inbuf), &inbuf_len, &outbuf_ptr, &outbuf_len);
