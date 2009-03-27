@@ -9,8 +9,8 @@ browser plugins, decoders, simple encoders, and utilities.
 
 Compatiblity
 ------------
-Don't use DjVuLibre 3.5.20-4, nor 3.5.20-5, nor Debian's 3.5.20-4. Those
-versions are broken_.
+DjVuLibre 3.5.21 or newer is required. For Debian/Ubuntu, 3.5.20-5 is
+sufficient.
 
 .. _DjVuLibre: http://djvu.sourceforge.net/
 .. _DjVu: http://djvu.org/
