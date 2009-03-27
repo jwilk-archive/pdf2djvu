@@ -844,59 +844,10 @@ public:
 
   virtual void set_outline(File &outlines_sed_file)
   {
-    TemporaryFile dummy_djvu_file;
-    dummy_djvu_file.write(djvu::binary::dummy_double_head, sizeof djvu::binary::dummy_double_head);
-    for (int i = 0; i < 2; i++)
-    {
-      dummy_djvu_file.write("FORM", 4);
-      for (int i = 3; i >= 0; i--)
-        dummy_djvu_file << static_cast<char>(((sizeof djvu::binary::dummy_page_data) >> (8 * i)) & 0xff);
-      dummy_djvu_file.write(djvu::binary::dummy_page_data, sizeof djvu::binary::dummy_page_data);
-    }
-    dummy_djvu_file.close();
-    debug(3) << "creating outline with `djvused`" << std::endl;
+    debug(3) << "creating document outline with `djvused`" << std::endl;
     DjVuCommand djvused("djvused");
-    djvused << "-s" << "-f" << outlines_sed_file << dummy_djvu_file;
-    djvused(); // djvused -s -f <outlines-sed-file> <dummy-djvu-file>
-    debug(3) << "copying outline" << std::endl;
-    dummy_djvu_file.reopen();
-    dummy_djvu_file.seekg(0x30, std::ios::beg);
-    {
-      char buffer[4];
-      dummy_djvu_file.read(buffer, 4);
-      if (std::string(buffer, 4) == std::string("NAVM"))
-      {
-        size_t navm_size = 0, chunks_size = 0;
-        for (int i = 3; i >= 0; i--)
-        { 
-          char c;
-          dummy_djvu_file.read(&c, 1);
-          navm_size |= static_cast<size_t>(c & 0xff) << (8 * i);
-        }
-        navm_size += 8;
-        dummy_djvu_file.seekg(0x30, std::ios::beg);
-        index_file.reopen();
-        this->index_file.seekg(0, std::ios::end);
-        size_t file_size = this->index_file.tellg();
-        if (file_size & 1)
-          // Each chunk must begin on an even byte boundary
-          this->index_file << '\0';
-        copy_stream(dummy_djvu_file, this->index_file, false, navm_size);
-        this->index_file.seekg(8, std::ios::beg);
-        for (int i = 3; i >= 0; i--)
-        { 
-          char c;
-          this->index_file.read(&c, 1);
-          chunks_size |= static_cast<size_t>(c & 0xff) << (8 * i);
-        }
-        chunks_size += navm_size + (file_size & 1);
-        this->index_file.seekg(8, std::ios::beg);
-        for (int i = 3; i >= 0; i--)
-          this->index_file << static_cast<char>((chunks_size >> (8 * i)) & 0xff);
-      }
-      else
-        throw UnexpectedDjvuSedOutput();
-    }
+    djvused << "-s" << "-f" << outlines_sed_file << this->index_file;
+    djvused(); // djvused -s -f <outlines-sed-file> <index-djvu-file>
   }
 
   virtual void set_metadata(File &metadata_sed_file)

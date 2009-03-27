@@ -72,6 +72,19 @@ then
   djvulibre_bugs="$djvulibre_bugs 471149"
 fi
 
+printf 'P1 3 3 0 0 0 0 0 0 0 0 0 0' > conftest.458086.pbm
+"$djvulibre_bin_path/cjb2" conftest.458086.pbm conftest.458086.p1.djvu
+"$djvulibre_bin_path/cjb2" conftest.458086.pbm conftest.458086.p2.djvu
+printf 'AT&TFORM\0\0\0\x35DJVMDIRM\0\0\0\x29\x01\0\x02\xff\xff\xc6\xbf\x8a' > conftest.458086.djvu
+printf '\x1f\xeb\x4b\xff\x40\x8e\x37\x86\x3f\x6c\xbe\x78\x02\x3c\x93\x9b' >> conftest.458086.djvu
+printf '\x17\x57\x16\x67\x1d\x7a\xeb\x57\xf8\xf3\x7e\x64\x32\x42\x88\xd2\x4f' >> conftest.458086.djvu
+printf '(bookmarks ("" ""))' > conftest.458086.outline
+"$djvulibre_bin_path/djvused" -s -e 'set-outline conftest.458086.outline' conftest.458086.djvu
+if ! "$djvulibre_bin_path/djvused" -e print-outline conftest.458086.djvu | grep '(bookmarks' > /dev/null
+then
+  djvulibre_bugs="$djvulibre_bugs 458086"
+fi
+                                                               
 if test -n "$djvulibre_bugs"
 then
   result=''
