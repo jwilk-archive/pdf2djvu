@@ -45,8 +45,6 @@ for regex in \
   'fontconfig-dev_[0-9.-]+_win32[.]zip' \
   'freetype_[0-9.-]+_win32[.]zip' \
   'freetype-dev_[0-9.-]+_win32[.]zip' \
-  'zlib-[0-9.]+[.]zip' \
-  'zlib-dev-[0-9.]+[.]zip' \
   'win_iconv-tml-[0-9]+.zip'
 do
   printf "$ftproot" >> ftp.gnome.org.txt
