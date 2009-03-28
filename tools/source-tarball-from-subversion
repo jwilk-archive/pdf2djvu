@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# Copyright © 2009 Jakub Wilk
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 dated June, 1991.
+
+set -e
+set -x
+
+pwd="$PWD"
+buildroot=`mktemp -dt pdf2djvu-source-XXXXXXXX`
+tarflags="--owner root --group root --mode a+rX"
+
+cd "$buildroot"
+
+# Subversion checkout:
+svn export "$@" http://pdf2djvu.googlecode.com/svn/trunk pdf2djvu
+version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q}' < pdf2djvu/doc/changelog.txt`
+mv pdf2djvu "pdf2djvu-$version"
+
+# Autoconf & company:
+cd "pdf2djvu-$version"
+aclocal
+autoheader
+autoconf
+rm -Rf *.cache
+cd ..
+
+# Build the manual page:
+make -C "pdf2djvu-$version/doc/"
+
+# Tarball with source + Debian stuff:
+tar $tarflags -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
+
+# Strip Debian stuff:
+cd "pdf2djvu-$version"
+rm doc/changelog.txt
+mv debian/changelog doc/changelog.txt
+rm -Rf debian/
+cd ..
+
+# Tarball with raw source:
+tar $tarflags -czf "$pwd/pdf2djvu_$version.tar.gz" "pdf2djvu-$version"
+
+# Cleanup:
+rm -Rf "$buildroot"
