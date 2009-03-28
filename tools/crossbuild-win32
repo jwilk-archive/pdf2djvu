@@ -36,16 +36,30 @@ mkdir -p "$pdist" || true
 
 cd "$usr"
 
+ftproot=ftp://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/
+wget -O ftp.gnome.org.html "$ftproot"
+true > ftp.gnome.org.txt
+for regex in \
+  'expat_[0-9.-]+_win32[.]zip' \
+  'fontconfig_[0-9.-]+_win32[.]zip' \
+  'fontconfig-dev_[0-9.-]+_win32[.]zip' \
+  'freetype_[0-9.-]+_win32[.]zip' \
+  'freetype-dev_[0-9.-]+_win32[.]zip' \
+  'zlib-[0-9.]+[.]zip' \
+  'zlib-dev-[0-9.]+[.]zip' \
+  'win_iconv-tml-[0-9]+.zip'
+do
+  printf "$ftproot" >> ftp.gnome.org.txt
+  grep -E -o "$regex" ftp.gnome.org.html | sort -rV | head -n1 | tee -a ftp.gnome.org.txt | grep . > /dev/null
+done
+wget -c -i ftp.gnome.org.txt
+
 wget -O - http://www.gtk.org/download-windows.html \
 | grep -E -o \
-  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/dependencies/expat-[0-9.]+[.]zip' \
-  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/dependencies/fontconfig(-dev)?-[0-9.]+-tml-[0-9]+[.]zip' \
-  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/dependencies/freetype(-dev)?-[0-9.]+[.]zip' \
   -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/glib/[0-9.]+/glib(-dev)?_[0-9.-]+_win32[.]zip' \
   -e 'http://gnuwin32[.]sourceforge[.]net/downlinks/jpeg-(bin|lib)-zip[.]php' \
-  -e 'http://www.zlib.net/zlib[0-9]+-dll[.]zip' \
-  -e 'http://www[.]gimp[.]org/~tml/gimp/win32/libiconv-[0-9.]+[.]bin[.]woe32[.]zip' | \
-wget -c -i -
+| wget -c -i -
+
 for file in *.zip
 do
   unzip "$file"
@@ -139,8 +153,7 @@ cp "$usr/bin/"libpoppler-*.dll .
 cp "$usr/bin/"libfontconfig-*.dll .
 cp "$usr/bin/"freetype*.dll .
 cp "$usr/bin/"jpeg*.dll .
-cp "$usr/bin/"iconv.dll .
-cp "$usr/bin/"libexpat.dll .
+cp "$usr/bin/"libexpat-*.dll .
 cp "$usr/bin/"mingwm*dll .
 mkdir etc/ || true
 cp -r "$usr/etc/fonts" etc/
@@ -272,8 +285,8 @@ We specifically permit and encourage the use of this software as the basis of
 commercial products, provided that all warranty or liability claims are assumed
 by the product vendor.
 
-libexpat.dll
-============
+libexpat-*.dll
+==============
 Copyright © 1998, 1999, 2000 Thai Open Source Software Center Ltd and Clark
 Cooper
 
@@ -296,20 +309,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-iconv.dll
-=========
-Copyright © 1999-2003 Free Software Foundation, Inc.
-
-The GNU LIBICONV Library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Library General Public License as
-published by the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-The GNU LIBICONV Library is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU Library General Public License
-for more details.
 EOF
  
 # Build the zipball:
