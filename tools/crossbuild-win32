@@ -283,8 +283,8 @@ We specifically permit and encourage the use of this software as the basis of
 commercial products, provided that all warranty or liability claims are assumed
 by the product vendor.
 
-libexpat-*.dll
-==============
+libexpat-\\*.dll
+================
 Copyright © 1998, 1999, 2000 Thai Open Source Software Center Ltd and Clark
 Cooper
 
