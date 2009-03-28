@@ -1,11 +1,11 @@
-pdf2djvu (0.5.3) UNRELEASED; urgency=low
+pdf2djvu (0.5.3) unstable; urgency=low
 
   * Don't die with an error while trying to add empty outline to an indirect
     multi-page document.
   * Work around DjVuLibre performance bug with adding shared annotations to
     indirect multi-page documents.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 22 Mar 2009 10:41:29 +0100
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 28 Mar 2009 21:30:10 +0100
 
 pdf2djvu (0.5.2) unstable; urgency=low
 
