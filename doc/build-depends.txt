@@ -12,16 +12,17 @@ Compatiblity
 DjVuLibre 3.5.21 or newer is required. For Debian/Ubuntu, 3.5.20-5 is
 sufficient.
 
-.. _DjVuLibre: http://djvu.sourceforge.net/
-.. _DjVu: http://djvu.org/
-.. _broken: http://sf.net/tracker/?func=detail&aid=1915337&group_id=32953&atid=406583
-
+.. _DjVuLibre:
+   http://djvu.sourceforge.net/
+.. _DjVu:
+   http://djvu.org/
 
 poppler
 =======
 Poppler_ is a PDF rendering library derived from xpdf.
 
-.. _poppler: http://poppler.freedesktop.org/
+.. _poppler:
+   http://poppler.freedesktop.org/
 
 Header files
 ------------
@@ -43,12 +44,18 @@ one serious security bug: CVE-2007-4352_, CVE-2007-5392_,
 CVE-2007-5393_, CVE-2008-2950_, CVE-2009-0755_ or CVE-2009-0756_.
 **You have been warned**.
 
-.. _CVE-2007-4352: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4352
-.. _CVE-2007-5392: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5392
-.. _CVE-2007-5393: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5393
-.. _CVE-2008-2950: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2950
-.. _CVE-2009-0755: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0755
-.. _CVE-2009-0756: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0756
+.. _CVE-2007-4352:
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4352
+.. _CVE-2007-5392:
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5392
+.. _CVE-2007-5393:
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5393
+.. _CVE-2008-2950:
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2950
+.. _CVE-2009-0755:
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0755
+.. _CVE-2009-0756:
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0756
 
 
 PStreams (recommended)
@@ -57,14 +64,15 @@ PStreams_ allows you to run another program from your C++ application
 and to transfer data between the two programs, similar to shell
 pipelines.
 
-.. _PStreams: http://pstreams.sourceforge.net/
+.. _PStreams:
+   http://pstreams.sourceforge.net/
 
 
 GraphicsMagick (optional)
 =========================
 GraphicsMagick_ is a library to read, write, and manipulate images.
 
-.. _GraphicsMagick: http://www.graphicsmagick.org/
+.. _GraphicsMagick:
+   http://www.graphicsmagick.org/
 
-
-.. vim:tw=72 ft=rst
+.. vim:ft=rst ts=3 sw=3 et tw=72
