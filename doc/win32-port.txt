@@ -27,8 +27,8 @@ Install the `MSYS Developer Tool Kit`_.
 
 Download:
 
- * `GCC 4.2.1`_ and
- * `G++ 4.2.1`_
+*  `GCC 4.2.1`_ and
+*  `G++ 4.2.1`_
 
 into ``C:\msys\1.0\src``.
 
@@ -56,14 +56,14 @@ Create the ``C:\msys\1.0\local`` directory.
 
 From the `GTK+ Project`_ download the following libraries:
 
- * GLIB (binaries, dev),
- * zlib (binaries & dev),
- * GNU libiconv (binaries & dev),
- * libjpeg (binaries, dev),
- * pkg-config (tool binaries),
- * freetype (binaries, dev),
- * fontconfig (binaries, dev),
- * libexpat (binaries).
+*  GLIB (binaries, dev),
+*  zlib (binaries & dev),
+*  GNU libiconv (binaries & dev),
+*  libjpeg (binaries, dev),
+*  pkg-config (tool binaries),
+*  freetype (binaries, dev),
+*  fontconfig (binaries, dev),
+*  libexpat (binaries).
 
 Unpack all the zips into ``C:\msys\1.0\local``.
 
@@ -75,9 +75,9 @@ Compilation
 
 Download sources for the following packages:
 
- * poppler (≥ 0.10),
- * DjVuLibre (≥ 3.5.21),
- * pdf2djvu (≥ 0.5.0).
+*  poppler (≥ 0.10),
+*  DjVuLibre (≥ 3.5.21),
+*  pdf2djvu (≥ 0.5.0).
 
 Put all ``*.tar.gz`` files into ``C:\msys\1.0\src\``.
 
