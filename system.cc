@@ -301,8 +301,18 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     if (CreatePipe(&read_end, &write_end, &security_attributes, 0) == 0)
       throw_win32_error("CreatePipe");
   }
-  if (SetHandleInformation(read_end, HANDLE_FLAG_INHERIT, 0) == 0)
-    throw_win32_error("SetHandleInformation");
+  rc = SetHandleInformation(read_end, HANDLE_FLAG_INHERIT, 0);
+  if (rc == 0)
+  {
+    if (GetLastError() == ERROR_CALL_NOT_IMPLEMENTED)
+    {
+      /* Presumably it's Windows 9x, so the call is not supported.
+       * Punt on security and let the pipe end be inherited.
+       */
+    }
+    else
+      throw_win32_error("SetHandleInformation");
+  }
   if (!quiet)
   {
     error_handle = GetStdHandle(STD_ERROR_HANDLE);;
