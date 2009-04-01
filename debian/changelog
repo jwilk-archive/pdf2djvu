@@ -1,3 +1,9 @@
+pdf2djvu (0.5.4) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Wed, 01 Apr 2009 20:34:09 +0200
+
 pdf2djvu (0.5.3) unstable; urgency=low
 
   * Don't die with an error while trying to add empty outline to an indirect

@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT(pdf2djvu, 0.5.3, ubanus@users.sf.net)
+AC_INIT(pdf2djvu, 0.5.4, ubanus@users.sf.net)
 AC_LANG(C++)
 
 # Checks for programs.
