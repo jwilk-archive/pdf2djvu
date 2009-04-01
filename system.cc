@@ -293,14 +293,12 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   int status = 0;
   unsigned long rc;
   HANDLE read_end, write_end, error_handle;
-  {
-    SECURITY_ATTRIBUTES security_attributes;
-    security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
-    security_attributes.lpSecurityDescriptor = NULL;
-    security_attributes.bInheritHandle = true;
-    if (CreatePipe(&read_end, &write_end, &security_attributes, 0) == 0)
-      throw_win32_error("CreatePipe");
-  }
+  SECURITY_ATTRIBUTES security_attributes;
+  security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
+  security_attributes.lpSecurityDescriptor = NULL;
+  security_attributes.bInheritHandle = true;
+  if (CreatePipe(&read_end, &write_end, &security_attributes, 0) == 0)
+    throw_win32_error("CreatePipe");
   rc = SetHandleInformation(read_end, HANDLE_FLAG_INHERIT, 0);
   if (rc == 0)
   {
@@ -328,7 +326,15 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     }
   }
   else
-    error_handle = INVALID_HANDLE_VALUE;
+  {
+    error_handle = CreateFile("nul",
+      GENERIC_WRITE, FILE_SHARE_WRITE,
+      &security_attributes, OPEN_EXISTING, 0, NULL);
+    /* Errors can be safely ignored:
+     * - For the Windows NT family, INVALID_HANDLE_VALUE does actually the right thing.
+     * - For Windows 9x, spurious debug messages could be generated, tough luck!
+     */
+  }
   {
     const std::string &command_line = argv_to_command_line(this->argv);
     PROCESS_INFORMATION process_info;
