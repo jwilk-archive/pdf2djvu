@@ -357,6 +357,8 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     {
       CloseHandle(process_info.hProcess); /* ignore errors */
       CloseHandle(process_info.hThread); /* ignore errors */
+      if (error_handle != INVALID_HANDLE_VALUE)
+        CloseHandle(error_handle); /* ignore errors */
     }
   }
   if (status == 0)
