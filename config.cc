@@ -152,12 +152,6 @@ public:
 };
 
 template <typename tp>
-tp integer_cast(const std::string &s)
-{
-  return integer_cast<tp>(s.c_str());
-}
-
-template <typename tp>
 tp integer_cast(const char *s)
 {
   long result = integer_cast<long>(s);
@@ -178,6 +172,12 @@ long integer_cast<long>(const char *s)
   if (*end_ptr != '\0' || errno == ERANGE)
     throw InvalidNumber(s);
   return result;
+}
+
+template <typename tp>
+tp integer_cast(const std::string &s)
+{
+  return integer_cast<tp>(s.c_str());
 }
 
 static int parse_fg_colors(const std::string &s)
