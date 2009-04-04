@@ -5,8 +5,10 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
+#include <cerrno>
 #include <climits>
 #include <cstdlib>
+#include <limits>
 #include <stdexcept>
 
 #include <getopt.h>
@@ -133,11 +135,56 @@ static std::pair<int, int>parse_page_size(const std::string &s)
     throw Config::PageSizeParseError();
 }
 
+class InvalidNumber : public Config::Error
+{
+private:
+  static std::string __error_message__(const char *s)
+  {
+    std::ostringstream stream;
+    stream
+      << s << " is not a valid number";
+    return stream.str();
+  }
+public:
+  explicit InvalidNumber(const char *s)
+  : Config::Error(__error_message__(s))
+  { }
+};
+
+template <typename tp>
+tp integer_cast(const std::string &s)
+{
+  return integer_cast<tp>(s.c_str());
+}
+
+template <typename tp>
+tp integer_cast(const char *s)
+{
+  long result = integer_cast<long>(s);
+  if (result > std::numeric_limits<tp>::max())
+    throw InvalidNumber(s);
+  if (result < std::numeric_limits<tp>::min())
+    throw InvalidNumber(s);
+  return result;
+}
+
+template <>
+long integer_cast<long>(const char *s)
+{
+  char *end_ptr;
+  long result;
+  errno = 0;
+  result = strtol(s, &end_ptr, 10);
+  if (*end_ptr != '\0' || errno == ERANGE)
+    throw InvalidNumber(s);
+  return result;
+}
+
 static int parse_fg_colors(const std::string &s)
 {
   if (s == "web")
     return -1;
-  int n = atoi(s.c_str());
+  long n = integer_cast<long>(s);
   if (n < 1 || n > djvu::max_fg_colors)
     throw Config::Error("The specified number of foreground colors is outside the allowed range");
   return n;
@@ -235,7 +282,7 @@ void Config::read_config(int argc, char * const argv[])
     switch (c)
     {
     case OPT_DPI:
-      this->dpi = atoi(optarg);
+      this->dpi = integer_cast<int>(optarg);
       if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
         throw Config::DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
       break;
@@ -255,7 +302,7 @@ void Config::read_config(int argc, char * const argv[])
       this->bg_slices = optarg;
       break;
     case OPT_BG_SUBSAMPLE:
-      this->bg_subsample = atoi(optarg);
+      this->bg_subsample = integer_cast<int>(optarg);
       if (this->bg_subsample < 1 || this->bg_subsample > djvu::max_subsample_ratio)
         throw Config::Error("The specified subsampling ratio is outside the allowed range");
       break;
@@ -269,7 +316,7 @@ void Config::read_config(int argc, char * const argv[])
       this->loss_level = 100;
       break;
     case OPT_LOSS_ANY:
-      this->loss_level = atoi(optarg);
+      this->loss_level = integer_cast<int>(optarg);
       if (this->loss_level < 0)
         this->loss_level = 0;
       else if (this->loss_level > 200)
