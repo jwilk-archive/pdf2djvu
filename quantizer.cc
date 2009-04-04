@@ -22,9 +22,17 @@ void WebSafeQuantizer::output_web_palette(std::ostream &stream)
   for (int g = 0; g < 6; g++)
   for (int b = 0; b < 6; b++)
   {
-    char buffer[] = { 51 * r, 51 * g, 51 * b };
-    stream.write(buffer, 3);
+    unsigned char buffer[] = { 51 * r, 51 * g, 51 * b };
+    stream.write(reinterpret_cast<char*>(buffer), 3);
   }
+}
+
+static inline void write_uint32(std::ostream &stream, uint32_t item)
+{
+  unsigned char buffer[4];
+  for (int i = 0; i < 4; i++)
+    buffer[i] = item >> ((3 - i) * 8);
+  stream.write(reinterpret_cast<char*>(buffer), 4);
 }
 
 void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
@@ -70,8 +78,8 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
           int item = (color << 20) + length;
           for (int i = 0; i < 4; i++)
           {
-            char c = item >> ((3 - i) * 8);
-            stream.write(&c, 1);
+            unsigned char c = item >> ((3 - i) * 8);
+            stream.write(reinterpret_cast<char*>(&c), 1);
           }
         }
         color = new_color;
@@ -80,12 +88,7 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
       p_fg++, p_bg++;
     }
     p_fg.next_row(), p_bg.next_row();
-    int item = (color << 20) + length;
-    for (int i = 0; i < 4; i++)
-    {
-      char c = item >> ((3 - i) * 8);
-      stream.write(&c, 1);
-    }
+    write_uint32(stream, ((uint32_t)color << 20) + length);
   }
 }
 
@@ -198,20 +201,13 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       else
       {
         if (length > 0)
-        {
-          int item = (color << 20) + length;
-          for (int i = 0; i < 4; i++)
-          {
-            char c = item >> ((3 - i) * 8);
-            stream.write(&c, 1);
-          }
-        }
+          write_uint32(stream, ((uint32_t)color << 20) + length);
         color = new_color;
         length = 1;
       }
       ipixel++, ppixel++;
     }
-    int item = (color << 20) + length;
+    uint32_t item = ((uint32_t)color << 20) + length;
     for (int i = 0; i < 4; i++)
     {
       char c = item >> ((3 - i) * 8);
