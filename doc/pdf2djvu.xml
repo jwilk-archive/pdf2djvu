@@ -473,6 +473,14 @@
 </refsection>
 
 <refsection>
+	<title>Bug reports</title>
+	<para>
+		If you find a bug in &p;, please report it at <ulink
+		url='http://code.google.com/p/pdf2djvu/issues/list'>the issue tracker</ulink>.
+	</para>
+</refsection>
+
+<refsection>
 	<title>See also</title>
 	<para>
 		<citerefentry>
