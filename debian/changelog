@@ -1,6 +1,6 @@
 pdf2djvu (0.5.4) UNRELEASED; urgency=low
 
-  * 
+  * Support for Windows 9x.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Wed, 01 Apr 2009 20:34:09 +0200
 
