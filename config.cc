@@ -45,7 +45,21 @@ Config::Config()
   this->pageid_prefix = "p";
 }
 
-static void split_by_char(char c, const std::string &s, std::vector<std::string> &result)
+namespace string
+{
+  static void split(const std::string &, char, std::vector<std::string> &);
+
+  template <typename tp>
+  tp as(const char *);
+  
+  template <>
+  long as<long>(const char *);
+  
+  template <typename tp>
+  tp as(const std::string &);
+}
+
+static void string::split(const std::string &s, char c, std::vector<std::string> &result)
 {
   size_t lpos = 0;
   while (true)
@@ -62,7 +76,7 @@ static void split_by_char(char c, const std::string &s, std::vector<std::string>
 static void parse_hyperlinks_options(const std::string &s, std::vector<sexpr::Ref> &result, bool &user_border_color)
 {
   std::vector<std::string> splitted;
-  split_by_char(',', s, splitted);
+  string::split(s, ',', splitted);
   for (std::vector<std::string>::const_iterator it = splitted.begin(); it != splitted.end(); it++)
   {
     if (*it == "border-avis" || *it == "border_avis")
@@ -152,9 +166,9 @@ public:
 };
 
 template <typename tp>
-tp integer_cast(const char *s)
+tp string::as(const char *s)
 {
-  long result = integer_cast<long>(s);
+  long result = as<long>(s);
   if (result > std::numeric_limits<tp>::max())
     throw InvalidNumber(s);
   if (result < std::numeric_limits<tp>::min())
@@ -163,7 +177,7 @@ tp integer_cast(const char *s)
 }
 
 template <>
-long integer_cast<long>(const char *s)
+long string::as<long>(const char *s)
 {
   char *end_ptr;
   long result;
@@ -175,16 +189,16 @@ long integer_cast<long>(const char *s)
 }
 
 template <typename tp>
-tp integer_cast(const std::string &s)
+tp string::as(const std::string &s)
 {
-  return integer_cast<tp>(s.c_str());
+  return as<tp>(s.c_str());
 }
 
 static int parse_fg_colors(const std::string &s)
 {
   if (s == "web")
     return -1;
-  long n = integer_cast<long>(s);
+  long n = string::as<long>(s);
   if (n < 1 || n > djvu::max_fg_colors)
     throw Config::Error("The specified number of foreground colors is outside the allowed range");
   return n;
@@ -282,7 +296,7 @@ void Config::read_config(int argc, char * const argv[])
     switch (c)
     {
     case OPT_DPI:
-      this->dpi = integer_cast<int>(optarg);
+      this->dpi = string::as<int>(optarg);
       if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
         throw Config::DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
       break;
@@ -302,7 +316,7 @@ void Config::read_config(int argc, char * const argv[])
       this->bg_slices = optarg;
       break;
     case OPT_BG_SUBSAMPLE:
-      this->bg_subsample = integer_cast<int>(optarg);
+      this->bg_subsample = string::as<int>(optarg);
       if (this->bg_subsample < 1 || this->bg_subsample > djvu::max_subsample_ratio)
         throw Config::Error("The specified subsampling ratio is outside the allowed range");
       break;
@@ -316,7 +330,7 @@ void Config::read_config(int argc, char * const argv[])
       this->loss_level = 100;
       break;
     case OPT_LOSS_ANY:
-      this->loss_level = integer_cast<int>(optarg);
+      this->loss_level = string::as<int>(optarg);
       if (this->loss_level < 0)
         this->loss_level = 0;
       else if (this->loss_level > 200)
