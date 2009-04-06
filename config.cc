@@ -426,40 +426,39 @@ void Config::usage(const Config::Error &error)
     << "Usage: " << std::endl
     << "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>" << std::endl
     << "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>" << std::endl
-    << std::endl
-    << "Options:" << std::endl
-    << " -i, --indirect=FILE"      << std::endl
-    << " -o, --output=FILE"        << std::endl
-    << "     --pageid-prefix=NAME" << std::endl
-    << " -d, --dpi=resolution"     << std::endl
-    << "     --media-box"          << std::endl
-    << "     --page-size=WxH"      << std::endl
-    << "     --bg-slices=N,...,N"  << std::endl
-    << "     --bg-slices=N+...+N"  << std::endl
-    << "     --bg-subsample=N"     << std::endl
+    << std::endl << "Options:"
+    << std::endl << " -i, --indirect=FILE"
+    << std::endl << " -o, --output=FILE"
+    << std::endl << "     --pageid-prefix=NAME"
+    << std::endl << " -d, --dpi=resolution"
+    << std::endl << "     --media-box"
+    << std::endl << "     --page-size=WxH"
+    << std::endl << "     --bg-slices=N,...,N"
+    << std::endl << "     --bg-slices=N+...+N"
+    << std::endl << "     --bg-subsample=N"
 #ifdef HAVE_GRAPHICSMAGICK
-    << "     --fg-colors=web"      << std::endl
-    << "     --fg-colors=N"        << std::endl
+    << std::endl << "     --fg-colors=web"
+    << std::endl << "     --fg-colors=N"
 #endif
-    << "     --monochrome"         << std::endl
-    << "     --loss-level=N"       << std::endl
-    << "     --lossy"              << std::endl
-    << "     --anti-alias"         << std::endl
-    << "     --no-metadata"        << std::endl
-    << "     --verbatim-metadata"  << std::endl
-    << "     --no-outline"         << std::endl
-    << "     --hyperlinks=..."     << std::endl
-    << "     --no-hyperlinks"      << std::endl
-    << "     --no-text"            << std::endl
-    << "     --words"              << std::endl
-    << "     --lines"              << std::endl
-    << "     --no-nfkc"            << std::endl
-    << " -p, --pages=..."          << std::endl
-    << " -v, --verbose"            << std::endl
-    << " -q, --quiet"              << std::endl
-    << " -h, --help"               << std::endl
-    << "     --version"            << std::endl
-  ;
+    << std::endl << "     --monochrome"
+    << std::endl << "     --loss-level=N"
+    << std::endl << "     --lossy"
+    << std::endl << "     --anti-alias"
+    << std::endl << "     --no-metadata"
+    << std::endl << "     --verbatim-metadata"
+    << std::endl << "     --no-outline"
+    << std::endl << "     --hyperlinks=..."
+    << std::endl << "     --no-hyperlinks"
+    << std::endl << "     --no-text"
+    << std::endl << "     --words"
+    << std::endl << "     --lines"
+    << std::endl << "     --no-nfkc"
+    << std::endl << " -p, --pages=..."
+    << std::endl << " -v, --verbose"
+    << std::endl << " -q, --quiet"
+    << std::endl << " -h, --help"
+    << std::endl << "     --version"
+    << std::endl;
   exit(1);
 }
 
