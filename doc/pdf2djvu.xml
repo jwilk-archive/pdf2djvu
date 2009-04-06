@@ -300,34 +300,26 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--hyperlinks=<replaceable>options</replaceable></option></term>
+			<term><option>--hyperlinks=border-avis</option></term>
 			<listitem>
 				<para>
-					Specifies hyperlink display options. <replaceable>options</replaceable> must be a comma-separated
-					list of:
-					<variablelist>
-						<varlistentry>
-							<term>border-avis</term>
-							<listitem>
-								<para>
-									Make hyperlinks' borders always visible. (Otherwise, the border will be visible only
-									when the mouse is over the hyperlink.)
-								</para>
-							</listitem>
-						</varlistentry>
-						<varlistentry>
-							<term>#<replaceable>RRGGBB</replaceable></term>
-							<listitem>
-								<para>
-									Set hyperlinks' borders color.
-								</para>
-							</listitem>
-						</varlistentry>
-					</variablelist>
+					Make hyperlink borders always visible.
+				</para>
+				<para>
+					By default, a hyperlink border is visible only when the mouse is over the hyperlink.
 				</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option></term>
+			<listitem>
+				<para>
+					Force the specified border color for hyperlinks
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--hyperlinks=none</option></term>
 			<term><option>--no-hyperlinks</option></term>
 			<listitem>
 				<para>

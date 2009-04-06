@@ -99,6 +99,11 @@ static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
       options.border_always_visible = true;
       continue;
     }
+    else if (*it == "no" || *it == "none")
+    {
+      options.extract = false;
+      continue;
+    }
     else if 
     (
       it->length() == 7 &&
@@ -447,8 +452,9 @@ void Config::usage(const Config::Error &error)
     << std::endl << "     --no-metadata"
     << std::endl << "     --verbatim-metadata"
     << std::endl << "     --no-outline"
-    << std::endl << "     --hyperlinks=..."
-    << std::endl << "     --no-hyperlinks"
+    << std::endl << "     --hyperlinks=border-avis"
+    << std::endl << "     --hyperlinks=#RRGGBB"
+    << std::endl << "     --hyperlinks=none"
     << std::endl << "     --no-text"
     << std::endl << "     --words"
     << std::endl << "     --lines"
