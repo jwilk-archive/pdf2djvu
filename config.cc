@@ -33,7 +33,6 @@ Config::Config()
   this->fg_colors = -1;
   this->antialias = false;
   this->hyperlinks_user_border_color = false;
-  this->extract_hyperlinks = true;
   this->extract_metadata = true;
   this->adjust_metadata = true;
   this->extract_outline = true;
@@ -88,7 +87,7 @@ static void string::replace(std::string &s, char c1, char c2)
   }
 }
 
-static void parse_hyperlinks_options(std::string s, std::vector<sexpr::Ref> &result, bool &user_border_color)
+static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
 {
   std::vector<std::string> splitted;
   string::replace(s, '_', '-');
@@ -97,8 +96,7 @@ static void parse_hyperlinks_options(std::string s, std::vector<sexpr::Ref> &res
   {
     if (*it == "border-avis")
     {
-      sexpr::Ref expr = sexpr::cons(sexpr::symbol("border_avis"), sexpr::nil);
-      result.push_back(expr);
+      options.border_always_visible = true;
       continue;
     }
     else if 
@@ -108,10 +106,7 @@ static void parse_hyperlinks_options(std::string s, std::vector<sexpr::Ref> &res
       it->find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
     )
     {
-      sexpr::Ref expr = sexpr::cons(sexpr::symbol(it->c_str()), sexpr::nil);
-      expr = sexpr::cons(sexpr::symbol("border"), expr);
-      result.push_back(expr);
-      user_border_color = true;
+      options.border_color = *it;
       continue;
     }
     throw Config::HyperlinksOptionsParseError();
@@ -359,10 +354,10 @@ void Config::read_config(int argc, char * const argv[])
       this->antialias = 1;
       break;
     case OPT_HYPERLINKS:
-      parse_hyperlinks_options(optarg, this->hyperlinks_options, this->hyperlinks_user_border_color);
+      parse_hyperlinks_options(optarg, this->hyperlinks);
       break;
     case OPT_NO_HLINKS:
-      this->extract_hyperlinks = false;
+      this->hyperlinks.extract = false;
       break;
     case OPT_NO_METADATA:
       this->extract_metadata = false;

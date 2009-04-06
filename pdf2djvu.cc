@@ -245,7 +245,7 @@ public:
   void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
   {
     sexpr::GCLock gc_lock;
-    if (!config.extract_hyperlinks)
+    if (!config.hyperlinks.extract)
       return;
     double x1, y1, x2, y2;
     pdf::link::Action *link_action = link->getAction();
@@ -294,12 +294,20 @@ public:
     static sexpr::Ref symbol_rect = sexpr::symbol("rect");
     static sexpr::Ref symbol_maparea = sexpr::symbol("maparea");
     sexpr::Ref expr = sexpr::nil;
-    for (
-      std::vector<sexpr::Ref>::const_iterator it = config.hyperlinks_options.begin();
-      it != config.hyperlinks_options.end(); it++
-    )
-      expr = sexpr::cons(*it, expr);
-    if (!config.hyperlinks_user_border_color)
+    if (config.hyperlinks.border_always_visible)
+    {
+      static sexpr::Ref symbol_border_avis = sexpr::symbol("border_avis");
+      sexpr::Ref item = sexpr::cons(sexpr::symbol("border_avis"), sexpr::nil);
+      expr = sexpr::cons(item, expr);
+    }
+    if (config.hyperlinks.border_color.length() > 0)
+    {
+      static sexpr::Ref symbol_border = sexpr::symbol("border");
+      sexpr::Ref item = sexpr::cons(sexpr::symbol(config.hyperlinks.border_color), sexpr::nil);
+      item = sexpr::cons(symbol_border, item);
+      expr = sexpr::cons(item, expr);
+    }
+    else
     { 
       sexpr::Ref bexpr = sexpr::nil;
       if (border_color.empty())

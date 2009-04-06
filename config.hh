@@ -15,9 +15,21 @@
 
 #include "sexpr.hh"
 
+
 class Config
 {
 public:
+  class Hyperlinks
+  {
+  public:
+    bool extract;
+    bool border_always_visible;
+    std::string border_color;
+    Hyperlinks()
+    : extract(true), border_always_visible(false)
+    { };
+  };
+
   enum text_t
   {
     TEXT_NONE = 0,
@@ -43,9 +55,8 @@ public:
   bool monochrome;
   int loss_level;
   bool antialias;
-  std::vector<sexpr::Ref> hyperlinks_options;
+  Hyperlinks hyperlinks;
   bool hyperlinks_user_border_color;
-  bool extract_hyperlinks;
   bool extract_metadata;
   bool adjust_metadata;
   bool extract_outline;
