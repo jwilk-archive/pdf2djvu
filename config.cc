@@ -32,7 +32,6 @@ Config::Config()
   this->bg_subsample = 3;
   this->fg_colors = -1;
   this->antialias = false;
-  this->hyperlinks_user_border_color = false;
   this->extract_metadata = true;
   this->adjust_metadata = true;
   this->extract_outline = true;

@@ -56,7 +56,6 @@ public:
   int loss_level;
   bool antialias;
   Hyperlinks hyperlinks;
-  bool hyperlinks_user_border_color;
   bool extract_metadata;
   bool adjust_metadata;
   bool extract_outline;
