@@ -289,6 +289,10 @@ public:
     w -= x;
     h = y - h;
     y = this->getBitmapHeight() - y;
+    static sexpr::Ref symbol_xor = sexpr::symbol("xor");
+    static sexpr::Ref symbol_border = sexpr::symbol("border");
+    static sexpr::Ref symbol_rect = sexpr::symbol("rect");
+    static sexpr::Ref symbol_maparea = sexpr::symbol("maparea");
     sexpr::Ref expr = sexpr::nil;
     for (
       std::vector<sexpr::Ref>::const_iterator it = config.hyperlinks_options.begin();
@@ -297,8 +301,6 @@ public:
       expr = sexpr::cons(*it, expr);
     if (!config.hyperlinks_user_border_color)
     { 
-      static sexpr::Ref symbol_xor = sexpr::symbol("xor");
-      static sexpr::Ref symbol_border = sexpr::symbol("border");
       sexpr::Ref bexpr = sexpr::nil;
       if (border_color.empty())
         bexpr = sexpr::cons(symbol_xor, bexpr);
@@ -309,8 +311,6 @@ public:
       }
       expr = sexpr::cons(bexpr, expr);
     };
-    static sexpr::Ref symbol_rect = sexpr::symbol("rect");
-    static sexpr::Ref symbol_maparea = sexpr::symbol("maparea");
     {
       sexpr::Ref rexpr = sexpr::nil;
       rexpr = sexpr::cons(sexpr::integer(h), rexpr);
