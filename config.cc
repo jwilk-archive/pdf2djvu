@@ -49,6 +49,8 @@ namespace string
 {
   static void split(const std::string &, char, std::vector<std::string> &);
 
+  static void replace(std::string &, char, char);
+
   template <typename tp>
   tp as(const char *);
   
@@ -73,13 +75,27 @@ static void string::split(const std::string &s, char c, std::vector<std::string>
   }
 }
 
-static void parse_hyperlinks_options(const std::string &s, std::vector<sexpr::Ref> &result, bool &user_border_color)
+static void string::replace(std::string &s, char c1, char c2)
+{
+  size_t lpos = 0;
+  while (true)
+  {
+    size_t rpos = s.find(c1, lpos);
+    if (rpos == std::string::npos)
+      break;
+    s[rpos] = c2;
+    lpos = rpos + 1;
+  }
+}
+
+static void parse_hyperlinks_options(std::string s, std::vector<sexpr::Ref> &result, bool &user_border_color)
 {
   std::vector<std::string> splitted;
+  string::replace(s, '_', '-');
   string::split(s, ',', splitted);
   for (std::vector<std::string>::const_iterator it = splitted.begin(); it != splitted.end(); it++)
   {
-    if (*it == "border-avis" || *it == "border_avis")
+    if (*it == "border-avis")
     {
       sexpr::Ref expr = sexpr::cons(sexpr::symbol("border_avis"), sexpr::nil);
       result.push_back(expr);
