@@ -44,6 +44,7 @@ public:
   format_t format;
   text_t text;
   bool text_nfkc;
+  bool text_crop;
   std::string output;
   bool output_stdout;
   int verbose;

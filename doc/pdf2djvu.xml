@@ -352,6 +352,14 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--crop-text</option></term>
+			<listitem>
+				<para>
+					Extract no text outside the page boundary.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--no-nfkc</option></term>
 			<listitem>
 				<para>

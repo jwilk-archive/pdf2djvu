@@ -23,6 +23,7 @@ Config::Config()
 {
   this->text = this->TEXT_WORDS;
   this->text_nfkc = true;
+  this->text_crop = false;
   this->format = this->FORMAT_BUNDLED;
   this->output_stdout = true;
   this->verbose = 1;
@@ -259,6 +260,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_PAGE_SIZE,
     OPT_PREFIX,
     OPT_TEXT_LINES,
+    OPT_TEXT_CROP,
     OPT_TEXT_NONE,
     OPT_TEXT_WORDS,
     OPT_TEXT_NO_NFKC,
@@ -271,6 +273,7 @@ void Config::read_config(int argc, char * const argv[])
     { "antialias", 0, 0, OPT_ANTIALIAS },
     { "bg-slices", 1, 0, OPT_BG_SLICES },
     { "bg-subsample", 1, 0, OPT_BG_SUBSAMPLE },
+    { "crop-text", 0, 0, OPT_TEXT_CROP },
     { "dpi", 1, 0, OPT_DPI },
     { "fg-colors", 1, 0, OPT_FG_COLORS },
     { "help", 0, 0, OPT_HELP },
@@ -387,6 +390,9 @@ void Config::read_config(int argc, char * const argv[])
     case OPT_TEXT_NO_NFKC:
       this->text_nfkc = false;
       break;
+    case OPT_TEXT_CROP:
+      this->text_crop = true;
+      break;
     case OPT_OUTPUT:
       this->format = this->FORMAT_BUNDLED;
       this->output = optarg;
@@ -457,6 +463,7 @@ void Config::usage(const Config::Error &error)
     << std::endl << "     --no-text"
     << std::endl << "     --words"
     << std::endl << "     --lines"
+    << std::endl << "     --crop-text"
     << std::endl << "     --no-nfkc"
     << std::endl << " -p, --pages=..."
     << std::endl << " -v, --verbose"

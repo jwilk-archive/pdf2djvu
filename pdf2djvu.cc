@@ -219,6 +219,13 @@ public:
     }
     pw = std::max(pw, 1.0);
     ph = std::max(ph, 1.0);
+    if (config.text_crop)
+    {
+      int bitmap_width = this->getBitmapWidth();
+      int bitmap_height = this->getBitmapHeight();
+      if (px + pw < 0 || py + ph < 0 || px >= bitmap_width || py >= bitmap_height)
+        return;
+    }
     std::auto_ptr<pdf::NFKC> nfkc;
     const Unicode *const_unistr;
     if (config.text_nfkc)

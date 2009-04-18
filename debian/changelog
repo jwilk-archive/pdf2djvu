@@ -1,8 +1,9 @@
 pdf2djvu (0.5.4) UNRELEASED; urgency=low
 
+  * Add the --crop-text option.
   * Support for Windows 9x.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Wed, 01 Apr 2009 20:34:09 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 18 Apr 2009 21:16:59 +0200
 
 pdf2djvu (0.5.3) unstable; urgency=low
 
