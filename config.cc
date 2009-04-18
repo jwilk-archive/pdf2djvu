@@ -453,7 +453,7 @@ void Config::usage(const Config::Error &error)
     << std::endl << "     --no-outline"
     << std::endl << "     --hyperlinks=border-avis"
     << std::endl << "     --hyperlinks=#RRGGBB"
-    << std::endl << "     --hyperlinks=none"
+    << std::endl << "     --no-hyperlinks"
     << std::endl << "     --no-text"
     << std::endl << "     --words"
     << std::endl << "     --lines"

@@ -319,8 +319,8 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--hyperlinks=none</option></term>
 			<term><option>--no-hyperlinks</option></term>
+			<term><option>--hyperlinks=none</option></term>
 			<listitem>
 				<para>
 					Don't extract hyperlinks.
