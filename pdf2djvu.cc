@@ -991,7 +991,22 @@ public:
 
 static void calculate_subsampled_size(int width, int height, int ratio, int &sub_width, int &sub_height)
 {
-  // See <http://sf.net/tracker/?func=detail&aid=1972089&group_id=32953&atid=406583>
+  /* DjVuLibre expects that:
+   *
+   *   sub_width = ceil(width / ratio)
+   *   sub_width = ceil(height / ratio)
+   *
+   * However, DjVu Reference (10.3) requires that:
+   *
+   *   ceil(width / sub_width) = ceil(height / sub_height)
+   *
+   * This functions satisfies all these equations by decreasing ratio if
+   * necessary.
+   *
+   * See
+   * http://sf.net/tracker/?func=detail&aid=1972089&group_id=32953&atid=406583
+   * for details.
+   */
   while (true)
   {
     sub_width = (width + ratio - 1) / ratio;
