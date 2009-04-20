@@ -952,7 +952,7 @@ void IndirectDjVm::do_create(const std::vector<std::string> &components, bool sh
     for (size_t i = 0; i < size; i++)
       bzz_file << '\1';
     if (shared_ant)
-      bzz_file << "shared_anno.iff" << '\0';
+      bzz_file << djvu::shared_ant_file_name << '\0';
     for (std::vector<std::string>::const_iterator it = components.begin(); it != components.end(); it++)
       bzz_file << *it << '\0';
     bzz_file.close();
@@ -1411,7 +1411,7 @@ static int xmain(int argc, char * const argv[])
       djvu_size += djvu_pages_size;
       try
       {
-        ExistingFile shared_anno(*output_dir, "shared_anno.iff");
+        ExistingFile shared_anno(*output_dir, djvu::shared_ant_file_name);
         djvu_size += shared_anno.size();
       }
       catch (std::ios_base::failure &ex)
