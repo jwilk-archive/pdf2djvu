@@ -393,7 +393,7 @@ std::string pdf::string_as_utf8(pdf::String *string)
         char buffer[4];
         size_t nbytes;
         for (nbytes = 2; nbytes < 4; nbytes++)
-          if (code < (1 << (5 * nbytes + 1)))
+          if (code < (1U << (5 * nbytes + 1)))
             break;
         buffer[0] = (0xff00 >> nbytes) & 0xff;
         for (size_t i = nbytes - 1; i; i--)
