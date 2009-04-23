@@ -17,7 +17,6 @@
 #include <libgen.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <iconv.h>
 
 #ifdef WIN32
 #include <windows.h>
@@ -681,53 +680,6 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
  * =================
  */
 
-void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream)
-{
-  char outbuf[BUFSIZ];
-  char *outbuf_ptr = outbuf;
-  size_t outbuf_len = sizeof outbuf;
-  iconv_t cd = iconv_open("UTF-8", "UTF-16");
-  if (cd == reinterpret_cast<iconv_t>(-1))
-    throw_posix_error("iconv_open()");
-  while (inbuf_len > 0)
-  {
-    /* Mac OS X provides a ``iconv()`` prototype which is not POSIX-compliant.
-     * To work around this bug, a special wrapper is used, which adapts itself
-     * to the expected type.
-     *
-     * The idea is taken from:
-     * http://wang.yuxuan.org/blog/2007/7/9/deal_with_2_versions_of_iconv_h
-     */
-    class iconv_adapter
-    {
-    protected:
-      const char** s;
-    public:
-      iconv_adapter(const char** s) : s(s) {}
-      operator char**() const
-      {
-        return const_cast<char**>(s);
-      }
-      operator const char**() const
-      {
-        return const_cast<const char**>(s);
-      }
-    };
-
-    size_t n = iconv(cd, iconv_adapter(&inbuf), &inbuf_len, &outbuf_ptr, &outbuf_len);
-    if (n == (size_t) -1 && errno == E2BIG)
-    {
-      stream.write(outbuf, outbuf_ptr - outbuf);
-      outbuf_ptr = outbuf;
-      outbuf_len = sizeof outbuf;
-    }
-    else if (n == (size_t) -1)
-      throw IconvError();
-  }
-  stream.write(outbuf, outbuf_ptr - outbuf);
-  if (iconv_close(cd) == -1)
-    throw_posix_error("iconv_close()");
-}
 
 #ifdef WIN32
 void ansi_to_oem(const std::string &string, std::ostream &stream)

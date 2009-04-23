@@ -155,16 +155,6 @@ public:
   ExistingFile(const Directory& directory, const std::string &name);
 };
 
-class IconvError : public std::runtime_error
-{
-public:
-  IconvError()
-  : std::runtime_error("Unable to convert encodings")
-  { } 
-};
-
-void utf16_to_utf8(const char *inbuf, size_t inbuf_len, std::ostream &stream);
-
 #ifdef WIN32
 void ansi_to_oem(const std::string &string, std::ostream &stream);
 #endif

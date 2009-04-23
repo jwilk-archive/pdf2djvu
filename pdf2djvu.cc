@@ -402,28 +402,6 @@ public:
   NoTitleForBookmark() : BookmarkError("No title for a bookmark") {}
 };
 
-namespace pdf
-{
-  // [TODO] move the following functions to `compoppler`
-
-  static std::string string_as_utf8(pdf::String *string)
-  {
-    const char *cstring = string->getCString();
-    std::ostringstream stream;
-    if ((cstring[0] & 0xff) == 0xfe && (cstring[1] & 0xff) == 0xff)
-      utf16_to_utf8(cstring, string->getLength(), stream);
-    else
-      pdf::write_as_utf8(stream, cstring);
-    return stream.str();
-  }
-
-  static inline std::string string_as_utf8(pdf::Object &object)
-  {
-    return pdf::string_as_utf8(object.getString());
-  }
-
-}
-
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
   const PageFiles &page_files)
 {
@@ -545,17 +523,9 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
     pdf::OwnedObject object;
     if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
       continue;
-    try
-    {
-      std::string value = pdf::string_as_utf8(object);
-      sexpr::Ref esc_value = sexpr::string(value);
-      stream << *pkey << "\t" << esc_value << std::endl;
-    }
-    catch (IconvError &ex)
-    {
-      debug(1) << "[Warning] metadata[" << *pkey << "] is not properly encoded" << std::endl;
-      continue;
-    }
+    std::string value = pdf::string_as_utf8(object);
+    sexpr::Ref esc_value = sexpr::string(value);
+    stream << *pkey << "\t" << esc_value << std::endl;
   }
   {
     bool have_producer = false;
@@ -564,16 +534,9 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
     if (pdf::dict_lookup(info_dict, "Producer", &object)->isString())
     {
       have_producer = true;
-      try
-      {
-        value = pdf::string_as_utf8(object);
-        if (config.adjust_metadata && value.length() > 0)
-          value += "\n" PACKAGE_STRING;
-      }
-      catch (IconvError &ex)
-      {
-        debug(1) << "[Warning] metadata[Producer] is not properly encoded" << std::endl;
-      }
+      value = pdf::string_as_utf8(object);
+      if (config.adjust_metadata && value.length() > 0)
+        value += "\n" PACKAGE_STRING;
     }
     else if (config.adjust_metadata)
     {

@@ -58,7 +58,6 @@ From the `GTK+ Project`_ download the following libraries:
 
 *  GLIB (binaries, dev),
 *  zlib (binaries & dev),
-*  GNU libiconv (binaries & dev),
 *  libjpeg (binaries, dev),
 *  pkg-config (tool binaries),
 *  freetype (binaries, dev),
@@ -116,7 +115,7 @@ In the MSYS console, execute the following commands::
    cd ~/pdf2djvu-dist/
    cp -r /usr/local/etc .
    cp /usr/local/bin/{djvm,djvused,bzz,csepdjvu,djvuextract,cjb2,c44,djvumake}.exe .
-   cp /usr/local/bin/{freetype*,iconv,jpeg*,libdjvulibre-*,libexpat,libfontconfig-*,libpoppler-*}.dll .
+   cp /usr/local/bin/{freetype*,jpeg*,libdjvulibre-*,libexpat,libfontconfig-*,libpoppler-*}.dll .
    cp /mingw/bin/mingwm*.dll .
    strip *.exe
 

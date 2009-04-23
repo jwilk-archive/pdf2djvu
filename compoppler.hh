@@ -345,8 +345,9 @@ namespace pdf
  */
 
   void write_as_utf8(std::ostream &stream, Unicode unicode_char);
-  void write_as_utf8(std::ostream &stream, char pdf_char);
-  void write_as_utf8(std::ostream &stream, const char *pdf_chars);
+
+  std::string string_as_utf8(pdf::String *);
+  std::string string_as_utf8(pdf::Object &);
 }
 
 #endif

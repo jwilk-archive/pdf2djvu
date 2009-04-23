@@ -44,8 +44,7 @@ for regex in \
   'fontconfig_[0-9.-]+_win32[.]zip' \
   'fontconfig-dev_[0-9.-]+_win32[.]zip' \
   'freetype_[0-9.-]+_win32[.]zip' \
-  'freetype-dev_[0-9.-]+_win32[.]zip' \
-  'win_iconv-tml-[0-9]+.zip'
+  'freetype-dev_[0-9.-]+_win32[.]zip'
 do
   printf "$ftproot" >> ftp.gnome.org.txt
   grep -E -o "$regex" ftp.gnome.org.html | sort -rV | head -n1 | tee -a ftp.gnome.org.txt | grep . > /dev/null
