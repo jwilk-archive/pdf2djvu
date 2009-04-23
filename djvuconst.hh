@@ -23,7 +23,7 @@ namespace djvu
 
   static const unsigned int version = 1;
 
-  static const char *shared_ant_file_name = "shared_anno.iff";
+  static const char shared_ant_file_name[] = "shared_anno.iff";
 
   namespace binary 
   {
