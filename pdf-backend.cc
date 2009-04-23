@@ -14,7 +14,7 @@
 #include <sstream>
 #include <string>
 
-#include "compoppler.hh"
+#include "pdf-backend.hh"
 #include "debug.hh"
 #include "system.hh"
 
@@ -349,10 +349,7 @@ std::string pdf::string_as_utf8(pdf::String *string)
     for (size_t i = 2; i < clength; i += 2)
     {
       if (i + 1 < clength)
-      {
         code = ((cstring[i] & 0xff) << 8) + (cstring[i + 1] & 0xff);
-        fprintf(stderr, "< %04x\n", code);
-      }
       else
       {
         /* A lone byte is encountered. */

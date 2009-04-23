@@ -10,7 +10,7 @@
 
 #include <stdexcept>
 
-#include "compoppler.hh"
+#include "pdf-backend.hh"
 #include "config.hh"
 
 class Quantizer

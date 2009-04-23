@@ -14,7 +14,7 @@
 #include <sstream>
 #include <vector>
 
-#include "compoppler.hh"
+#include "pdf-backend.hh"
 #include "config.hh"
 #include "debug.hh"
 #include "djvuconst.hh"

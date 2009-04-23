@@ -20,12 +20,12 @@ endif
 
 config.o: config.cc config.hh debug.hh djvuconst.hh sexpr.hh version.hh
 debug.o: debug.cc debug.hh
-compoppler.o: compoppler.cc compoppler.hh debug.hh system.hh version.hh
+pdf-backend.o: pdf-backend.cc pdf-backend.hh debug.hh system.hh version.hh
 sexpr.o: sexpr.cc sexpr.hh
 system.o: system.cc system.hh debug.hh version.hh
-quantizer.o: quantizer.cc quantizer.hh compoppler.hh config.hh sexpr.hh version.hh
-pdf2djvu.o: pdf2djvu.cc compoppler.hh debug.hh config.hh system.hh version.hh djvuconst.hh sexpr.hh quantizer.hh
-pdf2djvu: pdf2djvu.o compoppler.o debug.o config.o system.o sexpr.o quantizer.o
+quantizer.o: quantizer.cc quantizer.hh pdf-backend.hh config.hh sexpr.hh version.hh
+pdf2djvu.o: pdf2djvu.cc pdf-backend.hh debug.hh config.hh system.hh version.hh djvuconst.hh sexpr.hh quantizer.hh
+pdf2djvu: pdf2djvu.o pdf-backend.o debug.o config.o system.o sexpr.o quantizer.o
 	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@) 
 
 .PHONY: clean
