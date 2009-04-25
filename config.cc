@@ -73,7 +73,7 @@ public:
 
 class DpiOutsideRange : public Config::Error
 {
-private:
+protected:
   static std::string __error_message__(int dpi_from, int dpi_to)
   {
     std::ostringstream stream;
@@ -299,7 +299,7 @@ static std::pair<int, int>parse_page_size(const std::string &s)
 
 class InvalidNumber : public Config::Error
 {
-private:
+protected:
   static std::string __error_message__(const char *s)
   {
     std::ostringstream stream;

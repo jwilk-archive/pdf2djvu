@@ -83,7 +83,7 @@ static void warn_posix_error(const std::string &context)
 
 class Win32Error : public OSError
 {
-private:
+protected:
   static std::string __error_message__(const std::string &context);
 public:
   explicit Win32Error(const std::string &context) 
@@ -499,7 +499,7 @@ public:
 
 class TemporaryPathTemplate : public CharArray
 {
-private:
+protected:
   static const char *temporary_directory()
   {
     const char *result = getenv("TMPDIR");

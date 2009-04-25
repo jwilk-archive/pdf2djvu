@@ -36,7 +36,7 @@ protected:
 
 class POSIXError : public OSError
 {
-private:
+protected:
   static std::string __error_message__(const std::string &context);
 public:
   explicit POSIXError(const std::string &context) 
@@ -62,7 +62,7 @@ public:
 
 class Command
 {
-private:
+protected:
   std::string command;
 #ifdef HAVE_PSTREAMS  
   redi::pstreams::argv_type argv;

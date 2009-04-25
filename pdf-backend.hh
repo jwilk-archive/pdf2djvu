@@ -125,7 +125,7 @@ namespace pdf
 
   class PixmapIterator
   {
-  private:
+  protected:
     const uint8_t *row_ptr;
     const uint8_t *ptr;
     size_t row_size;
@@ -163,6 +163,7 @@ namespace pdf
   private:
     Pixmap(const Pixmap&); // not defined
     Pixmap& operator=(const Pixmap&); // not defined
+  protected:
     const uint8_t *raw_data;
     pdf::splash::Bitmap *bmp;
     size_t row_size;

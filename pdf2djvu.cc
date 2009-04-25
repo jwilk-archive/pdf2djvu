@@ -237,11 +237,10 @@ public:
 
 class MutedRenderer: public pdf::Renderer
 {
-private:
+protected:
   std::auto_ptr<std::ostringstream> text_comments;
   std::vector<sexpr::Ref> annotations;
   const ComponentList &page_files;
-protected:
 
   void add_text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
   {
@@ -785,8 +784,8 @@ class IndirectComponentList : public ComponentList
 private:
   IndirectComponentList(const IndirectComponentList&); // not defined
   IndirectComponentList& operator=(const IndirectComponentList&); // not defined
-  const Directory &directory;
 protected:
+  const Directory &directory;
   virtual File *create_file(const std::string &pageid)
   {
     return new File(this->directory, pageid);
@@ -860,11 +859,10 @@ void set_page_title(unsigned int n, const std::string &title, File &sed_file)
 
 class BundledDjVm : public DjVm
 {
-private:
+protected:
   File &output_file;
   DjVuCommand command;
   size_t page_counter;
-protected:
   std::vector<const std::string*> titles;
 public:
   explicit BundledDjVm(File &output_file) 
@@ -948,7 +946,7 @@ public:
 
 class IndirectDjVm : public DjVm
 {
-private:
+protected:
   File &index_file;
   std::vector<Component> components;
   class UnexpectedDjvuSedOutput : public std::runtime_error
