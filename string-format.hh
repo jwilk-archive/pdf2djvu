@@ -39,7 +39,7 @@ namespace string_format
     std::vector<Chunk*> chunks;
   public:
     explicit Template(const std::string &);
-    ~Template();
+    ~Template() throw ();
     void format(const Bindings &, std::ostream &) const;
     std::string format(const Bindings &) const;
   };

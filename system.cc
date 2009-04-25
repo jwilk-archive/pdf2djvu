@@ -485,7 +485,7 @@ public:
     return this->buffer;
   }
 
-  ~CharArray()
+  ~CharArray() throw ()
   {
     delete[] this->buffer;
   }

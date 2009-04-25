@@ -214,7 +214,7 @@ string_format::Template::Template(const std::string &source)
   }
 }
 
-string_format::Template::~Template()
+string_format::Template::~Template() throw ()
 {
   typedef std::vector<Chunk*>::iterator iterator;
   for (iterator it = this->chunks.begin(); it != this->chunks.end(); it++)
