@@ -78,10 +78,10 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     switch (mode)
     {
     case NAME:
-      if (*it == '+' || *it == '-' || *it == '|')
+      if (*it == '+' || *it == '-' || *it == ':')
       {
         this->variable = description.substr(0, it - description.begin());
-        if (*it == '|')
+        if (*it == ':')
           mode = WIDTH_1;
         else
         {
@@ -106,7 +106,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
           throw IntegerOverflow();
         this->offset = this->offset * 10 + (*it - '0');
       }
-      else if (*it == '|')
+      else if (*it == ':')
         mode = WIDTH_1;
       else
         throw ParseError();

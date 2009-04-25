@@ -148,7 +148,7 @@ public:
 
 string_format::Template* Config::default_pageid_template(const std::string &prefix)
 {
-  return new string_format::Template(prefix + "{spage|04*}.djvu");
+  return new string_format::Template(prefix + "{spage:04*}.djvu");
 }
 
 Config::Config()
