@@ -19,6 +19,11 @@
 #include "djvuconst.hh"
 #include "version.hh"
 
+string_format::Template* Config::default_pageid_template(const std::string &prefix)
+{
+  return new string_format::Template(prefix + "{spage|04*}.djvu");
+}
+
 Config::Config()
 {
   this->text = this->TEXT_WORDS;
@@ -41,7 +46,7 @@ Config::Config()
   this->loss_level = 0;
   this->bg_slices = NULL;
   this->file_name = NULL;
-  this->pageid_prefix = "p";
+  this->pageid_template.reset(default_pageid_template("p"));
 }
 
 namespace string
@@ -220,16 +225,17 @@ static int parse_fg_colors(const std::string &s)
   return n;
 }
 
-static const std::string& parse_pageid_prefix(const std::string &s)
+static void validate_pageid_template(string_format::Template &pageid_template)
 {
-  for (std::string::const_iterator it = s.begin(); it != s.end(); it++)
+  string_format::Bindings empty_bindings;
+  std::string pageid = pageid_template.format(empty_bindings);
+  for (std::string::const_iterator it = pageid.begin(); it != pageid.end(); it++)
   {
     if (isalnum(*it) || *it == '_' || *it == '-' || *it == '+' || *it == '.')
       ;
     else
-      throw Config::Error("Pageid prefix must consist only of letters, digits, '_', '+', '-' and '.' characters");
+      throw Config::Error("Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters");
   }
-  return s;
 }
 
 void Config::read_config(int argc, char * const argv[])
@@ -404,7 +410,8 @@ void Config::read_config(int argc, char * const argv[])
       this->output_stdout = false;
       break;
     case OPT_PREFIX:
-      this->pageid_prefix = parse_pageid_prefix(optarg);
+      this->pageid_template.reset(this->default_pageid_template(optarg));
+      validate_pageid_template(*this->pageid_template);
       break;
     case OPT_HELP:
       throw NeedHelp();

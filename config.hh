@@ -8,16 +8,20 @@
 #ifndef PDF2DJVU_CONFIG_H
 #define PDF2DJVU_CONFIG_H
 
+#include <memory>
 #include <sstream> 
 #include <stdexcept>
 #include <string>
 #include <vector>
 
+#include "string-format.hh"
 #include "sexpr.hh"
 
 
 class Config
 {
+protected:
+  static string_format::Template *default_pageid_template(const std::string &pageid_prefix);
 public:
   class Hyperlinks
   {
@@ -64,7 +68,8 @@ public:
   char *bg_slices;
   std::vector< std::pair<int, int> > pages;
   char *file_name;
-  std::string pageid_prefix;
+  std::auto_ptr<string_format::Template> pageid_template;
+  std::auto_ptr<string_format::Template> title_template;
 
   Config();
 
