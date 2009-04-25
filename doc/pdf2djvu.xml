@@ -110,14 +110,41 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--pageid-template=<filename><replaceable>template</replaceable></filename></option></term>
+			<listitem>
+				<para>
+					Specifies the naming scheme for page identifiers.
+					Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote>
+					section for the template language description.
+				</para>
+				<para>
+					The default template is <quote><literal>p{page:04*}.djvu</literal></quote>.
+				</para>
+				<para>
+					For portability reasons, page identifiers must consist only of letters, digits,
+					<literal>_</literal>, <literal>+</literal>, <literal>-</literal> and dot.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--pageid-prefix=<filename><replaceable>prefix</replaceable></filename></option></term>
 			<listitem>
 				<para>
-					Specifies the naming scheme for page identifiers: <replaceable>prefix</replaceable>, followed by
-					0-padded page number, followed by the the <literal>djvu</literal> extension.
-					<replaceable>prefix</replaceable> must consist only of letters, digits, <literal>_</literal>,
-					<literal>+</literal>, <literal>-</literal> and dot.
-					The default is <literal>p</literal>. 
+					Equivalent to
+					<quote><literal>--pageid-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--page-title-template=<filename><replaceable>template</replaceable></filename></option></term>
+			<listitem>
+				<para>
+					Specifies the template for page titles.
+					Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote>
+					section for the template language description.
+				</para>
+				<para>
+					The default is to set no page titles.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -416,6 +443,66 @@
 				<para>Display help and exit.</para>
 			</listitem>
 		</varlistentry>
+		</variablelist>
+	</refsection>
+</refsection>
+
+<refsection id='template-language'>
+	<title id='template-language.title'>Template language</title>
+	<refsection>
+		<title>Template syntax</title>
+		<para>
+			The template language is roughly modelled on the <ulink
+			url='http://docs.python.org/library/string.html#format-string-syntax'>Python
+			string formatting syntax</ulink>.
+		</para>
+		<para>
+			A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces
+			<literal>{</literal><literal>}</literal>.
+			Fields are replaced with appropriately formatted values when the template is evaluated.
+			Moreover,
+			<literal>{{</literal> is replaced with a single <literal>{</literal>
+			and <literal>}}</literal> is replaced with a single <literal>}</literal>.
+		</para>
+	</refsection>
+	<refsection>
+		<title>Field syntax</title>
+		<para>
+			Each field consist of a variable name, optionally followed by a shift, optionally followed by a format
+			specification.
+		</para>
+		<para>
+			The shift is a signed (i.e. starting with a <literal>+</literal> or <literal>-</literal> character) integer.
+		</para>
+		<para>
+			The format specification consist of a colon, followed by a width specification.
+		</para>
+		<para>
+			The width specification is a decimal integer defining the minimum field width. If not specified, then the
+			field width will be determined by the content. Preceding the width specification with a zero
+			(<literal>0</literal>) character, this enables zero-padding.
+		</para>
+		<para>
+			The width specification is optionally followed by an asterisk (<literal>*</literal>) character, which
+			increases the minimum field width to the width of the longest possible content of the variable.
+		</para>
+	</refsection>
+	<refsection>
+		<title>Available variables</title>
+		<variablelist>
+			<varlistentry>
+				<term><varname>page</varname></term>
+				<term><varname>spage</varname></term>
+				<listitem>
+					<para>Page number in the PDF document.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><varname>dpage</varname></term>
+				<listitem>
+					<para>Page number in the DjVu document.</para>
+				</listitem>
+			</varlistentry>
 		</variablelist>
 	</refsection>
 </refsection>
