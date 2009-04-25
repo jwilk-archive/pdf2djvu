@@ -33,7 +33,9 @@ static inline DebugStream &debug(int n)
 class NoLinkDestination : public std::runtime_error
 {
 public:
-  NoLinkDestination() : std::runtime_error("Cannot find link destination") {}
+  NoLinkDestination()
+  : std::runtime_error("Cannot find link destination")
+  { }
 };
 
 static int get_page_for_LinkGoTo(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
@@ -375,19 +377,25 @@ public:
 class BookmarkError : public std::runtime_error
 {
 public:
-  BookmarkError(const std::string &message) : std::runtime_error(message) {}
+  BookmarkError(const std::string &message)
+  : std::runtime_error(message)
+  { }
 };
 
 class NoPageForBookmark : public BookmarkError
 {
 public:
-  NoPageForBookmark() : BookmarkError("No page for a bookmark") {}
+  NoPageForBookmark()
+  : BookmarkError("No page for a bookmark")
+  { }
 };
 
 class NoTitleForBookmark : public BookmarkError
 {
 public:
-  NoTitleForBookmark() : BookmarkError("No title for a bookmark") {}
+  NoTitleForBookmark()
+  : BookmarkError("No title for a bookmark")
+  { }
 };
 
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
@@ -801,10 +809,10 @@ private:
 public:
   explicit IndirectDjVm(File &index_file) 
   : index_file(index_file)
-  {}
+  { }
 
   virtual ~IndirectDjVm() throw ()
-  {}
+  { }
 
   virtual void add(const File &file)
   {
