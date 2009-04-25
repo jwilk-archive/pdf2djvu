@@ -1,3 +1,9 @@
+pdf2djvu (0.5.5) UNRELEASED; urgency=low
+
+  * Add the --pageid-template option.
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 25 Apr 2009 13:57:44 +0200
+
 pdf2djvu (0.5.4) unstable; urgency=low
 
   * Add the --crop-text option.

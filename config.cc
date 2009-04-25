@@ -122,6 +122,14 @@ public:
   { }
 };
 
+class PageidTemplateParseError : public Config::Error
+{
+public:
+  PageidTemplateParseError()
+  : Config::Error("Unable to parse pageid template specification")
+  { }
+};
+
 class PageidIllegalCharacter : public Config::Error
 {
 public:
@@ -374,8 +382,9 @@ void Config::read_config(int argc, char * const argv[])
     OPT_NO_METADATA,
     OPT_NO_OUTLINE,
     OPT_NO_RENDER,
+    OPT_PAGEID_PREFIX,
+    OPT_PAGEID_TEMPLATE,
     OPT_PAGE_SIZE,
-    OPT_PREFIX,
     OPT_TEXT_LINES,
     OPT_TEXT_CROP,
     OPT_TEXT_NONE,
@@ -410,7 +419,8 @@ void Config::read_config(int argc, char * const argv[])
     { "no-nfkc", 0, 0, OPT_TEXT_NO_NFKC },
     { "output", 1, 0, OPT_OUTPUT },
     { "page-size", 1, 0, OPT_PAGE_SIZE },
-    { "pageid-prefix", 1, 0, OPT_PREFIX },
+    { "pageid-prefix", 1, 0, OPT_PAGEID_PREFIX },
+    { "pageid-template", 1, 0, OPT_PAGEID_TEMPLATE },
     { "pages", 1, 0, OPT_PAGES },
     { "quiet", 0, 0, OPT_QUIET },
     { "verbatim-metadata", 0, 0, OPT_VERBATIM_METADATA },
@@ -520,8 +530,19 @@ void Config::read_config(int argc, char * const argv[])
       this->output = optarg;
       this->output_stdout = false;
       break;
-    case OPT_PREFIX:
+    case OPT_PAGEID_PREFIX:
       this->pageid_template.reset(this->default_pageid_template(optarg));
+      validate_pageid_template(*this->pageid_template);
+      break;
+    case OPT_PAGEID_TEMPLATE:
+      try
+      {
+        this->pageid_template.reset(new string_format::Template(optarg));
+      }
+      catch (string_format::ParseError)
+      {
+        throw PageidTemplateParseError();
+      }
       validate_pageid_template(*this->pageid_template);
       break;
     case OPT_HELP:
@@ -558,6 +579,7 @@ void Config::usage(const Config::Error &error)
     << std::endl << " -i, --indirect=FILE"
     << std::endl << " -o, --output=FILE"
     << std::endl << "     --pageid-prefix=NAME"
+    << std::endl << "     --pageid-template=TEMPLATE"
     << std::endl << " -d, --dpi=resolution"
     << std::endl << "     --media-box"
     << std::endl << "     --page-size=WxH"
