@@ -97,6 +97,8 @@ public:
     string_format::Bindings bindings;
     bindings["max_spage"] = this->data.size();
     bindings["spage"] = n;
+    bindings["max_page"] = this->data.size();
+    bindings["page"] = n;
     return this->pageid_template.format(bindings);
   }
 
