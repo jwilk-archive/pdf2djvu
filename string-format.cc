@@ -213,9 +213,7 @@ string_format::Template::Template(const std::string &source)
     case KET:
       if (*right == '}')
       {
-        std::string text(1, *right);
-        this->chunks.push_back(new StaticChunk(text));
-        left = right + 1;
+        left = right;
         mode = TEXT;
       }
       else
@@ -224,9 +222,7 @@ string_format::Template::Template(const std::string &source)
     case FORMAT_1:
       if (*right == '{')
       {
-        std::string text(1, *right);
-        this->chunks.push_back(new StaticChunk(text));
-        left = right + 1;
+        left = right;
         mode = TEXT;
       }
       else
