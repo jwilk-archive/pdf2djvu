@@ -110,7 +110,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--pageid-template=<filename><replaceable>template</replaceable></filename></option></term>
+			<term><option>--pageid-template=<replaceable>template</replaceable></option></term>
 			<listitem>
 				<para>
 					Specifies the naming scheme for page identifiers.
@@ -127,7 +127,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--pageid-prefix=<filename><replaceable>prefix</replaceable></filename></option></term>
+			<term><option>--pageid-prefix=<replaceable>prefix</replaceable></option></term>
 			<listitem>
 				<para>
 					Equivalent to
@@ -136,7 +136,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><option>--page-title-template=<filename><replaceable>template</replaceable></filename></option></term>
+			<term><option>--page-title-template=<replaceable>template</replaceable></option></term>
 			<listitem>
 				<para>
 					Specifies the template for page titles.
