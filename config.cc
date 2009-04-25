@@ -600,6 +600,7 @@ void Config::usage(const Config::Error &error)
     << std::endl << " -o, --output=FILE"
     << std::endl << "     --pageid-prefix=NAME"
     << std::endl << "     --pageid-template=TEMPLATE"
+    << std::endl << "     --page-title-template=TEMPLATE"
     << std::endl << " -d, --dpi=resolution"
     << std::endl << "     --media-box"
     << std::endl << "     --page-size=WxH"
