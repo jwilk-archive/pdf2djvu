@@ -12,6 +12,7 @@
 #include <limits>
 #include <map>
 #include <memory>
+#include <set>
 #include <sstream>
 #include <vector>
 
@@ -822,6 +823,24 @@ void DjVuCommand::set_argv0(const char *argv0)
 
 class DjVm
 {
+protected:
+  std::set<std::string> known_ids;
+  std::set<std::string> known_titles;
+  class DuplicateId : public std::runtime_error
+  {
+  public:
+    DuplicateId(const std::string &id)
+    : std::runtime_error("Duplicate page identifier: " + id)
+    { }
+  };
+  class DuplicateTitle : public std::runtime_error
+  {
+  public:
+    DuplicateTitle(const std::string &id)
+    : std::runtime_error("Duplicate page title: " + id)
+    { }
+  };
+  void remember(const Component &component);
 public:
   virtual void add(const Component &compontent) = 0;
   virtual void create() = 0;
@@ -836,6 +855,21 @@ public:
   virtual ~DjVm() throw () { /* just to shut up compilers */ }
 };
 
+void DjVm::remember(const Component &component)
+{
+  std::string id;
+  id = component.get_basename();
+  if (this->known_ids.count(id) > 0)
+    throw DuplicateId(id);
+  this->known_ids.insert(id);
+  const std::string *title = component.get_title();
+  if (title != NULL)
+  {
+    if (this->known_titles.count(*title) > 0)
+      throw DuplicateTitle(*title);
+    this->known_titles.insert(*title);
+  }
+}
 
 void set_page_title(unsigned int n, const std::string &title, File &sed_file)
 {
@@ -878,6 +912,7 @@ public:
 
   virtual void add(const Component &component)
   {
+    this->remember(component);
     this->titles.push_back(component.get_title());
     this->page_counter++;
     this->command << component;
@@ -967,6 +1002,7 @@ public:
 
   virtual void add(const Component &component)
   {
+    this->remember(component);
     this->components.push_back(component);
   }
 
