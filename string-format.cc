@@ -38,6 +38,7 @@ namespace string_format
   {
   protected:
     std::string variable;  
+    bool negative_offset;
     uint_tp offset;
     unsigned int width;
     bool auto_width;
@@ -60,7 +61,7 @@ namespace string_format
 }
 
 string_format::VariableChunk::VariableChunk(const std::string &description)
-: offset(0), width(0), auto_width(false), pad_0(false) 
+: negative_offset(false), offset(0), width(0), auto_width(false), pad_0(false) 
 {
   enum
   {
@@ -77,10 +78,16 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     switch (mode)
     {
     case NAME:
-      if (*it == '+' || *it == '|')
+      if (*it == '+' || *it == '-' || *it == '|')
       {
         this->variable = description.substr(0, it - description.begin());
-        mode = *it == '+' ? OFFSET_1 : WIDTH_1;
+        if (*it == '|')
+          mode = WIDTH_1;
+        else
+        {
+          this->negative_offset = *it == '-';
+          mode = OFFSET_1;
+        }
       }
       break;
     case OFFSET_1:
@@ -138,22 +145,30 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     this->variable = description;
 }
 
+static string_format::uint_tp shift(string_format::uint_tp value, string_format::uint_tp offset, bool negative_offset)
+{
+  if (negative_offset)
+  {
+    if (offset > value)
+      value = 0;
+    else
+      value -= offset;
+  }
+  else if (value + offset >= value)
+    value += offset;
+  else
+    throw string_format::IntegerOverflow();
+  return value;
+}
+
 void string_format::VariableChunk::format(const Bindings &bindings, std::ostream &stream) const
 {
-  uint_tp value = bindings.get(this->variable);
-  if (value + this->offset >= value)
-    value += this->offset;
-  else
-    throw IntegerOverflow();
+  uint_tp value = shift(bindings.get(this->variable), this->offset, this->negative_offset);
   unsigned int width = this->width;
   if (auto_width)
   {
-    uint_tp max_value = bindings.get("max_" + this->variable);
+    uint_tp max_value = shift(bindings.get("max_" + this->variable), this->offset, this->negative_offset);
     unsigned int max_digits = 0;
-    if (max_value + this->offset >= max_value)
-      max_value += this->offset;
-    else
-      throw IntegerOverflow();
     while (max_value > 0)
     {
       max_digits++;
