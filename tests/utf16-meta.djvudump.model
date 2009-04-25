@@ -1,8 +1,8 @@
-  FORM:DJVM [372] 
+  FORM:DJVM [308] 
     DIRM [51]         Document directory (bundled, 2 files 1 pages)
     FORM:DJVU [57] {p0001.djvu}
       INFO [10]         DjVu 118x118, v24, 300 dpi, gamma=2.2
       INCL [15]         Indirection chunk --> {shared_anno.iff}
       Sjbz [3]          JB2 bilevel data
-    FORM:DJVI [234] {shared_anno.iff}
-      ANTz [222]        Page annotation (hyperlinks, etc.)
+    FORM:DJVI [170] {shared_anno.iff}
+      ANTz [158]        Page annotation (hyperlinks, etc.)
