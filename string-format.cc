@@ -49,6 +49,14 @@ namespace string_format
     virtual void format(const Bindings &, std::ostream &) const;
   };
 
+  class IntegerOverflow : public std::overflow_error
+  {
+  public:
+    IntegerOverflow()
+    : std::overflow_error("Integer overflow")
+    { }
+  };
+
 }
 
 string_format::VariableChunk::VariableChunk(const std::string &description)
@@ -88,7 +96,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
       if (*it >= '0' && *it <= '9')
       {
         if (this->offset > (std::numeric_limits<uint_tp>::max() - 9) / 10)
-          throw std::overflow_error("");
+          throw IntegerOverflow();
         this->offset = this->offset * 10 + (*it - '0');
       }
       else if (*it == '|')
@@ -109,7 +117,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
       if (*it >= '0' && *it <= '9')
       {
         if (this->width > (std::numeric_limits<typeof (this->width)>::max() - 9) / 10)
-          throw std::overflow_error("");
+          throw IntegerOverflow();
         this->width = this->width * 10 + (*it - '0');
       }
       else if (*it == '*')
@@ -136,7 +144,7 @@ void string_format::VariableChunk::format(const Bindings &bindings, std::ostream
   if (value + this->offset >= value)
     value += this->offset;
   else
-    throw std::overflow_error("");
+    throw IntegerOverflow();
   unsigned int width = this->width;
   if (auto_width)
   {
@@ -145,7 +153,7 @@ void string_format::VariableChunk::format(const Bindings &bindings, std::ostream
     if (max_value + this->offset >= max_value)
       max_value += this->offset;
     else
-      throw std::overflow_error("");
+      throw IntegerOverflow();
     while (max_value > 0)
     {
       max_digits++;
