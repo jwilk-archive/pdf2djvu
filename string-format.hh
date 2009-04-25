@@ -28,6 +28,8 @@ namespace string_format
   public:
     virtual void format(const Bindings &bindings, std::ostream &stream) const
     = 0;
+    virtual ~Chunk() throw ()
+    { }
   };
 
   class Template

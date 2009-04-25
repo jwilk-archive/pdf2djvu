@@ -26,6 +26,8 @@ namespace string_format
     StaticChunk(const std::string &value)
     : value(value)
     { } 
+    virtual ~StaticChunk() throw ()
+    { }
     virtual void format(const Bindings &bindings, std::ostream &stream) const
     {
       stream << this->value;
@@ -42,6 +44,8 @@ namespace string_format
     bool pad_0;
   public:
     explicit VariableChunk(const std::string &);
+    virtual ~VariableChunk() throw ()
+    { }
     virtual void format(const Bindings &, std::ostream &) const;
   };
 
