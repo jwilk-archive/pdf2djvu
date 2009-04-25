@@ -92,7 +92,9 @@ protected:
   void *posix_dir;
   void open(const char *name);
   void close();
-  Directory() : name(""), posix_dir(NULL) {}
+  Directory()
+  : name(""), posix_dir(NULL)
+  { }
 public: 
   explicit Directory(const std::string &name);
   virtual ~Directory() throw ();
@@ -118,7 +120,8 @@ protected:
   std::string name;
   std::string base_name;
   void open(const char* path, bool truncate = true);
-  File() {}
+  File()
+  { }
 public:
   explicit File(const std::string &name);
   File(const Directory& directory, const std::string &name);

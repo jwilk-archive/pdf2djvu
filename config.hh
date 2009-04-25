@@ -79,7 +79,9 @@ public:
   class Error : public std::runtime_error
   {
   public:
-    explicit Error(const std::string &message) : std::runtime_error(message) {};
+    explicit Error(const std::string &message)
+    : std::runtime_error(message)
+    { };
     virtual bool is_quiet() const
     {
       return false;
@@ -94,25 +96,33 @@ public:
   class PagesParseError : public Error
   {
   public:
-    PagesParseError() : Error("Unable to parse page numbers") {}
+    PagesParseError()
+    : Error("Unable to parse page numbers")
+    { }
   };
 
   class PageSizeParseError : public Error
   {
   public:
-    PageSizeParseError() : Error("Unable to parse page size") {}
+    PageSizeParseError()
+    : Error("Unable to parse page size")
+    { }
   };
 
   class NoPagesSelected : public Error
   {
   public:
-    NoPagesSelected() : Error("No pages selected") { }
+    NoPagesSelected()
+    : Error("No pages selected")
+    { }
   };
 
   class HyperlinksOptionsParseError : public Error
   {
   public:
-    HyperlinksOptionsParseError() : Error("Unable to parse hyperlinks options") {}
+    HyperlinksOptionsParseError()
+    : Error("Unable to parse hyperlinks options")
+    { }
   };
 
   class DpiOutsideRange : public Error
@@ -135,7 +145,9 @@ public:
   class NeedHelp : public Error
   {
   public:
-    NeedHelp() : Error("") {};
+    NeedHelp()
+    : Error("")
+    { };
     virtual bool is_quiet() const
     {
       return true;
@@ -145,7 +157,9 @@ public:
   class InvalidOption : public Error
   {
   public:
-    InvalidOption() : Error("") {};
+    InvalidOption()
+    : Error("")
+    { };
     virtual bool is_quiet() const
     {
       return true;
