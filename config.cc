@@ -122,6 +122,14 @@ public:
   { }
 };
 
+class PageTitleTemplateParseError : public Config::Error
+{
+public:
+  PageTitleTemplateParseError()
+  : Config::Error("Unable to parse page title template specification")
+  { }
+};
+
 class PageidTemplateParseError : public Config::Error
 {
 public:
@@ -385,6 +393,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_PAGEID_PREFIX,
     OPT_PAGEID_TEMPLATE,
     OPT_PAGE_SIZE,
+    OPT_PAGE_TITLE_TEMPLATE,
     OPT_TEXT_LINES,
     OPT_TEXT_CROP,
     OPT_TEXT_NONE,
@@ -419,6 +428,7 @@ void Config::read_config(int argc, char * const argv[])
     { "no-nfkc", 0, 0, OPT_TEXT_NO_NFKC },
     { "output", 1, 0, OPT_OUTPUT },
     { "page-size", 1, 0, OPT_PAGE_SIZE },
+    { "page-title-template", 1, 0, OPT_PAGE_TITLE_TEMPLATE },
     { "pageid-prefix", 1, 0, OPT_PAGEID_PREFIX },
     { "pageid-template", 1, 0, OPT_PAGEID_TEMPLATE },
     { "pages", 1, 0, OPT_PAGES },
@@ -544,6 +554,16 @@ void Config::read_config(int argc, char * const argv[])
         throw PageidTemplateParseError();
       }
       validate_pageid_template(*this->pageid_template);
+      break;
+    case OPT_PAGE_TITLE_TEMPLATE:
+      try
+      {
+        this->page_title_template.reset(new string_format::Template(optarg));
+      }
+      catch (string_format::ParseError)
+      {
+        throw PageTitleTemplateParseError();
+      }
       break;
     case OPT_HELP:
       throw NeedHelp();

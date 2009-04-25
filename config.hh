@@ -69,7 +69,7 @@ public:
   std::vector< std::pair<int, int> > pages;
   char *file_name;
   std::auto_ptr<string_format::Template> pageid_template;
-  std::auto_ptr<string_format::Template> title_template;
+  std::auto_ptr<string_format::Template> page_title_template;
 
   Config();
 

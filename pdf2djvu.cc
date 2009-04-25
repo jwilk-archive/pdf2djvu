@@ -9,6 +9,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <memory>
 #include <sstream>
@@ -67,42 +68,168 @@ static bool is_foreground_color_map(pdf::gfx::ImageColorMap *color_map)
   return (color_map->getNumPixelComps() <= 1 && color_map->getBits() <= 1);
 }
 
-class PageFiles
+class PageMap : protected std::map<int, int>
 {
 protected:
-  std::vector<File*> data;
-  string_format::Template &pageid_template;
+  int max;
+public:
+  PageMap()
+  {
+    this->max = std::numeric_limits<int>::min();
+  }
 
-  PageFiles(int n, string_format::Template &pageid_template)
-  : data(n), pageid_template(pageid_template)
+  int get_max() const
+  {
+    return this->max;
+  }
+
+  int get(int n) const
+  {
+    const_iterator it = this->find(n);
+    if (it == this->end())
+      throw std::logic_error("Page not found");
+    return it->second;
+  }
+
+  int get(int n, int m) const
+  {
+    const_iterator it = this->find(n);
+    if (it == this->end())
+      return m;
+    return it->second;
+  }
+
+  void set(int n, int m)
+  {
+    if (m > this->max)
+      this->max = m;
+    (*this)[n] = m;
+  }
+};
+
+class Component
+{
+protected:
+  std::auto_ptr<std::string> title;
+  File *file;
+public:
+  explicit Component(File &file, const std::string *title = NULL)
+  : file(&file)
+  { 
+    if (title != NULL)
+      this->title.reset(new std::string(*title));
+    file.close();
+  }
+
+  Component(const Component &component)
+  : file(component.file)
+  { 
+    if (component.title.get() != NULL)
+      this->title.reset(new std::string(*component.title));
+  }
+
+  const std::string * get_title() const
+  {
+    return this->title.get();
+  }
+
+  const std::string & get_basename() const
+  {
+    return this->file->get_basename();
+  }
+
+  size_t size()
+  {
+    size_t result;
+    this->file->reopen();
+    result = this->file->size();
+    this->file->close();
+    return result;
+  }
+
+  friend std::ostream &operator <<(std::ostream &, const Component &);
+  friend Command &operator <<(Command &, const Component &);
+};
+
+Command &operator <<(Command &command, const Component &component)
+{
+  command << *component.file;
+  return command;
+} 
+
+std::ostream &operator <<(std::ostream &stream, const Component &component)
+{
+  stream << *component.file;
+  return stream;
+} 
+
+class ComponentList
+{
+protected:
+  std::vector<File*> files;
+  std::vector<Component*> components;
+  const PageMap &page_map;
+
+  ComponentList(int n, const PageMap &page_map)
+  : files(n), components(n), page_map(page_map)
   { }
 
   void clean_files()
   {
-    for (std::vector<File*>::iterator it = this->data.begin(); it != this->data.end(); it++)
+    for (std::vector<Component*>::iterator it = this->components.begin(); it != this->components.end(); it++)
     {
-      if (*it != NULL)
-      {
-        delete *it;
-        *it = NULL;
-      }
+      delete *it;
+      *it = NULL;
+    }
+    for (std::vector<File*>::iterator it = this->files.begin(); it != this->files.end(); it++)
+    {
+      delete *it;
+      *it = NULL;
     }
   }
 
+  string_format::Bindings get_bindings(int n) const
+  {
+    string_format::Bindings bindings;
+    bindings["max_spage"] = this->files.size();
+    bindings["spage"] = n;
+    bindings["max_page"] = this->files.size();
+    bindings["page"] = n;
+    bindings["max_dpage"] = this->page_map.get_max();
+    bindings["dpage"] = this->page_map.get(n, 0);
+    return bindings;
+  }
+
+  std::string *get_title(int n) const
+  {
+    if (config.page_title_template.get() == NULL)
+      return NULL;
+    string_format::Bindings bindings = this->get_bindings(n);
+    return new std::string(config.page_title_template->format(bindings));
+  }
+
+  virtual File *create_file(const std::string &id)
+  = 0;
+
 public:
-  virtual File &operator[](int n) = 0;
+  virtual Component &operator[](int n)
+  {
+    std::vector<Component*>::reference tmpfile_ptr = this->components.at(n - 1);
+    if (tmpfile_ptr == NULL)
+    { 
+      this->files[n - 1] = this->create_file(this->get_file_name(n));
+      tmpfile_ptr = new Component(*this->files[n - 1], this->get_title(n));
+    }
+    return *tmpfile_ptr;
+  }
 
   std::string get_file_name(int n) const
   {
-    string_format::Bindings bindings;
-    bindings["max_spage"] = this->data.size();
-    bindings["spage"] = n;
-    bindings["max_page"] = this->data.size();
-    bindings["page"] = n;
-    return this->pageid_template.format(bindings);
+    string_format::Bindings bindings = this->get_bindings(n);
+    return config.pageid_template->format(bindings);
   }
 
-  virtual ~PageFiles() throw ()
+  virtual ~ComponentList() throw ()
   {
     this->clean_files();
   }
@@ -113,7 +240,7 @@ class MutedRenderer: public pdf::Renderer
 private:
   std::auto_ptr<std::ostringstream> text_comments;
   std::vector<sexpr::Ref> annotations;
-  const PageFiles &page_files;
+  const ComponentList &page_files;
 protected:
 
   void add_text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
@@ -348,7 +475,7 @@ public:
   }
   void eoFill(pdf::gfx::State *state) { }
 
-  MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const PageFiles &page_files) 
+  MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const ComponentList &page_files) 
   : Renderer(paper_color, monochrome), page_files(page_files)
   { 
     this->clear_texts();
@@ -401,7 +528,7 @@ public:
 };
 
 static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
-  const PageFiles &page_files)
+  const ComponentList &page_files)
 {
   sexpr::GCLock gc_lock;
   pdf::Object current, next;
@@ -460,7 +587,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
 }
 
 static bool pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream,
-  const PageFiles &page_files)
+  const ComponentList &page_files)
 /* Convert the PDF outline to DjVu outline. Save the resulting S-expression
  * into the stream.
  *
@@ -627,61 +754,47 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
   }
 }
 
-
-class TemporaryPageFiles : public PageFiles
+class TemporaryComponentList : public ComponentList
 {
 private:
-  TemporaryPageFiles(const TemporaryPageFiles&); // not defined
-  TemporaryPageFiles& operator=(const TemporaryPageFiles&); // not defined
+  TemporaryComponentList(const TemporaryComponentList&); // not defined
+  TemporaryComponentList& operator=(const TemporaryComponentList&); // not defined
 protected:
   const TemporaryDirectory *directory;
-public:
 
-  explicit TemporaryPageFiles(int n, string_format::Template &pageid_template)
-  : PageFiles(n, pageid_template)
+  virtual File *create_file(const std::string &pageid)
+  {
+    return new TemporaryFile(*this->directory, pageid);
+  }
+public:
+  explicit TemporaryComponentList(int n, const PageMap &page_map)
+  : ComponentList(n, page_map)
   { 
     this->directory = new TemporaryDirectory();
   }
 
-  virtual TemporaryFile &operator[](int n)
-  {
-    std::vector<File*>::reference tmpfile_ptr = this->data.at(n - 1);
-    if (tmpfile_ptr == NULL)
-    {
-      tmpfile_ptr = new TemporaryFile(*this->directory, this->get_file_name(n));
-      tmpfile_ptr->close();
-    }
-    return *dynamic_cast<TemporaryFile*>(tmpfile_ptr);
-  }
-
-  virtual ~TemporaryPageFiles() throw ()
+  virtual ~TemporaryComponentList() throw ()
   {
     this->clean_files();
     delete this->directory;
   }
 };
 
-class IndirectPageFiles : public PageFiles
+class IndirectComponentList : public ComponentList
 {
 private:
-  IndirectPageFiles(const IndirectPageFiles&); // not defined
-  IndirectPageFiles& operator=(const IndirectPageFiles&); // not defined
+  IndirectComponentList(const IndirectComponentList&); // not defined
+  IndirectComponentList& operator=(const IndirectComponentList&); // not defined
   const Directory &directory;
-public:
-  IndirectPageFiles(int n, const Directory &directory, string_format::Template &pageid_template)
-  : PageFiles(n, pageid_template), directory(directory)
-  { }
-
-  virtual File &operator[](int n)
+protected:
+  virtual File *create_file(const std::string &pageid)
   {
-    std::vector<File*>::reference tmpfile_ptr = this->data.at(n - 1);
-    if (tmpfile_ptr == NULL)
-    {
-      tmpfile_ptr = new File(this->directory, this->get_file_name(n));
-      tmpfile_ptr->close();
-    }
-    return *tmpfile_ptr;
+    return new File(this->directory, pageid);
   }
+public:
+  IndirectComponentList(int n, const PageMap &page_map, const Directory &directory)
+  : ComponentList(n, page_map), directory(directory)
+  { }
 };
 
 class DjVuCommand : public Command
@@ -711,12 +824,12 @@ void DjVuCommand::set_argv0(const char *argv0)
 class DjVm
 {
 public:
-  virtual void add(const File &file) = 0;
+  virtual void add(const Component &compontent) = 0;
   virtual void create() = 0;
   virtual void commit() = 0;
-  DjVm &operator <<(const File &file)
+  DjVm &operator <<(const Component &component)
   {
-    this->add(file);
+    this->add(component);
     return *this;
   }
   virtual void set_outline(File &outline_sed_file) = 0;
@@ -724,12 +837,35 @@ public:
   virtual ~DjVm() throw () { /* just to shut up compilers */ }
 };
 
+
+void set_page_title(unsigned int n, const std::string &title, File &sed_file)
+{
+  sed_file
+    << "select " << std::dec << n << std::endl
+    << "set-page-title \"" << std::oct;
+  for (std::string::const_iterator it = title.begin(); it != title.end(); it++)
+  {
+    if (*it == '"' || *it == '\\' || (*it >= 0 && *it <= 0x20))
+    { 
+      sed_file
+        << '\\' << std::setw(3) << std::setfill('0')
+        << static_cast<unsigned int>(*it);
+    }
+    else
+      sed_file << *it;
+  }
+  sed_file
+    << '"' << std::endl;
+}
+
 class BundledDjVm : public DjVm
 {
 private:
   File &output_file;
   DjVuCommand command;
-  unsigned int page_counter;
+  size_t page_counter;
+protected:
+  std::vector<const std::string*> titles;
 public:
   explicit BundledDjVm(File &output_file) 
   : output_file(output_file),
@@ -739,10 +875,14 @@ public:
     this->command << "-c" << this->output_file;
   }
 
-  virtual void add(const File &file)
+  ~BundledDjVm() throw ()
+  { }
+
+  virtual void add(const Component &component)
   {
+    this->titles.push_back(component.get_title());
     this->page_counter++;
-    this->command << file;
+    this->command << component;
   }
 
   virtual void set_outline(File &outlines_sed_file)
@@ -792,6 +932,17 @@ public:
       debug(3) << "removing the dummy page with `djvm`" << std::endl;
       djvm();
     }
+    {
+      TemporaryFile sed_file;
+      for (size_t i = 0; i < page_counter; i++)
+      {
+        if (this->titles[i] != NULL)
+          set_page_title(i + 1, *this->titles[i], sed_file);
+      }
+      DjVuCommand djvused("djvused");
+      djvused << "-s" << "-f" << sed_file << output_file;
+      djvused(); // djvused -s -f <sed-file> <output-djvu-file>
+    }
   }
 };
 
@@ -799,7 +950,7 @@ class IndirectDjVm : public DjVm
 {
 private:
   File &index_file;
-  std::vector<std::string> components;
+  std::vector<Component> components;
   class UnexpectedDjvuSedOutput : public std::runtime_error
   { 
   public: 
@@ -807,7 +958,7 @@ private:
     : std::runtime_error("Unexpected output from djvused") 
     { };
   };
-  void do_create(const std::vector<std::string> &components, bool shared_ant = false);
+  void do_create(const std::vector<Component> &components, bool shared_ant = false);
 public:
   explicit IndirectDjVm(File &index_file) 
   : index_file(index_file)
@@ -816,9 +967,9 @@ public:
   virtual ~IndirectDjVm() throw ()
   { }
 
-  virtual void add(const File &file)
+  virtual void add(const Component &component)
   {
-    this->components.push_back(file.get_basename());
+    this->components.push_back(component);
   }
 
   virtual void set_outline(File &outlines_sed_file)
@@ -848,8 +999,7 @@ public:
        * We need to work around this bug.
        */
       debug(3) << "setting metadata with `djvused` (working around a DjVuLibre bug)" << std::endl;
-      std::vector<std::string> dummy_components;
-      dummy_components.push_back("");
+      std::vector<Component> dummy_components;
       TemporaryFile dummy_sed_file;
       /* For an indirect document, ``create-shared-ant`` is, surprisingly, not
        * enough to create a shared annotations chunk. The dummy shared
@@ -868,14 +1018,15 @@ public:
          *   single page.
          * - Add the dummy shared annotation.
          */
-        dummy_components[0] = this->components[i];
+        dummy_components.push_back(this->components[i]);
         this->do_create(dummy_components);
         DjVuCommand djvused("djvused");
         djvused << "-s" << "-f" << dummy_sed_file << this->index_file;
         djvused(); // djvused -s -f <dummy-sed-file> <output-djvu-file>
+        dummy_components.pop_back();
       }
       /* For the last page, use the desired annotations. */
-      dummy_components[0] = this->components[size - 1];
+      dummy_components.push_back(this->components[size - 1]);
       this->do_create(dummy_components);
       DjVuCommand djvused("djvused");
       djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
@@ -899,7 +1050,7 @@ public:
   { }
 };
 
-void IndirectDjVm::do_create(const std::vector<std::string> &components, bool shared_ant)
+void IndirectDjVm::do_create(const std::vector<Component> &components, bool shared_ant)
 {
   size_t size = components.size();
   this->index_file.reopen(true); // (re)open and truncate
@@ -913,12 +1064,17 @@ void IndirectDjVm::do_create(const std::vector<std::string> &components, bool sh
       bzz_file.write("\0\0", 3);
     if (shared_ant)
       bzz_file << '\3';
-    for (size_t i = 0; i < size; i++)
-      bzz_file << '\1';
+    for (std::vector<Component>::const_iterator it = components.begin(); it != components.end(); it++)
+      bzz_file << (it->get_title() == NULL ? '\001' : '\101');
     if (shared_ant)
       bzz_file << djvu::shared_ant_file_name << '\0';
-    for (std::vector<std::string>::const_iterator it = components.begin(); it != components.end(); it++)
-      bzz_file << *it << '\0';
+    for (std::vector<Component>::const_iterator it = components.begin(); it != components.end(); it++)
+    {
+      bzz_file << it->get_basename() << '\0';
+      const std::string *title = it->get_title();
+      if (title != NULL)
+        bzz_file << *title << '\0';
+    }
     bzz_file.close();
     DjVuCommand bzz("bzz");
     bzz << "-e" << bzz_file << "-";
@@ -1032,10 +1188,11 @@ static int xmain(int argc, char * const argv[])
   size_t djvu_pages_size = 0;
   int n_pages = doc.getNumPages();
   unsigned int page_counter = 0;
+  PageMap page_map;
   std::auto_ptr<const Directory> output_dir;
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
-  std::auto_ptr<PageFiles> page_files;
+  std::auto_ptr<ComponentList> page_files;
   std::auto_ptr<Quantizer> quantizer;
   if (config.no_render || config.monochrome)
     quantizer.reset(new DummyQuantizer(config));
@@ -1049,7 +1206,7 @@ static int xmain(int argc, char * const argv[])
       output_file.reset(new TemporaryFile());
     else
       output_file.reset(new File(config.output));
-    page_files.reset(new TemporaryPageFiles(n_pages, *config.pageid_template));
+    page_files.reset(new TemporaryComponentList(n_pages, page_map));
     djvm.reset(new BundledDjVm(*output_file));
   }
   else
@@ -1088,19 +1245,18 @@ static int xmain(int argc, char * const argv[])
       }
     }
     output_file.reset(new File(*output_dir, index_file_name));
-    page_files.reset(new IndirectPageFiles(n_pages, *output_dir, *config.pageid_template));
+    page_files.reset(new IndirectComponentList(n_pages, page_map, *output_dir));
     djvm.reset(new IndirectDjVm(*output_file));
   }
   if (config.pages.size() == 0)
     config.pages.push_back(std::make_pair(1, n_pages));
-  std::map<int, int> page_map;
   int opage = 1;
   for (
     std::vector< std::pair<int, int> >::iterator page_range = config.pages.begin();
     page_range != config.pages.end(); page_range++)
   for (int ipage = page_range->first; ipage <= n_pages && ipage <= page_range->second; ipage++)
   {
-    page_map[ipage] = opage;
+    page_map.set(ipage, opage);
     opage++;
   }
 
@@ -1125,8 +1281,8 @@ static int xmain(int argc, char * const argv[])
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     page_counter++;
-    File &page_file = (*page_files)[n];
-    debug(1) << "page #" << n << " -> #" << page_map[n];
+    Component &component = (*page_files)[n];
+    debug(1) << "page #" << n << " -> #" << page_map.get(n);
     debug(2) << ":";
     debug(1) << std::endl;
     debug(0)++;
@@ -1208,15 +1364,15 @@ static int xmain(int argc, char * const argv[])
         csepdjvu << "-q" << config.bg_slices;
       if (config.text == config.TEXT_LINES)
         csepdjvu << "-t";
-      csepdjvu << sep_file << page_file;
+      csepdjvu << sep_file << component;
       csepdjvu();
     }
-    *djvm << page_file;
+    *djvm << component;
     TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
     { 
       debug(3) << "recovering images with `djvuextract`" << std::endl;
       DjVuCommand djvuextract("djvuextract");
-      djvuextract << page_file;
+      djvuextract << component;
       if (has_background || has_foreground || nonwhite_background_color)
         djvuextract
           << std::string("FGbz=") + std::string(fgbz_file)
@@ -1278,7 +1434,7 @@ static int xmain(int argc, char * const argv[])
     {
       debug(3) << "recovering text with `djvused`" << std::endl;
       DjVuCommand djvused("djvused");
-      djvused << page_file << "-e" << "output-txt";
+      djvused << component << "-e" << "output-txt";
       djvused(sed_file);
     }
     sed_file.close();
@@ -1288,7 +1444,7 @@ static int xmain(int argc, char * const argv[])
       std::ostringstream info;
       info << "INFO=" << width << "," << height << "," << dpi;
       djvumake
-        << page_file
+        << component
         << info.str()
         << std::string("Sjbz=") + std::string(sjbz_file);
       if ((has_foreground || has_background || nonwhite_background_color) && (fgbz_file.size() || bg44_file.size()))
@@ -1300,14 +1456,11 @@ static int xmain(int argc, char * const argv[])
     {
       debug(3) << "re-adding non-raster data with `djvused`" << std::endl;
       DjVuCommand djvused("djvused");
-      djvused << page_file << "-s" << "-f" << sed_file;
+      djvused << component << "-s" << "-f" << sed_file;
       djvused();
     }
     {
-      size_t page_size;
-      page_file.reopen();
-      page_size = page_file.size();
-      page_file.close();
+      size_t page_size = component.size();
       debug(2) << page_size << " bytes out" << std::endl;
       djvu_pages_size += page_size;
     }
