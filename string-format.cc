@@ -188,6 +188,7 @@ string_format::Template::Template(const std::string &source)
   enum
   {
     TEXT,
+    KET,
     FORMAT_1,
     FORMAT_2
   } mode = TEXT;
@@ -198,7 +199,7 @@ string_format::Template::Template(const std::string &source)
     switch (mode)
     {
     case TEXT:
-      if (*right == '{')
+      if (*right == '{' || *right == '}')
       {
         if (left != right)
         {
@@ -206,11 +207,22 @@ string_format::Template::Template(const std::string &source)
           this->chunks.push_back(new StaticChunk(text));
         }
         left = right + 1;
-        mode = FORMAT_1;
+        mode = *right == '}' ? KET : FORMAT_1;
       }
       break;
+    case KET:
+      if (*right == '}')
+      {
+        std::string text(1, *right);
+        this->chunks.push_back(new StaticChunk(text));
+        left = right + 1;
+        mode = TEXT;
+      }
+      else
+        throw ParseError();
+      break;
     case FORMAT_1:
-      if (*right == '{' || *right == '}')
+      if (*right == '{')
       {
         std::string text(1, *right);
         this->chunks.push_back(new StaticChunk(text));
