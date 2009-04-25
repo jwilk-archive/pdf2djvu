@@ -1,9 +1,11 @@
-pdf2djvu (0.5.5) UNRELEASED; urgency=low
+pdf2djvu (0.5.5) unstable; urgency=low
 
   * Add the --pageid-template option.
   * Add the --page-title-template option.
+  * Don't allow duplicate page identifies nor duplicate page titles.
+  * More robust UTF-16 to UTF-8 conversion.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 25 Apr 2009 13:57:44 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 25 Apr 2009 22:33:44 +0200
 
 pdf2djvu (0.5.4) unstable; urgency=low
 
