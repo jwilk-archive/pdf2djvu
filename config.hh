@@ -93,52 +93,11 @@ public:
     virtual ~Error() throw () { /* just to shut up compilers */ }
   };
 
-  class PagesParseError : public Error
-  {
-  public:
-    PagesParseError()
-    : Error("Unable to parse page numbers")
-    { }
-  };
-
-  class PageSizeParseError : public Error
-  {
-  public:
-    PageSizeParseError()
-    : Error("Unable to parse page size")
-    { }
-  };
-
   class NoPagesSelected : public Error
   {
   public:
     NoPagesSelected()
     : Error("No pages selected")
-    { }
-  };
-
-  class HyperlinksOptionsParseError : public Error
-  {
-  public:
-    HyperlinksOptionsParseError()
-    : Error("Unable to parse hyperlinks options")
-    { }
-  };
-
-  class DpiOutsideRange : public Error
-  {
-  private:
-    static std::string __error_message__(int dpi_from, int dpi_to)
-    {
-      std::ostringstream stream;
-      stream
-        << "The specified resolution is outside the allowed range: " 
-        << dpi_from << " .. " << dpi_to;
-      return stream.str();
-    }
-  public:
-    DpiOutsideRange(int dpi_from, int dpi_to) 
-    : Error(__error_message__(dpi_from, dpi_to))
     { }
   };
 

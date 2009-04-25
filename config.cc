@@ -19,6 +19,117 @@
 #include "djvuconst.hh"
 #include "version.hh"
 
+class OptionsParseError : public Config::Error
+{
+protected:
+  explicit OptionsParseError(const std::string &message)
+  : Config::Error(message)
+  { }
+public:
+  OptionsParseError()
+  : Config::Error("Unable to parse command-line options")
+  { }
+};
+
+class TooManyArguments : public Config::Error
+{
+public:
+  TooManyArguments()
+  : Config::Error("Too many arguments were specified")
+  { }
+};
+
+class NoInputFile : public Config::Error
+{
+public:
+  NoInputFile()
+  : Config::Error("No input file name was specified")
+  { }
+};
+
+class PagesParseError : public Config::Error
+{
+public:
+  PagesParseError()
+  : Config::Error("Unable to parse page numbers")
+  { }
+};
+
+class PageSizeParseError : public Config::Error
+{
+public:
+  PageSizeParseError()
+  : Config::Error("Unable to parse page size")
+  { }
+};
+
+class HyperlinksOptionsParseError : public Config::Error
+{
+public:
+  HyperlinksOptionsParseError()
+  : Config::Error("Unable to parse hyperlinks options")
+  { }
+};
+
+class DpiOutsideRange : public Config::Error
+{
+private:
+  static std::string __error_message__(int dpi_from, int dpi_to)
+  {
+    std::ostringstream stream;
+    stream
+      << "The specified resolution is outside the allowed range: "
+      << dpi_from << " .. " << dpi_to;
+    return stream.str();
+  }
+public:
+  DpiOutsideRange(int dpi_from, int dpi_to)
+  : Config::Error(__error_message__(dpi_from, dpi_to))
+  { }
+};
+
+class FgColorsOutsideRange : public Config::Error
+{
+protected:
+  static std::string __error_message__(int n, int m)
+  {
+    std::ostringstream stream;
+    stream
+      << "The specified number of foreground colors is outside the allowed range: "
+      << n << " .. " << m;
+    return stream.str();
+  }
+public:
+  FgColorsOutsideRange(int n, int m)
+  : Error(__error_message__(n, m))
+  { }
+};
+
+class SubsampleRatioOutsideRange : public Config::Error
+{
+protected:
+  static std::string __error_message__(int n, int m)
+  {
+    std::ostringstream stream;
+    stream
+      << "The specified subsampling ratio is outside the allowed range: "
+      << n << " .. " << m;
+    return stream.str();
+  }
+public:
+  SubsampleRatioOutsideRange(int n, int m)
+  : Error(__error_message__(n, m))
+  { }
+};
+
+class PageidIllegalCharacter : public Config::Error
+{
+public:
+  PageidIllegalCharacter()
+  : Config::Error("Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters")
+  { }
+};
+
 string_format::Template* Config::default_pageid_template(const std::string &prefix)
 {
   return new string_format::Template(prefix + "{spage|04*}.djvu");
@@ -119,7 +230,7 @@ static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
       options.border_color = *it;
       continue;
     }
-    throw Config::HyperlinksOptionsParseError();
+    throw HyperlinksOptionsParseError();
   }
 }
 
@@ -143,18 +254,18 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
     else if (*it == ',')
     {
       if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-        throw Config::PagesParseError();
+        throw PagesParseError();
       result.push_back(std::make_pair(value[0], value[1]));
       value[0] = value[1] = 0;
       state = 0;
     }
     else
-      throw Config::PagesParseError();
+      throw PagesParseError();
   }
   if (state == 0)
     value[1] = value[0];
   if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-    throw Config::PagesParseError();
+    throw PagesParseError();
   result.push_back(std::make_pair(value[0], value[1]));
 }
 
@@ -167,7 +278,7 @@ static std::pair<int, int>parse_page_size(const std::string &s)
   if (x > 0 &&  y > 0 && c == 'x' && stream.eof() && !stream.fail())
     return std::make_pair(x, y);
   else
-    throw Config::PageSizeParseError();
+    throw PageSizeParseError();
 }
 
 class InvalidNumber : public Config::Error
@@ -221,7 +332,7 @@ static int parse_fg_colors(const std::string &s)
     return -1;
   long n = string::as<long>(s);
   if (n < 1 || n > djvu::max_fg_colors)
-    throw Config::Error("The specified number of foreground colors is outside the allowed range");
+    throw FgColorsOutsideRange(1, djvu::max_fg_colors);
   return n;
 }
 
@@ -234,7 +345,7 @@ static void validate_pageid_template(string_format::Template &pageid_template)
     if (isalnum(*it) || *it == '_' || *it == '-' || *it == '+' || *it == '.')
       ;
     else
-      throw Config::Error("Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters");
+      throw PageidIllegalCharacter();
   }
 }
 
@@ -316,13 +427,13 @@ void Config::read_config(int argc, char * const argv[])
     if (c < 0)
       break;
     if (c == 0)
-      throw Error("Unable to parse command-line options");
+      throw OptionsParseError();
     switch (c)
     {
     case OPT_DPI:
       this->dpi = string::as<int>(optarg);
       if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
-        throw Config::DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
+        throw DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
       break;
     case OPT_PAGE_SIZE:
       this->preferred_page_size = parse_page_size(optarg);
@@ -342,7 +453,7 @@ void Config::read_config(int argc, char * const argv[])
     case OPT_BG_SUBSAMPLE:
       this->bg_subsample = string::as<int>(optarg);
       if (this->bg_subsample < 1 || this->bg_subsample > djvu::max_subsample_ratio)
-        throw Config::Error("The specified subsampling ratio is outside the allowed range");
+        throw SubsampleRatioOutsideRange(1, djvu::max_subsample_ratio);
       break;
     case OPT_FG_COLORS:
       this->fg_colors = parse_fg_colors(optarg);
@@ -425,9 +536,9 @@ void Config::read_config(int argc, char * const argv[])
     }
   }
   if (optind < argc - 1)
-    throw Config::Error("Too many arguments were specified");
+    throw TooManyArguments();
   else if (optind > argc - 1)
-    throw Config::Error("No input file name was specified");
+    throw NoInputFile();
   else
     this->file_name = argv[optind];
 }
