@@ -27,6 +27,11 @@ do
     AC_MSG_ERROR($tool not found)
   fi
 done
+
+# Test for Debian bug #458211 <http://bugs.debian/458211>.
+# csepdjvu affected by the bug is unable to use subsample ratio 12.
+# Prior to pdf2djvu 0.5.0, pdf2djvu simply dissalowed subsample ratio 12 by
+# itself.
 echo 'P1 12 12' > conftest.458211.pbm
 for i in 1 2 3 4 5 6 7 8 9 a b c
 do
@@ -37,6 +42,8 @@ done
 printf 'P6 1 1 255 xxx' >> conftest.458211.sep
 "$djvulibre_bin_path/csepdjvu" conftest.458211.sep conftest.458211.djvu 2>/dev/null || djvulibre_bugs="$djvulibre_bugs 458211"
 
+# Test for Debian bug #471149 <http://bugs.debian.org/471149>.
+# djvused affected by the bug is unable to correctly set annotations.
 printf 'P1 3 3 0 0 0 0 0 0 0 0 0' > conftest.471149.pbm
 "$djvulibre_bin_path/cjb2" conftest.471149.pbm conftest.471149.djvu
 cat > conftest.471149.djvused <<_ACEOF
@@ -51,6 +58,10 @@ then
   djvulibre_bugs="$djvulibre_bugs 471149"
 fi
 
+# Test for Debian bug #458086 <http://bugs.debian.org/458086>.
+# djvused affected by the bug is unable to set bookmarks for indirect
+# multi-page documents.
+# Prior to pdf2djvu 0.5.3, the bug was worked around.
 printf 'P1 3 3 0 0 0 0 0 0 0 0 0 0' > conftest.458086.pbm
 "$djvulibre_bin_path/cjb2" conftest.458086.pbm conftest.458086.p1.djvu
 "$djvulibre_bin_path/cjb2" conftest.458086.pbm conftest.458086.p2.djvu
