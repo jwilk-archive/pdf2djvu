@@ -466,38 +466,39 @@ void Directory::close(void)
     throw_posix_error(this->name);
 }
 
-/* class CharArray
+/* class Array<tp>
  * ===============
  */
 
-class CharArray
+template <typename tp>
+class Array
 {
 protected:
-  char *buffer;
+  tp *buffer;
 public:
-  explicit CharArray(size_t size)
+  explicit Array(size_t size)
   {
-    buffer = new char[size];
+    buffer = new tp[size];
   }
 
-  operator char * ()
+  operator tp * ()
   {
     return this->buffer;
   }
 
-  ~CharArray() throw ()
+  ~Array() throw ()
   {
     delete[] this->buffer;
   }
 };
 
 
-/* class TemporaryPathTemplate : CharArray
- * =======================================
+/* class TemporaryPathTemplate : Array<char>
+ * =========================================
  */
 
 
-class TemporaryPathTemplate : public CharArray
+class TemporaryPathTemplate : public Array<char>
 {
 protected:
   static const char *temporary_directory()
@@ -509,7 +510,7 @@ protected:
   }
 public:
   TemporaryPathTemplate()
-  : CharArray(strlen(this->temporary_directory()) + strlen(PACKAGE_NAME) + 9)
+  : Array<char>(strlen(this->temporary_directory()) + strlen(PACKAGE_NAME) + 9)
   {
     sprintf(*this, "%s%c%s.XXXXXX", this->temporary_directory(), path_separator, PACKAGE_NAME);
   }
@@ -686,7 +687,7 @@ void ansi_to_oem(const std::string &string, std::ostream &stream)
 {
   int rc;
   size_t length = string.length();
-  CharArray buffer(length);
+  Array<char> buffer(length);
   string.copy(buffer, length);
   rc = CharToOemBuff(buffer, buffer, length);
   if (rc == 0)
@@ -745,12 +746,12 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
    * appended to the splitted path.
    */
   {
-    CharArray buffer(path.length() + 2);
+    Array<char> buffer(path.length() + 2);
     sprintf(buffer, "%s!", path.c_str());
     directory_name = ::dirname(buffer);
   }
   {
-    CharArray buffer(path.length() + 2);
+    Array<char> buffer(path.length() + 2);
     sprintf(buffer, "%s!", path.c_str());
     file_name = ::basename(buffer);
     size_t length = file_name.length();
@@ -782,7 +783,7 @@ void stream_printf(std::ostream &stream, char *message, va_list args)
   assert(length >= 0);
   if (length < 0)
     throw_posix_error("vsnprintf");
-  CharArray buffer(length + 1);
+  Array<char> buffer(length + 1);
   length = vsprintf(buffer, message, args);
   assert(length >= 0);
   if (length < 0)
