@@ -731,9 +731,10 @@ bool is_stream_a_tty(const std::ostream &ostream)
     return isatty(STDOUT_FILENO);
   else
   {
-    // Not implemented for `ostream != std::count`.
-    // See <http://www.ginac.de/~kreckel/fileno/> for a more general
-    // (although terribly unportable) solution.
+    /* Not implemented for streams other that ``std::cout``.
+     * See http://www.ginac.de/~kreckel/fileno/ for a more general
+     * (although unportable, GCC-specific) solution.
+     */
     throw std::invalid_argument("is_a_tty(const std::ostream &)");
   }
 }
