@@ -10,7 +10,9 @@
 class DevNull : public std::ostream
 {
 public:
-  DevNull() : std::ostream(0) { }
+  DevNull()
+  : std::ostream(0)
+  { }
 };
 
 static DevNull static_dev_null;

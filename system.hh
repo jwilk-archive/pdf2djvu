@@ -125,7 +125,8 @@ protected:
 public:
   explicit File(const std::string &name);
   File(const Directory& directory, const std::string &name);
-  virtual ~File() throw () { }
+  virtual ~File() throw ()
+  { }
   size_t size();
   void reopen(bool truncate = false);
   const std::string& get_basename() const;
@@ -136,8 +137,8 @@ public:
 class TemporaryFile : public File
 {
 private:
-  TemporaryFile(const TemporaryFile&); // not defined
-  TemporaryFile& operator=(const TemporaryFile&); // not defined
+  TemporaryFile(const TemporaryFile &); // not defined
+  TemporaryFile& operator=(const TemporaryFile &); // not defined
 protected:
   void construct();
 public:
@@ -151,8 +152,8 @@ public:
 class ExistingFile : public File
 {
 private:
-  ExistingFile(const ExistingFile&); // not defined
-  ExistingFile& operator=(const ExistingFile&); // not defined
+  ExistingFile(const ExistingFile &); // not defined
+  ExistingFile& operator=(const ExistingFile &); // not defined
 public:
   explicit ExistingFile(const std::string &name);
   ExistingFile(const Directory& directory, const std::string &name);

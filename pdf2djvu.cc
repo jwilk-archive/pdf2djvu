@@ -460,9 +460,14 @@ public:
     annotations.push_back(expr);
   }
 
-  GBool useDrawChar() { return gTrue; }
+  GBool useDrawChar()
+  {
+    return gTrue;
+  }
 
-  void stroke(pdf::gfx::State *state) { }
+  void stroke(pdf::gfx::State *state)
+  { }
+
   void fill(pdf::gfx::State *state)
   { 
     if (config.no_render)
@@ -473,7 +478,9 @@ public:
     if (area / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
       Renderer::fill(state);
   }
-  void eoFill(pdf::gfx::State *state) { }
+
+  void eoFill(pdf::gfx::State *state)
+  { }
 
   MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const ComponentList &page_files) 
   : Renderer(paper_color, monochrome), page_files(page_files)

@@ -21,7 +21,8 @@ public:
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream) = 0;
   explicit Quantizer(const Config &config) : config(config) { }
-  virtual ~Quantizer() throw () { /* just to shut up compilers */ }
+  virtual ~Quantizer() throw ()
+  { }
 };
 
 class WebSafeQuantizer : public Quantizer
@@ -29,7 +30,9 @@ class WebSafeQuantizer : public Quantizer
 protected:
   void output_web_palette(std::ostream &stream);
 public:
-  explicit WebSafeQuantizer(const Config &config) : Quantizer(config) { }
+  explicit WebSafeQuantizer(const Config &config)
+  : Quantizer(config)
+  { }
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
@@ -37,7 +40,9 @@ public:
 class DummyQuantizer : public WebSafeQuantizer
 {
 public:
-  explicit DummyQuantizer(const Config &config) : WebSafeQuantizer(config) { }
+  explicit DummyQuantizer(const Config &config)
+  : WebSafeQuantizer(config)
+  { }
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
