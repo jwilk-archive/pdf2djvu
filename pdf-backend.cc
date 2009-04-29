@@ -18,6 +18,7 @@
 #include "debug.hh"
 #include "system.hh"
 
+#include <Error.h>
 #include <GlobalParams.h>
 #include <PDFDocEncoding.h>
 #include <UTF8.h>
