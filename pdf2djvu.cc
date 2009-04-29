@@ -878,6 +878,7 @@ void set_page_title(unsigned int n, const std::string &title, File &sed_file)
     << "set-page-title \"" << std::oct;
   for (std::string::const_iterator it = title.begin(); it != title.end(); it++)
   {
+    /* Luckily, djvused does all the necessary locale-to-UTF-8 conversion. */
     if (*it == '"' || *it == '\\' || (*it >= 0 && *it <= 0x20))
     { 
       sed_file
@@ -973,6 +974,7 @@ public:
           set_page_title(i + 1, *this->titles[i], sed_file);
       }
       DjVuCommand djvused("djvused");
+      debug(3) << "setting page titles with `djvused`" << std::endl;
       djvused << "-s" << "-f" << sed_file << output_file;
       djvused(); // djvused -s -f <sed-file> <output-djvu-file>
     }
