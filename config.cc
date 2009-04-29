@@ -584,7 +584,7 @@ void Config::read_config(int argc, char * const argv[])
     this->file_name = argv[optind];
 }
 
-void Config::usage(const Config::Error &error)
+void Config::usage(const Config::Error &error) const
 {
   DebugStream &log = debug(0, this->verbose);
   if (error.is_already_printed())
