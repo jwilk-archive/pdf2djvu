@@ -74,14 +74,7 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
       else
       {
         if (length > 0)
-        {
-          int item = (color << 20) + length;
-          for (int i = 0; i < 4; i++)
-          {
-            unsigned char c = item >> ((3 - i) * 8);
-            stream.write(reinterpret_cast<char*>(&c), 1);
-          }
-        }
+          write_uint32(stream, ((uint32_t)color << 20) + length);
         color = new_color;
         length = 1;
       }
@@ -207,12 +200,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       }
       ipixel++, ppixel++;
     }
-    uint32_t item = ((uint32_t)color << 20) + length;
-    for (int i = 0; i < 4; i++)
-    {
-      char c = item >> ((3 - i) * 8);
-      stream.write(&c, 1);
-    }
+    write_uint32(stream, ((uint32_t)color << 20) + length);
   }
 }
 
