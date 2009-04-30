@@ -112,6 +112,7 @@ cd "$src/"poppler-*/
   --disable-poppler-glib \
   --disable-poppler-qt \
   --disable-poppler-qt4
+sed -i -e 's/"Call to Object/(char*) &/' poppler/Object.h
 make
 make install
  
