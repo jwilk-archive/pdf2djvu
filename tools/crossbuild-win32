@@ -107,6 +107,7 @@ export LDFLAGS="-L$usr/lib"
 cd "$src/"poppler-*/
 ./configure --host="$host" --prefix="$usr" \
   --enable-xpdf-headers \
+  --disable-static \
   --disable-abiword-output \
   --disable-cairo-output \
   --disable-poppler-glib \
@@ -122,7 +123,7 @@ sed -i \
   -e '/LIBS=-lmsvcp60/d' \
   -e 's/mingw32)/mingw32*)/' \
   configure
-./configure --host="$host" --prefix="$usr"
+./configure --host="$host" --prefix="$usr" --disable-static
 sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' libdjvu/atomic.cpp
 make -C libdjvu install
 make -C tools install
