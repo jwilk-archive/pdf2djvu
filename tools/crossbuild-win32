@@ -53,7 +53,6 @@ wget -c -i ftp.gnome.org.txt
 
 wget -O - http://www.gtk.org/download-windows.html \
 | grep -E -o \
-  -e 'http://ftp[.]gnome[.]org/pub/gnome/binaries/win32/glib/[0-9.]+/glib(-dev)?_[0-9.-]+_win32[.]zip' \
   -e 'http://gnuwin32[.]sourceforge[.]net/downlinks/jpeg-(bin|lib)-zip[.]php' \
 | wget -c -i -
 
