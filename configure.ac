@@ -19,7 +19,7 @@ AC_DEFINE_UNQUOTED(DJVULIBRE_VERSION_STRING, "$djvulibre_version", Define to the
 
 djvulibre_bugs=''
 AC_MSG_CHECKING(DjVuLibre fitness)
-for tool in cjb2 c44 csepdjvu ddjvu djvused djvuextract djvumake
+for tool in cjb2 c44 csepdjvu ddjvu djvused djvuextract djvumake djvmcvt
 do
   if test ! -x "$djvulibre_bin_path/$tool"
   then

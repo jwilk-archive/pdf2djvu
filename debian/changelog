@@ -3,6 +3,7 @@ pdf2djvu (0.5.6) UNRELEASED; urgency=low
   * New default quantization algorithm.
   * Fix some character encoding issues.
   * Stricter requirements for pageid names.
+  * Lift a limitation on number of pages in a bundled multi-page document.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Sat, 02 May 2009 10:19:31 +0200
 

@@ -878,114 +878,27 @@ void DjVm::remember(const Component &component)
   }
 }
 
-void set_page_title(unsigned int n, const std::string &title, File &sed_file)
-{
-  sed_file
-    << "select " << std::dec << n << std::endl
-    << "set-page-title \"" << std::oct;
-  for (std::string::const_iterator it = title.begin(); it != title.end(); it++)
-  {
-    /* Luckily, djvused does all the necessary locale-to-UTF-8 conversion. */
-    if (*it == '"' || *it == '\\' || (*it >= 0 && *it <= 0x20))
-    { 
-      sed_file
-        << '\\' << std::setw(3) << std::setfill('0')
-        << static_cast<unsigned int>(*it);
-    }
-    else
-      sed_file << *it;
-  }
-  sed_file
-    << '"' << std::endl;
-}
+class IndirectDjVm;
 
 class BundledDjVm : public DjVm
 {
 protected:
   File &output_file;
-  DjVuCommand command;
-  size_t page_counter;
-  std::vector<const std::string*> titles;
+  DjVuCommand converter;
+  std::auto_ptr<IndirectDjVm> indirect_djvm;
+  std::auto_ptr<TemporaryFile> index_file;
 public:
   explicit BundledDjVm(File &output_file) 
   : output_file(output_file),
-    command("djvm"),
-    page_counter(0)
-  {
-    this->command << "-c" << this->output_file;
-  }
-
+    converter("djvmcvt")
+  { }
   ~BundledDjVm() throw ()
   { }
-
-  virtual void add(const Component &component)
-  {
-    this->remember(component);
-    this->titles.push_back(component.get_title());
-    this->page_counter++;
-    this->command << component;
-  }
-
-  virtual void set_outline(File &outlines_sed_file)
-  {
-    debug(3) << "creating document outline with `djvused`" << std::endl;
-    DjVuCommand djvused("djvused");
-    djvused << "-s" << "-f" << outlines_sed_file << this->output_file;
-    djvused(); // djvused -s -f <outlines-sed-file> <output-djvu-file>
-  }
-
-  virtual void set_metadata(File &metadata_sed_file)
-  {
-    debug(3) << "setting metadata with `djvused`" << std::endl;
-    DjVuCommand djvused("djvused");
-    djvused << "-s" << "-f" << metadata_sed_file << this->output_file;
-    djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
-  }
-
-  virtual void create()
-  {
-    std::auto_ptr<TemporaryFile> dummy_page_file;
-    if (this->page_counter == 1)
-    {
-      /* An additional, dummy page is necessary to force multi-file document structure. */
-      dummy_page_file.reset(new TemporaryFile());
-      dummy_page_file->write(djvu::binary::dummy_head, sizeof djvu::binary::dummy_head);
-      dummy_page_file->write(djvu::binary::dummy_page_data, sizeof djvu::binary::dummy_page_data);
-      dummy_page_file->close();
-      this->command << *dummy_page_file;
-    }
-    debug(3) << "creating multi-page document (" << this->page_counter << " ";
-    if (this->page_counter == 1)
-      debug(3) << "page + a dummy page";
-    else
-      debug(3) << "pages";
-    debug(3) << ") with `djvm`" << std::endl;
-    this->command();
-  }
-
-  virtual void commit()
-  {
-    if (this->page_counter == 1)
-    {
-      /* The dummy page is redundant now, so remove it. */
-      DjVuCommand djvm("djvm");
-      djvm << "-d" << this->output_file << "2";
-      debug(3) << "removing the dummy page with `djvm`" << std::endl;
-      djvm();
-    }
-    {
-      TemporaryFile sed_file;
-      for (size_t i = 0; i < page_counter; i++)
-      {
-        if (this->titles[i] != NULL)
-          set_page_title(i + 1, *this->titles[i], sed_file);
-      }
-      DjVuCommand djvused("djvused");
-      debug(3) << "setting page titles with `djvused`" << std::endl;
-      djvused << "-s" << "-f" << sed_file << output_file;
-      djvused(); // djvused -s -f <sed-file> <output-djvu-file>
-    }
-  }
+  virtual void add(const Component &component);
+  virtual void set_outline(File &outlines_sed_file);
+  virtual void set_metadata(File &metadata_sed_file);
+  virtual void create();
+  virtual void commit();
 };
 
 class IndirectDjVm : public DjVm
@@ -1092,6 +1005,44 @@ public:
   virtual void commit()
   { }
 };
+
+void BundledDjVm::add(const Component &component)
+{
+  if (this->index_file.get() == NULL)
+  {
+    std::ostringstream stream;
+    stream << component << ".djvu-index";
+    this->index_file.reset(new TemporaryFile(stream.str()));
+    this->indirect_djvm.reset(new IndirectDjVm(*this->index_file));
+  }
+  /* No need to call ``this->remember(component)``. */
+  *this->indirect_djvm << component;
+}
+
+void BundledDjVm::set_outline(File &outlines_sed_file)
+{
+  this->indirect_djvm->set_outline(outlines_sed_file);
+}
+
+void BundledDjVm::set_metadata(File &metadata_sed_file)
+{
+  this->indirect_djvm->set_metadata(metadata_sed_file);
+}
+
+void BundledDjVm::create()
+{
+  this->indirect_djvm->create();
+}
+
+void BundledDjVm::commit()
+{
+  this->converter
+    << "-b"
+    << *this->index_file
+    << this->output_file;
+  this->converter(); // djvmcvt -b <output-djvu-file> <index-djvu-file>
+  this->index_file.reset(NULL);
+}
 
 void IndirectDjVm::do_create(const std::vector<Component> &components, bool shared_ant)
 {

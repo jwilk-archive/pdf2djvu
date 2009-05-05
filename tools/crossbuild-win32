@@ -142,7 +142,7 @@ make
 
 cd "$pdist"
 cp "$psrc/pdf2djvu" ./pdf2djvu.exe
-for tool in djvm djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
+for tool in djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
 do
   cp "$usr/bin/${tool}" "${tool}.exe"
 done
