@@ -47,6 +47,14 @@ public:
   { }
 };
 
+class InvalidOutputFileName : public Config::Error
+{
+public:
+  InvalidOutputFileName()
+  : Config::Error("Invalid output file name")
+  { }
+};
+
 class PagesParseError : public Config::Error
 {
 public:
@@ -572,7 +580,24 @@ void Config::read_config(int argc, char * const argv[])
     case OPT_OUTPUT:
       this->format = this->FORMAT_BUNDLED;
       this->output = optarg;
-      this->output_stdout = false;
+      if (this->output == "-")
+      {
+        this->output.clear();
+        this->output_stdout = true;
+      }
+      else
+      {
+        std::string directory_name, file_name;
+        this->output_stdout = false;
+        split_path(this->output, directory_name, file_name);
+        if (file_name == "-")
+        {
+          /* ``djvmcvt`` does not support ``-`` as a file name.
+           * Work-arounds are possible but not worthwhile.
+           */
+          throw InvalidOutputFileName();
+        }
+      }
       break;
     case OPT_INDIRECT:
       this->format = this->FORMAT_INDIRECT;
