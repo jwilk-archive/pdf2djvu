@@ -121,8 +121,30 @@
 					The default template is <quote><literal>p{page:04*}.djvu</literal></quote>.
 				</para>
 				<para>
-					For portability reasons, page identifiers must consist only of letters, digits,
-					<literal>_</literal>, <literal>+</literal>, <literal>-</literal> and dot.
+					For portability reasons, page identifiers:
+					<itemizedlist>
+						<listitem>
+							<para>
+								must consist only of lowercase ASCII letters, digits, <literal>_</literal>,
+								<literal>+</literal>, <literal>-</literal> and dot,
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								cannot start with a dot,
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								cannot contain two consecutive dots,
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								must end with the <literal>.djvu</literal> or the <literal>.djv</literal> extension.
+							</para>
+						</listitem>
+					</itemizedlist>
 				</para>
 			</listitem>
 		</varlistentry>

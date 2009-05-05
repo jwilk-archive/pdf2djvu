@@ -146,6 +146,22 @@ public:
   { }
 };
 
+class PageidIllegalDot : public Config::Error
+{
+public:
+  PageidIllegalDot()
+  : Config::Error("Pageid cannot start with a '.' character or contain two consecutive '.' characters")
+  { }
+};
+
+class PageidBadExtension : public Config::Error
+{
+public:
+  PageidBadExtension()
+  : Config::Error("Pageid must end with the '.djvu' or the '.djv' extension")
+  { }
+};
+
 string_format::Template* Config::default_pageid_template(const std::string &prefix)
 {
   return new string_format::Template(prefix + "{spage:04*}.djvu");
@@ -366,13 +382,27 @@ static void validate_pageid_template(string_format::Template &pageid_template)
 {
   string_format::Bindings empty_bindings;
   std::string pageid = pageid_template.format(empty_bindings);
+  size_t length = pageid.length();
+  bool dot_allowed = false;
   for (std::string::const_iterator it = pageid.begin(); it != pageid.end(); it++)
   {
-    if (isalnum(*it) || *it == '_' || *it == '-' || *it == '+' || *it == '.')
-      ;
+    if (*it == '.')
+    {
+      if (!dot_allowed)
+        throw PageidIllegalDot();
+      dot_allowed = false;
+    }
+    else if ((*it >= 'a' && *it <= 'z') || (*it >= '0' && *it <= '9') || *it == '_' || *it == '-' || *it == '+')
+      dot_allowed = true;
     else
       throw PageidIllegalCharacter();
   }
+  if (length >= 4 && pageid.substr(length - 4) == ".djv")
+    ;
+  else if (length >= 5 && pageid.substr(length - 5) == ".djvu")
+    ;
+  else
+    throw PageidBadExtension();
 }
 
 void Config::read_config(int argc, char * const argv[])
