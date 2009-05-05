@@ -1116,7 +1116,7 @@ void IndirectDjVm::do_create(const std::vector<Component> &components, bool shar
       bzz_file << it->get_basename() << '\0';
       const std::string *title = it->get_title();
       if (title != NULL)
-        bzz_file << *title << '\0';
+        bzz_file << encoding::proxy<encoding::native, encoding::utf8>(*title) << '\0';
     }
     bzz_file.close();
     DjVuCommand bzz("bzz");

@@ -147,6 +147,30 @@ fi
 
 # Checks for typedefs, structures, and compiler characteristics.
 
+AC_TRY_CPP
+AC_MSG_CHECKING(for wchar_t encoding)
+AC_TRY_CPP([
+#include <stdlib.h>
+
+#if defined(__STDC_ISO_10646__)
+#elif defined(__WIN32__)
+#elif defined(__APPLE__)
+#else
+#error
+#endif
+],
+  [
+    AC_MSG_RESULT(UTF-32 or UTF-16)
+    have_unicode_wchar_t=yes
+    AC_DEFINE(HAVE_UNICODE_WCHAR_T, 1, [Define if wchar_t encoding is UTF-32 or UTF-16])
+  ],
+  [
+    AC_MSG_RESULT(unknown)
+    have_unicode_wchar_t=maybe
+  ]
+)
+
+
 # Checks for library functions.
 
 # Turn on compile warnings
@@ -161,5 +185,17 @@ fi
 AC_CONFIG_FILES(Makefile)
 AC_CONFIG_HEADER(version.hh)
 AC_OUTPUT
+
+# Final remarks
+
+if test "$have_unicode_wchar_t" = maybe
+then
+  cat <<_ACEOF
+
+WARNING: pdf2djvu assumes that wchar_t encoding is UTF-32 or UTF-16.
+This might NOT be the case for your system.
+Please file a bug to $PACKAGE_BUGREPORT.
+_ACEOF
+fi
 
 # vim:ts=2 sw=2 et 

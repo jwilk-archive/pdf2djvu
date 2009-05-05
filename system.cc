@@ -713,6 +713,79 @@ namespace encoding
   }
 #endif
 
+  template <>
+  std::ostream &operator <<(std::ostream &stream, const proxy<native, utf8> &converter)
+  {
+    /* The following code assumes that wchar_t strings are UTF-32 or UTF-16.
+     * This is not necessarily the case for every system.
+     *
+     * See
+     * http://unicode.org/faq/utf_bom.html
+     * for description of both UTF-16 and UTF-8.
+     */
+    const std::string &string = converter.string;
+    size_t length = string.length();
+    Array<wchar_t> wstring(length + 1);
+    length = mbstowcs(wstring, string.c_str(), length + 1);
+    if (length == static_cast<size_t>(-1))
+      throw_posix_error("mbstowcs");
+    uint32_t code, code_shift = 0;
+    for (size_t i = 0; i < length; i++)
+    {
+      code = wstring[i];
+      if (code_shift)
+      {
+        /* A leading surrogate has been encountered. */
+        if (code >= 0xdc00 && code < 0xe000)
+        {
+          /* A trailing surrogate is encountered. */
+          code = code_shift + (code & 0x3ff);
+        }
+        else
+        {
+          /* An unpaired surrogate is encountered. */ 
+          errno = EILSEQ;
+          throw_posix_error(__FUNCTION__);
+        }
+        code_shift = 0;
+      }
+      else if (code >= 0xd800 && code < 0xdc00)
+      {
+        /* A leading surrogate is encountered. */
+        code_shift = 0x10000 + ((code & 0x3ff) << 10);
+        continue;
+      }
+      if (code >= 0x110000 || (code & 0xfffe) == 0xfffe)
+      {
+        /* Code is out of range or a non-character is encountered. */
+        errno = EILSEQ;
+        throw_posix_error(__FUNCTION__);
+      }
+      if (code < 0x80)
+      {
+        char ascii = code;
+        stream << ascii;
+      }
+      else
+      {
+        char buffer[4];
+        size_t nbytes;
+        for (nbytes = 2; nbytes < 4; nbytes++)
+          if (code < (1U << (5 * nbytes + 1)))
+            break;
+        buffer[0] = (0xff00 >> nbytes) & 0xff;
+        for (size_t i = nbytes - 1; i; i--)
+        {
+          buffer[i] = 0x80 | (code & 0x3f);
+          code >>= 6;
+        }
+        buffer[0] |= code;
+        stream.write(buffer, nbytes);
+      }
+    }
+    return stream;
+  }
+
   void setup_locale()
   {
     setlocale(LC_CTYPE, "");

@@ -165,7 +165,8 @@ namespace encoding
   enum encoding
   {
     native,
-    terminal
+    terminal,
+    utf8,
   };
 
   template <enum encoding from, enum encoding to>
