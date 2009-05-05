@@ -480,7 +480,9 @@ public:
   }
 
   void eoFill(pdf::gfx::State *state)
-  { }
+  {
+    this->fill(state);
+  }
 
   MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const ComponentList &page_files) 
   : Renderer(paper_color, monochrome), page_files(page_files)
