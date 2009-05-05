@@ -767,7 +767,8 @@ private:
   TemporaryComponentList(const TemporaryComponentList&); // not defined
   TemporaryComponentList& operator=(const TemporaryComponentList&); // not defined
 protected:
-  const TemporaryDirectory *directory;
+  std::auto_ptr<const TemporaryDirectory> directory;
+  std::auto_ptr<const TemporaryFile> shared_ant_file;
 
   virtual File *create_file(const std::string &pageid)
   {
@@ -775,15 +776,14 @@ protected:
   }
 public:
   explicit TemporaryComponentList(int n, const PageMap &page_map)
-  : ComponentList(n, page_map)
-  { 
-    this->directory = new TemporaryDirectory();
-  }
+  : ComponentList(n, page_map),
+    directory(new TemporaryDirectory()),
+    shared_ant_file(new TemporaryFile(*directory, djvu::shared_ant_file_name))
+  { }
 
   virtual ~TemporaryComponentList() throw ()
   {
     this->clean_files();
-    delete this->directory;
   }
 };
 
