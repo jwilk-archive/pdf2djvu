@@ -91,7 +91,7 @@ public:
 class FgColorsOutsideRange : public Config::Error
 {
 protected:
-  static std::string __error_message__(int n, int m)
+  static std::string __error_message__(unsigned int n, unsigned int m)
   {
     std::ostringstream stream;
     stream
@@ -100,7 +100,7 @@ protected:
     return stream.str();
   }
 public:
-  FgColorsOutsideRange(int n, int m)
+  FgColorsOutsideRange(unsigned int n, unsigned int m)
   : Error(__error_message__(n, m))
   { }
 };
@@ -108,7 +108,7 @@ public:
 class SubsampleRatioOutsideRange : public Config::Error
 {
 protected:
-  static std::string __error_message__(int n, int m)
+  static std::string __error_message__(unsigned int n, unsigned int m)
   {
     std::ostringstream stream;
     stream
@@ -117,7 +117,7 @@ protected:
     return stream.str();
   }
 public:
-  SubsampleRatioOutsideRange(int n, int m)
+  SubsampleRatioOutsideRange(unsigned int n, unsigned int m)
   : Error(__error_message__(n, m))
   { }
 };
@@ -163,7 +163,7 @@ Config::Config()
   this->preferred_page_size = std::make_pair(0, 0);
   this->use_media_box = false;
   this->bg_subsample = 3;
-  this->fg_colors = -1;
+  this->fg_colors = this->FG_COLORS_DEFAULT;
   this->antialias = false;
   this->extract_metadata = true;
   this->adjust_metadata = true;
@@ -342,13 +342,23 @@ tp string::as(const std::string &s)
   return as<tp>(s.c_str());
 }
 
-static int parse_fg_colors(const std::string &s)
+static unsigned int parse_fg_colors(const std::string &s)
 {
   if (s == "web")
-    return -1;
+    return Config::FG_COLORS_WEB;
+  else if (s == "default")
+    return Config::FG_COLORS_DEFAULT;
   long n = string::as<long>(s);
-  if (n < 1 || n > djvu::max_fg_colors)
+  if (n < 1 || n > static_cast<long>(djvu::max_fg_colors))
     throw FgColorsOutsideRange(1, djvu::max_fg_colors);
+  return n;
+}
+
+static unsigned int parse_bg_subsample(const std::string &s)
+{
+  long n = string::as<long>(optarg);
+  if (n < 1 || n > static_cast<long>(djvu::max_subsample_ratio))
+    throw SubsampleRatioOutsideRange(1, djvu::max_subsample_ratio);
   return n;
 }
 
@@ -471,9 +481,7 @@ void Config::read_config(int argc, char * const argv[])
       this->bg_slices = optarg;
       break;
     case OPT_BG_SUBSAMPLE:
-      this->bg_subsample = string::as<int>(optarg);
-      if (this->bg_subsample < 1 || this->bg_subsample > djvu::max_subsample_ratio)
-        throw SubsampleRatioOutsideRange(1, djvu::max_subsample_ratio);
+      this->bg_subsample = parse_bg_subsample(optarg);
       break;
     case OPT_FG_COLORS:
       this->fg_colors = parse_fg_colors(optarg);
@@ -607,8 +615,9 @@ void Config::usage(const Config::Error &error) const
     << std::endl << "     --bg-slices=N,...,N"
     << std::endl << "     --bg-slices=N+...+N"
     << std::endl << "     --bg-subsample=N"
-#ifdef HAVE_GRAPHICSMAGICK
+    << std::endl << "     --fg-colors=default"
     << std::endl << "     --fg-colors=web"
+#ifdef HAVE_GRAPHICSMAGICK
     << std::endl << "     --fg-colors=N"
 #endif
     << std::endl << "     --monochrome"

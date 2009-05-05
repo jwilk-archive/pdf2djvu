@@ -1239,10 +1239,12 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<Quantizer> quantizer;
   if (config.no_render || config.monochrome)
     quantizer.reset(new DummyQuantizer(config));
-  else if (config.fg_colors > 0)
-    quantizer.reset(new GraphicsMagickQuantizer(config));
-  else
+  else if (config.fg_colors == Config::FG_COLORS_DEFAULT)
+    quantizer.reset(new DefaultQuantizer(config));
+  else if (config.fg_colors == Config::FG_COLORS_WEB)
     quantizer.reset(new WebSafeQuantizer(config));
+  else
+    quantizer.reset(new GraphicsMagickQuantizer(config));
   if (config.format == config.FORMAT_BUNDLED)
   {
     if (config.output_stdout)

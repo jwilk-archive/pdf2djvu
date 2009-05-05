@@ -8,6 +8,7 @@
 #ifndef PDF2DJVU_CONFIG_H
 #define PDF2DJVU_CONFIG_H
 
+#include <climits>
 #include <memory>
 #include <sstream> 
 #include <stdexcept>
@@ -34,6 +35,11 @@ public:
     { };
   };
 
+  enum
+  {
+    FG_COLORS_DEFAULT = UINT_MAX,
+    FG_COLORS_WEB = UINT_MAX - 1,
+  };
   enum text_t
   {
     TEXT_NONE = 0,
@@ -55,8 +61,8 @@ public:
   int dpi;
   std::pair<int, int> preferred_page_size;
   bool use_media_box;
-  int bg_subsample;
-  int fg_colors;
+  unsigned int bg_subsample;
+  unsigned int fg_colors;
   bool monochrome;
   int loss_level;
   bool antialias;

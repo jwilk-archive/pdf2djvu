@@ -11,9 +11,15 @@
 #include <Magick++.h>
 #endif
 
+#include <bitset>
+#include <map>
+#include <vector>
+
 #include "quantizer.hh"
 
 #include "config.hh"
+#include "djvuconst.hh"
+
 
 void WebSafeQuantizer::output_web_palette(std::ostream &stream)
 {
@@ -82,6 +88,229 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
     }
     p_fg.next_row(), p_bg.next_row();
     write_uint32(stream, ((uint32_t)color << 20) + length);
+  }
+}
+
+class Rgb18
+{
+protected:
+  int value;
+public:
+  explicit Rgb18()
+  : value(-1)
+  { }
+
+  explicit Rgb18(int r, int g, int b)
+  : value((r >> 2) | ((g >> 2) << 6) | ((b >> 2) << 12))
+  { }
+
+  explicit Rgb18(size_t n)
+  : value(n)
+  { }
+
+  template <typename tp>
+  explicit Rgb18(const tp &components)
+  : value((components[0] >> 2) | ((components[1] >> 2) << 6) | ((components[2] >> 2) << 12))
+  { }
+
+  int operator [](int i) const
+  {
+    return 
+      (((this->value >> (6 * i)) << 2) & 0xff) |
+      ((this->value >> (6 * i + 4)) & 3);
+  }
+
+  bool operator ==(Rgb18 other) const
+  {
+    return this->value == other.value;
+  }
+
+  operator int () const
+  {
+    return this->value;
+  }
+
+  Rgb18 reduce(int k) const
+  {
+    int components[3];
+    const int n = 1 << 8;
+    const int c = (n + k - 1) / k;
+    for (int i = 0; i < 3; i++)
+    {
+      const int m = ((*this)[i] * c) / n;
+      components[i] = (n - 1) * m / (c - 1);
+    }
+    return Rgb18(components);
+  }
+
+};
+
+class Run
+{
+protected:
+  Rgb18 color;
+  size_t length;
+public:
+  explicit Run(Rgb18 color)
+  : color(color), length(0)
+  { }
+  explicit Run()
+  : color(Rgb18()), length(0)
+  { }
+  void operator ++(int)
+  {
+    this->length++;
+  }
+  bool same_color(Rgb18 other_color) const
+  {
+    return this->color == other_color;
+  }
+  Rgb18 get_color() const
+  {
+    return this->color;
+  }
+  size_t get_length() const
+  {
+    return this->length;
+  }
+};
+
+void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
+  int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+{
+  stream << "R6 " << width << " " << height << " ";
+  pdf::Pixmap bmp_fg(out_fg);
+  pdf::Pixmap bmp_bg(out_bg);
+  pdf::Pixmap::iterator p_fg = bmp_fg.begin();
+  pdf::Pixmap::iterator p_bg = bmp_bg.begin();
+  size_t color_counter = 0;
+  std::bitset<1 << 18> original_colors;
+  std::bitset<1 << 18> quantized_colors;
+  std::vector<std::vector<Run> > runs(height);
+  for (int i = 0; i < 3; i++) 
+    background_color[i] = p_bg[i];
+  for (int y = 0; y < height; y++)
+  {
+    Run run;
+    Rgb18 new_color;
+    for (int x = 0; x < width; x++)
+    {
+      if (!has_background)
+      {
+        for (int i = 0; i < 3; i++)
+        if (background_color[i] != p_bg[i])
+        {
+          has_background = true;
+          break;
+        }
+      }
+      if (p_fg[0] != p_bg[0] || p_fg[1] != p_bg[1] || p_fg[2] != p_bg[2])
+      {
+        if (!has_foreground && (p_fg[0] || p_fg[1] || p_fg[2]))
+          has_foreground = true;
+        new_color = Rgb18(p_fg[0], p_fg[1], p_fg[2]);
+        if (!original_colors[new_color])
+        {
+          color_counter++;
+          original_colors.set(new_color);
+        }
+      }
+      else
+        new_color = Rgb18();
+      if (run.same_color(new_color))
+        run++;
+      else
+      {
+        if (run.get_length() > 0)
+          runs[y].push_back(run);
+        run = Run(new_color);
+        run++;
+      }
+      p_fg++, p_bg++;
+    }
+    p_fg.next_row(), p_bg.next_row();
+    if (run.get_length() > 0)
+      runs[y].push_back(run);
+  }
+  /* Find appropriate color palette: */
+  int divisor = 4;
+  while (color_counter > djvu::max_fg_colors)
+  {
+    size_t new_color_counter = 0;
+    quantized_colors.reset();
+    divisor++;
+    for (size_t color = 0; color < original_colors.size(); color++)
+    {
+      if (!original_colors[color])
+        continue;
+      Rgb18 new_color = Rgb18(color).reduce(divisor);
+      if (!quantized_colors[new_color])
+      {
+        quantized_colors.set(new_color);
+        new_color_counter++;
+        if (new_color_counter > djvu::max_fg_colors)
+          break;
+      }
+    }
+    color_counter = new_color_counter;
+  }
+  if (divisor == 4)
+    quantized_colors = original_colors;
+  /* Output the palette: */
+  if (color_counter == 0)
+  {
+    stream << 1 << std::endl << "\xff\xff\xff";
+  }
+  else
+  {
+    stream << color_counter << std::endl;
+    for (size_t color = 0; color < quantized_colors.size(); color++)
+    {
+      if (quantized_colors[color])
+      {
+        Rgb18 rgb18(color);
+        unsigned char buffer[3];
+        for (int i = 0; i < 3; i++)
+          buffer[i] = rgb18[i];
+        stream.write(reinterpret_cast<char*>(buffer), 3);
+      }
+    }
+  }
+  /* Map colors into color indices: */
+  std::map<int, uint32_t> color_map;
+  uint32_t last_color_index = 0;
+  color_map[-1] = 0xfff;
+  if (divisor == 4)
+    for (size_t color = 0; color < original_colors.size(); color++)
+    {
+      if (!original_colors[color])
+        continue;
+      color_map[color] = last_color_index++;
+    }
+  else
+  {
+    std::map<int, uint32_t> quantized_color_map;
+    for (size_t color = 0; color < quantized_colors.size(); color++)
+    {
+      if (!quantized_colors[color])
+        continue;
+      quantized_color_map[color] = last_color_index++;
+    }
+    for (size_t color = 0; color < original_colors.size(); color++)
+    {
+      Rgb18 new_color = Rgb18(color).reduce(divisor);
+      color_map[color] = quantized_color_map[new_color];
+    }
+  }
+  /* Output runs: */
+  for (int y = 0; y < height; y++)
+  {
+    const std::vector<Run> line_runs = runs[y];
+    for (std::vector<Run>::const_iterator run = line_runs.begin(); run != line_runs.end(); run++)
+    {
+      uint32_t color_index = color_map[run->get_color()];
+      write_uint32(stream, ((uint32_t)color_index << 20) + run->get_length());
+    }
   }
 }
 

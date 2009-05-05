@@ -213,11 +213,20 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term><option>--fg-colors=default</option></term>
+			<listitem>
+				<para>
+					Try to preserve all the foreground layer colors.
+					This is the default.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term><option>--fg-colors=web</option></term>
 			<listitem>
 				<para>
 					Reduce foreground layer colors to the web palette (216 colors).
-					This is default.
+					This option is not recommended.
 				</para>
 			</listitem>
 		</varlistentry>

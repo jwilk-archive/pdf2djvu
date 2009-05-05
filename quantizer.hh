@@ -25,6 +25,16 @@ public:
   { }
 };
 
+class DefaultQuantizer : public Quantizer
+{
+public:
+  explicit DefaultQuantizer(const Config &config)
+  : Quantizer(config)
+  { }
+  virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
+};
+
 class WebSafeQuantizer : public Quantizer
 {
 protected:

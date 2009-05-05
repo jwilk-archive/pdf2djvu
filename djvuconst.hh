@@ -17,9 +17,9 @@ namespace djvu
    * for details.
    */
 
-  static const int max_fg_colors = 4080;
+  static const unsigned int max_fg_colors = 4080;
 
-  static const int max_subsample_ratio = 12;
+  static const unsigned int max_subsample_ratio = 12;
 
   static const unsigned int version = 1;
 
