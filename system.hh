@@ -145,6 +145,9 @@ public:
   TemporaryFile(const Directory& directory, const std::string &name) 
   : File(directory, name) 
   { }
+  TemporaryFile(const std::string &name)
+  : File(name)
+  { }
   TemporaryFile();
   virtual ~TemporaryFile() throw ();
 };
