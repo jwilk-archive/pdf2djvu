@@ -186,6 +186,8 @@ namespace encoding
     friend std::ostream &operator << <>(std::ostream &, const proxy<from, to> &);
   };
 
+  void setup_locale();
+
 }
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);

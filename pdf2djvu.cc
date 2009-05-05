@@ -1190,6 +1190,7 @@ static void calculate_subsampled_size(int width, int height, int ratio, int &sub
 
 static int xmain(int argc, char * const argv[])
 {
+  encoding::setup_locale();
   std::ios_base::sync_with_stdio(false);
   DjVuCommand::set_argv0(argv[0]);
 
