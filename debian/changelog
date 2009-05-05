@@ -1,3 +1,9 @@
+pdf2djvu (0.5.6) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 02 May 2009 10:19:31 +0200
+
 pdf2djvu (0.5.5) unstable; urgency=low
 
   * Add the --pageid-template option.
