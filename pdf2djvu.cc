@@ -268,6 +268,11 @@ protected:
   }
 public:
 
+  pdf::Bool needNonText()
+  {
+    return !config.no_render;
+  }
+
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
     GBool invert, GBool inline_image)
   {
@@ -1191,7 +1196,7 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<ComponentList> page_files;
   std::auto_ptr<Quantizer> quantizer;
-  if (config.no_render || config.monochrome)
+  if (config.monochrome)
     quantizer.reset(new DummyQuantizer(config));
   else if (config.fg_colors == Config::FG_COLORS_DEFAULT)
     quantizer.reset(new DefaultQuantizer(config));
@@ -1367,61 +1372,90 @@ static int xmain(int argc, char * const argv[])
       csepdjvu();
     }
     *djvm << component;
-    TemporaryFile sjbz_file, fgbz_file, bg44_file, sed_file;
-    { 
-      debug(3) << "recovering images with `djvuextract`" << std::endl;
-      DjVuCommand djvuextract("djvuextract");
-      djvuextract << component;
-      if (has_background || has_foreground || nonwhite_background_color)
-        djvuextract
-          << std::string("FGbz=") + std::string(fgbz_file)
-          << std::string("BG44=") + std::string(bg44_file);
-      djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
-      djvuextract(config.verbose < 3);
-    }
-    if (config.monochrome)
+    const bool need_reassemble = !config.no_render && (config.monochrome || nonwhite_background_color);
+    TemporaryFile sed_file;
+    if (need_reassemble)
     {
-      TemporaryFile pbm_file;
-      debug(3) << "encoding monochrome image with `cjb2`" << std::endl;
-      DjVuCommand cjb2("cjb2");
-      cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
-      pbm_file << "P4 " << width << " " << height << std::endl;
-      pdf::Pixmap bmp(out1.get());
-      pbm_file << bmp;
-      pbm_file.close();
-      cjb2();
-    }
-    else if (nonwhite_background_color)
-    {
-      TemporaryFile c44_file;
-      c44_file.close();
-      {
-        TemporaryFile ppm_file;
-        debug(3) << "creating new background image with `c44`" << std::endl;
-        DjVuCommand c44("c44");
-        c44 << "-slice" << "97" << ppm_file << c44_file;
-        int bg_width = (width + 11) / 12;
-        int bg_height = (height + 11) / 12;
-        ppm_file << "P6 " << bg_width << " " << bg_height << " 255" << std::endl;
-        for (int y = 0; y < bg_height; y++)
-        for (int x = 0; x < bg_width; x++)
-        for (int i = 0; i < 3; i++)
-        {
-          char c = background_color[i];
-          ppm_file.write(&c, 1);
-        }
-        ppm_file.close();
-        c44();
-      }
-      {
-        debug(3) << "recovering image chunks with `djvuextract`" << std::endl;
+      TemporaryFile sjbz_file, fgbz_file, bg44_file;
+      { 
+        debug(3) << "recovering images with `djvuextract`" << std::endl;
         DjVuCommand djvuextract("djvuextract");
-        djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
+        djvuextract << component;
+        if (has_background || has_foreground || nonwhite_background_color)
+          djvuextract
+            << std::string("FGbz=") + std::string(fgbz_file)
+            << std::string("BG44=") + std::string(bg44_file);
+        djvuextract << std::string("Sjbz=") + std::string(sjbz_file);
         djvuextract(config.verbose < 3);
       }
+      if (config.monochrome)
+      {
+        TemporaryFile pbm_file;
+        debug(3) << "encoding monochrome image with `cjb2`" << std::endl;
+        DjVuCommand cjb2("cjb2");
+        cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
+        pbm_file << "P4 " << width << " " << height << std::endl;
+        pdf::Pixmap bmp(out1.get());
+        pbm_file << bmp;
+        pbm_file.close();
+        cjb2();
+      }
+      else if (nonwhite_background_color)
+      {
+        TemporaryFile c44_file;
+        c44_file.close();
+        {
+          TemporaryFile ppm_file;
+          debug(3) << "creating new background image with `c44`" << std::endl;
+          DjVuCommand c44("c44");
+          c44 << "-slice" << "97" << ppm_file << c44_file;
+          int bg_width = (width + 11) / 12;
+          int bg_height = (height + 11) / 12;
+          ppm_file << "P6 " << bg_width << " " << bg_height << " 255" << std::endl;
+          for (int y = 0; y < bg_height; y++)
+          for (int x = 0; x < bg_width; x++)
+          for (int i = 0; i < 3; i++)
+          {
+            char c = background_color[i];
+            ppm_file.write(&c, 1);
+          }
+          ppm_file.close();
+          c44();
+        }
+        {
+          debug(3) << "recovering image chunks with `djvuextract`" << std::endl;
+          DjVuCommand djvuextract("djvuextract");
+          djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
+          djvuextract(config.verbose < 3);
+        }
+      }
+      else
+        throw std::logic_error("no need to re-assemble the DjVu file");
+      if (has_text)
+      {
+        debug(3) << "recovering text with `djvused`" << std::endl;
+        DjVuCommand djvused("djvused");
+        djvused << component << "-e" << "output-txt";
+        djvused(sed_file);
+      }
+      {
+        debug(3) << "re-assembling page with `djvumake`" << std::endl;
+        DjVuCommand djvumake("djvumake");
+        std::ostringstream info;
+        info << "INFO=" << width << "," << height << "," << dpi;
+        djvumake
+          << component
+          << info.str()
+          << std::string("Sjbz=") + std::string(sjbz_file);
+        if ((has_foreground || has_background || nonwhite_background_color) && (fgbz_file.size() || bg44_file.size()))
+          djvumake
+            << std::string("FGbz=") + std::string(fgbz_file)
+            << std::string("BG44=") + std::string(bg44_file) + std::string(":99");
+        djvumake();
+      }
     }
     {
-      debug(3) << "recovering annotations with `djvused`" << std::endl;
+      debug(3) << "extracting annotations" << std::endl;
       const std::vector<sexpr::Ref> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
       for (std::vector<sexpr::Ref>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
@@ -1429,31 +1463,9 @@ static int xmain(int argc, char * const argv[])
       sed_file << "." << std::endl;
       outm->clear_annotations();
     }
-    if (has_text)
-    {
-      debug(3) << "recovering text with `djvused`" << std::endl;
-      DjVuCommand djvused("djvused");
-      djvused << component << "-e" << "output-txt";
-      djvused(sed_file);
-    }
     sed_file.close();
     {
-      debug(3) << "re-assembling page with `djvumake`" << std::endl;
-      DjVuCommand djvumake("djvumake");
-      std::ostringstream info;
-      info << "INFO=" << width << "," << height << "," << dpi;
-      djvumake
-        << component
-        << info.str()
-        << std::string("Sjbz=") + std::string(sjbz_file);
-      if ((has_foreground || has_background || nonwhite_background_color) && (fgbz_file.size() || bg44_file.size()))
-        djvumake
-          << std::string("FGbz=") + std::string(fgbz_file)
-          << std::string("BG44=") + std::string(bg44_file) + std::string(":99");
-      djvumake();
-    }
-    {
-      debug(3) << "re-adding non-raster data with `djvused`" << std::endl;
+      debug(3) << "adding non-raster data with `djvused`" << std::endl;
       DjVuCommand djvused("djvused");
       djvused << component << "-s" << "-f" << sed_file;
       djvused();

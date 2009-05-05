@@ -551,7 +551,8 @@ void Config::read_config(int argc, char * const argv[])
       this->extract_outline = false;
       break;
     case OPT_NO_RENDER:
-      this->no_render = 1;
+      this->no_render = true;
+      this->monochrome = true;
       break;
     case OPT_TEXT_NONE:
       this->text = this->TEXT_NONE;
