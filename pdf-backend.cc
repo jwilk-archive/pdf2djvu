@@ -358,7 +358,7 @@ std::string pdf::string_as_utf8(pdf::String *string)
       }
       if (code_shift)
       {
-        /* A leading surrogate has been encoutered. */
+        /* A leading surrogate has been encountered. */
         if (code >= 0xdc00 && code < 0xe000)
         {
           /* A trailing surrogate is encountered. */
@@ -368,7 +368,7 @@ std::string pdf::string_as_utf8(pdf::String *string)
         }
         else
         {
-          /* An unparied surrogate is encoutered. */ 
+          /* An unpaired surrogate is encountered. */
           code = replacement_character;
         }
         code_shift = 0;
