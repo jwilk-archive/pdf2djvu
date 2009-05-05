@@ -55,6 +55,7 @@ namespace pdf
   typedef ::Dict Dict;
   typedef ::Catalog Catalog;
   typedef ::GooString String;
+  typedef ::GBool Bool;
 
 /* type definitions — annotations
  * ==============================
