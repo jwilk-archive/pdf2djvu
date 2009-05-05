@@ -681,23 +681,38 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
  * =================
  */
 
-
-#ifdef WIN32
-void ansi_to_oem(const std::string &string, std::ostream &stream)
+namespace encoding
 {
-  int rc;
-  size_t length = string.length();
-  Array<char> buffer(length);
-  string.copy(buffer, length);
-  rc = CharToOemBuff(buffer, buffer, length);
-  if (rc == 0)
+#ifdef WIN32
+  /* The native encoding (so called ANSI character set) can differ from the
+   * terminal encoding (typically: so called OEM charset).
+   */
+  template <>
+  std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &converter)
   {
-    // This should actually never happen.
-    throw_win32_error("CharToOemBuff");
+    int rc;
+    const std::string &string = converter.string;
+    size_t length = converter.string.length();
+    Array<char> buffer(length);
+    string.copy(buffer, length);
+    rc = CharToOemBuff(buffer, buffer, length);
+    if (rc == 0)
+    {
+      /* This should actually never happen. */
+      throw_win32_error("CharToOemBuff");
+    }
+    stream.write(buffer, length);
+    return stream;
   }
-  stream.write(buffer, length);
-}
+#else
+  template <>
+  std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &converter)
+  {
+    stream << converter.string;
+    return stream;
+  }
 #endif
+}
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)
 {

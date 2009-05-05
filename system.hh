@@ -159,9 +159,34 @@ public:
   ExistingFile(const Directory& directory, const std::string &name);
 };
 
-#ifdef WIN32
-void ansi_to_oem(const std::string &string, std::ostream &stream);
-#endif
+namespace encoding
+{
+
+  enum encoding
+  {
+    native,
+    terminal
+  };
+
+  template <enum encoding from, enum encoding to>
+  class proxy;
+
+  template <enum encoding from, enum encoding to>
+  std::ostream &operator << (std::ostream &, const proxy<from, to> &);
+
+  template <enum encoding from, enum encoding to>
+  class proxy
+  {
+  protected:
+    const std::string &string;
+  public:
+    explicit proxy<from, to>(const std::string &string)
+    : string(string)
+    { }
+    friend std::ostream &operator << <>(std::ostream &, const proxy<from, to> &);
+  };
+
+}
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit);
