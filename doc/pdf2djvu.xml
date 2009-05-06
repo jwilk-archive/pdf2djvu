@@ -205,6 +205,14 @@
 				</para>
 			</listitem>
 		</varlistentry>
+		<varlistentry>
+			<term><option>--guess-dpi</option></term>
+			<listitem>
+				<para>
+					Try to guess native resolution by inspecting embedded images. Use with care.
+				</para>
+			</listitem>
+		</varlistentry>
 		</variablelist>
 	</refsection>
 	<refsection>

@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "pdf-backend.hh"
+#include "pdf-dpi.hh"
 #include "config.hh"
 #include "debug.hh"
 #include "djvuconst.hh"
@@ -1091,6 +1092,17 @@ void IndirectDjVm::do_create(const std::vector<Component> &components, bool shar
   this->index_file.close();
 }
 
+static int calculate_dpi(const pdf::dpi::Guess &guess)
+{
+  double dpi = guess.max();
+  if (dpi < djvu::min_dpi)
+    return djvu::min_dpi;
+  else if (dpi > djvu::max_dpi)
+    return djvu::max_dpi;
+  else
+    return static_cast<int>(dpi);
+}
+
 static int calculate_dpi(double page_width, double page_height)
 {
   if (config.preferred_page_size.first)
@@ -1293,7 +1305,23 @@ static int xmain(int argc, char * const argv[])
     debug(3) << "rendering page (1st pass)" << std::endl;
     double page_width, page_height;
     doc.get_page_size(n, crop, page_width, page_height);
-    int dpi = calculate_dpi(page_width, page_height);
+    int dpi = 0;
+    if (config.guess_dpi)
+    {
+      pdf::dpi::Guesser dpi_guesser(doc);
+      try
+      {
+        pdf::dpi::Guess guess = dpi_guesser[n];
+        debug(2) << "guessed resoultion: " << guess << " dpi" << std::endl;
+        dpi = calculate_dpi(guess);
+      }
+      catch (pdf::dpi::NoGuess)
+      {
+        debug(2) << "unable to guess resolution" << std::endl;
+      }
+    }
+    if (dpi == 0)
+      dpi = calculate_dpi(page_width, page_height);
     doc.display_page(outm.get(), n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();

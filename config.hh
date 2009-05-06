@@ -59,6 +59,7 @@ public:
   bool output_stdout;
   int verbose;
   int dpi;
+  bool guess_dpi;
   std::pair<int, int> preferred_page_size;
   bool use_media_box;
   unsigned int bg_subsample;

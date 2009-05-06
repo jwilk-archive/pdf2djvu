@@ -184,6 +184,7 @@ Config::Config()
   this->output_stdout = true;
   this->verbose = 1;
   this->dpi = 300;
+  this->guess_dpi = false;
   this->preferred_page_size = std::make_pair(0, 0);
   this->use_media_box = false;
   this->bg_subsample = 3;
@@ -429,6 +430,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_BG_SLICES,
     OPT_BG_SUBSAMPLE,
     OPT_FG_COLORS,
+    OPT_GUESS_DPI,
     OPT_HYPERLINKS,
     OPT_LOSS_100,
     OPT_LOSS_ANY,
@@ -459,6 +461,7 @@ void Config::read_config(int argc, char * const argv[])
     { "crop-text", 0, 0, OPT_TEXT_CROP },
     { "dpi", 1, 0, OPT_DPI },
     { "fg-colors", 1, 0, OPT_FG_COLORS },
+    { "guess-dpi", 0, 0, OPT_GUESS_DPI },
     { "help", 0, 0, OPT_HELP },
     { "hyperlinks", 1, 0, OPT_HYPERLINKS },
     { "indirect", 0, 0, OPT_INDIRECT },
@@ -502,6 +505,9 @@ void Config::read_config(int argc, char * const argv[])
       this->dpi = string::as<int>(optarg);
       if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
         throw DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
+      break;
+    case OPT_GUESS_DPI:
+      this->guess_dpi = true;
       break;
     case OPT_PAGE_SIZE:
       this->preferred_page_size = parse_page_size(optarg);
@@ -666,6 +672,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl << "     --pageid-template=TEMPLATE"
     << std::endl << "     --page-title-template=TEMPLATE"
     << std::endl << " -d, --dpi=resolution"
+    << std::endl << "     --guess-dpi"
     << std::endl << "     --media-box"
     << std::endl << "     --page-size=WxH"
     << std::endl << "     --bg-slices=N,...,N"
