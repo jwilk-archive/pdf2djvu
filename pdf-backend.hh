@@ -5,8 +5,8 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#ifndef PDF2DJVU_COMPOPPLER_H
-#define PDF2DJVU_COMPOPPLER_H
+#ifndef PDF2DJVU_PDF_BACKEND_H
+#define PDF2DJVU_PDF_BACKEND_H
 
 #include <ostream>
 #include <stdexcept>
