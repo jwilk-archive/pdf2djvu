@@ -274,13 +274,13 @@ public:
   }
 
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
-    GBool invert, GBool inline_image)
+    pdf::Bool invert, pdf::Bool inline_image)
   {
     return;
   }
 
   void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, int *mask_colors, GBool inline_image)
+    pdf::gfx::ImageColorMap *color_map, int *mask_colors, pdf::Bool inline_image)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
       return;
@@ -288,7 +288,7 @@ public:
   }
 
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, GBool mask_invert)
+    pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
       return;
@@ -306,7 +306,7 @@ public:
       color_map, mask_stream, mask_width, mask_height, mask_color_map);
   }
 
-  GBool interpretType3Chars() { return gFalse; }
+  pdf::Bool interpretType3Chars() { return gFalse; }
 
   void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
     CharCode code, int n_bytes, Unicode *unistr, int length)
@@ -465,7 +465,7 @@ public:
     annotations.push_back(expr);
   }
 
-  GBool useDrawChar()
+  pdf::Bool useDrawChar()
   {
     return gTrue;
   }
