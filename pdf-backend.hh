@@ -50,6 +50,7 @@ namespace pdf
  * ==============================
  */
 
+  typedef ::OutputDev OutputDevice;
   typedef ::Stream Stream;
   typedef ::Object Object;
   typedef ::Dict Dict;
