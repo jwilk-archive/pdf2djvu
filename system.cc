@@ -637,8 +637,10 @@ void TemporaryFile::construct()
     throw_win32_error("GetTempPath");
   if (GetTempFileName(base_path_buffer, PACKAGE_NAME, 0, path_buffer) == 0)
     throw_win32_error("GetTempFileName");
-  if (CreateFile(path_buffer, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL) == 0)
+  HANDLE handle = CreateFile(path_buffer, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL);
+  if (handle == 0)
     throw_win32_error("CreateFile");
+  CloseHandle(handle); /* ignore errors */
 #endif
   this->open(path_buffer);
 }

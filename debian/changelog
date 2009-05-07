@@ -1,6 +1,7 @@
 pdf2djvu (0.5.7) UNRELEASED; urgency=low
 
   * Add the --guess-dpi option.
+  * Windows: fix file handle leak.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Wed, 06 May 2009 20:19:18 +0200
 
