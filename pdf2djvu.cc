@@ -1400,16 +1400,21 @@ static int xmain(int argc, char * const argv[])
       csepdjvu();
     }
     *djvm << component;
-    const bool need_reassemble = !config.no_render && (config.monochrome || nonwhite_background_color);
+    const bool should_have_fgbz = has_background || has_foreground || nonwhite_background_color;
+    const bool need_reassemble =
+      config.no_render
+      ? true
+      : (config.monochrome || nonwhite_background_color || !should_have_fgbz);
     TemporaryFile sed_file;
     if (need_reassemble)
     {
       TemporaryFile sjbz_file, fgbz_file, bg44_file;
+      if (!config.monochrome)
       { 
         debug(3) << "recovering images with `djvuextract`" << std::endl;
         DjVuCommand djvuextract("djvuextract");
         djvuextract << component;
-        if (has_background || has_foreground || nonwhite_background_color)
+        if (should_have_fgbz)
           djvuextract
             << std::string("FGbz=") + std::string(fgbz_file)
             << std::string("BG44=") + std::string(bg44_file);
@@ -1457,8 +1462,6 @@ static int xmain(int argc, char * const argv[])
           djvuextract(config.verbose < 3);
         }
       }
-      else
-        throw std::logic_error("no need to re-assemble the DjVu file");
       if (has_text)
       {
         debug(3) << "recovering text with `djvused`" << std::endl;
@@ -1475,7 +1478,7 @@ static int xmain(int argc, char * const argv[])
           << component
           << info.str()
           << std::string("Sjbz=") + std::string(sjbz_file);
-        if ((has_foreground || has_background || nonwhite_background_color) && (fgbz_file.size() || bg44_file.size()))
+        if (should_have_fgbz && (fgbz_file.size() || bg44_file.size()))
           djvumake
             << std::string("FGbz=") + std::string(fgbz_file)
             << std::string("BG44=") + std::string(bg44_file) + std::string(":99");
