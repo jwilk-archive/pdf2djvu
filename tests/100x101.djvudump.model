@@ -1,7 +1,7 @@
-  FORM:DJVU [811]
+  FORM:DJVU [165] 
     INFO [10]         DjVu 100x101, v24, 72 dpi, gamma=2.2
     Sjbz [4]          JB2 bilevel data
-    FGbz [651]        JB2 colors data, v0, 216 colors
+    FGbz [6]          JB2 colors data, v0, 1 colors
     BG44 [20]         IW4 data #1, 72 slices, v1.2 (color), 10x11
     BG44 [4]          IW4 data #2, 11 slices
     BG44 [15]         IW4 data #3, 10 slices
