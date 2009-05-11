@@ -1312,7 +1312,7 @@ static int xmain(int argc, char * const argv[])
       try
       {
         pdf::dpi::Guess guess = dpi_guesser[n];
-        debug(2) << "guessed resoultion: " << guess << " dpi" << std::endl;
+        debug(2) << "guessed resolution: " << guess << " dpi" << std::endl;
         dpi = calculate_dpi(guess);
       }
       catch (pdf::dpi::NoGuess)
