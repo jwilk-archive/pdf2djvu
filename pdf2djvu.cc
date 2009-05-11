@@ -1094,7 +1094,7 @@ void IndirectDjVm::do_create(const std::vector<Component> &components, bool shar
 
 static int calculate_dpi(const pdf::dpi::Guess &guess)
 {
-  double dpi = guess.max();
+  double dpi = guess.max() + 0.5;
   if (dpi < djvu::min_dpi)
     return djvu::min_dpi;
   else if (dpi > djvu::max_dpi)
@@ -1109,7 +1109,7 @@ static int calculate_dpi(double page_width, double page_height)
   {
     double hdpi = config.preferred_page_size.first / page_width;
     double vdpi = config.preferred_page_size.second / page_height;
-    double dpi = std::min(hdpi, vdpi);
+    double dpi = std::min(hdpi, vdpi) + 0.5;
     if (dpi < djvu::min_dpi)
       return djvu::min_dpi;
     else if (dpi > djvu::max_dpi)
