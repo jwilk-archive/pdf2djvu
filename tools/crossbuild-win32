@@ -71,6 +71,16 @@ sed -i -e "s!^prefix=.*!prefix=$usr!" lib/pkgconfig/*
   tar -xzf mingwrt-*.tar.gz
 )
 
+(
+  cd etc/fonts/
+  mkdir conf.d
+  cd conf.d
+  for file in 30-metric-aliases.conf 30-urw-aliases.conf
+  do
+    wget -O $file "http://cgit.freedesktop.org/fontconfig/plain/conf.d/$file?id=2.6.0"
+  done
+)
+
 # Download source libraries:
 
 cd "$src"
