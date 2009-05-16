@@ -73,11 +73,22 @@ sed -i -e "s!^prefix=.*!prefix=$usr!" lib/pkgconfig/*
 
 (
   cd etc/fonts/
+  sed -i -e 's!<dir>~/[.]fonts</dir>!<dir>CUSTOMFONTDIR</dir>!' fonts.conf
   mkdir conf.d
   cd conf.d
   for file in 30-metric-aliases.conf 30-urw-aliases.conf
   do
     wget -O $file "http://cgit.freedesktop.org/fontconfig/plain/conf.d/$file?id=2.6.0"
+  done
+  sed -i -e 's/"append"/"prepend"/g' *.conf
+)
+
+(
+  mkdir fonts/
+  cd fonts/
+  for font in StandardSymL Dingbats
+  do
+    wget "http://svn.ghostscript.com/ghostscript/trunk/urw-fonts/$font.pfb"
   done
 )
 
@@ -165,6 +176,7 @@ cp "$usr/bin/"libexpat-*.dll .
 cp "$usr/bin/"mingwm*dll .
 mkdir etc/ || true
 cp -r "$usr/etc/fonts" etc/
+cp -r "$usr/fonts" .
 mkdir doc/ || true
 
 chmod -x *.exe *.dll
@@ -184,7 +196,22 @@ do
 done
 xsltproc --nonet "$docbook_xsl" pdf2djvu.xml > "$pdist/doc/manual-page.html"
 
-# Build libraries licensing documentation:
+# Build fonts/libraries licensing documentation:
+
+cat <<EOF | rst2html > "$pdist/doc/COPYING.fonts.html"
+URW Type 1 fonts
+================
+Copyright © 1997 URW Software
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; version 2 dated June, 1991.
+
+As a special exception, permission is granted to include this font program in a
+Postscript or PDF file that consists of a document that contains text to be
+displayed or printed using this font, regardless of the conditions or license
+applying to the document itself.
+EOF
 
 cat <<EOF | rst2html > "$pdist/doc/COPYING.libraries.html"
 libdjvulibre-\\*.dll
