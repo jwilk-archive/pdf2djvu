@@ -1,8 +1,8 @@
-pdf2djvu (0.5.8) UNRELEASED; urgency=low
+pdf2djvu (0.5.8) unstable; urgency=low
 
-  * 
+  * Fix some rounding bugs.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 11 May 2009 23:35:10 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Sun, 17 May 2009 10:11:53 +0200
 
 pdf2djvu (0.5.7) unstable; urgency=low
 
