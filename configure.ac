@@ -114,21 +114,25 @@ PKG_CHECK_MODULES(GRAPHICSMAGICK, GraphicsMagick++,
  
 AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name and version of this package)
 
+AC_TRY_CPP
+
+have_pstreams=maybe
+AC_CHECK_FUNC(fork, [], [have_pstreams=no])
 AC_MSG_CHECKING(for PStreams)
-have_pstreams=no
-AC_TRY_LINK(
-  [#include <pstream.h>],
-  [redi::ipstream in;],
-  [
-    AC_DEFINE(HAVE_PSTREAM_H, 1, [Define if you have the <pstream.h> file])
-    have_pstreams=yes
-  ]
-)
-if test "$have_pstreams" = "no"
+if test "$have_pstreams" = "maybe"
 then
-  AC_TRY_LINK(
+  AC_TRY_CPP(
+    [#include <pstream.h>],
+    [
+      AC_DEFINE(HAVE_PSTREAM_H, 1, [Define if you have the <pstream.h> file])
+      have_pstreams=yes
+    ]
+  )
+fi
+if test "$have_pstreams" = "maybe"
+then
+  AC_TRY_CPP(
     [#include <pstreams/pstream.h>],
-    [redi::ipstream in;],
     [
       AC_DEFINE(HAVE_PSTREAMS_PSTREAM_H, 1, [Define if you have the <pstreams/pstream.h> file])
       have_pstreams=yes
@@ -147,7 +151,6 @@ fi
 
 # Checks for typedefs, structures, and compiler characteristics.
 
-AC_TRY_CPP
 AC_MSG_CHECKING(for wchar_t encoding)
 AC_TRY_CPP([
 #include <stdlib.h>
