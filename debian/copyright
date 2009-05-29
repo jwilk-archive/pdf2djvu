@@ -1,20 +1,10 @@
-This package was debianized by Jakub Wilk <ubanus@users.sf.net> on
-Mon, 22 Oct 2007.
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=48
+Name: pdf2djvu
+Maintainer: Jakub Wilk <ubanus@users.sf.net>
+Source: http://pdf2djvu.googlecode.com/
 
-Copyright © 2007, 2008, 2009 Jakub Wilk <ubanus@users.sf.net>.
-
-License:
-
-  This package is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; version 2 dated June, 1991.
-
-  This package is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-  General Public License for more details.
-
-On Debian systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL-2'.
-
-# vim:tw=72
+Files: *
+Copyright: 2007, 2008, 2009, Jakub Wilk <ubanus@users.sf.net>
+License: GPL-2
+ On Debian systems, the complete text of the GNU General Public License
+ version 2 can be found in the /usr/share/common-licenses/GPL-2 file.
