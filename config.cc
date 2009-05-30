@@ -671,7 +671,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl << "     --pageid-prefix=NAME"
     << std::endl << "     --pageid-template=TEMPLATE"
     << std::endl << "     --page-title-template=TEMPLATE"
-    << std::endl << " -d, --dpi=resolution"
+    << std::endl << " -d, --dpi=RESOLUTION"
     << std::endl << "     --guess-dpi"
     << std::endl << "     --media-box"
     << std::endl << "     --page-size=WxH"
