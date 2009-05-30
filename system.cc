@@ -875,7 +875,7 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
   return path;
 }
 
-void stream_printf(std::ostream &stream, char *message, va_list args)
+void stream_printf(std::ostream &stream, const char *message, va_list args)
 {
   int length = vsnprintf(NULL, 0, message, args);
   assert(length >= 0);
