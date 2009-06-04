@@ -1,0 +1,13 @@
+syntax: glob
+
+Makefile
+aclocal.m4
+autom4te.cache
+config.log
+config.status
+configure
+version.hh
+version.hh.in
+pdf2djvu
+*.o
+doc/*.1

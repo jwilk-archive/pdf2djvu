@@ -17,7 +17,7 @@ export GZIP='-9'
 cd "$buildroot"
 
 # Subversion checkout:
-svn export "$@" http://pdf2djvu.googlecode.com/svn/trunk pdf2djvu
+hg archive "$@" -R "$pwd" pdf2djvu
 version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q}' < pdf2djvu/doc/changelog.txt`
 mv pdf2djvu "pdf2djvu-$version"
 
