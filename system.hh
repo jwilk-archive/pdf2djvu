@@ -205,6 +205,8 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
 
 std::string absolute_path(const std::string &path, const std::string &dir_name);
 
+void prevent_pop_out();
+
 #endif
 
 // vim:ts=2 sw=2 et

@@ -1176,6 +1176,8 @@ static int xmain(int argc, char * const argv[])
   catch (const Config::Error &ex)
   {
     config.usage(ex);
+    if (argc <= 1)
+      prevent_pop_out();
     exit(1);
   }
 

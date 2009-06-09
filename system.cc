@@ -890,4 +890,26 @@ void stream_printf(std::ostream &stream, const char *message, va_list args)
   stream << static_cast<char*>(buffer);
 }
 
+void prevent_pop_out(void)
+{
+#ifdef WIN32
+  /* GetConsoleProcessList() function is not available for some systems (e.g.,
+   * Wine, Windows 98), so it's not desireable to import it at link time.
+   */
+  typedef DWORD (WINAPI *get_console_process_list_fn)(LPDWORD, DWORD);
+  get_console_process_list_fn get_console_process_list;
+  HMODULE dll = GetModuleHandle("kernel32");
+  if (dll == NULL)
+    return;
+  get_console_process_list = (get_console_process_list_fn) GetProcAddress(dll, "GetConsoleProcessList");
+  if (get_console_process_list != NULL)
+  {
+    unsigned long pid, rc;
+    rc = get_console_process_list(&pid, 1);
+    if (rc == 1)
+      MessageBox(NULL, PACKAGE_NAME " is intended to be run from the command prompt.", PACKAGE_NAME, MB_OK | MB_ICONINFORMATION);
+  }
+#endif
+}
+
 // vim:ts=2 sw=2 et
