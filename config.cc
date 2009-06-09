@@ -704,7 +704,6 @@ void Config::usage(const Config::Error &error) const
     << std::endl << " -h, --help"
     << std::endl << "     --version"
     << std::endl;
-  exit(1);
 }
 
 // vim:ts=2 sw=2 et
