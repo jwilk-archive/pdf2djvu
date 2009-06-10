@@ -1,6 +1,6 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=48
+Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=54
 Name: pdf2djvu
-Maintainer: Jakub Wilk <ubanus@users.sf.net>
+Contact: Jakub Wilk <ubanus@users.sf.net>
 Source: http://pdf2djvu.googlecode.com/
 
 Files: *
