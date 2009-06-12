@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Copyright © 2009 Jakub Wilk
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 dated June, 1991.
+
+: "${CXX:=g++}"
+"$CXX" -MM *.cc \
+| sed -n -e '/\\ *$/ { H; d; }; H; x; s/[\\\n]/ /g; s/^ //; p; s/.*//; x;' \
+| sort \
+| while read line
+do
+  target=`printf -- '%s' "$line" | cut -d: -f1`
+  deps=`printf -- '%s' "$line" | cut -d: -f2 | tr ' ' '\n' | sort`
+  for dep in $deps
+  do
+    echo "$target: $dep"
+  done
+done > Makefile.dep
+
+# vim:ts=2 sw=2 et

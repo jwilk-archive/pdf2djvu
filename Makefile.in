@@ -18,15 +18,8 @@ version.o: version.rc version.hh
 pdf2djvu: version.o
 endif
 
-config.o: config.cc config.hh string-format.hh sexpr.hh debug.hh djvuconst.hh version.hh
-debug.o: debug.cc debug.hh
-pdf-backend.o: pdf-backend.cc pdf-backend.hh debug.hh system.hh version.hh
-pdf-dpi.o: pdf-dpi.cc pdf-dpi.hh pdf-backend.hh
-sexpr.o: sexpr.cc sexpr.hh
-string-format.o: string-format.cc string-format.hh
-system.o: system.cc system.hh debug.hh version.hh
-quantizer.o: quantizer.cc quantizer.hh pdf-backend.hh config.hh string-format.hh sexpr.hh version.hh
-pdf2djvu.o: pdf2djvu.cc pdf-backend.hh pdf-dpi.hh debug.hh config.hh string-format.hh system.hh version.hh djvuconst.hh sexpr.hh quantizer.hh
+include Makefile.dep
+
 pdf2djvu: pdf2djvu.o pdf-backend.o pdf-dpi.o debug.o config.o string-format.o system.o sexpr.o quantizer.o
 	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@) 
 
