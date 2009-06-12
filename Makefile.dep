@@ -21,6 +21,7 @@ pdf-dpi.o: pdf-dpi.hh
 pdf2djvu.o: config.hh
 pdf2djvu.o: debug.hh
 pdf2djvu.o: djvuconst.hh
+pdf2djvu.o: paths.hh
 pdf2djvu.o: pdf-backend.hh
 pdf2djvu.o: pdf-dpi.hh
 pdf2djvu.o: pdf2djvu.cc

@@ -21,6 +21,7 @@
 #include "config.hh"
 #include "debug.hh"
 #include "djvuconst.hh"
+#include "paths.hh"
 #include "quantizer.hh"
 #include "sexpr.hh"
 #include "system.hh"
@@ -833,7 +834,7 @@ void DjVuCommand::set_argv0(const char *argv0)
 {
   std::string argv0_dir_name, argv0_file_name;
   split_path(argv0, argv0_dir_name, argv0_file_name);
-  DjVuCommand::dir_name = absolute_path(DJVULIBRE_BIN_PATH, argv0_dir_name);
+  DjVuCommand::dir_name = absolute_path(paths::djvulibre_bindir, argv0_dir_name);
 }
 
 class DjVm

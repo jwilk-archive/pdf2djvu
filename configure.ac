@@ -13,7 +13,7 @@ AC_CHECK_TOOL(WINDRES, windres, :)
 
 PKG_CHECK_MODULES(DJVULIBRE, ddjvuapi >= 3.5.17)
 djvulibre_bin_path=`$PKG_CONFIG --variable exec_prefix ddjvuapi`/bin
-AC_DEFINE_UNQUOTED(DJVULIBRE_BIN_PATH, "$djvulibre_bin_path", Define to the path to DjVuLibre utilities)
+AC_SUBST(djvulibre_bindir, "$djvulibre_bin_path")
 djvulibre_version=`$PKG_CONFIG --modversion ddjvuapi`
 PACKAGE_STRING="$PACKAGE_STRING (DjVuLibre $djvulibre_version"
 AC_DEFINE_UNQUOTED(DJVULIBRE_VERSION_STRING, "$djvulibre_version", Define to the version of DjVuLibre)

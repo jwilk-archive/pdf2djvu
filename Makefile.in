@@ -8,6 +8,7 @@ WINDRES = @WINDRES@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 bindir = @bindir@
+djvulibre_bindir = @djvulibre_bindir@
 
 .PHONY: all
 all: pdf2djvu
@@ -20,12 +21,15 @@ endif
 
 include Makefile.dep
 
+paths.hh: tools/generate-paths-hh Makefile
+	$(<) $(foreach var,djvulibre_bindir,$(var) $($(var)))
+
 pdf2djvu: pdf2djvu.o pdf-backend.o pdf-dpi.o debug.o config.o string-format.o system.o sexpr.o quantizer.o
 	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@) 
 
 .PHONY: clean
 clean:
-	$(RM) pdf2djvu *.o
+	$(RM) pdf2djvu *.o paths.hh
 
 .PHONY: distclean
 distclean: clean

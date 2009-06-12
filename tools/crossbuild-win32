@@ -155,9 +155,7 @@ cd "$psrc"
 sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.in
 sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
 ./configure --host="$host" --prefix="$usr"
-printf '#undef DJVULIBRE_BIN_PATH\n' >> version.hh
-printf '#define DJVULIBRE_BIN_PATH "."\n' >> version.hh
-make
+make djvulibre_bindir=.
 
 # Prepare the zipball contents:
 
