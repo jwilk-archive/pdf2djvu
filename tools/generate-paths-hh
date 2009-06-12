@@ -20,7 +20,7 @@ while [ $# -gt 0 ]
 do
   key="$1"
   value="$2"
-  printf '  static const char *%s = "%s";\n' "$key" "$value"
+  printf '  static const char %s[] = "%s";\n' "$key" "$value"
   shift 2
 done
 
