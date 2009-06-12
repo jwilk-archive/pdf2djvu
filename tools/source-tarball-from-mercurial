@@ -23,9 +23,8 @@ mv pdf2djvu "pdf2djvu-$version"
 
 # Autoconf & company:
 cd "pdf2djvu-$version"
-aclocal
-autoheader
-autoconf
+cp /usr/share/automake*/install-sh tools/
+autoreconf --verbose
 rm -Rf *.cache
 cd ..
 
