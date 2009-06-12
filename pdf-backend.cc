@@ -14,8 +14,9 @@
 #include <sstream>
 #include <string>
 
-#include "pdf-backend.hh"
 #include "debug.hh"
+#include "i18n.hh"
+#include "pdf-backend.hh"
 #include "system.hh"
 
 #include <Error.h>
@@ -30,7 +31,7 @@
 
 static void poppler_error_handler(int pos, char *message, va_list args)
 {
-  error_log << "PDF error";
+  error_log << _("PDF error");
   if (pos >= 0)
     error_log << " (" << pos << ")";
   error_log << ": ";
@@ -49,9 +50,9 @@ pdf::Environment::Environment()
 void pdf::Environment::set_antialias(bool value)
 {
   if (!globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no")))
-    throw UnableToSetParameter("Unable to set antialias parameter");
+    throw UnableToSetParameter(_("Unable to set antialias parameter"));
   if (!globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no")))
-    throw UnableToSetParameter("Unable to set vector antialias parameter");
+    throw UnableToSetParameter(_("Unable to set vector antialias parameter"));
 }
 
 

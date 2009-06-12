@@ -17,6 +17,7 @@
 
 #include "debug.hh"
 #include "djvuconst.hh"
+#include "i18n.hh"
 #include "version.hh"
 
 class OptionsParseError : public Config::Error
@@ -27,7 +28,7 @@ protected:
   { }
 public:
   OptionsParseError()
-  : Config::Error("Unable to parse command-line options")
+  : Config::Error(_("Unable to parse command-line options"))
   { }
 };
 
@@ -35,7 +36,7 @@ class TooManyArguments : public Config::Error
 {
 public:
   TooManyArguments()
-  : Config::Error("Too many arguments were specified")
+  : Config::Error(_("Too many arguments were specified"))
   { }
 };
 
@@ -43,7 +44,7 @@ class NoInputFile : public Config::Error
 {
 public:
   NoInputFile()
-  : Config::Error("No input file name was specified")
+  : Config::Error(_("No input file name was specified"))
   { }
 };
 
@@ -51,7 +52,7 @@ class InvalidOutputFileName : public Config::Error
 {
 public:
   InvalidOutputFileName()
-  : Config::Error("Invalid output file name")
+  : Config::Error(_("Invalid output file name"))
   { }
 };
 
@@ -59,7 +60,7 @@ class PagesParseError : public Config::Error
 {
 public:
   PagesParseError()
-  : Config::Error("Unable to parse page numbers")
+  : Config::Error(_("Unable to parse page numbers"))
   { }
 };
 
@@ -67,7 +68,7 @@ class PageSizeParseError : public Config::Error
 {
 public:
   PageSizeParseError()
-  : Config::Error("Unable to parse page size")
+  : Config::Error(_("Unable to parse page size"))
   { }
 };
 
@@ -75,58 +76,31 @@ class HyperlinksOptionsParseError : public Config::Error
 {
 public:
   HyperlinksOptionsParseError()
-  : Config::Error("Unable to parse hyperlinks options")
+  : Config::Error(_("Unable to parse hyperlinks options"))
   { }
 };
 
 class DpiOutsideRange : public Config::Error
 {
-protected:
-  static std::string __error_message__(int dpi_from, int dpi_to)
-  {
-    std::ostringstream stream;
-    stream
-      << "The specified resolution is outside the allowed range: "
-      << dpi_from << " .. " << dpi_to;
-    return stream.str();
-  }
 public:
   DpiOutsideRange(int dpi_from, int dpi_to)
-  : Config::Error(__error_message__(dpi_from, dpi_to))
+  : Config::Error(string_printf(_("The specified resolution is outside the allowed range: %d .. %d"), dpi_from, dpi_to))
   { }
 };
 
 class FgColorsOutsideRange : public Config::Error
 {
-protected:
-  static std::string __error_message__(unsigned int n, unsigned int m)
-  {
-    std::ostringstream stream;
-    stream
-      << "The specified number of foreground colors is outside the allowed range: "
-      << n << " .. " << m;
-    return stream.str();
-  }
 public:
   FgColorsOutsideRange(unsigned int n, unsigned int m)
-  : Error(__error_message__(n, m))
+  : Error(string_printf(_("The specified number of foreground colors is outside the allowed range: %u .. %u"), n, m))
   { }
 };
 
 class SubsampleRatioOutsideRange : public Config::Error
 {
-protected:
-  static std::string __error_message__(unsigned int n, unsigned int m)
-  {
-    std::ostringstream stream;
-    stream
-      << "The specified subsampling ratio is outside the allowed range: "
-      << n << " .. " << m;
-    return stream.str();
-  }
 public:
   SubsampleRatioOutsideRange(unsigned int n, unsigned int m)
-  : Error(__error_message__(n, m))
+  : Error(string_printf(_("The specified subsampling ratio is outside the allowed range: %u .. %u"), n, m))
   { }
 };
 
@@ -134,7 +108,7 @@ class PageTitleTemplateParseError : public Config::Error
 {
 public:
   PageTitleTemplateParseError()
-  : Config::Error("Unable to parse page title template specification")
+  : Config::Error(_("Unable to parse page title template specification"))
   { }
 };
 
@@ -142,7 +116,7 @@ class PageidTemplateParseError : public Config::Error
 {
 public:
   PageidTemplateParseError()
-  : Config::Error("Unable to parse pageid template specification")
+  : Config::Error(_("Unable to parse pageid template specification"))
   { }
 };
 
@@ -150,7 +124,7 @@ class PageidIllegalCharacter : public Config::Error
 {
 public:
   PageidIllegalCharacter()
-  : Config::Error("Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters")
+  : Config::Error(_("Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"))
   { }
 };
 
@@ -158,7 +132,7 @@ class PageidIllegalDot : public Config::Error
 {
 public:
   PageidIllegalDot()
-  : Config::Error("Pageid cannot start with a '.' character or contain two consecutive '.' characters")
+  : Config::Error(_("Pageid cannot start with a '.' character or contain two consecutive '.' characters"))
   { }
 };
 
@@ -166,7 +140,7 @@ class PageidBadExtension : public Config::Error
 {
 public:
   PageidBadExtension()
-  : Config::Error("Pageid must end with the '.djvu' or the '.djv' extension")
+  : Config::Error(_("Pageid must end with the '.djvu' or the '.djv' extension"))
   { }
 };
 
@@ -324,17 +298,9 @@ static std::pair<int, int>parse_page_size(const std::string &s)
 
 class InvalidNumber : public Config::Error
 {
-protected:
-  static std::string __error_message__(const char *s)
-  {
-    std::ostringstream stream;
-    stream
-      << s << " is not a valid number";
-    return stream.str();
-  }
 public:
   explicit InvalidNumber(const char *s)
-  : Config::Error(__error_message__(s))
+  : Config::Error(string_printf(_("%s is not a valid number"), s))
   { }
 };
 
@@ -643,7 +609,7 @@ void Config::read_config(int argc, char * const argv[])
     case ':':
       throw InvalidOption();
     default:
-      throw std::logic_error("Unknown option");
+      throw std::logic_error(_("Unknown option"));
     }
   }
   if (optind < argc - 1)
@@ -662,47 +628,47 @@ void Config::usage(const Config::Error &error) const
   if (!error.is_quiet())
     log << error << std::endl << std::endl;
   log
-    << "Usage: " << std::endl
-    << "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>" << std::endl
-    << "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>" << std::endl
-    << std::endl << "Options:"
-    << std::endl << " -i, --indirect=FILE"
-    << std::endl << " -o, --output=FILE"
-    << std::endl << "     --pageid-prefix=NAME"
-    << std::endl << "     --pageid-template=TEMPLATE"
-    << std::endl << "     --page-title-template=TEMPLATE"
-    << std::endl << " -d, --dpi=RESOLUTION"
-    << std::endl << "     --guess-dpi"
-    << std::endl << "     --media-box"
-    << std::endl << "     --page-size=WxH"
-    << std::endl << "     --bg-slices=N,...,N"
-    << std::endl << "     --bg-slices=N+...+N"
-    << std::endl << "     --bg-subsample=N"
-    << std::endl << "     --fg-colors=default"
-    << std::endl << "     --fg-colors=web"
+    << _("Usage: ") << std::endl
+    << _("   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>") << std::endl
+    << _("   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>") << std::endl
+    << std::endl << _("Options: ")
+    << std::endl << _(" -i, --indirect=FILE")
+    << std::endl << _(" -o, --output=FILE")
+    << std::endl << _("     --pageid-prefix=NAME")
+    << std::endl << _("     --pageid-template=TEMPLATE")
+    << std::endl << _("     --page-title-template=TEMPLATE")
+    << std::endl << _(" -d, --dpi=RESOLUTION")
+    << std::endl <<   "     --guess-dpi"
+    << std::endl <<   "     --media-box"
+    << std::endl << _("     --page-size=WxH")
+    << std::endl <<   "     --bg-slices=N,...,N"
+    << std::endl <<   "     --bg-slices=N+...+N"
+    << std::endl <<   "     --bg-subsample=N"
+    << std::endl <<   "     --fg-colors=default"
+    << std::endl <<   "     --fg-colors=web"
 #ifdef HAVE_GRAPHICSMAGICK
-    << std::endl << "     --fg-colors=N"
+    << std::endl <<   "     --fg-colors=N"
 #endif
-    << std::endl << "     --monochrome"
-    << std::endl << "     --loss-level=N"
-    << std::endl << "     --lossy"
-    << std::endl << "     --anti-alias"
-    << std::endl << "     --no-metadata"
-    << std::endl << "     --verbatim-metadata"
-    << std::endl << "     --no-outline"
-    << std::endl << "     --hyperlinks=border-avis"
-    << std::endl << "     --hyperlinks=#RRGGBB"
-    << std::endl << "     --no-hyperlinks"
-    << std::endl << "     --no-text"
-    << std::endl << "     --words"
-    << std::endl << "     --lines"
-    << std::endl << "     --crop-text"
-    << std::endl << "     --no-nfkc"
-    << std::endl << " -p, --pages=..."
-    << std::endl << " -v, --verbose"
-    << std::endl << " -q, --quiet"
-    << std::endl << " -h, --help"
-    << std::endl << "     --version"
+    << std::endl <<   "     --monochrome"
+    << std::endl <<   "     --loss-level=N"
+    << std::endl <<   "     --lossy"
+    << std::endl <<   "     --anti-alias"
+    << std::endl <<   "     --no-metadata"
+    << std::endl <<   "     --verbatim-metadata"
+    << std::endl <<   "     --no-outline"
+    << std::endl <<   "     --hyperlinks=border-avis"
+    << std::endl <<   "     --hyperlinks=#RRGGBB"
+    << std::endl <<   "     --no-hyperlinks"
+    << std::endl <<   "     --no-text"
+    << std::endl <<   "     --words"
+    << std::endl <<   "     --lines"
+    << std::endl <<   "     --crop-text"
+    << std::endl <<   "     --no-nfkc"
+    << std::endl <<   " -p, --pages=..."
+    << std::endl <<   " -v, --verbose"
+    << std::endl <<   " -q, --quiet"
+    << std::endl <<   " -h, --help"
+    << std::endl <<   "     --version"
     << std::endl;
 }
 

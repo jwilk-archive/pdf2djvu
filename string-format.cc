@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "string-format.hh"
+#include "i18n.hh"
 
 namespace string_format
 {
@@ -54,7 +55,7 @@ namespace string_format
   {
   public:
     IntegerOverflow()
-    : std::overflow_error("Integer overflow")
+    : std::overflow_error(_("Integer overflow"))
     { }
   };
 

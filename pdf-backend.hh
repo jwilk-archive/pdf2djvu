@@ -26,6 +26,8 @@
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
 
+#include "i18n.hh"
+
 namespace pdf 
 {
 
@@ -296,7 +298,7 @@ namespace pdf
     {
     public:
       LoadError()
-      : std::runtime_error("Unable to load document")
+      : std::runtime_error(_("Unable to load document"))
       { }
     };
   };

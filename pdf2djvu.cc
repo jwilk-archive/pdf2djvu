@@ -26,6 +26,7 @@
 #include "sexpr.hh"
 #include "system.hh"
 #include "version.hh"
+#include "i18n.hh"
 
 Config config;
 
@@ -38,7 +39,7 @@ class NoLinkDestination : public std::runtime_error
 {
 public:
   NoLinkDestination()
-  : std::runtime_error("Cannot find link destination")
+  : std::runtime_error(_("Cannot find link destination"))
   { }
 };
 
@@ -90,7 +91,7 @@ public:
   {
     const_iterator it = this->find(n);
     if (it == this->end())
-      throw std::logic_error("Page not found");
+      throw std::logic_error(_("Page not found"));
     return it->second;
   }
 
@@ -398,7 +399,7 @@ public:
       }
       catch (NoLinkDestination &ex)
       {
-        debug(1) << "[Warning] " << ex << std::endl;
+        debug(1) << string_printf(_("[Warning] %s"), ex.what()) << std::endl;
         return;
       }
       std::ostringstream strstream;
@@ -407,13 +408,13 @@ public:
       break;
     }
     case actionGoToR:
-      debug(1) << "[Warning] Unable to convert link with a remote go-to action" << std::endl;
+      debug(1) << _("[Warning] Unable to convert link with a remote go-to action") << std::endl;
       return;
     case actionNamed:
-      debug(1) << "[Warning] Unable to convert link with a named action" << std::endl;
+      debug(1) << _("[Warning] Unable to convert link with a named action") << std::endl;
       return;
     default:
-      debug(1) << "[Warning] Unknown link action" << std::endl;
+      debug(1) << _("[Warning] Unknown link action") << std::endl;
       return;
     }
     int x, y, w, h;
@@ -531,7 +532,7 @@ class NoPageForBookmark : public BookmarkError
 {
 public:
   NoPageForBookmark()
-  : BookmarkError("No page for a bookmark")
+  : BookmarkError(_("No page for a bookmark"))
   { }
 };
 
@@ -539,7 +540,7 @@ class NoTitleForBookmark : public BookmarkError
 {
 public:
   NoTitleForBookmark()
-  : BookmarkError("No title for a bookmark")
+  : BookmarkError(_("No title for a bookmark"))
   { }
 };
 
@@ -590,7 +591,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
     }
     catch (BookmarkError &ex)
     {
-      debug(1) << "[Warning] " << ex << std::endl;
+      debug(1) << string_printf(_("[Warning] %s"), ex.what()) << std::endl;
     }
 
     pdf::dict_lookup(current, "Next", &next);
@@ -629,7 +630,7 @@ class InvalidDateFormat : public std::runtime_error
 { 
 public:
   InvalidDateFormat()
-  : std::runtime_error("Invalid date format")
+  : std::runtime_error(_("Invalid date format"))
   { }
 };
 
@@ -766,7 +767,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
   }
   catch (InvalidDateFormat &ex)
   {
-    debug(1) << "[Warning] metadata[" << *pkey << "] is not a valid date" << std::endl;
+    debug(1) << string_printf(_("[Warning] metadata[%s] is not a valid date"), *pkey) << std::endl;
   }
 }
 
@@ -846,14 +847,14 @@ protected:
   {
   public:
     DuplicateId(const std::string &id)
-    : std::runtime_error("Duplicate page identifier: " + id)
+    : std::runtime_error(string_printf(_("Duplicate page identifier: %s"), id.c_str()))
     { }
   };
   class DuplicateTitle : public std::runtime_error
   {
   public:
     DuplicateTitle(const std::string &id)
-    : std::runtime_error("Duplicate page title: " + id)
+    : std::runtime_error(string_printf(_("Duplicate page title: %s"), id.c_str()))
     { }
   };
   void remember(const Component &component);
@@ -919,7 +920,7 @@ protected:
   { 
   public: 
     UnexpectedDjvuSedOutput() 
-    : std::runtime_error("Unexpected output from djvused") 
+    : std::runtime_error(_("Unexpected output from djvused")) 
     { };
   };
   void do_create(const std::vector<Component> &components, bool shared_ant = false);
@@ -939,7 +940,7 @@ public:
 
   virtual void set_outline(File &outlines_sed_file)
   {
-    debug(3) << "creating document outline with `djvused`" << std::endl;
+    debug(3) << _("creating document outline with `djvused`") << std::endl;
     DjVuCommand djvused("djvused");
     djvused << "-s" << "-f" << outlines_sed_file << this->index_file;
     djvused(); // djvused -s -f <outlines-sed-file> <index-djvu-file>
@@ -950,7 +951,7 @@ public:
     size_t size = this->components.size();
     if (size <= 2)
     {
-      debug(3) << "setting metadata with `djvused`" << std::endl;
+      debug(3) << _("setting metadata with `djvused`") << std::endl;
       DjVuCommand djvused("djvused");
       djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
       djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
@@ -963,7 +964,7 @@ public:
        *
        * We need to work around this bug.
        */
-      debug(3) << "setting metadata with `djvused` (working around a DjVuLibre bug)" << std::endl;
+      debug(3) << _("setting metadata with `djvused` (working around a DjVuLibre bug)") << std::endl;
       std::vector<Component> dummy_components;
       TemporaryFile dummy_sed_file;
       /* For an indirect document, ``create-shared-ant`` is, surprisingly, not
@@ -1005,8 +1006,11 @@ public:
   {
     size_t size = this->components.size();
     debug(3)
-      << "creating multi-page indirect document "
-      << "(" << size << " " << (size == 1 ? "page" : "pages") << ")"
+      << string_printf(ngettext(
+           "creating multi-page indirect document (%d page)",
+           "creating multi-page indirect document (%d pages)",
+           size), size
+         )
       << std::endl;
     this->do_create(this->components);
   }
@@ -1126,7 +1130,7 @@ class StdoutIsATerminal : public std::runtime_error
 {
 public:
   StdoutIsATerminal() 
-  : std::runtime_error("I won't write DjVu data to a terminal.")
+  : std::runtime_error(_("I won't write DjVu data to a terminal."))
   { }
 };
 
@@ -1301,11 +1305,11 @@ static int xmain(int argc, char * const argv[])
   {
     page_counter++;
     Component &component = (*page_files)[n];
-    debug(1) << "page #" << n << " -> #" << page_map.get(n);
+    debug(1) << string_printf(_("page #%d -> #%d"), n, page_map.get(n));
     debug(2) << ":";
     debug(1) << std::endl;
     debug(0)++;
-    debug(3) << "rendering page (1st pass)" << std::endl;
+    debug(3) << _("rendering page (1st pass)") << std::endl;
     double page_width, page_height;
     doc.get_page_size(n, crop, page_width, page_height);
     int dpi = 0;
@@ -1315,12 +1319,16 @@ static int xmain(int argc, char * const argv[])
       try
       {
         pdf::dpi::Guess guess = dpi_guesser[n];
-        debug(2) << "guessed resolution: " << guess << " dpi" << std::endl;
+        std::ostringstream guess_str;
+        guess_str << guess;
+        debug(2)
+          << string_printf(_("guessed resoultion: %s dpi"), guess_str.str().c_str())
+          << std::endl;
         dpi = calculate_dpi(guess);
       }
       catch (pdf::dpi::NoGuess)
       {
-        debug(2) << "unable to guess resolution" << std::endl;
+         debug(2) << _("unable to guess resolution") << std::endl;
       }
     }
     if (dpi == 0)
@@ -1329,16 +1337,16 @@ static int xmain(int argc, char * const argv[])
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
-    debug(2) << "image size: " << width << "x" << height << std::endl;
+    debug(2) << string_printf(_("image size: %dx%d"), width, height) << std::endl;
     if (!config.no_render)
     {
-      debug(3) << "rendering page (2nd pass)" << std::endl;
+      debug(3) << _("rendering page (2nd pass)") << std::endl;
       doc.display_page(out1.get(), n, dpi, dpi, crop, false);
     }
-    debug(3) << "preparing data for `csepdjvu`" << std::endl;
+    debug(3) << _("preparing data for `csepdjvu`") << std::endl;
     debug(0)++;
     TemporaryFile sep_file;
-    debug(3) << "storing foreground image" << std::endl;
+    debug(3) << _("storing foreground image") << std::endl;
     bool has_background = false;
     int background_color[3];
     bool has_foreground = false;
@@ -1351,14 +1359,14 @@ static int xmain(int argc, char * const argv[])
       calculate_subsampled_size(width, height, config.bg_subsample, sub_width, sub_height);
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
-      debug(3) << "rendering background image" << std::endl;
+      debug(3) << _("rendering background image") << std::endl;
       doc.display_page(outs.get(), n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
-        throw std::logic_error("Unexpected subsampled bitmap width");
+        throw std::logic_error(_("Unexpected subsampled bitmap width"));
       if (sub_height != outs->getBitmapHeight())
-        throw std::logic_error("Unexpected subsampled bitmap height");
+        throw std::logic_error(_("Unexpected subsampled bitmap height"));
       pdf::Pixmap bmp(outs.get());
-      debug(3) << "storing background image" << std::endl;
+      debug(3) << _("storing background image") << std::endl;
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
       sep_file << bmp;
       nonwhite_background_color = false;
@@ -1374,7 +1382,7 @@ static int xmain(int argc, char * const argv[])
         // It will be replaced later.
         int sub_width, sub_height;
         calculate_subsampled_size(width, height, 12, sub_width, sub_height);
-        debug(3) << "storing dummy background image" << std::endl;
+        debug(3) << _("storing dummy background image") << std::endl;
         sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
         for (int x = 0; x < sub_width; x++)
         for (int y = 0; y < sub_height; y++)
@@ -1383,7 +1391,7 @@ static int xmain(int argc, char * const argv[])
     }
     if (config.text)
     {
-      debug(3) << "storing text layer" << std::endl;
+      debug(3) << _("storing text layer") << std::endl;
       const std::string &texts = outm->get_texts();
       sep_file << texts;
       has_text = texts.length() > 0;
@@ -1392,7 +1400,7 @@ static int xmain(int argc, char * const argv[])
     sep_file.close();
     debug(0)--;
     {
-      debug(3) << "encoding layers with `csepdjvu`" << std::endl;
+      debug(3) << _("encoding layers with `csepdjvu`") << std::endl;
       DjVuCommand csepdjvu("csepdjvu");
       csepdjvu << "-d" << dpi;
       if (config.bg_slices)
@@ -1414,7 +1422,7 @@ static int xmain(int argc, char * const argv[])
       TemporaryFile sjbz_file, fgbz_file, bg44_file;
       if (!config.monochrome)
       { 
-        debug(3) << "recovering images with `djvuextract`" << std::endl;
+        debug(3) << _("recovering images with `djvuextract`") << std::endl;
         DjVuCommand djvuextract("djvuextract");
         djvuextract << component;
         if (should_have_fgbz)
@@ -1427,7 +1435,7 @@ static int xmain(int argc, char * const argv[])
       if (config.monochrome)
       {
         TemporaryFile pbm_file;
-        debug(3) << "encoding monochrome image with `cjb2`" << std::endl;
+        debug(3) << _("encoding monochrome image with `cjb2`") << std::endl;
         DjVuCommand cjb2("cjb2");
         cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
         pbm_file << "P4 " << width << " " << height << std::endl;
@@ -1442,7 +1450,7 @@ static int xmain(int argc, char * const argv[])
         c44_file.close();
         {
           TemporaryFile ppm_file;
-          debug(3) << "creating new background image with `c44`" << std::endl;
+          debug(3) << _("creating new background image with `c44`") << std::endl;
           DjVuCommand c44("c44");
           c44 << "-slice" << "97" << ppm_file << c44_file;
           int bg_width = (width + 11) / 12;
@@ -1459,7 +1467,7 @@ static int xmain(int argc, char * const argv[])
           c44();
         }
         {
-          debug(3) << "recovering image chunks with `djvuextract`" << std::endl;
+          debug(3) << _("recovering image chunks with `djvuextract`") << std::endl;
           DjVuCommand djvuextract("djvuextract");
           djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
           djvuextract(config.verbose < 3);
@@ -1467,13 +1475,13 @@ static int xmain(int argc, char * const argv[])
       }
       if (has_text)
       {
-        debug(3) << "recovering text with `djvused`" << std::endl;
+        debug(3) << _("recovering text with `djvused`") << std::endl;
         DjVuCommand djvused("djvused");
         djvused << component << "-e" << "output-txt";
         djvused(sed_file);
       }
       {
-        debug(3) << "re-assembling page with `djvumake`" << std::endl;
+        debug(3) << _("re-assembling page with `djvumake`") << std::endl;
         DjVuCommand djvumake("djvumake");
         std::ostringstream info;
         info << "INFO=" << width << "," << height << "," << dpi;
@@ -1489,7 +1497,7 @@ static int xmain(int argc, char * const argv[])
       }
     }
     {
-      debug(3) << "extracting annotations" << std::endl;
+      debug(3) << _("extracting annotations") << std::endl;
       const std::vector<sexpr::Ref> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
       for (std::vector<sexpr::Ref>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
@@ -1499,14 +1507,16 @@ static int xmain(int argc, char * const argv[])
     }
     sed_file.close();
     {
-      debug(3) << "adding non-raster data with `djvused`" << std::endl;
+      debug(3) << _("adding non-raster data with `djvused`") << std::endl;
       DjVuCommand djvused("djvused");
       djvused << component << "-s" << "-f" << sed_file;
       djvused();
     }
     {
       size_t page_size = component.size();
-      debug(2) << page_size << " bytes out" << std::endl;
+      debug(2)
+        << string_printf(ngettext("%zu bytes out", "%zu bytes out", page_size), page_size)
+        << std::endl;
       djvu_pages_size += page_size;
     }
     debug(0)--;
@@ -1517,7 +1527,7 @@ static int xmain(int argc, char * const argv[])
   if (config.extract_metadata)
   {
     TemporaryFile sed_file;
-    debug(3) << "extracting XMP metadata" << std::endl;
+    debug(3) << _("extracting XMP metadata") << std::endl;
     {
       const std::string &xmp_bytes = doc.get_xmp();
       if (xmp_bytes.length())
@@ -1536,11 +1546,11 @@ static int xmain(int argc, char * const argv[])
       else
       {
         debug(0)++;
-        debug(3) << "no XMP metadata" << std::endl;
+        debug(3) << _("no XMP metadata") << std::endl;
         debug(0)--;
       }
     }
-    debug(3) << "extracting document-information metadata" << std::endl;
+    debug(3) << _("extracting document-information metadata") << std::endl;
     sed_file << "set-meta" << std::endl;
     pdf_metadata_to_djvu_metadata(doc, sed_file);
     sed_file << "." << std::endl;
@@ -1551,7 +1561,7 @@ static int xmain(int argc, char * const argv[])
   {
     bool nonempty_outline;
     TemporaryFile sed_file;
-    debug(3) << "extracting document outline" << std::endl;
+    debug(3) << _("extracting document outline") << std::endl;
     if (config.format == config.FORMAT_BUNDLED)
     {
       // Shared annotations chunk in necessary to preserve multi-file document structure.
@@ -1586,11 +1596,10 @@ static int xmain(int argc, char * const argv[])
     double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;
     debug(0)--;
     debug(1) 
-      << std::fixed << std::setprecision(3) << bpp << " bits/pixel; "
-      << std::fixed << std::setprecision(3) << ratio << ":1, "
-      << std::fixed << std::setprecision(2) << percent_saved << "% saved, "
-      << pdf_size << " bytes in, "
-      << djvu_size << " bytes out" 
+      << string_printf(
+           _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"),
+           bpp, ratio, percent_saved, pdf_size, djvu_size
+         )
       << std::endl;
   }
   if (config.output_stdout)
@@ -1601,11 +1610,12 @@ static int xmain(int argc, char * const argv[])
 int main(int argc, char * const argv[])
 try
 {
+  initialize_i18n();
   xmain(argc, argv);
 }
 catch (std::ios_base::failure &ex)
 {
-  error_log << "I/O error (" << ex.what() << ")" << std::endl;
+  error_log << string_printf(_("I/O error (%s)"), ex.what()) << std::endl;
   exit(2);
 }
 catch (std::runtime_error &ex)

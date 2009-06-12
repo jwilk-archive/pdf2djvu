@@ -15,9 +15,9 @@
 #include <string>
 #include <vector>
 
-#include "string-format.hh"
+#include "i18n.hh"
 #include "sexpr.hh"
-
+#include "string-format.hh"
 
 class Config
 {
@@ -104,7 +104,7 @@ public:
   {
   public:
     NoPagesSelected()
-    : Error("No pages selected")
+    : Error(_("No pages selected"))
     { }
   };
 

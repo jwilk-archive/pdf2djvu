@@ -9,6 +9,7 @@
 #include <cerrno>
 #include <cstdarg>
 #include <cstdlib>
+#include <cstdarg>
 #include <cstring>
 #include <sstream>
 #include <stdexcept>
@@ -26,7 +27,7 @@
 
 #include "system.hh"
 #include "debug.hh"
-
+#include "i18n.hh"
 
 /* constants
  * =========
@@ -73,7 +74,7 @@ static void warn_posix_error(const std::string &context)
   }
   catch (const POSIXError &e)
   {
-    error_log << "[Warning] " << e.what() << std::endl;
+    error_log << string_printf(_("[Warning] %s"), e.what()) << std::endl;
   }
 }
 
@@ -108,7 +109,7 @@ std::string Win32Error::__error_message__(const std::string &context)
     NULL
   );
   if (nbytes == 0)
-    message.append("possibly memory allocation error");
+    message.append(_("possibly memory allocation error"));
   else
   {
     message.append(buffer);
@@ -907,9 +908,19 @@ void prevent_pop_out(void)
     unsigned long pid, rc;
     rc = get_console_process_list(&pid, 1);
     if (rc == 1)
-      MessageBox(NULL, PACKAGE_NAME " is intended to be run from the command prompt.", PACKAGE_NAME, MB_OK | MB_ICONINFORMATION);
+      MessageBox(NULL, _("pdf2djvu is intended to be run from the command prompt."), PACKAGE_NAME, MB_OK | MB_ICONINFORMATION);
   }
 #endif
+}
+
+std::string string_printf(const char *message, ...)
+{
+  std::ostringstream stream;
+  va_list args;
+  va_start(args, message);
+  stream_printf(stream, message, args);
+  va_end(args);
+  return stream.str();
 }
 
 // vim:ts=2 sw=2 et

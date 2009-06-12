@@ -12,6 +12,7 @@
 
 #include "pdf-backend.hh"
 #include "config.hh"
+#include "i18n.hh"
 
 class Quantizer
 {
@@ -67,7 +68,7 @@ public:
   {
   public:
     NotImplementedError()
-    : std::runtime_error("Advanced color quantization is not supported.")
+    : std::runtime_error(_("Advanced color quantization is not supported."))
     { };
   };
 };

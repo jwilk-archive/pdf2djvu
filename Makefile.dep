@@ -2,6 +2,7 @@ config.o: config.cc
 config.o: config.hh
 config.o: debug.hh
 config.o: djvuconst.hh
+config.o: i18n.hh
 config.o: sexpr.hh
 config.o: string-format.hh
 config.o: system.hh
@@ -11,16 +12,19 @@ debug.o: debug.hh
 debug.o: system.hh
 debug.o: version.hh
 pdf-backend.o: debug.hh
+pdf-backend.o: i18n.hh
 pdf-backend.o: pdf-backend.cc
 pdf-backend.o: pdf-backend.hh
 pdf-backend.o: system.hh
 pdf-backend.o: version.hh
+pdf-dpi.o: i18n.hh
 pdf-dpi.o: pdf-backend.hh
 pdf-dpi.o: pdf-dpi.cc
 pdf-dpi.o: pdf-dpi.hh
 pdf2djvu.o: config.hh
 pdf2djvu.o: debug.hh
 pdf2djvu.o: djvuconst.hh
+pdf2djvu.o: i18n.hh
 pdf2djvu.o: paths.hh
 pdf2djvu.o: pdf-backend.hh
 pdf2djvu.o: pdf-dpi.hh
@@ -32,6 +36,7 @@ pdf2djvu.o: system.hh
 pdf2djvu.o: version.hh
 quantizer.o: config.hh
 quantizer.o: djvuconst.hh
+quantizer.o: i18n.hh
 quantizer.o: pdf-backend.hh
 quantizer.o: quantizer.cc
 quantizer.o: quantizer.hh
@@ -40,9 +45,11 @@ quantizer.o: string-format.hh
 quantizer.o: version.hh
 sexpr.o: sexpr.cc
 sexpr.o: sexpr.hh
+string-format.o: i18n.hh
 string-format.o: string-format.cc
 string-format.o: string-format.hh
 system.o: debug.hh
+system.o: i18n.hh
 system.o: system.cc
 system.o: system.hh
 system.o: version.hh
