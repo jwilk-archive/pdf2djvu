@@ -6,6 +6,7 @@ autom4te.cache
 config.log
 config.status
 configure
+paths.hh
 version.hh
 version.hh.in
 pdf2djvu
