@@ -47,7 +47,66 @@ static const char path_separator = '\\';
 
 std::string POSIXError::__error_message__(const std::string &context)
 {
-  std::string message = strerror(errno);
+  std::string message;
+#ifdef WIN32
+  /* Win32 systems tends to return POSIX-style error messages in English.
+   * Translation is required.
+   */
+  N_("Operation not permitted");
+  N_("No such file or directory");
+  N_("No such process");
+  N_("Interrupted function call");
+  N_("Interrupted system call");
+  N_("Input/output error");
+  N_("No such device or address");
+  N_("Arg list too long");
+  N_("Argument list too long");
+  N_("Exec format error");
+  N_("Bad file descriptor");
+  N_("No child processes");
+  N_("Resource temporarily unavailable");
+  N_("Not enough space");
+  N_("Cannot allocate memory");
+  N_("Permission denied");
+  N_("Bad address");
+  N_("Resource device");
+  N_("Device or resource busy");
+  N_("File exists");
+  N_("Improper link");
+  N_("Invalid cross-device link");
+  N_("No such device");
+  N_("Not a directory");
+  N_("Is a directory");
+  N_("Invalid argument");
+  N_("Too many open files in system");
+  N_("Too many open files");
+  N_("Inappropriate I/O control operation");
+  N_("Inappropriate ioctl for device");
+  N_("File too large");
+  N_("No space left on device");
+  N_("Invalid seek");
+  N_("Illegal seek");
+  N_("Read-only file system");
+  N_("Too many links");
+  N_("Broken pipe");
+  N_("Domain error");
+  N_("Numerical argument out of domain");
+  N_("Result too large");
+  N_("Numerical result out of range");
+  N_("Resource deadlock avoided");
+  N_("Filename too long");
+  N_("File name too long");
+  N_("No locks available");
+  N_("Function not implemented");
+  N_("Directory not empty");
+  N_("Illegal byte sequence");
+  N_("Invalid or incomplete multibyte or wide character");
+  message = _(strerror(errno));
+#else
+  /* POSIX says that ``strerror()`` returns a locale-dependent error message.
+   * No need to translate. */
+  message = strerror(errno);
+#endif
   if (context.length())
     message = context + ": " + message;
   return message;

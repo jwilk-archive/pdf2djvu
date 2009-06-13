@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.5.7\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2009-06-12 20:05+0200\n"
+"POT-Creation-Date: 2009-06-13 20:55+0200\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
 "Last-Translator: Mateusz Turcza <mturcza@mimuw.edu.pl>\n"
 "Language-Team: Polish\n"
@@ -159,7 +159,7 @@ msgstr "Nie można odnaleźć celu łącza"
 msgid "Page not found"
 msgstr "Nie znaleziono strony"
 
-#: pdf2djvu.cc:402 pdf2djvu.cc:594 system.cc:77
+#: pdf2djvu.cc:402 pdf2djvu.cc:594 system.cc:136
 #, c-format
 msgid "[Warning] %s"
 msgstr "[Ostrzeżenie] %s"
@@ -366,11 +366,207 @@ msgstr "Błąd We/Wy (%s)"
 msgid "Integer overflow"
 msgstr "Przekroczenie zakresu liczb całkowitych"
 
-#: system.cc:112
+#: system.cc:55
+msgid "Operation not permitted"
+msgstr "Operacja niedozwolona"
+
+#: system.cc:56
+msgid "No such file or directory"
+msgstr "Nie ma takiego pliku ani katalogu"
+
+#: system.cc:57
+msgid "No such process"
+msgstr "Nie ma takiego procesu"
+
+#: system.cc:58
+msgid "Interrupted function call"
+msgstr "Przerwane wywołanie systemowe"
+
+#: system.cc:59
+msgid "Interrupted system call"
+msgstr "Przerwane wywołanie systemowe"
+
+#: system.cc:60
+msgid "Input/output error"
+msgstr "Błąd wejścia/wyjścia"
+
+#: system.cc:61
+msgid "No such device or address"
+msgstr "Nie ma takiego urządzenia ani adresu"
+
+#: system.cc:62
+msgid "Arg list too long"
+msgstr "Lista argumentów za długa"
+
+#: system.cc:63
+msgid "Argument list too long"
+msgstr "Lista argumentów za długa"
+
+#: system.cc:64
+msgid "Exec format error"
+msgstr "Błędny format pliku wykonywalnego"
+
+#: system.cc:65
+msgid "Bad file descriptor"
+msgstr "Błędny deskryptor pliku"
+
+#: system.cc:66
+msgid "No child processes"
+msgstr "Brak procesów potomnych"
+
+#: system.cc:67
+msgid "Resource temporarily unavailable"
+msgstr "Zasoby chwilowo niedostępne"
+
+#: system.cc:68
+msgid "Not enough space"
+msgstr "Nie można przydzielić pamięci"
+
+#: system.cc:69
+msgid "Cannot allocate memory"
+msgstr "Nie można przydzielić pamięci"
+
+#: system.cc:70
+msgid "Permission denied"
+msgstr "Brak dostępu"
+
+#: system.cc:71
+msgid "Bad address"
+msgstr "Błędny adres"
+
+#: system.cc:72
+msgid "Resource device"
+msgstr "Urządzenie lub zasoby zajęte"
+
+#: system.cc:73
+msgid "Device or resource busy"
+msgstr "Urządzenie lub zasoby zajęte"
+
+#: system.cc:74
+msgid "File exists"
+msgstr "Plik istnieje"
+
+#: system.cc:75
+msgid "Improper link"
+msgstr "Błędne dowiązanie między urządzeniami"
+
+#: system.cc:76
+msgid "Invalid cross-device link"
+msgstr "Błędne dowiązanie między urządzeniami"
+
+#: system.cc:77
+msgid "No such device"
+msgstr "Nie ma takiego urządzenia"
+
+#: system.cc:78
+msgid "Not a directory"
+msgstr "Nie jest katalogiem"
+
+#: system.cc:79
+msgid "Is a directory"
+msgstr "Jest katalogiem"
+
+#: system.cc:80
+msgid "Invalid argument"
+msgstr "Zły argument"
+
+#: system.cc:81
+msgid "Too many open files in system"
+msgstr "Za dużo otwartych plików w systemie"
+
+#: system.cc:82
+msgid "Too many open files"
+msgstr "Za dużo otwartych plików"
+
+#: system.cc:83
+msgid "Inappropriate I/O control operation"
+msgstr "Niewłaściwy ioctl dla urządzenia"
+
+#: system.cc:84
+msgid "Inappropriate ioctl for device"
+msgstr "Niewłaściwy ioctl dla urządzenia"
+
+#: system.cc:85
+msgid "File too large"
+msgstr "Plik zbyt duży"
+
+#: system.cc:86
+msgid "No space left on device"
+msgstr "Brak miejsca na urządzeniu"
+
+#: system.cc:87
+msgid "Invalid seek"
+msgstr "Błędne przesunięcie"
+
+#: system.cc:88
+msgid "Illegal seek"
+msgstr "Błędne przesunięcie"
+
+#: system.cc:89
+msgid "Read-only file system"
+msgstr "System plików wyłącznie do odczytu"
+
+#: system.cc:90
+msgid "Too many links"
+msgstr "Za dużo dowiązań"
+
+#: system.cc:91
+msgid "Broken pipe"
+msgstr "Przerwany potok"
+
+#: system.cc:92
+msgid "Domain error"
+msgstr "Argument liczbowy spoza dziedziny"
+
+#: system.cc:93
+msgid "Numerical argument out of domain"
+msgstr "Argument liczbowy spoza dziedziny"
+
+#: system.cc:94
+msgid "Result too large"
+msgstr "Wynik liczbowy poza zakresem"
+
+#: system.cc:95
+msgid "Numerical result out of range"
+msgstr "Wynik liczbowy poza zakresem"
+
+#: system.cc:96
+msgid "Resource deadlock avoided"
+msgstr "Uniknięto zakleszczenia zasobów"
+
+#: system.cc:97
+msgid "Filename too long"
+msgstr "Za długa nazwa pliku"
+
+#: system.cc:98
+msgid "File name too long"
+msgstr "Za długa nazwa pliku"
+
+#: system.cc:99
+msgid "No locks available"
+msgstr "Brak dostępnych blokad"
+
+#: system.cc:100
+msgid "Function not implemented"
+msgstr "Nie zaimplementowana funkcja"
+
+#: system.cc:101
+msgid "Directory not empty"
+msgstr "Katalog nie jest pusty"
+
+#: system.cc:102
+msgid "Illegal byte sequence"
+msgstr "Błędny lub niepełny znak wielobajtowy"
+
+#: system.cc:103
+msgid "Invalid or incomplete multibyte or wide character"
+msgstr "Błędny lub niepełny znak wielobajtowy"
+
+#: system.cc:171
 msgid "possibly memory allocation error"
 msgstr "prawdopodobnie błąd przydziału pamięci"
 
-#: system.cc:911
+#: system.cc:970
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
 

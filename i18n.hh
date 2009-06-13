@@ -11,6 +11,11 @@
 #include "version.hh"
 #include "paths.hh"
 
+static inline void N_(const char *message_id)
+{
+  return;
+}
+
 #ifdef ENABLE_NLS
 
 #include <libintl.h>
