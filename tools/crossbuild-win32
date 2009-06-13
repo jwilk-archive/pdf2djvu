@@ -25,7 +25,7 @@ mkdir "$src/" || true
 
 psrc="$src/pdf2djvu-$version/"
 mkdir "$psrc" || true
-cp -a *.cc *.hh *.in *.rc configure Makefile.* tools/ "$src/pdf2djvu-$version/"
+cp -a *.cc *.hh *.in *.rc configure Makefile.* po/ tools/ "$src/pdf2djvu-$version/"
 cp doc/*.txt doc/*.xml COPYING "$src/pdf2djvu-$version/"
 
 dist="$usr/dist"
@@ -44,7 +44,10 @@ for regex in \
   'fontconfig_[0-9.-]+_win32[.]zip' \
   'fontconfig-dev_[0-9.-]+_win32[.]zip' \
   'freetype_[0-9.-]+_win32[.]zip' \
-  'freetype-dev_[0-9.-]+_win32[.]zip'
+  'freetype-dev_[0-9.-]+_win32[.]zip' \
+  'gettext-runtime-[0-9.-]+[.]zip' \
+  'gettext-runtime-dev-[0-9.-]+[.]zip' \
+  'win_iconv-tml-[0-9]+[.]zip'
 do
   printf "$ftproot" >> ftp.gnome.org.txt
   grep -E -o "$regex" ftp.gnome.org.html | sort -rV | head -n1 | tee -a ftp.gnome.org.txt | grep . > /dev/null
@@ -60,6 +63,7 @@ for file in *.zip
 do
   unzip "$file"
 done
+sed -i -e '/iconv(/ s/const//' include/iconv.h
 sed -i -e "s!^prefix=.*!prefix=$usr!" lib/pkgconfig/*
 
 ( cp /usr/share/doc/mingw32-runtime/mingwm10.dll.gz bin/ && gzip -d bin/*.gz ) || \
@@ -154,14 +158,15 @@ make -C tools install
 cd "$psrc"
 sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.in
 sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
+sed -i -e '/^extern/d; /^"C"$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$//' configure
 ./configure --host="$host" --prefix="$usr"
-make djvulibre_bindir=.
+make djvulibre_bindir=. localedir=locale
+make install
 
 # Prepare the zipball contents:
 
 cd "$pdist"
-cp "$psrc/pdf2djvu" ./pdf2djvu.exe
-for tool in djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
+for tool in pdf2djvu djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
 do
   cp "$usr/bin/${tool}" "${tool}.exe"
 done
@@ -171,10 +176,12 @@ cp "$usr/bin/"libfontconfig-*.dll .
 cp "$usr/bin/"freetype*.dll .
 cp "$usr/bin/"jpeg*.dll .
 cp "$usr/bin/"libexpat-*.dll .
+cp "$usr/bin/"intl.dll .
 cp "$usr/bin/"mingwm*dll .
 mkdir etc/ || true
 cp -r "$usr/etc/fonts" etc/
 cp -r "$usr/fonts" .
+cp -r "$usr/share/locale/" .
 mkdir doc/ || true
 
 chmod -x *.exe *.dll

@@ -1,7 +1,7 @@
 CXX = @CXX@
 CXXFLAGS = @CXXFLAGS@ @DJVULIBRE_CFLAGS@ @POPPLER_CFLAGS@ @GRAPHICSMAGICK_CFLAGS@
 LDFLAGS = @LDFLAGS@
-LDLIBS = @LIBS@ @DJVULIBRE_LIBS@ @POPPLER_LIBS@ @GRAPHICSMAGICK_LIBS@
+LDLIBS = @LIBS@ @DJVULIBRE_LIBS@ @POPPLER_LIBS@ @GRAPHICSMAGICK_LIBS@ @LIBINTL@
 
 INSTALL = @INSTALL@
 WINDRES = @WINDRES@
@@ -10,6 +10,7 @@ exec_prefix = @exec_prefix@
 bindir = @bindir@
 datarootdir = @datarootdir@
 mandir = @mandir@
+localedir = @localedir@
 djvulibre_bindir = @djvulibre_bindir@
 
 .PHONY: all
@@ -24,7 +25,7 @@ endif
 include Makefile.dep
 
 paths.hh: tools/generate-paths-hh Makefile
-	$(<) $(foreach var,djvulibre_bindir,$(var) $($(var)))
+	$(<) $(foreach var,localedir djvulibre_bindir,$(var) $($(var)))
 
 pdf2djvu: pdf2djvu.o pdf-backend.o pdf-dpi.o debug.o config.o string-format.o system.o sexpr.o quantizer.o
 	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@) 
@@ -42,6 +43,7 @@ test: pdf2djvu
 	$(MAKE) -C tests/
 
 MAN_PAGES = $(wildcard doc/*.1)
+MO_FILES = $(wildcard po/*.mo)
 
 .PHONY: install
 install:
@@ -50,6 +52,13 @@ install:
 ifneq ($(MAN_PAGES),)
 	$(INSTALL) -d $(DESTDIR)$(mandir)/man1/
 	$(INSTALL) -m 644 $(MAN_PAGES) $(DESTDIR)$(mandir)/man1/
+endif
+ifneq ($(MO_FILES),)
+	for locale in $(basename $(notdir $(MO_FILES))); \
+	do \
+		$(INSTALL) -d $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/; \
+		$(INSTALL) -m 644 po/$$locale.mo $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/pdf2djvu.mo; \
+	done
 endif
 
 # vim:ts=4 sw=4 noet

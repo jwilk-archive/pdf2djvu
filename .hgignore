@@ -12,4 +12,7 @@ version.hh.in
 pdf2djvu
 *.o
 doc/*.1
+tools/config.*
+po/*.pot
+po/*.mo
 tools/install-sh

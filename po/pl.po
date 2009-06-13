@@ -1,0 +1,387 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: pdf2djvu 0.5.7\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"POT-Creation-Date: 2009-06-12 20:05+0200\n"
+"PO-Revision-Date: 2009-05-30 16:59+0200\n"
+"Last-Translator: Mateusz Turcza <mturcza@mimuw.edu.pl>\n"
+"Language-Team: Polish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: config.cc:31
+msgid "Unable to parse command-line options"
+msgstr "Błąd przetwarzania opcji wiersza poleceń"
+
+#: config.cc:39
+msgid "Too many arguments were specified"
+msgstr "Podano za dużo argumentów"
+
+#: config.cc:47
+msgid "No input file name was specified"
+msgstr "Nie podano nazwy pliku wejściowego"
+
+#: config.cc:55
+msgid "Invalid output file name"
+msgstr "Błędna nazwa pliku wyjściowego"
+
+#: config.cc:63
+msgid "Unable to parse page numbers"
+msgstr "Błąd przetwarzania numerów stron"
+
+#: config.cc:71
+msgid "Unable to parse page size"
+msgstr "Błąd przetwarzania rozmiaru strony"
+
+#: config.cc:79
+msgid "Unable to parse hyperlinks options"
+msgstr "Błąd przetwarzania opcji hiperłączy"
+
+#: config.cc:87
+#, c-format
+msgid "The specified resolution is outside the allowed range: %d .. %d"
+msgstr "Podana rozdzielczość jest spoza dozwolonego zakresu: %d .. %d"
+
+#: config.cc:95
+#, c-format
+msgid ""
+"The specified number of foreground colors is outside the allowed range: %"
+"u .. %u"
+msgstr ""
+"Podana liczba kolorów pierwszego planu jest spoza dozwolonego zakresu: %u .. "
+"%u"
+
+#: config.cc:103
+#, c-format
+msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
+msgstr ""
+"Podany współczynnik próbkowania jest spoza dozwolonego zakresu: %u .. %u"
+
+#: config.cc:111
+msgid "Unable to parse page title template specification"
+msgstr "Błąd przetwarzania specyfikacji szablonu tytułu strony"
+
+#: config.cc:119
+msgid "Unable to parse pageid template specification"
+msgstr "Błąd przetwarzania specyfikacji szablonu pageid"
+
+#: config.cc:127
+msgid ""
+"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr ""
+"Pageid może zawierać jedynie litery, cyfry oraz znaki '_', '+', '-' i '.'"
+
+#: config.cc:135
+msgid ""
+"Pageid cannot start with a '.' character or contain two consecutive '.' "
+"characters"
+msgstr ""
+"Pageid nie może rozpoczynać się od znaku '.' ani zawierać dwóch "
+"występujących po sobie znaków '.'"
+
+#: config.cc:143
+msgid "Pageid must end with the '.djvu' or the '.djv' extension"
+msgstr "Pageid musi kończyć się rozszerzeniem '.djvu' lub '.djv'"
+
+#: config.cc:303
+#, c-format
+msgid "%s is not a valid number"
+msgstr "%s nie jest poprawną liczbą"
+
+#: config.cc:612
+msgid "Unknown option"
+msgstr "Nieznana opcja"
+
+#: config.cc:631
+msgid "Usage: "
+msgstr "Użycie: "
+
+#: config.cc:632
+msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
+msgstr "   pdf2djvu [-o <plik-wyjściowy-djvu>] [opcje] <plik-pdf>"
+
+#: config.cc:633
+msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
+msgstr "   pdf2djvu -i <plik-indeksowy-djvu> [opcje] <plik-pdf>"
+
+#: config.cc:634
+msgid "Options: "
+msgstr "Opcje: "
+
+#: config.cc:635
+msgid " -i, --indirect=FILE"
+msgstr " -i, --indirect=PLIK"
+
+#: config.cc:636
+msgid " -o, --output=FILE"
+msgstr " -o, --output=PLIK"
+
+#: config.cc:637
+msgid "     --pageid-prefix=NAME"
+msgstr "     --pageid-prefix=NAZWA"
+
+#: config.cc:638
+msgid "     --pageid-template=TEMPLATE"
+msgstr "     --pageid-template=SZABLON"
+
+#: config.cc:639
+msgid "     --page-title-template=TEMPLATE"
+msgstr "     --page-title-template=SZABLON"
+
+#: config.cc:640
+msgid " -d, --dpi=RESOLUTION"
+msgstr " -d, --dpi=ROZDZIELCZOŚĆ"
+
+#: config.cc:643
+msgid "     --page-size=WxH"
+msgstr "     --page-size=SZERxWYS"
+
+#: pdf-backend.cc:34
+msgid "PDF error"
+msgstr "Błąd pliku PDF"
+
+#: pdf-backend.cc:53
+msgid "Unable to set antialias parameter"
+msgstr "Nie można ustawić parametru antyaliasingu"
+
+#: pdf-backend.cc:55
+msgid "Unable to set vector antialias parameter"
+msgstr "Nie można ustawić parametru antyaliasingu grafiki wektorowej"
+
+#: pdf2djvu.cc:42
+msgid "Cannot find link destination"
+msgstr "Nie można odnaleźć celu łącza"
+
+#: pdf2djvu.cc:94
+msgid "Page not found"
+msgstr "Nie znaleziono strony"
+
+#: pdf2djvu.cc:402 pdf2djvu.cc:594 system.cc:77
+#, c-format
+msgid "[Warning] %s"
+msgstr "[Ostrzeżenie] %s"
+
+#: pdf2djvu.cc:411
+msgid "[Warning] Unable to convert link with a remote go-to action"
+msgstr "[Ostrzeżenie] Nie można przekonwertować łącza ze zdalną akcją idź-do"
+
+#: pdf2djvu.cc:414
+msgid "[Warning] Unable to convert link with a named action"
+msgstr "[Ostrzeżenie] Nie można przekonwertować łącza z nazwaną akcją"
+
+#: pdf2djvu.cc:417
+msgid "[Warning] Unknown link action"
+msgstr "[Ostrzeżenie] Nieznana akcja łącza"
+
+#: pdf2djvu.cc:535
+msgid "No page for a bookmark"
+msgstr "Brak strony dla zakładki"
+
+#: pdf2djvu.cc:543
+msgid "No title for a bookmark"
+msgstr "Brak tytułu dla zakładki"
+
+#: pdf2djvu.cc:633
+msgid "Invalid date format"
+msgstr "Błędny format daty"
+
+#: pdf2djvu.cc:770
+#, c-format
+msgid "[Warning] metadata[%s] is not a valid date"
+msgstr "[Ostrzeżenie] metadata[%s] nie jest poprawną datą"
+
+#: pdf2djvu.cc:850
+#, c-format
+msgid "Duplicate page identifier: %s"
+msgstr "Powtórzony identyfikator strony: %s"
+
+#: pdf2djvu.cc:857
+#, c-format
+msgid "Duplicate page title: %s"
+msgstr "Powtórzony tytuł strony: %s"
+
+#: pdf2djvu.cc:923
+msgid "Unexpected output from djvused"
+msgstr "Nieoczekiwany wynik z djvused"
+
+#: pdf2djvu.cc:943
+msgid "creating document outline with `djvused`"
+msgstr "tworzenie konspektu dokumentu za pomocą `djvused`"
+
+#: pdf2djvu.cc:954
+msgid "setting metadata with `djvused`"
+msgstr "ustawianie metadanych za pomocą `djvused`"
+
+#: pdf2djvu.cc:967
+msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
+msgstr "ustawianie metadanych za pomocą `djvused` (omijanie błędu DjVuLibre)"
+
+#: pdf2djvu.cc:1010
+#, c-format
+msgid "creating multi-page indirect document (%d page)"
+msgid_plural "creating multi-page indirect document (%d pages)"
+msgstr[0] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strona)"
+msgstr[1] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strony)"
+msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%d stron)"
+
+#: pdf2djvu.cc:1133
+msgid "I won't write DjVu data to a terminal."
+msgstr "Nie wypiszę danych DjVu na terminal."
+
+#: pdf2djvu.cc:1308
+#, c-format
+msgid "page #%d -> #%d"
+msgstr "strona #%d -> #%d"
+
+#: pdf2djvu.cc:1312
+msgid "rendering page (1st pass)"
+msgstr "tworzenie strony (pierwszy przebieg)"
+
+#: pdf2djvu.cc:1325
+#, c-format
+msgid "guessed resoultion: %s dpi"
+msgstr "odgadnięta rozdzielczość: %s dpi"
+
+#: pdf2djvu.cc:1331
+msgid "unable to guess resolution"
+msgstr "nie udało się odgadnąć rozdzielczości"
+
+#: pdf2djvu.cc:1340
+#, c-format
+msgid "image size: %dx%d"
+msgstr "wymiary obrazu: %dx%d"
+
+#: pdf2djvu.cc:1343
+msgid "rendering page (2nd pass)"
+msgstr "tworzenie strony (drugi przebieg)"
+
+#: pdf2djvu.cc:1346
+msgid "preparing data for `csepdjvu`"
+msgstr "przygotowywanie danych dla `csepdjvu`"
+
+#: pdf2djvu.cc:1349
+msgid "storing foreground image"
+msgstr "zapisywanie obrazu pierwszoplanowego"
+
+#: pdf2djvu.cc:1362
+msgid "rendering background image"
+msgstr "tworzenie obrazu tła"
+
+#: pdf2djvu.cc:1365
+msgid "Unexpected subsampled bitmap width"
+msgstr "Nieoczekiwana szerokość podpróbkowanej bitmapy"
+
+#: pdf2djvu.cc:1367
+msgid "Unexpected subsampled bitmap height"
+msgstr "Nieoczekiwana wysokość podpróbkowanej bitmapy"
+
+#: pdf2djvu.cc:1369
+msgid "storing background image"
+msgstr "zapisywanie obrazu tła"
+
+#: pdf2djvu.cc:1385
+msgid "storing dummy background image"
+msgstr "zapisywanie pustego obrazu tła"
+
+#: pdf2djvu.cc:1394
+msgid "storing text layer"
+msgstr "zapisywanie warstwy tekstowej"
+
+#: pdf2djvu.cc:1403
+msgid "encoding layers with `csepdjvu`"
+msgstr "kodowanie warstw za pomocą `csepdjvu`"
+
+#: pdf2djvu.cc:1425
+msgid "recovering images with `djvuextract`"
+msgstr "wyodrębnianie obrazów za pomocą `djvuextract`"
+
+#: pdf2djvu.cc:1438
+msgid "encoding monochrome image with `cjb2`"
+msgstr "kodowanie obrazu monochromatycznego za pomocą `cjb2`"
+
+#: pdf2djvu.cc:1453
+msgid "creating new background image with `c44`"
+msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
+
+#: pdf2djvu.cc:1470
+msgid "recovering image chunks with `djvuextract`"
+msgstr "wyodrębnianie kawałków obrazu za pomocą `djvuextract`"
+
+#: pdf2djvu.cc:1478
+msgid "recovering text with `djvused`"
+msgstr "wyodrębnianie tekstu za pomocą `djvused`"
+
+#: pdf2djvu.cc:1484
+msgid "re-assembling page with `djvumake`"
+msgstr "składanie strony za pomocą `djvumake`"
+
+#: pdf2djvu.cc:1500
+msgid "extracting annotations"
+msgstr "wyodrębnianie adnotacji"
+
+#: pdf2djvu.cc:1510
+msgid "adding non-raster data with `djvused`"
+msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
+
+#: pdf2djvu.cc:1518
+#, c-format
+msgid "%zu bytes out"
+msgid_plural "%zu bytes out"
+msgstr[0] "%zu bajt wyjściowy"
+msgstr[1] "%zu bajty wyjściowe"
+msgstr[2] "%zu bajtów wyjściowych"
+
+#: pdf2djvu.cc:1530
+msgid "extracting XMP metadata"
+msgstr "wyodrębnianie metadanych XMP"
+
+#: pdf2djvu.cc:1549
+msgid "no XMP metadata"
+msgstr "brak metadanych XMP"
+
+#: pdf2djvu.cc:1553
+msgid "extracting document-information metadata"
+msgstr "wyodrębnianie metadanych dokumentu"
+
+#: pdf2djvu.cc:1564
+msgid "extracting document outline"
+msgstr "wyodrębnianie konspektu dokumentu"
+
+#: pdf2djvu.cc:1600
+#, c-format
+msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
+msgstr ""
+"%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
+"wyjściowych"
+
+#: pdf2djvu.cc:1618
+#, c-format
+msgid "I/O error (%s)"
+msgstr "Błąd We/Wy (%s)"
+
+#: string-format.cc:58
+msgid "Integer overflow"
+msgstr "Przekroczenie zakresu liczb całkowitych"
+
+#: system.cc:112
+msgid "possibly memory allocation error"
+msgstr "prawdopodobnie błąd przydziału pamięci"
+
+#: system.cc:911
+msgid "pdf2djvu is intended to be run from the command prompt."
+msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
+
+#: config.hh:107
+msgid "No pages selected"
+msgstr "Nie wybrano stron"
+
+#: pdf-backend.hh:301
+msgid "Unable to load document"
+msgstr "Nie można załadować dokumentu"
+
+#: quantizer.hh:71
+msgid "Advanced color quantization is not supported."
+msgstr "Zaawansowana kwantyzacja kolorów nie jest obsługiwana."

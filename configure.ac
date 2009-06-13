@@ -172,8 +172,9 @@ AC_TRY_CPP([
   ]
 )
 
-
-# Checks for library functions.
+# Checks for gettext
+AM_GNU_GETTEXT(external, need-ngettext)
+AM_GNU_GETTEXT_VERSION(0.17)
 
 # Turn on compile warnings
 
@@ -184,7 +185,7 @@ fi
 
 # Output files
 
-AC_CONFIG_FILES(Makefile)
+AC_CONFIG_FILES(Makefile po/Makefile)
 AC_CONFIG_HEADER(version.hh)
 AC_OUTPUT
 

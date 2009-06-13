@@ -21,6 +21,7 @@ pdf-dpi.o: i18n.hh
 pdf-dpi.o: pdf-backend.hh
 pdf-dpi.o: pdf-dpi.cc
 pdf-dpi.o: pdf-dpi.hh
+pdf-dpi.o: version.hh
 pdf2djvu.o: config.hh
 pdf2djvu.o: debug.hh
 pdf2djvu.o: djvuconst.hh
@@ -48,6 +49,7 @@ sexpr.o: sexpr.hh
 string-format.o: i18n.hh
 string-format.o: string-format.cc
 string-format.o: string-format.hh
+string-format.o: version.hh
 system.o: debug.hh
 system.o: i18n.hh
 system.o: system.cc
