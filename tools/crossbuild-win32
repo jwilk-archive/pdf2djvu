@@ -113,7 +113,7 @@ zcat djvulibre_*.diff.gz | patch -p0
  
 # Setup cross-compilation environment:
 
-export AS="${hostprefix}as"
+export AS="${host}-as"
 export DLLTOOL="${host}-dlltool"
 export OBJDUMP="${host}-objdump"
 export STRIP="${host}-strip"
