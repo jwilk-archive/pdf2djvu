@@ -5,26 +5,25 @@ LDFLAGS=-Wl,--as-needed
 .PHONY: build
 build: build-stamp
 build-stamp:
-	dh build
+	+ dh build
 	touch $(@)
 
 .PHONY: clean
 clean:
-	dh clean
+	+ dh clean
 
 .PHONY: install
 install: install-stamp
 install-stamp: build-stamp
-	dh install
+	+ dh install
 	touch $(@)
 
 .PHONY: binary-arch
 binary-arch: install
-	dh binary-arch
+	+ dh binary-arch
 
 .PHONY: binary-indep
-binary-indep: install
-	:
+binary-indep: install ;
 
 .PHONY: binary
 binary: binary-arch binary-indep
