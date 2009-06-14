@@ -31,13 +31,19 @@
 
 static void poppler_error_handler(int pos, char *message, va_list args)
 {
-  error_log << _("PDF error");
+  std::string format;
+  std::string expanded_message = string_printf(message, args);
+  const char *c_message = expanded_message.c_str();
   if (pos >= 0)
-    error_log << " (" << pos << ")";
-  error_log << ": ";
-  std::ostringstream stream;
-  stream_printf(stream, message, args);
-  error_log << stream.str();
+  {
+    error_log <<
+      string_printf(_("PDF error (%d): %s"), pos, c_message);
+  }
+  else
+  {
+    error_log <<
+      string_printf(_("PDF error: %s"), c_message);
+  }
   error_log << std::endl;
 }
 

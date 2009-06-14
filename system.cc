@@ -133,7 +133,7 @@ static void warn_posix_error(const std::string &context)
   }
   catch (const POSIXError &e)
   {
-    error_log << string_printf(_("[Warning] %s"), e.what()) << std::endl;
+    error_log << string_printf(_("Warning: %s"), e.what()) << std::endl;
   }
 }
 
@@ -936,7 +936,7 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
   return path;
 }
 
-void stream_printf(std::ostream &stream, const char *message, va_list args)
+std::string string_vprintf(const char *message, va_list args)
 {
   int length = vsnprintf(NULL, 0, message, args);
   assert(length >= 0);
@@ -947,7 +947,7 @@ void stream_printf(std::ostream &stream, const char *message, va_list args)
   assert(length >= 0);
   if (length < 0)
     throw_posix_error("vsprintf");
-  stream << static_cast<char*>(buffer);
+  return static_cast<char*>(buffer);
 }
 
 void prevent_pop_out(void)
@@ -974,12 +974,11 @@ void prevent_pop_out(void)
 
 std::string string_printf(const char *message, ...)
 {
-  std::ostringstream stream;
   va_list args;
   va_start(args, message);
-  stream_printf(stream, message, args);
+  std::string result = string_vprintf(message, args);
   va_end(args);
-  return stream.str();
+  return result;
 }
 
 // vim:ts=2 sw=2 et

@@ -399,7 +399,7 @@ public:
       }
       catch (NoLinkDestination &ex)
       {
-        debug(1) << string_printf(_("[Warning] %s"), ex.what()) << std::endl;
+        debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
         return;
       }
       std::ostringstream strstream;
@@ -408,13 +408,13 @@ public:
       break;
     }
     case actionGoToR:
-      debug(1) << _("[Warning] Unable to convert link with a remote go-to action") << std::endl;
+      debug(1) << _("Warning: Unable to convert link with a remote go-to action") << std::endl;
       return;
     case actionNamed:
-      debug(1) << _("[Warning] Unable to convert link with a named action") << std::endl;
+      debug(1) << _("Warning: Unable to convert link with a named action") << std::endl;
       return;
     default:
-      debug(1) << _("[Warning] Unknown link action") << std::endl;
+      debug(1) << _("Warning: Unknown link action") << std::endl;
       return;
     }
     int x, y, w, h;
@@ -591,7 +591,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
     }
     catch (BookmarkError &ex)
     {
-      debug(1) << string_printf(_("[Warning] %s"), ex.what()) << std::endl;
+      debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
     }
 
     pdf::dict_lookup(current, "Next", &next);
@@ -767,7 +767,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
   }
   catch (InvalidDateFormat &ex)
   {
-    debug(1) << string_printf(_("[Warning] metadata[%s] is not a valid date"), *pkey) << std::endl;
+    debug(1) << string_printf(_("Warning: metadata[%s] is not a valid date"), *pkey) << std::endl;
   }
 }
 

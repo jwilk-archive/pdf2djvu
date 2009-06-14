@@ -197,7 +197,7 @@ namespace encoding
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit);
 
-void stream_printf(std::ostream &stream, const char *message, va_list args);
+std::string string_vprintf(const char *message, va_list args);
 std::string string_printf(const char *message, ...);
 
 bool is_stream_a_tty(const std::ostream &ostream);
