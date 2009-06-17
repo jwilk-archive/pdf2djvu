@@ -1,3 +1,7 @@
+# Polish translation of pdf2djvu messages
+# Copyright © 2009 Mateusz Turcza
+# This file is distributed under the same license as the pdf2djvu package.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.5.7\n"
