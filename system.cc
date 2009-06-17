@@ -849,12 +849,6 @@ namespace encoding
     }
     return stream;
   }
-
-  void setup_locale()
-  {
-    setlocale(LC_CTYPE, "");
-    /* Deliberately ignore errors. */
-  }
 }
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek)

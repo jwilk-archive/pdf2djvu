@@ -25,11 +25,23 @@ static inline const char * _(const char *message_id)
   return gettext(message_id);
 }
 
-static inline void initialize_i18n()
+namespace i18n
 {
-  setlocale(LC_ALL, "");
-  bindtextdomain(PACKAGE_NAME, paths::localedir);
-  textdomain(PACKAGE_NAME);
+
+  static inline void setup_locale()
+  {
+    setlocale(LC_ALL, "");
+    /* Deliberately ignore errors. */
+  }
+
+  static inline void setup()
+  {
+    setup_locale();
+    bindtextdomain(PACKAGE_NAME, paths::localedir);
+    /* Deliberately ignore errors. */
+    textdomain(PACKAGE_NAME);
+    /* Deliberately ignore errors. */
+  }
 }
 
 #else
@@ -44,9 +56,18 @@ static inline const char * _(const char *message_id)
   return message_id;
 }
 
-static inline void initialize_i18n()
+namespace i18n
 {
-  /* Do nothing. */
+  static inline void setup_locale()
+  {
+    setlocale(LC_CTYPE, "");
+    /* Deliberately ignore errors. */
+  }
+
+  static inline void setup()
+  {
+    setup_locale();
+  }
 }
 
 #endif

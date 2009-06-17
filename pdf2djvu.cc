@@ -1165,7 +1165,6 @@ static void calculate_subsampled_size(int width, int height, int ratio, int &sub
 
 static int xmain(int argc, char * const argv[])
 {
-  encoding::setup_locale();
   std::ios_base::sync_with_stdio(false);
   DjVuCommand::set_argv0(argv[0]);
 
@@ -1610,7 +1609,7 @@ static int xmain(int argc, char * const argv[])
 int main(int argc, char * const argv[])
 try
 {
-  initialize_i18n();
+  i18n::setup();
   xmain(argc, argv);
 }
 catch (std::ios_base::failure &ex)
