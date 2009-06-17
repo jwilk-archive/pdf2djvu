@@ -1590,13 +1590,19 @@ static int xmain(int argc, char * const argv[])
         // Plausibly no shared annotations
       }
     }
+    /* Poppler resets the LC_NUMERIC locale settings:
+     * http://bugs.debian.org/533425
+     *
+     * We need to work around this bug.
+     */
+    i18n::setup_locale();
     double bpp = 8.0 * djvu_size / n_pixels;
     double ratio = 1.0 * pdf_size / djvu_size;
     double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;
     debug(0)--;
     debug(1) 
       << string_printf(
-           _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"),
+           _("%'.3f bits/pixel; %'.3f:1, %'.2f%% saved, %zu bytes in, %zu bytes out"),
            bpp, ratio, percent_saved, pdf_size, djvu_size
          )
       << std::endl;

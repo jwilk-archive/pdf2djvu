@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.5.7\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2009-06-14 09:44+0200\n"
+"POT-Creation-Date: 2009-06-17 16:13+0200\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
 "Last-Translator: Mateusz Turcza <mturcza@mimuw.edu.pl>\n"
 "Language-Team: Polish\n"
@@ -241,102 +241,102 @@ msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%d stron)"
 msgid "I won't write DjVu data to a terminal."
 msgstr "Nie wypiszę danych DjVu na terminal."
 
-#: pdf2djvu.cc:1308
+#: pdf2djvu.cc:1307
 #, c-format
 msgid "page #%d -> #%d"
 msgstr "strona #%d -> #%d"
 
-#: pdf2djvu.cc:1312
+#: pdf2djvu.cc:1311
 msgid "rendering page (1st pass)"
 msgstr "tworzenie strony (pierwszy przebieg)"
 
-#: pdf2djvu.cc:1325
+#: pdf2djvu.cc:1324
 #, c-format
 msgid "guessed resoultion: %s dpi"
 msgstr "odgadnięta rozdzielczość: %s dpi"
 
-#: pdf2djvu.cc:1331
+#: pdf2djvu.cc:1330
 msgid "unable to guess resolution"
 msgstr "nie udało się odgadnąć rozdzielczości"
 
-#: pdf2djvu.cc:1340
+#: pdf2djvu.cc:1339
 #, c-format
 msgid "image size: %dx%d"
 msgstr "wymiary obrazu: %dx%d"
 
-#: pdf2djvu.cc:1343
+#: pdf2djvu.cc:1342
 msgid "rendering page (2nd pass)"
 msgstr "tworzenie strony (drugi przebieg)"
 
-#: pdf2djvu.cc:1346
+#: pdf2djvu.cc:1345
 msgid "preparing data for `csepdjvu`"
 msgstr "przygotowywanie danych dla `csepdjvu`"
 
-#: pdf2djvu.cc:1349
+#: pdf2djvu.cc:1348
 msgid "storing foreground image"
 msgstr "zapisywanie obrazu pierwszoplanowego"
 
-#: pdf2djvu.cc:1362
+#: pdf2djvu.cc:1361
 msgid "rendering background image"
 msgstr "tworzenie obrazu tła"
 
-#: pdf2djvu.cc:1365
+#: pdf2djvu.cc:1364
 msgid "Unexpected subsampled bitmap width"
 msgstr "Nieoczekiwana szerokość podpróbkowanej bitmapy"
 
-#: pdf2djvu.cc:1367
+#: pdf2djvu.cc:1366
 msgid "Unexpected subsampled bitmap height"
 msgstr "Nieoczekiwana wysokość podpróbkowanej bitmapy"
 
-#: pdf2djvu.cc:1369
+#: pdf2djvu.cc:1368
 msgid "storing background image"
 msgstr "zapisywanie obrazu tła"
 
-#: pdf2djvu.cc:1385
+#: pdf2djvu.cc:1384
 msgid "storing dummy background image"
 msgstr "zapisywanie pustego obrazu tła"
 
-#: pdf2djvu.cc:1394
+#: pdf2djvu.cc:1393
 msgid "storing text layer"
 msgstr "zapisywanie warstwy tekstowej"
 
-#: pdf2djvu.cc:1403
+#: pdf2djvu.cc:1402
 msgid "encoding layers with `csepdjvu`"
 msgstr "kodowanie warstw za pomocą `csepdjvu`"
 
-#: pdf2djvu.cc:1425
+#: pdf2djvu.cc:1424
 msgid "recovering images with `djvuextract`"
 msgstr "wyodrębnianie obrazów za pomocą `djvuextract`"
 
-#: pdf2djvu.cc:1438
+#: pdf2djvu.cc:1437
 msgid "encoding monochrome image with `cjb2`"
 msgstr "kodowanie obrazu monochromatycznego za pomocą `cjb2`"
 
-#: pdf2djvu.cc:1453
+#: pdf2djvu.cc:1452
 msgid "creating new background image with `c44`"
 msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
 
-#: pdf2djvu.cc:1470
+#: pdf2djvu.cc:1469
 msgid "recovering image chunks with `djvuextract`"
 msgstr "wyodrębnianie kawałków obrazu za pomocą `djvuextract`"
 
-#: pdf2djvu.cc:1478
+#: pdf2djvu.cc:1477
 msgid "recovering text with `djvused`"
 msgstr "wyodrębnianie tekstu za pomocą `djvused`"
 
-#: pdf2djvu.cc:1484
+#: pdf2djvu.cc:1483
 msgid "re-assembling page with `djvumake`"
 msgstr "składanie strony za pomocą `djvumake`"
 
-#: pdf2djvu.cc:1500
+#: pdf2djvu.cc:1499
 msgid "extracting annotations"
 msgstr "wyodrębnianie adnotacji"
 
-#: pdf2djvu.cc:1510
+#: pdf2djvu.cc:1509
 msgid "adding non-raster data with `djvused`"
 msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
 
-#: pdf2djvu.cc:1518
+#: pdf2djvu.cc:1517
 #, c-format
 msgid "%zu bytes out"
 msgid_plural "%zu bytes out"
@@ -344,30 +344,30 @@ msgstr[0] "%zu bajt wyjściowy"
 msgstr[1] "%zu bajty wyjściowe"
 msgstr[2] "%zu bajtów wyjściowych"
 
-#: pdf2djvu.cc:1530
+#: pdf2djvu.cc:1529
 msgid "extracting XMP metadata"
 msgstr "wyodrębnianie metadanych XMP"
 
-#: pdf2djvu.cc:1549
+#: pdf2djvu.cc:1548
 msgid "no XMP metadata"
 msgstr "brak metadanych XMP"
 
-#: pdf2djvu.cc:1553
+#: pdf2djvu.cc:1552
 msgid "extracting document-information metadata"
 msgstr "wyodrębnianie metadanych dokumentu"
 
-#: pdf2djvu.cc:1564
+#: pdf2djvu.cc:1563
 msgid "extracting document outline"
 msgstr "wyodrębnianie konspektu dokumentu"
 
-#: pdf2djvu.cc:1600
+#: pdf2djvu.cc:1605
 #, c-format
-msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
+msgid "%'.3f bits/pixel; %'.3f:1, %'.2f%% saved, %zu bytes in, %zu bytes out"
 msgstr ""
-"%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
-"wyjściowych"
+"%'.3f bitów/piksel; %'.3f:1, %'.2f%% zysku, %zu bajtów wejściowych, %zu "
+"bajtów wyjściowych"
 
-#: pdf2djvu.cc:1618
+#: pdf2djvu.cc:1623
 #, c-format
 msgid "I/O error (%s)"
 msgstr "Błąd We/Wy (%s)"
@@ -576,7 +576,7 @@ msgstr "Błędny lub niepełny znak wielobajtowy"
 msgid "possibly memory allocation error"
 msgstr "prawdopodobnie błąd przydziału pamięci"
 
-#: system.cc:970
+#: system.cc:964
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
 
