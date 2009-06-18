@@ -930,9 +930,19 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
   return path;
 }
 
+#if defined(va_copy)
+#elif defined(__va_copy)
+#define va_copy __va_copy
+#else
+#define va_copy(dest, src) memcpy((dest), (src), sizeof (va_list))
+#endif
+
 std::string string_vprintf(const char *message, va_list args)
 {
-  int length = vsnprintf(NULL, 0, message, args);
+  va_list args_copy;
+  va_copy(args_copy, args);
+  int length = vsnprintf(NULL, 0, message, args_copy);
+  va_end(args_copy);
   assert(length >= 0);
   if (length < 0)
     throw_posix_error("vsnprintf");
