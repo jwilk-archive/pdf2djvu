@@ -32,7 +32,7 @@
 static void poppler_error_handler(int pos, char *message, va_list args)
 {
   std::string format;
-  std::string expanded_message = string_printf(message, args);
+  std::string expanded_message = string_vprintf(message, args);
   const char *c_message = expanded_message.c_str();
   if (pos >= 0)
   {
