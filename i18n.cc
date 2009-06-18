@@ -39,7 +39,7 @@ void i18n::setup_locale()
   /* Deliberately ignore errors. */
 }
 
-void i18n::setup()
+void i18n::setup(const char *argv0)
 {
   i18n::setup_locale();
 }
