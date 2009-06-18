@@ -160,6 +160,14 @@ cd "$psrc"
 sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.in
 sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
 sed -i -e '/^extern/d; /^"C"$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$//' configure
+sed -i -e 's/%zu/%Iu/g' *.cc *.hh
+cd po
+for file in *.po
+do
+  language="${file%.po}"
+  sed -e 's/%zu/%Iu/g' < "$language.po" | msgfmt - -o "$language.mo"
+done
+cd ..
 ./configure --host="$host" --prefix="$usr"
 make djvulibre_bindir=. localedir=locale
 make install
