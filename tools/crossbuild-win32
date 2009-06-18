@@ -290,8 +290,8 @@ DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-jpeg*.dll
-=========
+jpeg\\*.dll
+===========
 This software is copyright © 1991-1998, Thomas G. Lane.
 All Rights Reserved except as specified below.
 
