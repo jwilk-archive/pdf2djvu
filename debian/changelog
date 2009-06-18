@@ -1,3 +1,9 @@
+pdf2djvu (0.5.10) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Thu, 18 Jun 2009 23:56:35 +0200
+
 pdf2djvu (0.5.9) unstable; urgency=low
 
   * Add the Polish translation.
