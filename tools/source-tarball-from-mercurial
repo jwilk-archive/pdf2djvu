@@ -36,6 +36,13 @@ cd ..
 # Build the manual page:
 make -C "pdf2djvu-$version/doc/"
 
+# Build translations:
+for po in "pdf2djvu-$version/po/"*.po
+do
+  mo=`printf '%s' "$po" | sed -e 's/[.]po$/.mo/'`
+  msgfmt "$po" -o "$mo"
+done
+
 # Tarball with source + Debian stuff:
 tar $tarflags -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
 
