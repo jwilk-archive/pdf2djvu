@@ -37,11 +37,13 @@ cd ..
 make -C "pdf2djvu-$version/doc/"
 
 # Build translations:
-for po in "pdf2djvu-$version/po/"*.po
+cd "pdf2djvu-$version/po/"
+for file in *.po
 do
-  mo=`printf '%s' "$po" | sed -e 's/[.]po$/.mo/'`
-  msgfmt "$po" -o "$mo"
+  language="${file%.po}"
+  msgfmt "$language.po" -o "$language.mo"
 done
+cd ../..
 
 # Tarball with source + Debian stuff:
 tar $tarflags -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
