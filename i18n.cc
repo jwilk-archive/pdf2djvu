@@ -9,6 +9,7 @@
 
 #include "i18n.hh"
 #include "paths.hh"
+#include "system.hh"
 
 #ifdef ENABLE_NLS
 
@@ -18,10 +19,13 @@ void i18n::setup_locale()
   /* Deliberately ignore errors. */
 }
 
-void i18n::setup()
+void i18n::setup(const char *argv0)
 {
+  std::string argv0_dir_name, argv0_file_name;
+  split_path(argv0, argv0_dir_name, argv0_file_name);
+  std::string localedir = absolute_path(paths::localedir, argv0_dir_name);
   i18n::setup_locale();
-  bindtextdomain(PACKAGE_NAME, paths::localedir);
+  bindtextdomain(PACKAGE_NAME, localedir.c_str());
   /* Deliberately ignore errors. */
   textdomain(PACKAGE_NAME);
   /* Deliberately ignore errors. */

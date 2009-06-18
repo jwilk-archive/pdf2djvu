@@ -1615,7 +1615,7 @@ static int xmain(int argc, char * const argv[])
 int main(int argc, char * const argv[])
 try
 {
-  i18n::setup();
+  i18n::setup(argv[0]);
   xmain(argc, argv);
 }
 catch (std::ios_base::failure &ex)

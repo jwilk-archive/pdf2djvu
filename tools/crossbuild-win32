@@ -169,7 +169,7 @@ do
 done
 cd ..
 ./configure --host="$host" --prefix="$usr"
-make djvulibre_bindir=. localedir=locale
+make djvulibre_bindir=. localedir=./locale
 make install
 
 # Prepare the zipball contents:

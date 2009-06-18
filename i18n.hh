@@ -14,7 +14,7 @@ namespace i18n
 {
 
   void setup_locale();
-  void setup();
+  void setup(const char *argv0);
 }
 
 static inline void N_(const char *message_id)
