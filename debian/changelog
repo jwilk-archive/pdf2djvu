@@ -1,8 +1,9 @@
-pdf2djvu (0.5.9) UNRELEASED; urgency=low
+pdf2djvu (0.5.9) unstable; urgency=low
 
-  * 
+  * Add the Polish translation.
+  * Respect LC_NUMERIC locale settings.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Tue, 19 May 2009 11:11:45 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Thu, 18 Jun 2009 23:20:32 +0200
 
 pdf2djvu (0.5.8) unstable; urgency=low
 
