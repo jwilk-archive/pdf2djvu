@@ -24,7 +24,11 @@ mv pdf2djvu "pdf2djvu-$version"
 
 # Autoconf & company:
 cd "pdf2djvu-$version"
-cp /usr/share/automake*/install-sh tools/
+for file in install-sh config.sub config.guess
+do
+  cp /usr/share/automake*/$file tools/
+done
+cp /usr/share/gettext/config.rpath tools/
 autoreconf --verbose
 rm -Rf *.cache
 cd ..
