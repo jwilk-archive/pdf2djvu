@@ -1602,7 +1602,7 @@ static int xmain(int argc, char * const argv[])
     debug(0)--;
     debug(1) 
       << string_printf(
-           _("%'.3f bits/pixel; %'.3f:1, %'.2f%% saved, %zu bytes in, %zu bytes out"),
+           _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"),
            bpp, ratio, percent_saved, pdf_size, djvu_size
          )
       << std::endl;
