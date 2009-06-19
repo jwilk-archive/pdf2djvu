@@ -5,6 +5,7 @@ Source: http://pdf2djvu.googlecode.com/
 
 Files: *
 Copyright: 2007, 2008, 2009, Jakub Wilk <ubanus@users.sf.net>
+           2009, Mateusz Turcza <mturcza@mimuw.edu.pl>
 License: GPL-2
  On Debian systems, the complete text of the GNU General Public License
  version 2 can be found in the /usr/share/common-licenses/GPL-2 file.
