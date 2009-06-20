@@ -1,625 +1,625 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE refentry PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.docbook.org/xml/4.5/docbookx.dtd' 
 [
-	<!ENTITY p 'pdf2djvu'>
-	<!ENTITY version '0.5.10'>
+    <!ENTITY p 'pdf2djvu'>
+    <!ENTITY version '0.5.10'>
 ]>
 
 <refentry>
 
 <refentryinfo>
-	<title>&p; manual</title>
-	<productname>&p;</productname>
-	<author>
-		<firstname>Jakub</firstname> <surname>Wilk</surname>
-		<affiliation>
-			<address>
-				<email>ubanus@users.sf.net</email>
-			</address>
-		</affiliation>
-	</author>
-	<copyright>
-		<year>2007</year>
-		<year>2008</year>
-		<year>2009</year>
-		<holder>Jakub Wilk</holder>
-	</copyright>
+    <title>&p; manual</title>
+    <productname>&p;</productname>
+    <author>
+        <firstname>Jakub</firstname> <surname>Wilk</surname>
+        <affiliation>
+            <address>
+                <email>ubanus@users.sf.net</email>
+            </address>
+        </affiliation>
+    </author>
+    <copyright>
+        <year>2007</year>
+        <year>2008</year>
+        <year>2009</year>
+        <holder>Jakub Wilk</holder>
+    </copyright>
 </refentryinfo>
 
 <refmeta>
-	<refentrytitle>&p;</refentrytitle>
-	<manvolnum>1</manvolnum>
-	<refmiscinfo class='version'>&version;</refmiscinfo>
+    <refentrytitle>&p;</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo class='version'>&version;</refmiscinfo>
 </refmeta>
 
 <refnamediv>
-	<refname>&p;</refname>
-	<refpurpose>creates DjVu files from PDF files</refpurpose>
+    <refname>&p;</refname>
+    <refpurpose>creates DjVu files from PDF files</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-	<cmdsynopsis>
-		<command>&p;</command>
-		<arg choice='opt'>
-			<group choice='req'>
-				<arg choice='plain'><option>-o</option></arg>
-				<arg choice='plain'><option>--output</option></arg>
-			</group>
-			<arg choice='plain'><replaceable>output-djvu-file</replaceable></arg>
-		</arg>
-		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
-		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
-	</cmdsynopsis>
-	<cmdsynopsis>
-		<command>&p;</command>
-		<arg choice='plain'>
-			<group choice='req'>
-				<arg choice='plain'><option>-i</option></arg>
-				<arg choice='plain'><option>--indirect</option></arg>
-			</group>
-			<arg choice='plain'><replaceable>index-djvu-file</replaceable></arg>
-		</arg>
-		<arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
-		<arg choice='plain'><replaceable>pdf-file</replaceable></arg>
-	</cmdsynopsis>
-	<cmdsynopsis>
-		<command>&p;</command>
-		<group choice='req'>
-			<arg choice='plain'><option>--version</option></arg>
-			<arg choice='plain'><option>--help</option></arg>
-			<arg choice='plain'><option>-h</option></arg>
-		</group>
-	</cmdsynopsis>
+    <cmdsynopsis>
+        <command>&p;</command>
+        <arg choice='opt'>
+            <group choice='req'>
+                <arg choice='plain'><option>-o</option></arg>
+                <arg choice='plain'><option>--output</option></arg>
+            </group>
+            <arg choice='plain'><replaceable>output-djvu-file</replaceable></arg>
+        </arg>
+        <arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
+        <arg choice='plain'><replaceable>pdf-file</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+        <command>&p;</command>
+        <arg choice='plain'>
+            <group choice='req'>
+                <arg choice='plain'><option>-i</option></arg>
+                <arg choice='plain'><option>--indirect</option></arg>
+            </group>
+            <arg choice='plain'><replaceable>index-djvu-file</replaceable></arg>
+        </arg>
+        <arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
+        <arg choice='plain'><replaceable>pdf-file</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+        <command>&p;</command>
+        <group choice='req'>
+            <arg choice='plain'><option>--version</option></arg>
+            <arg choice='plain'><option>--help</option></arg>
+            <arg choice='plain'><option>-h</option></arg>
+        </group>
+    </cmdsynopsis>
 </refsynopsisdiv>
 
 <refsection>
-	<title>Description</title>
-	<para>
-		This program creates a DjVu file from the Portable Document Format file
-		<filename><replaceable>pdf-file</replaceable></filename>.
-	</para>
+    <title>Description</title>
+    <para>
+        This program creates a DjVu file from the Portable Document Format file
+        <filename><replaceable>pdf-file</replaceable></filename>.
+    </para>
 </refsection>
 
 <refsection>
-	<title>Options</title>
-	<para>
-		<command>&p;</command> accepts the following options:
-	</para>
-	<refsection>
-		<title>Document type, file names</title>
-		<variablelist>
-		<varlistentry>
-			<term><option>-o</option></term>
-			<term><option>--output=<filename><replaceable>output-djvu-file</replaceable></filename></option></term>
-			<listitem>
-				<para>
-					Generate a bundled multi-page document. Write the file into
-					<filename><replaceable>output-djvu-file</replaceable></filename> instead of standard output.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>-i</option></term>
-			<term><option>--indirect=<filename><replaceable>index-djvu-file</replaceable></filename></option></term>
-			<listitem>
-				<para>
-					Generate an indirect multi-page document. Use
-					<filename><replaceable>index-djvu-file</replaceable></filename> as the index file name; put the
-					component files into the same directory. The directory must exist and be writable.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--pageid-template=<replaceable>template</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies the naming scheme for page identifiers.
-					Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote>
-					section for the template language description.
-				</para>
-				<para>
-					The default template is <quote><literal>p{page:04*}.djvu</literal></quote>.
-				</para>
-				<para>
-					For portability reasons, page identifiers:
-					<itemizedlist>
-						<listitem>
-							<para>
-								must consist only of lowercase ASCII letters, digits, <literal>_</literal>,
-								<literal>+</literal>, <literal>-</literal> and dot,
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								cannot start with a dot,
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								cannot contain two consecutive dots,
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								must end with the <literal>.djvu</literal> or the <literal>.djv</literal> extension.
-							</para>
-						</listitem>
-					</itemizedlist>
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--pageid-prefix=<replaceable>prefix</replaceable></option></term>
-			<listitem>
-				<para>
-					Equivalent to
-					<quote><literal>--pageid-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--page-title-template=<replaceable>template</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies the template for page titles.
-					Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote>
-					section for the template language description.
-				</para>
-				<para>
-					The default is to set no page titles.
-				</para>
-			</listitem>
-		</varlistentry>
-		</variablelist>
-	</refsection>
-	<refsection>
-		<title>Resolution, page size</title>
-		<variablelist>
-		<varlistentry>
-			<term><option>-d</option></term>
-			<term><option>--dpi=<replaceable>resolution</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies the desired resolution to <replaceable>resolution</replaceable> dots per inch. The default
-					is 300 dpi. The allowed range is: 72 ≤ <replaceable>resolution</replaceable> ≤ 6000.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--media-box</option></term>
-			<listitem>
-				<para>
-					Use <firstterm>MediaBox</firstterm> to determine page size. <firstterm>CropBox</firstterm> is used by
-					default.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--page-size=<replaceable>width</replaceable>x<replaceable>height</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies the preferred page size to <replaceable>width</replaceable> pixels ×
-					<replaceable>height</replaceable> pixels. The actual page size may be altered in order to
-					respect aspect ratio and DjVu limitations on resolution. (This option takes precedence over
-					<option>-d</option>/<option>--dpi</option>.)
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--guess-dpi</option></term>
-			<listitem>
-				<para>
-					Try to guess native resolution by inspecting embedded images. Use with care.
-				</para>
-			</listitem>
-		</varlistentry>
-		</variablelist>
-	</refsection>
-	<refsection>
-		<title>Image quality</title>
-		<variablelist>
-		<varlistentry>
-			<term><option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>+<replaceable>n</replaceable></option></term>
-			<term><option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</replaceable>,<replaceable>n</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies the encoding quality of the IW44 background layer. This option is similar to
-					the <option>-slice</option> option of <command>c44</command>. Consult the 
-					<citerefentry>
-						<refentrytitle>c44</refentrytitle>
-						<manvolnum>1</manvolnum>
-					</citerefentry>
-					manual page for details. The default is <literal>72+11+10+10</literal>.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--bg-subsample=<replaceable>n</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies the background subsampling ratio. The default is 3. Valid values are integers between 1
-					and 12, inclusive.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--fg-colors=default</option></term>
-			<listitem>
-				<para>
-					Try to preserve all the foreground layer colors.
-					This is the default.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--fg-colors=web</option></term>
-			<listitem>
-				<para>
-					Reduce foreground layer colors to the web palette (216 colors).
-					This option is not recommended.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--fg-colors=<replaceable>n</replaceable></option></term>
-			<listitem>
-				<para>
-					Use GraphicsMagick to reduce number of distinct colors in the foreground layer to
-					<replaceable>n</replaceable>. Valid values are integers between 1 and 4080.
-					This option is not recommended.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--monochrome</option></term>
-			<listitem>
-				<para>
-					Render pages as monochrome bitmaps. With this option,
-					<option>--bg-<replaceable>…</replaceable></option> and
-					<option>--fg-<replaceable>…</replaceable></option>
-					options are not respected.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--loss-level=N</option></term>
-			<listitem>
-				<para>
-					Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).
-					Valid values are integers between 0 and 200, inclusive. This option is similar to
-					the <option>-losslevel</option> option of <command>cjb2</command>; consult the 
-					<citerefentry>
-						<refentrytitle>cjb2</refentrytitle>
-						<manvolnum>1</manvolnum>
-					</citerefentry>
-					manual page for details. 
-					This option is respected only along with the <option>--monochrome</option> option.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--lossy</option></term>
-			<listitem>
-				<para>
-					Synonym for <option>--loss-level=100</option>.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--anti-alias</option></term>
-			<listitem>
-				<para>
-					Enable font and vector anti-aliasing.
-					This option is not recommended.
-				</para>
-			</listitem>
-		</varlistentry>
-		</variablelist>
-	</refsection>
-	<refsection>
-		<title>Extraction</title>
-		<variablelist>
-		<varlistentry>
-			<term><option>--no-metadata</option></term>
-			<listitem>
-				<para>
-					Don't extract the metadata.
-				</para>
-				<para>
-					By default:
-					<itemizedlist>
-						<listitem>
-							<para>XMP metadata is extracted.</para>
-						</listitem>
-						<listitem>
-							<para>
-								The following entries of the document information dictionary are extracted:
-								<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>,
-								<literal>Creator</literal>, <literal>Producer</literal>,
-								<literal>CreationDate</literal>, <literal>ModDate</literal>.
-								Timestamps are formatted according to
-								<ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time
-								components separated by a single space.
-							</para>
-						</listitem>
-					</itemizedlist>
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--verbatim-metadata</option></term>
-			<listitem>
-				<para>
-					Keep the original metadata intact.
-				</para>
-				<para>
-					By default, the <literal>Producer</literal> entry is extended by the &p; version information.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--no-outline</option></term>
-			<listitem>
-				<para>
-					Don't extract the document outline.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--hyperlinks=border-avis</option></term>
-			<listitem>
-				<para>
-					Make hyperlink borders always visible.
-				</para>
-				<para>
-					By default, a hyperlink border is visible only when the mouse is over the hyperlink.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option></term>
-			<listitem>
-				<para>
-					Force the specified border color for hyperlinks
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--no-hyperlinks</option></term>
-			<term><option>--hyperlinks=none</option></term>
-			<listitem>
-				<para>
-					Don't extract hyperlinks.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--no-text</option></term>
-			<listitem>
-				<para>
-					Don't extract the text.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry><term>
-			<option>--words</option></term>
-			<listitem>
-				<para>
-					Extract the text. Record the location of every word. This is the default.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--lines</option></term>
-			<listitem>
-				<para>
-					Extract the text. Record the location of every line, rather that every word.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--crop-text</option></term>
-			<listitem>
-				<para>
-					Extract no text outside the page boundary.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--no-nfkc</option></term>
-			<listitem>
-				<para>
-					Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize the text.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--pages=<replaceable>page-range</replaceable></option></term>
-			<listitem>
-				<para>
-					Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of
-					sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous
-					range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1.
-				</para>
-				<para>
-					The default is to convert all pages.
-				</para>
-			</listitem>
-		</varlistentry>
-		</variablelist>
-	</refsection>
-	<refsection>
-		<title>Verbosity, help</title>
-		<variablelist>
-		<varlistentry>
-			<term><option>-v</option></term>
-			<term><option>--verbose</option></term>
-			<listitem>
-				<para>
-					Display more informational messages while converting the file.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>-q</option></term>
-			<term><option>--quiet</option></term>
-			<listitem>
-				<para>
-					Don't display informational messages while converting the file.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>--version</option></term>
-			<listitem>
-				<para>Output version information and exit.</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term><option>-h</option></term>
-			<term><option>--help</option></term>
-			<listitem>
-				<para>Display help and exit.</para>
-			</listitem>
-		</varlistentry>
-		</variablelist>
-	</refsection>
+    <title>Options</title>
+    <para>
+        <command>&p;</command> accepts the following options:
+    </para>
+    <refsection>
+        <title>Document type, file names</title>
+        <variablelist>
+        <varlistentry>
+            <term><option>-o</option></term>
+            <term><option>--output=<filename><replaceable>output-djvu-file</replaceable></filename></option></term>
+            <listitem>
+                <para>
+                    Generate a bundled multi-page document. Write the file into
+                    <filename><replaceable>output-djvu-file</replaceable></filename> instead of standard output.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-i</option></term>
+            <term><option>--indirect=<filename><replaceable>index-djvu-file</replaceable></filename></option></term>
+            <listitem>
+                <para>
+                    Generate an indirect multi-page document. Use
+                    <filename><replaceable>index-djvu-file</replaceable></filename> as the index file name; put the
+                    component files into the same directory. The directory must exist and be writable.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--pageid-template=<replaceable>template</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies the naming scheme for page identifiers.
+                    Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote>
+                    section for the template language description.
+                </para>
+                <para>
+                    The default template is <quote><literal>p{page:04*}.djvu</literal></quote>.
+                </para>
+                <para>
+                    For portability reasons, page identifiers:
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                must consist only of lowercase ASCII letters, digits, <literal>_</literal>,
+                                <literal>+</literal>, <literal>-</literal> and dot,
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                cannot start with a dot,
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                cannot contain two consecutive dots,
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                must end with the <literal>.djvu</literal> or the <literal>.djv</literal> extension.
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--pageid-prefix=<replaceable>prefix</replaceable></option></term>
+            <listitem>
+                <para>
+                    Equivalent to
+                    <quote><literal>--pageid-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--page-title-template=<replaceable>template</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies the template for page titles.
+                    Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote>
+                    section for the template language description.
+                </para>
+                <para>
+                    The default is to set no page titles.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Resolution, page size</title>
+        <variablelist>
+        <varlistentry>
+            <term><option>-d</option></term>
+            <term><option>--dpi=<replaceable>resolution</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies the desired resolution to <replaceable>resolution</replaceable> dots per inch. The default
+                    is 300 dpi. The allowed range is: 72 ≤ <replaceable>resolution</replaceable> ≤ 6000.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--media-box</option></term>
+            <listitem>
+                <para>
+                    Use <firstterm>MediaBox</firstterm> to determine page size. <firstterm>CropBox</firstterm> is used by
+                    default.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--page-size=<replaceable>width</replaceable>x<replaceable>height</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies the preferred page size to <replaceable>width</replaceable> pixels ×
+                    <replaceable>height</replaceable> pixels. The actual page size may be altered in order to
+                    respect aspect ratio and DjVu limitations on resolution. (This option takes precedence over
+                    <option>-d</option>/<option>--dpi</option>.)
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--guess-dpi</option></term>
+            <listitem>
+                <para>
+                    Try to guess native resolution by inspecting embedded images. Use with care.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Image quality</title>
+        <variablelist>
+        <varlistentry>
+            <term><option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>+<replaceable>n</replaceable></option></term>
+            <term><option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</replaceable>,<replaceable>n</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies the encoding quality of the IW44 background layer. This option is similar to
+                    the <option>-slice</option> option of <command>c44</command>. Consult the 
+                    <citerefentry>
+                        <refentrytitle>c44</refentrytitle>
+                        <manvolnum>1</manvolnum>
+                    </citerefentry>
+                    manual page for details. The default is <literal>72+11+10+10</literal>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--bg-subsample=<replaceable>n</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies the background subsampling ratio. The default is 3. Valid values are integers between 1
+                    and 12, inclusive.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--fg-colors=default</option></term>
+            <listitem>
+                <para>
+                    Try to preserve all the foreground layer colors.
+                    This is the default.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--fg-colors=web</option></term>
+            <listitem>
+                <para>
+                    Reduce foreground layer colors to the web palette (216 colors).
+                    This option is not recommended.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--fg-colors=<replaceable>n</replaceable></option></term>
+            <listitem>
+                <para>
+                    Use GraphicsMagick to reduce number of distinct colors in the foreground layer to
+                    <replaceable>n</replaceable>. Valid values are integers between 1 and 4080.
+                    This option is not recommended.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--monochrome</option></term>
+            <listitem>
+                <para>
+                    Render pages as monochrome bitmaps. With this option,
+                    <option>--bg-<replaceable>…</replaceable></option> and
+                    <option>--fg-<replaceable>…</replaceable></option>
+                    options are not respected.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--loss-level=N</option></term>
+            <listitem>
+                <para>
+                    Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).
+                    Valid values are integers between 0 and 200, inclusive. This option is similar to
+                    the <option>-losslevel</option> option of <command>cjb2</command>; consult the 
+                    <citerefentry>
+                        <refentrytitle>cjb2</refentrytitle>
+                        <manvolnum>1</manvolnum>
+                    </citerefentry>
+                    manual page for details. 
+                    This option is respected only along with the <option>--monochrome</option> option.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--lossy</option></term>
+            <listitem>
+                <para>
+                    Synonym for <option>--loss-level=100</option>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--anti-alias</option></term>
+            <listitem>
+                <para>
+                    Enable font and vector anti-aliasing.
+                    This option is not recommended.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Extraction</title>
+        <variablelist>
+        <varlistentry>
+            <term><option>--no-metadata</option></term>
+            <listitem>
+                <para>
+                    Don't extract the metadata.
+                </para>
+                <para>
+                    By default:
+                    <itemizedlist>
+                        <listitem>
+                            <para>XMP metadata is extracted.</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                The following entries of the document information dictionary are extracted:
+                                <literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>,
+                                <literal>Creator</literal>, <literal>Producer</literal>,
+                                <literal>CreationDate</literal>, <literal>ModDate</literal>.
+                                Timestamps are formatted according to
+                                <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time
+                                components separated by a single space.
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--verbatim-metadata</option></term>
+            <listitem>
+                <para>
+                    Keep the original metadata intact.
+                </para>
+                <para>
+                    By default, the <literal>Producer</literal> entry is extended by the &p; version information.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--no-outline</option></term>
+            <listitem>
+                <para>
+                    Don't extract the document outline.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--hyperlinks=border-avis</option></term>
+            <listitem>
+                <para>
+                    Make hyperlink borders always visible.
+                </para>
+                <para>
+                    By default, a hyperlink border is visible only when the mouse is over the hyperlink.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option></term>
+            <listitem>
+                <para>
+                    Force the specified border color for hyperlinks
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--no-hyperlinks</option></term>
+            <term><option>--hyperlinks=none</option></term>
+            <listitem>
+                <para>
+                    Don't extract hyperlinks.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--no-text</option></term>
+            <listitem>
+                <para>
+                    Don't extract the text.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry><term>
+            <option>--words</option></term>
+            <listitem>
+                <para>
+                    Extract the text. Record the location of every word. This is the default.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--lines</option></term>
+            <listitem>
+                <para>
+                    Extract the text. Record the location of every line, rather that every word.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--crop-text</option></term>
+            <listitem>
+                <para>
+                    Extract no text outside the page boundary.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--no-nfkc</option></term>
+            <listitem>
+                <para>
+                    Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize the text.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--pages=<replaceable>page-range</replaceable></option></term>
+            <listitem>
+                <para>
+                    Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of
+                    sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous
+                    range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1.
+                </para>
+                <para>
+                    The default is to convert all pages.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Verbosity, help</title>
+        <variablelist>
+        <varlistentry>
+            <term><option>-v</option></term>
+            <term><option>--verbose</option></term>
+            <listitem>
+                <para>
+                    Display more informational messages while converting the file.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-q</option></term>
+            <term><option>--quiet</option></term>
+            <listitem>
+                <para>
+                    Don't display informational messages while converting the file.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>--version</option></term>
+            <listitem>
+                <para>Output version information and exit.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-h</option></term>
+            <term><option>--help</option></term>
+            <listitem>
+                <para>Display help and exit.</para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsection>
 </refsection>
 
 <refsection id='template-language'>
-	<title id='template-language.title'>Template language</title>
-	<refsection>
-		<title>Template syntax</title>
-		<para>
-			The template language is roughly modelled on the <ulink
-			url='http://docs.python.org/library/string.html#format-string-syntax'>Python
-			string formatting syntax</ulink>.
-		</para>
-		<para>
-			A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces
-			<literal>{</literal><literal>}</literal>.
-			Fields are replaced with appropriately formatted values when the template is evaluated.
-			Moreover,
-			<literal>{{</literal> is replaced with a single <literal>{</literal>
-			and <literal>}}</literal> is replaced with a single <literal>}</literal>.
-		</para>
-	</refsection>
-	<refsection>
-		<title>Field syntax</title>
-		<para>
-			Each field consist of a variable name, optionally followed by a shift, optionally followed by a format
-			specification.
-		</para>
-		<para>
-			The shift is a signed (i.e. starting with a <literal>+</literal> or <literal>-</literal> character) integer.
-		</para>
-		<para>
-			The format specification consist of a colon, followed by a width specification.
-		</para>
-		<para>
-			The width specification is a decimal integer defining the minimum field width. If not specified, then the
-			field width will be determined by the content. Preceding the width specification with a zero
-			(<literal>0</literal>) character, this enables zero-padding.
-		</para>
-		<para>
-			The width specification is optionally followed by an asterisk (<literal>*</literal>) character, which
-			increases the minimum field width to the width of the longest possible content of the variable.
-		</para>
-	</refsection>
-	<refsection>
-		<title>Available variables</title>
-		<variablelist>
-			<varlistentry>
-				<term><varname>page</varname></term>
-				<term><varname>spage</varname></term>
-				<listitem>
-					<para>Page number in the PDF document.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term><varname>dpage</varname></term>
-				<listitem>
-					<para>Page number in the DjVu document.</para>
-				</listitem>
-			</varlistentry>
-		</variablelist>
-	</refsection>
+    <title id='template-language.title'>Template language</title>
+    <refsection>
+        <title>Template syntax</title>
+        <para>
+            The template language is roughly modelled on the <ulink
+            url='http://docs.python.org/library/string.html#format-string-syntax'>Python
+            string formatting syntax</ulink>.
+        </para>
+        <para>
+            A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces
+            <literal>{</literal><literal>}</literal>.
+            Fields are replaced with appropriately formatted values when the template is evaluated.
+            Moreover,
+            <literal>{{</literal> is replaced with a single <literal>{</literal>
+            and <literal>}}</literal> is replaced with a single <literal>}</literal>.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Field syntax</title>
+        <para>
+            Each field consist of a variable name, optionally followed by a shift, optionally followed by a format
+            specification.
+        </para>
+        <para>
+            The shift is a signed (i.e. starting with a <literal>+</literal> or <literal>-</literal> character) integer.
+        </para>
+        <para>
+            The format specification consist of a colon, followed by a width specification.
+        </para>
+        <para>
+            The width specification is a decimal integer defining the minimum field width. If not specified, then the
+            field width will be determined by the content. Preceding the width specification with a zero
+            (<literal>0</literal>) character, this enables zero-padding.
+        </para>
+        <para>
+            The width specification is optionally followed by an asterisk (<literal>*</literal>) character, which
+            increases the minimum field width to the width of the longest possible content of the variable.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Available variables</title>
+        <variablelist>
+            <varlistentry>
+                <term><varname>page</varname></term>
+                <term><varname>spage</varname></term>
+                <listitem>
+                    <para>Page number in the PDF document.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><varname>dpage</varname></term>
+                <listitem>
+                    <para>Page number in the DjVu document.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
 </refsection>
 
 <refsection>
-	<title>Implementation details</title>
-	<refsection>
-		<title>Layer separation algorithm</title>
-		<para>
-			Unless the <option>--monochrome</option> option is on,
-			&p; uses the following naïve layer separation algorithm:
-			<orderedlist>
-				<listitem>
-					<para>
-						For each page, do the following:
-						<orderedlist>
-							<listitem>
-								<para>
-									Raster the page into a pixmap, in the usual manner.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Raster the page into another pixmap, omitting the following page elements:
-									<itemizedlist>
-										<listitem><para>text,</para></listitem>
-										<listitem><para>1 bit-per-pixel raster images,</para></listitem>
-										<listitem><para>vector elements (except fills of large areas).</para></listitem>
-									</itemizedlist>
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Compare both pixmaps, pixel by pixel:
-									<orderedlist>
-										<listitem>
-											<para>
-												If their colors match, classify the pixel as a part of the background layer.
-											</para>
-										</listitem>
-										<listitem>
-											<para>
-												Otherwise, classify the pixel as a part of the foreground layer.
-											</para>
-										</listitem>
-									</orderedlist>
-								</para>
-							</listitem>
-						</orderedlist>
-					</para>
-				</listitem>
-			</orderedlist>
-		</para>
-	</refsection>
+    <title>Implementation details</title>
+    <refsection>
+        <title>Layer separation algorithm</title>
+        <para>
+            Unless the <option>--monochrome</option> option is on,
+            &p; uses the following naïve layer separation algorithm:
+            <orderedlist>
+                <listitem>
+                    <para>
+                        For each page, do the following:
+                        <orderedlist>
+                            <listitem>
+                                <para>
+                                    Raster the page into a pixmap, in the usual manner.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Raster the page into another pixmap, omitting the following page elements:
+                                    <itemizedlist>
+                                        <listitem><para>text,</para></listitem>
+                                        <listitem><para>1 bit-per-pixel raster images,</para></listitem>
+                                        <listitem><para>vector elements (except fills of large areas).</para></listitem>
+                                    </itemizedlist>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Compare both pixmaps, pixel by pixel:
+                                    <orderedlist>
+                                        <listitem>
+                                            <para>
+                                                If their colors match, classify the pixel as a part of the background layer.
+                                            </para>
+                                        </listitem>
+                                        <listitem>
+                                            <para>
+                                                Otherwise, classify the pixel as a part of the foreground layer.
+                                            </para>
+                                        </listitem>
+                                    </orderedlist>
+                                </para>
+                            </listitem>
+                        </orderedlist>
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </refsection>
 </refsection>
 
 <refsection>
-	<title>Bug reports</title>
-	<para>
-		If you find a bug in &p;, please report it at <ulink
-		url='http://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>.
-	</para>
+    <title>Bug reports</title>
+    <para>
+        If you find a bug in &p;, please report it at <ulink
+        url='http://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>.
+    </para>
 </refsection>
 
 <refsection>
-	<title>See also</title>
-	<para>
-		<citerefentry>
-			<refentrytitle>djvudigital</refentrytitle>
-			<manvolnum>1</manvolnum>
-		</citerefentry>,
-		<citerefentry>
-			<refentrytitle>csepdjvu</refentrytitle>
-			<manvolnum>1</manvolnum>
-		</citerefentry>
-	</para>
+    <title>See also</title>
+    <para>
+        <citerefentry>
+            <refentrytitle>djvudigital</refentrytitle>
+            <manvolnum>1</manvolnum>
+        </citerefentry>,
+        <citerefentry>
+            <refentrytitle>csepdjvu</refentrytitle>
+            <manvolnum>1</manvolnum>
+        </citerefentry>
+    </para>
 </refsection>
 
 </refentry>
 
-<!-- vim:set ts=4 sw=4 tw=120: -->
+<!-- vim:set ts=4 sw=4 tw=120 et: -->
