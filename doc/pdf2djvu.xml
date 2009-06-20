@@ -507,14 +507,14 @@
     <refsection>
         <title>Field syntax</title>
         <para>
-            Each field consist of a variable name, optionally followed by a shift, optionally followed by a format
+            Each field consists of a variable name, optionally followed by a shift, optionally followed by a format
             specification.
         </para>
         <para>
             The shift is a signed (i.e. starting with a <literal>+</literal> or <literal>-</literal> character) integer.
         </para>
         <para>
-            The format specification consist of a colon, followed by a width specification.
+            The format specification consists of a colon, followed by a width specification.
         </para>
         <para>
             The width specification is a decimal integer defining the minimum field width. If not specified, then the
