@@ -1,12 +1,9 @@
-XSL = http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
-XMLLINT = /usr/bin/xmllint --valid --noout --nonet
-XSLTPROC = /usr/bin/xsltproc --nonet --param man.charmap.use.subset 0
+include Makefile.common
+
+XML_FILES = $(wildcard *.xml)
+MAN_FILES = $(XML_FILES:.xml=.1)
 
 .PHONY: all
-all: pdf2djvu.1
-
-%.1: %.xml
-	$(XMLLINT) $(<)
-	$(XSLTPROC) $(XSL) $(<)
+all: $(MAN_FILES)
 
 # vim:ts=4
