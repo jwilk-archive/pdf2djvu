@@ -282,7 +282,7 @@
             </listitem>
         </varlistentry>
         <varlistentry>
-            <term><option>--loss-level=N</option></term>
+            <term><option>--loss-level=<replaceable>n</replaceable></option></term>
             <listitem>
                 <para>
                     Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).
