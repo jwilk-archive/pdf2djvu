@@ -1,0 +1,29 @@
+# Package information:
+PACKAGE_NAME = @PACKAGE_NAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
+
+# Paths:
+srcdir = @top_srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+datarootdir = @datarootdir@
+mandir = @mandir@
+localedir = @localedir@
+djvulibre_bindir = @djvulibre_bindir@
+
+# Complier, etc.:
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@ @DJVULIBRE_CFLAGS@ @POPPLER_CFLAGS@ @GRAPHICSMAGICK_CFLAGS@
+LDFLAGS = @LDFLAGS@
+LDLIBS = @LIBS@ @DJVULIBRE_LIBS@ @POPPLER_LIBS@ @GRAPHICSMAGICK_LIBS@ @LIBINTL@
+
+# Utilitiles:
+INSTALL = @INSTALL@
+WINDRES = @WINDRES@
+MSGMERGE = @MSGMERGE@
+MSGFMT = @MSGFMT@
+XGETTEXT_HELPER = $(srcdir)/tools/generate-po-template
+XGETTEXT = $(XGETTEXT_HELPER) @XGETTEXT@
+

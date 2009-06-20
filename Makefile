@@ -1,17 +1,4 @@
-CXX = @CXX@
-CXXFLAGS = @CXXFLAGS@ @DJVULIBRE_CFLAGS@ @POPPLER_CFLAGS@ @GRAPHICSMAGICK_CFLAGS@
-LDFLAGS = @LDFLAGS@
-LDLIBS = @LIBS@ @DJVULIBRE_LIBS@ @POPPLER_LIBS@ @GRAPHICSMAGICK_LIBS@ @LIBINTL@
-
-INSTALL = @INSTALL@
-WINDRES = @WINDRES@
-prefix = @prefix@
-exec_prefix = @exec_prefix@
-bindir = @bindir@
-datarootdir = @datarootdir@
-mandir = @mandir@
-localedir = @localedir@
-djvulibre_bindir = @djvulibre_bindir@
+include Makefile.common
 
 .PHONY: all
 all: pdf2djvu

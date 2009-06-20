@@ -4,21 +4,13 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-PACKAGE_NAME = @PACKAGE_NAME@
-PACKAGE_VERSION = @PACKAGE_VERSION@
-PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
-
-srcdir = @top_srcdir@
+srcdir = ..
+include $(srcdir)/Makefile.common
 
 PO_FILES = $(wildcard *.po)
 MO_FILES = $(PO_FILES:.po=.mo)
 SOURCE_FILES = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
 
-MSGMERGE = @MSGMERGE@
-MSGFMT = @MSGFMT@
-
-XGETTEXT_HELPER = $(srcdir)/tools/generate-po-template
-XGETTEXT = $(XGETTEXT_HELPER) @XGETTEXT@
 XGETTEXT_OPTIONS = \
 	--package-name=$(PACKAGE_NAME) \
 	--package-version=$(PACKAGE_VERSION) \

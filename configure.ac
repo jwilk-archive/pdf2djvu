@@ -185,7 +185,7 @@ fi
 
 # Output files
 
-AC_CONFIG_FILES(Makefile po/Makefile)
+AC_CONFIG_FILES(Makefile.common)
 AC_CONFIG_HEADER(version.hh)
 AC_OUTPUT
 
