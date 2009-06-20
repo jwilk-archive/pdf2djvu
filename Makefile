@@ -1,4 +1,5 @@
-include Makefile.common
+srcdir = .
+include $(srcdir)/Makefile.common
 
 .PHONY: all
 all: pdf2djvu
