@@ -380,7 +380,7 @@
             <term><option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option></term>
             <listitem>
                 <para>
-                    Force the specified border color for hyperlinks
+                    Force the specified border color for hyperlinks.
                 </para>
             </listitem>
         </varlistentry>
