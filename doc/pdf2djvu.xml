@@ -519,7 +519,7 @@
         <para>
             The width specification is a decimal integer defining the minimum field width. If not specified, then the
             field width will be determined by the content. Preceding the width specification with a zero
-            (<literal>0</literal>) character, this enables zero-padding.
+            (<literal>0</literal>) character enables zero-padding.
         </para>
         <para>
             The width specification is optionally followed by an asterisk (<literal>*</literal>) character, which
