@@ -250,13 +250,13 @@ namespace pdf
   {
   protected:
     Unicode* data; 
-    int _length;
+    int int_length;
   public:
     explicit NFKC(Unicode *, int length);
     ~NFKC() throw ();
     size_t length() const
     {
-      return static_cast<size_t>(this->_length);
+      return static_cast<size_t>(this->int_length);
     }
     operator const Unicode*() const
     {

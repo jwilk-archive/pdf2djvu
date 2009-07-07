@@ -19,13 +19,13 @@ namespace pdf
     class Guess
     {
     protected:
-      double _min, _max;
+      double min_, max_;
     public:
       explicit Guess(double min, double max)
-      : _min(min), _max(max)
+      : min_(min), max_(max)
       { };
-      double min() const { return this->_min; }
-      double max() const { return this->_max; }
+      double min() const { return this->min_; }
+      double max() const { return this->max_; }
     };
 
     class NoGuess
@@ -34,8 +34,8 @@ namespace pdf
     class Guesser
     {
     protected:
-      void *_magic;
-      pdf::Document &_document;
+      void *magic;
+      pdf::Document &document;
     public:
       explicit Guesser(pdf::Document &document);
       ~Guesser();

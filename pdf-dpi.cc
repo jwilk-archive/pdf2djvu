@@ -13,8 +13,8 @@
 class DpiGuessDevice : public pdf::OutputDevice
 {
 protected:
-  double _min;
-  double _max;
+  double min_;
+  double max_;
   void process_image(pdf::gfx::State *state, int width, int height);
   virtual void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::Bool invert, pdf::Bool inline_image);
@@ -44,11 +44,11 @@ public:
   }
   void reset()
   {
-    this->_max = 0.0;
-    this->_min = std::numeric_limits<double>::infinity();
+    this->max_ = 0.0;
+    this->min_ = std::numeric_limits<double>::infinity();
   }
-  double min() const { return this->_min; }
-  double max() const { return this->_max; }
+  double min() const { return this->min_; }
+  double max() const { return this->max_; }
   virtual ~DpiGuessDevice()
   { }
 };
@@ -58,8 +58,8 @@ void DpiGuessDevice::process_image(pdf::gfx::State *state, int width, int height
   double *ctm = state->getCTM();
   double h_dpi = 72.0 * width / hypot(ctm[0], ctm[1]);
   double v_dpi = 72.0 * height / hypot(ctm[2], ctm[3]);
-  this->_min = std::min(this->_min, std::min(h_dpi, v_dpi));
-  this->_max = std::max(this->_max, std::max(h_dpi, v_dpi));
+  this->min_ = std::min(this->min_, std::min(h_dpi, v_dpi));
+  this->max_ = std::max(this->max_, std::max(h_dpi, v_dpi));
 }
 
 void DpiGuessDevice::drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
@@ -90,23 +90,23 @@ void DpiGuessDevice::drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *ob
 }
 
 pdf::dpi::Guesser::Guesser(pdf::Document &document)
-: _document(document)
+: document(document)
 {
   DpiGuessDevice *guess_device = new DpiGuessDevice();
-  this->_magic = guess_device;
+  this->magic = guess_device;
 }
 
 pdf::dpi::Guesser::~Guesser()
 {
-  DpiGuessDevice *guess_device = static_cast<DpiGuessDevice*>(this->_magic);
+  DpiGuessDevice *guess_device = static_cast<DpiGuessDevice*>(this->magic);
   delete guess_device;
 }
 
 pdf::dpi::Guess pdf::dpi::Guesser::operator[](int n)
 {
-  DpiGuessDevice *guess_device = static_cast<DpiGuessDevice*>(this->_magic);
+  DpiGuessDevice *guess_device = static_cast<DpiGuessDevice*>(this->magic);
   guess_device->reset();
-  this->_document.displayPages(guess_device, n, n, 72, 72, 0, true, false, false, false);
+  this->document.displayPages(guess_device, n, n, 72, 72, 0, true, false, false, false);
   double min = guess_device->min();
   double max = guess_device->max();
   if (max == 0.0)

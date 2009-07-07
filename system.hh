@@ -37,10 +37,10 @@ protected:
 class POSIXError : public OSError
 {
 protected:
-  static std::string __error_message__(const std::string &context);
+  static std::string error_message(const std::string &context);
 public:
   explicit POSIXError(const std::string &context) 
-  : OSError(__error_message__(context))
+  : OSError(error_message(context))
   { };
 };
 

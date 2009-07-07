@@ -466,9 +466,9 @@ namespace pdf
  */
 
 pdf::NFKC::NFKC(Unicode *unistr, int length) 
-: data(NULL), _length(0)
+: data(NULL), int_length(0)
 {
-  data = unicodeNormalizeNFKC(unistr, length, &this->_length, NULL);
+  data = unicodeNormalizeNFKC(unistr, length, &this->int_length, NULL);
 }
 
 pdf::NFKC::~NFKC() throw ()

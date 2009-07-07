@@ -46,7 +46,7 @@ static const char path_separator = '\\';
  * ==========================
  */
 
-std::string POSIXError::__error_message__(const std::string &context)
+std::string POSIXError::error_message(const std::string &context)
 {
   std::string message;
 #ifdef WIN32
@@ -147,14 +147,14 @@ static void warn_posix_error(const std::string &context)
 class Win32Error : public OSError
 {
 protected:
-  static std::string __error_message__(const std::string &context);
+  static std::string error_message(const std::string &context);
 public:
   explicit Win32Error(const std::string &context) 
-  : OSError(__error_message__(context))
+  : OSError(error_message(context))
   { };
 };
 
-std::string Win32Error::__error_message__(const std::string &context)
+std::string Win32Error::error_message(const std::string &context)
 {
   char *buffer;
   std::string message = context + ": ";
