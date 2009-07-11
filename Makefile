@@ -36,7 +36,7 @@ distclean: clean
 test: pdf2djvu
 	$(MAKE) -C tests/
 
-MAN_PAGES = $(wildcard doc/*.1)
+MAN_PAGES = $(wildcard doc/*.1 doc/po/*.1)
 MO_FILES = $(wildcard po/*.mo)
 
 .PHONY: install
@@ -44,8 +44,16 @@ install: all
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) pdf2djvu $(DESTDIR)$(bindir)
 ifneq ($(MAN_PAGES),)
-	$(INSTALL) -d $(DESTDIR)$(mandir)/man1/
-	$(INSTALL) -m 644 $(MAN_PAGES) $(DESTDIR)$(mandir)/man1/
+	for manpage in $(MAN_PAGES); \
+	do \
+		set -x; \
+		basename=`basename $$manpage`; \
+		suffix="$${basename#*.}"; \
+		locale="$${suffix%.*}"; \
+		[ $$locale = $$suffix ] && locale=; \
+		$(INSTALL) -d $(DESTDIR)$(mandir)/$$locale/man1/; \
+		$(INSTALL) -m 644 $$manpage $(DESTDIR)$(mandir)/$$locale/man1/"$${basename%%.*}.$${basename##*.}"; \
+	done
 endif
 ifneq ($(MO_FILES),)
 	for locale in $(basename $(notdir $(MO_FILES))); \

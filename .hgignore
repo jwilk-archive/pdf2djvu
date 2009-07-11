@@ -12,6 +12,8 @@ version.hh.in
 pdf2djvu
 *.o
 doc/*.1
+doc/po/*.1
+doc/po/*.[a-z][a-z].xml
 tools/config.*
 po/*.pot
 po/*.mo

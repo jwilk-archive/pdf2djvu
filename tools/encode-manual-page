@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Copyright © 2009 Jakub Wilk
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 dated June, 1991.
+
+if [ $# != 1 ]
+then
+  printf 'Usage: %s <file>\n' "$0" >&2
+  exit 1
+fi
+
+set -e
+encoding_template="'\\\" -*- coding: %s -*-\n"
+manpage="$1"
+tmpfile=`mktemp -t encode-manual-page-XXXXXX`
+if iconv -f 'UTF-8' -t 'ISO-8859-1' < "$manpage" > /dev/null 2> /dev/null
+then
+  printf "$encoding_template" 'UTF-8' > "$tmpfile"
+  cat "$manpage" >> "$tmpfile"
+else
+  printf "$encoding_template" 'ISO-8859-2' > "$tmpfile"
+  sed \
+    -e "s/\\\\('o/ó/" \
+    -e "s/\\\\('O/Ó/" \
+    -e "s!\\\\(/l!ł!" \
+    -e "s!\\\\(/L!Ł!" \
+    "$manpage" \
+  | iconv -f 'UTF-8' -t 'ISO-8859-2' >> "$tmpfile"
+fi
+cat "$tmpfile" > "$manpage"
+rm -f "$tmpfile"
+
+# vim:ts=2 sw=2 et
