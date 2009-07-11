@@ -16,7 +16,7 @@ paths.hh: tools/generate-paths-hh Makefile.common
 	$(<) $(foreach var,localedir djvulibre_bindir,$(var) $($(var)))
 
 pdf2djvu: pdf2djvu.o pdf-backend.o pdf-dpi.o debug.o config.o string-format.o system.o sexpr.o quantizer.o i18n.o
-	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@) 
+	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@)
 
 .PHONY: clean
 clean:
