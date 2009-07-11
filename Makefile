@@ -34,7 +34,7 @@ MAN_PAGES = $(wildcard doc/*.1)
 MO_FILES = $(wildcard po/*.mo)
 
 .PHONY: install
-install:
+install: all
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) pdf2djvu $(DESTDIR)$(bindir)
 ifneq ($(MAN_PAGES),)
