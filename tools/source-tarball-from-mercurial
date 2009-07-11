@@ -11,7 +11,7 @@ set -x
 
 pwd="$PWD"
 buildroot=`mktemp -dt pdf2djvu-source-XXXXXXXX`
-tarflags="--owner root --group root --mode a+rX"
+export TAR_OPTIONS='--owner root --group root --mode a+rX'
 export GZIP='-9'
 
 cd "$buildroot"
@@ -46,7 +46,7 @@ done
 cd ../..
 
 # Tarball with source + Debian stuff:
-tar $tarflags -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
+tar -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
 
 # Strip Debian stuff:
 cd "pdf2djvu-$version"
@@ -56,7 +56,7 @@ rm -Rf debian/
 cd ..
 
 # Tarball with raw source:
-tar $tarflags -czf "$pwd/pdf2djvu_$version.tar.gz" "pdf2djvu-$version"
+tar -czf "$pwd/pdf2djvu_$version.tar.gz" "pdf2djvu-$version"
 
 # Cleanup:
 rm -Rf "$buildroot"
