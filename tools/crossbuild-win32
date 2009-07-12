@@ -25,8 +25,8 @@ mkdir "$src/" || true
 
 psrc="$src/pdf2djvu-$version/"
 mkdir "$psrc" || true
-cp -a *.cc *.hh *.in *.rc configure Makefile.* po/ tools/ "$src/pdf2djvu-$version/"
-cp doc/*.txt doc/*.xml COPYING "$src/pdf2djvu-$version/"
+cp -a *.cc *.hh *.in *.rc configure Makefile* po/ tools/ "$src/pdf2djvu-$version/"
+cp doc/*.txt doc/*.xml doc/po/*.[a-z][a-z].xml COPYING "$src/pdf2djvu-$version/"
 
 dist="$usr/dist"
 pdist="$dist/pdf2djvu-$version"
@@ -157,7 +157,7 @@ make -C tools install
 # Compile pdf2djvu:
 
 cd "$psrc"
-sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.in
+sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.common.in
 sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
 sed -i -e '/^extern/d; /^"C"$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$//' configure
 sed -i -e 's/%zu/%Iu/g' *.cc *.hh
@@ -209,6 +209,12 @@ do
   rst2html $file > "$pdist/doc/${file%%.txt}.html"
 done
 xsltproc --nonet "$docbook_xsl" pdf2djvu.xml > "$pdist/doc/manual-page.html"
+for file in pdf2djvu.*.xml
+do
+  suffix="${file#*.}"
+  locale="${suffix%.*}"
+  xsltproc --nonet "$docbook_xsl" "$file" > "$pdist/doc/manual-page-$locale.html"
+done
 
 # Build fonts/libraries licensing documentation:
 
