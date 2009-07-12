@@ -1,8 +1,8 @@
-pdf2djvu (0.5.10) UNRELEASED; urgency=low
+pdf2djvu (0.5.10) unstable; urgency=low
 
-  * 
+  * Add Polish translation of the manual page.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 18 Jun 2009 23:56:35 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Sun, 12 Jul 2009 12:58:27 +0200
 
 pdf2djvu (0.5.9) unstable; urgency=low
 
