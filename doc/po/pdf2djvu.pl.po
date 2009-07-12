@@ -636,7 +636,7 @@ msgstr "<option>--hyperlinks=none</option>"
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 #: pdf2djvu.xml:392
 msgid "Don't extract hyperlinks."
-msgstr "Nie wyodrębniaj hiperlików."
+msgstr "Nie wyodrębniaj hiperłączy."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 #: pdf2djvu.xml:397
