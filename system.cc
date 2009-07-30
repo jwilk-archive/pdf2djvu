@@ -23,6 +23,7 @@
 #include <sys/types.h>
 
 #ifdef WIN32
+#include <climits>
 #include <windows.h>
 #endif
 
