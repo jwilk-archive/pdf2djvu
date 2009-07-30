@@ -537,6 +537,9 @@ void Directory::close(void)
 template <typename tp>
 class Array
 {
+private:
+  Array(const Array &); // not defined
+  Array& operator=(const Array &); // not defined
 protected:
   tp *buffer;
 public:
