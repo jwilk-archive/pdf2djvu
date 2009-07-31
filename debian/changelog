@@ -1,8 +1,10 @@
-pdf2djvu (0.5.11) UNRELEASED; urgency=low
+pdf2djvu (0.5.11) unstable; urgency=low
 
-  * 
+  * Document how to deal with CJK PDFs.
+  * Windows: make it feasible to use poppler-data.
+  * Add support for poppler ≥ 0.11.1.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 31 Jul 2009 11:16:21 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 31 Jul 2009 17:07:07 +0200
 
 pdf2djvu (0.5.10) unstable; urgency=low
 
