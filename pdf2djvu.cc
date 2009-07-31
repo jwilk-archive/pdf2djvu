@@ -1190,7 +1190,7 @@ static int xmain(int argc, char * const argv[])
   if (config.output_stdout && is_stream_a_tty(std::cout))
     throw StdoutIsATerminal();
 
-  pdf::Environment environment;
+  pdf::Environment environment(argv[0]);
   environment.set_antialias(config.antialias);
 
   size_t pdf_size;

@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <cstdarg>
 #include <cstring>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 
@@ -745,6 +746,51 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
   this->open(NULL, false);
 }
 
+#ifdef WIN32
+
+/* class Cwd
+ * =========
+ */
+
+Cwd::Cwd(const std::string &path)
+{
+  int rc;
+  size_t size = 32;
+  while (1)
+  {
+    Array<char> buffer(size);
+    rc = getcwd(buffer, size) == NULL;
+    if (rc != 0)
+    {
+      if (errno == ERANGE && size < std::numeric_limits<size_t>::max() / 2)
+      {
+        size *= 2;
+        continue;
+      }
+      throw_posix_error("getcwd");
+    }
+    this->previous_cwd = buffer;
+    break;
+  }
+  rc = chdir(path.c_str());
+  if (rc != 0)
+    throw_posix_error("chdir");
+}
+
+Cwd::~Cwd()
+{
+  if (this->previous_cwd.length())
+  {
+    int rc = chdir(this->previous_cwd.c_str());
+    if (rc != 0)
+    {
+      warn_posix_error("chdir");
+      abort();
+    }
+  }
+}
+
+#endif
 
 /* utility functions
  * =================

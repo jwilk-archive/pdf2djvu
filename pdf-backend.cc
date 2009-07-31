@@ -48,8 +48,16 @@ static void poppler_error_handler(int pos, char *message, va_list args)
   error_log << std::endl;
 }
 
-pdf::Environment::Environment()
+pdf::Environment::Environment(const char *argv0)
 {
+#ifdef WIN32
+  /* Change the current working directory to be able to read poppler data.
+   * This is not required (and potentially harmful) for Unix installations.
+   */
+  std::string argv0_dir_name, argv0_file_name;
+  split_path(argv0, argv0_dir_name, argv0_file_name);
+  Cwd cwd(argv0_dir_name);
+#endif
   globalParams = new GlobalParams();
   setErrorFunction(poppler_error_handler);
 }

@@ -140,6 +140,7 @@ cd "$src/"poppler-*/
   --disable-poppler-qt \
   --disable-poppler-qt4
 sed -i -e 's/"Call to Object/(char*) &/' poppler/Object.h
+sed -i -e 's!^\(#define POPPLER_DATADIR\) .*!\1 "./poppler-data/"!' config.h
 make
 make install
  

@@ -163,6 +163,22 @@ public:
   ExistingFile(const Directory& directory, const std::string &name);
 };
 
+#ifdef WIN32
+
+class Cwd
+{
+protected:
+  std::string previous_cwd;
+private:
+  Cwd(const Cwd &); // not defined
+  Cwd& operator=(const Cwd &); // not defined
+public:
+  explicit Cwd(const std::string &path);
+  ~Cwd();
+};
+
+#endif
+
 namespace encoding
 {
 
