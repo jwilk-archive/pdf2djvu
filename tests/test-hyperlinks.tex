@@ -1,0 +1,25 @@
+\input common
+
+\pdfpagewidth 100pt
+\pdfpageheight 13pt
+
+\pdfdest name {P1} fit
+
+\leavevmode
+\pdfstartlink
+goto name {P2}
+Lorem
+\pdfendlink
+
+\eject
+
+\pdfdest name {P2} fit
+
+\leavevmode
+\pdfstartlink
+attr{/Border[0 0 1]/H/I/C[1 0.5 0]}
+goto name {P1}
+{ipsum}
+\pdfendlink
+
+\end
