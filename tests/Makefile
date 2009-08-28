@@ -33,7 +33,7 @@ clean:
 	./jpeg2tex $(<) > $(@)
 
 %.pdf: %.tex
-	pdftex -interaction=batchmode $(<)
+	pdftex $(<)
 
 %: %.in
 	$(<)
