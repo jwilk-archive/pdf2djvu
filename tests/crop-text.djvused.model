@@ -1,9 +1,0 @@
-select; remove-ant; remove-txt
-# -------------------------------------
-select 'crop-text.djvu'
-set-txt
-(page 0 0 137 83
- (line 13 30 127 58
-  (word 13 30 127 58 "Lorem")))
-
-.

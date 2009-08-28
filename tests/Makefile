@@ -1,35 +1,44 @@
-# Copyright © 2007, 2008, 2009 Jakub Wilk
+# Copyright © 2009 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-PDF_FILES = $(wildcard *.pdf)
-DJVU_FILES = $(PDF_FILES:.pdf=.djvu)
-SED_FILES = $(DJVU_FILES:.djvu=.djvused)
-DUMP_FILES = $(DJVU_FILES:.djvu=.djvudump)
+pdf2djvu = ../pdf2djvu
+export pdf2djvu
 
-.DELETE_ON_ERROR:
+TEST_SCRIPTS = $(wildcard test-*.sh)
+TESTS = $(TEST_SCRIPTS:.sh=)
+
+STAMP_FILES = $(addsuffix .stamp, $(TESTS))
+PDF_FILES = $(addsuffix .pdf, $(TESTS))
+DJVU_FILES = $(addsuffix .djvu, $(TESTS))
+
+IN_FILES = $(wildcard *.in)
+
+GENERATED_FILES = $(IN_FILES:.in=) $(STAMP_FILES) $(PDF_FILES)
 
 .PHONY: all
-all: $(DJVU_FILES) $(SED_FILES) $(DUMP_FILES)
+all: $(GENERATED_FILES)
 
 .PHONY: clean
 clean:
-	$(RM) *.djvu *.djvused *.djvudump
+	rm -f $(GENERATED_FILES) *.log *.djvu
+
+%.stamp: %.sh %.pdf $(pdf2djvu)
+	sh -e -x $(<)
+	touch $(@)
+
+%.tex: %.jpeg
+	./jpeg2tex $(<) > $(@)
+
+%.pdf: %.tex
+	pdftex -interaction=batchmode $(<)
+
+%: %.in
+	$(<)
 
 ../pdf2djvu:
-	$(MAKE) -C ..
-
-%.djvu: %.pdf ../pdf2djvu
-	../pdf2djvu $(shell cat $(<:.pdf=.options) 2>/dev/null) -v $(<) > $(@)
-
-%.djvused: %.djvu
-	djvused -e 'output-all; print-outline' $(<) > $(@)
-	diff $(@) $(@).model || true
-
-%.djvudump: %.djvu
-	djvudump $(<) > $(@)
-	diff $(@) $(@).model || true
+	$(MAKE) -C ../
 
 # vim:ts=4 sw=4 noet
