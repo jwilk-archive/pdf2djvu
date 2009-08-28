@@ -1,20 +1,20 @@
 syntax: glob
 
+*.o
 Makefile.common
 aclocal.m4
 autom4te.cache
 config.log
 config.status
 configure
-paths.hh
-version.hh
-version.hh.in
-pdf2djvu
-*.o
 doc/*.1
 doc/po/*.1
 doc/po/*.[a-z][a-z].xml
-tools/config.*
-po/*.pot
+paths.hh
+pdf2djvu
 po/*.mo
+po/*.pot
+tools/config.*
 tools/install-sh
+version.hh
+version.hh.in
