@@ -1,0 +1,26 @@
+\input common
+
+\pdfpagewidth 100pt
+\pdfpageheight 100pt
+
+\immediate\pdfobj{%
+    <<
+    /Type /Outlines
+    /Count 0
+    >>
+}
+\edef\outlineobj{\the\pdflastobj}
+
+\outlineobj
+
+% \pdfoutline goto num 1 {Lorem ipsum}
+
+\pdfcatalog{%
+    /Outlines \outlineobj\space 0 R
+}
+
+\ 
+
+\end
+
+% vim:ts=4 sw=4 et
