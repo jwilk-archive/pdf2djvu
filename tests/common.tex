@@ -17,6 +17,15 @@
 \edef\2{\string\2}%
 \edef\3{\string\3}%
 
+\def\pdfpageimage#1{
+    \setbox0\hbox{\pdfximage{#1}\pdfrefximage\pdflastximage}%
+    \pdfpagewidth=\wd0
+    \pdfpageheight=\ht0
+    \shipout\box0
+}
+
 \pdfmapline{ptmr8r Times-Roman <8r.enc}
 \font\times=ptmr8r at 12pt
 \times
+
+% vim:ts=4 sw=4 et

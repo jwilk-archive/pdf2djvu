@@ -23,14 +23,11 @@ all: $(GENERATED_FILES)
 
 .PHONY: clean
 clean:
-	rm -f $(GENERATED_FILES) *.log *.djvu
+	rm -f $(GENERATED_FILES) *.log *.djvu *.pyc
 
 %.stamp: %.sh %.pdf $(pdf2djvu)
 	sh -e -x $(<)
 	touch $(@)
-
-%.tex: %.jpeg
-	./jpeg2tex $(<) > $(@)
 
 %.pdf: %.tex
 	pdftex $(<)
