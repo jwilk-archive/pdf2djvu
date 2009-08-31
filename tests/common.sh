@@ -4,13 +4,6 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-gm=`command -v gm`
-
-eval_image_size()
-{
-  eval `$gm identify -format 'width=%w; height=%h;' "$1" | sed -e 's/[.][0-9]\+//g' -e 's/[A-Z][A-Za-z]*//' | tr -dc '0-9a-z=;'`
-}
-
 pdf2djvu=`command -v ${pdf2djvu:-pdf2djvu}`
 
 pdf2djvu()
