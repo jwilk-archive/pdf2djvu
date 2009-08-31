@@ -197,7 +197,7 @@ pdf2djvu (0.4.2) unstable; urgency=low
 
   * Split code into several files.
   * Don't write binary garbage to a terminal. 
-  * Don't hang if a djvulibre binary tools is not found.
+  * Don't hang if a DjVuLibre binary tool is not found.
     Thanks to Janusz S. Bień for the bug report.
   * Fix an off-by-one error which caused (sometimes) erroneous text
     conversion. 
