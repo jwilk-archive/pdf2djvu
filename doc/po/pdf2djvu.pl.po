@@ -23,8 +23,8 @@ msgstr "pdf2djvu"
 
 #. type: Content of the version entity
 #: pdf2djvu.xml:5
-msgid "0.5.10"
-msgstr "0.5.10"
+msgid "0.5.12"
+msgstr "0.5.12"
 
 #. type: Content of: <refentry><refentryinfo><title>
 #: pdf2djvu.xml:11
