@@ -18,11 +18,28 @@ pdf2djvu()
     "$pdf2djvu" "$@"
 }
 
-test_pdf2djvu()
+_pdf2djvu_variables()
 {
     pdf_file="${0%*.sh}".pdf
     djvu_file="${0%*.sh}".djvu
-    pdf2djvu -q "$pdf_file" -o "$djvu_file" "$@"
+    error_log="${0%.sh}".pdf.log
+}
+
+_test_pdf2djvu()
+{
+    pdf2djvu -q "$pdf_file" "$@" 2> "$error_log"
+}
+
+test_pdf2djvu()
+{
+    _pdf2djvu_variables
+    _test_pdf2djvu -o "$djvu_file" "$@"
+}
+
+test_pdf2djvu_indirect()
+{
+    _pdf2djvu_variables
+    _test_pdf2djvu -i "$djvu_file" "$@"
 }
 
 # vim:ts=4 sw=4 et
