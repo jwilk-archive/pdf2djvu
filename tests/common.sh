@@ -27,7 +27,7 @@ _pdf2djvu_variables()
 
 _test_pdf2djvu()
 {
-    pdf2djvu -q "$pdf_file" "$@" 2> "$error_log"
+    "$pdf2djvu" -q "$pdf_file" "$@" 2> "$error_log"
 }
 
 test_pdf2djvu()
