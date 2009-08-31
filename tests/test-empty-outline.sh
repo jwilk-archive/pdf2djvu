@@ -5,7 +5,7 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 # http://bugs.debian.org/508391
-# Fixed in [].
+# Fixed in [f5d4727b2490].
 
 . common.sh
 
