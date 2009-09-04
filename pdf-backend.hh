@@ -29,7 +29,7 @@
 
 #include "i18n.hh"
 
-namespace pdf 
+namespace pdf
 {
 
 /* type definitions — splash output device
@@ -134,7 +134,7 @@ namespace pdf
     const uint8_t *row_ptr;
     const uint8_t *ptr;
     size_t row_size;
-  public:  
+  public:
     PixmapIterator(const uint8_t *raw_data, size_t row_size)
     {
       this->row_ptr = this->ptr = raw_data;
@@ -178,7 +178,7 @@ namespace pdf
   public:
     typedef PixmapIterator iterator;
 
-    int get_width() const 
+    int get_width() const
     {
       return width;
     }
@@ -238,7 +238,7 @@ namespace pdf
     ~OwnedObject() throw ()
     {
       this->free();
-    } 
+    }
   };
 
 
@@ -249,7 +249,7 @@ namespace pdf
   class NFKC
   {
   protected:
-    Unicode* data; 
+    Unicode* data;
     int int_length;
   public:
     explicit NFKC(Unicode *, int length);
@@ -328,7 +328,7 @@ namespace pdf
  * =======================
  */
 
-  bool get_glyph(pdf::splash::Splash *splash, pdf::splash::Font *font, 
+  bool get_glyph(pdf::splash::Splash *splash, pdf::splash::Font *font,
     double x, double y, // x, y are transformed (i.e. output device) coordinates
     int code, pdf::splash::GlyphBitmap *bitmap);
 

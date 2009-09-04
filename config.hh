@@ -11,7 +11,7 @@
 
 #include <climits>
 #include <memory>
-#include <sstream> 
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>

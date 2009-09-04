@@ -27,19 +27,19 @@ namespace string_format
   public:
     StaticChunk(const std::string &value)
     : value(value)
-    { } 
+    { }
     virtual ~StaticChunk() throw ()
     { }
     virtual void format(const Bindings &bindings, std::ostream &stream) const
     {
       stream << this->value;
-    } 
+    }
   };
 
   class VariableChunk : public Chunk
   {
   protected:
-    std::string variable;  
+    std::string variable;
     bool negative_offset;
     uint_tp offset;
     unsigned int width;
@@ -63,7 +63,7 @@ namespace string_format
 }
 
 string_format::VariableChunk::VariableChunk(const std::string &description)
-: negative_offset(false), offset(0), width(0), auto_width(false), pad_0(false) 
+: negative_offset(false), offset(0), width(0), auto_width(false), pad_0(false)
 {
   enum
   {

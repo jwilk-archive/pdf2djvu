@@ -184,10 +184,10 @@ namespace string
 
   template <typename tp>
   tp as(const char *);
-  
+
   template <>
   long as<long>(const char *);
-  
+
   template <typename tp>
   tp as(const std::string &);
 }
@@ -236,7 +236,7 @@ static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
       options.extract = false;
       continue;
     }
-    else if 
+    else if
     (
       it->length() == 7 &&
       (*it)[0] == '#' &&

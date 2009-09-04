@@ -61,7 +61,7 @@ static int get_page_for_LinkGoTo(pdf::link::GoTo *goto_link, pdf::Catalog *catal
       Ref pageref = dest->getPageRef();
       page = catalog->findPage(pageref.num, pageref.gen);
     }
-    else 
+    else
       page = dest->getPageNum();
     return page;
   }
@@ -121,7 +121,7 @@ protected:
 public:
   explicit Component(File &file, const std::string *title = NULL)
   : file(&file)
-  { 
+  {
     if (title != NULL)
       this->title.reset(new std::string(*title));
     file.close();
@@ -129,7 +129,7 @@ public:
 
   Component(const Component &component)
   : file(component.file)
-  { 
+  {
     if (component.title.get() != NULL)
       this->title.reset(new std::string(*component.title));
   }
@@ -161,13 +161,13 @@ Command &operator <<(Command &command, const Component &component)
 {
   command << *component.file;
   return command;
-} 
+}
 
 std::ostream &operator <<(std::ostream &stream, const Component &component)
 {
   stream << *component.file;
   return stream;
-} 
+}
 
 class ComponentList
 {
@@ -222,7 +222,7 @@ public:
   {
     std::vector<Component*>::reference tmpfile_ptr = this->components.at(n - 1);
     if (tmpfile_ptr == NULL)
-    { 
+    {
       this->files[n - 1] = this->create_file(this->get_file_name(n));
       tmpfile_ptr = new Component(*this->files[n - 1], this->get_title(n));
     }
@@ -256,8 +256,8 @@ protected:
       return;
     *(this->text_comments)
       << std::dec << std::noshowpos
-      << "# T " 
-      << ox << ":" << oy << " " 
+      << "# T "
+      << ox << ":" << oy << " "
       << dx << ":" << dy << " "
       <<  w << "x" <<  h << std::showpos << x << y << " "
       << "("
@@ -280,7 +280,7 @@ public:
 
 #if POPPLER_VERSION < 1101
 
-  void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height, 
+  void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::Bool invert, pdf::Bool inline_image)
   {
     return;
@@ -487,7 +487,7 @@ public:
       expr = sexpr::cons(item, expr);
     }
     else
-    { 
+    {
       sexpr::Ref bexpr = sexpr::nil;
       if (border_color.empty())
         bexpr = sexpr::cons(symbol_xor, bexpr);
@@ -522,7 +522,7 @@ public:
   { }
 
   void fill(pdf::gfx::State *state)
-  { 
+  {
     if (config.no_render)
       return;
     pdf::splash::Path path;
@@ -537,9 +537,9 @@ public:
     this->fill(state);
   }
 
-  MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const ComponentList &page_files) 
+  MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const ComponentList &page_files)
   : Renderer(paper_color, monochrome), page_files(page_files)
-  { 
+  {
     this->clear_texts();
   }
 
@@ -607,7 +607,7 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
         if (!pdf::dict_lookup(current, "Title", &title)->isString())
           throw NoTitleForBookmark();
         title_str = pdf::string_as_utf8(title);
-      } 
+      }
 
       int page;
       {
@@ -672,7 +672,7 @@ static bool pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream
 }
 
 class InvalidDateFormat : public std::runtime_error
-{ 
+{
 public:
   InvalidDateFormat()
   : std::runtime_error(_("Invalid date format"))
@@ -798,7 +798,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
     if (tzs)
     {
       std::ostringstream stream;
-      stream 
+      stream
         << tzs
         << std::setw(2) << std::setfill('0') << tzh
         << ":"
@@ -807,7 +807,7 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
       tzstring = stream.str();
       if (tzstring.length() != 6)
         throw InvalidDateFormat();
-    } 
+    }
     stream << *pkey << "\t\"" << buffer << tzstring << "\"" << std::endl;
   }
   catch (InvalidDateFormat &ex)
@@ -866,7 +866,7 @@ protected:
   static std::string full_path(const std::string &base_name)
   {
     return DjVuCommand::dir_name + "/" + base_name;
-  } 
+  }
 public:
   static void set_argv0(const char *argv0);
   explicit DjVuCommand(const std::string &base_name)
@@ -943,7 +943,7 @@ protected:
   std::auto_ptr<IndirectDjVm> indirect_djvm;
   std::auto_ptr<TemporaryFile> index_file;
 public:
-  explicit BundledDjVm(File &output_file) 
+  explicit BundledDjVm(File &output_file)
   : output_file(output_file),
     converter("djvmcvt")
   { }
@@ -962,15 +962,15 @@ protected:
   File &index_file;
   std::vector<Component> components;
   class UnexpectedDjvuSedOutput : public std::runtime_error
-  { 
-  public: 
-    UnexpectedDjvuSedOutput() 
-    : std::runtime_error(_("Unexpected output from djvused")) 
+  {
+  public:
+    UnexpectedDjvuSedOutput()
+    : std::runtime_error(_("Unexpected output from djvused"))
     { };
   };
   void do_create(const std::vector<Component> &components, bool shared_ant = false);
 public:
-  explicit IndirectDjVm(File &index_file) 
+  explicit IndirectDjVm(File &index_file)
   : index_file(index_file)
   { }
 
@@ -1174,7 +1174,7 @@ static int calculate_dpi(double page_width, double page_height)
 class StdoutIsATerminal : public std::runtime_error
 {
 public:
-  StdoutIsATerminal() 
+  StdoutIsATerminal()
   : std::runtime_error(_("I won't write DjVu data to a terminal."))
   { }
 };
@@ -1237,7 +1237,7 @@ static int xmain(int argc, char * const argv[])
   environment.set_antialias(config.antialias);
 
   size_t pdf_size;
-  { 
+  {
     std::ifstream ifs(config.file_name, std::ifstream::in | std::ifstream::binary);
     ifs.seekg(0, std::ios::end);
     pdf_size = ifs.tellg();
@@ -1329,7 +1329,7 @@ static int xmain(int argc, char * const argv[])
 
   std::auto_ptr<pdf::Renderer> out1;
   std::auto_ptr<MutedRenderer> outm, outs;
-  
+
   out1.reset(new pdf::Renderer(paper_color, config.monochrome));
   outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
   out1->startDoc(doc.getXRef());
@@ -1417,7 +1417,7 @@ static int xmain(int argc, char * const argv[])
       outs->clear_texts();
       outs->clear_annotations();
     }
-    else  
+    else
     {
       nonwhite_background_color = (background_color[0] & background_color[1] & background_color[2] & 0xff) != 0xff;
       if (nonwhite_background_color)
@@ -1465,7 +1465,7 @@ static int xmain(int argc, char * const argv[])
     {
       TemporaryFile sjbz_file, fgbz_file, bg44_file;
       if (!config.monochrome)
-      { 
+      {
         debug(3) << _("recovering images with `djvuextract`") << std::endl;
         DjVuCommand djvuextract("djvuextract");
         djvuextract << component;
@@ -1645,7 +1645,7 @@ static int xmain(int argc, char * const argv[])
     double ratio = 1.0 * pdf_size / djvu_size;
     double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;
     debug(0)--;
-    debug(1) 
+    debug(1)
       << string_printf(
            _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"),
            bpp, ratio, percent_saved, pdf_size, djvu_size

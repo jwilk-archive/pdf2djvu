@@ -30,7 +30,7 @@
 class OSError : public std::runtime_error
 {
 protected:
-  explicit OSError(const std::string &message) 
+  explicit OSError(const std::string &message)
   : std::runtime_error(message)
   { };
 };
@@ -40,7 +40,7 @@ class POSIXError : public OSError
 protected:
   static std::string error_message(const std::string &context);
 public:
-  explicit POSIXError(const std::string &context) 
+  explicit POSIXError(const std::string &context)
   : OSError(error_message(context))
   { };
 };
@@ -65,7 +65,7 @@ class Command
 {
 protected:
   std::string command;
-#ifdef HAVE_PSTREAMS  
+#ifdef HAVE_PSTREAMS
   redi::pstreams::argv_type argv;
 #else
   std::vector<std::string> argv;
@@ -75,7 +75,7 @@ public:
   class CommandFailed : public std::runtime_error
   {
   public:
-    CommandFailed(const std::string &message) 
+    CommandFailed(const std::string &message)
     : std::runtime_error(message)
     { }
   };
@@ -96,7 +96,7 @@ protected:
   Directory()
   : name(""), posix_dir(NULL)
   { }
-public: 
+public:
   explicit Directory(const std::string &name);
   virtual ~Directory() throw ();
   friend std::ostream &operator<<(std::ostream &, const Directory &);
@@ -143,8 +143,8 @@ private:
 protected:
   void construct();
 public:
-  TemporaryFile(const Directory& directory, const std::string &name) 
-  : File(directory, name) 
+  TemporaryFile(const Directory& directory, const std::string &name)
+  : File(directory, name)
   { }
   TemporaryFile(const std::string &name)
   : File(name)

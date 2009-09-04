@@ -75,9 +75,9 @@ void pdf::Environment::set_antialias(bool value)
  * ===================
  */
 
-pdf::Document::Document(const std::string &file_name) 
+pdf::Document::Document(const std::string &file_name)
 : ::PDFDoc(new pdf::String(file_name.c_str()), NULL, NULL)
-{ 
+{
   if (!this->isOk())
     throw LoadError();
 }
@@ -149,8 +149,8 @@ static pdf::Bool annotations_callback(pdf::ant::Annotation *annotation, void *us
 void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links)
 {
   renderer->link_border_colors.clear();
-  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links, 
-    NULL, NULL, 
+  this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links,
+    NULL, NULL,
     do_links ? annotations_callback : NULL,
     do_links ? &renderer->link_border_colors : NULL
   );
@@ -239,7 +239,7 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
  * =======================
  */
 
-bool pdf::get_glyph(splash::Splash *splash, splash::Font *font, 
+bool pdf::get_glyph(splash::Splash *splash, splash::Font *font,
   double x, double y, int code, splash::GlyphBitmap *bitmap)
 {
   if (font == NULL)
@@ -261,10 +261,10 @@ void pdf::Renderer::convert_path(pdf::gfx::State *state, splash::Path &splash_pa
   pdf::gfx::Subpath *subpath;
   pdf::gfx::Path *path = state->getPath();
   int n_subpaths = path->getNumSubpaths();
-  for (int i = 0; i < n_subpaths; i++) 
+  for (int i = 0; i < n_subpaths; i++)
   {
     subpath = path->getSubpath(i);
-    if (subpath->getNumPoints() > 0) 
+    if (subpath->getNumPoints() > 0)
     {
       double x1, y1, x2, y2, x3, y3;
       state->transform(subpath->getX(0), subpath->getY(0), &x1, &y1);
@@ -273,7 +273,7 @@ void pdf::Renderer::convert_path(pdf::gfx::State *state, splash::Path &splash_pa
       int n_points = subpath->getNumPoints();
       while (j < n_points)
       {
-        if (subpath->getCurve(j)) 
+        if (subpath->getCurve(j))
         {
           state->transform(subpath->getX(j), subpath->getY(j), &x1, &y1);
           state->transform(subpath->getX(j + 1), subpath->getY(j + 1), &x2, &y2);
@@ -284,8 +284,8 @@ void pdf::Renderer::convert_path(pdf::gfx::State *state, splash::Path &splash_pa
             (splash::Coord)x3, (splash::Coord)y3
           );
           j += 3;
-        } 
-        else 
+        }
+        else
         {
           state->transform(subpath->getX(j), subpath->getY(j), &x1, &y1);
           splash_path.lineTo((splash::Coord)x1, (splash::Coord)y1);
@@ -473,7 +473,7 @@ namespace pdf
  * ===============
  */
 
-pdf::NFKC::NFKC(Unicode *unistr, int length) 
+pdf::NFKC::NFKC(Unicode *unistr, int length)
 : data(NULL), int_length(0)
 {
   data = unicodeNormalizeNFKC(unistr, length, &this->int_length, NULL);

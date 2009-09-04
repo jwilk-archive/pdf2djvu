@@ -132,7 +132,7 @@ static void warn_posix_error(const std::string &context)
 {
   try
   {
-    throw_posix_error(context); 
+    throw_posix_error(context);
   }
   catch (const POSIXError &e)
   {
@@ -151,7 +151,7 @@ class Win32Error : public OSError
 protected:
   static std::string error_message(const std::string &context);
 public:
-  explicit Win32Error(const std::string &context) 
+  explicit Win32Error(const std::string &context)
   : OSError(error_message(context))
   { };
 };
@@ -300,7 +300,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
   for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
   {
     buffer << "'";
-    if (parg->find_first_of("\\\'") == std::string::npos) 
+    if (parg->find_first_of("\\\'") == std::string::npos)
       buffer << *parg;
     else
       for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++)
@@ -507,7 +507,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
 
 Directory::Directory(const std::string &name)
 : name(name), posix_dir(NULL)
-{ 
+{
   this->open(name.c_str());
 }
 
@@ -730,7 +730,7 @@ TemporaryFile::~TemporaryFile() throw ()
  * =========================
  */
 
-ExistingFile::ExistingFile(const std::string &name) 
+ExistingFile::ExistingFile(const std::string &name)
 : File()
 {
   this->name = name;
@@ -858,7 +858,7 @@ namespace encoding
         }
         else
         {
-          /* An unpaired surrogate is encountered. */ 
+          /* An unpaired surrogate is encountered. */
           errno = EILSEQ;
           throw_posix_error(__FUNCTION__);
         }

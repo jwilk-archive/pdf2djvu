@@ -50,7 +50,7 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   pdf::Pixmap bmp_bg(out_bg);
   pdf::Pixmap::iterator p_fg = bmp_fg.begin();
   pdf::Pixmap::iterator p_bg = bmp_bg.begin();
-  for (int i = 0; i < 3; i++) 
+  for (int i = 0; i < 3; i++)
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
   {
@@ -115,7 +115,7 @@ public:
 
   int operator [](int i) const
   {
-    return 
+    return
       (((this->value >> (6 * i)) << 2) & 0xff) |
       ((this->value >> (6 * i + 4)) & 3);
   }
@@ -187,7 +187,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   std::bitset<1 << 18> original_colors;
   std::bitset<1 << 18> quantized_colors;
   std::vector<std::vector<Run> > runs(height);
-  for (int i = 0; i < 3; i++) 
+  for (int i = 0; i < 3; i++)
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
   {
@@ -363,7 +363,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
   pdf::Pixmap bmp_bg(out_bg);
   pdf::Pixmap::iterator p_fg = bmp_fg.begin();
   pdf::Pixmap::iterator p_bg = bmp_bg.begin();
-  for (int i = 0; i < 3; i++) 
+  for (int i = 0; i < 3; i++)
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
   {
@@ -437,7 +437,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
 
 GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
 : Quantizer(config)
-{ 
+{
   throw NotImplementedError();
 }
 
