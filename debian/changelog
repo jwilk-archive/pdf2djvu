@@ -1,6 +1,6 @@
 pdf2djvu (0.5.12) UNRELEASED; urgency=low
 
-  * 
+  * New regression tests.
 
  -- Jakub Wilk <ubanus@users.sf.net>  Fri, 28 Aug 2009 17:58:12 +0200
 
