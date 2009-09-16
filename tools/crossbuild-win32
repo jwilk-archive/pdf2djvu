@@ -159,8 +159,6 @@ make -C tools install
 # Compile pdf2djvu:
 
 cd "$psrc"
-sed -i -e 's/@GRAPHICS[A-Z_]*@//' Makefile.common.in
-sed -i -e 's/\(GraphicsMagick[+][+]\)/Disabled\1/' configure
 sed -i -e '/^extern/d; /^"C"$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$//' configure
 sed -i -e 's/%zu/%Iu/g' *.cc *.hh
 cd po
@@ -170,7 +168,7 @@ do
   sed -e 's/%zu/%Iu/g' < "$language.po" | msgfmt - -o "$language.mo"
 done
 cd ..
-./configure --host="$host" --prefix="$usr"
+./configure --host="$host" --prefix="$usr" --without-graphicsmagick
 make djvulibre_bindir=. localedir=./locale
 make install
 

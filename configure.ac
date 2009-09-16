@@ -98,15 +98,19 @@ poppler_version=`printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0
 poppler_version=`printf '%02d' $poppler_version | sed -e 's/^0*//g'`
 AC_DEFINE_UNQUOTED(POPPLER_VERSION, $poppler_version, Define to the version of poppler, as integer)
 
-PKG_CHECK_MODULES(GRAPHICSMAGICK, GraphicsMagick++, 
-  [
-    AC_DEFINE(HAVE_GRAPHICSMAGICK, 1, Define if you have GraphicsMagick++ installed)
-    graphicsmagick_version=`$PKG_CONFIG --modversion GraphicsMagick++`
-    AC_DEFINE_UNQUOTED(GRAPHICSMAGICK_VERSION_STRING, "$graphicsmagick_version", Define to the version of GraphicsMagick++)
-    PACKAGE_STRING="$PACKAGE_STRING, GraphicsMagick++ $graphicsmagick_version"
-  ], [ : ]
-)
-PACKAGE_STRING="$PACKAGE_STRING)"
+AC_ARG_WITH(graphicsmagick, AS_HELP_STRING([--with-graphicsmagick], [use the GraphicsMagick library]))
+if test "$with_graphicsmagick" != "no"
+then
+  PKG_CHECK_MODULES(GRAPHICSMAGICK, GraphicsMagick++,
+    [
+      AC_DEFINE(HAVE_GRAPHICSMAGICK, 1, Define if you have GraphicsMagick++ installed)
+      graphicsmagick_version=`$PKG_CONFIG --modversion GraphicsMagick++`
+      AC_DEFINE_UNQUOTED(GRAPHICSMAGICK_VERSION_STRING, "$graphicsmagick_version", Define to the version of GraphicsMagick++)
+      PACKAGE_STRING="$PACKAGE_STRING, GraphicsMagick++ $graphicsmagick_version"
+    ], [ : ]
+  )
+  PACKAGE_STRING="$PACKAGE_STRING)"
+fi
  
 AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name and version of this package)
 
