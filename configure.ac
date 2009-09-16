@@ -72,7 +72,7 @@ if ! "$djvulibre_bin_path/djvused" -e print-outline conftest.458086.djvu | grep 
 then
   djvulibre_bugs="$djvulibre_bugs 458086"
 fi
-                                                               
+
 if test -n "$djvulibre_bugs"
 then
   result=''
@@ -111,7 +111,7 @@ then
   )
   PACKAGE_STRING="$PACKAGE_STRING)"
 fi
- 
+
 AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name and version of this package)
 
 AC_TRY_CPP
@@ -202,4 +202,4 @@ Please file a bug to $PACKAGE_BUGREPORT.
 _ACEOF
 fi
 
-# vim:ts=2 sw=2 et 
+# vim:ts=2 sw=2 et

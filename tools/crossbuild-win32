@@ -113,7 +113,7 @@ wget -O - 'http://djvu.sourceforge.net/' \
 | head -n 1 \
 | wget -c -i -
 tar -xzf djvulibre-*.tar.gz
- 
+
 # Setup cross-compilation environment:
 
 export CXX="${host}-g++ -static-libgcc"
@@ -125,7 +125,7 @@ export STRIP="${host}-strip"
 export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
 export CPATH="$usr/include"
 export LDFLAGS="-L$usr/lib"
- 
+
 # Compile popppler:
 
 cd "$src/"poppler-*/
@@ -141,7 +141,7 @@ sed -i -e 's/"Call to Object/(char*) &/' poppler/Object.h
 sed -i -e 's!^\(#define POPPLER_DATADIR\) .*!\1 "./poppler-data/"!' config.h
 make
 make install
- 
+
 # Compile DjVuLibre:
 
 cd "$src/"djvulibre-*/
@@ -377,7 +377,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 Library General Public License for more details.
 EOF
- 
+
 # Build the zipball:
 
 cd "$dist/"
