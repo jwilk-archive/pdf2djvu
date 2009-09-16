@@ -34,10 +34,7 @@ done
 # Prior to pdf2djvu 0.5.0, pdf2djvu simply dissalowed subsample ratio 12 by
 # itself.
 echo 'P1 12 12' > conftest.458211.pbm
-for i in 1 2 3 4 5 6 7 8 9 a b c
-do
-  echo '0 0 0 0 0 0 0 0 0 0 0 0' >> conftest.458211.pbm; 
-done
+yes 0 | head -n 144 >> conftest.458211.pbm
 "$djvulibre_bin_path/cjb2" conftest.458211.pbm conftest.458211.djvu
 "$djvulibre_bin_path/ddjvu" -format=rle conftest.458211.djvu conftest.458211.sep
 printf 'P6 1 1 255 xxx' >> conftest.458211.sep
