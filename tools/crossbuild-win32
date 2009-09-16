@@ -108,13 +108,11 @@ cd "$src"
 ) | wget -c -i -
 tar -xzf poppler-*.tar.gz
 
-wget -O - 'http://packages.debian.org/testing/djvulibre-bin' \
-| grep -E -o \
-  -e 'http://ftp[a-z.]+[.]debian[.]org/debian/pool/main/d/djvulibre/djvulibre_[0-9.]+[.]orig[.]tar[.]gz' \
-  -e 'http://ftp[a-z.]+[.]debian[.]org/debian/pool/main/d/djvulibre/djvulibre_[0-9.]+-[0-9]+[.]diff[.]gz' \
+wget -O - 'http://djvu.sourceforge.net/' \
+| grep -E -o 'http://downloads.sourceforge.net/djvu/djvulibre-[0-9.]+.tar.gz' \
+| head -n 1 \
 | wget -c -i -
-tar -xzf djvulibre_*.orig.tar.gz
-zcat djvulibre_*.diff.gz | patch -p0
+tar -xzf djvulibre-*.tar.gz
  
 # Setup cross-compilation environment:
 
