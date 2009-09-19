@@ -1,8 +1,9 @@
 pdf2djvu (0.5.12) UNRELEASED; urgency=low
 
   * New regression tests.
+  * Add support for correcting XMP metadata.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 28 Aug 2009 17:58:12 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Sat, 19 Sep 2009 17:08:42 +0200
 
 pdf2djvu (0.5.11) unstable; urgency=low
 

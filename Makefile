@@ -18,6 +18,9 @@ endif
 
 include Makefile.dep
 
+%.hh: %.xml
+	tools/xml2c < $(<) > $(@)
+
 paths.hh: tools/generate-paths-hh Makefile.common
 	$(<) $(foreach var,localedir djvulibre_bindir,$(var) $($(var)))
 
@@ -31,6 +34,7 @@ pdf2djvu: quantizer.o
 pdf2djvu: sexpr.o
 pdf2djvu: string-format.o
 pdf2djvu: system.o
+pdf2djvu: xmp.o
 pdf2djvu:
 	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@)
 

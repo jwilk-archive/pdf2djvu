@@ -60,3 +60,6 @@ system.o: i18n.hh
 system.o: system.cc
 system.o: system.hh
 system.o: version.hh
+xmp.o: xmp-xslt.hh
+xmp.o: xmp.cc
+xmp.o: xmp.hh

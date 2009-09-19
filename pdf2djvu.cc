@@ -29,6 +29,7 @@
 #include "system.hh"
 #include "version.hh"
 #include "i18n.hh"
+#include "xmp.hh"
 
 Config config;
 
@@ -1573,12 +1574,21 @@ static int xmain(int argc, char * const argv[])
     TemporaryFile sed_file;
     debug(3) << _("extracting XMP metadata") << std::endl;
     {
-      const std::string &xmp_bytes = doc.get_xmp();
+      std::string xmp_bytes = doc.get_xmp();
       if (xmp_bytes.length())
       {
         sexpr::GCLock gc_lock;
         static sexpr::Ref xmp_symbol = sexpr::symbol("xmp");
         sexpr::Ref xmp = sexpr::nil;
+        if (config.adjust_metadata)
+          try
+          {
+            xmp_bytes = xmp::transform(xmp_bytes);
+          }
+          catch (xmp::XmlError &ex)
+          {
+            debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+          }
         xmp = sexpr::cons(sexpr::string(xmp_bytes), xmp);
         xmp = sexpr::cons(xmp_symbol, xmp);
         sed_file

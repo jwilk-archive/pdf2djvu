@@ -18,3 +18,4 @@ tools/config.*
 tools/install-sh
 version.hh
 version.hh.in
+xmp-xslt.hh

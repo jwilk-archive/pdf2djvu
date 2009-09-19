@@ -1,0 +1,50 @@
+<!--# namespace xmp { #-->
+<!--# static const std::string xslt = #-->
+
+<xsl:stylesheet 
+  version='1.0'
+  xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  xmlns:xmp='adobe:ns:meta/'
+  xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+  xmlns:pdf='http://ns.adobe.com/pdf/1.3/'
+  xmlns:dc='http://purl.org/dc/elements/1.1/'
+>
+
+<xsl:output method='xml' omit-xml-declaration='yes'/>
+
+<xsl:param name='djvu-producer' select='""'/>
+
+<xsl:template match='/xmp:xmpmeta'>
+  <xsl:apply-templates select='rdf:RDF'/>
+</xsl:template>
+
+<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/dc:format[string(.)="application/pdf"]'>
+  <xsl:copy>
+    <xsl:copy-of select='@*'/>
+    <xsl:text>image/vnd.djvu</xsl:text>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/pdf:Producer'>
+  <xsl:copy>
+    <xsl:copy-of select='@*'/>
+      <xsl:apply-templates/>
+      <xsl:if test='string($djvu-producer) != ""'>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select='$djvu-producer'/>
+      </xsl:if>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match='*'>
+  <xsl:copy>
+    <xsl:copy-of select='@*'/>
+    <xsl:apply-templates/>
+  </xsl:copy>
+</xsl:template>
+
+</xsl:stylesheet>
+
+<!--# ; #-->
+<!--# } #-->
+<!-- vim:set ts=2 sw=2 et:-->
