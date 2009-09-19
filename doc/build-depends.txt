@@ -52,6 +52,15 @@ pipelines.
 .. _PStreams:
    http://pstreams.sourceforge.net/
 
+GNOME XSLT library (recommended)
+================================
+
+Libxslt_ is the XSLT C library developed for the GNOME project.
+
+This library is required to correctly deal with XMP metadata.
+
+.. _Libxslt:
+   http://xmlsoft.org/xslt/
 
 GraphicsMagick (optional)
 =========================
