@@ -133,6 +133,7 @@ cd "$src/"poppler-*/
 ./configure --host="$host" --prefix="$usr" \
   --enable-xpdf-headers \
   --disable-static \
+  --disable-cms \
   --disable-abiword-output \
   --disable-cairo-output \
   --disable-poppler-glib \
