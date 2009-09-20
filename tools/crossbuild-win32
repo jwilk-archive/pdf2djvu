@@ -107,6 +107,7 @@ cd "$src"
   | grep -E -o 'poppler-[0-9.]+[.]tar[.]gz' | head -n 1
 ) | wget -c -i -
 tar -xzf poppler-*.tar.gz
+sed -i -e 's/\([( ]\)uint /\1Guint /g' poppler-*/poppler/Gfx.cc # http://cgit.freedesktop.org/poppler/poppler/commit/?id=68711d8494e2765c4a24ea59ce8d904981f0f917
 
 wget -O - 'http://djvu.sourceforge.net/' \
 | grep -E -o 'http://downloads.sourceforge.net/djvu/djvulibre-[0-9.]+.tar.gz' \
