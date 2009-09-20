@@ -168,7 +168,7 @@ do
   sed -e 's/%zu/%Iu/g' < "$language.po" | msgfmt - -o "$language.mo"
 done
 cd ..
-./configure --host="$host" --prefix="$usr" --without-graphicsmagick
+./configure --host="$host" --prefix="$usr" --without-graphicsmagick --without-xslt
 make djvulibre_bindir=. localedir=./locale
 make install
 
