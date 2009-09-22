@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT(pdf2djvu, 0.5.12, http://code.google.com/p/pdf2djvu/issues/)
+AC_INIT(pdf2djvu, 0.5.12, http://code.google.com/p/pdf2djvu/issues/, pdf2djvu, http://pdf2djvu.googlecode.com/)
 AC_CONFIG_AUX_DIR(tools)
 AC_LANG(C++)
 
