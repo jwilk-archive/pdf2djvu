@@ -8,31 +8,91 @@
   xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
   xmlns:pdf='http://ns.adobe.com/pdf/1.3/'
   xmlns:dc='http://purl.org/dc/elements/1.1/'
+  xmlns:xmpMM='http://ns.adobe.com/xap/1.0/mm/'
+  xmlns:stEvt='http://ns.adobe.com/xap/1.0/sType/ResourceEvent#'
 >
 
 <xsl:output method='xml' omit-xml-declaration='yes'/>
 
 <xsl:param name='djvu-producer' select='""'/>
+<xsl:param name='now' select='""'/>
+<xsl:param name='pdf-title' select='""'/>
+<xsl:param name='pdf-author' select='""'/>
+<xsl:param name='pdf-subject' select='""'/>
+<xsl:param name='pdf-keywords' select='""'/>
+<xsl:param name='pdf-producer' select='""'/>
+<xsl:param name='pdf-creator' select='""'/>
+<xsl:param name='pdf-creation-date' select='""'/>
+<xsl:param name='pdf-mod-date' select='""'/>
 
 <xsl:template match='/xmp:xmpmeta'>
   <xsl:apply-templates select='rdf:RDF'/>
 </xsl:template>
 
-<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/dc:format[string(.)="application/pdf"]'>
+<xsl:template match='/xmp:xmpmeta/rdf:RDF'>
   <xsl:copy>
     <xsl:copy-of select='@*'/>
-    <xsl:text>image/vnd.djvu</xsl:text>
+    <xsl:apply-templates/>
+    <rdf:Description rdf:about=''>
+      <xsl:if test='count(rdf:Description/xmpMM:History/rdf:Seq) = 0'>
+        <xmpMM:History>
+          <rdf:Seq>
+            <xsl:apply-templates mode='convert-info' select='/'/>
+          </rdf:Seq>
+        </xmpMM:History>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/dc:title) = 0 and $pdf-title != ""'>
+        <dc:title><xsl:copy-of select='$pdf-title'/></dc:title>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/dc:creator) = 0 and $pdf-author != ""'>
+        <dc:creator><xsl:copy-of select='$pdf-author'/></dc:creator>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/dc:description) = 0 and $pdf-subject != ""'>
+        <dc:description><xsl:copy-of select='$pdf-subject'/></dc:description>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/dc:format) = 0'>
+        <dc:format>image/vnd.djvu</dc:format>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/pdf:Keywords) = 0 and $pdf-keywords != ""'>
+        <pdf:Keywords><xsl:copy-of select='$pdf-keywords'/></pdf:Keywords>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/pdf:Producer) = 0 and $pdf-producer != ""'>
+        <pdf:Producer><xsl:copy-of select='$pdf-producer'/></pdf:Producer>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/xmp:CreatorTool) = 0 and $pdf-creator != ""'>
+        <xmp:CreatorTool><xsl:copy-of select='$pdf-creator'/></xmp:CreatorTool>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/xmp:CreateDate) = 0 and $pdf-creation-date != ""'>
+        <xmp:CreateDate><xsl:copy-of select='$pdf-creation-date'/></xmp:CreateDate>
+      </xsl:if>
+      <xsl:if test='count(rdf:Description/xmp:ModifyDate) = 0 and $pdf-mod-date != ""'>
+        <xmp:ModifyDate><xsl:copy-of select='$pdf-mod-date'/></xmp:ModifyDate>
+      </xsl:if>
+    </rdf:Description>
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/pdf:Producer'>
+<xsl:template mode='convert-info' match='*'>
+  <rdf:li
+    stEvt:action='converted'
+    stEvt:parameters='from application/pdf to image/vnd.djvu'
+    softwareAgent='{$djvu-producer}'
+    when='{$now}'
+  />
+</xsl:template>
+
+<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/xmpMM:History/rdf:Seq'>
   <xsl:copy>
     <xsl:copy-of select='@*'/>
-      <xsl:apply-templates/>
-      <xsl:if test='string($djvu-producer) != ""'>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select='$djvu-producer'/>
-      </xsl:if>
+    <xsl:apply-templates/>
+    <xsl:apply-templates mode='convert-info' select='/'/>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/dc:format'>
+  <xsl:copy>
+    <xsl:copy-of select='@*'/>
+    <xsl:text>image/vnd.djvu</xsl:text>
   </xsl:copy>
 </xsl:template>
 
