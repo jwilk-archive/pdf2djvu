@@ -699,7 +699,7 @@ static int scan_date_digits(char * &input, int n)
 
 static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stream)
 {
-  static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", NULL };
+  static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", "Producer", NULL };
   static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
   pdf::OwnedObject info;
   doc.getDocInfo(&info);
@@ -714,28 +714,6 @@ static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stre
     std::string value = pdf::string_as_utf8(object);
     sexpr::Ref esc_value = sexpr::string(value);
     stream << *pkey << "\t" << esc_value << std::endl;
-  }
-  {
-    bool have_producer = false;
-    std::string value;
-    pdf::OwnedObject object;
-    if (pdf::dict_lookup(info_dict, "Producer", &object)->isString())
-    {
-      have_producer = true;
-      value = pdf::string_as_utf8(object);
-      if (config.adjust_metadata && value.length() > 0)
-        value += "\n" PACKAGE_STRING;
-    }
-    else if (config.adjust_metadata)
-    {
-      have_producer = true;
-      value = PACKAGE_STRING;
-    }
-    if (have_producer)
-    {
-      sexpr::Ref esc_value = sexpr::string(value);
-      stream << "Producer\t" << esc_value << std::endl;
-    }
   }
   for (const char** pkey = date_keys; *pkey; pkey++)
   try
