@@ -305,6 +305,76 @@ namespace pdf
   };
 
 
+/* class pdf::Timestamp
+ * ====================
+ */
+
+  class Timestamp
+  {
+  protected:
+    bool dummy;
+    struct tm timestamp;
+    char tz_sign;
+    int tz_hour;
+    int tz_minute;
+  public:
+    Timestamp();
+    Timestamp(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, char tz_sign = 0, int tz_hour = 0, int tz_minute = 0);
+    std::string format(char separator = 'T') const;
+
+    class Invalid : public std::runtime_error
+    {
+    public:
+      Invalid()
+      : std::runtime_error(_("Invalid time/date format"))
+      { }
+    };
+  };
+
+
+/* class pdf::Metadata
+ * ===================
+ */
+
+  class Metadata
+  {
+  protected:
+    typedef std::pair<const char *, std::string *> string_field;
+    std::vector<string_field> string_fields;
+    typedef std::pair<const char *, pdf::Timestamp *> date_field;
+    std::vector<date_field> date_fields;
+  public:
+    Metadata(pdf::Document &document);
+    std::string title;
+    std::string subject;
+    std::string keywords;
+    std::string author;
+    std::string creator;
+    std::string producer;
+    Timestamp creation_date;
+    Timestamp mod_date;
+    template <typename T>
+    void iterate(
+      void (*string_callback)(const char *, const std::string &, const T &),
+      void (*date_callback)(const char *, const Timestamp &, const T &),
+      const T &extra
+    );
+  };
+
+  template <typename T>
+  void Metadata::iterate(
+    void (*string_callback)(const char *, const std::string &, const T &),
+    void (*date_callback)(const char *, const Timestamp &, const T &),
+    const T &extra
+  )
+  {
+    for (std::vector<string_field>::const_iterator it = this->string_fields.begin(); it != this->string_fields.end(); it++)
+      string_callback(it->first, *it->second, extra);
+    for (std::vector<date_field>::const_iterator it = this->date_fields.begin(); it != this->date_fields.end(); it++)
+      date_callback(it->first, *it->second, extra);
+  }
+
+
 /* utility functions
  * =================
  */

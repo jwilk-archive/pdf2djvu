@@ -10,6 +10,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <limits.h>
 #include <memory>
 #include <ostream>
 #include <sstream>
@@ -204,6 +205,157 @@ const std::string pdf::Document::get_xmp()
   while (endcstring > cstring && *endcstring != '>')
     endcstring--;
   return std::string(cstring, endcstring - cstring + 1);
+}
+
+
+/* class pdf::Timestamp
+ * ====================
+ */
+
+pdf::Timestamp::Timestamp()
+: dummy(true)
+{ }
+
+pdf::Timestamp::Timestamp(int year, int month, int day, int hour, int minute, int second, char tz_sign, int tz_hour, int tz_minute)
+: dummy(false),
+  tz_sign(tz_sign),
+  tz_hour(tz_hour),
+  tz_minute(tz_minute)
+{
+  this->timestamp.tm_isdst = -1;
+  this->timestamp.tm_year = year - 1900;
+  this->timestamp.tm_mon = month - 1;
+  this->timestamp.tm_mday = day;
+  this->timestamp.tm_hour = hour;
+  this->timestamp.tm_min = minute;
+  this->timestamp.tm_sec = second;
+}
+
+std::string pdf::Timestamp::format(char separator) const
+{
+  /* Format timestamp according to RFC 3339 date format,
+   * e.g. "2007-10-27S13:19:59+02:00", where S is the separator.
+   */
+  if (this->dummy)
+    return "";
+  std::ostringstream stream;
+  char buffer[10 + CHAR_BIT * sizeof this->timestamp.tm_year / 3];
+  char format[] = "%Y-%m-%d %H:%M:%S";
+  format[8] = separator;
+  struct tm tmp_timestamp = this->timestamp;
+  if (mktime(&tmp_timestamp) == static_cast<time_t>(-1))
+    throw Invalid();
+  if (strftime(buffer, sizeof buffer, format, &this->timestamp) != 19)
+    throw Invalid();
+  stream << buffer;
+  if (this->tz_sign)
+  {
+    if (this->tz_hour < 0 || this->tz_hour >= 24)
+      throw Invalid();
+    if (this->tz_minute < 0 || this->tz_minute >= 60)
+      throw Invalid();
+    stream
+      << this->tz_sign
+      << std::setw(2) << std::setfill('0') << this->tz_hour
+      << ":"
+      << std::setw(2) << std::setfill('0') << this->tz_minute
+    ;
+  }
+  return stream.str();
+}
+
+
+/* class pdf::Metadata
+ * ===================
+ */
+
+static int scan_date_digits(char * &input, int n)
+{
+  int value = 0;
+  for (int i = 0; i < n; i++)
+  {
+    if (*input >= '0' && *input <= '9' && value < INT_MAX / 10)
+    {
+      value *= 10;
+      value += *input - '0';
+    }
+    else
+      return INT_MIN;
+    input++;
+  }
+  return value;
+}
+
+pdf::Metadata::Metadata(pdf::Document &document)
+{
+  string_fields.push_back(std::make_pair("Title", &this->title));
+  string_fields.push_back(std::make_pair("Subject", &this->subject));
+  string_fields.push_back(std::make_pair("Keywords", &this->keywords));
+  string_fields.push_back(std::make_pair("Author", &this->author));
+  string_fields.push_back(std::make_pair("Creator", &this->creator));
+  string_fields.push_back(std::make_pair("Producer", &this->producer));
+  date_fields.push_back(std::make_pair("CreationDate", &this->creation_date));
+  date_fields.push_back(std::make_pair("ModDate", &this->mod_date));
+
+  pdf::OwnedObject info;
+  document.getDocInfo(&info);
+  if (!info.isDict())
+    return;
+  pdf::Dict *info_dict = info.getDict();
+  for (std::vector<string_field>::iterator it = this->string_fields.begin(); it != this->string_fields.end(); it++)
+  {
+    pdf::OwnedObject object;
+    if (!pdf::dict_lookup(info_dict, it->first, &object)->isString())
+      continue;
+    *it->second = pdf::string_as_utf8(object);
+  }
+  for (std::vector<date_field>::iterator it = this->date_fields.begin(); it != this->date_fields.end(); it++)
+  {
+    pdf::OwnedObject object;
+    char tzs = 0; int tzh = 0, tzm = 0;
+    if (!pdf::dict_lookup(info_dict, it->first, &object)->isString())
+      continue;
+    char *input = object.getString()->getCString();
+    if (input[0] == 'D' && input[1] == ':')
+      input += 2;
+    int year = scan_date_digits(input, 4);
+    int month = *input ? scan_date_digits(input, 2) : 1;
+    int day = *input ? scan_date_digits(input, 2) : 1;
+    int hour = *input ? scan_date_digits(input, 2) : 0;
+    int minute = *input ? scan_date_digits(input, 2) : 0;
+    int second  = *input ? scan_date_digits(input, 2) : 0;
+    switch (*input)
+    {
+    case '\0':
+      tzs = 0;
+      break;
+    case '-':
+    case '+':
+      tzs = *input;
+      input++;
+      tzh = scan_date_digits(input, 2);
+      if (*input == '\'')
+        input++;
+      else
+        tzh = -1;
+      tzm = scan_date_digits(input, 2);
+      if (*input == '\'')
+        input++;
+      else
+        tzh = -1;
+      break;
+    case 'Z':
+      input++;
+      tzs = '+';
+      tzh = tzm = 0;
+      break;
+    default:
+      tzh = -1;
+    }
+    if (*input)
+      tzh = -1;
+    *it->second = Timestamp(year, month, day, hour, minute, second, tzs, tzh, tzm);
+  }
 }
 
 

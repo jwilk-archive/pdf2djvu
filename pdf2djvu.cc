@@ -672,127 +672,29 @@ static bool pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream
   return true;
 }
 
-class InvalidDateFormat : public std::runtime_error
+static void add_meta_string(const char *key, const std::string &value, std::ostream &stream)
 {
-public:
-  InvalidDateFormat()
-  : std::runtime_error(_("Invalid date format"))
-  { }
-};
+  sexpr::Ref expr = sexpr::string(value);
+  stream << key << "\t" << expr << std::endl;
+}
 
-static int scan_date_digits(char * &input, int n)
+static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ostream &stream)
 {
-  int value = 0;
-  for (int i = 0; i < n; i++)
+  try
   {
-    if (*input >= '0' && *input <= '9')
-    {
-      value *= 10;
-      value += *input - '0';
-    }
-    else
-      throw InvalidDateFormat();
-    input++;
+    sexpr::Ref sexpr = sexpr::string(value.format(' '));
+    stream << key << "\t" << sexpr << std::endl;
   }
-  return value;
+  catch (pdf::Timestamp::Invalid)
+  {
+    debug(1) << string_printf(_("Warning: metadata[%s] is not a valid date"), key) << std::endl;
+  }
 }
 
 static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stream)
 {
-  static const char* string_keys[] = { "Title", "Subject", "Keywords", "Author", "Creator", "Producer", NULL };
-  static const char* date_keys[] = { "CreationDate", "ModDate", NULL };
-  pdf::OwnedObject info;
-  doc.getDocInfo(&info);
-  if (!info.isDict())
-    return;
-  pdf::Dict *info_dict = info.getDict();
-  for (const char** pkey = string_keys; *pkey; pkey++)
-  {
-    pdf::OwnedObject object;
-    if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
-      continue;
-    std::string value = pdf::string_as_utf8(object);
-    sexpr::Ref esc_value = sexpr::string(value);
-    stream << *pkey << "\t" << esc_value << std::endl;
-  }
-  for (const char** pkey = date_keys; *pkey; pkey++)
-  try
-  {
-    pdf::OwnedObject object;
-    struct tm tms;
-    char tzs; int tzh = 0, tzm = 0;
-    char buffer[32];
-    if (!pdf::dict_lookup(info_dict, *pkey, &object)->isString())
-      continue;
-    char *input = object.getString()->getCString();
-    if (input[0] == 'D' && input[1] == ':')
-      input += 2;
-    tms.tm_isdst = -1;
-    tms.tm_year = scan_date_digits(input, 4) - 1900;
-    tms.tm_mon = (*input ? scan_date_digits(input, 2) : 1) - 1;
-    tms.tm_mday = *input ? scan_date_digits(input, 2) : 1;
-    tms.tm_hour = *input ? scan_date_digits(input, 2) : 0;
-    tms.tm_min  = *input ? scan_date_digits(input, 2) : 0;
-    tms.tm_sec  = *input ? scan_date_digits(input, 2) : 0;
-    switch (*input)
-    {
-    case '\0':
-      tzs = 0;
-      break;
-    case '-':
-    case '+':
-      tzs = *input;
-      input++;
-      tzh = scan_date_digits(input, 2);
-      if (tzh > 23)
-        throw InvalidDateFormat();
-      if (*input == '\'')
-        input++;
-      else
-        throw InvalidDateFormat();
-      tzm = scan_date_digits(input, 2);
-      if (tzm > 59)
-        throw InvalidDateFormat();
-      if (*input == '\'')
-        input++;
-      else
-        throw InvalidDateFormat();
-      break;
-    case 'Z':
-      input++;
-      tzs = '+';
-      tzh = tzm = 0;
-      break;
-    default:
-      throw InvalidDateFormat();
-    }
-    if (*input)
-      throw InvalidDateFormat();
-    if (mktime(&tms) == static_cast<time_t>(-1))
-      throw InvalidDateFormat();
-    // RFC 3339 date format, e.g. "2007-10-27 13:19:59+02:00"
-    if (strftime(buffer, sizeof buffer, "%Y-%m-%d %H:%M:%S", &tms) != 19)
-      throw InvalidDateFormat();
-    std::string tzstring;
-    if (tzs)
-    {
-      std::ostringstream stream;
-      stream
-        << tzs
-        << std::setw(2) << std::setfill('0') << tzh
-        << ":"
-        << std::setw(2) << std::setfill('0') << tzm
-      ;
-      tzstring = stream.str();
-      if (tzstring.length() != 6)
-        throw InvalidDateFormat();
-    }
-    stream << *pkey << "\t\"" << buffer << tzstring << "\"" << std::endl;
-  }
-  catch (InvalidDateFormat &ex)
-  {
-    debug(1) << string_printf(_("Warning: metadata[%s] is not a valid date"), *pkey) << std::endl;
-  }
+  pdf::Metadata metadata(doc);
+  metadata.iterate<std::ostream&>(add_meta_string, add_meta_date, stream);
 }
 
 class TemporaryComponentList : public ComponentList
