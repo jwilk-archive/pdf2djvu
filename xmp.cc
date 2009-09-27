@@ -181,7 +181,6 @@ std::string xmp::transform(const std::string &data)
 
 #else
 
-
 std::string xmp::transform(const std::string &data)
 {
   throw XmlError(_("XML transformations are not supported"));
