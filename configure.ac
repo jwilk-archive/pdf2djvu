@@ -208,6 +208,15 @@ AC_OUTPUT
 
 # Final remarks
 
+if test "$with_graphicsmagick" != "no" && test -z "$graphicsmagick_version"
+then
+  cat <<_ACEOF
+
+INFO: Please consider installing the GraphicsMagick library to extend
+functionality of pdf2djvu.
+_ACEOF
+fi
+
 if test "$with_xslt" != "no" && test -z "$libxslt_version"
 then
   cat <<_ACEOF
