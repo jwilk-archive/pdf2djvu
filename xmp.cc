@@ -11,6 +11,7 @@
 
 #ifdef HAVE_LIBXSLT
 
+#include <sstream>
 #include <memory>
 
 #include <libxml/xmlIO.h>
@@ -113,6 +114,53 @@ public:
   }
 };
 
+static void string_as_xpath(const std::string &string, std::ostream &stream)
+{
+  char quote = '"';
+  bool first = true;
+  std::string::const_iterator left = string.begin();
+  std::string::const_iterator right = string.begin();
+  while (right != string.end())
+  {
+    if (*right != quote)
+      right++;
+    else
+    {
+      if (right > left)
+      {
+        if (first)
+        {
+          stream << "concat(";
+          first = false;
+        }
+        else
+          stream << ',';
+        stream << quote;
+        stream << string.substr(left - string.begin(), right - left);
+        stream << quote;
+        left = right;
+      }
+      quote ^= ('"' ^ '\'');
+    }
+  }
+  if (!first)
+    stream << ',';
+  stream << quote;
+  stream << string.substr(left - string.begin(), right - left);
+  stream << quote;
+  right++;
+  left = right;
+  if (!first)
+    stream << ')';
+}
+
+static std::string string_as_xpath(const std::string &string)
+{
+  std::ostringstream stream;
+  string_as_xpath(string, stream);
+  return stream.str();
+}
+
 #include "xmp-xslt.hh"
 
 std::string xmp::transform(const std::string &data)
@@ -120,7 +168,8 @@ std::string xmp::transform(const std::string &data)
   std::string result;
   XmlEnvironment xml_environment;
   {
-    static const char *params[2] = { "djvu-producer", "\"" PACKAGE_STRING "\"" };
+    static const std::string xpath_producer = string_as_xpath(PACKAGE_STRING);
+    static const char *params[2] = { "djvu-producer", xpath_producer.c_str() };
     Xml xmp(data);
     Xsl xsl(xmp::xslt);
     std::auto_ptr<Xml> transformed_data;
