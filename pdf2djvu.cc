@@ -691,10 +691,9 @@ static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ost
   }
 }
 
-static void pdf_metadata_to_djvu_metadata(pdf::Document &doc, std::ostream &stream)
+static void pdf_metadata_to_djvu_metadata(pdf::Metadata &metadata, std::ostream &stream)
 {
   sexpr::GCLock gc_lock;
-  pdf::Metadata metadata(doc);
   metadata.iterate<std::ostream&>(add_meta_string, add_meta_date, stream);
 }
 
@@ -1453,6 +1452,7 @@ static int xmain(int argc, char * const argv[])
   if (config.extract_metadata)
   {
     TemporaryFile sed_file;
+    pdf::Metadata metadata(doc);
     debug(3) << _("extracting XMP metadata") << std::endl;
     {
       std::string xmp_bytes = doc.get_xmp();
@@ -1487,7 +1487,7 @@ static int xmain(int argc, char * const argv[])
     }
     debug(3) << _("extracting document-information metadata") << std::endl;
     sed_file << "set-meta" << std::endl;
-    pdf_metadata_to_djvu_metadata(doc, sed_file);
+    pdf_metadata_to_djvu_metadata(metadata, sed_file);
     sed_file << "." << std::endl;
     sed_file.close();
     djvm->set_metadata(sed_file);
