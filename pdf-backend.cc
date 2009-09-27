@@ -216,6 +216,24 @@ pdf::Timestamp::Timestamp()
 : dummy(true)
 { }
 
+pdf::Timestamp pdf::Timestamp::now()
+{
+  time_t unix_now;
+  pdf::Timestamp result;
+  result.dummy = false;
+  result.tz_sign = '+';
+  result.tz_hour = 0;
+  result.tz_minute = 0;
+  time(&unix_now);
+  if (unix_now == static_cast<time_t>(-1))
+    throw pdf::Timestamp::Invalid();
+  struct tm *c_timestamp = gmtime(&unix_now);
+  if (c_timestamp == NULL)
+    throw pdf::Timestamp::Invalid();
+  result.timestamp = *c_timestamp;
+  return result;
+}
+
 pdf::Timestamp::Timestamp(int year, int month, int day, int hour, int minute, int second, char tz_sign, int tz_hour, int tz_minute)
 : dummy(false),
   tz_sign(tz_sign),

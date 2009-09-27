@@ -321,6 +321,7 @@ namespace pdf
     Timestamp();
     Timestamp(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, char tz_sign = 0, int tz_hour = 0, int tz_minute = 0);
     std::string format(char separator = 'T') const;
+    static Timestamp now();
 
     class Invalid : public std::runtime_error
     {
