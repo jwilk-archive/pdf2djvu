@@ -123,6 +123,23 @@ public:
   }
 };
 
+static inline void char_as_xpath(char c, std::ostream &stream)
+{
+  if (c < 0 || c >= ' ' || c == '\r' || c == '\n' || c == '\t')
+    stream << c;
+  else
+  {
+    /* These are invalid characters for XML documents.
+     * Replace them with U+FFFD (replacement character).
+     *
+     * See
+     * http://www.w3.org/TR/REC-xml/#charsets
+     * for details.
+     */
+    stream << "\xef\xbf\xbd";
+  }
+}
+
 static void string_as_xpath(const std::string &string, std::ostream &stream)
 {
   char quote = '"';
@@ -145,7 +162,8 @@ static void string_as_xpath(const std::string &string, std::ostream &stream)
         else
           stream << ',';
         stream << quote;
-        stream << string.substr(left - string.begin(), right - left);
+        while (left < right)
+          char_as_xpath(*left++, stream);
         stream << quote;
         left = right;
       }
@@ -155,7 +173,8 @@ static void string_as_xpath(const std::string &string, std::ostream &stream)
   if (!first)
     stream << ',';
   stream << quote;
-  stream << string.substr(left - string.begin(), right - left);
+  while (left < right)
+    char_as_xpath(*left++, stream);
   stream << quote;
   right++;
   left = right;
