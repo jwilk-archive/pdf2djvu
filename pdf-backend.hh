@@ -358,7 +358,7 @@ namespace pdf
       void (*string_callback)(const char *, const std::string &, const T &),
       void (*date_callback)(const char *, const Timestamp &, const T &),
       const T &extra
-    );
+    ) const;
   };
 
   template <typename T>
@@ -366,7 +366,7 @@ namespace pdf
     void (*string_callback)(const char *, const std::string &, const T &),
     void (*date_callback)(const char *, const Timestamp &, const T &),
     const T &extra
-  )
+  ) const
   {
     for (std::vector<string_field>::const_iterator it = this->string_fields.begin(); it != this->string_fields.end(); it++)
       string_callback(it->first, *it->second, extra);
