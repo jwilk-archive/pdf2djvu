@@ -122,7 +122,7 @@ then
       AC_DEFINE_UNQUOTED(LIBXSLT_VERSION_STRING, "$libxslt_version", Define to the version of GNOME XSLT library)
       AC_DEFINE_UNQUOTED(LIBXML2_VERSION_STRING, "$libxml2_version", Define to the version of GNOME XML library)
       PACKAGE_STRING="$PACKAGE_STRING, GNOME XSLT $libxslt_version, GNOME XML $libxml2_version"
-    ]
+    ], [ : ]
   )
 fi
 
@@ -207,6 +207,15 @@ AC_CONFIG_HEADER(version.hh)
 AC_OUTPUT
 
 # Final remarks
+
+if test "$with_xslt" != "no" && test -z "$libxslt_version"
+then
+  cat <<_ACEOF
+
+WARNING: Please consider installing the GNOME XSLT library to extend
+functionality of pdf2djvu.
+_ACEOF
+fi
 
 if test "$have_unicode_wchar_t" = maybe
 then
