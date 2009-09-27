@@ -1456,20 +1456,22 @@ static int xmain(int argc, char * const argv[])
     debug(3) << _("extracting XMP metadata") << std::endl;
     {
       std::string xmp_bytes = doc.get_xmp();
+      debug(0)++;
+      if (config.adjust_metadata)
+        try
+        {
+          xmp_bytes = xmp::transform(xmp_bytes, metadata);
+        }
+        catch (xmp::XmlError &ex)
+        {
+          debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+        }
+      debug(0)--;
       if (xmp_bytes.length())
       {
         sexpr::GCLock gc_lock;
         static sexpr::Ref xmp_symbol = sexpr::symbol("xmp");
         sexpr::Ref xmp = sexpr::nil;
-        if (config.adjust_metadata)
-          try
-          {
-            xmp_bytes = xmp::transform(xmp_bytes, metadata);
-          }
-          catch (xmp::XmlError &ex)
-          {
-            debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
-          }
         xmp = sexpr::cons(sexpr::string(xmp_bytes), xmp);
         xmp = sexpr::cons(xmp_symbol, xmp);
         sed_file
@@ -1477,12 +1479,6 @@ static int xmain(int argc, char * const argv[])
           << "set-ant" << std::endl
           << xmp << std::endl
           << "." << std::endl;
-      }
-      else
-      {
-        debug(0)++;
-        debug(3) << _("no XMP metadata") << std::endl;
-        debug(0)--;
       }
     }
     debug(3) << _("extracting document-information metadata") << std::endl;

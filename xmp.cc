@@ -24,7 +24,11 @@
 
 static void throw_xml_error()
 {
-  throw xmp::XmlError(xmlGetLastError()->message);
+  xmlErrorPtr error = xmlGetLastError();
+  if (error != NULL)
+    throw xmp::XmlError(error->message);
+  else
+    throw xmp::XmlError(_("Unknown error"));
 }
 
 class Xsl;
@@ -167,6 +171,7 @@ static std::string string_as_xpath(const std::string &string)
 }
 
 #include "xmp-xslt.hh"
+#include "xmp-dummy.hh"
 
 static std::string pdf_key_to_xslt_key(const std::string &string)
 {
@@ -215,7 +220,7 @@ std::string xmp::transform(const std::string &data, const pdf::Metadata &metadat
     params.push_back("djvu-producer");
     params.push_back(string_as_xpath(PACKAGE_STRING));
     metadata.iterate<std::vector<std::string>&>(add_meta_string, add_meta_date, params);
-    Xml xmp(data);
+    Xml xmp(data.length() > 0 ? data : dummy_xmp);
     Xsl xsl(xmp::xslt);
     std::auto_ptr<Xml> transformed_data;
     transformed_data.reset(xsl.transform(xmp, params));
