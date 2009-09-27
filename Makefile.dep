@@ -62,6 +62,7 @@ system.o: system.cc
 system.o: system.hh
 system.o: version.hh
 xmp.o: i18n.hh
+xmp.o: pdf-backend.hh
 xmp.o: version.hh
 xmp.o: xmp-xslt.hh
 xmp.o: xmp.cc

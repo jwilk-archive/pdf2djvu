@@ -89,10 +89,15 @@ public:
     xsltFreeStylesheet(this->c_xsl);
   }
 
-  Xml *transform(const Xml &xml, const char **params)
+  Xml *transform(const Xml &xml, const std::vector<std::string> &params)
   {
     xmlDocPtr c_document;
-    c_document = xsltApplyStylesheet(this->c_xsl, xml.c_xml, params);
+    const char **c_params = new const char*[params.size() + 1];
+    for (size_t i = 0; i < params.size(); i++)
+      c_params[i] = params[i].c_str();
+    c_params[params.size()] = NULL;
+    c_document = xsltApplyStylesheet(this->c_xsl, xml.c_xml, c_params);
+    delete[] c_params;
     if (c_document == NULL)
       throw_xml_error();
     return new Xml(c_document);
@@ -163,13 +168,53 @@ static std::string string_as_xpath(const std::string &string)
 
 #include "xmp-xslt.hh"
 
-std::string xmp::transform(const std::string &data)
+static std::string pdf_key_to_xslt_key(const std::string &string)
+{
+  std::string result = "pdf";
+  for (std::string::const_iterator it = string.begin(); it != string.end(); it++)
+  {
+    if (*it >= 'A' && *it <= 'Z')
+    {
+      result += '-';
+      result += *it - 'A' + 'a';
+    }
+    else
+      result += *it;
+  }
+  return result;
+}
+
+static void add_meta_string(const char *key, const std::string &value, std::vector<std::string> &params)
+{
+  params.push_back(pdf_key_to_xslt_key(key));
+  params.push_back(string_as_xpath(value));
+}
+
+static void add_meta_date(const char *key, const pdf::Timestamp &value, std::vector<std::string> &params)
+{
+  std::string string_value;
+  try
+  {
+    string_value = value.format('T');
+  }
+  catch (pdf::Timestamp::Invalid)
+  {
+    /* Ignore the error. User should be warned somewhere else anyway. */
+    return;
+  }
+  params.push_back(pdf_key_to_xslt_key(key));
+  params.push_back(string_as_xpath(string_value));
+}
+
+std::string xmp::transform(const std::string &data, const pdf::Metadata &metadata)
 {
   std::string result;
   XmlEnvironment xml_environment;
   {
-    static const std::string xpath_producer = string_as_xpath(PACKAGE_STRING);
-    static const char *params[2] = { "djvu-producer", xpath_producer.c_str() };
+    std::vector<std::string> params;
+    params.push_back("djvu-producer");
+    params.push_back(string_as_xpath(PACKAGE_STRING));
+    metadata.iterate<std::vector<std::string>&>(add_meta_string, add_meta_date, params);
     Xml xmp(data);
     Xsl xsl(xmp::xslt);
     std::auto_ptr<Xml> transformed_data;

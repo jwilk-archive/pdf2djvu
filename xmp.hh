@@ -11,9 +11,11 @@
 #include <string>
 #include <stdexcept>
 
+#include "pdf-backend.hh"
+
 namespace xmp
 {
-  std::string transform(const std::string &data);
+  std::string transform(const std::string &data, const pdf::Metadata &metadata);
 
   class XmlError : public std::runtime_error
   {

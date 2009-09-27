@@ -1464,7 +1464,7 @@ static int xmain(int argc, char * const argv[])
         if (config.adjust_metadata)
           try
           {
-            xmp_bytes = xmp::transform(xmp_bytes);
+            xmp_bytes = xmp::transform(xmp_bytes, metadata);
           }
           catch (xmp::XmlError &ex)
           {
