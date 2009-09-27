@@ -38,9 +38,12 @@ pdf2djvu: xmp.o
 pdf2djvu:
 	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@)
 
+XML_FILES = $(wildcard *.xml)
+XML_HH_FILES = $(XML_FILES:.xml=.hh)
+
 .PHONY: clean
 clean:
-	$(RM) pdf2djvu *.o paths.hh
+	$(RM) pdf2djvu *.o paths.hh $(XML_HH_FILES)
 
 .PHONY: distclean
 distclean: clean
