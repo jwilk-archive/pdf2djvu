@@ -238,6 +238,8 @@ std::string xmp::transform(const std::string &data, const pdf::Metadata &metadat
     std::vector<std::string> params;
     params.push_back("djvu-producer");
     params.push_back(string_as_xpath(PACKAGE_STRING));
+    params.push_back("now");
+    params.push_back(string_as_xpath(pdf::Timestamp::now().format('T')));
     metadata.iterate<std::vector<std::string>&>(add_meta_string, add_meta_date, params);
     Xml xmp(data.length() > 0 ? data : dummy_xmp);
     Xsl xsl(xmp::xslt);
