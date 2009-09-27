@@ -37,7 +37,7 @@ protected:
   : c_xml(c_xml)
   { }
 public:
-  Xml(const std::string &data)
+  explicit Xml(const std::string &data)
   {
     this->c_xml = xmlReadMemory(data.c_str(), data.length(), NULL, NULL, XML_PARSE_NONET);
     if (this->c_xml == NULL)
@@ -75,7 +75,7 @@ class Xsl : public Xml
 protected:
   xsltStylesheetPtr c_xsl;
 public:
-  Xsl(const std::string &s)
+  explicit Xsl(const std::string &s)
   : Xml(s)
   {
     this->c_xsl = xsltParseStylesheetDoc(this->c_xml);
@@ -173,7 +173,7 @@ std::string xmp::transform(const std::string &data)
     Xml xmp(data);
     Xsl xsl(xmp::xslt);
     std::auto_ptr<Xml> transformed_data;
-    transformed_data.reset(xsl.transform(data, params));
+    transformed_data.reset(xsl.transform(xmp, params));
     result = transformed_data->serialize();
   }
   return result;

@@ -18,7 +18,7 @@ namespace xmp
   class XmlError : public std::runtime_error
   {
   public:
-    XmlError(const std::string message)
+    explicit XmlError(const std::string message)
     : std::runtime_error(message)
     { }
   };
