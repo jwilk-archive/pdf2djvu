@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <ctime>
 #include <iomanip>
 #include <iostream>
 #include <limits>
