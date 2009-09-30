@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.5.10\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2009-06-20 12:54+0200\n"
+"POT-Creation-Date: 2009-09-30 14:08+0200\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
-"Last-Translator: Mateusz Turcza <mturcza@mimuw.edu.pl>\n"
+"Last-Translator: Jakub Wilk <ubanus@users.sf.net>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -143,93 +143,89 @@ msgstr " -d, --dpi=ROZDZIELCZOŚĆ"
 msgid "     --page-size=WxH"
 msgstr "     --page-size=SZERxWYS"
 
-#: pdf-backend.cc:41
+#: pdf-backend.cc:42
 #, c-format
 msgid "PDF error (%d): %s"
 msgstr "Błąd pliku PDF (%d): %s"
 
-#: pdf-backend.cc:46
+#: pdf-backend.cc:47
 #, c-format
 msgid "PDF error: %s"
 msgstr "Błąd pliku PDF: %s"
 
-#: pdf-backend.cc:60
+#: pdf-backend.cc:69
 msgid "Unable to set antialias parameter"
 msgstr "Nie można ustawić parametru antyaliasingu"
 
-#: pdf-backend.cc:62
+#: pdf-backend.cc:71
 msgid "Unable to set vector antialias parameter"
 msgstr "Nie można ustawić parametru antyaliasingu grafiki wektorowej"
 
-#: pdf2djvu.cc:43
+#: pdf2djvu.cc:45
 msgid "Cannot find link destination"
 msgstr "Nie można odnaleźć celu łącza"
 
-#: pdf2djvu.cc:95
+#: pdf2djvu.cc:97
 msgid "Page not found"
 msgstr "Nie znaleziono strony"
 
-#: pdf2djvu.cc:403 pdf2djvu.cc:595 system.cc:137
+#: pdf2djvu.cc:448 pdf2djvu.cc:640 pdf2djvu.cc:1467 system.cc:139
 #, c-format
 msgid "Warning: %s"
 msgstr "Ostrzeżenie: %s"
 
-#: pdf2djvu.cc:412
+#: pdf2djvu.cc:457
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź-do"
 
-#: pdf2djvu.cc:415
+#: pdf2djvu.cc:460
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
 
-#: pdf2djvu.cc:418
+#: pdf2djvu.cc:463
 msgid "Warning: Unknown link action"
 msgstr "Ostrzeżenie: Nieznana akcja łącza"
 
-#: pdf2djvu.cc:536
+#: pdf2djvu.cc:581
 msgid "No page for a bookmark"
 msgstr "Brak strony dla zakładki"
 
-#: pdf2djvu.cc:544
+#: pdf2djvu.cc:589
 msgid "No title for a bookmark"
 msgstr "Brak tytułu dla zakładki"
 
-#: pdf2djvu.cc:634
-msgid "Invalid date format"
-msgstr "Błędny format daty"
-
-#: pdf2djvu.cc:771
+#: pdf2djvu.cc:690
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Ostrzeżenie: metadata[%s] nie jest poprawną datą"
 
-#: pdf2djvu.cc:851
+#: pdf2djvu.cc:776
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Powtórzony identyfikator strony: %s"
 
-#: pdf2djvu.cc:858
+#: pdf2djvu.cc:783
 #, c-format
 msgid "Duplicate page title: %s"
 msgstr "Powtórzony tytuł strony: %s"
 
-#: pdf2djvu.cc:924
+#: pdf2djvu.cc:849
 msgid "Unexpected output from djvused"
 msgstr "Nieoczekiwany wynik z djvused"
 
-#: pdf2djvu.cc:944
+#: pdf2djvu.cc:869
 msgid "creating document outline with `djvused`"
 msgstr "tworzenie konspektu dokumentu za pomocą `djvused`"
 
-#: pdf2djvu.cc:955
+#: pdf2djvu.cc:880
 msgid "setting metadata with `djvused`"
 msgstr "ustawianie metadanych za pomocą `djvused`"
 
-#: pdf2djvu.cc:968
+#: pdf2djvu.cc:893
 msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
 msgstr "ustawianie metadanych za pomocą `djvused` (omijanie błędu DjVuLibre)"
 
-#: pdf2djvu.cc:1011
+#: pdf2djvu.cc:936
 #, c-format
 msgid "creating multi-page indirect document (%d page)"
 msgid_plural "creating multi-page indirect document (%d pages)"
@@ -237,106 +233,106 @@ msgstr[0] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strona)"
 msgstr[1] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strony)"
 msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%d stron)"
 
-#: pdf2djvu.cc:1134
+#: pdf2djvu.cc:1059
 msgid "I won't write DjVu data to a terminal."
 msgstr "Nie wypiszę danych DjVu na terminal."
 
-#: pdf2djvu.cc:1308
+#: pdf2djvu.cc:1233
 #, c-format
 msgid "page #%d -> #%d"
 msgstr "strona #%d -> #%d"
 
-#: pdf2djvu.cc:1312
+#: pdf2djvu.cc:1237
 msgid "rendering page (1st pass)"
 msgstr "tworzenie strony (pierwszy przebieg)"
 
-#: pdf2djvu.cc:1325
+#: pdf2djvu.cc:1250
 #, c-format
 msgid "guessed resoultion: %s dpi"
 msgstr "odgadnięta rozdzielczość: %s dpi"
 
-#: pdf2djvu.cc:1331
+#: pdf2djvu.cc:1256
 msgid "unable to guess resolution"
 msgstr "nie udało się odgadnąć rozdzielczości"
 
-#: pdf2djvu.cc:1340
+#: pdf2djvu.cc:1265
 #, c-format
 msgid "image size: %dx%d"
 msgstr "wymiary obrazu: %dx%d"
 
-#: pdf2djvu.cc:1343
+#: pdf2djvu.cc:1268
 msgid "rendering page (2nd pass)"
 msgstr "tworzenie strony (drugi przebieg)"
 
-#: pdf2djvu.cc:1346
+#: pdf2djvu.cc:1271
 msgid "preparing data for `csepdjvu`"
 msgstr "przygotowywanie danych dla `csepdjvu`"
 
-#: pdf2djvu.cc:1349
+#: pdf2djvu.cc:1274
 msgid "storing foreground image"
 msgstr "zapisywanie obrazu pierwszoplanowego"
 
-#: pdf2djvu.cc:1362
+#: pdf2djvu.cc:1287
 msgid "rendering background image"
 msgstr "tworzenie obrazu tła"
 
-#: pdf2djvu.cc:1365
+#: pdf2djvu.cc:1290
 msgid "Unexpected subsampled bitmap width"
 msgstr "Nieoczekiwana szerokość podpróbkowanej bitmapy"
 
-#: pdf2djvu.cc:1367
+#: pdf2djvu.cc:1292
 msgid "Unexpected subsampled bitmap height"
 msgstr "Nieoczekiwana wysokość podpróbkowanej bitmapy"
 
-#: pdf2djvu.cc:1369
+#: pdf2djvu.cc:1294
 msgid "storing background image"
 msgstr "zapisywanie obrazu tła"
 
-#: pdf2djvu.cc:1385
+#: pdf2djvu.cc:1310
 msgid "storing dummy background image"
 msgstr "zapisywanie pustego obrazu tła"
 
-#: pdf2djvu.cc:1394
+#: pdf2djvu.cc:1319
 msgid "storing text layer"
 msgstr "zapisywanie warstwy tekstowej"
 
-#: pdf2djvu.cc:1403
+#: pdf2djvu.cc:1328
 msgid "encoding layers with `csepdjvu`"
 msgstr "kodowanie warstw za pomocą `csepdjvu`"
 
-#: pdf2djvu.cc:1425
+#: pdf2djvu.cc:1350
 msgid "recovering images with `djvuextract`"
 msgstr "wyodrębnianie obrazów za pomocą `djvuextract`"
 
-#: pdf2djvu.cc:1438
+#: pdf2djvu.cc:1363
 msgid "encoding monochrome image with `cjb2`"
 msgstr "kodowanie obrazu monochromatycznego za pomocą `cjb2`"
 
-#: pdf2djvu.cc:1453
+#: pdf2djvu.cc:1378
 msgid "creating new background image with `c44`"
 msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
 
-#: pdf2djvu.cc:1470
+#: pdf2djvu.cc:1395
 msgid "recovering image chunks with `djvuextract`"
 msgstr "wyodrębnianie kawałków obrazu za pomocą `djvuextract`"
 
-#: pdf2djvu.cc:1478
+#: pdf2djvu.cc:1403
 msgid "recovering text with `djvused`"
 msgstr "wyodrębnianie tekstu za pomocą `djvused`"
 
-#: pdf2djvu.cc:1484
+#: pdf2djvu.cc:1409
 msgid "re-assembling page with `djvumake`"
 msgstr "składanie strony za pomocą `djvumake`"
 
-#: pdf2djvu.cc:1500
+#: pdf2djvu.cc:1425
 msgid "extracting annotations"
 msgstr "wyodrębnianie adnotacji"
 
-#: pdf2djvu.cc:1510
+#: pdf2djvu.cc:1435
 msgid "adding non-raster data with `djvused`"
 msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
 
-#: pdf2djvu.cc:1518
+#: pdf2djvu.cc:1443
 #, c-format
 msgid "%zu bytes out"
 msgid_plural "%zu bytes out"
@@ -344,30 +340,26 @@ msgstr[0] "%zu bajt wyjściowy"
 msgstr[1] "%zu bajty wyjściowe"
 msgstr[2] "%zu bajtów wyjściowych"
 
-#: pdf2djvu.cc:1530
+#: pdf2djvu.cc:1456
 msgid "extracting XMP metadata"
 msgstr "wyodrębnianie metadanych XMP"
 
-#: pdf2djvu.cc:1549
-msgid "no XMP metadata"
-msgstr "brak metadanych XMP"
-
-#: pdf2djvu.cc:1553
+#: pdf2djvu.cc:1484
 msgid "extracting document-information metadata"
 msgstr "wyodrębnianie metadanych dokumentu"
 
-#: pdf2djvu.cc:1564
+#: pdf2djvu.cc:1495
 msgid "extracting document outline"
 msgstr "wyodrębnianie konspektu dokumentu"
 
-#: pdf2djvu.cc:1606
+#: pdf2djvu.cc:1537
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
 msgstr ""
 "%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
 "wyjściowych"
 
-#: pdf2djvu.cc:1624
+#: pdf2djvu.cc:1555
 #, c-format
 msgid "I/O error (%s)"
 msgstr "Błąd We/Wy (%s)"
@@ -376,209 +368,217 @@ msgstr "Błąd We/Wy (%s)"
 msgid "Integer overflow"
 msgstr "Przekroczenie zakresu liczb całkowitych"
 
-#: system.cc:56
+#: system.cc:58
 msgid "Operation not permitted"
 msgstr "Operacja niedozwolona"
 
-#: system.cc:57
+#: system.cc:59
 msgid "No such file or directory"
 msgstr "Nie ma takiego pliku ani katalogu"
 
-#: system.cc:58
+#: system.cc:60
 msgid "No such process"
 msgstr "Nie ma takiego procesu"
 
-#: system.cc:59
+#: system.cc:61
 msgid "Interrupted function call"
 msgstr "Przerwane wywołanie systemowe"
 
-#: system.cc:60
+#: system.cc:62
 msgid "Interrupted system call"
 msgstr "Przerwane wywołanie systemowe"
 
-#: system.cc:61
+#: system.cc:63
 msgid "Input/output error"
 msgstr "Błąd wejścia/wyjścia"
 
-#: system.cc:62
+#: system.cc:64
 msgid "No such device or address"
 msgstr "Nie ma takiego urządzenia ani adresu"
 
-#: system.cc:63
+#: system.cc:65
 msgid "Arg list too long"
 msgstr "Lista argumentów za długa"
 
-#: system.cc:64
+#: system.cc:66
 msgid "Argument list too long"
 msgstr "Lista argumentów za długa"
 
-#: system.cc:65
+#: system.cc:67
 msgid "Exec format error"
 msgstr "Błędny format pliku wykonywalnego"
 
-#: system.cc:66
+#: system.cc:68
 msgid "Bad file descriptor"
 msgstr "Błędny deskryptor pliku"
 
-#: system.cc:67
+#: system.cc:69
 msgid "No child processes"
 msgstr "Brak procesów potomnych"
 
-#: system.cc:68
+#: system.cc:70
 msgid "Resource temporarily unavailable"
 msgstr "Zasoby chwilowo niedostępne"
 
-#: system.cc:69
+#: system.cc:71
 msgid "Not enough space"
 msgstr "Nie można przydzielić pamięci"
 
-#: system.cc:70
+#: system.cc:72
 msgid "Cannot allocate memory"
 msgstr "Nie można przydzielić pamięci"
 
-#: system.cc:71
+#: system.cc:73
 msgid "Permission denied"
 msgstr "Brak dostępu"
 
-#: system.cc:72
+#: system.cc:74
 msgid "Bad address"
 msgstr "Błędny adres"
 
-#: system.cc:73
+#: system.cc:75
 msgid "Resource device"
 msgstr "Urządzenie lub zasoby zajęte"
 
-#: system.cc:74
+#: system.cc:76
 msgid "Device or resource busy"
 msgstr "Urządzenie lub zasoby zajęte"
 
-#: system.cc:75
+#: system.cc:77
 msgid "File exists"
 msgstr "Plik istnieje"
 
-#: system.cc:76
+#: system.cc:78
 msgid "Improper link"
 msgstr "Błędne dowiązanie między urządzeniami"
 
-#: system.cc:77
+#: system.cc:79
 msgid "Invalid cross-device link"
 msgstr "Błędne dowiązanie między urządzeniami"
 
-#: system.cc:78
+#: system.cc:80
 msgid "No such device"
 msgstr "Nie ma takiego urządzenia"
 
-#: system.cc:79
+#: system.cc:81
 msgid "Not a directory"
 msgstr "Nie jest katalogiem"
 
-#: system.cc:80
+#: system.cc:82
 msgid "Is a directory"
 msgstr "Jest katalogiem"
 
-#: system.cc:81
+#: system.cc:83
 msgid "Invalid argument"
 msgstr "Zły argument"
 
-#: system.cc:82
+#: system.cc:84
 msgid "Too many open files in system"
 msgstr "Za dużo otwartych plików w systemie"
 
-#: system.cc:83
+#: system.cc:85
 msgid "Too many open files"
 msgstr "Za dużo otwartych plików"
 
-#: system.cc:84
+#: system.cc:86
 msgid "Inappropriate I/O control operation"
 msgstr "Niewłaściwy ioctl dla urządzenia"
 
-#: system.cc:85
+#: system.cc:87
 msgid "Inappropriate ioctl for device"
 msgstr "Niewłaściwy ioctl dla urządzenia"
 
-#: system.cc:86
+#: system.cc:88
 msgid "File too large"
 msgstr "Plik zbyt duży"
 
-#: system.cc:87
+#: system.cc:89
 msgid "No space left on device"
 msgstr "Brak miejsca na urządzeniu"
 
-#: system.cc:88
+#: system.cc:90
 msgid "Invalid seek"
 msgstr "Błędne przesunięcie"
 
-#: system.cc:89
+#: system.cc:91
 msgid "Illegal seek"
 msgstr "Błędne przesunięcie"
 
-#: system.cc:90
+#: system.cc:92
 msgid "Read-only file system"
 msgstr "System plików wyłącznie do odczytu"
 
-#: system.cc:91
+#: system.cc:93
 msgid "Too many links"
 msgstr "Za dużo dowiązań"
 
-#: system.cc:92
+#: system.cc:94
 msgid "Broken pipe"
 msgstr "Przerwany potok"
 
-#: system.cc:93
+#: system.cc:95
 msgid "Domain error"
 msgstr "Argument liczbowy spoza dziedziny"
 
-#: system.cc:94
+#: system.cc:96
 msgid "Numerical argument out of domain"
 msgstr "Argument liczbowy spoza dziedziny"
 
-#: system.cc:95
+#: system.cc:97
 msgid "Result too large"
 msgstr "Wynik liczbowy poza zakresem"
 
-#: system.cc:96
+#: system.cc:98
 msgid "Numerical result out of range"
 msgstr "Wynik liczbowy poza zakresem"
 
-#: system.cc:97
+#: system.cc:99
 msgid "Resource deadlock avoided"
 msgstr "Uniknięto zakleszczenia zasobów"
 
-#: system.cc:98
+#: system.cc:100
 msgid "Filename too long"
 msgstr "Za długa nazwa pliku"
 
-#: system.cc:99
+#: system.cc:101
 msgid "File name too long"
 msgstr "Za długa nazwa pliku"
 
-#: system.cc:100
+#: system.cc:102
 msgid "No locks available"
 msgstr "Brak dostępnych blokad"
 
-#: system.cc:101
+#: system.cc:103
 msgid "Function not implemented"
 msgstr "Nie zaimplementowana funkcja"
 
-#: system.cc:102
+#: system.cc:104
 msgid "Directory not empty"
 msgstr "Katalog nie jest pusty"
 
-#: system.cc:103
+#: system.cc:105
 msgid "Illegal byte sequence"
 msgstr "Błędny lub niepełny znak wielobajtowy"
 
-#: system.cc:104
+#: system.cc:106
 msgid "Invalid or incomplete multibyte or wide character"
 msgstr "Błędny lub niepełny znak wielobajtowy"
 
-#: system.cc:172
+#: system.cc:174
 msgid "possibly memory allocation error"
 msgstr "prawdopodobnie błąd przydziału pamięci"
 
-#: system.cc:975
+#: system.cc:1025
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
+
+#: xmp.cc:31
+msgid "Unknown error"
+msgstr "Nieznany błąd"
+
+#: xmp.cc:257
+msgid "XML transformations are not supported"
+msgstr "Transformacje XML nie są obsługiwane"
 
 #: config.hh:108
 msgid "No pages selected"
@@ -587,6 +587,10 @@ msgstr "Nie wybrano stron"
 #: pdf-backend.hh:302
 msgid "Unable to load document"
 msgstr "Nie można załadować dokumentu"
+
+#: pdf-backend.hh:330
+msgid "Invalid date format"
+msgstr "Błędny format daty"
 
 #: quantizer.hh:72
 msgid "Advanced color quantization is not supported."
