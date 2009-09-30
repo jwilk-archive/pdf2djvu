@@ -14,6 +14,11 @@ paths.hh
 pdf2djvu
 po/*.mo
 po/*.pot
+tests/*.djvu
+tests/*.log
+tests/*.pdf
+tests/*.pyc
+tests/*.stamp
 tools/config.*
 tools/install-sh
 version.hh
