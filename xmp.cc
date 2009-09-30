@@ -252,7 +252,7 @@ std::string xmp::transform(const std::string &data, const pdf::Metadata &metadat
 
 #else
 
-std::string xmp::transform(const std::string &data)
+std::string xmp::transform(const std::string &data, const pdf::Metadata &metadata)
 {
   throw XmlError(_("XML transformations are not supported"));
 }
