@@ -257,7 +257,7 @@ std::string pdf::Timestamp::format(char separator) const
   if (this->dummy)
     return "";
   std::ostringstream stream;
-  char buffer[10 + CHAR_BIT * sizeof this->timestamp.tm_year / 3];
+  char buffer[17 + CHAR_BIT * sizeof this->timestamp.tm_year / 3];
   char format[] = "%Y-%m-%d %H:%M:%S";
   format[8] = separator;
   struct tm tmp_timestamp = this->timestamp;
