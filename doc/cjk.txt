@@ -6,7 +6,7 @@ languages, the poppler-data_ package has to be installed.
 
 For the Windows port:
 
-- upack the archive;
+- unpack the archive;
 - rename the extracted directory to ``poppler-data``;
 - put it into the same directory as the ``pdf2djvu.exe`` file.
 
