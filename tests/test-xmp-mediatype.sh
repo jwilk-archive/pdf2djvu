@@ -4,6 +4,9 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
+# http://code.google.com/p/pdf2djvu/issues/detail?id=12
+# Fixed in [490a08283fb4].
+
 . common.sh
 
 test_pdf2djvu --verbatim-metadata

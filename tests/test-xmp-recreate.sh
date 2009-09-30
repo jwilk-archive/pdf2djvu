@@ -4,6 +4,8 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
+# Fixed in [d8c60ea6bc37].
+
 . common.sh
 
 test_pdf2djvu --verbatim-metadata
