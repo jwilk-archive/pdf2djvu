@@ -11,4 +11,4 @@
 test_pdf2djvu --verbatim-metadata
 extract_xmp "$djvu_file" | grep -F '<pdf2djvu:empty' > /dev/null
 test_pdf2djvu
-extract_xmp "$djvu_file" | grep -F '>image/vnd.djvu<'
+extract_xmp "$djvu_file" | grep -F '>image/vnd.djvu<' > /dev/null
