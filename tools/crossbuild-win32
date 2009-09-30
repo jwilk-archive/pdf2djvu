@@ -124,7 +124,7 @@ export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
 export CPATH="$usr/include"
 export LDFLAGS="-L$usr/lib"
 
-# Compile popppler:
+# Compile poppler:
 
 cd "$src/"poppler-*/
 CPPFLAGS='-DWIN32_LEAN_AND_MEAN -DXMD_H' \
