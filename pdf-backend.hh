@@ -327,7 +327,7 @@ namespace pdf
     {
     public:
       Invalid()
-      : std::runtime_error(_("Invalid time/date format"))
+      : std::runtime_error(_("Invalid date format"))
       { }
     };
   };
