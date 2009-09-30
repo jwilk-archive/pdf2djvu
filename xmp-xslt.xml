@@ -4,10 +4,11 @@
 <xsl:stylesheet 
   version='1.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:xmp='adobe:ns:meta/'
+  xmlns:x='adobe:ns:meta/'
   xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
   xmlns:pdf='http://ns.adobe.com/pdf/1.3/'
   xmlns:dc='http://purl.org/dc/elements/1.1/'
+  xmlns:xmp='http://ns.adobe.com/xap/1.0/'
   xmlns:xmpMM='http://ns.adobe.com/xap/1.0/mm/'
   xmlns:stEvt='http://ns.adobe.com/xap/1.0/sType/ResourceEvent#'
 >
@@ -25,11 +26,11 @@
 <xsl:param name='pdf-creation-date' select='""'/>
 <xsl:param name='pdf-mod-date' select='""'/>
 
-<xsl:template match='/xmp:xmpmeta'>
+<xsl:template match='/x:xmpmeta'>
   <xsl:apply-templates select='rdf:RDF'/>
 </xsl:template>
 
-<xsl:template match='/xmp:xmpmeta/rdf:RDF'>
+<xsl:template match='/x:xmpmeta/rdf:RDF'>
   <xsl:copy>
     <xsl:copy-of select='@*'/>
     <xsl:apply-templates/>
@@ -81,7 +82,7 @@
   />
 </xsl:template>
 
-<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/xmpMM:History/rdf:Seq'>
+<xsl:template match='/x:xmpmeta/rdf:RDF/rdf:Description/xmpMM:History/rdf:Seq'>
   <xsl:copy>
     <xsl:copy-of select='@*'/>
     <xsl:apply-templates/>
@@ -89,7 +90,7 @@
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match='/xmp:xmpmeta/rdf:RDF/rdf:Description/dc:format'>
+<xsl:template match='/x:xmpmeta/rdf:RDF/rdf:Description/dc:format'>
   <xsl:copy>
     <xsl:copy-of select='@*'/>
     <xsl:text>image/vnd.djvu</xsl:text>
