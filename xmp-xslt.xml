@@ -69,6 +69,9 @@
       <xsl:if test='count(rdf:Description/xmp:ModifyDate) = 0 and $pdf-mod-date != ""'>
         <xmp:ModifyDate><xsl:copy-of select='$pdf-mod-date'/></xmp:ModifyDate>
       </xsl:if>
+      <xsl:if test='count(rdf:Description/xmp:MetadataDate) = 0 and $now != ""'>
+        <xmp:MetadataDate><xsl:copy-of select='$now'/></xmp:MetadataDate>
+      </xsl:if>
     </rdf:Description>
   </xsl:copy>
 </xsl:template>
@@ -94,6 +97,13 @@
   <xsl:copy>
     <xsl:copy-of select='@*'/>
     <xsl:text>image/vnd.djvu</xsl:text>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match='/x:xmpmeta/rdf:RDF/rdf:Description/xmp:MetadataDate'>
+  <xsl:copy>
+    <xsl:copy-of select='@*'/>
+    <xsl:copy-of select='$now'/>
   </xsl:copy>
 </xsl:template>
 
