@@ -35,4 +35,13 @@ test_pdf2djvu_indirect()
     _test_pdf2djvu -i "$djvu_file" "$@"
 }
 
+extract_xmp()
+{
+    djvused -e output-ant "$@" \
+    | sed -n -e '/^(xmp \(.*\))$/ { s//printf \1/ p; q }' \
+    | sh \
+    | ( grep '.*' || printf '<pdf2djvu:empty xmlns:pdf2djvu="http://pdf2djvu.googlecode.com/"/>') \
+    | xmllint -format -
+}
+
 # vim:ts=4 sw=4 et
