@@ -37,11 +37,19 @@ test_pdf2djvu_indirect()
 
 extract_xmp()
 {
+    local raw
+    if [ "$1" = '--raw' ]
+    then
+        raw=1
+        shift
+    else
+        raw=0
+    fi
     djvused -e output-ant "$@" \
     | sed -n -e '/^(xmp \(.*\))$/ { s//printf \1/ p; q }' \
     | sh \
     | ( grep '.*' || printf '<pdf2djvu:empty xmlns:pdf2djvu="http://pdf2djvu.googlecode.com/"/>') \
-    | xmllint -format -
+    | ( [ "$raw" -eq 0 ] && xmllint -format - || cat )
 }
 
 # vim:ts=4 sw=4 et
