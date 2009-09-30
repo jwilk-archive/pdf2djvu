@@ -11,6 +11,7 @@
   xmlns:xmp='http://ns.adobe.com/xap/1.0/'
   xmlns:xmpMM='http://ns.adobe.com/xap/1.0/mm/'
   xmlns:stEvt='http://ns.adobe.com/xap/1.0/sType/ResourceEvent#'
+  exclude-result-prefixes='xsl x rdf pdf dc xmp xmpMM stEvt'
 >
 
 <xsl:output method='xml' omit-xml-declaration='yes'/>
