@@ -112,6 +112,13 @@ wget -O - 'http://djvu.sourceforge.net/' \
 | wget -c -i -
 tar -xzf djvulibre-*.tar.gz
 
+printf 'ftp://xmlsoft.org/libxslt/LATEST_LIB%s\n' XML2 XSLT \
+| wget -c -i -
+for file in LATEST_*
+do
+  tar -xzf "$file"
+done
+
 # Setup cross-compilation environment:
 
 export CXX="${host}-g++ -static-libgcc"
@@ -123,6 +130,52 @@ export STRIP="${host}-strip"
 export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
 export CPATH="$usr/include"
 export LDFLAGS="-L$usr/lib"
+
+# Compile libxml2:
+
+cd "$src/"libxml2-*/
+./configure --host="$host" --prefix="$usr" \
+  --disable-static \
+  --with-minimum \
+  --with-xpath \
+  --with-html \
+  --with-output \
+  --with-tree
+cat <<EOF > include/libxml/xmlexports.h
+#ifndef __XML_EXPORTS_H__
+#define __XML_EXPORTS_H__
+
+#if defined(IN_LIBXML)
+  #define XMLPUBFUN __declspec(dllexport)
+  #define XMLPUBVAR __declspec(dllexport) extern
+#else
+  #define XMLPUBFUN __declspec(dllimport)
+  #define XMLPUBVAR __declspec(dllimport) extern
+#endif
+#define XMLCALL __cdecl
+#define XMLCDECL __cdecl
+#if !defined _REENTRANT
+  #define _REENTRANT
+#endif
+
+#endif
+EOF
+make
+make install
+
+# Compile libxslt:
+
+cd "$src/"libxslt-*/
+./configure --host="$host" --prefix="$usr" \
+  --disable-static \
+  --with-libxml-prefix="$usr" \
+  --without-crypto \
+  --without-debug \
+  --without-debugger \
+  --without-plugins
+cd libxslt
+make
+make install
 
 # Compile poppler:
 
@@ -166,7 +219,7 @@ do
   sed -e 's/%zu/%Iu/g' < "$language.po" | msgfmt - -o "$language.mo"
 done
 cd ..
-./configure --host="$host" --prefix="$usr" --without-graphicsmagick --without-xslt
+./configure --host="$host" --prefix="$usr" --without-graphicsmagick
 make djvulibre_bindir=. localedir=./locale
 make install
 
@@ -183,6 +236,8 @@ cp "$usr/bin/"libfontconfig-*.dll .
 cp "$usr/bin/"freetype*.dll .
 cp "$usr/bin/"libjpeg*.dll .
 cp "$usr/bin/"libexpat-*.dll .
+cp "$usr/bin/"libxml2-*.dll .
+cp "$usr/bin/"libxslt-*.dll .
 cp "$usr/bin/"intl.dll .
 cp "$usr/bin/"mingwm*dll .
 mkdir etc/ || true
