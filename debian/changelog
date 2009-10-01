@@ -1,10 +1,10 @@
-pdf2djvu (0.6.0) UNRELEASED; urgency=low
+pdf2djvu (0.6.0) unstable; urgency=low
 
   * New regression tests.
   * Add support for correcting XMP metadata.
   * Fix resolution detection (poppler ≥ 0.11.1 only).
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 01 Oct 2009 17:02:20 +0200
+ -- Jakub Wilk <ubanus@users.sf.net>  Thu, 01 Oct 2009 18:30:33 +0200
 
 pdf2djvu (0.5.11) unstable; urgency=low
 
