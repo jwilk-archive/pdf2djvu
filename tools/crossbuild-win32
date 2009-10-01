@@ -130,6 +130,7 @@ export STRIP="${host}-strip"
 export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
 export CPATH="$usr/include"
 export LDFLAGS="-L$usr/lib"
+export CFLAGS='-Os'
 
 # Compile libxml2:
 
