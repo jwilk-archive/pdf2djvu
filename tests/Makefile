@@ -33,7 +33,7 @@ clean:
 	pdftex $(<)
 
 %: %.in
-	$(<)
+	./$(<)
 
 ../pdf2djvu:
 	$(MAKE) -C ../
