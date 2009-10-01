@@ -48,6 +48,9 @@ do
 done
 cd ../..
 
+# Prepare tests:
+make -C "pdf2djvu-$version/tests/" prepare
+
 # Tarball with source + Debian stuff:
 tar -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
 

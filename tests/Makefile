@@ -21,6 +21,10 @@ GENERATED_FILES = $(IN_FILES:.in=) $(STAMP_FILES) $(PDF_FILES)
 .PHONY: all
 all: $(GENERATED_FILES)
 
+.PHONY: prepare
+prepare: $(IN_FILES:.in=) $(PDF_FILES)
+	rm -f *.log *.pyc
+
 .PHONY: clean
 clean:
 	rm -f $(GENERATED_FILES) *.log *.djvu *.pyc
