@@ -305,7 +305,7 @@ public:
 
   void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
     int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream,
-    int mask_width, int mask_height,	pdf::gfx::ImageColorMap *mask_color_map)
+    int mask_width, int mask_height, pdf::gfx::ImageColorMap *mask_color_map)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
       return;
