@@ -6,7 +6,7 @@
 
 # Fixed in [9a9650e7f06f].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu
 djvudump "$djvu_file" | grep 'BG44 \[[0-9][0-9]\] .* 75x75' > /dev/null

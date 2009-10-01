@@ -7,7 +7,7 @@
 # http://code.google.com/p/pdf2djvu/issues/detail?id=23
 # Fixed in [ede3c622526a].
 
-. common.sh
+. ./common.sh
 
 ! test_pdf2djvu --pages=1,1 && \
 grep '^Duplicate page identifier:' "$error_log" > /dev/null

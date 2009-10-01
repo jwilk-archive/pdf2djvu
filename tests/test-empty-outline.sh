@@ -7,7 +7,7 @@
 # http://bugs.debian.org/508391
 # Fixed in [f5d4727b2490].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu
 ! djvused -e print-outline "$djvu_file" | grep .

@@ -4,7 +4,7 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu --verbatim-metadata
 extract_xmp --raw "$djvu_file" | grep -F '<broken' > /dev/null

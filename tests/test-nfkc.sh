@@ -6,7 +6,7 @@
 
 # Fixed in [18b2ae04de2f], [fa7d4addf18e].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu
 djvused -e print-pure-txt "$djvu_file" | grep '^fluorografia *$' > /dev/null

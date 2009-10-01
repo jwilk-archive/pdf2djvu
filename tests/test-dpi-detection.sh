@@ -7,7 +7,7 @@
 # http://sf.net/tracker/?func=detail&aid=1972089&group_id=32953&atid=406583
 # Fixed in [5e3937296514].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu --guess-dpi
 djvudump "$djvu_file" | grep 'INFO .* DjVu 100x200,' > /dev/null

@@ -6,7 +6,7 @@
 
 # Fixed in [d8c60ea6bc37].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu --verbatim-metadata
 extract_xmp "$djvu_file" | grep -F '<pdf2djvu:empty' > /dev/null

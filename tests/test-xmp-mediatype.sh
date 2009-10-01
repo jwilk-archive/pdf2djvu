@@ -7,7 +7,7 @@
 # http://code.google.com/p/pdf2djvu/issues/detail?id=12
 # Fixed in [490a08283fb4].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu --verbatim-metadata
 extract_xmp "$djvu_file" | grep -F '>application/pdf<' > /dev/null

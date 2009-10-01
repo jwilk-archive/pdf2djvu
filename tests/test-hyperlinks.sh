@@ -6,7 +6,7 @@
 
 # Fixed in [a244b65e0661], [2e5ab20f8a07].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu
 djvused -e 'select 1; print-ant' "$djvu_file" | grep '^(maparea "#p0002.djvu" "" (rect [0-9]\+ [0-9]\+ [0-9]\+ [0-9]\+) (xor))$' > /dev/null

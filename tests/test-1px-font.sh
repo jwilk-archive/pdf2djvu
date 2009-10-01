@@ -7,6 +7,6 @@
 # http://code.google.com/p/pdf2djvu/issues/detail?id=5
 # Fixed in [1a39024ea13a].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu

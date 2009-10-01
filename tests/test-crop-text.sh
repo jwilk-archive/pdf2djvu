@@ -7,7 +7,7 @@
 # http://code.google.com/p/pdf2djvu/issues/detail?id=20
 # Fixed in [c06a41afdc46].
 
-. common.sh
+. ./common.sh
 
 test_pdf2djvu
 djvused -e print-pure-txt "$djvu_file" | grep '^Lorem ipsum *$' > /dev/null
