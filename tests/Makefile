@@ -10,9 +10,9 @@ export pdf2djvu
 TEST_SCRIPTS = $(wildcard test-*.sh)
 TESTS = $(TEST_SCRIPTS:.sh=)
 
-STAMP_FILES = $(addsuffix .stamp, $(TESTS))
-PDF_FILES = $(addsuffix .pdf, $(TESTS))
-DJVU_FILES = $(addsuffix .djvu, $(TESTS))
+STAMP_FILES = $(TESTS:%=%.stamp)
+PDF_FILES = $(TESTS:%=%.pdf)
+DJVU_FILES = $(TESTS:%=%.djvu)
 
 IN_FILES = $(wildcard *.in)
 
