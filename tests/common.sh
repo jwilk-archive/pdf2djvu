@@ -46,8 +46,8 @@ extract_xmp()
         raw=0
     fi
     djvused -e output-ant "$@" \
-    | sed -n -e '/^(xmp \(.*\))$/ { s//printf \1/ p; q }' \
-    | sh \
+    | sed -n -e '/^(xmp "\(.*\)")$/ { s//\1/ p; q }' \
+    | xargs -0 printf "%b" \
     | ( grep '.*' || printf '<pdf2djvu:empty xmlns:pdf2djvu="http://pdf2djvu.googlecode.com/"/>') \
     | ( [ "$raw" -eq 0 ] && xmllint -format - || cat )
 }
