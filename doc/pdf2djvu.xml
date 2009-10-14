@@ -431,6 +431,7 @@
             </listitem>
         </varlistentry>
         <varlistentry>
+            <term><option>-p</option></term>
             <term><option>--pages=<replaceable>page-range</replaceable></option></term>
             <listitem>
                 <para>
