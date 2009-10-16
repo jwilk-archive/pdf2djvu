@@ -314,7 +314,7 @@ msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
 
 #: pdf2djvu.cc:1395
 msgid "recovering image chunks with `djvuextract`"
-msgstr "wyodrębnianie kawałków obrazu za pomocą `djvuextract`"
+msgstr "wyodrębnianie urywków obrazu za pomocą `djvuextract`"
 
 #: pdf2djvu.cc:1403
 msgid "recovering text with `djvused`"
