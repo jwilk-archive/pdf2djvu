@@ -16,7 +16,7 @@ export GZIP='-9'
 
 cd "$buildroot"
 
-# Subversion checkout:
+# Mercurial archive:
 hg archive "$@" -R "$pwd" pdf2djvu
 rm -f pdf2djvu/.hg*
 version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q; }' < pdf2djvu/doc/changelog.txt`
