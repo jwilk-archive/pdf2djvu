@@ -693,7 +693,7 @@ static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ost
 static void pdf_metadata_to_djvu_metadata(pdf::Metadata &metadata, std::ostream &stream)
 {
   sexpr::GCLock gc_lock;
-  metadata.iterate<std::ostream&>(add_meta_string, add_meta_date, stream);
+  metadata.iterate<std::ostream>(add_meta_string, add_meta_date, stream);
 }
 
 class TemporaryComponentList : public ComponentList

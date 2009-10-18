@@ -356,17 +356,17 @@ namespace pdf
     Timestamp mod_date;
     template <typename T>
     void iterate(
-      void (*string_callback)(const char *, const std::string &, const T &),
-      void (*date_callback)(const char *, const Timestamp &, const T &),
-      const T &extra
+      void (*string_callback)(const char *, const std::string &, T &),
+      void (*date_callback)(const char *, const Timestamp &, T &),
+      T &extra
     ) const;
   };
 
   template <typename T>
   void Metadata::iterate(
-    void (*string_callback)(const char *, const std::string &, const T &),
-    void (*date_callback)(const char *, const Timestamp &, const T &),
-    const T &extra
+    void (*string_callback)(const char *, const std::string &, T &),
+    void (*date_callback)(const char *, const Timestamp &, T &),
+    T &extra
   ) const
   {
     for (std::vector<string_field>::const_iterator it = this->string_fields.begin(); it != this->string_fields.end(); it++)
