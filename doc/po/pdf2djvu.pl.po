@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.6.1\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2009-10-14 14:56+0300\n"
+"POT-Creation-Date: 2009-11-20 22:40+0100\n"
 "PO-Revision-Date: 2009-06-20 10:25+0300\n"
 "Last-Translator: Jakub Wilk <ubanus@users.sf.net>\n"
 "Language-Team: none\n"
@@ -23,8 +23,8 @@ msgstr "pdf2djvu"
 
 #. type: Content of the version entity
 #: pdf2djvu.xml:5
-msgid "0.6.0"
-msgstr "0.6.0"
+msgid "0.6.1"
+msgstr "0.6.1"
 
 #. type: Content of: <refentry><refentryinfo><title>
 #: pdf2djvu.xml:11
@@ -997,10 +997,14 @@ msgstr "Zobacz też"
 #. type: Content of: <refentry><refsection><para>
 #: pdf2djvu.xml:610
 msgid ""
-"<citerefentry> <refentrytitle>djvudigital</refentrytitle> <manvolnum>1</"
-"manvolnum> </citerefentry>, <citerefentry> <refentrytitle>csepdjvu</"
-"refentrytitle> <manvolnum>1</manvolnum> </citerefentry>"
+"<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> "
+"</citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> "
+"<manvolnum>1</manvolnum> </citerefentry>, <citerefentry> "
+"<refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </"
+"citerefentry>"
 msgstr ""
-"<citerefentry> <refentrytitle>djvudigital</refentrytitle> <manvolnum>1</"
-"manvolnum> </citerefentry>, <citerefentry> <refentrytitle>csepdjvu</"
-"refentrytitle> <manvolnum>1</manvolnum> </citerefentry>"
+"<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> "
+"</citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> "
+"<manvolnum>1</manvolnum> </citerefentry>, <citerefentry> "
+"<refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </"
+"citerefentry>"
