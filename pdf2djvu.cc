@@ -271,8 +271,8 @@ protected:
     }
     *(this->text_comments) << ")" << std::endl;
   }
-public:
 
+public:
   pdf::Bool needNonText()
   {
     return !config.no_render;
