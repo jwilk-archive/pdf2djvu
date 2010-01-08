@@ -51,16 +51,6 @@ cd ../..
 # Prepare tests:
 make -C "pdf2djvu-$version/tests/" prepare
 
-# Tarball with source + Debian stuff:
-tar -czf "$pwd/pdf2djvu+deb_$version.tar.gz" "pdf2djvu-$version"
-
-# Strip Debian stuff:
-cd "pdf2djvu-$version"
-rm doc/changelog.txt
-mv debian/changelog doc/changelog.txt
-rm -Rf debian/
-cd ..
-
 # Tarball with raw source:
 tar -czf "$pwd/pdf2djvu_$version.tar.gz" "pdf2djvu-$version"
 
