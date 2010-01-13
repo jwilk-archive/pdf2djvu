@@ -905,7 +905,7 @@ public:
       for (size_t i = 0; i < size - 1; i++)
       {
         /* To make the page include the annotations chunk:
-         * - Create an emphemeric indirect multi-page document with just this
+         * - Create an ephemeral indirect multi-page document with just this
          *   single page.
          * - Add the dummy shared annotation.
          */
