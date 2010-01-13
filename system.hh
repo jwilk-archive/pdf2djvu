@@ -1,4 +1,4 @@
-/* Copyright © 2007, 2008, 2009 Jakub Wilk
+/* Copyright © 2007, 2008, 2009, 2010 Jakub Wilk
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,6 +84,7 @@ public:
   Command &operator <<(int i);
   void operator()(std::ostream &my_stdout, bool quiet = false);
   void operator()(bool quiet = false);
+  static std::string filter(const std::string &command, const std::string string);
 };
 
 class Directory

@@ -1,4 +1,4 @@
-/* Copyright © 2007, 2008, 2009 Jakub Wilk
+/* Copyright © 2007, 2008, 2009, 2010 Jakub Wilk
  * Copyright © 2009 Mateusz Turcza
  *
  * This package is free software; you can redistribute it and/or modify
@@ -411,11 +411,12 @@ void Config::read_config(int argc, char * const argv[])
     OPT_PAGEID_TEMPLATE,
     OPT_PAGE_SIZE,
     OPT_PAGE_TITLE_TEMPLATE,
-    OPT_TEXT_LINES,
     OPT_TEXT_CROP,
+    OPT_TEXT_FILTER,
+    OPT_TEXT_LINES,
     OPT_TEXT_NONE,
-    OPT_TEXT_WORDS,
     OPT_TEXT_NO_NFKC,
+    OPT_TEXT_WORDS,
     OPT_VERBATIM_METADATA,
     OPT_VERSION,
   };
@@ -428,6 +429,7 @@ void Config::read_config(int argc, char * const argv[])
     { "crop-text", 0, 0, OPT_TEXT_CROP },
     { "dpi", 1, 0, OPT_DPI },
     { "fg-colors", 1, 0, OPT_FG_COLORS },
+    { "filter-text", 1, 0, OPT_TEXT_FILTER },
     { "guess-dpi", 0, 0, OPT_GUESS_DPI },
     { "help", 0, 0, OPT_HELP },
     { "hyperlinks", 1, 0, OPT_HYPERLINKS },
@@ -440,10 +442,10 @@ void Config::read_config(int argc, char * const argv[])
     { "monochrome", 0, 0, OPT_MONOCHROME },
     { "no-hyperlinks", 0, 0, OPT_NO_HLINKS },
     { "no-metadata", 0, 0, OPT_NO_METADATA },
+    { "no-nfkc", 0, 0, OPT_TEXT_NO_NFKC },
     { "no-outline", 0, 0, OPT_NO_OUTLINE },
     { "no-render", 0, 0, OPT_NO_RENDER },
     { "no-text", 0, 0, OPT_TEXT_NONE },
-    { "no-nfkc", 0, 0, OPT_TEXT_NO_NFKC },
     { "output", 1, 0, OPT_OUTPUT },
     { "page-size", 1, 0, OPT_PAGE_SIZE },
     { "page-title-template", 1, 0, OPT_PAGE_TITLE_TEMPLATE },
@@ -546,6 +548,10 @@ void Config::read_config(int argc, char * const argv[])
       break;
     case OPT_TEXT_NO_NFKC:
       this->text_nfkc = false;
+      break;
+    case OPT_TEXT_FILTER:
+      this->text_nfkc = false; /* filter normally does some normalization on its own */
+      this->text_filter_command = optarg;
       break;
     case OPT_TEXT_CROP:
       this->text_crop = true;
@@ -665,6 +671,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl <<   "     --lines"
     << std::endl <<   "     --crop-text"
     << std::endl <<   "     --no-nfkc"
+    << std::endl <<   "     --filter-text=COMMAND"
     << std::endl <<   " -p, --pages=..."
     << std::endl <<   " -v, --verbose"
     << std::endl <<   " -q, --quiet"

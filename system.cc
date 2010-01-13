@@ -1,4 +1,4 @@
-/* Copyright © 2007, 2008, 2009 Jakub Wilk
+/* Copyright © 2007, 2008, 2009, 2010 Jakub Wilk
  * Copyright © 2009 Mateusz Turcza
  *
  * This package is free software; you can redistribute it and/or modify
@@ -496,6 +496,81 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     message << " ...\") failed";
     throw POSIXError(message.str());
   }
+}
+
+#endif
+
+#if defined(WIN32)
+
+std::string Command::filter(const std::string &command, const std::string string)
+{
+  errno = ENOSYS;
+  throw_posix_error("fork");
+}
+
+#else
+
+std::string Command::filter(const std::string &command, const std::string string)
+{
+  int rc;
+  int pipe_fds[2];
+  rc = pipe(pipe_fds);
+  if (rc != 0)
+    throw_posix_error("pipe");
+  pid_t writer_pid = fork();
+  if (writer_pid == -1)
+    throw_posix_error("fork");
+  else if (writer_pid == 0)
+  {
+    /* Writer: */
+    close(pipe_fds[0]); /* Deliberately ignore errors. */
+    rc = dup2(pipe_fds[1], STDOUT_FILENO);
+    if (rc == -1)
+      throw_posix_error("dup2");
+    FILE *fp = popen(command.c_str(), "w");
+    if (fp == NULL)
+      throw_posix_error("popen");
+    if (fputs(string.c_str(), fp) == EOF)
+      throw_posix_error("fputs");
+    rc = pclose(fp);
+    if (rc != 0)
+      throw_posix_error("pclose");
+    exit(0);
+  }
+  else
+  {
+    /* Main process: */
+    close(pipe_fds[1]); /* Deliberately ignore errors. */
+    std::ostringstream stream;
+    while (1)
+    {
+      char buffer[BUFSIZ];
+      size_t n = read(pipe_fds[0], buffer, sizeof buffer);
+      if (n < 0)
+        throw_posix_error("read");
+      else if (n == 0)
+        break;
+      else
+        stream.write(buffer, n);
+    }
+    int status;
+    writer_pid = wait(&status);
+    if (writer_pid == static_cast<pid_t>(-1))
+      throw_posix_error("wait");
+    if (status != 0)
+    {
+      std::ostringstream message;
+      message
+        << "system(\""
+        << command
+        << "\") failed";
+      if (WIFEXITED(status))
+        message << " with exit code " << WEXITSTATUS(status);
+      throw CommandFailed(message.str());
+    }
+    return stream.str();
+  }
+  return string; /* Should not really happen. */
 }
 
 #endif

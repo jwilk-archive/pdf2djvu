@@ -1,4 +1,4 @@
-/* Copyright © 2007, 2008, 2009 Jakub Wilk
+/* Copyright © 2007, 2008, 2009, 2010 Jakub Wilk
  * Copyright © 2009 Mateusz Turcza
  *
  * This package is free software; you can redistribute it and/or modify
@@ -256,10 +256,10 @@ protected:
       return;
     *(this->text_comments)
       << std::dec << std::noshowpos
-      << "# T "
+      << "\x01 \x02 " /* special characters will be replaced later */
       << ox << ":" << oy << " "
       << dx << ":" << dy << " "
-      <<  w << "x" <<  h << std::showpos << x << y << " "
+      <<  w << "\x03" <<  h << std::showpos << x << y << " "
       << "("
       << std::oct;
     for (; len > 0; len--, unistr++)
@@ -555,7 +555,20 @@ public:
 
   const std::string get_texts() const
   {
-    return this->text_comments->str();
+    std::string texts = this->text_comments->str();
+    if (config.text_filter_command.length() > 0)
+      texts = Command::filter(config.text_filter_command, texts);
+    for (std::string::iterator it = texts.begin(); it != texts.end(); it++)
+      switch (*it)
+      {
+      case '\x01':
+        *it = '#'; break;
+      case '\x02':
+        *it = 'T'; break;
+      case '\x03':
+        *it = 'x'; break;
+      }
+    return texts;
   }
 
   void clear_texts()
