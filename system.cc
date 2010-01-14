@@ -506,10 +506,138 @@ void Command::call(std::ostream *my_stdout, bool quiet)
 
 #if defined(WIN32)
 
-std::string Command::filter(const std::string &command, const std::string string)
+class FilterWriterData
 {
-  errno = ENOSYS;
-  throw_posix_error("fork");
+public:
+  HANDLE handle;
+  const std::string &string;
+  FilterWriterData(HANDLE handle, const std::string &string)
+  : handle(handle),
+    string(string)
+  { }
+};
+
+unsigned long WINAPI filter_writer(void *data_)
+{
+  bool success;
+  FilterWriterData *data = reinterpret_cast<FilterWriterData*>(data_);
+  success = WriteFile(data->handle, data->string.c_str(), data->string.length(), NULL, NULL);
+  if (!success)
+    throw_win32_error("WriteFile");
+  success = CloseHandle(data->handle);
+  if (!success)
+    throw_win32_error("CloseHandle");
+  return 0;
+}
+
+std::string Command::filter(const std::string &command_line, const std::string string)
+{
+  int status = 0;
+  unsigned long rc;
+  HANDLE stdin_read, stdin_write, stdout_read, stdout_write, error_handle;
+  SECURITY_ATTRIBUTES security_attributes;
+  security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
+  security_attributes.lpSecurityDescriptor = NULL;
+  security_attributes.bInheritHandle = true;
+  if (CreatePipe(&stdin_read, &stdin_write, &security_attributes, 0) == 0)
+    throw_win32_error("CreatePipe");
+  if (CreatePipe(&stdout_read, &stdout_write, &security_attributes, 0) == 0)
+    throw_win32_error("CreatePipe");
+  rc =
+    SetHandleInformation(stdout_read, HANDLE_FLAG_INHERIT, 0) &&
+    SetHandleInformation(stdin_write, HANDLE_FLAG_INHERIT, 0);
+  if (rc == 0)
+  {
+    if (GetLastError() == ERROR_CALL_NOT_IMPLEMENTED)
+    {
+      /* Presumably it's Windows 9x, so the call is not supported.
+       * Punt on security and let the pipe end be inherited.
+       */
+    }
+    else
+      throw_win32_error("SetHandleInformation");
+  }
+  error_handle = GetStdHandle(STD_ERROR_HANDLE);;
+  if (error_handle != INVALID_HANDLE_VALUE)
+  {
+    rc = DuplicateHandle(
+      GetCurrentProcess(), error_handle,
+      GetCurrentProcess(), &error_handle,
+      0, true, DUPLICATE_SAME_ACCESS
+    );
+    if (rc == 0)
+      throw_win32_error("DuplicateHandle");
+  }
+  {
+    PROCESS_INFORMATION process_info;
+    memset(&process_info, 0, sizeof process_info);
+    STARTUPINFO startup_info;
+    memset(&startup_info, 0, sizeof startup_info);
+    startup_info.cb = sizeof startup_info;
+    startup_info.hStdInput = stdin_read;
+    startup_info.hStdOutput = stdout_write;
+    startup_info.hStdError = error_handle;
+    startup_info.dwFlags = STARTF_USESTDHANDLES;
+    char *c_command_line = strdup(command_line.c_str());
+    if (c_command_line == NULL)
+      throw_posix_error("strdup");
+    rc = CreateProcess(
+      NULL, c_command_line,
+      NULL, NULL,
+      true, 0,
+      NULL, NULL,
+      &startup_info,
+      &process_info
+    );
+    free(c_command_line);
+    if (rc == 0)
+      status = -1;
+    else
+    {
+      CloseHandle(process_info.hProcess); /* ignore errors */
+      CloseHandle(process_info.hThread); /* ignore errors */
+      if (error_handle != INVALID_HANDLE_VALUE)
+        CloseHandle(error_handle); /* ignore errors */
+    }
+  }
+  if (status == 0)
+  {
+    std::ostringstream stream;
+    CloseHandle(stdin_read); /* ignore errors */
+    CloseHandle(stdout_write); /* ignore errors */
+    FilterWriterData writer_data(stdin_write, string);
+    HANDLE thread_handle = CreateThread(NULL, 0, filter_writer, &writer_data, 0, NULL);
+    if (thread_handle == NULL)
+      throw_win32_error("CreateThread");
+    while (true)
+    {
+      char buffer[BUFSIZ];
+      unsigned long nbytes;
+      bool success = ReadFile(stdout_read, buffer, sizeof buffer, &nbytes, NULL);
+      if (!success)
+      {
+        status = -(GetLastError() != ERROR_BROKEN_PIPE);
+        break;
+      }
+      stream.write(buffer, nbytes);
+    }
+    CloseHandle(stdout_read); /* ignore errors */
+    rc = WaitForSingleObject(thread_handle, INFINITE);
+    if (rc == WAIT_FAILED)
+      throw_win32_error("WaitForSingleObject");
+    CloseHandle(thread_handle); /* ignore errors */
+    return stream.str();
+  }
+  if (status < 0)
+  {
+    std::ostringstream message;
+    message
+      << "system(\""
+      << command_line
+      << "\") failed";
+    throw Win32Error(message.str());
+  }
+  return string; /* Should not really happen. */
 }
 
 #else
