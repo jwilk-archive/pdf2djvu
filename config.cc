@@ -671,7 +671,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl <<   "     --lines"
     << std::endl <<   "     --crop-text"
     << std::endl <<   "     --no-nfkc"
-    << std::endl <<   "     --filter-text=COMMAND-LINE"
+    << std::endl << _("     --filter-text=COMMAND-LINE")
     << std::endl <<   " -p, --pages=..."
     << std::endl <<   " -v, --verbose"
     << std::endl <<   " -q, --quiet"

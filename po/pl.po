@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.6.1\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2009-09-30 14:08+0200\n"
+"POT-Creation-Date: 2010-01-14 22:33+0100\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
 "Last-Translator: Jakub Wilk <ubanus@users.sf.net>\n"
 "Language-Team: none\n"
@@ -95,137 +95,141 @@ msgstr "Pageid musi kończyć się rozszerzeniem '.djvu' lub '.djv'"
 msgid "%s is not a valid number"
 msgstr "%s nie jest poprawną liczbą"
 
-#: config.cc:613
+#: config.cc:619
 msgid "Unknown option"
 msgstr "Nieznana opcja"
 
-#: config.cc:632
+#: config.cc:638
 msgid "Usage: "
 msgstr "Użycie: "
 
-#: config.cc:633
+#: config.cc:639
 msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
 msgstr "   pdf2djvu [-o <plik-wyjściowy-djvu>] [opcje] <plik-pdf>"
 
-#: config.cc:634
+#: config.cc:640
 msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
 msgstr "   pdf2djvu -i <plik-indeksowy-djvu> [opcje] <plik-pdf>"
 
-#: config.cc:635
+#: config.cc:641
 msgid "Options: "
 msgstr "Opcje: "
 
-#: config.cc:636
+#: config.cc:642
 msgid " -i, --indirect=FILE"
 msgstr " -i, --indirect=PLIK"
 
-#: config.cc:637
+#: config.cc:643
 msgid " -o, --output=FILE"
 msgstr " -o, --output=PLIK"
 
-#: config.cc:638
+#: config.cc:644
 msgid "     --pageid-prefix=NAME"
 msgstr "     --pageid-prefix=NAZWA"
 
-#: config.cc:639
+#: config.cc:645
 msgid "     --pageid-template=TEMPLATE"
 msgstr "     --pageid-template=SZABLON"
 
-#: config.cc:640
+#: config.cc:646
 msgid "     --page-title-template=TEMPLATE"
 msgstr "     --page-title-template=SZABLON"
 
-#: config.cc:641
+#: config.cc:647
 msgid " -d, --dpi=RESOLUTION"
 msgstr " -d, --dpi=ROZDZIELCZOŚĆ"
 
-#: config.cc:644
+#: config.cc:650
 msgid "     --page-size=WxH"
 msgstr "     --page-size=SZERxWYS"
 
-#: pdf-backend.cc:42
+#: config.cc:674
+msgid "     --filter-text=COMMAND-LINE"
+msgstr "     --filter-text=LINIA-POLECEŃ"
+
+#: pdf-backend.cc:43
 #, c-format
 msgid "PDF error (%d): %s"
 msgstr "Błąd pliku PDF (%d): %s"
 
-#: pdf-backend.cc:47
+#: pdf-backend.cc:48
 #, c-format
 msgid "PDF error: %s"
 msgstr "Błąd pliku PDF: %s"
 
-#: pdf-backend.cc:69
+#: pdf-backend.cc:70
 msgid "Unable to set antialias parameter"
 msgstr "Nie można ustawić parametru antyaliasingu"
 
-#: pdf-backend.cc:71
+#: pdf-backend.cc:72
 msgid "Unable to set vector antialias parameter"
 msgstr "Nie można ustawić parametru antyaliasingu grafiki wektorowej"
 
-#: pdf2djvu.cc:45
+#: pdf2djvu.cc:44
 msgid "Cannot find link destination"
 msgstr "Nie można odnaleźć celu łącza"
 
-#: pdf2djvu.cc:97
+#: pdf2djvu.cc:96
 msgid "Page not found"
 msgstr "Nie znaleziono strony"
 
-#: pdf2djvu.cc:448 pdf2djvu.cc:640 pdf2djvu.cc:1467 system.cc:139
+#: pdf2djvu.cc:447 pdf2djvu.cc:652 pdf2djvu.cc:1479 system.cc:139
 #, c-format
 msgid "Warning: %s"
 msgstr "Ostrzeżenie: %s"
 
-#: pdf2djvu.cc:457
+#: pdf2djvu.cc:456
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź-do"
 
-#: pdf2djvu.cc:460
+#: pdf2djvu.cc:459
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
 
-#: pdf2djvu.cc:463
+#: pdf2djvu.cc:462
 msgid "Warning: Unknown link action"
 msgstr "Ostrzeżenie: Nieznana akcja łącza"
 
-#: pdf2djvu.cc:581
+#: pdf2djvu.cc:593
 msgid "No page for a bookmark"
 msgstr "Brak strony dla zakładki"
 
-#: pdf2djvu.cc:589
+#: pdf2djvu.cc:601
 msgid "No title for a bookmark"
 msgstr "Brak tytułu dla zakładki"
 
-#: pdf2djvu.cc:690
+#: pdf2djvu.cc:702
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Ostrzeżenie: metadata[%s] nie jest poprawną datą"
 
-#: pdf2djvu.cc:776
+#: pdf2djvu.cc:788
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Powtórzony identyfikator strony: %s"
 
-#: pdf2djvu.cc:783
+#: pdf2djvu.cc:795
 #, c-format
 msgid "Duplicate page title: %s"
 msgstr "Powtórzony tytuł strony: %s"
 
-#: pdf2djvu.cc:849
+#: pdf2djvu.cc:861
 msgid "Unexpected output from djvused"
 msgstr "Nieoczekiwany wynik z djvused"
 
-#: pdf2djvu.cc:869
+#: pdf2djvu.cc:881
 msgid "creating document outline with `djvused`"
 msgstr "tworzenie konspektu dokumentu za pomocą `djvused`"
 
-#: pdf2djvu.cc:880
+#: pdf2djvu.cc:892
 msgid "setting metadata with `djvused`"
 msgstr "ustawianie metadanych za pomocą `djvused`"
 
-#: pdf2djvu.cc:893
+#: pdf2djvu.cc:905
 msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
 msgstr "ustawianie metadanych za pomocą `djvused` (omijanie błędu DjVuLibre)"
 
-#: pdf2djvu.cc:936
+#: pdf2djvu.cc:948
 #, c-format
 msgid "creating multi-page indirect document (%d page)"
 msgid_plural "creating multi-page indirect document (%d pages)"
@@ -233,106 +237,106 @@ msgstr[0] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strona)"
 msgstr[1] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strony)"
 msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%d stron)"
 
-#: pdf2djvu.cc:1059
+#: pdf2djvu.cc:1071
 msgid "I won't write DjVu data to a terminal."
 msgstr "Nie wypiszę danych DjVu na terminal."
 
-#: pdf2djvu.cc:1233
+#: pdf2djvu.cc:1245
 #, c-format
 msgid "page #%d -> #%d"
 msgstr "strona #%d -> #%d"
 
-#: pdf2djvu.cc:1237
+#: pdf2djvu.cc:1249
 msgid "rendering page (1st pass)"
 msgstr "tworzenie strony (pierwszy przebieg)"
 
-#: pdf2djvu.cc:1250
+#: pdf2djvu.cc:1262
 #, c-format
 msgid "guessed resoultion: %s dpi"
 msgstr "odgadnięta rozdzielczość: %s dpi"
 
-#: pdf2djvu.cc:1256
+#: pdf2djvu.cc:1268
 msgid "unable to guess resolution"
 msgstr "nie udało się odgadnąć rozdzielczości"
 
-#: pdf2djvu.cc:1265
+#: pdf2djvu.cc:1277
 #, c-format
 msgid "image size: %dx%d"
 msgstr "wymiary obrazu: %dx%d"
 
-#: pdf2djvu.cc:1268
+#: pdf2djvu.cc:1280
 msgid "rendering page (2nd pass)"
 msgstr "tworzenie strony (drugi przebieg)"
 
-#: pdf2djvu.cc:1271
+#: pdf2djvu.cc:1283
 msgid "preparing data for `csepdjvu`"
 msgstr "przygotowywanie danych dla `csepdjvu`"
 
-#: pdf2djvu.cc:1274
+#: pdf2djvu.cc:1286
 msgid "storing foreground image"
 msgstr "zapisywanie obrazu pierwszoplanowego"
 
-#: pdf2djvu.cc:1287
+#: pdf2djvu.cc:1299
 msgid "rendering background image"
 msgstr "tworzenie obrazu tła"
 
-#: pdf2djvu.cc:1290
+#: pdf2djvu.cc:1302
 msgid "Unexpected subsampled bitmap width"
 msgstr "Nieoczekiwana szerokość podpróbkowanej bitmapy"
 
-#: pdf2djvu.cc:1292
+#: pdf2djvu.cc:1304
 msgid "Unexpected subsampled bitmap height"
 msgstr "Nieoczekiwana wysokość podpróbkowanej bitmapy"
 
-#: pdf2djvu.cc:1294
+#: pdf2djvu.cc:1306
 msgid "storing background image"
 msgstr "zapisywanie obrazu tła"
 
-#: pdf2djvu.cc:1310
+#: pdf2djvu.cc:1322
 msgid "storing dummy background image"
 msgstr "zapisywanie pustego obrazu tła"
 
-#: pdf2djvu.cc:1319
+#: pdf2djvu.cc:1331
 msgid "storing text layer"
 msgstr "zapisywanie warstwy tekstowej"
 
-#: pdf2djvu.cc:1328
+#: pdf2djvu.cc:1340
 msgid "encoding layers with `csepdjvu`"
 msgstr "kodowanie warstw za pomocą `csepdjvu`"
 
-#: pdf2djvu.cc:1350
+#: pdf2djvu.cc:1362
 msgid "recovering images with `djvuextract`"
 msgstr "wyodrębnianie obrazów za pomocą `djvuextract`"
 
-#: pdf2djvu.cc:1363
+#: pdf2djvu.cc:1375
 msgid "encoding monochrome image with `cjb2`"
 msgstr "kodowanie obrazu monochromatycznego za pomocą `cjb2`"
 
-#: pdf2djvu.cc:1378
+#: pdf2djvu.cc:1390
 msgid "creating new background image with `c44`"
 msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
 
-#: pdf2djvu.cc:1395
+#: pdf2djvu.cc:1407
 msgid "recovering image chunks with `djvuextract`"
 msgstr "wyodrębnianie urywków obrazu za pomocą `djvuextract`"
 
-#: pdf2djvu.cc:1403
+#: pdf2djvu.cc:1415
 msgid "recovering text with `djvused`"
 msgstr "wyodrębnianie tekstu za pomocą `djvused`"
 
-#: pdf2djvu.cc:1409
+#: pdf2djvu.cc:1421
 msgid "re-assembling page with `djvumake`"
 msgstr "składanie strony za pomocą `djvumake`"
 
-#: pdf2djvu.cc:1425
+#: pdf2djvu.cc:1437
 msgid "extracting annotations"
 msgstr "wyodrębnianie adnotacji"
 
-#: pdf2djvu.cc:1435
+#: pdf2djvu.cc:1447
 msgid "adding non-raster data with `djvused`"
 msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
 
-#: pdf2djvu.cc:1443
+#: pdf2djvu.cc:1455
 #, c-format
 msgid "%zu bytes out"
 msgid_plural "%zu bytes out"
@@ -340,26 +344,26 @@ msgstr[0] "%zu bajt wyjściowy"
 msgstr[1] "%zu bajty wyjściowe"
 msgstr[2] "%zu bajtów wyjściowych"
 
-#: pdf2djvu.cc:1456
+#: pdf2djvu.cc:1468
 msgid "extracting XMP metadata"
 msgstr "wyodrębnianie metadanych XMP"
 
-#: pdf2djvu.cc:1484
+#: pdf2djvu.cc:1496
 msgid "extracting document-information metadata"
 msgstr "wyodrębnianie metadanych dokumentu"
 
-#: pdf2djvu.cc:1495
+#: pdf2djvu.cc:1507
 msgid "extracting document outline"
 msgstr "wyodrębnianie konspektu dokumentu"
 
-#: pdf2djvu.cc:1537
+#: pdf2djvu.cc:1549
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
 msgstr ""
 "%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
 "wyjściowych"
 
-#: pdf2djvu.cc:1555
+#: pdf2djvu.cc:1567
 #, c-format
 msgid "I/O error (%s)"
 msgstr "Błąd We/Wy (%s)"
@@ -568,7 +572,7 @@ msgstr "Błędny lub niepełny znak wielobajtowy"
 msgid "possibly memory allocation error"
 msgstr "prawdopodobnie błąd przydziału pamięci"
 
-#: system.cc:1025
+#: system.cc:1232
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
 
@@ -580,7 +584,7 @@ msgstr "Nieznany błąd"
 msgid "XML transformations are not supported"
 msgstr "Transformacje XML nie są obsługiwane"
 
-#: config.hh:108
+#: config.hh:109
 msgid "No pages selected"
 msgstr "Nie wybrano stron"
 
