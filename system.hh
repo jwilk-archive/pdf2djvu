@@ -84,7 +84,7 @@ public:
   Command &operator <<(int i);
   void operator()(std::ostream &my_stdout, bool quiet = false);
   void operator()(bool quiet = false);
-  static std::string filter(const std::string &command, const std::string string);
+  static std::string filter(const std::string &command_line, const std::string string);
 };
 
 class Directory

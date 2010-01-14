@@ -556,8 +556,8 @@ public:
   const std::string get_texts() const
   {
     std::string texts = this->text_comments->str();
-    if (config.text_filter_command.length() > 0)
-      texts = Command::filter(config.text_filter_command, texts);
+    if (config.text_filter_command_line.length() > 0)
+      texts = Command::filter(config.text_filter_command_line, texts);
     for (std::string::iterator it = texts.begin(); it != texts.end(); it++)
       switch (*it)
       {

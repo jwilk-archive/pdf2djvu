@@ -551,7 +551,7 @@ void Config::read_config(int argc, char * const argv[])
       break;
     case OPT_TEXT_FILTER:
       this->text_nfkc = false; /* filter normally does some normalization on its own */
-      this->text_filter_command = optarg;
+      this->text_filter_command_line = optarg;
       break;
     case OPT_TEXT_CROP:
       this->text_crop = true;
@@ -671,7 +671,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl <<   "     --lines"
     << std::endl <<   "     --crop-text"
     << std::endl <<   "     --no-nfkc"
-    << std::endl <<   "     --filter-text=COMMAND"
+    << std::endl <<   "     --filter-text=COMMAND-LINE"
     << std::endl <<   " -p, --pages=..."
     << std::endl <<   " -v, --verbose"
     << std::endl <<   " -q, --quiet"

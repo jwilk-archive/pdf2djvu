@@ -78,7 +78,7 @@ public:
   char *file_name;
   std::auto_ptr<string_format::Template> pageid_template;
   std::auto_ptr<string_format::Template> page_title_template;
-  std::string text_filter_command;
+  std::string text_filter_command_line;
 
   Config();
 

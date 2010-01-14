@@ -341,9 +341,10 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   if (status != 0)
   {
     std::ostringstream message;
-    message << "system(\"";
-    message << this->command;
-    message << " ...\") failed";
+    message
+      << "system(\""
+      << this->command
+      << " ...\") failed";
     if (WIFEXITED(status))
       message << " with exit code " << WEXITSTATUS(status);
     throw CommandFailed(message.str());
@@ -451,9 +452,10 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   if (status < 0)
   {
     std::ostringstream message;
-    message << "system(\"";
-    message << this->command;
-    message << " ...\") failed";
+    message
+      << "system(\""
+      << this->command
+      << " ...\") failed";
     throw Win32Error(message.str());
   }
 }
@@ -491,10 +493,11 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   if (status < 0)
   {
     std::ostringstream message;
-    message << "system(\"";
-    message << this->command;
-    message << " ...\") failed";
-    throw POSIXError(message.str());
+    message
+      << "system(\""
+      << this->command
+      << " ...\") failed";
+    throw_posix_error(message.str());
   }
 }
 
@@ -510,7 +513,7 @@ std::string Command::filter(const std::string &command, const std::string string
 
 #else
 
-std::string Command::filter(const std::string &command, const std::string string)
+std::string Command::filter(const std::string &command_line, const std::string string)
 {
   int rc;
   int pipe_fds[2];
@@ -527,7 +530,7 @@ std::string Command::filter(const std::string &command, const std::string string
     rc = dup2(pipe_fds[1], STDOUT_FILENO);
     if (rc == -1)
       throw_posix_error("dup2");
-    FILE *fp = popen(command.c_str(), "w");
+    FILE *fp = popen(command_line.c_str(), "w");
     if (fp == NULL)
       throw_posix_error("popen");
     if (fputs(string.c_str(), fp) == EOF)
@@ -562,7 +565,7 @@ std::string Command::filter(const std::string &command, const std::string string
       std::ostringstream message;
       message
         << "system(\""
-        << command
+        << command_line
         << "\") failed";
       if (WIFEXITED(status))
         message << " with exit code " << WEXITSTATUS(status);
