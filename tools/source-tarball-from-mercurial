@@ -26,7 +26,7 @@ mv pdf2djvu "pdf2djvu-$version"
 cd "pdf2djvu-$version"
 for file in install-sh config.sub config.guess
 do
-  cp /usr/share/automake*/$file tools/
+  cp `ls -d /usr/share/automake* | head -n1`/$file tools/
 done
 cp /usr/share/gettext/config.rpath tools/
 autoreconf --verbose
