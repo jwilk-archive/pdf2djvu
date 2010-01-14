@@ -448,6 +448,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
       if (my_stdout != NULL)
         my_stdout->write(buffer, nbytes);
     }
+    CloseHandle(read_end); /* ignore errors */
   }
   if (status < 0)
   {
