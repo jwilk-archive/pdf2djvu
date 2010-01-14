@@ -431,6 +431,18 @@
             </listitem>
         </varlistentry>
         <varlistentry>
+            <term><option>--filter-text=<replaceable>command-line</replaceable></option></term>
+            <listitem>
+                <para>
+                    Filter the text through the <replaceable>command-line</replaceable>. The provided filter must
+                    preserve whitespace, control characters and decimal digits.
+                </para>
+                <para> 
+                    This option implies <option>--no-nfkc</option>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
             <term><option>-p</option></term>
             <term><option>--pages=<replaceable>page-range</replaceable></option></term>
             <listitem>
