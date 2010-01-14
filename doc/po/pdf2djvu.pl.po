@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.6.1\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2010-01-14 22:47+0100\n"
+"POT-Creation-Date: 2010-01-14 22:49+0100\n"
 "PO-Revision-Date: 2009-06-20 10:25+0300\n"
 "Last-Translator: Jakub Wilk <ubanus@users.sf.net>\n"
 "Language-Team: none\n"
@@ -47,35 +47,35 @@ msgid ""
 "<productname>&p;</productname> <author> <firstname>Jakub</firstname> "
 "<surname>Wilk</surname> <affiliation> <placeholder type=\"address\" id=\"0\"/"
 "> </affiliation> </author> <copyright> <year>2007</year> <year>2008</year> "
-"<year>2009</year> <holder>Jakub Wilk</holder> </copyright>"
+"<year>2009</year> <year>2010</year> <holder>Jakub Wilk</holder> </copyright>"
 msgstr ""
 "<productname>&p;</productname> <author> <firstname>Jakub</firstname> "
 "<surname>Wilk</surname> <affiliation> <placeholder type=\"address\" id=\"0\"/"
 "> </affiliation> </author> <copyright> <year>2007</year> <year>2008</year> "
-"<year>2009</year> <holder>Jakub Wilk</holder> </copyright>"
+"<year>2009</year> <year>2010</year> <holder>Jakub Wilk</holder> </copyright>"
 
 #. type: Content of: <refentry><refnamediv><refname>
-#: pdf2djvu.xml:30 pdf2djvu.xml:36
+#: pdf2djvu.xml:31 pdf2djvu.xml:37
 msgid "&p;"
 msgstr "&p;"
 
 #. type: Content of: <refentry><refmeta><manvolnum>
-#: pdf2djvu.xml:31
+#: pdf2djvu.xml:32
 msgid "1"
 msgstr "1"
 
 #. type: Content of: <refentry><refmeta><refmiscinfo>
-#: pdf2djvu.xml:32
+#: pdf2djvu.xml:33
 msgid "&version;"
 msgstr "&version;"
 
 #. type: Content of: <refentry><refnamediv><refpurpose>
-#: pdf2djvu.xml:37
+#: pdf2djvu.xml:38
 msgid "creates DjVu files from PDF files"
 msgstr "tworzy pliki DjVu z plików PDF"
 
 #. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
-#: pdf2djvu.xml:42
+#: pdf2djvu.xml:43
 msgid ""
 "<command>&p;</command> <arg choice='opt'> <group choice='req'> <arg "
 "choice='plain'><option>-o</option></arg> <arg choice='plain'><option>--"
@@ -92,7 +92,7 @@ msgstr ""
 "choice='plain'><replaceable>plik-pdf</replaceable></arg>"
 
 #. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
-#: pdf2djvu.xml:54
+#: pdf2djvu.xml:55
 msgid ""
 "<command>&p;</command> <arg choice='plain'> <group choice='req'> <arg "
 "choice='plain'><option>-i</option></arg> <arg choice='plain'><option>--"
@@ -109,7 +109,7 @@ msgstr ""
 "choice='plain'><replaceable>plik-pdf</replaceable></arg>"
 
 #. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
-#: pdf2djvu.xml:66
+#: pdf2djvu.xml:67
 msgid ""
 "<command>&p;</command> <group choice='req'> <arg choice='plain'><option>--"
 "version</option></arg> <arg choice='plain'><option>--help</option></arg> "
@@ -120,12 +120,12 @@ msgstr ""
 "<arg choice='plain'><option>-h</option></arg> </group>"
 
 #. type: Content of: <refentry><refsection><title>
-#: pdf2djvu.xml:76
+#: pdf2djvu.xml:77
 msgid "Description"
 msgstr "Opis"
 
 #. type: Content of: <refentry><refsection><para>
-#: pdf2djvu.xml:78
+#: pdf2djvu.xml:79
 msgid ""
 "This program creates a DjVu file from the Portable Document Format file "
 "<filename><replaceable>pdf-file</replaceable></filename>."
@@ -134,27 +134,27 @@ msgstr ""
 "file</replaceable></filename> w formacie Portable Document Format."
 
 #. type: Content of: <refentry><refsection><title>
-#: pdf2djvu.xml:84
+#: pdf2djvu.xml:85
 msgid "Options"
 msgstr "Opcje"
 
 #. type: Content of: <refentry><refsection><para>
-#: pdf2djvu.xml:86
+#: pdf2djvu.xml:87
 msgid "<command>&p;</command> accepts the following options:"
 msgstr "<command>&p;</command> przyjmuje następujące opcje:"
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:89
+#: pdf2djvu.xml:90
 msgid "Document type, file names"
 msgstr "Typ dokumentu, nazwy plików"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:92
+#: pdf2djvu.xml:93
 msgid "<option>-o</option>"
 msgstr "<option>-o</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:93
+#: pdf2djvu.xml:94
 msgid ""
 "<option>--output=<filename><replaceable>output-djvu-file</replaceable></"
 "filename></option>"
@@ -163,7 +163,7 @@ msgstr ""
 "filename></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:96
+#: pdf2djvu.xml:97
 msgid ""
 "Generate a bundled multi-page document. Write the file into "
 "<filename><replaceable>output-djvu-file</replaceable></filename> instead of "
@@ -174,12 +174,12 @@ msgstr ""
 "zamiast na standardowe wyjście."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:102
+#: pdf2djvu.xml:103
 msgid "<option>-i</option>"
 msgstr "<option>-i</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:103
+#: pdf2djvu.xml:104
 msgid ""
 "<option>--indirect=<filename><replaceable>index-djvu-file</replaceable></"
 "filename></option>"
@@ -188,7 +188,7 @@ msgstr ""
 "filename></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:106
+#: pdf2djvu.xml:107
 msgid ""
 "Generate an indirect multi-page document. Use <filename><replaceable>index-"
 "djvu-file</replaceable></filename> as the index file name; put the component "
@@ -200,12 +200,12 @@ msgstr ""
 "zapisu."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:113
+#: pdf2djvu.xml:114
 msgid "<option>--pageid-template=<replaceable>template</replaceable></option>"
 msgstr "<option>--pageid-template=<replaceable>szablon</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:116
+#: pdf2djvu.xml:117
 msgid ""
 "Specifies the naming scheme for page identifiers.  Consult the <quote><link "
 "linkend='template-language' endterm='template-language.title'/></quote> "
@@ -216,19 +216,19 @@ msgstr ""
 "endterm='template-language.title'/></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:121
+#: pdf2djvu.xml:122
 msgid ""
 "The default template is <quote><literal>p{page:04*}.djvu</literal></quote>."
 msgstr ""
 "Domyślny szablon to <quote><literal>p{page:04*}.djvu</literal></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:124
+#: pdf2djvu.xml:125
 msgid "For portability reasons, page identifiers:"
 msgstr "Aby umożliwić przenośność, identyfikatory stron:"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:128
+#: pdf2djvu.xml:129
 msgid ""
 "must consist only of lowercase ASCII letters, digits, <literal>_</literal>, "
 "<literal>+</literal>, <literal>-</literal> and dot,"
@@ -237,17 +237,17 @@ msgstr ""
 "literal>, <literal>+</literal>, <literal>-</literal> i kropki,"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:134
+#: pdf2djvu.xml:135
 msgid "cannot start with a dot,"
 msgstr "nie mogą zaczynać się od kropki,"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:139
+#: pdf2djvu.xml:140
 msgid "cannot contain two consecutive dots,"
 msgstr "nie mogą zawierać dwóch kropek z rzędu,"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:144
+#: pdf2djvu.xml:145
 msgid ""
 "must end with the <literal>.djvu</literal> or the <literal>.djv</literal> "
 "extension."
@@ -256,12 +256,12 @@ msgstr ""
 "literal>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:152
+#: pdf2djvu.xml:153
 msgid "<option>--pageid-prefix=<replaceable>prefix</replaceable></option>"
 msgstr "<option>--pageid-prefix=<replaceable>prefiks</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:155
+#: pdf2djvu.xml:156
 msgid ""
 "Equivalent to <quote><literal>--pageid-template=<replaceable>prefix</"
 "replaceable>{page:04*}.djvu</literal></quote>."
@@ -270,14 +270,14 @@ msgstr ""
 "replaceable>{page:04*}.djvu</literal></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:161
+#: pdf2djvu.xml:162
 msgid ""
 "<option>--page-title-template=<replaceable>template</replaceable></option>"
 msgstr ""
 "<option>--page-title-template=<replaceable>szablon</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:164
+#: pdf2djvu.xml:165
 msgid ""
 "Specifies the template for page titles.  Consult the <quote><link "
 "linkend='template-language' endterm='template-language.title'/></quote> "
@@ -288,27 +288,27 @@ msgstr ""
 "language.title'/></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:169
+#: pdf2djvu.xml:170
 msgid "The default is to set no page titles."
 msgstr "Domyślnie tytuły nie są ustawiane."
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:176
+#: pdf2djvu.xml:177
 msgid "Resolution, page size"
 msgstr "Rozdzielczość, wielkość strony"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:179
+#: pdf2djvu.xml:180
 msgid "<option>-d</option>"
 msgstr "<option>-d</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:180
+#: pdf2djvu.xml:181
 msgid "<option>--dpi=<replaceable>resolution</replaceable></option>"
 msgstr "<option>--dpi=<replaceable>rozdzielczość</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:183
+#: pdf2djvu.xml:184
 msgid ""
 "Specifies the desired resolution to <replaceable>resolution</replaceable> "
 "dots per inch. The default is 300 dpi. The allowed range is: 72 ≤ "
@@ -319,12 +319,12 @@ msgstr ""
 "zakres to: 72 ≤ <replaceable>rozdzielczość</replaceable> ≤ 6000."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:189
+#: pdf2djvu.xml:190
 msgid "<option>--media-box</option>"
 msgstr "<option>--media-box</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:192
+#: pdf2djvu.xml:193
 msgid ""
 "Use <firstterm>MediaBox</firstterm> to determine page size. "
 "<firstterm>CropBox</firstterm> is used by default."
@@ -333,7 +333,7 @@ msgstr ""
 "Domyślnie używane jest <firstterm>CropBox</firstterm>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:198
+#: pdf2djvu.xml:199
 msgid ""
 "<option>--page-size=<replaceable>width</replaceable>x<replaceable>height</"
 "replaceable></option>"
@@ -342,7 +342,7 @@ msgstr ""
 "replaceable>x<replaceable>wysokość</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:201
+#: pdf2djvu.xml:202
 msgid ""
 "Specifies the preferred page size to <replaceable>width</replaceable> pixels "
 "× <replaceable>height</replaceable> pixels. The actual page size may be "
@@ -357,12 +357,12 @@ msgstr ""
 "d</option>/<option>--dpi</option>.)"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:209
+#: pdf2djvu.xml:210
 msgid "<option>--guess-dpi</option>"
 msgstr "<option>--guess-dpi</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:212
+#: pdf2djvu.xml:213
 msgid ""
 "Try to guess native resolution by inspecting embedded images. Use with care."
 msgstr ""
@@ -370,12 +370,12 @@ msgstr ""
 "Używać ostrożnie."
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:219
+#: pdf2djvu.xml:220
 msgid "Image quality"
 msgstr "Jakość obrazu"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:222
+#: pdf2djvu.xml:223
 msgid ""
 "<option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>"
 "+<replaceable>n</replaceable></option>"
@@ -384,7 +384,7 @@ msgstr ""
 "+<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:223
+#: pdf2djvu.xml:224
 msgid ""
 "<option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</"
 "replaceable>,<replaceable>n</replaceable></option>"
@@ -393,7 +393,7 @@ msgstr ""
 "replaceable>,<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:226
+#: pdf2djvu.xml:227
 msgid ""
 "Specifies the encoding quality of the IW44 background layer. This option is "
 "similar to the <option>-slice</option> option of <command>c44</command>. "
@@ -408,12 +408,12 @@ msgstr ""
 "+11+10+10</literal>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:237
+#: pdf2djvu.xml:238
 msgid "<option>--bg-subsample=<replaceable>n</replaceable></option>"
 msgstr "<option>--bg-subsample=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:240
+#: pdf2djvu.xml:241
 msgid ""
 "Specifies the background subsampling ratio. The default is 3. Valid values "
 "are integers between 1 and 12, inclusive."
@@ -422,23 +422,23 @@ msgstr ""
 "Dopuszczalne wartości to liczby całkowite od 1 do 12 włącznie."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:246
+#: pdf2djvu.xml:247
 msgid "<option>--fg-colors=default</option>"
 msgstr "<option>--fg-colors=default</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:249
+#: pdf2djvu.xml:250
 msgid "Try to preserve all the foreground layer colors.  This is the default."
 msgstr ""
 "Staraj zachować się wszystkie kolory pierwszego planu. Tak jest domyślnie."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:255
+#: pdf2djvu.xml:256
 msgid "<option>--fg-colors=web</option>"
 msgstr "<option>--fg-colors=web</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:258
+#: pdf2djvu.xml:259
 msgid ""
 "Reduce foreground layer colors to the web palette (216 colors).  This option "
 "is not recommended."
@@ -447,12 +447,12 @@ msgstr ""
 "jest zalecana."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:264
+#: pdf2djvu.xml:265
 msgid "<option>--fg-colors=<replaceable>n</replaceable></option>"
 msgstr "<option>--fg-colors=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:267
+#: pdf2djvu.xml:268
 msgid ""
 "Use GraphicsMagick to reduce number of distinct colors in the foreground "
 "layer to <replaceable>n</replaceable>. Valid values are integers between 1 "
@@ -463,12 +463,12 @@ msgstr ""
 "całkowite od 1 do 4080. Ta opcja nie jest zalecana."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:274
+#: pdf2djvu.xml:275
 msgid "<option>--monochrome</option>"
 msgstr "<option>--monochrome</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:277
+#: pdf2djvu.xml:278
 msgid ""
 "Render pages as monochrome bitmaps. With this option, <option>--bg-"
 "<replaceable>…</replaceable></option> and <option>--fg-<replaceable>…</"
@@ -479,12 +479,12 @@ msgstr ""
 "replaceable></option> nie są respektowane."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:285
+#: pdf2djvu.xml:286
 msgid "<option>--loss-level=<replaceable>n</replaceable></option>"
 msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:288
+#: pdf2djvu.xml:289
 msgid ""
 "Specifies the aggressiveness of the lossy compression. The default is 0 "
 "(lossless).  Valid values are integers between 0 and 200, inclusive. This "
@@ -503,48 +503,48 @@ msgstr ""
 "monochrome</option>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:301
+#: pdf2djvu.xml:302
 msgid "<option>--lossy</option>"
 msgstr "<option>--lossy</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:304
+#: pdf2djvu.xml:305
 msgid "Synonym for <option>--loss-level=100</option>."
 msgstr "Synonim <option>--loss-level=100</option>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:309
+#: pdf2djvu.xml:310
 msgid "<option>--anti-alias</option>"
 msgstr "<option>--anti-alias</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:312
+#: pdf2djvu.xml:313
 msgid "Enable font and vector anti-aliasing.  This option is not recommended."
 msgstr ""
 "Włącz antyaliasing fontów i grafiki wektorowej. Ta opcja nie jest zalecana."
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:320
+#: pdf2djvu.xml:321
 msgid "Extraction"
 msgstr "Wyodrębnianie"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:323
+#: pdf2djvu.xml:324
 msgid "<option>--no-metadata</option>"
 msgstr "<option>--no-metadata</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:326
+#: pdf2djvu.xml:327
 msgid "Don't extract the metadata."
 msgstr "Nie wyodrębniaj metadanych."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:329
+#: pdf2djvu.xml:330
 msgid "By default:"
 msgstr "Domyślnie:"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:333
+#: pdf2djvu.xml:334
 msgid ""
 "The following entries of the document information dictionary are extracted: "
 "<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</"
@@ -561,43 +561,43 @@ msgstr ""
 "3999</ulink>, z datą i czasem oddzielonymi pojedynczą spacją."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:342
+#: pdf2djvu.xml:343
 msgid "The XMP metadata is extracted (or created) and updated accordingly."
 msgstr ""
 "Metadane XMP są wyodrębniane (lub tworzone) i odpowiednio aktualizowane."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:350
+#: pdf2djvu.xml:351
 msgid "<option>--verbatim-metadata</option>"
 msgstr "<option>--verbatim-metadata</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:353
+#: pdf2djvu.xml:354
 msgid "Keep the original metadata intact."
 msgstr "Zachowaj oryginalne metadane bez zmian."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:358
+#: pdf2djvu.xml:359
 msgid "<option>--no-outline</option>"
 msgstr "<option>--no-outline</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:361
+#: pdf2djvu.xml:362
 msgid "Don't extract the document outline."
 msgstr "Nie wyodrębniaj konspektu dokumentu."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:366
+#: pdf2djvu.xml:367
 msgid "<option>--hyperlinks=border-avis</option>"
 msgstr "<option>--hyperlinks=border-avis</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:369
+#: pdf2djvu.xml:370
 msgid "Make hyperlink borders always visible."
 msgstr "Spraw, by ramki hiperłączy były zawsze widoczne."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:372
+#: pdf2djvu.xml:373
 msgid ""
 "By default, a hyperlink border is visible only when the mouse is over the "
 "hyperlink."
@@ -606,79 +606,79 @@ msgstr ""
 "kursor myszki."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:377
+#: pdf2djvu.xml:378
 msgid "<option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option>"
 msgstr "<option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:380
+#: pdf2djvu.xml:381
 msgid "Force the specified border color for hyperlinks."
 msgstr "Wymuś określony kolor ramki hiperłączy."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:385
+#: pdf2djvu.xml:386
 msgid "<option>--no-hyperlinks</option>"
 msgstr "<option>--no-hyperlinks</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:386
+#: pdf2djvu.xml:387
 msgid "<option>--hyperlinks=none</option>"
 msgstr "<option>--hyperlinks=none</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:389
+#: pdf2djvu.xml:390
 msgid "Don't extract hyperlinks."
 msgstr "Nie wyodrębniaj hiperłączy."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:394
+#: pdf2djvu.xml:395
 msgid "<option>--no-text</option>"
 msgstr "<option>--no-text</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:397
+#: pdf2djvu.xml:398
 msgid "Don't extract the text."
 msgstr "Nie wyodrębniaj tekstu."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:402
+#: pdf2djvu.xml:403
 msgid "<option>--words</option>"
 msgstr "<option>--words</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:405
+#: pdf2djvu.xml:406
 msgid ""
 "Extract the text. Record the location of every word. This is the default."
 msgstr "Wyodrębniaj tekst. Zapisz położenia każdego słowa. Tak jest domyślnie."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:410
+#: pdf2djvu.xml:411
 msgid "<option>--lines</option>"
 msgstr "<option>--lines</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:413
+#: pdf2djvu.xml:414
 msgid ""
 "Extract the text. Record the location of every line, rather that every word."
 msgstr "Wyodrębniaj tekst. Zapisz położenia każdej linii, a nie każdego słowa."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:418
+#: pdf2djvu.xml:419
 msgid "<option>--crop-text</option>"
 msgstr "<option>--crop-text</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:421
+#: pdf2djvu.xml:422
 msgid "Extract no text outside the page boundary."
 msgstr "Nie wyodrębniaj tekstu, który znajduje się poza granicami strony."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:426
+#: pdf2djvu.xml:427
 msgid "<option>--no-nfkc</option>"
 msgstr "<option>--no-nfkc</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:429
+#: pdf2djvu.xml:430
 msgid ""
 "Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize "
 "the text."
@@ -687,13 +687,13 @@ msgstr ""
 "tr15/'>NFKC</ulink>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:434
+#: pdf2djvu.xml:435
 msgid "<option>--filter-text=<replaceable>command-line</replaceable></option>"
 msgstr ""
 "<option>--filter-text=<replaceable>linia-poleceń</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:437
+#: pdf2djvu.xml:438
 msgid ""
 "Filter the text through the <replaceable>command-line</replaceable>. The "
 "provided filter must preserve whitespace, control characters and decimal "
@@ -703,22 +703,22 @@ msgstr ""
 "musi zachowywać białe znaki, znaki kontrole i cyfry dziesiętne."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:441
+#: pdf2djvu.xml:442
 msgid "This option implies <option>--no-nfkc</option>."
 msgstr "Opcja ta implikuje <option>--no-nfkc</option>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:446
+#: pdf2djvu.xml:447
 msgid "<option>-p</option>"
 msgstr "<option>-p</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:447
+#: pdf2djvu.xml:448
 msgid "<option>--pages=<replaceable>page-range</replaceable></option>"
 msgstr "<option>--pages=<replaceable>zakres stron</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:450
+#: pdf2djvu.xml:451
 msgid ""
 "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-"
 "separated list of sub-ranges. Each sub-range is either a single page (e."
@@ -731,82 +731,82 @@ msgstr ""
 "stron (np. <literal>37-42</literal>). Strony numerowane są od 1."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:455
+#: pdf2djvu.xml:456
 msgid "The default is to convert all pages."
 msgstr "Domyślnie konwertowane są wszystkie strony."
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:462
+#: pdf2djvu.xml:463
 msgid "Verbosity, help"
 msgstr "Gadatliwość, pomoc"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:465
+#: pdf2djvu.xml:466
 msgid "<option>-v</option>"
 msgstr "<option>-v</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:466
+#: pdf2djvu.xml:467
 msgid "<option>--verbose</option>"
 msgstr "<option>--verbose</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:469
+#: pdf2djvu.xml:470
 msgid "Display more informational messages while converting the file."
 msgstr "Wyświetlaj więcej komunikatów informacyjnych podczas konwersji pliku."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:474
+#: pdf2djvu.xml:475
 msgid "<option>-q</option>"
 msgstr "<option>-q</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:475
+#: pdf2djvu.xml:476
 msgid "<option>--quiet</option>"
 msgstr "<option>--quiet</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:478
+#: pdf2djvu.xml:479
 msgid "Don't display informational messages while converting the file."
 msgstr "Nie wyświetlaj komunikatów informacyjnych podczas konwersji pliku."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:483
+#: pdf2djvu.xml:484
 msgid "<option>--version</option>"
 msgstr "<option>--version</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:485
+#: pdf2djvu.xml:486
 msgid "Output version information and exit."
 msgstr "Wyświetl informację o wersji i wyjdź."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:489
+#: pdf2djvu.xml:490
 msgid "<option>-h</option>"
 msgstr "<option>-h</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:490
+#: pdf2djvu.xml:491
 msgid "<option>--help</option>"
 msgstr "<option>--help</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:492
+#: pdf2djvu.xml:493
 msgid "Display help and exit."
 msgstr "Wyświetl pomoc i wyjdź."
 
 #. type: Content of: <refentry><refsection><title>
-#: pdf2djvu.xml:500
+#: pdf2djvu.xml:501
 msgid "Template language"
 msgstr "Język szablonów"
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:502
+#: pdf2djvu.xml:503
 msgid "Template syntax"
 msgstr "Składnia szablonów"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:504
+#: pdf2djvu.xml:505
 msgid ""
 "The template language is roughly modelled on the <ulink url='http://docs."
 "python.org/library/string.html#format-string-syntax'>Python string "
@@ -817,7 +817,7 @@ msgstr ""
 "języku Python</ulink>."
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:509
+#: pdf2djvu.xml:510
 msgid ""
 "A template is a piece of text which contains <firstterm>fields</firstterm>, "
 "surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields "
@@ -833,12 +833,12 @@ msgstr ""
 "literal> a ciąg <literal>}}</literal> — pojedynczym <literal>}</literal>."
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:518
+#: pdf2djvu.xml:519
 msgid "Field syntax"
 msgstr "Składnia pól"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:520
+#: pdf2djvu.xml:521
 msgid ""
 "Each field consists of a variable name, optionally followed by a shift, "
 "optionally followed by a format specification."
@@ -847,7 +847,7 @@ msgstr ""
 "przesunięcie, po którym opcjonalnie następuje specyfikacja formatu."
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:524
+#: pdf2djvu.xml:525
 msgid ""
 "The shift is a signed (i.e. starting with a <literal>+</literal> or "
 "<literal>-</literal> character) integer."
@@ -856,7 +856,7 @@ msgstr ""
 "<literal>+</literal> lub <literal>-</literal>)."
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:527
+#: pdf2djvu.xml:528
 msgid ""
 "The format specification consists of a colon, followed by a width "
 "specification."
@@ -865,7 +865,7 @@ msgstr ""
 "specyfikacja szerokości."
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:530
+#: pdf2djvu.xml:531
 msgid ""
 "The width specification is a decimal integer defining the minimum field "
 "width. If not specified, then the field width will be determined by the "
@@ -878,7 +878,7 @@ msgstr ""
 "literal>) powoduje dopełnianie zerami."
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:535
+#: pdf2djvu.xml:536
 msgid ""
 "The width specification is optionally followed by an asterisk (<literal>*</"
 "literal>) character, which increases the minimum field width to the width of "
@@ -889,52 +889,52 @@ msgstr ""
 "największej możliwej długości zawartości zmiennej."
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:540
+#: pdf2djvu.xml:541
 msgid "Available variables"
 msgstr "Dostępne zmienne"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:543
+#: pdf2djvu.xml:544
 msgid "<varname>page</varname>"
 msgstr "<varname>page</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:544
+#: pdf2djvu.xml:545
 msgid "<varname>spage</varname>"
 msgstr "<varname>spage</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:546
+#: pdf2djvu.xml:547
 msgid "Page number in the PDF document."
 msgstr "Numer strony w dokumencie PDF."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-#: pdf2djvu.xml:550
+#: pdf2djvu.xml:551
 msgid "<varname>dpage</varname>"
 msgstr "<varname>dpage</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#: pdf2djvu.xml:552
+#: pdf2djvu.xml:553
 msgid "Page number in the DjVu document."
 msgstr "Numer strony w dokumencie DjVu."
 
 #. type: Content of: <refentry><refsection><title>
-#: pdf2djvu.xml:560
+#: pdf2djvu.xml:561
 msgid "Implementation details"
 msgstr "Szczegóły implementacji"
 
 #. type: Content of: <refentry><refsection><refsection><title>
-#: pdf2djvu.xml:562
+#: pdf2djvu.xml:563
 msgid "Layer separation algorithm"
 msgstr "Algorytm separacji warstw"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-#: pdf2djvu.xml:573
+#: pdf2djvu.xml:574
 msgid "Raster the page into a pixmap, in the usual manner."
 msgstr "Zrastruj stronę do mapy pikseli w zwykły sposób."
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-#: pdf2djvu.xml:578
+#: pdf2djvu.xml:579
 msgid ""
 "Raster the page into another pixmap, omitting the following page elements:"
 msgstr ""
@@ -942,34 +942,34 @@ msgstr ""
 "strony:"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:580
+#: pdf2djvu.xml:581
 msgid "text,"
 msgstr "tekst,"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:581
+#: pdf2djvu.xml:582
 msgid "1 bit-per-pixel raster images,"
 msgstr "obrazy rastrowe o głębokości 1 bit na piksel,"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
-#: pdf2djvu.xml:582
+#: pdf2djvu.xml:583
 msgid "vector elements (except fills of large areas)."
 msgstr "elementy wektorowe (oprócz wypełnień o dużej powierzchni)."
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><orderedlist><listitem><para>
-#: pdf2djvu.xml:592
+#: pdf2djvu.xml:593
 msgid ""
 "If their colors match, classify the pixel as a part of the background layer."
 msgstr ""
 "Jeżeli kolory się zgadzają, zaklasyfikuj piksel jako część warstwy tła."
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><orderedlist><listitem><para>
-#: pdf2djvu.xml:597
+#: pdf2djvu.xml:598
 msgid "Otherwise, classify the pixel as a part of the foreground layer."
 msgstr "W przeciwnym wypadku, zaklasyfikuj piksel jako część pierwszego planu."
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-#: pdf2djvu.xml:588
+#: pdf2djvu.xml:589
 msgid ""
 "Compare both pixmaps, pixel by pixel: <placeholder type=\"orderedlist\" id="
 "\"0\"/>"
@@ -978,7 +978,7 @@ msgstr ""
 "\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para>
-#: pdf2djvu.xml:569
+#: pdf2djvu.xml:570
 msgid ""
 "For each page, do the following: <placeholder type=\"orderedlist\" id=\"0\"/>"
 msgstr ""
@@ -986,7 +986,7 @@ msgstr ""
 "\"0\"/>"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-#: pdf2djvu.xml:564
+#: pdf2djvu.xml:565
 msgid ""
 "Unless the <option>--monochrome</option> option is on, &p; uses the "
 "following naïve layer separation algorithm: <placeholder type=\"orderedlist"
@@ -997,12 +997,12 @@ msgstr ""
 "\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><title>
-#: pdf2djvu.xml:612
+#: pdf2djvu.xml:613
 msgid "Bug reports"
 msgstr "Raporty o błędach"
 
 #. type: Content of: <refentry><refsection><para>
-#: pdf2djvu.xml:614
+#: pdf2djvu.xml:615
 msgid ""
 "If you find a bug in &p;, please report it at <ulink url='http://code.google."
 "com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
@@ -1011,12 +1011,12 @@ msgstr ""
 "p/pdf2djvu/issues/'>systemie śledzenia problemów</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
-#: pdf2djvu.xml:620
+#: pdf2djvu.xml:621
 msgid "See also"
 msgstr "Zobacz też"
 
 #. type: Content of: <refentry><refsection><para>
-#: pdf2djvu.xml:622
+#: pdf2djvu.xml:623
 msgid ""
 "<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> "
 "</citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> "
