@@ -52,7 +52,7 @@ static void poppler_error_handler(int pos, char *message, va_list args)
 
 pdf::Environment::Environment(const char *argv0)
 {
-#ifdef WIN32
+#if WIN32
   /* Change the current working directory to be able to read poppler data.
    * This is not required (and potentially harmful) for Unix installations.
    */

@@ -23,7 +23,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#ifdef WIN32
+#if WIN32
 #include <climits>
 #include <windows.h>
 #endif
@@ -37,7 +37,7 @@
  */
 
 static const char unix_path_separator = '/';
-#ifndef WIN32
+#if !WIN32
 static const char path_separator = unix_path_separator;
 #else
 static const char path_separator = '\\';
@@ -51,7 +51,7 @@ static const char path_separator = '\\';
 std::string POSIXError::error_message(const std::string &context)
 {
   std::string message;
-#ifdef WIN32
+#if WIN32
   /* Win32 systems tends to return POSIX-style error messages in English.
    * Translation is required.
    */
@@ -140,7 +140,7 @@ static void warn_posix_error(const std::string &context)
   }
 }
 
-#ifdef WIN32
+#if WIN32
 
 /* class Win32Error : OSError
  * ==========================
@@ -234,12 +234,12 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
-#ifndef HAVE_PSTREAMS
+#if !HAVE_PSTREAMS
 static const std::string argv_to_command_line(const std::vector<std::string> &argv)
 /* Translate a sequence of arguments into a command line string. */
 {
   std::ostringstream buffer;
-#ifdef WIN32
+#if WIN32
   /* Using the same rules as the MS C runtime:
    *
    * 1) Arguments are delimited by white space, which is either a space or a
@@ -318,7 +318,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
 #endif
 
 
-#if defined(HAVE_PSTREAMS)
+#if HAVE_PSTREAMS
 
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
@@ -351,7 +351,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
 }
 
-#elif defined(WIN32)
+#elif WIN32
 
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
@@ -504,7 +504,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
 
 #endif
 
-#if defined(WIN32)
+#if WIN32
 
 class FilterWriterData
 {
@@ -798,7 +798,7 @@ public:
 
 TemporaryDirectory::TemporaryDirectory() : Directory()
 {
-#ifndef WIN32
+#if !WIN32
   TemporaryPathTemplate path_buffer;
   if (mkdtemp(path_buffer) == NULL)
     throw_posix_error(static_cast<char*>(path_buffer));
@@ -897,7 +897,7 @@ std::ostream &operator<<(std::ostream &out, const File &file)
 
 void TemporaryFile::construct()
 {
-#ifndef WIN32
+#if !WIN32
   TemporaryPathTemplate path_buffer;
   int fd = mkstemp(path_buffer);
   if (fd == -1)
@@ -953,7 +953,7 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
   this->open(NULL, false);
 }
 
-#ifdef WIN32
+#if WIN32
 
 /* class Cwd
  * =========
@@ -1005,7 +1005,7 @@ Cwd::~Cwd()
 
 namespace encoding
 {
-#ifdef WIN32
+#if WIN32
   /* The native encoding (so called ANSI character set) can differ from the
    * terminal encoding (typically: so called OEM charset).
    */
@@ -1214,7 +1214,7 @@ std::string string_vprintf(const char *message, va_list args)
 
 void prevent_pop_out(void)
 {
-#ifdef WIN32
+#if WIN32
   /* GetConsoleProcessList() function is not available for some systems (e.g.,
    * Wine, Windows 98), so it's not desireable to import it at link time.
    */

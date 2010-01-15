@@ -15,11 +15,11 @@
 
 #include "version.hh"
 
-#ifdef HAVE_PSTREAMS
-#  ifdef HAVE_PSTREAM_H
+#if HAVE_PSTREAMS
+#  if HAVE_PSTREAM_H
 #    include <pstream.h>
 #  endif
-#  ifdef HAVE_PSTREAMS_PSTREAM_H
+#  if HAVE_PSTREAMS_PSTREAM_H
 #    include <pstreams/pstream.h>
 #  endif
 #else
@@ -65,7 +65,7 @@ class Command
 {
 protected:
   std::string command;
-#ifdef HAVE_PSTREAMS
+#if HAVE_PSTREAMS
   redi::pstreams::argv_type argv;
 #else
   std::vector<std::string> argv;
@@ -164,7 +164,7 @@ public:
   ExistingFile(const Directory& directory, const std::string &name);
 };
 
-#ifdef WIN32
+#if WIN32
 
 class Cwd
 {

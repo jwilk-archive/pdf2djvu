@@ -653,7 +653,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl <<   "     --bg-subsample=N"
     << std::endl <<   "     --fg-colors=default"
     << std::endl <<   "     --fg-colors=web"
-#ifdef HAVE_GRAPHICSMAGICK
+#if HAVE_GRAPHICSMAGICK
     << std::endl <<   "     --fg-colors=N"
 #endif
     << std::endl <<   "     --monochrome"

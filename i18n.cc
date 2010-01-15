@@ -11,7 +11,7 @@
 #include "paths.hh"
 #include "system.hh"
 
-#ifdef ENABLE_NLS
+#if ENABLE_NLS
 
 void i18n::setup_locale()
 {

@@ -9,7 +9,7 @@
 #include "version.hh"
 #include "xmp.hh"
 
-#ifdef HAVE_LIBXSLT
+#if HAVE_LIBXSLT
 
 #include <sstream>
 #include <memory>
