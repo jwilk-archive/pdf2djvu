@@ -1,8 +1,9 @@
-pdf2djvu (0.6.2) UNRELEASED; urgency=low
+pdf2djvu (0.6.2) unstable; urgency=low
 
-  * 
+  * Fix build failure without PStreams.
+    Thanks to Kyrill Detinov for the bug report.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 15 Jan 2010 18:48:40 +0100
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 15 Jan 2010 19:00:44 +0100
 
 pdf2djvu (0.6.1) unstable; urgency=low
 
