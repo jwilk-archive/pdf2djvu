@@ -32,6 +32,11 @@
 #include "debug.hh"
 #include "i18n.hh"
 
+#if !HAVE_PSTREAMS && HAVE_FORK
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
 /* constants
  * =========
  */
@@ -640,7 +645,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
   return string; /* Should not really happen. */
 }
 
-#else
+#elif HAVE_FORK
 
 std::string Command::filter(const std::string &command_line, const std::string string)
 {
@@ -703,6 +708,15 @@ std::string Command::filter(const std::string &command_line, const std::string s
     return stream.str();
   }
   return string; /* Should not really happen. */
+}
+
+#else
+
+std::string Command::filter(const std::string &command_line, const std::string string)
+{
+  /* Should not really happen. */
+  errno = ENOSYS;
+  throw_posix_error("fork");
 }
 
 #endif

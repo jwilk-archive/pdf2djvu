@@ -131,7 +131,10 @@ AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name an
 AC_TRY_CPP
 
 have_pstreams=maybe
-AC_CHECK_FUNC(fork, [], [have_pstreams=no])
+AC_CHECK_FUNC(fork, 
+  [AC_DEFINE(HAVE_FORK, 1, [Define if fork(3) is available.])],
+  [have_pstreams=no]
+)
 AC_MSG_CHECKING(for PStreams)
 if test "$have_pstreams" = "maybe"
 then
