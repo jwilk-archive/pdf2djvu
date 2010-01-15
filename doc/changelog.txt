@@ -1,3 +1,9 @@
+pdf2djvu (0.6.2) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <ubanus@users.sf.net>  Fri, 15 Jan 2010 18:48:40 +0100
+
 pdf2djvu (0.6.1) unstable; urgency=low
 
   * Add the --text-filter option.

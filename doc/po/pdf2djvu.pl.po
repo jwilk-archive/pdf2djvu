@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pdf2djvu 0.6.1\n"
+"Project-Id-Version: pdf2djvu 0.6.2\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2010-01-14 22:49+0100\n"
+"POT-Creation-Date: 2010-01-15 18:48+0100\n"
 "PO-Revision-Date: 2009-06-20 10:25+0300\n"
 "Last-Translator: Jakub Wilk <ubanus@users.sf.net>\n"
 "Language-Team: none\n"
@@ -23,8 +23,8 @@ msgstr "pdf2djvu"
 
 #. type: Content of the version entity
 #: pdf2djvu.xml:5
-msgid "0.6.1"
-msgstr "0.6.1"
+msgid "0.6.2"
+msgstr "0.6.2"
 
 #. type: Content of: <refentry><refentryinfo><title>
 #: pdf2djvu.xml:11
