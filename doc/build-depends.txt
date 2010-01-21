@@ -4,8 +4,8 @@ Packages required do build *pdf2djvu*
 
 DjVuLibre
 =========
-DjVuLibre_ is an open source implementation of DjVu_, including viewers,
-browser plugins, decoders, simple encoders, and utilities.
+DjVuLibre_ is an implementation of DjVu_, including viewers, browser
+plugins, decoders, simple encoders, and utilities.
 
 Compatiblity
 ------------
