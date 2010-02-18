@@ -3,13 +3,13 @@ pdf2djvu (0.6.2) unstable; urgency=low
   * Fix build failure without PStreams.
     Thanks to Kyrill Detinov for the bug report.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 15 Jan 2010 19:00:44 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Jan 2010 19:00:44 +0100
 
 pdf2djvu (0.6.1) unstable; urgency=low
 
   * Add the --text-filter option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 14 Jan 2010 22:57:46 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 14 Jan 2010 22:57:46 +0100
 
 pdf2djvu (0.6.0) unstable; urgency=low
 
@@ -17,7 +17,7 @@ pdf2djvu (0.6.0) unstable; urgency=low
   * Add support for correcting XMP metadata.
   * Fix resolution detection (poppler ≥ 0.11.1 only).
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 01 Oct 2009 18:30:33 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 01 Oct 2009 18:30:33 +0200
 
 pdf2djvu (0.5.11) unstable; urgency=low
 
@@ -25,34 +25,34 @@ pdf2djvu (0.5.11) unstable; urgency=low
   * Windows: make it feasible to use poppler-data.
   * Add support for poppler ≥ 0.11.1.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 31 Jul 2009 17:07:07 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Jul 2009 17:07:07 +0200
 
 pdf2djvu (0.5.10) unstable; urgency=low
 
   * Add Polish translation of the manual page.
     Thanks to Mateusz Turcza for providing a patch.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 12 Jul 2009 12:58:27 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 12 Jul 2009 12:58:27 +0200
 
 pdf2djvu (0.5.9) unstable; urgency=low
 
   * Add the Polish translation.
   * Respect LC_NUMERIC locale settings.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 18 Jun 2009 23:20:32 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jun 2009 23:20:32 +0200
 
 pdf2djvu (0.5.8) unstable; urgency=low
 
   * Fix some rounding bugs.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 17 May 2009 10:11:53 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 17 May 2009 10:11:53 +0200
 
 pdf2djvu (0.5.7) unstable; urgency=low
 
   * Add the --guess-dpi option.
   * Windows: fix file handle leak.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 08 May 2009 15:07:20 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 08 May 2009 15:07:20 +0200
 
 pdf2djvu (0.5.6) unstable; urgency=low
 
@@ -61,7 +61,7 @@ pdf2djvu (0.5.6) unstable; urgency=low
   * Stricter requirements for pageid names.
   * Lift a limitation on number of pages in a bundled multi-page document.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Tue, 05 May 2009 18:31:26 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 05 May 2009 18:31:26 +0200
 
 pdf2djvu (0.5.5) unstable; urgency=low
 
@@ -70,14 +70,14 @@ pdf2djvu (0.5.5) unstable; urgency=low
   * Don't allow duplicate page identifies nor duplicate page titles.
   * More robust UTF-16 to UTF-8 conversion.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 25 Apr 2009 22:33:44 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 25 Apr 2009 22:33:44 +0200
 
 pdf2djvu (0.5.4) unstable; urgency=low
 
   * Add the --crop-text option.
   * Support for Windows 9x.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 18 Apr 2009 21:36:38 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 18 Apr 2009 21:36:38 +0200
 
 pdf2djvu (0.5.3) unstable; urgency=low
 
@@ -86,14 +86,14 @@ pdf2djvu (0.5.3) unstable; urgency=low
   * Work around DjVuLibre performance bug with adding shared annotations to
     indirect multi-page documents.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 28 Mar 2009 21:30:10 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 28 Mar 2009 21:30:10 +0100
 
 pdf2djvu (0.5.2) unstable; urgency=low
 
   * Add --verbatim-metadata option.
   * Better support for Windows systems.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 21 Mar 2009 16:28:18 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 21 Mar 2009 16:28:18 +0100
 
 pdf2djvu (0.5.1) unstable; urgency=low
 
@@ -101,20 +101,20 @@ pdf2djvu (0.5.1) unstable; urgency=low
   * On Unix systems, respect the TMPDIR variable.
   * Better support for Windows systems.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 16 Mar 2009 20:26:58 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 16 Mar 2009 20:26:58 +0100
 
 pdf2djvu (0.5.0) unstable; urgency=low
 
   * Drop support for poppler < 0.7.3.
   * Allow to compile with MinGW.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 28 Dec 2008 16:24:08 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 28 Dec 2008 16:24:08 +0100
 
 pdf2djvu (0.4.13) unstable; urgency=low
 
   * Add --monochrome, --lossy, --loss-level options.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Wed, 08 Oct 2008 13:54:55 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 08 Oct 2008 13:54:55 +0200
 
 pdf2djvu (0.4.12) unstable; urgency=low
 
@@ -123,7 +123,7 @@ pdf2djvu (0.4.12) unstable; urgency=low
   * Hyperlinks without borders no longer cause segmentation faults
     (poppler ≥ 0.7 only).
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 28 Jul 2008 14:13:15 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Jul 2008 14:13:15 +0200
 
 pdf2djvu (0.4.11) unstable; urgency=low
 
@@ -131,7 +131,7 @@ pdf2djvu (0.4.11) unstable; urgency=low
     That should partially fix an issue with rotated text, too.
   * Work around an issue with subsampled image resolution.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 20 Jun 2008 12:33:53 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 20 Jun 2008 12:33:53 +0200
 
 pdf2djvu (0.4.10) unstable; urgency=low
 
@@ -143,7 +143,7 @@ pdf2djvu (0.4.10) unstable; urgency=low
   * Make page references in the form "#<page-id>", instead of "#<page-no>".
   * Fix a regression which disabled the --fg-colors option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 02 May 2008 18:36:02 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 02 May 2008 18:36:02 +0200
 
 pdf2djvu (0.4.9) unstable; urgency=low
 
@@ -152,21 +152,21 @@ pdf2djvu (0.4.9) unstable; urgency=low
     indirect documents.
   * Fix version information.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 18 Apr 2008 20:04:17 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 18 Apr 2008 20:04:17 +0200
 
 pdf2djvu (0.4.8) unstable; urgency=low
 
   * From now on, --indirect argument means an index file name.
   * Add --pageid-prefix option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 13 Apr 2008 20:21:21 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 13 Apr 2008 20:21:21 +0200
 
 pdf2djvu (0.4.7) unstable; urgency=low
 
   * Add the --media-box option.
   * Disable vector anti-aliasing by default.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Wed, 09 Apr 2008 16:46:37 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 09 Apr 2008 16:46:37 +0200
 
 pdf2djvu (0.4.6) unstable; urgency=low
 
@@ -175,13 +175,13 @@ pdf2djvu (0.4.6) unstable; urgency=low
   * Enable compilation on Cygwin.
   * Add the --fg-colors option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 30 Mar 2008 21:06:03 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 30 Mar 2008 21:06:03 +0200
 
 pdf2djvu (0.4.5.1) unstable; urgency=low
 
   * Fix version information.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 03 Mar 2008 23:48:30 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 03 Mar 2008 23:48:30 +0100
 
 pdf2djvu (0.4.5) unstable; urgency=low
 
@@ -192,14 +192,14 @@ pdf2djvu (0.4.5) unstable; urgency=low
   * Add the --version option.
   * Add the --page-size option.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 07 Feb 2008 20:43:54 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 07 Feb 2008 20:43:54 +0100
 
 pdf2djvu (0.4.4) unstable; urgency=low
 
   * Fix an undefined behaviour which led to rendering bugs.
     Thanks to Janusz S. Bień and Krzysztof Szafran for bug reports.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Tue, 05 Feb 2008 23:13:23 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 05 Feb 2008 23:13:23 +0100
 
 pdf2djvu (0.4.3) unstable; urgency=low
 
@@ -207,7 +207,7 @@ pdf2djvu (0.4.3) unstable; urgency=low
   * Add the --hyperlinks option.
   * Display compression ratio, file sizes etc.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 26 Jan 2008 13:00:32 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 26 Jan 2008 13:00:32 +0100
 
 pdf2djvu (0.4.2) unstable; urgency=low
 
@@ -219,7 +219,7 @@ pdf2djvu (0.4.2) unstable; urgency=low
     conversion.
     Thanks to Janusz S. Bień and Fadi Edward for bug reports.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Thu, 17 Jan 2008 23:28:49 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Jan 2008 23:28:49 +0100
 
 pdf2djvu (0.4.1) unstable; urgency=low
 
@@ -229,7 +229,7 @@ pdf2djvu (0.4.1) unstable; urgency=low
     Thanks to Janusz S. Bień for the bug report.
   * Tune color quantization a bit.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 28 Dec 2007 22:25:51 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 28 Dec 2007 22:25:51 +0100
 
 pdf2djvu (0.4.0) unstable; urgency=low
 
@@ -241,7 +241,7 @@ pdf2djvu (0.4.0) unstable; urgency=low
   * More verbose error messages while option processing.
   * Include ")" and "\" in the text layer.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Wed, 12 Dec 2007 20:40:02 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 12 Dec 2007 20:40:02 +0100
 
 pdf2djvu (0.3.6) unstable; urgency=low
 
@@ -254,7 +254,7 @@ pdf2djvu (0.3.6) unstable; urgency=low
     Thanks to Victor Ivrii for the report.
   * Find text position more accurately (poppler 0.6 only).
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 07 Dec 2007 21:28:32 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Dec 2007 21:28:32 +0100
 
 pdf2djvu (0.3.5) unstable; urgency=low
 
@@ -262,7 +262,7 @@ pdf2djvu (0.3.5) unstable; urgency=low
   * Better bitonal image recognition.
   * Coordinate space transformations are now done correctly.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Wed, 28 Nov 2007 16:13:57 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 28 Nov 2007 16:13:57 +0100
 
 pdf2djvu (0.3.4) unstable; urgency=low
 
@@ -272,7 +272,7 @@ pdf2djvu (0.3.4) unstable; urgency=low
   * Recognize more link actions.
   * Provide the manual page.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 23 Nov 2007 13:23:18 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 23 Nov 2007 13:23:18 +0100
 
 pdf2djvu (0.3.3) unstable; urgency=low
 
@@ -283,20 +283,20 @@ pdf2djvu (0.3.3) unstable; urgency=low
   * Add -v/--verbose, -q/--quiet options.
   * Don't synchronize C++ I/O streams with C stdio.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sat, 17 Nov 2007 11:56:25 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 17 Nov 2007 11:56:25 +0100
 
 pdf2djvu (0.3.2) unstable; urgency=low
 
   * Fix a regression which caused hyperlinks not be included into PDF
     documents.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Sun, 11 Nov 2007 18:07:35 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 11 Nov 2007 18:07:35 +0100
 
 pdf2djvu (0.3.1) unstable; urgency=low
 
   * Legible file identifiers.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 09 Nov 2007 21:59:50 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 09 Nov 2007 21:59:50 +0100
 
 pdf2djvu (0.3) unstable; urgency=low
 
@@ -306,7 +306,7 @@ pdf2djvu (0.3) unstable; urgency=low
   * Fix mishandling of Type3 characters.
   * Fix some other minor bugs.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Fri, 09 Nov 2007 21:59:42 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 09 Nov 2007 21:59:42 +0100
 
 pdf2djvu (0.2) unstable; urgency=low
 
@@ -316,10 +316,10 @@ pdf2djvu (0.2) unstable; urgency=low
   * Better exception handling.
   * Fix some other minor bugs.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Tue, 30 Oct 2007 21:36:53 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 30 Oct 2007 21:36:53 +0100
 
 pdf2djvu (0.1) unstable; urgency=low
 
   * Initial release.
 
- -- Jakub Wilk <ubanus@users.sf.net>  Mon, 22 Oct 2007 19:25:12 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 22 Oct 2007 19:25:12 +0200
