@@ -1,3 +1,9 @@
+pdf2djvu (0.6.3) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@debian.org>  Thu, 18 Feb 2010 22:11:16 +0100
+
 pdf2djvu (0.6.2) unstable; urgency=low
 
   * Fix build failure without PStreams.
