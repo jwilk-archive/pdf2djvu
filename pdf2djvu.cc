@@ -1046,19 +1046,44 @@ static int calculate_dpi(const pdf::dpi::Guess &guess)
     return static_cast<int>(dpi);
 }
 
-static int calculate_dpi(double page_width, double page_height)
+static int calculate_dpi(pdf::Document &doc, int n, bool crop)
 {
+  double page_width, page_height;
+  doc.get_page_size(n, crop, page_width, page_height);
+  if (config.guess_dpi)
+  {
+    pdf::dpi::Guesser dpi_guesser(doc);
+    try
+    {
+      pdf::dpi::Guess guess = dpi_guesser[n];
+      std::ostringstream guess_str;
+      guess_str << guess;
+      debug(2)
+        << string_printf(_("guessed resolution: %s dpi"), guess_str.str().c_str())
+        << std::endl;
+      return calculate_dpi(guess);
+    }
+    catch (pdf::dpi::NoGuess)
+    {
+      debug(2) << _("unable to guess resolution") << std::endl;
+    }
+  }
   if (config.preferred_page_size.first)
   {
     double hdpi = config.preferred_page_size.first / page_width;
     double vdpi = config.preferred_page_size.second / page_height;
     double dpi = std::min(hdpi, vdpi) + 0.5;
+    int int_dpi;
     if (dpi < djvu::min_dpi)
-      return djvu::min_dpi;
+      int_dpi = djvu::min_dpi;
     else if (dpi > djvu::max_dpi)
-      return djvu::max_dpi;
+      int_dpi = djvu::max_dpi;
     else
-      return static_cast<int>(dpi);
+      int_dpi = static_cast<int>(dpi);
+      debug(2)
+        << string_printf(_("estimated resolution: %d dpi"), int_dpi)
+        << std::endl;
+    return int_dpi;
   }
   else
     return config.dpi;
@@ -1249,27 +1274,7 @@ static int xmain(int argc, char * const argv[])
     debug(3) << _("rendering page (1st pass)") << std::endl;
     double page_width, page_height;
     doc.get_page_size(n, crop, page_width, page_height);
-    int dpi = 0;
-    if (config.guess_dpi)
-    {
-      pdf::dpi::Guesser dpi_guesser(doc);
-      try
-      {
-        pdf::dpi::Guess guess = dpi_guesser[n];
-        std::ostringstream guess_str;
-        guess_str << guess;
-        debug(2)
-          << string_printf(_("guessed resoultion: %s dpi"), guess_str.str().c_str())
-          << std::endl;
-        dpi = calculate_dpi(guess);
-      }
-      catch (pdf::dpi::NoGuess)
-      {
-         debug(2) << _("unable to guess resolution") << std::endl;
-      }
-    }
-    if (dpi == 0)
-      dpi = calculate_dpi(page_width, page_height);
+    int dpi = calculate_dpi(doc, n, crop);
     doc.display_page(outm.get(), n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
