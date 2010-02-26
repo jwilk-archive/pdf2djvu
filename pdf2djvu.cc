@@ -379,8 +379,8 @@ public:
     }
     else
     {
-      // Ideally, this should not happen. Some heuristics is required to
-      // determine character width/height.
+      /* Ideally, this should never happen. Some heuristics is required to
+       * determine character width/height: */
       pw = pdx; ph = pdy;
       double font_size = state->getTransformedFontSize();
       if (pw * 4.0 < font_size)
@@ -1199,7 +1199,7 @@ static int xmain(int argc, char * const argv[])
     std::string index_file_name = "index.djvu";
     try
     {
-      // For compatibility reasons, check if it's a directory.
+      /* For compatibility reasons, check if it's a directory: */
       output_dir.reset(new Directory(config.output));
     }
     catch (OSError &no_such_directory_exception)
@@ -1221,7 +1221,7 @@ static int xmain(int argc, char * const argv[])
         throw;
       if (config_output_not_a_dir)
       {
-        // Nope, it's not a directory, it must be a file.
+        /* No, it's not a directory, it must be a file: */
         std::string output_directory_name;
         split_path(config.output, output_directory_name, index_file_name);
         if (index_file_name.length() == 0)
@@ -1512,8 +1512,8 @@ static int xmain(int argc, char * const argv[])
     debug(3) << _("extracting document outline") << std::endl;
     if (config.format == config.FORMAT_BUNDLED)
     {
-      // Shared annotations chunk in necessary to preserve multi-file document structure.
-      // (Single-file documents cannot contain document outline.)
+      /* Shared annotations chunk in necessary to preserve multi-file document
+       * structure. (Single-file documents cannot contain document outline.) */
       sed_file << "create-shared-ant" << std::endl;
     }
     sed_file << "set-outline" << std::endl;
@@ -1536,7 +1536,7 @@ static int xmain(int argc, char * const argv[])
       }
       catch (std::ios_base::failure &ex)
       {
-        // Plausibly no shared annotations
+        /* Let's assume that there are no shared annotations. */
       }
     }
     /* Poppler resets the LC_NUMERIC locale settings:
