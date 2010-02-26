@@ -1319,9 +1319,8 @@ static int xmain(int argc, char * const argv[])
     {
       nonwhite_background_color = (background_color[0] & background_color[1] & background_color[2] & 0xff) != 0xff;
       if (nonwhite_background_color)
-      {
-        // Dummy background just to assure FGbz chunks.
-        // It will be replaced later.
+      { /* Create a dummy background, just to assure existence of FGbz chunks.
+         * The background chunk will be replaced later: */
         int sub_width, sub_height;
         calculate_subsampled_size(width, height, 12, sub_width, sub_height);
         debug(3) << _("storing dummy background image") << std::endl;
@@ -1363,7 +1362,8 @@ static int xmain(int argc, char * const argv[])
     {
       TemporaryFile sjbz_file, fgbz_file, bg44_file;
       if (!config.monochrome)
-      {
+      { /* Extract FGbz and BG44 image chunks, to that they can be mangled and
+         * re-assembled later: */
         debug(3) << _("recovering images with `djvuextract`") << std::endl;
         DjVuCommand djvuextract("djvuextract");
         djvuextract << component;
@@ -1375,7 +1375,7 @@ static int xmain(int argc, char * const argv[])
         djvuextract(config.verbose < 3);
       }
       if (config.monochrome)
-      {
+      { /* Use cjb2 for lossy compression: */
         TemporaryFile pbm_file;
         debug(3) << _("encoding monochrome image with `cjb2`") << std::endl;
         DjVuCommand cjb2("cjb2");
@@ -1390,7 +1390,7 @@ static int xmain(int argc, char * const argv[])
       {
         TemporaryFile c44_file;
         c44_file.close();
-        {
+        { /* Create solid-color PPM image with subsample ratio 12: */
           TemporaryFile ppm_file;
           debug(3) << _("creating new background image with `c44`") << std::endl;
           DjVuCommand c44("c44");
@@ -1408,7 +1408,7 @@ static int xmain(int argc, char * const argv[])
           ppm_file.close();
           c44();
         }
-        {
+        { /* Replace previous (dummy) BG44 chunk with the newly created one: */
           debug(3) << _("recovering image chunks with `djvuextract`") << std::endl;
           DjVuCommand djvuextract("djvuextract");
           djvuextract << c44_file << std::string("BG44=") + std::string(bg44_file);
@@ -1416,13 +1416,13 @@ static int xmain(int argc, char * const argv[])
         }
       }
       if (has_text)
-      {
+      { /* Extract hidden text layer (as created by csepdjvu); save it into the sed file: */
         debug(3) << _("recovering text with `djvused`") << std::endl;
         DjVuCommand djvused("djvused");
         djvused << component << "-e" << "output-txt";
         djvused(sed_file);
       }
-      {
+      { /* Re-assemble new DjVu using previously mangled chunks: */
         debug(3) << _("re-assembling page with `djvumake`") << std::endl;
         DjVuCommand djvumake("djvumake");
         std::ostringstream info;
@@ -1438,7 +1438,7 @@ static int xmain(int argc, char * const argv[])
         djvumake();
       }
     }
-    {
+    { /* Extract annotations (hyperlinks); save it into the sed file: */
       debug(3) << _("extracting annotations") << std::endl;
       const std::vector<sexpr::Ref> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
@@ -1448,7 +1448,7 @@ static int xmain(int argc, char * const argv[])
       outm->clear_annotations();
     }
     sed_file.close();
-    {
+    { /* Add per-page non-raster data into the DjVu file: */
       debug(3) << _("adding non-raster data with `djvused`") << std::endl;
       DjVuCommand djvused("djvused");
       djvused << component << "-s" << "-f" << sed_file;
