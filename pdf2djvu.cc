@@ -1355,7 +1355,7 @@ static int xmain(int argc, char * const argv[])
     const bool should_have_fgbz = has_background || has_foreground || nonwhite_background_color;
     const bool need_reassemble =
       config.no_render
-      ? true
+      ? false
       : (config.monochrome || nonwhite_background_color || !should_have_fgbz);
     TemporaryFile sed_file;
     if (need_reassemble)
