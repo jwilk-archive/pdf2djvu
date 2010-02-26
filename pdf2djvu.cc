@@ -1167,8 +1167,8 @@ static int xmain(int argc, char * const argv[])
   pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
 
-  size_t n_pixels = 0;
-  size_t djvu_pages_size = 0;
+  intmax_t n_pixels = 0;
+  intmax_t djvu_pages_size = 0;
   int n_pages = doc.getNumPages();
   unsigned int page_counter = 0;
   PageMap page_map;
