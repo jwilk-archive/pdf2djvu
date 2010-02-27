@@ -12,6 +12,7 @@ MO_FILES = $(PO_FILES:.po=.mo)
 SOURCE_FILES = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
 
 XGETTEXT_OPTIONS = \
+	--no-location \
 	--language=C++ \
 	--keyword=_ --keyword=N_ \
 	--package-name=$(PACKAGE_NAME) \
