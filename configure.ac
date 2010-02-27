@@ -196,8 +196,12 @@ AC_TRY_CPP([
   ]
 )
 
-AX_OPENMP
-AC_SUBST(OPENMP_CXXFLAGS)
+AC_ARG_ENABLE(openmp, AS_HELP_STRING([--disable-openmp], [do not use the OpenMP API]))
+if test "$enable_openmp" != "no"
+then
+  AX_OPENMP
+  AC_SUBST(OPENMP_CXXFLAGS)
+fi
 
 # Checks for gettext
 AM_GNU_GETTEXT(external, need-ngettext)
