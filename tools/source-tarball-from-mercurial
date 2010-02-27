@@ -29,7 +29,10 @@ do
   cp `ls -d /usr/share/automake* | head -n1`/$file tools/
 done
 cp /usr/share/gettext/config.rpath tools/
-autoreconf --verbose
+mkdir m4/
+aclocal -I m4 --install
+autoconf
+autoheader
 rm -Rf *.cache
 cd ..
 
