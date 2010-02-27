@@ -611,11 +611,9 @@ void Config::read_config(int argc, char * const argv[])
         throw PageTitleTemplateParseError();
       }
       break;
-#if _OPENMP
     case OPT_JOBS:
       this->n_jobs = string::as<int>(optarg);
       break;
-#endif
     case OPT_HELP:
       throw NeedHelp();
     case OPT_VERSION:

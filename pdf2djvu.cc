@@ -1155,6 +1155,12 @@ static int xmain(int argc, char * const argv[])
 #if _OPENMP
   if (config.n_jobs >= 1)
     omp_set_num_threads(config.n_jobs);
+#else
+  if (config.n_jobs != 1)
+  {
+    debug(1) << string_printf(_("Warning: %s"), _("Multi-threading is not supported.")) << std::endl;
+    config.n_jobs = 1;
+  }
 #endif
 
   if (config.output_stdout && is_stream_a_tty(std::cout))
