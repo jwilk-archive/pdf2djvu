@@ -25,6 +25,7 @@ all: $(MAN_FILES)
 
 %.xml: %.po
 	po4a $(PO4A_OPTIONS) po4a.conf
+	sed -i -e '/^#:/ d' *.po
 	sed -i -e 's/<\(refentry\)>/<\1 lang="$(subst .,,$(suffix $(basename $(@))))">/' $(@)
 
 # vim:ts=4 sw=4 noet
