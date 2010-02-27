@@ -1,8 +1,8 @@
-pdf2djvu (0.6.3) UNRELEASED; urgency=low
+pdf2djvu (0.7.0) UNRELEASED; urgency=low
 
   * 
 
- -- Jakub Wilk <jwilk@debian.org>  Thu, 18 Feb 2010 22:11:16 +0100
+ -- Jakub Wilk <jwilk@debian.org>  Sat, 27 Feb 2010 15:44:25 +0100
 
 pdf2djvu (0.6.2) unstable; urgency=low
 
