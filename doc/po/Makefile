@@ -11,6 +11,7 @@ include $(srcdir)/doc/Makefile.common
 XSLTPROC += --param man.output.lang.in.name.enabled 1
 
 PO4A_OPTIONS = \
+	--rm-backups \
 	--package-name=$(PACKAGE_NAME) \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
