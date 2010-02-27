@@ -196,6 +196,9 @@ AC_TRY_CPP([
   ]
 )
 
+AX_OPENMP
+AC_SUBST(OPENMP_CXXFLAGS)
+
 # Checks for gettext
 AM_GNU_GETTEXT(external, need-ngettext)
 AM_GNU_GETTEXT_VERSION(0.17)
