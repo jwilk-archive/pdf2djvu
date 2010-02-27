@@ -1268,8 +1268,11 @@ static int xmain(int argc, char * const argv[])
   for (size_t i = 0; i < page_numbers.size(); i++)
   {
     int n = page_numbers[i];
-    if (doc.get() == NULL)
+    if (out1.get() == NULL)
     {
+#if _OPENMP
+      assert(doc.get() == NULL);
+#endif
       doc.reset(new pdf::Document(config.file_name));
       assert(out1.get() == NULL);
       out1.reset(new pdf::Renderer(paper_color, config.monochrome));
@@ -1284,6 +1287,11 @@ static int xmain(int argc, char * const argv[])
         outs->startDoc(doc->getXRef());
       }
     }
+    assert(doc.get() != NULL);
+    assert(out1.get() != NULL);
+    assert(outm.get() != NULL);
+    if (!config.monochrome)
+      assert(outs.get() != NULL);
     Component &component = (*page_files)[n];
     #pragma omp critical
     {
