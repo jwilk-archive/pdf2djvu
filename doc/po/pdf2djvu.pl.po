@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.0\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2010-02-27 19:01+0100\n"
+"POT-Creation-Date: 2010-02-27 18:35+0100\n"
 "PO-Revision-Date: 2009-06-20 10:25+0300\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -635,6 +635,39 @@ msgid "The default is to convert all pages."
 msgstr "Domyślnie konwertowane są wszystkie strony."
 
 #. type: Content of: <refentry><refsection><refsection><title>
+msgid "Performance"
+msgstr "Wydajność"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-j</option>"
+msgstr "<option>-j</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--jobs=<replaceable>n</replaceable></option>"
+msgstr "<option>--jobs=<replaceable>n</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Use <replaceable>n</replaceable> threads to perform conversion. The default "
+"is to use one thread."
+msgstr ""
+"Użyj <replaceable>n</replaceable> wątków do przeprowadzenia konwersji. "
+"Domyślnie używany jest jeden wątek."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-j0</option>"
+msgstr "<option>-j0</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--jobs=0</option>"
+msgstr "<option>--jobs=0</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Determine automatically how many threads to use to perform conversion."
+msgstr ""
+"Określ liczbę wątków używanych do przeprowadzenia konwersji automatycznie."
+
+#. type: Content of: <refentry><refsection><refsection><title>
 msgid "Verbosity, help"
 msgstr "Gadatliwość, pomoc"
 
@@ -681,6 +714,25 @@ msgstr "<option>--help</option>"
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Display help and exit."
 msgstr "Wyświetl pomoc i wyjdź."
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Environment"
+msgstr "Środowisko"
+
+#. type: Content of: <refentry><refsection><variablelist><varlistentry><term>
+msgid "<varname>OMP_<replaceable>*</replaceable></varname>"
+msgstr "<varname>OMP_<replaceable>*</replaceable></varname>"
+
+#. type: Content of: <refentry><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Details of runtime behaviour with respect to parallelism can be controlled "
+"by several environment variables.  Please refer to the <ulink url='http://"
+"openmp.org/wp/openmp-specifications/'>OpenMP API specification</ulink> for "
+"details."
+msgstr ""
+"Zachowanie programu pod względem współbieżności można kontrolować za pomocą "
+"kilku zmiennych środowiskowych. Szczegóły opisane są w <ulink url='http://"
+"openmp.org/wp/openmp-specifications/'>specyfikacji API OpenMP</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Template language"
