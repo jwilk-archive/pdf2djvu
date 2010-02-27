@@ -1,6 +1,6 @@
 pdf2djvu (0.7.0) UNRELEASED; urgency=low
 
-  * 
+  * Add support for parallel page rendering: options -j/--jobs.
 
  -- Jakub Wilk <jwilk@debian.org>  Sat, 27 Feb 2010 15:44:25 +0100
 
