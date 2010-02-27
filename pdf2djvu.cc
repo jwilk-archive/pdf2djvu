@@ -7,6 +7,7 @@
  */
 
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -16,6 +17,9 @@
 #include <set>
 #include <sstream>
 #include <vector>
+#if _OPENMP
+#include <omp.h>
+#endif
 
 #include "pdf-backend.hh"
 #include "pdf-dpi.hh"
@@ -1148,6 +1152,11 @@ static int xmain(int argc, char * const argv[])
     exit(1);
   }
 
+#if _OPENMP
+  if (config.n_jobs >= 1)
+    omp_set_num_threads(config.n_jobs);
+#endif
+
   if (config.output_stdout && is_stream_a_tty(std::cout))
     throw StdoutIsATerminal();
 
@@ -1162,16 +1171,16 @@ static int xmain(int argc, char * const argv[])
     ifs.close();
   }
 
-  pdf::Document doc(config.file_name);
+  std::auto_ptr<pdf::Document> doc(new pdf::Document(config.file_name));
 
   pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
 
   intmax_t n_pixels = 0;
   intmax_t djvu_pages_size = 0;
-  int n_pages = doc.getNumPages();
-  unsigned int page_counter = 0;
+  int n_pages = doc->getNumPages();
   PageMap page_map;
+  std::vector<int> page_numbers;
   std::auto_ptr<const Directory> output_dir;
   std::auto_ptr<File> output_file;
   std::auto_ptr<DjVm> djvm;
@@ -1235,47 +1244,64 @@ static int xmain(int argc, char * const argv[])
   }
   if (config.pages.size() == 0)
     config.pages.push_back(std::make_pair(1, n_pages));
-  int opage = 1;
-  for (
-    std::vector< std::pair<int, int> >::iterator page_range = config.pages.begin();
-    page_range != config.pages.end(); page_range++)
-  for (int ipage = page_range->first; ipage <= n_pages && ipage <= page_range->second; ipage++)
-  {
-    page_map.set(ipage, opage);
-    opage++;
-  }
-
-  std::auto_ptr<pdf::Renderer> out1;
-  std::auto_ptr<MutedRenderer> outm, outs;
-
-  out1.reset(new pdf::Renderer(paper_color, config.monochrome));
-  outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
-  out1->startDoc(doc.getXRef());
-  outm->startDoc(doc.getXRef());
-  if (!config.monochrome)
-  {
-    outs.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
-    outs->startDoc(doc.getXRef());
-  }
-  debug(1) << doc.getFileName()->getCString() << ":" << std::endl;
-  bool crop = !config.use_media_box;
-  debug(0)++;
   for (
     std::vector< std::pair<int, int> >::iterator page_range = config.pages.begin();
     page_range != config.pages.end(); page_range++)
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
-    page_counter++;
+    static int i = 1;
+    page_map.set(i, n);
+    page_numbers.push_back(n);
+    i++;
+  }
+
+  if (page_numbers.size() == 0)
+    throw Config::NoPagesSelected();
+
+  std::auto_ptr<pdf::Renderer> out1;
+  std::auto_ptr<MutedRenderer> outm, outs;
+
+  debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
+  bool crop = !config.use_media_box;
+  debug(0)++;
+  #pragma omp parallel for private(out1, outm, outs, doc) reduction(+: djvu_pages_size)
+  for (size_t i = 0; i < page_numbers.size(); i++)
+  {
+    int n = page_numbers[i];
+    if (doc.get() == NULL)
+    {
+      doc.reset(new pdf::Document(config.file_name));
+      assert(out1.get() == NULL);
+      out1.reset(new pdf::Renderer(paper_color, config.monochrome));
+      out1->startDoc(doc->getXRef());
+      assert(outm.get() == NULL);
+      outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
+      outm->startDoc(doc->getXRef());
+      assert(outs.get() == NULL);
+      if (!config.monochrome)
+      {
+        outs.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
+        outs->startDoc(doc->getXRef());
+      }
+    }
     Component &component = (*page_files)[n];
-    debug(1) << string_printf(_("page #%d -> #%d"), n, page_map.get(n));
-    debug(2) << ":";
-    debug(1) << std::endl;
+    #pragma omp critical
+    {
+      debug(1) << string_printf(_("page #%d -> #%d"), n, page_map.get(n));
+      if (config.n_jobs != 1)
+        debug(2) << ":";
+      debug(1) << std::endl;
+    }
+#if _OPENMP
+/* Multi-threading would interact badly with logging. Disable it for now. */
+#define debug(x) if (config.n_jobs == 1) (debug)(x)
+#endif
     debug(0)++;
     debug(3) << _("rendering page (1st pass)") << std::endl;
     double page_width, page_height;
-    doc.get_page_size(n, crop, page_width, page_height);
-    int dpi = calculate_dpi(doc, n, crop);
-    doc.display_page(outm.get(), n, dpi, dpi, crop, true);
+    doc->get_page_size(n, crop, page_width, page_height);
+    int dpi = calculate_dpi(*doc, n, crop);
+    doc->display_page(outm.get(), n, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -1283,7 +1309,7 @@ static int xmain(int argc, char * const argv[])
     if (!config.no_render)
     {
       debug(3) << _("rendering page (2nd pass)") << std::endl;
-      doc.display_page(out1.get(), n, dpi, dpi, crop, false);
+      doc->display_page(out1.get(), n, dpi, dpi, crop, false);
     }
     debug(3) << _("preparing data for `csepdjvu`") << std::endl;
     debug(0)++;
@@ -1302,7 +1328,7 @@ static int xmain(int argc, char * const argv[])
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << _("rendering background image") << std::endl;
-      doc.display_page(outs.get(), n, hdpi, vdpi, crop, true);
+      doc->display_page(outs.get(), n, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
         throw std::logic_error(_("Unexpected subsampled bitmap width"));
       if (sub_height != outs->getBitmapHeight())
@@ -1351,7 +1377,6 @@ static int xmain(int argc, char * const argv[])
       csepdjvu << sep_file << component;
       csepdjvu();
     }
-    *djvm << component;
     const bool should_have_fgbz = has_background || has_foreground || nonwhite_background_color;
     const bool need_reassemble =
       config.no_render
@@ -1462,17 +1487,24 @@ static int xmain(int argc, char * const argv[])
       djvu_pages_size += page_size;
     }
     debug(0)--;
+#if _OPENMP
+#undef debug
+#endif
   }
-  if (page_counter == 0)
-    throw Config::NoPagesSelected();
+  /* Separate loop to avoid parallelization: */
+  for (size_t i = 0; i < page_numbers.size(); i++)
+  {
+    int n = page_numbers[i];
+    *djvm << (*page_files)[n];
+  }
   djvm->create();
   if (config.extract_metadata)
   {
     TemporaryFile sed_file;
-    pdf::Metadata metadata(doc);
+    pdf::Metadata metadata(*doc);
     debug(3) << _("extracting XMP metadata") << std::endl;
     {
-      std::string xmp_bytes = doc.get_xmp();
+      std::string xmp_bytes = doc->get_xmp();
       debug(0)++;
       if (config.adjust_metadata)
         try
@@ -1517,7 +1549,7 @@ static int xmain(int argc, char * const argv[])
       sed_file << "create-shared-ant" << std::endl;
     }
     sed_file << "set-outline" << std::endl;
-    nonempty_outline = pdf_outline_to_djvu_outline(doc, sed_file, *page_files);
+    nonempty_outline = pdf_outline_to_djvu_outline(*doc, sed_file, *page_files);
     sed_file << std::endl << "." << std::endl;
     sed_file.close();
     if (nonempty_outline)

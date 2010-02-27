@@ -174,6 +174,7 @@ Config::Config()
   this->bg_slices = NULL;
   this->file_name = NULL;
   this->pageid_template.reset(default_pageid_template("p"));
+  this->n_jobs = 1;
 }
 
 namespace string
@@ -388,6 +389,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_DPI = 'd',
     OPT_HELP = 'h',
     OPT_INDIRECT = 'i',
+    OPT_JOBS = 'j',
     OPT_OUTPUT = 'o',
     OPT_PAGES = 'p',
     OPT_QUIET = 'q',
@@ -434,6 +436,7 @@ void Config::read_config(int argc, char * const argv[])
     { "help", 0, 0, OPT_HELP },
     { "hyperlinks", 1, 0, OPT_HYPERLINKS },
     { "indirect", 0, 0, OPT_INDIRECT },
+    { "jobs", 1, 0, OPT_JOBS },
     { "lines", 0, 0, OPT_TEXT_LINES },
     { "loss-level", 1, 0, OPT_LOSS_ANY },
     { "losslevel", 1, 0, OPT_LOSS_ANY },
@@ -463,7 +466,7 @@ void Config::read_config(int argc, char * const argv[])
   while (true)
   {
     optindex = 0;
-    c = getopt_long(argc, argv, "i:o:d:qvp:h", options, &optindex);
+    c = getopt_long(argc, argv, "i:o:d:qvp:j:h", options, &optindex);
     if (c < 0)
       break;
     if (c == 0)
@@ -608,6 +611,11 @@ void Config::read_config(int argc, char * const argv[])
         throw PageTitleTemplateParseError();
       }
       break;
+#if _OPENMP
+    case OPT_JOBS:
+      this->n_jobs = string::as<int>(optarg);
+      break;
+#endif
     case OPT_HELP:
       throw NeedHelp();
     case OPT_VERSION:
@@ -674,6 +682,9 @@ void Config::usage(const Config::Error &error) const
     << std::endl << _("     --filter-text=COMMAND-LINE")
     << std::endl <<   " -p, --pages=..."
     << std::endl <<   " -v, --verbose"
+#if _OPENMP
+    << std::endl <<   " -j, --jobs=N"
+#endif
     << std::endl <<   " -q, --quiet"
     << std::endl <<   " -h, --help"
     << std::endl <<   "     --version"
