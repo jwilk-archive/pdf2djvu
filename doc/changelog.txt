@@ -8,6 +8,7 @@ pdf2djvu (0.6.2) unstable; urgency=low
 
   * Fix build failure without PStreams.
     Thanks to Kyrill Detinov for the bug report.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=43
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Jan 2010 19:00:44 +0100
 
@@ -20,7 +21,9 @@ pdf2djvu (0.6.1) unstable; urgency=low
 pdf2djvu (0.6.0) unstable; urgency=low
 
   * New regression tests.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=27
   * Add support for correcting XMP metadata.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=12
   * Fix resolution detection (poppler ≥ 0.11.1 only).
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 01 Oct 2009 18:30:33 +0200
@@ -30,6 +33,7 @@ pdf2djvu (0.5.11) unstable; urgency=low
   * Document how to deal with CJK PDFs.
   * Windows: make it feasible to use poppler-data.
   * Add support for poppler ≥ 0.11.1.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=40
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Jul 2009 17:07:07 +0200
 
@@ -50,12 +54,15 @@ pdf2djvu (0.5.9) unstable; urgency=low
 pdf2djvu (0.5.8) unstable; urgency=low
 
   * Fix some rounding bugs.
+  * Windows: fix fontconfig configuration and install URW fonts.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=39
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 17 May 2009 10:11:53 +0200
 
 pdf2djvu (0.5.7) unstable; urgency=low
 
   * Add the --guess-dpi option.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=11
   * Windows: fix file handle leak.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 08 May 2009 15:07:20 +0200
@@ -63,17 +70,24 @@ pdf2djvu (0.5.7) unstable; urgency=low
 pdf2djvu (0.5.6) unstable; urgency=low
 
   * New default quantization algorithm.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=36
+    http://code.google.com/p/pdf2djvu/issues/detail?id=42
   * Fix some character encoding issues.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=37
   * Stricter requirements for pageid names.
   * Lift a limitation on number of pages in a bundled multi-page document.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=38
 
  -- Jakub Wilk <jwilk@jwilk.net>  Tue, 05 May 2009 18:31:26 +0200
 
 pdf2djvu (0.5.5) unstable; urgency=low
 
   * Add the --pageid-template option.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=13
   * Add the --page-title-template option.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=13
   * Don't allow duplicate page identifies nor duplicate page titles.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=23
   * More robust UTF-16 to UTF-8 conversion.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 25 Apr 2009 22:33:44 +0200
@@ -81,6 +95,7 @@ pdf2djvu (0.5.5) unstable; urgency=low
 pdf2djvu (0.5.4) unstable; urgency=low
 
   * Add the --crop-text option.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=20
   * Support for Windows 9x.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 18 Apr 2009 21:36:38 +0200
@@ -91,6 +106,7 @@ pdf2djvu (0.5.3) unstable; urgency=low
     multi-page document.
   * Work around DjVuLibre performance bug with adding shared annotations to
     indirect multi-page documents.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=19
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 28 Mar 2009 21:30:10 +0100
 
@@ -98,6 +114,9 @@ pdf2djvu (0.5.2) unstable; urgency=low
 
   * Add --verbatim-metadata option.
   * Better support for Windows systems.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=15
+    http://code.google.com/p/pdf2djvu/issues/detail?id=16
+    http://code.google.com/p/pdf2djvu/issues/detail?id=18
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 21 Mar 2009 16:28:18 +0100
 
@@ -106,6 +125,8 @@ pdf2djvu (0.5.1) unstable; urgency=low
   * Fix several memory leaks.
   * On Unix systems, respect the TMPDIR variable.
   * Better support for Windows systems.
+  * Document differences between pdf2djvu and djvudigital.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=14
 
  -- Jakub Wilk <jwilk@jwilk.net>  Mon, 16 Mar 2009 20:26:58 +0100
 
@@ -143,9 +164,12 @@ pdf2djvu (0.4.10) unstable; urgency=low
 
   * Ensure that each character height is ≥ 1 pixel.
     Thanks to John Goerzen for the bug report.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=5
   * Handle rotated PDF pages properly.
     Thanks to John Goerzen for the bug report.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=4
   * Extract hyperlinks border colors (poppler ≥ 0.7 only).
+    http://code.google.com/p/pdf2djvu/issues/detail?id=3
   * Make page references in the form "#<page-id>", instead of "#<page-no>".
   * Fix a regression which disabled the --fg-colors option.
 
