@@ -1,6 +1,6 @@
 pdf2djvu (0.7.1) UNRELEASED; urgency=low
 
-  * 
+  * Speed up converting pages for which no foreground were detected.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 08 Apr 2010 23:39:38 +0200
 

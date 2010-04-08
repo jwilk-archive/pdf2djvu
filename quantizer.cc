@@ -20,6 +20,7 @@
 #include "config.hh"
 #include "djvuconst.hh"
 
+static void dummy_quantizer(int width, int height, int *background_color, std::ostream &stream);
 
 void WebSafeQuantizer::output_web_palette(std::ostream &stream)
 {
@@ -44,6 +45,11 @@ static inline void write_uint32(std::ostream &stream, uint32_t item)
 void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
+  if (out_fg == out_bg)
+  { /* Don't bother to analyze images if they are obviously identical. */
+    dummy_quantizer(width, height, background_color, stream);
+    has_background = true;
+  }
   stream << "R6 " << width << " " << height << " ";
   output_web_palette(stream);
   pdf::Pixmap bmp_fg(out_fg);
@@ -178,6 +184,12 @@ public:
 void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
+  if (out_fg == out_bg)
+  { /* Don't bother to analyze images if they are obviously identical. */
+    dummy_quantizer(width, height, background_color, stream);
+    has_background = true;
+    return;
+  }
   stream << "R6 " << width << " " << height << " ";
   pdf::Pixmap bmp_fg(out_fg);
   pdf::Pixmap bmp_bg(out_bg);
@@ -314,8 +326,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   }
 }
 
-void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
-  int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+static void dummy_quantizer(int width, int height, int *background_color, std::ostream &stream)
 {
   static const int MAX_RUN_LENGTH = 0x3fff;
   stream << "R4 " << width << " " << height << " ";
@@ -346,6 +357,12 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
   background_color[0] = background_color[1] = background_color[2] = 0xff;
 }
 
+void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
+  int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+{
+  dummy_quantizer(width, height, background_color, stream);
+}
+
 #if HAVE_GRAPHICSMAGICK
 
 GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
@@ -355,6 +372,12 @@ GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
+  if (out_fg == out_bg)
+  { /* Don't bother to analyze images if they are obviously identical. */
+    dummy_quantizer(width, height, background_color, stream);
+    has_background = true;
+    return;
+  }
   stream << "R6 " << width << " " << height << " ";
   Magick::Image image(Magick::Geometry(width, height), Magick::Color());
   image.type(Magick::TrueColorMatteType);

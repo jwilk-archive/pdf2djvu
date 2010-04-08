@@ -251,6 +251,7 @@ protected:
   std::auto_ptr<std::ostringstream> text_comments;
   std::vector<sexpr::Ref> annotations;
   const ComponentList &page_files;
+  bool skipped_elements;
 
   void add_text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
   {
@@ -287,6 +288,7 @@ public:
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::Bool invert, pdf::Bool inline_image)
   {
+    this->skipped_elements = true;
     return;
   }
 
@@ -294,7 +296,10 @@ public:
     pdf::gfx::ImageColorMap *color_map, int *mask_colors, pdf::Bool inline_image)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     Renderer::drawImage(state, object, stream, width, height, color_map, mask_colors, inline_image);
   }
 
@@ -302,7 +307,10 @@ public:
     pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     Renderer::drawMaskedImage(state, object, stream, width, height,
       color_map, mask_stream, mask_width, mask_height, mask_invert);
   }
@@ -312,7 +320,10 @@ public:
     int mask_width, int mask_height, pdf::gfx::ImageColorMap *mask_color_map)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     Renderer::drawSoftMaskedImage(state, object, stream, width, height,
       color_map, mask_stream, mask_width, mask_height, mask_color_map);
   }
@@ -322,6 +333,7 @@ public:
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
   {
+    this->skipped_elements = true;
     return;
   }
 
@@ -329,7 +341,10 @@ public:
     pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate, int *mask_colors, pdf::Bool inline_image)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     Renderer::drawImage(state, object, stream, width, height, color_map, interpolate, mask_colors, inline_image);
   }
 
@@ -338,7 +353,10 @@ public:
     pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert, pdf::Bool mask_interpolate)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     Renderer::drawMaskedImage(state, object, stream, width, height,
       color_map, interpolate,
       mask_stream, mask_width, mask_height, mask_invert, mask_interpolate);
@@ -350,7 +368,10 @@ public:
     pdf::gfx::ImageColorMap *mask_color_map, pdf::Bool mask_interpolate)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     Renderer::drawSoftMaskedImage(state, object, stream, width, height,
       color_map, interpolate,
       mask_stream, mask_width, mask_height, mask_color_map, mask_interpolate);
@@ -368,7 +389,11 @@ public:
     state->transform(x, y, &pox, &poy);
     state->transformDelta(dx, dy, &pdx, &pdy);
     int old_render = state->getRender();
+    /* Setting the following rendering mode disallows drawing text, but allows
+     * fonts to be set up properly nevertheless:
+     */
     state->setRender(0x103);
+    this->skipped_elements = true;
     this->Renderer::drawChar(state, x, y, dx, dy, origin_x, origin_y, code, n_bytes, unistr, length);
     state->setRender(old_render);
     pdf::splash::Font *font = this->getCurrentFont();
@@ -523,12 +548,17 @@ public:
   }
 
   void stroke(pdf::gfx::State *state)
-  { }
+  { 
+    this->skipped_elements = true;
+  }
 
   void fill(pdf::gfx::State *state)
   {
     if (config.no_render)
+    {
+      this->skipped_elements = true;
       return;
+    }
     pdf::splash::Path path;
     this->convert_path(state, path);
     double area = pdf::get_path_area(path);
@@ -579,6 +609,18 @@ public:
   {
     this->text_comments.reset(new std::ostringstream);
     *(this->text_comments) << std::setfill('0');
+  }
+
+  void clear()
+  {
+    this->skipped_elements = 0;
+    this->clear_texts();
+    this->clear_annotations();
+  }
+
+  bool has_skipped_elements()
+  {
+    return this->skipped_elements;
   }
 };
 
@@ -1320,8 +1362,8 @@ static int xmain(int argc, char * const argv[])
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
     debug(2) << string_printf(_("image size: %dx%d"), width, height) << std::endl;
-    if (!config.no_render)
-    {
+    if (!config.no_render && outm->has_skipped_elements())
+    { /* Render the page second time, without skipping any elements. */
       debug(3) << _("rendering page (2nd pass)") << std::endl;
       doc->display_page(out1.get(), n, dpi, dpi, crop, false);
     }
@@ -1333,7 +1375,13 @@ static int xmain(int argc, char * const argv[])
     int background_color[3];
     bool has_foreground = false;
     bool has_text = false;
-    (*quantizer)(out1.get(), outm.get(), width, height, background_color, has_foreground, has_background, sep_file);
+    (*quantizer)(
+        outm->has_skipped_elements() ? out1.get() : outm.get(),
+        outm.get(),
+        width, height,
+        background_color, has_foreground, has_background,
+        sep_file
+    );
     bool nonwhite_background_color;
     if (has_background)
     {
