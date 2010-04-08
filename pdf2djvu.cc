@@ -1385,6 +1385,7 @@ static int xmain(int argc, char * const argv[])
     bool nonwhite_background_color;
     if (has_background)
     {
+      /* The image has a real (non-solid) background. Store subsampled IW44 image. */
       int sub_width, sub_height;
       calculate_subsampled_size(width, height, config.bg_subsample, sub_width, sub_height);
       double hdpi = sub_width / page_width;
@@ -1405,6 +1406,7 @@ static int xmain(int argc, char * const argv[])
     }
     else
     {
+      /* Background is solid. */
       nonwhite_background_color = (background_color[0] & background_color[1] & background_color[2] & 0xff) != 0xff;
       if (nonwhite_background_color)
       { /* Create a dummy background, just to assure existence of FGbz chunks.
