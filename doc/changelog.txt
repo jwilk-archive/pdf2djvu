@@ -1,8 +1,14 @@
+pdf2djvu (0.7.1) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 08 Apr 2010 23:39:38 +0200
+
 pdf2djvu (0.7.0) unstable; urgency=low
 
   * Add support for parallel page rendering: options -j/--jobs.
 
- -- Jakub Wilk <jwilk@debian.org>  Sat, 27 Feb 2010 23:32:21 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 27 Feb 2010 23:32:21 +0100
 
 pdf2djvu (0.6.2) unstable; urgency=low
 
