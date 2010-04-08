@@ -425,7 +425,7 @@ void Config::read_config(int argc, char * const argv[])
   static struct option options [] =
   {
     { "anti-alias", 0, 0, OPT_ANTIALIAS },
-    { "antialias", 0, 0, OPT_ANTIALIAS },
+    { "antialias", 0, 0, OPT_ANTIALIAS }, /* deprecated alias */
     { "bg-slices", 1, 0, OPT_BG_SLICES },
     { "bg-subsample", 1, 0, OPT_BG_SUBSAMPLE },
     { "crop-text", 0, 0, OPT_TEXT_CROP },
@@ -438,7 +438,7 @@ void Config::read_config(int argc, char * const argv[])
     { "indirect", 0, 0, OPT_INDIRECT },
     { "jobs", 1, 0, OPT_JOBS },
     { "lines", 0, 0, OPT_TEXT_LINES },
-    { "loss-level", 1, 0, OPT_LOSS_ANY },
+    { "loss-level", 1, 0, OPT_LOSS_ANY }, /* deprecated alias */
     { "losslevel", 1, 0, OPT_LOSS_ANY },
     { "lossy", 0, 0, OPT_LOSS_100 },
     { "media-box", 0, 0, OPT_MEDIA_BOX },
