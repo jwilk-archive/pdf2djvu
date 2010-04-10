@@ -12,7 +12,7 @@ set -x
 pwd="$PWD"
 buildroot=`mktemp -dt pdf2djvu-source-XXXXXXXX`
 export TAR_OPTIONS='--owner root --group root --mode a+rX'
-export GZIP='-9'
+export GZIP='-9n'
 
 cd "$buildroot"
 
