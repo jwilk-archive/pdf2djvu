@@ -49,11 +49,11 @@ public:
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
 
-class DummyQuantizer : public WebSafeQuantizer
+class DummyQuantizer : public Quantizer
 {
 public:
   explicit DummyQuantizer(const Config &config)
-  : WebSafeQuantizer(config)
+  : Quantizer(config)
   { }
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
