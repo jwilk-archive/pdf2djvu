@@ -47,6 +47,7 @@ quantizer.o: i18n.hh
 quantizer.o: pdf-backend.hh
 quantizer.o: quantizer.cc
 quantizer.o: quantizer.hh
+quantizer.o: rle.hh
 quantizer.o: sexpr.hh
 quantizer.o: string-format.hh
 quantizer.o: version.hh
