@@ -548,7 +548,7 @@ public:
   }
 
   void stroke(pdf::gfx::State *state)
-  { 
+  {
     this->skipped_elements = true;
   }
 
