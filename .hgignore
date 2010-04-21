@@ -10,6 +10,7 @@ configure
 doc/*.1
 doc/po/*.1
 doc/po/*.[a-z][a-z].xml
+m4/*.m4
 paths.hh
 pdf2djvu
 po/*.mo
