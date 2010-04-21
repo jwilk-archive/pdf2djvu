@@ -5,6 +5,9 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
+#ifndef PDF2DJVU_DJVU_CONST_H
+#define PDF2DJVU_DJVU_CONST_H
+
 namespace djvu
 {
   static const int min_dpi = 72;
@@ -56,5 +59,7 @@ namespace djvu
   }
 
 }
+
+#endif
 
 // vim:ts=2 sw=2 et
