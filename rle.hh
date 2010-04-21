@@ -37,26 +37,29 @@ rle::R4::R4(std::ostream &stream, int width, int height)
   last_pixel(0),
   run_length(0)
 {
+  assert(width > 0);
+  assert(height > 0);
   this->stream << "R4 " << width << " " << height << " ";
 }
 
 void rle::R4::operator <<(int pixel)
 {
   pixel = !!pixel;
-  if (this->last_pixel != pixel || this->x == this->width)
+  this->x++;
+  if (this->last_pixel != pixel)
   {
     this->output_run(this->run_length);
-    this->run_length = 0;
-  }
-  if (this->x == this->width)
-  {
-    this->last_pixel = 0;
-    this->x = 0;
+    this->run_length = 1;
+    this->last_pixel = pixel;
   }
   else
+    this->run_length++;
+  if (this->x == this->width)
   {
-    assert(this->x < this->width);
-    this->last_pixel = pixel;
+    this->output_run(this->run_length);
+    this->last_pixel = 0;
+    this->x = 0;
+    this->run_length = 0;
   }
 }
 
@@ -68,13 +71,13 @@ void rle::R4::output_run(int length)
     this->stream.write("\xff\xff", 3);
     length -= max_run_length;
   }
-  if (length > 192)
+  if (length >= 192)
   {
     this->stream
       << static_cast<char>(0xc0 + (length >> 8))
       << static_cast<char>(length & 0xff);
   }
-  else if (length > 0)
+  else
     this->stream << static_cast<char>(length);
 }
 
