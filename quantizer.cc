@@ -92,6 +92,7 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   { /* Don't bother to analyze images if they are obviously identical. */
     dummy_quantizer(width, height, background_color, stream);
     has_background = true;
+    return;
   }
   stream << "R6 " << width << " " << height << " ";
   output_web_palette(stream);
