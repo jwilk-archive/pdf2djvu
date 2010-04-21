@@ -341,6 +341,8 @@ static unsigned int parse_fg_colors(const std::string &s)
     return Config::FG_COLORS_WEB;
   else if (s == "default")
     return Config::FG_COLORS_DEFAULT;
+  else if (s == "black")
+    return Config::FG_COLORS_BLACK;
   long n = string::as<long>(s);
   if (n < 1 || n > static_cast<long>(djvu::max_fg_colors))
     throw FgColorsOutsideRange(1, djvu::max_fg_colors);
@@ -659,6 +661,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl <<   "     --bg-subsample=N"
     << std::endl <<   "     --fg-colors=default"
     << std::endl <<   "     --fg-colors=web"
+    << std::endl <<   "     --fg-colors=black"
 #if HAVE_GRAPHICSMAGICK
     << std::endl <<   "     --fg-colors=N"
 #endif

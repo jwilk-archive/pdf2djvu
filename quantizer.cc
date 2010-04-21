@@ -43,6 +43,48 @@ static inline void write_uint32(std::ostream &stream, uint32_t item)
   stream.write(reinterpret_cast<char*>(buffer), 4);
 }
 
+void MaskQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
+  int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
+{
+  if (out_fg == out_bg)
+  { /* Don't bother to analyze images if they are obviously identical. */
+    dummy_quantizer(width, height, background_color, stream);
+    has_background = true;
+    return;
+  }
+  rle::R4 r4(stream, width, height);
+  pdf::Pixmap bmp_fg(out_fg);
+  pdf::Pixmap bmp_bg(out_bg);
+  pdf::Pixmap::iterator p_fg = bmp_fg.begin();
+  pdf::Pixmap::iterator p_bg = bmp_bg.begin();
+  for (int y = 0; y < height; y++)
+  {
+    for (int x = 0; x < width; x++)
+    {
+      if (!has_background)
+      {
+        for (int i = 0; i < 3; i++)
+        if (background_color[i] != p_bg[i])
+        {
+          has_background = true;
+          break;
+        }
+      }
+      if (p_fg[0] != p_bg[0] || p_fg[1] != p_bg[1] || p_fg[2] != p_bg[2])
+      {
+        if (!has_foreground && (p_fg[0] || p_fg[1] || p_fg[2]))
+          has_foreground = true;
+        r4 << 1;
+      }
+      else
+        r4 << 0;
+      p_fg++, p_bg++;
+    }
+    p_fg.next_row(), p_bg.next_row();
+  }
+
+}
+
 void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {

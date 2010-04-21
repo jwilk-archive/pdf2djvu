@@ -1236,12 +1236,21 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<Quantizer> quantizer;
   if (config.monochrome)
     quantizer.reset(new DummyQuantizer(config));
-  else if (config.fg_colors == Config::FG_COLORS_DEFAULT)
-    quantizer.reset(new DefaultQuantizer(config));
-  else if (config.fg_colors == Config::FG_COLORS_WEB)
-    quantizer.reset(new WebSafeQuantizer(config));
   else
-    quantizer.reset(new GraphicsMagickQuantizer(config));
+    switch (config.fg_colors)
+    {
+    case Config::FG_COLORS_DEFAULT:
+      quantizer.reset(new DefaultQuantizer(config));
+      break;
+    case Config::FG_COLORS_WEB:
+      quantizer.reset(new WebSafeQuantizer(config));
+      break;
+    case Config::FG_COLORS_BLACK:
+      quantizer.reset(new MaskQuantizer(config));
+      break;
+    default:
+      quantizer.reset(new GraphicsMagickQuantizer(config));
+    }
   if (config.format == config.FORMAT_BUNDLED)
   {
     if (config.output_stdout)

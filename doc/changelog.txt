@@ -1,8 +1,8 @@
 pdf2djvu (0.7.2) UNRELEASED; urgency=low
 
-  * 
+  * Add the --fg-colors=black option.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 20 Apr 2010 23:00:09 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 22 Apr 2010 01:03:30 +0200
 
 pdf2djvu (0.7.1) unstable; urgency=low
 

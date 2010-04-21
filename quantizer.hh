@@ -49,6 +49,16 @@ public:
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
 };
 
+class MaskQuantizer : public Quantizer
+{
+public:
+  explicit MaskQuantizer(const Config &config)
+  : Quantizer(config)
+  { }
+  virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
+    int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream);
+};
+
 class DummyQuantizer : public Quantizer
 {
 public:
