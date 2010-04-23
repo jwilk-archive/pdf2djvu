@@ -41,6 +41,7 @@ public:
     FG_COLORS_DEFAULT = UINT_MAX,
     FG_COLORS_WEB = UINT_MAX - 1,
     FG_COLORS_BLACK = UINT_MAX - 2,
+    FG_IW44 = UINT_MAX - 3,
   };
   enum text_t
   {

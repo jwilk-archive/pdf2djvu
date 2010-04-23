@@ -1246,6 +1246,7 @@ static int xmain(int argc, char * const argv[])
       quantizer.reset(new WebSafeQuantizer(config));
       break;
     case Config::FG_COLORS_BLACK:
+    case Config::FG_IW44:
       quantizer.reset(new MaskQuantizer(config));
       break;
     default:
@@ -1454,12 +1455,17 @@ static int xmain(int argc, char * const argv[])
     const bool need_reassemble =
       config.no_render
       ? false
-      : (config.monochrome || nonwhite_background_color || !should_have_fgbz);
+      : (
+        config.monochrome ||
+        config.fg_colors == Config::FG_IW44 ||
+        nonwhite_background_color ||
+        !should_have_fgbz
+      );
     TemporaryFile sed_file;
     if (need_reassemble)
     {
       TemporaryFile sjbz_file, fgbz_file, bg44_file;
-      if (!config.monochrome)
+      if (!config.monochrome || config.fg_colors == Config::FG_IW44)
       { /* Extract FGbz and BG44 image chunks, to that they can be mangled and
          * re-assembled later: */
         debug(3) << _("recovering images with `djvuextract`") << std::endl;
@@ -1521,6 +1527,7 @@ static int xmain(int argc, char * const argv[])
         djvused(sed_file);
       }
       { /* Re-assemble new DjVu using previously mangled chunks: */
+        TemporaryFile ppm_file;
         debug(3) << _("re-assembling page with `djvumake`") << std::endl;
         DjVuCommand djvumake("djvumake");
         std::ostringstream info;
@@ -1529,7 +1536,16 @@ static int xmain(int argc, char * const argv[])
           << component
           << info.str()
           << std::string("Sjbz=") + std::string(sjbz_file);
-        if (should_have_fgbz && (fgbz_file.size() || bg44_file.size()))
+        if (config.fg_colors == Config::FG_IW44)
+        {
+          ppm_file << "P6 " << width << " " << height << std::endl;
+          pdf::Pixmap pixmap(out1.get());
+          ppm_file << pixmap;
+          ppm_file.close();
+          djvumake
+            << std::string("PPM=") + std::string(ppm_file);
+        }
+        else if (should_have_fgbz && (fgbz_file.size() || bg44_file.size()))
           djvumake
             << std::string("FGbz=") + std::string(fgbz_file)
             << std::string("BG44=") + std::string(bg44_file) + std::string(":99");

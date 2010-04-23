@@ -401,6 +401,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_BG_SLICES,
     OPT_BG_SUBSAMPLE,
     OPT_FG_COLORS,
+    OPT_FG_IW44,
     OPT_GUESS_DPI,
     OPT_HYPERLINKS,
     OPT_LOSS_100,
@@ -433,6 +434,7 @@ void Config::read_config(int argc, char * const argv[])
     { "crop-text", 0, 0, OPT_TEXT_CROP },
     { "dpi", 1, 0, OPT_DPI },
     { "fg-colors", 1, 0, OPT_FG_COLORS },
+    { "fg-iw44", 0, 0, OPT_FG_IW44 },
     { "filter-text", 1, 0, OPT_TEXT_FILTER },
     { "guess-dpi", 0, 0, OPT_GUESS_DPI },
     { "help", 0, 0, OPT_HELP },
@@ -503,6 +505,9 @@ void Config::read_config(int argc, char * const argv[])
       break;
     case OPT_FG_COLORS:
       this->fg_colors = parse_fg_colors(optarg);
+      break;
+    case OPT_FG_IW44:
+      this->fg_colors = FG_IW44;
       break;
     case OPT_MONOCHROME:
       this->monochrome = true;
@@ -665,6 +670,7 @@ void Config::usage(const Config::Error &error) const
 #if HAVE_GRAPHICSMAGICK
     << std::endl <<   "     --fg-colors=N"
 #endif
+    << std::endl <<   "     --fg-iw44"
     << std::endl <<   "     --monochrome"
     << std::endl <<   "     --loss-level=N"
     << std::endl <<   "     --lossy"
