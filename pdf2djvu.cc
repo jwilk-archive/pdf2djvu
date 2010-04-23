@@ -27,7 +27,7 @@
 #include "debug.hh"
 #include "djvuconst.hh"
 #include "paths.hh"
-#include "quantizer.hh"
+#include "image-filter.hh"
 #include "sexpr.hh"
 #include "system.hh"
 #include "version.hh"

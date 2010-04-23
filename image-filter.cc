@@ -15,7 +15,7 @@
 #include <map>
 #include <vector>
 
-#include "quantizer.hh"
+#include "image-filter.hh"
 
 #include "config.hh"
 #include "djvuconst.hh"

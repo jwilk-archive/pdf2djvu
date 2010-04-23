@@ -6,8 +6,8 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#ifndef PDF2DJVU_QUANTIZER_H
-#define PDF2DJVU_QUANTIZER_H
+#ifndef PDF2DJVU_IMAGE_FILTER_H
+#define PDF2DJVU_IMAGE_FILTER_H
 
 #include <stdexcept>
 
