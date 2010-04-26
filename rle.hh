@@ -21,31 +21,35 @@ namespace rle
   {
   protected:
     std::ostream &stream;
-    int x, width, height;
+    unsigned int x, width, height;
+    unsigned int run_length;
     int last_pixel;
-    int run_length;
   public:
-    R4(std::ostream &, int width, int height);
+    template <typename T> R4(std::ostream &, T width, T height);
     void operator <<(int pixel);
-    void output_run(int length);
+    template <typename T> void output_run(T);
   };
 }
 
-rle::R4::R4(std::ostream &stream, int width, int height)
+template <typename T>
+rle::R4::R4(std::ostream &stream, T width_, T height_)
 : stream(stream),
-  x(0), width(width), height(height),
-  last_pixel(0),
-  run_length(0)
+  x(0), width(width_), height(height_),
+  run_length(0),
+  last_pixel(0)
 {
-  assert(width > 0);
-  assert(height > 0);
-  this->stream << "R4 " << width << " " << height << " ";
+  assert(width_ > 0);
+  assert(height_ > 0);
+  assert(static_cast<T>(this->width) == width_);
+  assert(static_cast<T>(this->height) == height_);
+  this->stream << "R4 " << this->width << " " << this->height << " ";
 }
 
 void rle::R4::operator <<(int pixel)
 {
   pixel = !!pixel;
   this->x++;
+  assert(this->x > 0);
   if (this->last_pixel != pixel)
   {
     this->output_run(this->run_length);
@@ -63,13 +67,18 @@ void rle::R4::operator <<(int pixel)
   }
 }
 
-void rle::R4::output_run(int length)
+template <typename T>
+void rle::R4::output_run(T length_)
 {
-  static const int max_run_length = 0x3fff;
-  while (length > max_run_length)
+  unsigned int length = length_;
+  static const unsigned int max_length = 0x3fff;
+  assert(length_ >= 0);
+  assert(static_cast<T>(length) == length_);
+  assert(length <= this->width);
+  while (length > max_length)
   {
     this->stream.write("\xff\xff", 3);
-    length -= max_run_length;
+    length -= max_length;
   }
   if (length >= 192)
   {
