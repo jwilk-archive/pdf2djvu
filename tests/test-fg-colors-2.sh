@@ -1,0 +1,1 @@
+test-fg-colors-1.sh
