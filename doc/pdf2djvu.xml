@@ -272,6 +272,14 @@
             </listitem>
         </varlistentry>
         <varlistentry>
+            <term><option>--fg-colors=black</option></term>
+            <listitem>
+                <para>
+                    Discard any color information from the foreground layer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
             <term><option>--monochrome</option></term>
             <listitem>
                 <para>

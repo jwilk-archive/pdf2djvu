@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.2\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2010-04-20 23:00+0300\n"
+"POT-Creation-Date: 2010-04-28 22:18+0300\n"
 "PO-Revision-Date: 2009-06-20 10:25+0300\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -403,6 +403,14 @@ msgstr ""
 "Użyj GraphicsMagicka do zredukowania do <replaceable>n</replaceable> liczby "
 "różnych kolorów na pierwszym planie. Dopuszczalne wartości to liczby "
 "całkowite od 1 do 4080. Ta opcja nie jest zalecana."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--fg-colors=black</option>"
+msgstr "<option>--fg-colors=black</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Discard any color information from the foreground layer."
+msgstr "Odrzuć informacje o kolorach pierwszego planu."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--monochrome</option>"
