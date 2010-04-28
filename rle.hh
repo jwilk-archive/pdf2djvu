@@ -29,6 +29,22 @@ namespace rle
     void operator <<(int pixel);
     template <typename T> void output_run(T);
   };
+
+  class R6
+  {
+  protected:
+    std::ostream &stream;
+    bool has_palette;
+    unsigned int n_colors;
+    unsigned int width, height;
+  public:
+    template <typename T> R6(std::ostream &, T width, T height);
+    template <typename T> void output_run(unsigned int color, T length);
+    void use_palette(unsigned int n_colors);
+    void add_color(uint8_t, uint8_t, uint8_t);
+    void use_dummy_palette();
+    void use_web_palette();
+  };
 }
 
 template <typename T>
@@ -88,6 +104,81 @@ void rle::R4::output_run(T length_)
   }
   else
     this->stream << static_cast<char>(length);
+}
+
+template <typename T>
+rle::R6::R6(std::ostream &stream, T width_, T height_)
+: stream(stream),
+  has_palette(false), n_colors(0),
+  width(width_), height(height_)
+{
+  assert(width_ > 0);
+  assert(height_ > 0);
+  assert(static_cast<T>(this->width) == width_);
+  assert(static_cast<T>(this->height) == height_);
+  this->stream << "R6 " << this->width << " " << this->height << " ";
+}
+
+void rle::R6::use_palette(unsigned int n_colors)
+{
+  assert(!this->has_palette);
+  assert(n_colors > 0);
+  assert(n_colors < 0xff0);
+  this->n_colors = n_colors;
+  this->stream << n_colors << " ";
+}
+
+void rle::R6::add_color(uint8_t r, uint8_t g, uint8_t b)
+{
+  assert(!this->has_palette);
+  assert(this->n_colors-- > 0);
+  this->stream
+    << static_cast<char>(r)
+    << static_cast<char>(g)
+    << static_cast<char>(b);
+  this->has_palette = this->n_colors == 0;
+}
+
+void rle::R6::use_dummy_palette()
+{
+  this->use_palette(1);
+  this->add_color(0xff, 0xff, 0xff);
+  assert(this->has_palette);
+}
+
+void rle::R6::use_web_palette()
+{
+  this->use_palette(216);
+  for (unsigned int r = 0; r < 6; r++)
+  for (unsigned int g = 0; g < 6; g++)
+  for (unsigned int b = 0; b < 6; b++)
+    this->add_color(51 * r, 51 * g, 51 * b);
+  assert(this->has_palette);
+}
+
+static inline void write_uint32(std::ostream &stream, uint32_t item)
+{
+  unsigned char buffer[4];
+  for (size_t i = 0; i < 4; i++)
+    buffer[i] = item >> ((3 - i) * 8);
+  stream.write(reinterpret_cast<char*>(buffer), 4);
+}
+
+template <typename T>
+void rle::R6::output_run(unsigned int color, T length_)
+{
+  unsigned int length = length_;
+  static const unsigned int max_length = 0xfffff;
+  assert(this->has_palette);
+  assert(length_ >= 0);
+  assert(static_cast<T>(length) == length_);
+  assert(length <= this->width);
+  while (length > max_length)
+  {
+    write_uint32(this->stream, (((uint32_t) color) << 20) + (uint32_t) max_length);
+    length -= max_length;
+  }
+  write_uint32(this->stream, (((uint32_t) color) << 20) + (uint32_t) length);
 }
 
 #endif

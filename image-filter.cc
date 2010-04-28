@@ -23,26 +23,6 @@
 
 static void dummy_quantizer(int width, int height, int *background_color, std::ostream &stream);
 
-void WebSafeQuantizer::output_web_palette(std::ostream &stream)
-{
-  stream << "216" << std::endl;
-  for (int r = 0; r < 6; r++)
-  for (int g = 0; g < 6; g++)
-  for (int b = 0; b < 6; b++)
-  {
-    unsigned char buffer[] = { 51 * r, 51 * g, 51 * b };
-    stream.write(reinterpret_cast<char*>(buffer), 3);
-  }
-}
-
-static inline void write_uint32(std::ostream &stream, uint32_t item)
-{
-  unsigned char buffer[4];
-  for (int i = 0; i < 4; i++)
-    buffer[i] = item >> ((3 - i) * 8);
-  stream.write(reinterpret_cast<char*>(buffer), 4);
-}
-
 void MaskQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
@@ -94,8 +74,8 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
     has_background = true;
     return;
   }
-  stream << "R6 " << width << " " << height << " ";
-  output_web_palette(stream);
+  rle::R6 r6(stream, width, height);
+  r6.use_web_palette();
   pdf::Pixmap bmp_fg(out_fg);
   pdf::Pixmap bmp_bg(out_bg);
   pdf::Pixmap::iterator p_fg = bmp_fg.begin();
@@ -130,14 +110,14 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
       else
       {
         if (length > 0)
-          write_uint32(stream, ((uint32_t)color << 20) + length);
+          r6.output_run(color, length);
         color = new_color;
         length = 1;
       }
       p_fg++, p_bg++;
     }
     p_fg.next_row(), p_bg.next_row();
-    write_uint32(stream, ((uint32_t)color << 20) + length);
+    r6.output_run(color, length);
   }
 }
 
@@ -234,7 +214,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
     has_background = true;
     return;
   }
-  stream << "R6 " << width << " " << height << " ";
+  rle::R6 r6(stream, width, height);
   pdf::Pixmap bmp_fg(out_fg);
   pdf::Pixmap bmp_bg(out_bg);
   pdf::Pixmap::iterator p_fg = bmp_fg.begin();
@@ -315,20 +295,17 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   /* Output the palette: */
   if (color_counter == 0)
   {
-    stream << 1 << std::endl << "\xff\xff\xff";
+    r6.use_dummy_palette();
   }
   else
   {
-    stream << color_counter << std::endl;
+    r6.use_palette(color_counter);
     for (size_t color = 0; color < quantized_colors.size(); color++)
     {
       if (quantized_colors[color])
       {
         Rgb18 rgb18(color);
-        unsigned char buffer[3];
-        for (int i = 0; i < 3; i++)
-          buffer[i] = rgb18[i];
-        stream.write(reinterpret_cast<char*>(buffer), 3);
+        r6.add_color(rgb18[0], rgb18[1], rgb18[2]);
       }
     }
   }
@@ -365,7 +342,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
     for (std::vector<Run>::const_iterator run = line_runs.begin(); run != line_runs.end(); run++)
     {
       uint32_t color_index = color_map[run->get_color()];
-      write_uint32(stream, ((uint32_t)color_index << 20) + run->get_length());
+      r6.output_run(color_index, run->get_length());
     }
   }
 }
@@ -399,7 +376,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
     has_background = true;
     return;
   }
-  stream << "R6 " << width << " " << height << " ";
+  rle::R6 r6(stream, width, height);
   Magick::Image image(Magick::Geometry(width, height), Magick::Color());
   image.type(Magick::TrueColorMatteType);
   image.modifyImage();
@@ -443,12 +420,11 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
   image.quantizeColors(9999);
   image.quantize();
   unsigned int n_colors = image.colorMapSize();
-  stream << n_colors << std::endl;
+  r6.use_palette(n_colors);
   for (unsigned int i = 0; i < n_colors; i++)
   {
     const Magick::Color &color = image.colorMap(i);
-    char buffer[] = { color.redQuantum(), color.greenQuantum(), color.blueQuantum() };
-    stream.write(buffer, 3);
+    r6.add_color(color.redQuantum(), color.greenQuantum(), color.blueQuantum());
   }
   for (int y = 0; y < height; y++)
   {
@@ -467,13 +443,13 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       else
       {
         if (length > 0)
-          write_uint32(stream, ((uint32_t)color << 20) + length);
+          r6.output_run(color, length);
         color = new_color;
         length = 1;
       }
       ipixel++, ppixel++;
     }
-    write_uint32(stream, ((uint32_t)color << 20) + length);
+    r6.output_run(color, length);
   }
 }
 
