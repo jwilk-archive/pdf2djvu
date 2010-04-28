@@ -1194,17 +1194,6 @@ static int xmain(int argc, char * const argv[])
     exit(1);
   }
 
-#if _OPENMP
-  if (config.n_jobs >= 1)
-    omp_set_num_threads(config.n_jobs);
-#else
-  if (config.n_jobs != 1)
-  {
-    debug(1) << string_printf(_("Warning: %s"), _("Multi-threading is not supported.")) << std::endl;
-    config.n_jobs = 1;
-  }
-#endif
-
   if (config.output_stdout && is_stream_a_tty(std::cout))
     throw StdoutIsATerminal();
 
@@ -1251,6 +1240,18 @@ static int xmain(int argc, char * const argv[])
     default:
       quantizer.reset(new GraphicsMagickQuantizer(config));
     }
+
+#if _OPENMP
+  if (config.n_jobs >= 1)
+    omp_set_num_threads(config.n_jobs);
+#else
+  if (config.n_jobs != 1)
+  {
+    debug(1) << string_printf(_("Warning: %s"), _("Multi-threading is not supported.")) << std::endl;
+    config.n_jobs = 1;
+  }
+#endif
+
   if (config.format == config.FORMAT_BUNDLED)
   {
     if (config.output_stdout)
