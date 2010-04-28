@@ -1,0 +1,2 @@
+pdf2djvu development is supported by the Ministry of Science and Higher
+Education's grant no. N N519 384036.
