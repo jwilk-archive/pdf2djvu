@@ -388,7 +388,16 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 
 GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
 : Quantizer(config)
-{ }
+{ 
+  static bool initialized = false;
+  if (!initialized)
+  {
+    /* Call to InitializeMagick() is obligatory with GraphicsMagick ≥ 1.3.8.
+     */
+    Magick::InitializeMagick("");
+    initialized = true;
+  }
+}
 
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
