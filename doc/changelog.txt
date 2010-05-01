@@ -1,4 +1,4 @@
-pdf2djvu (0.7.2) UNRELEASED; urgency=low
+pdf2djvu (0.7.2) unstable; urgency=low
 
   * Add the --fg-colors=black option.
   * Fix broken output with --fg-colors=web.
@@ -7,7 +7,7 @@ pdf2djvu (0.7.2) UNRELEASED; urgency=low
     http://code.google.com/p/pdf2djvu/issues/detail?id=47
   * Override number of threads set by GraphicsMagick.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 28 Apr 2010 22:15:34 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 01 May 2010 23:52:23 +0200
 
 pdf2djvu (0.7.1) unstable; urgency=low
 
