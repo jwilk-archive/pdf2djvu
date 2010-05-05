@@ -101,7 +101,7 @@ static std::string html_color(double r, double g, double b)
   return html_color(rgb);
 }
 
-static void cmyk_to_rgb(double cmyk[], double rgb[])
+static void cmyk_to_rgb(const double cmyk[], double rgb[])
 {
   static pdf::gfx::DeviceCmykColorSpace cmyk_space;
   pdf::gfx::Color cmyk_cc;
@@ -126,7 +126,7 @@ static pdf::Bool annotations_callback(pdf::ant::Annotation *annotation, void *us
     border_colors.push_back("");
     return true;
   }
-  double *values = color->getValues();
+  const double *values = color->getValues();
   switch (color->getSpace())
   {
   case pdf::ant::Color::colorTransparent:
