@@ -11,7 +11,7 @@ set -x
 
 # You may want to customize these:
 host=i586-mingw32msvc
-docbook_xsl=http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
+docbook_xsl=http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 buildroot=`mktemp -dt pdf2djvu-win32-XXXXXXXX`
 # Note that $buildroot contents will be removed!
 
