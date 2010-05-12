@@ -17,7 +17,7 @@ buildroot=`mktemp -dt pdf2djvu-win32-XXXXXXXX`
 
 version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q}' < doc/changelog.txt`
 
-pwd="$PWD"
+pwd=`pwd`
 usr="$buildroot"
 mkdir "$usr/" || true
 src="$buildroot/src"
