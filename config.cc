@@ -437,7 +437,7 @@ void Config::read_config(int argc, char * const argv[])
     { "guess-dpi", 0, 0, OPT_GUESS_DPI },
     { "help", 0, 0, OPT_HELP },
     { "hyperlinks", 1, 0, OPT_HYPERLINKS },
-    { "indirect", 0, 0, OPT_INDIRECT },
+    { "indirect", 1, 0, OPT_INDIRECT },
     { "jobs", 1, 0, OPT_JOBS },
     { "lines", 0, 0, OPT_TEXT_LINES },
     { "loss-level", 1, 0, OPT_LOSS_ANY }, /* deprecated alias */

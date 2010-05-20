@@ -3,6 +3,9 @@ pdf2djvu (0.7.3) UNRELEASED; urgency=low
   * Add a few const annotation to fix build failure with poppler ≥ 0.13.
     Thanks to Rakesh Pandit for the bug report and the patch.
     http://code.google.com/p/pdf2djvu/issues/detail?id=48
+  * Fix handling of the --indirect option. Thanks to T S Mohan for the
+    bugreport.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=49
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 05 May 2010 14:43:12 +0200
 
