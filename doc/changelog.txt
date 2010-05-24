@@ -1,4 +1,4 @@
-pdf2djvu (0.7.3) UNRELEASED; urgency=low
+pdf2djvu (0.7.3) unstable; urgency=low
 
   * Add a few const annotation to fix build failure with poppler ≥ 0.13.
     Thanks to Rakesh Pandit for the bug report and the patch.
@@ -7,7 +7,7 @@ pdf2djvu (0.7.3) UNRELEASED; urgency=low
     bugreport.
     http://code.google.com/p/pdf2djvu/issues/detail?id=49
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 05 May 2010 14:43:12 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 24 May 2010 19:59:43 +0200
 
 pdf2djvu (0.7.2) unstable; urgency=low
 
