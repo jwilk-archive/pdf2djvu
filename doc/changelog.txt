@@ -1,3 +1,11 @@
+pdf2djvu (0.7.4) UNRELEASED; urgency=low
+
+  * Fix handling of the --pages option.
+    Thanks to Kyrill Detinov for the bug report.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=50
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 12 Jun 2010 01:01:27 +0200
+
 pdf2djvu (0.7.3) unstable; urgency=low
 
   * Add a few const annotation to fix build failure with poppler ≥ 0.13.

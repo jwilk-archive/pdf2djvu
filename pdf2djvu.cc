@@ -1308,7 +1308,7 @@ static int xmain(int argc, char * const argv[])
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     static int i = 1;
-    page_map.set(i, n);
+    page_map.set(n, i);
     page_numbers.push_back(n);
     i++;
   }
