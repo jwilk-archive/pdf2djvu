@@ -222,12 +222,23 @@ AC_OUTPUT
 
 # Final remarks
 
+if test "$ax_cv_cxx_openmp" = "unknown"
+then
+  cat <<_ACEOF
+
+WARNING: Parallel page rendering will be disabled.
+Please consider using a compiler with OpenMP support to enable this
+functionality.
+_ACEOF
+fi
+
 if test "$with_graphicsmagick" != "no" && test -z "$graphicsmagick_version"
 then
   cat <<_ACEOF
 
-INFO: Please consider installing the GraphicsMagick++ library to extend
-functionality of pdf2djvu.
+INFO: Color quantization using GraphicsMagick will be disabled.
+Please consider installing the GraphicsMagick++ library to enable this
+functionality.
 _ACEOF
 fi
 
@@ -235,8 +246,9 @@ if test "$with_xslt" != "no" && test -z "$libxslt_version"
 then
   cat <<_ACEOF
 
-WARNING: Please consider installing the GNOME XSLT library to extend
-functionality of pdf2djvu.
+WARNING: Updating XMP metadata is will be disabled.
+Please consider installing the GNOME XSLT library to enable this
+functionality.
 _ACEOF
 fi
 

@@ -1247,7 +1247,7 @@ static int xmain(int argc, char * const argv[])
 #else
   if (config.n_jobs != 1)
   {
-    debug(1) << string_printf(_("Warning: %s"), _("Multi-threading is not supported.")) << std::endl;
+    debug(1) << string_printf(_("Warning: %s"), _("pdf2djvu was built without OpenMP support; multi-threading is disabled.")) << std::endl;
     config.n_jobs = 1;
   }
 #endif

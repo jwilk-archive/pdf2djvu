@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.3\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2010-02-27 18:49+0100\n"
+"POT-Creation-Date: 2010-06-12 21:16+0200\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -203,6 +203,11 @@ msgstr "oszacowana rozdzielczość: %d dpi"
 
 msgid "I won't write DjVu data to a terminal."
 msgstr "Nie wypiszę danych DjVu na terminal."
+
+msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
+msgstr ""
+"pdf2djvu zostało skompilowane bez obsługi OpenMP; wielowątkowość jest "
+"wyłączona."
 
 #, c-format
 msgid "page #%d -> #%d"
@@ -454,17 +459,24 @@ msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
-msgid "XML transformations are not supported"
-msgstr "Transformacje XML nie są obsługiwane"
+msgid ""
+"pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+msgstr ""
+"pdf2djvu zostało skompilowane bez GNOME XSLT; transformacje XML są "
+"wyłączone."
 
 msgid "No pages selected"
 msgstr "Nie wybrano stron"
+
+msgid ""
+"pdf2djvu was built without GraphicsMagick; advanced color quantization is "
+"disabled."
+msgstr ""
+"pdf2djvu zostało skompilowane bez GraphicsMagick; zaawansowana kwantyzacja "
+"kolorów jest wyłączona."
 
 msgid "Unable to load document"
 msgstr "Nie można załadować dokumentu"
 
 msgid "Invalid date format"
 msgstr "Błędny format daty"
-
-msgid "Advanced color quantization is not supported."
-msgstr "Zaawansowana kwantyzacja kolorów nie jest obsługiwana."

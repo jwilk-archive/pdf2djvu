@@ -254,7 +254,7 @@ std::string xmp::transform(const std::string &data, const pdf::Metadata &metadat
 
 std::string xmp::transform(const std::string &data, const pdf::Metadata &metadata)
 {
-  throw XmlError(_("XML transformations are not supported"));
+  throw XmlError(_("pdf2djvu was built without GNOME XSLT; XML transformations are disabled."));
 }
 
 #endif

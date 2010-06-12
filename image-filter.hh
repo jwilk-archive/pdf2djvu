@@ -79,7 +79,7 @@ public:
   {
   public:
     NotImplementedError()
-    : std::runtime_error(_("Advanced color quantization is not supported."))
+    : std::runtime_error(_("pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."))
     { };
   };
 };
