@@ -44,7 +44,7 @@ one serious security bug. **You have been warned**.
 
 
 PStreams (recommended)
-=======================
+======================
 PStreams_ allows you to run another program from your C++ application
 and to transfer data between the two programs, similar to shell
 pipelines.
