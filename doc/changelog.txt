@@ -10,7 +10,7 @@ pdf2djvu (0.7.4) UNRELEASED; urgency=low
     Thanks to François Boulogne for the bug report.
     http://code.google.com/p/pdf2djvu/issues/detail?id=52
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 12 Jun 2010 21:30:04 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 12 Jun 2010 21:33:05 +0200
 
 pdf2djvu (0.7.3) unstable; urgency=low
 
