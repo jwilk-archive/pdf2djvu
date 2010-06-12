@@ -69,12 +69,11 @@ GraphicsMagick_ is a library to read, write, and manipulate images.
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
 
-an OpenMP implementation
-========================
-OpenMP_ (Open Multi-Processing) is an application programming interface (API)
-that supports multi-platform shared memory multiprocessing programming.
+an OpenMP implementation (recommended)
+======================================
+OpenMP_ is API for multi-platform shared-memory parallel programming.
 
 .. _OpenMP:
-   http://openmp.org/wp/
+   http://openmp.org/
 
 .. vim:ft=rst ts=3 sw=3 et tw=72
