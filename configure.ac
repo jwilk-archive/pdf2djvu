@@ -246,7 +246,7 @@ if test "$with_xslt" != "no" && test -z "$libxslt_version"
 then
   cat <<_ACEOF
 
-WARNING: Updating XMP metadata is will be disabled.
+WARNING: Updating XMP metadata will be disabled.
 Please consider installing the GNOME XSLT library to enable this
 functionality.
 _ACEOF
