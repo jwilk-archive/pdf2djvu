@@ -188,9 +188,13 @@ CPPFLAGS='-DWIN32_LEAN_AND_MEAN -DXMD_H' \
   --disable-cms \
   --disable-abiword-output \
   --disable-cairo-output \
+  --disable-poppler-cpp \
   --disable-poppler-glib \
   --disable-poppler-qt \
-  --disable-poppler-qt4
+  --disable-poppler-qt4 \
+  --disable-utils \
+  --disable-libpng \
+  --disable-compile-warnings
 sed -i -e 's/"Call to Object/(char*) &/' poppler/Object.h
 sed -i -e 's!^\(#define POPPLER_DATADIR\) .*!\1 "./poppler-data/"!' config.h
 make
