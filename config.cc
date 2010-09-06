@@ -137,6 +137,14 @@ public:
   { }
 };
 
+class PageidIllegalPm : public Config::Error
+{
+public:
+  PageidIllegalPm()
+  : Config::Error(_("Pageid cannot start with a '+' or a '-' character"))
+  { }
+};
+
 class PageidBadExtension : public Config::Error
 {
 public:
@@ -363,8 +371,13 @@ static void validate_pageid_template(string_format::Template &pageid_template)
   std::string pageid = pageid_template.format(empty_bindings);
   size_t length = pageid.length();
   bool dot_allowed = false;
+  bool pm_allowed = false;
   for (std::string::const_iterator it = pageid.begin(); it != pageid.end(); it++)
   {
+    if (!pm_allowed && (*it == '+' || *it == '-'))
+    {
+      throw PageidIllegalPm();
+    }
     if (*it == '.')
     {
       if (!dot_allowed)
@@ -375,6 +388,7 @@ static void validate_pageid_template(string_format::Template &pageid_template)
       dot_allowed = true;
     else
       throw PageidIllegalCharacter();
+    pm_allowed = true;
   }
   if (length >= 4 && pageid.substr(length - 4) == ".djv")
     ;

@@ -132,7 +132,7 @@
                         </listitem>
                         <listitem>
                             <para>
-                                cannot start with a dot,
+                                cannot start with a <literal>+</literal>, <literal>-</literal> or a dot,
                             </para>
                         </listitem>
                         <listitem>
