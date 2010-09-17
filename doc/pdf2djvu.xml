@@ -543,6 +543,18 @@
             </para>
             </listitem>
         </varlistentry>
+        <varlistentry>
+            <term><varname>TMPDIR</varname></term>
+            <!-- As per IEEE Std 1003.1, 2004 Edition, “8.3 Other Environment Variables”:
+            http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html#tag_08_03
+            -->
+            <listitem>
+                <para>
+                    <command>&p;</command> makes havy use of temporary files. It will store them in a directory
+                    specified by this variable. The default is <filename>/tmp</filename>.
+                </para>
+            </listitem>
+        </varlistentry>
         </variablelist>
     </para>
 </refsection>
