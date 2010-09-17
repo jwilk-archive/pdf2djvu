@@ -530,18 +530,21 @@
 
 <refsection>
     <title>Environment</title>
-    <variablelist>
-    <varlistentry>
-        <term><varname>OMP_<replaceable>*</replaceable></varname></term>
-        <listitem>
-        <para>
-            Details of runtime behaviour with respect to parallelism can be controlled by several environment variables.
-            Please refer to the <ulink url='http://openmp.org/wp/openmp-specifications/'>OpenMP API
-            specification</ulink> for details.
-        </para>
-        </listitem>
-    </varlistentry>
-    </variablelist>
+    <para>
+        The following environment variables affects <command>&p;</command> on Unix systems:
+        <variablelist>
+        <varlistentry>
+            <term><varname>OMP_<replaceable>*</replaceable></varname></term>
+            <listitem>
+            <para>
+                Details of runtime behaviour with respect to parallelism can be controlled by several environment variables.
+                Please refer to the <ulink url='http://openmp.org/wp/openmp-specifications/'>OpenMP API
+                specification</ulink> for details.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </para>
 </refsection>
 
 <refsection id='template-language'>
