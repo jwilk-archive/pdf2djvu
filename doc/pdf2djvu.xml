@@ -550,7 +550,7 @@
             -->
             <listitem>
                 <para>
-                    <command>&p;</command> makes havy use of temporary files. It will store them in a directory
+                    <command>&p;</command> makes heavy use of temporary files. It will store them in a directory
                     specified by this variable. The default is <filename>/tmp</filename>.
                 </para>
             </listitem>
