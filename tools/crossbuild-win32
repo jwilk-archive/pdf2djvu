@@ -49,7 +49,7 @@ for regex in \
   'freetype-dev_[0-9.-]+_win32[.]zip' \
   'gettext-runtime-[0-9.-]+[.]zip' \
   'gettext-runtime-dev-[0-9.-]+[.]zip' \
-  'win_iconv-tml-[0-9]+[.]zip'
+  'win-iconv-dev_tml-[0-9]+_win32[.]zip'
 do
   printf "$ftproot" >> ftp.gnome.org.txt
   grep -E -o "$regex" ftp.gnome.org.html | sort -rV | head -n1 | tee -a ftp.gnome.org.txt | grep . > /dev/null
