@@ -1165,6 +1165,36 @@ bool is_stream_a_tty(const std::ostream &ostream)
 
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name)
 {
+#ifdef __MINGW32__
+  /* MinGW32 implementations of ``basename()`` and ``dirname()`` are broken:
+   * http://bugs.debian.org/607215
+   * Therefore, we cannot use the generic code. This implementation is less
+   * sophisticated than MinGW32 one, yet it should be sufficient for our
+   * purposes.
+   */
+  bool append_dot = true;
+  size_t l = 0, r = 0;
+  if (path.length() >= 2 && path[1] == ':')
+    l = r = 2;
+  while (l < path.length() && (path[l] == '/' || path[l] == '\\'))
+  {
+    l++, r++;
+    append_dot = false;
+  }
+  for (size_t i = l; i < path.length(); i++)
+  {
+    if (path[i] == '/' || path[i] == '\\')
+    {
+      l = i;
+      r = i + 1;
+      append_dot = false;
+    }
+  }
+  directory_name = path.substr(0, l);
+  file_name = path.substr(r);
+  if (append_dot)
+    directory_name += ".";
+#else
   /* POSIX-compliant ``basename()`` and ``dirname()`` would split ``/foo/bar/``
    * into ``/foo`` and ``bar``, instead of desired ``foo/bar`` and an empty
    * string. To deal with this weirdness, a trailing ``!`` character is
@@ -1184,6 +1214,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     assert(file_name[length - 1] == '!');
     file_name.erase(length - 1);
   }
+#endif
 }
 
 std::string absolute_path(const std::string &path, const std::string &dir_name)
