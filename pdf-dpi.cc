@@ -8,7 +8,6 @@
 #include "pdf-dpi.hh"
 
 #include <limits>
-#include <iostream>
 
 class DpiGuessDevice : public pdf::OutputDevice
 {
