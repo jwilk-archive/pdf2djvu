@@ -1,8 +1,12 @@
 pdf2djvu (0.7.5) UNRELEASED; urgency=low
 
-  * 
+  * Don't allow page identifiers start with a ‘+’ or ‘-’ characters.
+  * Document the use of TMPDIR environment variable.
+  * Windows: fix handling of non-ASCII filenames in CJK locales. Thanks to Lu
+    Wei for the bugreport.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=53
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 12 Jun 2010 23:14:43 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 17 Jan 2011 17:56:48 +0100
 
 pdf2djvu (0.7.4) unstable; urgency=low
 
