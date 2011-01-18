@@ -24,6 +24,9 @@ MAN_FILES = $(PO_FILES:.po=.1)
 .PHONY: all
 all: $(MAN_FILES)
 
+.PHONY: XML
+xml: $(XML_FILES)
+
 %.xml: %.po
 	po4a $(PO4A_OPTIONS) po4a.conf
 	sed -i -e '/^#:/ d' *.po
