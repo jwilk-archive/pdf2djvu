@@ -335,7 +335,7 @@ src/gettext/config.status: src/winiconv/install-stamp
 
 src/gettext/build-stamp: src/gettext/config.status
 	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ \
-		aliaspath='"; return NULL; "' \
+		aliaspath='\""; return NULL; "\"' \
 		localedir='.'
 	touch $@
 
