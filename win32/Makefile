@@ -319,7 +319,7 @@ src/gettext/source-stamp:
 	echo '93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9  src/gettext-0.18.1.1.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../gettext-*.tar.gz --exclude='gettext-tools'
 	rm -v src/gettext-*.tar.gz
-	sed -r -i -e '/(#undef|#define|extern .*) (sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
+	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
 	touch $@
 
 src/gettext/config.status: src/gettext/source-stamp
