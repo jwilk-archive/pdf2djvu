@@ -9,8 +9,8 @@ host = i586-mingw32msvc
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
 djvulibre_tools = djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
-untar = tar --strip-components=1 -xvvf
 
+untar = tar --strip-components=1 -xvvf
 ship_dll = cp -v bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod -v a-x dist/$1*.dll
 
 export CC = $(host)-gcc -static-libgcc
@@ -23,6 +23,7 @@ export STRIP = $(host)-strip
 export PKG_CONFIG_PATH = $(usr)/lib/pkgconfig
 export CPATH = $(usr)/include
 export LDFLAGS = -L$(usr)/lib
+
 export CFLAGS = -Os
 export CXXFLAGS = -Os
 
