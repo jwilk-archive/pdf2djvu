@@ -8,6 +8,8 @@ usr = $(CURDIR)
 host = i586-mingw32msvc
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
+version := $(shell cat ../doc/changelog.txt | head -n1 | cut -d' ' -f2 | tr -d '()')
+
 djvulibre_tools = djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
 
 untar = tar --strip-components=1 -xvvf
@@ -26,22 +28,38 @@ export LDFLAGS = -L$(usr)/lib
 
 export CFLAGS = -Os
 export CXXFLAGS = -Os
+export TAR_OPTIONS = --owner root --group root --mode a+rX
 
 .PHONY: all
 all: src/pdf2djvu/install-stamp
 all: src/libs-install-stamp
 all: src/urw-fonts/install-stamp
 
+src_tarball_topdir = pdf2djvu-win32-source-$(version)
+src_tarball_name = pdf2djvu-win32-source_$(version)
+
+.PHONY:
+source-tarball:
+	rm -rf src/*/
+	$(MAKE) $(shell grep '[^ ]*source[-]stamp:' Makefile | cut -d: -f1)
+	mkdir -p $(src_tarball_topdir)
+	cp -rl src/*/ $(src_tarball_topdir)/
+	find $(src_tarball_topdir) -name source-stamp -delete
+	tar -cf $(src_tarball_name).tar $(src_tarball_topdir)
+	xz -v $(src_tarball_name).tar
+
 # pdf2djvu
 
-src/pdf2djvu/source-stamp: src/pdf2djvu/configure
+src/pdf2djvu/source-stamp: src/pdf2djvu_$(version).tar.gz
+	mkdir -pv $(dir $@)
+	cd $(dir $@) && $(untar) $(CURDIR)/$(<)
 	sed -i \
 		-e '/^extern/d; /^"C"$$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$$//' \
 		$(dir $@)/configure
 	sed -i -e 's/%zu/%Iu/g' \
-		$(wildcard $(dir $@)/*.cc) \
-		$(wildcard $(dir $@)/*.hh) \
-		$(wildcard $(dir $@)/po/*.po*)
+		$(dir $@)/*.cc \
+		$(dir $@)/*.hh \
+		$(dir $@)/po/*.po*
 	rm -f $(dir $@)/paths.hh
 	touch $@
 
