@@ -49,6 +49,7 @@ source-tarball:
 	find $(src_tarball_topdir) -name source-stamp -delete
 	tar -cf $(src_tarball_name).tar $(src_tarball_topdir)
 	xz -v $(src_tarball_name).tar
+	rm -rf $(src_tarball_topdir)
 
 # pdf2djvu
 
