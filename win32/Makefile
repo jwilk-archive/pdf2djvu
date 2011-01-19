@@ -41,7 +41,6 @@ src/pdf2djvu/source-stamp: src/pdf2djvu/configure
 		$(wildcard $(dir $@)/*.cc) \
 		$(wildcard $(dir $@)/*.hh) \
 		$(wildcard $(dir $@)/po/*.po*)
-	$(MAKE) -C $(dir $@)/po/
 	rm -f $(dir $@)/paths.hh
 	touch $@
 
