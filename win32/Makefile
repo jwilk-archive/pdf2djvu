@@ -153,6 +153,7 @@ src/djvulibre/source-stamp:
 		-e 's/mingw32)/mingw32*)/' \
 		$(dir $@)/configure
 	sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' $(dir $@)/libdjvu/atomic.cpp
+	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	rm -v src/djvulibre-*.tar.gz
 	touch $@
 
