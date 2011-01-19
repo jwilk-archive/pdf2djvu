@@ -320,6 +320,7 @@ src/gettext/source-stamp:
 	cd $(dir $@) && $(untar) ../gettext-*.tar.gz --exclude='gettext-tools'
 	rm -v src/gettext-*.tar.gz
 	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
+	sed -r -i -e 's/(-DENABLE_RELOCATABLE)=1/\1=0/' $(dir $@)/gettext-runtime/intl/Makefile.in
 	touch $@
 
 src/gettext/config.status: src/gettext/source-stamp
@@ -328,11 +329,13 @@ src/gettext/config.status: src/winiconv/install-stamp
 	cd $(dir $@)/gettext-runtime/ && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
-		--enable-relocatable \
 		--disable-libasprintf
+	touch $@	
 
 src/gettext/build-stamp: src/gettext/config.status
-	$(MAKE) -C $(dir $@)/gettext-runtime/intl/
+	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ \
+		aliaspath='"; return NULL; "' \
+		localedir='.'
 	touch $@
 
 src/gettext/install-stamp: src/gettext/build-stamp
