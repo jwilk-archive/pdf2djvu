@@ -37,6 +37,12 @@ src/pdf2djvu/source-stamp: src/pdf2djvu/configure
 	sed -i \
 		-e '/^extern/d; /^"C"$$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$$//' \
 		$(dir $@)/configure
+	sed -i -e 's/%zu/%Iu/g' \
+		$(wildcard $(dir $@)/*.cc) \
+		$(wildcard $(dir $@)/*.hh) \
+		$(wildcard $(dir $@)/po/*.po*)
+	$(MAKE) -C $(dir $@)/po/
+	rm -f $(dir $@)/paths.hh
 	touch $@
 
 src/pdf2djvu/config.status: src/pdf2djvu/source-stamp
@@ -52,15 +58,6 @@ src/pdf2djvu/config.status: src/gettext/install-stamp
 		--without-graphicsmagick
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
-	sed -i -e 's/%zu/%Iu/g' \
-		$(wildcard $(dir $@)/*.cc) \
-		$(wildcard $(dir $@)/*.hh)
-	cd $(dir $@)/po && set -e && \
-		for file in *.po; do \
-			language="$${file%.po}"; \
-			sed -e 's/%zu/%Iu/g' < "$$language.po" | msgfmt - -o "$$language.mo"; \
-		done
-	rm -f $(dir $@)/paths.hh
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
 	touch $@
 
