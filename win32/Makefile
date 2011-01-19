@@ -51,7 +51,7 @@ source-dist:
 
 # Binary zipballs
 
-zipball_topdir = pdf2djvu-win32-$(version)
+zipball_topdir = pdf2djvu-$(version)
 zipball_name = pdf2djvu-win32_$(version)
 export ZIPOPT = -9 -X -r
 
