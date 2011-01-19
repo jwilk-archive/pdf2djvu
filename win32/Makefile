@@ -31,9 +31,11 @@ export CXXFLAGS = -Os
 export TAR_OPTIONS = --owner root --group root --mode a+rX
 
 .PHONY: all
-all: src/pdf2djvu/install-stamp
-all: src/libs-install-stamp
-all: src/urw-fonts/install-stamp
+
+.PHONY: install
+install: src/pdf2djvu/install-stamp
+install: src/libs-install-stamp
+install: src/urw-fonts/install-stamp
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
 src_tarball_name = pdf2djvu-win32-source_$(version)
