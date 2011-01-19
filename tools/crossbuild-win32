@@ -1,524 +1,56 @@
 #!/bin/sh
 
-# Copyright © 2009 Jakub Wilk
+# Copyright © 2009, 2010, 2011 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
+if [ $# -ne 1 ]
+then
+    printf '%s <tarball>\n' "$0"
+    exit 1
+fi
+
 set -e
 set -x
 
-# You may want to customize these:
-host=i586-mingw32msvc
-docbook_xsl=http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
-buildroot=`mktemp -dt pdf2djvu-win32-XXXXXXXX`
-# Note that $buildroot contents will be removed!
-
-version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q}' < doc/changelog.txt`
-
-pwd=`pwd`
-usr="$buildroot"
-mkdir "$usr/" || true
-src="$buildroot/src"
-mkdir "$src/" || true
-
-psrc="$src/pdf2djvu-$version/"
-mkdir "$psrc" || true
-cp -a *.cc *.hh *.in *.rc *.xml configure Makefile* po/ tools/ "$psrc"
-cp doc/*.txt doc/*.xml doc/po/*.[a-z][a-z].xml COPYING "$psrc"
-
-dist="$usr/dist"
-pdist="$dist/pdf2djvu-$version"
-mkdir -p "$pdist" || true
-
-# Download pre-compiled libraries:
-
-cd "$usr"
-
-ftproot=ftp://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/
-wget -O ftp.gnome.org.html "$ftproot"
-true > ftp.gnome.org.txt
-for regex in \
-  'jpeg_[0-9.-]+_win32[.]zip' \
-  'jpeg-dev_[0-9.-]+_win32[.]zip' \
-  'expat_[0-9.-]+_win32[.]zip' \
-  'fontconfig_[0-9.-]+_win32[.]zip' \
-  'fontconfig-dev_[0-9.-]+_win32[.]zip' \
-  'freetype_[0-9.-]+_win32[.]zip' \
-  'freetype-dev_[0-9.-]+_win32[.]zip' \
-  'gettext-runtime-[0-9.-]+[.]zip' \
-  'gettext-runtime-dev-[0-9.-]+[.]zip' \
-  'win-iconv-dev_tml-[0-9]+_win32[.]zip'
-do
-  printf "$ftproot" >> ftp.gnome.org.txt
-  grep -E -o "$regex" ftp.gnome.org.html | sort -rV | head -n1 | tee -a ftp.gnome.org.txt | grep . > /dev/null
-done
-wget -c -i ftp.gnome.org.txt
-
-for file in *.zip
-do
-  unzip "$file"
-done
-sed -i -e '/sn\?printf/ d' include/libintl.h
-sed -i -e '/iconv(/ s/const//' include/iconv.h
-sed -i -e "s!^prefix=.*!prefix=$usr!" lib/pkgconfig/*
-
-( cp /usr/share/doc/mingw32-runtime/mingwm10.dll.gz bin/ && gzip -d bin/*.gz ) || \
-(
-  wget -O - 'http://sourceforge.net/project/showfiles.php?group_id=2435&package_id=11598' \
-  | grep -E -o 'http://downloads[.]sourceforge[.]net/mingw/mingwrt-[0-9.]+-mingw32-dll[.]tar[.]gz' \
-  | head -n1 - \
-  | wget -c -i -
-  tar -xzf mingwrt-*.tar.gz
-)
-
-(
-  cd etc/fonts/
-  sed -i -e 's!<dir>~/[.]fonts</dir>!<dir>CUSTOMFONTDIR</dir>!' fonts.conf
-  mkdir conf.d
-  cd conf.d
-  for file in 30-metric-aliases.conf 30-urw-aliases.conf
-  do
-    wget -O $file "http://cgit.freedesktop.org/fontconfig/plain/conf.d/$file?id=2.6.0"
-  done
-  sed -i -e 's/"append"/"prepend"/g' *.conf
-)
-
-(
-  mkdir fonts/
-  cd fonts/
-  for font in StandardSymL Dingbats
-  do
-    wget "http://svn.ghostscript.com/ghostscript/trunk/urw-fonts/$font.pfb"
-  done
-)
-
-# Download source libraries:
-
-cd "$src"
-
-(
-  printf 'http://poppler.freedesktop.org/'
-  wget -O - 'http://poppler.freedesktop.org/' \
-  | grep -E -o 'poppler-[0-9.]+[.]tar[.]gz' | head -n 1
-) | wget -c -i -
-tar -xzf poppler-*.tar.gz
-sed -i -e 's/\([( ]\)uint /\1Guint /g' poppler-*/poppler/Gfx.cc # http://cgit.freedesktop.org/poppler/poppler/commit/?id=68711d8494e2765c4a24ea59ce8d904981f0f917
-
-wget -O - 'http://djvu.sourceforge.net/' \
-| grep -E -o 'http://downloads.sourceforge.net/djvu/djvulibre-[0-9.]+.tar.gz' \
-| head -n 1 \
-| wget -c -i -
-tar -xzf djvulibre-*.tar.gz
-
-printf 'ftp://xmlsoft.org/libxslt/LATEST_LIB%s\n' XML2 XSLT \
-| wget -c -i -
-for file in LATEST_*
-do
-  tar -xzf "$file"
-done
-
-# Setup cross-compilation environment:
-
-export CXX="${host}-g++ -static-libgcc"
-export AS="${host}-as"
-export DLLTOOL="${host}-dlltool"
-export OBJDUMP="${host}-objdump"
-export STRIP="${host}-strip"
-
-export PKG_CONFIG_PATH="$usr/lib/pkgconfig"
-export CPATH="$usr/include"
-export LDFLAGS="-L$usr/lib"
-export CFLAGS='-Os'
-
-# Compile libxml2:
-
-cd "$src/"libxml2-*/
-./configure --host="$host" --prefix="$usr" \
-  --disable-static \
-  --with-minimum \
-  --with-xpath \
-  --with-html \
-  --with-output \
-  --with-tree
-cat <<EOF > include/libxml/xmlexports.h
-#ifndef __XML_EXPORTS_H__
-#define __XML_EXPORTS_H__
-
-#if defined(IN_LIBXML)
-  #define XMLPUBFUN __declspec(dllexport)
-  #define XMLPUBVAR __declspec(dllexport) extern
-#else
-  #define XMLPUBFUN __declspec(dllimport)
-  #define XMLPUBVAR __declspec(dllimport) extern
-#endif
-#define XMLCALL __cdecl
-#define XMLCDECL __cdecl
-#if !defined _REENTRANT
-  #define _REENTRANT
-#endif
-
-#endif
-EOF
-make
-make install
-
-# Compile libxslt:
-
-cd "$src/"libxslt-*/
-./configure --host="$host" --prefix="$usr" \
-  --disable-static \
-  --with-libxml-prefix="$usr" \
-  --without-crypto \
-  --without-debug \
-  --without-debugger \
-  --without-plugins
-cd libxslt
-make
-make install
-
-# Compile poppler:
-
-cd "$src/"poppler-*/
-CPPFLAGS='-DWIN32_LEAN_AND_MEAN -DXMD_H' \
-./configure --host="$host" --prefix="$usr" \
-  --enable-xpdf-headers \
-  --disable-static \
-  --disable-cms \
-  --disable-abiword-output \
-  --disable-cairo-output \
-  --disable-poppler-cpp \
-  --disable-poppler-glib \
-  --disable-poppler-qt \
-  --disable-poppler-qt4 \
-  --disable-utils \
-  --disable-libpng \
-  --disable-compile-warnings
-sed -i -e 's/"Call to Object/(char*) &/' poppler/Object.h
-sed -i -e 's!^\(#define POPPLER_DATADIR\) .*!\1 "./poppler-data/"!' config.h
-make
-make install
-
-# Compile DjVuLibre:
-
-cd "$src/"djvulibre-*/
-sed -i \
-  -e '/LIBS=-lmsvcp60/d' \
-  -e 's/mingw32)/mingw32*)/' \
-  configure
-./configure --host="$host" --prefix="$usr" --disable-static
-sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' libdjvu/atomic.cpp
-make -C libdjvu install
-make -C tools install
-
-# Compile pdf2djvu:
-
-cd "$psrc"
-sed -i -e '/^extern/d; /^"C"$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$//' configure
-sed -i -e 's/%zu/%Iu/g' *.cc *.hh
-cd po
-for file in *.po
-do
-  language="${file%.po}"
-  sed -e 's/%zu/%Iu/g' < "$language.po" | msgfmt - -o "$language.mo"
-done
-cd ..
-./configure --host="$host" --prefix="$usr" --without-graphicsmagick
-make djvulibre_bindir=. localedir=./locale
-make install
-
-# Prepare the zipball contents:
-
-cd "$pdist"
-for tool in pdf2djvu djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
-do
-  cp "$usr/bin/${tool}" "${tool}.exe"
-done
-cp "$usr/bin/"libdjvulibre-*.dll .
-cp "$usr/bin/"libpoppler-*.dll .
-cp "$usr/bin/"libfontconfig-*.dll .
-cp "$usr/bin/"freetype*.dll .
-cp "$usr/bin/"libjpeg*.dll .
-cp "$usr/bin/"libexpat-*.dll .
-cp "$usr/bin/"libxml2-*.dll .
-cp "$usr/bin/"libxslt-*.dll .
-cp "$usr/bin/"intl.dll .
-cp "$usr/bin/"mingwm*dll .
-mkdir etc/ || true
-cp -r "$usr/etc/fonts" etc/
-cp -r "$usr/fonts" .
-cp -r "$usr/share/locale/" .
-mkdir doc/ || true
-
-chmod -x *.exe *.dll
-"$STRIP" -s *.exe
-
-# Build pdf2djvu documentation:
-
-cd "$psrc"
-for file in COPYING changelog.txt
-do
-  sed -e 's/$/\r/' < $file > "$pdist/doc/${file%%.txt}.txt"
-done
-rm changelog.txt
-for file in *.txt
-do
-  rst2html $file > "$pdist/doc/${file%%.txt}.html"
-done
-xsltproc --nonet "$docbook_xsl" pdf2djvu.xml > "$pdist/doc/manual-page.html"
-for file in pdf2djvu.*.xml
-do
-  suffix="${file#*.}"
-  locale="${suffix%.*}"
-  xsltproc --nonet "$docbook_xsl" "$file" > "$pdist/doc/manual-page-$locale.html"
-done
-
-# Build fonts/libraries licensing documentation:
-
-cat <<EOF | rst2html > "$pdist/doc/COPYING.fonts.html"
-URW Type 1 fonts
-================
-Copyright © 1997 URW Software
-
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; version 2 dated June, 1991.
-
-As a special exception, permission is granted to include this font program in a
-Postscript or PDF file that consists of a document that contains text to be
-displayed or printed using this font, regardless of the conditions or license
-applying to the document itself.
-EOF
-
-cat <<EOF | rst2html > "$pdist/doc/COPYING.libraries.html"
-libdjvulibre-\\*.dll
-====================
-Copyright © 2001 AT&T
-
-Copyright © 2002 Leon Bottou and Yann Le Cun.
-
-This software is subject to, and may be distributed under, the GNU General
-Public License, either Version 2 of the license, or (at your option) any later
-version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-libpoppler-\\*.dll
-==================
-Copyright © 1996-2004 Glyph & Cog, LLC
-
-Copyright © 2005-2009 \`The Poppler Developers <http://poppler.freedesktop.org>\`_
-
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; version 2 dated June, 1991.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-freetype\\*.dll
-===============
-The FreeType 2 font engine is copyrighted work and cannot be used legally
-without a software license. In order to make this project usable to a vast
-majority of developers, we distribute it under two mutually exclusive
-open-source licenses.
-
-This means that *you* must choose *one* of the two licenses described below,
-then obey all its terms and conditions when using FreeType 2 in any of your
-projects or products.
-
-- The FreeType License, which is similar to the original BSD license *with* an
-  advertising clause that forces you to explicitly cite the FreeType project in
-  your product's documentation. All details are in the license file. This
-  license is suited to products which don't use the GNU General Public License.
-
-- The GNU General Public License version 2, for programs which already use the
-  GPL. Note that the FTL is incompatible with the GPL due to its advertisement
-  clause.
-
-The contributed PCF driver comes with a license similar to that of the X
-Window System. It is compatible to the above two licenses.
-
-libfontconfig-\\*.dll
-=====================
-Copyright © 2001, 2003 Keith Packard
-
-Permission to use, copy, modify, distribute, and sell this software and its
-documentation for any purpose is hereby granted without fee, provided that the
-above copyright notice appear in all copies and that both that copyright notice
-and this permission notice appear in supporting documentation, and that the
-name of Keith Packard not be used in advertising or publicity pertaining to
-distribution of the software without specific, written prior permission. Keith
-Packard makes no representations about the suitability of this software for any
-purpose. It is provided “as is” without express or implied warranty.
-
-KEITH PACKARD DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
-ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL KEITH
-PACKARD BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
-DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
-CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-libjpeg-\\*.dll
-===============
-This software is copyright © 1991-2009, Thomas G. Lane.
-All Rights Reserved except as specified below.
-
-Permission is hereby granted to use, copy, modify, and distribute this
-software (or portions thereof) for any purpose, without fee, subject to these
-conditions:
-
-1) If any part of the source code for this software is distributed, then the
-README file must be included, with this copyright and no-warranty notice
-unaltered; and any additions, deletions, or changes to the original files must
-be clearly indicated in accompanying documentation.
-
-2) If only executable code is distributed, then the accompanying
-documentation must state that “this software is based in part on the work of
-the Independent JPEG Group”.
-
-3) Permission for use of this software is granted only if the user accepts full
-responsibility for any undesirable consequences; the authors accept NO
-LIABILITY for damages of any kind.
-
-These conditions apply to any software derived from or based on the IJG code,
-not just to the unmodified library. If you use our work, you ought to
-acknowledge us.
-
-Permission is NOT granted for the use of any IJG author's name or company name
-in advertising or publicity relating to this software or products derived from
-it. This software may be referred to only as “the Independent JPEG Group's
-software”.
-
-We specifically permit and encourage the use of this software as the basis of
-commercial products, provided that all warranty or liability claims are assumed
-by the product vendor.
-
-libexpat-\\*.dll
-================
-Copyright © 1998, 1999, 2000 Thai Open Source Software Center Ltd and Clark
-Cooper
-
-Copyright © 2001, 2002, 2003, 2004, 2005, 2006 Expat maintainers.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-libxml2-\\*.dll
-===============
-Except where otherwise noted in the source code (e.g. the files hash.c,
-list.c and the trio files, which are covered by a similar licence but
-with different Copyright notices) [#]_ all the files are:
-
-Copyright © 1998-2003 Daniel Veillard. All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the “Software”), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-DANIEL VEILLARD BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Except as contained in this notice, the name of Daniel Veillard shall not
-be used in advertising or otherwise to promote the sale, use or other dealings
-in this Software without prior written authorization from him.
-
-.. [#] The *otherwise noted* license and copyright notices are:
-
-   | Copyright © 1998 Bjorn Reese and Daniel Stenberg.
-   | Copyright © 2000 Bjorn Reese and Daniel Stenberg.
-   | Copyright © 2000 Bjorn Reese and Daniel Veillard.
-   | Copyright © 2000 Gary Pennington and Daniel Veillard.
-   | Copyright © 2001 Bjorn Reese and Daniel Stenberg.
-   | Copyright © 2001 Bjorn Reese.
-
-   Permission to use, copy, modify, and distribute this software for any
-   purpose with or without fee is hereby granted, provided that the above
-   copyright notice and this permission notice appear in all copies.
-
-   THIS SOFTWARE IS PROVIDED “AS IS” AND WITHOUT ANY EXPRESS OR IMPLIED
-   WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
-   MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE AUTHORS AND
-   CONTRIBUTORS ACCEPT NO RESPONSIBILITY IN ANY CONCEIVABLE MANNER.
-
-
-libxslt1-\\*.dll
-================
-Copyright © 2001-2002 Daniel Veillard. All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the “Software”), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-DANIEL VEILLARD BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Except as contained in this notice, the name of Daniel Veillard shall not
-be used in advertising or otherwise to promote the sale, use or other dealings
-in this Software without prior written authorization from him.
-
-intl.dll
-========
-Copyright © 1995-2007 Free Software Foundation, Inc.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU Library General Public License as published
-by the Free Software Foundation; either version 2, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Library General Public License for more details.
-EOF
-
-# Build the zipball:
-
-cd "$dist/"
-rm -f "$pwd/pdf2djvu-win32_$version.zip"
-zip -9 -X -r "$pwd/pdf2djvu-win32_$version.zip" "pdf2djvu-$version"
+export ZIPOPT='-9Xr'
+
+cwd=$(pwd)
+tarball=$(readlink -f "$1")
+tarball_base="${tarball%.tar.*}"
+root=$(mktemp -dt pdf2djvu-win32-XXXXXX)
+version="${tarball_base##*_}"
+
+mkdir -pv "$root/src/"
+cd "$root/src/"
+tar -xvvf "$tarball"
+mv -v pdf2djvu-* pdf2djvu
+cd "$root"
+ls -lR src/
+cp -rv src/pdf2djvu/win32/* .
+
+# Build source:
+
+stamps=$(grep -o '^[^ ]*source-stamp' Makefile | sort -u)
+make $stamps
+tag="pdf2djvu-win32-source_$version"
+cp -rl src "$tag"
+find "$tag" -name source-stamp -delete
+zip "$cwd/$tag.zip" "$tag"
+mv "$tag" src
+
+# Build binaries:
+
+make all
+tag="pdf2djvu-win32_$version"
+mv dist "$tag"
+zip "$cwd/$tag.zip" "$tag"
 
 # Cleanup:
 
-rm -Rf "$buildroot"
+cd /
+rm -rf "$root"
 
-# vim:ts=2 sw=2 et
+# vim:ts=4 sw=4 et

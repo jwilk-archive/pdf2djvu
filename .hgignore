@@ -24,5 +24,6 @@ tools/config.*
 tools/install-sh
 version.hh
 version.hh.in
+win32/*/
 xmp-dummy.hh
 xmp-xslt.hh

@@ -1,0 +1,13 @@
+URW Type 1 fonts
+================
+Copyright © 1997 URW Software
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; version 2 dated June, 1991.
+
+As a special exception, permission is granted to include this font program in a
+Postscript or PDF file that consists of a document that contains text to be
+displayed or printed using this font, regardless of the conditions or license
+applying to the document itself.
+
