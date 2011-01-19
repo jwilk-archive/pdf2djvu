@@ -28,20 +28,18 @@ export LDFLAGS = -L$(usr)/lib
 
 export CFLAGS = -Os
 export CXXFLAGS = -Os
-export TAR_OPTIONS = --owner root --group root --mode a+rX
 
 .PHONY: all
+all:
 
-.PHONY: install
-install: src/pdf2djvu/install-stamp
-install: src/libs-install-stamp
-install: src/urw-fonts/install-stamp
+# Source tarballs
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
 src_tarball_name = pdf2djvu-win32-source_$(version)
+export TAR_OPTIONS = --owner root --group root --mode a+rX
 
 .PHONY:
-source-tarball:
+source-dist:
 	rm -rf src/*/
 	$(MAKE) $(shell grep '[^ ]*source[-]stamp:' Makefile | cut -d: -f1)
 	mkdir -p $(src_tarball_topdir)
@@ -50,6 +48,24 @@ source-tarball:
 	tar -cf $(src_tarball_name).tar $(src_tarball_topdir)
 	xz -v $(src_tarball_name).tar
 	rm -rf $(src_tarball_topdir)
+
+# Binary zipballs
+
+zipball_topdir = pdf2djvu-win32-$(version)
+zipball_name = pdf2djvu-win32_$(version)
+export ZIPOPT = -9 -X -r
+
+.PHONY: binary-dist
+binary-dist: install
+	mkdir -p $(zipball_topdir)
+	cp -rl dist $(zipball_topdir)
+	zip $(zipball_name).zip $(zipball_topdir)
+	rm -r $(zipball_topdir)
+
+.PHONY: install
+install: src/pdf2djvu/install-stamp
+install: src/libs-install-stamp
+install: src/urw-fonts/install-stamp
 
 # pdf2djvu
 
