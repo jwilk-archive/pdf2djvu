@@ -60,6 +60,7 @@ src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 			language="$${file%.po}"; \
 			sed -e 's/%zu/%Iu/g' < "$$language.po" | msgfmt - -o "$$language.mo"; \
 		done
+	rm -f $(dir $@)/paths.hh
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
 	touch $@
 
