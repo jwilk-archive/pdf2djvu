@@ -148,7 +148,7 @@ pdf2djvu (0.5.4) unstable; urgency=low
 
   * Add the --crop-text option.
     http://code.google.com/p/pdf2djvu/issues/detail?id=20
-  * Support for Windows 9x.
+  * Add support for Windows 9x.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 18 Apr 2009 21:36:38 +0200
 
