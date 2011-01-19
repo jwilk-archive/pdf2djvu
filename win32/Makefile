@@ -119,6 +119,7 @@ src/poppler/config.status: src/libjpeg/install-stamp
 	cd $(dir $@) && \
 		CPPFLAGS='-DWIN32_LEAN_AND_MEAN -DXMD_H' \
 		./configure --host=$(host) --prefix=$(usr) \
+		--with-font-configuration=fontconfig \
 		--enable-xpdf-headers \
 		--disable-static \
 		--disable-cms \
