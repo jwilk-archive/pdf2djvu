@@ -58,7 +58,7 @@ export ZIPOPT = -9 -X -r
 .PHONY: binary-dist
 binary-dist: install
 	mkdir -p $(zipball_topdir)
-	cp -rl dist $(zipball_topdir)
+	cp -rl dist/* $(zipball_topdir)
 	zip $(zipball_name).zip $(zipball_topdir)
 	rm -r $(zipball_topdir)
 
