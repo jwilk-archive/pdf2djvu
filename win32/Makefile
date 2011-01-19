@@ -184,7 +184,7 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/libxml2/source-stamp:
 	mkdir -pv $(dir $@)
-	cd src && wget -c ftp://xmlsoft.org/libxslt/libxml2-2.7.8.tar.gz
+	cd src && wget -c http://xmlsoft.org/sources/libxml2-2.7.8.tar.gz
 	echo 'cda23bc9ebd26474ca8f3d67e7d1c4a1f1e7106364b690d822e009fdc3c417ec  src/libxml2-2.7.8.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxml2-*.tar.gz
 	rm -v src/libxml2-*.tar.gz
@@ -218,7 +218,7 @@ src/libxml2/install-stamp: src/libxml2/build-stamp
 
 src/libxslt/source-stamp:
 	mkdir -pv $(dir $@)
-	cd src && wget -c ftp://xmlsoft.org/libxslt/libxslt-1.1.26.tar.gz
+	cd src && wget -c http://xmlsoft.org/sources/libxslt-1.1.26.tar.gz
 	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  src/libxslt-1.1.26.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
 	rm -v src/libxslt-*.tar.gz
