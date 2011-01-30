@@ -1,3 +1,9 @@
+pdf2djvu (0.7.6) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 30 Jan 2011 23:39:28 +0100
+
 pdf2djvu (0.7.5) unstable; urgency=low
 
   * Don't allow page identifiers start with a ‘+’ or ‘-’ characters.
