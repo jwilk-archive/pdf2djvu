@@ -334,12 +334,12 @@ src/fontconfig/config.status: src/libxml2/install-stamp
 		--disable-docs
 
 src/fontconfig/build-stamp: src/fontconfig/config.status
-	$(MAKE) -C $(dir $@)
+	$(MAKE) -C $(dir $@)/src/
 	touch $@
 
 src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	mkdir -p dist/etc/fonts/conf.d/
-	$(MAKE) -C $(dir $@) install RUN_FC_CACHE_TEST=false
+	$(MAKE) -C $(dir $@)/src/ install RUN_FC_CACHE_TEST=false
 	$(call ship_dll,libfontconfig)
 	cp etc/fonts/fonts.conf dist/etc/fonts/
 	cp etc/fonts/fonts.dtd dist/etc/fonts/
