@@ -238,7 +238,8 @@ src/libxml2/config.status: src/libxml2/source-stamp
 		--with-output \
 		--with-tree \
 		--with-writer \
-		--with-xpath
+		--with-xpath \
+		--with-sax1
 
 src/libxml2/build-stamp: src/libxml2/config.status
 	$(MAKE) -C $(dir $@)

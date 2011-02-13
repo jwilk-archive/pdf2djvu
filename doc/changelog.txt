@@ -1,8 +1,8 @@
 pdf2djvu (0.7.6) UNRELEASED; urgency=low
 
-  * 
+  * Windows: compile libxml2 with --with-sax1, which is needed by fontconfig.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 30 Jan 2011 23:39:28 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 14 Feb 2011 00:50:23 +0100
 
 pdf2djvu (0.7.5) unstable; urgency=low
 
