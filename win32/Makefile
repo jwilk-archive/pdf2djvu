@@ -334,17 +334,16 @@ src/fontconfig/config.status: src/libxml2/install-stamp
 		--disable-docs
 
 src/fontconfig/build-stamp: src/fontconfig/config.status
-	$(MAKE) -C $(dir $@)/src/
+	$(MAKE) -C $(dir $@)/
 	touch $@
 
 src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	mkdir -p dist/etc/fonts/conf.d/
-	$(MAKE) -C $(dir $@)/src/ install RUN_FC_CACHE_TEST=false
+	$(MAKE) -C $(dir $@)/ install RUN_FC_CACHE_TEST=false
 	$(call ship_dll,libfontconfig)
 	cp etc/fonts/fonts.conf dist/etc/fonts/
 	cp etc/fonts/fonts.dtd dist/etc/fonts/
-	cp etc/fonts/conf.d/*-metric-aliases.conf dist/etc/fonts/conf.d/
-	cp etc/fonts/conf.d/*-urw-aliases.conf dist/etc/fonts/conf.d/
+	cp etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
 	touch $@
 
 # GNU gettext
@@ -456,13 +455,10 @@ src/mingwrt/install-stamp: src/mingwrt/build-stamp
 
 # URW fonts
 
-src/urw-fonts/source-stamp: src/urw-fonts/Dingbats.pfb
-src/urw-fonts/source-stamp: src/urw-fonts/StandardSymL.pfb
-	touch $@
-
-src/urw-fonts/%.pfb:
+src/urw-fonts/source-stamp:
 	mkdir -p $(dir $@)
-	cd $(dir $@) && wget http://svn.ghostscript.com/ghostscript/trunk/urw-fonts/$*.pfb
+	cd $(dir $@) && wget -A '*.pfb' -r -nd -np http://svn.ghostscript.com/ghostscript/trunk/urw-fonts/
+	touch $@
 
 src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 	touch $@
