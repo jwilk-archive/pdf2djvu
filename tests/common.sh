@@ -52,4 +52,16 @@ extract_xmp()
     | ( [ "$raw" -eq 0 ] && xmllint -format - || cat )
 }
 
+_error_handler()
+{
+    exitcode=$?
+    if [ $exitcode -ne 0 ] && [ -s "$error_log" ]
+    then
+        cat "$error_log" >&2
+        exit $exitcode
+    fi
+}
+
+trap _error_handler EXIT
+
 # vim:ts=4 sw=4 et
