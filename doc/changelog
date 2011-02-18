@@ -1,4 +1,4 @@
-pdf2djvu (0.7.6) UNRELEASED; urgency=low
+pdf2djvu (0.7.6) unstable; urgency=low
 
   * Import Windows font support.
     + Compile libxml2 with --with-sax1, which is needed by fontconfig.
@@ -6,7 +6,7 @@ pdf2djvu (0.7.6) UNRELEASED; urgency=low
     + Ship substitutes for all 35 standard PostScript fonts.
   * Tests: output error log if a test failed.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 15 Feb 2011 13:05:36 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 18 Feb 2011 13:00:59 +0100
 
 pdf2djvu (0.7.5) unstable; urgency=low
 
