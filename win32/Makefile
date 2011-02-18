@@ -8,7 +8,7 @@ usr = $(CURDIR)
 host = i586-mingw32msvc
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
-version := $(shell cat ../doc/changelog.txt | head -n1 | cut -d' ' -f2 | tr -d '()')
+version := $(shell cat ../doc/changelog | head -n1 | cut -d' ' -f2 | tr -d '()')
 
 djvulibre_tools = djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
 
@@ -117,8 +117,7 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 		for file in *.txt; do \
 			rst2html $$file > $(usr)/dist/doc/$${file%.txt}.html; \
 		done
-	rm -f dist/doc/changelog.html
-	sed -e 's/$$/\r/' < src/pdf2djvu/doc/changelog.txt > dist/doc/changelog.txt
+	sed -e 's/$$/\r/' < src/pdf2djvu/doc/changelog > dist/doc/changelog.txt
 	touch $@
 
 # Various libraries
