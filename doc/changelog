@@ -1,3 +1,9 @@
+pdf2djvu (0.7.7) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 18 Feb 2011 13:54:43 +0100
+
 pdf2djvu (0.7.6) unstable; urgency=low
 
   * Improve Windows font support.
