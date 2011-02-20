@@ -5,7 +5,7 @@ then
   exit 1
 fi
 source_dir=$1
-include_dir=`pkg-config --cflags-only-I poppler-splash | sed -n -e '/^-I/ { s/^-I//; s/ .*//; p; q;}'`
+include_dir=$(pkg-config --cflags-only-I poppler-splash | sed -n -e '/^-I/ { s/^-I//; s/ .*//; p; q;}')
 if [ "x$include_dir" = "x" ]
 then
   printf 'Unable to determine destination directory\n' >&2

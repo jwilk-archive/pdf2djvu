@@ -1,6 +1,6 @@
 #!/bin/sh
 version=${1:?"no version number provided"}
-windows_version="`printf -- '%s' "$version" | sed -e 's/[.]/,/g'`,0"
+windows_version="$(printf -- '%s' "$version" | sed -e 's/[.]/,/g'),0"
 set -e
 set -x
 dch -v "$version" -c doc/changelog

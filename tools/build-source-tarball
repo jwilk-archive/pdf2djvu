@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright © 2009, 2010 Jakub Wilk
+# Copyright © 2009, 2010, 2011 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -10,7 +10,7 @@ set -e
 set -x
 
 pwd="$PWD"
-buildroot=`mktemp -dt pdf2djvu-source-XXXXXXXX`
+buildroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
 export TAR_OPTIONS='--owner root --group root --mode a+rX'
 export GZIP='-9n'
 
@@ -19,14 +19,14 @@ cd "$buildroot"
 # Mercurial archive:
 hg archive "$@" -R "$pwd" pdf2djvu
 rm -f pdf2djvu/.hg*
-version=`sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q; }' < pdf2djvu/doc/changelog`
+version=$(sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q; }' < pdf2djvu/doc/changelog)
 mv pdf2djvu "pdf2djvu-$version"
 
 # Autoconf & company:
 cd "pdf2djvu-$version"
 for file in install-sh config.sub config.guess
 do
-  cp `ls -d /usr/share/automake* | head -n1`/$file tools/
+  cp $(ls -d /usr/share/automake* | head -n1)/$file tools/
 done
 cp /usr/share/gettext/config.rpath tools/
 mkdir m4/
