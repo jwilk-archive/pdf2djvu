@@ -161,6 +161,8 @@ private:
   ExistingFile& operator=(const ExistingFile &); // not defined
 public:
   explicit ExistingFile(const std::string &name);
+  virtual ~ExistingFile() throw ()
+  { }
   ExistingFile(const Directory& directory, const std::string &name);
 };
 
