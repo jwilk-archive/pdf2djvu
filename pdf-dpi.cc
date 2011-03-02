@@ -119,7 +119,7 @@ pdf::dpi::Guess pdf::dpi::Guesser::operator[](int n)
 {
   DpiGuessDevice *guess_device = static_cast<DpiGuessDevice*>(this->magic);
   guess_device->reset();
-  this->document.displayPages(guess_device, n, n, 72, 72, 0, true, false, false, false);
+  this->document.displayPages(guess_device, n, n, 72, 72, 0, true, false, false);
   double min = guess_device->min();
   double max = guess_device->max();
   if (max == 0.0)
