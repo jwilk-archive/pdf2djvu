@@ -13,7 +13,11 @@ AC_LANG(C++)
 
 AC_PROG_CXX
 AC_PROG_INSTALL
-AC_CHECK_TOOL(WINDRES, windres, :)
+AC_MSG_CHECKING(for PStreams)
+AC_TRY_CPP(
+  [#include <winver.h>],
+  [AC_CHECK_TOOL(WINDRES, windres)]
+)
 
 # Checks for libraries.
 

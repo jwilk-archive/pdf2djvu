@@ -1,8 +1,10 @@
 pdf2djvu (0.7.7) UNRELEASED; urgency=low
 
-  * 
+  * Don't let the configure script look for windres if winver.h is not
+    available. Thanks to Andrew Isakov for the bug report.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=57
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 18 Feb 2011 13:54:43 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Mar 2011 19:35:48 +0100
 
 pdf2djvu (0.7.6) unstable; urgency=low
 

@@ -10,7 +10,7 @@ include $(srcdir)/Makefile.common
 .PHONY: all
 all: pdf2djvu
 
-ifneq ($(WINDRES),:)
+ifneq "$(WINDRES)" ""
 version.o: version.rc version.hh
 	$(WINDRES) -c 1252 -o $(@) $(<)
 pdf2djvu: version.o
