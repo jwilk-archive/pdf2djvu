@@ -3,8 +3,9 @@ pdf2djvu (0.7.7) UNRELEASED; urgency=low
   * Don't let the configure script look for windres if winver.h is not
     available. Thanks to Andrew Isakov for the bug report.
     http://code.google.com/p/pdf2djvu/issues/detail?id=57
+  * Fix build failure with GCC 4.6.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Mar 2011 19:35:48 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Mar 2011 19:42:20 +0100
 
 pdf2djvu (0.7.6) unstable; urgency=low
 
@@ -32,7 +33,7 @@ pdf2djvu (0.7.4) unstable; urgency=low
   * Fix handling of the --pages option.
     Thanks to Kyrill Detinov for the bug report.
     http://code.google.com/p/pdf2djvu/issues/detail?id=50
-  * Fix compilation with GCC 4.2.
+  * Fix build failure with GCC 4.2.
     Thanks to Robert Baruch for the bug report.
     http://code.google.com/p/pdf2djvu/issues/detail?id=51
   * Make messages about missing features a bit more informative.
