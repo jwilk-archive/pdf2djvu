@@ -21,9 +21,9 @@ AC_TRY_CPP(
 # Checks for libraries.
 
 PKG_CHECK_MODULES(DJVULIBRE, ddjvuapi >= 3.5.17)
-djvulibre_bin_path=`$PKG_CONFIG --variable exec_prefix ddjvuapi`/bin
+djvulibre_bin_path=$($PKG_CONFIG --variable exec_prefix ddjvuapi)/bin
 AC_SUBST(djvulibre_bindir, "$djvulibre_bin_path")
-djvulibre_version=`$PKG_CONFIG --modversion ddjvuapi`
+djvulibre_version=$($PKG_CONFIG --modversion ddjvuapi)
 PACKAGE_STRING="$PACKAGE_STRING (DjVuLibre $djvulibre_version"
 AC_DEFINE_UNQUOTED(DJVULIBRE_VERSION_STRING, "$djvulibre_version", Define to the version of DjVuLibre)
 
@@ -100,11 +100,11 @@ else
 fi
 
 PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.7.3)
-poppler_version=`$PKG_CONFIG --modversion poppler-splash`
+poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED(POPPLER_VERSION_STRING, "$poppler_version", Define to the version of poppler)
 PACKAGE_STRING="$PACKAGE_STRING, poppler $poppler_version"
-poppler_version=`printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g'`
-poppler_version=`printf '%02d' $poppler_version | sed -e 's/^0*//g'`
+poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g')
+poppler_version=$(printf '%02d' $poppler_version | sed -e 's/^0*//g')
 AC_DEFINE_UNQUOTED(POPPLER_VERSION, $poppler_version, Define to the version of poppler, as integer)
 
 AC_ARG_WITH(graphicsmagick, AS_HELP_STRING([--without-graphicsmagick], [do not use the GraphicsMagick library]))
@@ -113,7 +113,7 @@ then
   PKG_CHECK_MODULES(GRAPHICSMAGICK, GraphicsMagick++,
     [
       AC_DEFINE(HAVE_GRAPHICSMAGICK, 1, Define if you have GraphicsMagick++ installed)
-      graphicsmagick_version=`$PKG_CONFIG --modversion GraphicsMagick++`
+      graphicsmagick_version=$($PKG_CONFIG --modversion GraphicsMagick++)
       AC_DEFINE_UNQUOTED(GRAPHICSMAGICK_VERSION_STRING, "$graphicsmagick_version", Define to the version of GraphicsMagick++)
       PACKAGE_STRING="$PACKAGE_STRING, GraphicsMagick++ $graphicsmagick_version"
     ], [ : ]
@@ -126,8 +126,8 @@ then
   PKG_CHECK_MODULES(XSLT, libxslt,
     [
       AC_DEFINE(HAVE_LIBXSLT, 1, Define if you have GNOME XSLT library installed)
-      libxml2_version=`$PKG_CONFIG --modversion libxml-2.0`
-      libxslt_version=`$PKG_CONFIG --modversion libxslt`
+      libxml2_version=$($PKG_CONFIG --modversion libxml-2.0)
+      libxslt_version=$($PKG_CONFIG --modversion libxslt)
       PACKAGE_STRING="$PACKAGE_STRING, GNOME XSLT $libxslt_version, GNOME XML $libxml2_version"
     ], [ : ]
   )
