@@ -1322,7 +1322,7 @@ static int xmain(int argc, char * const argv[])
   debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
   bool crop = !config.use_media_box;
   debug(0)++;
-  #pragma omp parallel for private(out1, outm, outs, doc) reduction(+: djvu_pages_size)
+  #pragma omp parallel for private(out1, outm, outs, doc) reduction(+: djvu_pages_size) schedule(runtime)
   for (size_t i = 0; i < page_numbers.size(); i++)
   {
     int n = page_numbers[i];
