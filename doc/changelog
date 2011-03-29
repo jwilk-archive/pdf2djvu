@@ -1,3 +1,9 @@
+pdf2djvu (0.7.8) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 29 Mar 2011 18:52:09 +0200
+
 pdf2djvu (0.7.7) unstable; urgency=low
 
   * Don't let the configure script look for windres if winver.h is not

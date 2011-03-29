@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pdf2djvu 0.7.7\n"
+"Project-Id-Version: pdf2djvu 0.7.8\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2011-01-19 22:17+0100\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
