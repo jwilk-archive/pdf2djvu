@@ -31,6 +31,9 @@ export CXXFLAGS = -Os
 
 .PHONY: all
 all:
+	@echo Usage:
+	@echo '  make source-dist'
+	@echo '  make binary-dist'
 
 # Source tarballs
 
