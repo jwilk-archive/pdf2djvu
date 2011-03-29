@@ -1,4 +1,4 @@
-pdf2djvu (0.7.7) UNRELEASED; urgency=low
+pdf2djvu (0.7.7) unstable; urgency=low
 
   * Don't let the configure script look for windres if winver.h is not
     available. Thanks to Andrew Isakov for the bug report.
@@ -7,7 +7,7 @@ pdf2djvu (0.7.7) UNRELEASED; urgency=low
   * Make it possible to control how work is distributed between threads with
     the OMP_SCHEDULE variable.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Mar 2011 16:59:11 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 29 Mar 2011 18:21:22 +0200
 
 pdf2djvu (0.7.6) unstable; urgency=low
 
