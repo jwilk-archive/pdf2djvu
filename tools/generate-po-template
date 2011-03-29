@@ -17,7 +17,8 @@ options=$(cat <<EOF
 --flag=_:1:pass-c-format
 --flag=N_:1:pass-c-format
 --flag=string_format:1:c-format
-EOF)
+EOF
+)
 
 grep -E '^#( |$)' "$0" | sed -e 's/2009/2007, 2008, &/'
 "$@" $options -o - \
