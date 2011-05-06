@@ -1,4 +1,4 @@
-dnl | Copyright © 2008, 2009, 2010 Jakub Wilk
+dnl | Copyright © 2008, 2009, 2010, 2011 Jakub Wilk
 dnl | 
 dnl | This package is free software; you can redistribute it and/or modify
 dnl | it under the terms of the GNU General Public License as published by
