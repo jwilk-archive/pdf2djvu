@@ -5,7 +5,7 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 usr = $(CURDIR)
-host = i586-mingw32msvc
+host = i686-w64-mingw32
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
 version := $(shell cat ../doc/changelog | head -n1 | cut -d' ' -f2 | tr -d '()')
@@ -15,8 +15,8 @@ djvulibre_tools = djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
-export CC = $(host)-gcc -static-libgcc
-export CXX = $(host)-g++ -static-libgcc
+export CC = $(host)-gcc -D__USE_MINGW_ANSI_STDIO
+export CXX = $(host)-g++ -D__USE_MINGW_ANSI_STDIO
 export AS = $(host)-as
 export DLLTOOL = $(host)-dlltool
 export OBJDUMP = $(host)-objdump
@@ -88,7 +88,6 @@ src/pdf2djvu/source-stamp: src/pdf2djvu_$(version).tar.gz
 src/pdf2djvu/config.status: src/pdf2djvu/source-stamp
 src/pdf2djvu/config.status: src/djvulibre/install-stamp
 src/pdf2djvu/config.status: src/libxslt/install-stamp
-src/pdf2djvu/config.status: src/mingwrt/install-stamp
 src/pdf2djvu/config.status: src/poppler/install-stamp
 src/pdf2djvu/config.status: src/gettext/install-stamp
 	cd $(dir $@) && \
@@ -132,7 +131,6 @@ src/libs-install-stamp: src/gettext/install-stamp
 src/libs-install-stamp: src/libjpeg/install-stamp
 src/libs-install-stamp: src/libxml2/install-stamp
 src/libs-install-stamp: src/libxslt/install-stamp
-src/libs-install-stamp: src/mingwrt/install-stamp
 src/libs-install-stamp: src/poppler/install-stamp
 src/libs-install-stamp: src/winiconv/install-stamp
 	mkdir -p dist/doc/
@@ -262,6 +260,7 @@ src/libxslt/source-stamp:
 	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  src/libxslt-1.1.26.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
 	rm src/libxslt-*.tar.gz
+	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' src/libxslt/libxslt/libxslt.h
 	touch $@
 
 src/libxslt/config.status: src/libxslt/source-stamp
@@ -429,30 +428,6 @@ src/libjpeg/install-stamp: src/libjpeg/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libjpeg)
-	touch $@
-
-# MinGW runtime
-
-src/mingwrt/source-stamp:
-	mkdir -p $(dir $@)
-	cd src && wget -c http://sourceforge.net/projects/mingw/files/MinGW/BaseSystem/RuntimeLibrary/MinGW-RT/mingwrt-3.18/mingwrt-3.18-mingw32-src.tar.gz
-	echo 'de4979fd6eedeb21d2d506fe4880a838706dc88cbebe031e38561967fb7cbd42  src/mingwrt-3.18-mingw32-src.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../mingwrt-*.tar.gz
-	rm src/mingwrt-*.tar.gz
-	touch $@
-
-src/mingwrt/config.status: src/mingwrt/source-stamp
-	cd $(dir $@) && \
-		./configure --host=$(host) --prefix=$(usr)
-
-src/mingwrt/build-stamp: src/mingwrt/config.status
-	$(MAKE) -C $(dir $@) libmingwthrd_old.a SUBDIRS= INCLUDES=-I$(usr)/$(dir $@)
-	touch $@
-
-src/mingwrt/install-stamp: src/mingwrt/build-stamp
-	mkdir -p bin/ dist/
-	cp $(dir $@)/mingwm10.dll bin/
-	$(call ship_dll,mingw)
 	touch $@
 
 # URW fonts
