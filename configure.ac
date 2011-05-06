@@ -173,6 +173,9 @@ else
   AC_MSG_RESULT(no (or not usable))
 fi
 
+AM_GNU_GETTEXT(external, need-ngettext)
+AM_GNU_GETTEXT_VERSION(0.17)
+
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -206,9 +209,16 @@ then
   AC_SUBST(OPENMP_CXXFLAGS)
 fi
 
-# Checks for gettext
-AM_GNU_GETTEXT(external, need-ngettext)
-AM_GNU_GETTEXT_VERSION(0.17)
+AC_MSG_CHECKING(for MinGW ANSI stdio)
+AC_EGREP_HEADER(__mingw_vsnprintf, stdio.h,
+  [
+    AC_MSG_RESULT(yes)
+    AC_DEFINE_UNQUOTED(USE_MINGW_ANSI_STDIO, 1, Define to use MinGW ANSI stdio)
+  ],
+  [
+    AC_MSG_RESULT(no)
+  ]
+)
 
 # Turn on compile warnings
 

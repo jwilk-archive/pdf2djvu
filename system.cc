@@ -37,6 +37,10 @@
 #include <unistd.h>
 #endif
 
+#if USE_MINGW_ANSI_STDIO
+#define vsnprintf __mingw_vsnprintf
+#endif
+
 /* constants
  * =========
  */
