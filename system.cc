@@ -1257,6 +1257,16 @@ std::string string_vprintf(const char *message, va_list args)
   return static_cast<char*>(buffer);
 }
 
+std::string string_printf(const char *message, ...)
+{
+  va_list args;
+  va_start(args, message);
+  std::string result = string_vprintf(message, args);
+  va_end(args);
+  return result;
+}
+
+
 void prevent_pop_out(void)
 {
 #if WIN32
@@ -1277,15 +1287,6 @@ void prevent_pop_out(void)
       MessageBox(NULL, _("pdf2djvu is intended to be run from the command prompt."), PACKAGE_NAME, MB_OK | MB_ICONINFORMATION);
   }
 #endif
-}
-
-std::string string_printf(const char *message, ...)
-{
-  va_list args;
-  va_start(args, message);
-  std::string result = string_vprintf(message, args);
-  va_end(args);
-  return result;
 }
 
 // vim:ts=2 sw=2 et
