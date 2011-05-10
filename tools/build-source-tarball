@@ -36,20 +36,18 @@ autoheader
 rm -Rf *.cache
 cd ..
 
-# Build the manual page:
+# Build the manual page and translations:
 sed -n -e '/^AC_INIT(\(.*\), *\(.*\), *\(.*\), .*, .*)$/ { s//PACKAGE_NAME=\1\nPACKAGE_VERSION=\2\nPACKAGE_BUGREPORT=\3/p; q }' "pdf2djvu-$version/configure.ac" > "pdf2djvu-$version/Makefile.common"
+grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "pdf2djvu-$version/Makefile.common.in" \
+| sed >> "pdf2djvu-$version/Makefile.common" \
+    -e 's/@MSGFMT@/msgfmt/' \
+    -e 's/@MSGMERGE@/msgmerge/' \
+    -e 's/@XGETTEXT@/xgettext/'
+cat "pdf2djvu-$version/Makefile.common"
+make -C "pdf2djvu-$version/po/"
 make -C "pdf2djvu-$version/doc/"
 make -C "pdf2djvu-$version/doc/po/"
 rm "pdf2djvu-$version/Makefile.common"
-
-# Build translations:
-cd "pdf2djvu-$version/po/"
-for file in *.po
-do
-  language="${file%.po}"
-  msgfmt "$language.po" -o "$language.mo"
-done
-cd ../..
 
 # Prepare tests:
 make -C "pdf2djvu-$version/tests/" prepare
