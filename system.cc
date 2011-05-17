@@ -686,7 +686,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
     while (1)
     {
       char buffer[BUFSIZ];
-      size_t n = read(pipe_fds[0], buffer, sizeof buffer);
+      ssize_t n = read(pipe_fds[0], buffer, sizeof buffer);
       if (n < 0)
         throw_posix_error("read");
       else if (n == 0)
