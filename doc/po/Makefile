@@ -24,7 +24,7 @@ MAN_FILES = $(PO_FILES:.po=.1)
 .PHONY: all
 all: $(MAN_FILES)
 
-.PHONY: XML
+.PHONY: xml
 xml: $(XML_FILES)
 
 %.xml: %.po
