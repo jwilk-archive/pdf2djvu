@@ -31,4 +31,8 @@ $(PACKAGE_NAME).pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 %.mo: %.po
 	$(MSGFMT) -o $(@) -c $(<)
 
+.PHONY: clean
+clean:
+	rm -f *.mo $(PACKAGE_NAME).pot
+
 # vim:ts=4 sw=4 noet
