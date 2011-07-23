@@ -11,29 +11,39 @@ PO_FILES = $(wildcard *.po)
 MO_FILES = $(PO_FILES:.po=.mo)
 SOURCE_FILES = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
 
-XGETTEXT_OPTIONS = \
+gettext-common-options = \
 	--no-location \
+	--sort-output
+
+xgettext = $(XGETTEXT) \
+	$(gettext-common-options) \
 	--language=C++ \
 	--keyword=_ --keyword=N_ \
 	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT)
 
+msgmerge = $(MSGMERGE) \
+	$(gettext-common-options)
+
+msgfmt = $(MSGFMT) \
+	--check
+
 .PHONY: all
 all: pdf2djvu.pot $(PO_FILES) $(MO_FILES)
 
 pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
-	$(XGETTEXT) $(XGETTEXT_OPTIONS) -D $(srcdir) $(notdir $(SOURCE_FILES)) > $(@)
+	$(xgettext) -D $(srcdir) $(notdir $(SOURCE_FILES)) > $(@)
 
 %.po: pdf2djvu.pot
-	$(MSGMERGE) -o $(@) $(@) $(<)
+	$(msgmerge) -o $(@) $(@) $(<)
 
 %.mo: %.po
 ifneq "$(quality-check)" ""
 	! grep -H '^#,.*fuzzy' $(<)
 	! msggrep -T -v -e . $(<) | grep .
 endif
-	$(MSGFMT) -o $(@) -c $(<)
+	$(msgfmt) -o $(@) -c $(<)
 
 .PHONY: clean
 clean:

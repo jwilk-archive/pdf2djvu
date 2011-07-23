@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.8\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2011-01-19 22:17+0100\n"
+"POT-Creation-Date: 2011-07-23 20:29+0200\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -18,30 +18,261 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-msgid "Unable to parse command-line options"
-msgstr "Błąd przetwarzania opcji wiersza poleceń"
+msgid "     --filter-text=COMMAND-LINE"
+msgstr "     --filter-text=LINIA-POLECEŃ"
 
-msgid "Too many arguments were specified"
-msgstr "Podano za dużo argumentów"
+msgid "     --page-size=WxH"
+msgstr "     --page-size=SZERxWYS"
 
-msgid "No input file name was specified"
-msgstr "Nie podano nazwy pliku wejściowego"
+msgid "     --page-title-template=TEMPLATE"
+msgstr "     --page-title-template=SZABLON"
+
+msgid "     --pageid-prefix=NAME"
+msgstr "     --pageid-prefix=NAZWA"
+
+msgid "     --pageid-template=TEMPLATE"
+msgstr "     --pageid-template=SZABLON"
+
+msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
+msgstr "   pdf2djvu -i <plik-indeksowy-djvu> [opcje] <plik-pdf>"
+
+msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
+msgstr "   pdf2djvu [-o <plik-wyjściowy-djvu>] [opcje] <plik-pdf>"
+
+msgid " -d, --dpi=RESOLUTION"
+msgstr " -d, --dpi=ROZDZIELCZOŚĆ"
+
+msgid " -i, --indirect=FILE"
+msgstr " -i, --indirect=PLIK"
+
+msgid " -o, --output=FILE"
+msgstr " -o, --output=PLIK"
+
+#, c-format
+msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
+msgstr ""
+"%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
+"wyjściowych"
+
+#, c-format
+msgid "%s is not a valid number"
+msgstr "%s nie jest poprawną liczbą"
+
+#, c-format
+msgid "%zu bytes out"
+msgid_plural "%zu bytes out"
+msgstr[0] "%zu bajt wyjściowy"
+msgstr[1] "%zu bajty wyjściowe"
+msgstr[2] "%zu bajtów wyjściowych"
+
+msgid "Arg list too long"
+msgstr "Lista argumentów za długa"
+
+msgid "Argument list too long"
+msgstr "Lista argumentów za długa"
+
+msgid "Bad address"
+msgstr "Błędny adres"
+
+msgid "Bad file descriptor"
+msgstr "Błędny deskryptor pliku"
+
+msgid "Broken pipe"
+msgstr "Przerwany potok"
+
+msgid "Cannot allocate memory"
+msgstr "Nie można przydzielić pamięci"
+
+msgid "Cannot find link destination"
+msgstr "Nie można odnaleźć celu łącza"
+
+msgid "Device or resource busy"
+msgstr "Urządzenie lub zasoby zajęte"
+
+msgid "Directory not empty"
+msgstr "Katalog nie jest pusty"
+
+msgid "Domain error"
+msgstr "Argument liczbowy spoza dziedziny"
+
+#, c-format
+msgid "Duplicate page identifier: %s"
+msgstr "Powtórzony identyfikator strony: %s"
+
+#, c-format
+msgid "Duplicate page title: %s"
+msgstr "Powtórzony tytuł strony: %s"
+
+msgid "Exec format error"
+msgstr "Błędny format pliku wykonywalnego"
+
+msgid "File exists"
+msgstr "Plik istnieje"
+
+msgid "File name too long"
+msgstr "Za długa nazwa pliku"
+
+msgid "File too large"
+msgstr "Plik zbyt duży"
+
+msgid "Filename too long"
+msgstr "Za długa nazwa pliku"
+
+msgid "Function not implemented"
+msgstr "Nie zaimplementowana funkcja"
+
+msgid "I won't write DjVu data to a terminal."
+msgstr "Nie wypiszę danych DjVu na terminal."
+
+#, c-format
+msgid "I/O error (%s)"
+msgstr "Błąd We/Wy (%s)"
+
+msgid "Illegal byte sequence"
+msgstr "Błędny lub niepełny znak wielobajtowy"
+
+msgid "Illegal seek"
+msgstr "Błędne przesunięcie"
+
+msgid "Improper link"
+msgstr "Błędne dowiązanie między urządzeniami"
+
+msgid "Inappropriate I/O control operation"
+msgstr "Niewłaściwy ioctl dla urządzenia"
+
+msgid "Inappropriate ioctl for device"
+msgstr "Niewłaściwy ioctl dla urządzenia"
+
+msgid "Input/output error"
+msgstr "Błąd wejścia/wyjścia"
+
+msgid "Integer overflow"
+msgstr "Przekroczenie zakresu liczb całkowitych"
+
+msgid "Interrupted function call"
+msgstr "Przerwane wywołanie systemowe"
+
+msgid "Interrupted system call"
+msgstr "Przerwane wywołanie systemowe"
+
+msgid "Invalid argument"
+msgstr "Zły argument"
+
+msgid "Invalid cross-device link"
+msgstr "Błędne dowiązanie między urządzeniami"
+
+msgid "Invalid date format"
+msgstr "Błędny format daty"
+
+msgid "Invalid or incomplete multibyte or wide character"
+msgstr "Błędny lub niepełny znak wielobajtowy"
 
 msgid "Invalid output file name"
 msgstr "Błędna nazwa pliku wyjściowego"
 
-msgid "Unable to parse page numbers"
-msgstr "Błąd przetwarzania numerów stron"
+msgid "Invalid seek"
+msgstr "Błędne przesunięcie"
 
-msgid "Unable to parse page size"
-msgstr "Błąd przetwarzania rozmiaru strony"
+msgid "Is a directory"
+msgstr "Jest katalogiem"
 
-msgid "Unable to parse hyperlinks options"
-msgstr "Błąd przetwarzania opcji hiperłączy"
+msgid "No child processes"
+msgstr "Brak procesów potomnych"
+
+msgid "No input file name was specified"
+msgstr "Nie podano nazwy pliku wejściowego"
+
+msgid "No locks available"
+msgstr "Brak dostępnych blokad"
+
+msgid "No page for a bookmark"
+msgstr "Brak strony dla zakładki"
+
+msgid "No pages selected"
+msgstr "Nie wybrano stron"
+
+msgid "No space left on device"
+msgstr "Brak miejsca na urządzeniu"
+
+msgid "No such device"
+msgstr "Nie ma takiego urządzenia"
+
+msgid "No such device or address"
+msgstr "Nie ma takiego urządzenia ani adresu"
+
+msgid "No such file or directory"
+msgstr "Nie ma takiego pliku ani katalogu"
+
+msgid "No such process"
+msgstr "Nie ma takiego procesu"
+
+msgid "No title for a bookmark"
+msgstr "Brak tytułu dla zakładki"
+
+msgid "Not a directory"
+msgstr "Nie jest katalogiem"
+
+msgid "Not enough space"
+msgstr "Nie można przydzielić pamięci"
+
+msgid "Numerical argument out of domain"
+msgstr "Argument liczbowy spoza dziedziny"
+
+msgid "Numerical result out of range"
+msgstr "Wynik liczbowy poza zakresem"
+
+msgid "Operation not permitted"
+msgstr "Operacja niedozwolona"
+
+msgid "Options: "
+msgstr "Opcje: "
 
 #, c-format
-msgid "The specified resolution is outside the allowed range: %d .. %d"
-msgstr "Podana rozdzielczość jest spoza dozwolonego zakresu: %d .. %d"
+msgid "PDF error (%d): %s"
+msgstr "Błąd pliku PDF (%d): %s"
+
+#, c-format
+msgid "PDF error: %s"
+msgstr "Błąd pliku PDF: %s"
+
+msgid "Page not found"
+msgstr "Nie znaleziono strony"
+
+msgid "Pageid cannot start with a '+' or a '-' character"
+msgstr "Pageid nie może rozpoczynać się od znaku '+' ani '-'"
+
+msgid ""
+"Pageid cannot start with a '.' character or contain two consecutive '.' "
+"characters"
+msgstr ""
+"Pageid nie może rozpoczynać się od znaku '.' ani zawierać dwóch "
+"występujących po sobie znaków '.'"
+
+msgid ""
+"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr ""
+"Pageid może zawierać jedynie litery, cyfry oraz znaki '_', '+', '-' i '.'"
+
+msgid "Pageid must end with the '.djvu' or the '.djv' extension"
+msgstr "Pageid musi kończyć się rozszerzeniem '.djvu' lub '.djv'"
+
+msgid "Permission denied"
+msgstr "Brak dostępu"
+
+msgid "Read-only file system"
+msgstr "System plików wyłącznie do odczytu"
+
+msgid "Resource deadlock avoided"
+msgstr "Uniknięto zakleszczenia zasobów"
+
+msgid "Resource device"
+msgstr "Urządzenie lub zasoby zajęte"
+
+msgid "Resource temporarily unavailable"
+msgstr "Zasoby chwilowo niedostępne"
+
+msgid "Result too large"
+msgstr "Wynik liczbowy poza zakresem"
 
 #, c-format
 msgid ""
@@ -52,9 +283,40 @@ msgstr ""
 "%u"
 
 #, c-format
+msgid "The specified resolution is outside the allowed range: %d .. %d"
+msgstr "Podana rozdzielczość jest spoza dozwolonego zakresu: %d .. %d"
+
+#, c-format
 msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
 msgstr ""
 "Podany współczynnik próbkowania jest spoza dozwolonego zakresu: %u .. %u"
+
+msgid "Too many arguments were specified"
+msgstr "Podano za dużo argumentów"
+
+msgid "Too many links"
+msgstr "Za dużo dowiązań"
+
+msgid "Too many open files"
+msgstr "Za dużo otwartych plików"
+
+msgid "Too many open files in system"
+msgstr "Za dużo otwartych plików w systemie"
+
+msgid "Unable to load document"
+msgstr "Nie można załadować dokumentu"
+
+msgid "Unable to parse command-line options"
+msgstr "Błąd przetwarzania opcji wiersza poleceń"
+
+msgid "Unable to parse hyperlinks options"
+msgstr "Błąd przetwarzania opcji hiperłączy"
+
+msgid "Unable to parse page numbers"
+msgstr "Błąd przetwarzania numerów stron"
+
+msgid "Unable to parse page size"
+msgstr "Błąd przetwarzania rozmiaru strony"
 
 msgid "Unable to parse page title template specification"
 msgstr "Błąd przetwarzania specyfikacji szablonu tytułu strony"
@@ -62,27 +324,23 @@ msgstr "Błąd przetwarzania specyfikacji szablonu tytułu strony"
 msgid "Unable to parse pageid template specification"
 msgstr "Błąd przetwarzania specyfikacji szablonu pageid"
 
-msgid ""
-"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
-msgstr ""
-"Pageid może zawierać jedynie litery, cyfry oraz znaki '_', '+', '-' i '.'"
+msgid "Unable to set antialias parameter"
+msgstr "Nie można ustawić parametru antyaliasingu"
 
-msgid ""
-"Pageid cannot start with a '.' character or contain two consecutive '.' "
-"characters"
-msgstr ""
-"Pageid nie może rozpoczynać się od znaku '.' ani zawierać dwóch "
-"występujących po sobie znaków '.'"
+msgid "Unable to set vector antialias parameter"
+msgstr "Nie można ustawić parametru antyaliasingu grafiki wektorowej"
 
-msgid "Pageid cannot start with a '+' or a '-' character"
-msgstr "Pageid nie może rozpoczynać się od znaku '+' ani '-'"
+msgid "Unexpected output from djvused"
+msgstr "Nieoczekiwany wynik z djvused"
 
-msgid "Pageid must end with the '.djvu' or the '.djv' extension"
-msgstr "Pageid musi kończyć się rozszerzeniem '.djvu' lub '.djv'"
+msgid "Unexpected subsampled bitmap height"
+msgstr "Nieoczekiwana wysokość podpróbkowanej bitmapy"
 
-#, c-format
-msgid "%s is not a valid number"
-msgstr "%s nie jest poprawną liczbą"
+msgid "Unexpected subsampled bitmap width"
+msgstr "Nieoczekiwana szerokość podpróbkowanej bitmapy"
+
+msgid "Unknown error"
+msgstr "Nieznany błąd"
 
 msgid "Unknown option"
 msgstr "Nieznana opcja"
@@ -90,101 +348,28 @@ msgstr "Nieznana opcja"
 msgid "Usage: "
 msgstr "Użycie: "
 
-msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
-msgstr "   pdf2djvu [-o <plik-wyjściowy-djvu>] [opcje] <plik-pdf>"
-
-msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
-msgstr "   pdf2djvu -i <plik-indeksowy-djvu> [opcje] <plik-pdf>"
-
-msgid "Options: "
-msgstr "Opcje: "
-
-msgid " -i, --indirect=FILE"
-msgstr " -i, --indirect=PLIK"
-
-msgid " -o, --output=FILE"
-msgstr " -o, --output=PLIK"
-
-msgid "     --pageid-prefix=NAME"
-msgstr "     --pageid-prefix=NAZWA"
-
-msgid "     --pageid-template=TEMPLATE"
-msgstr "     --pageid-template=SZABLON"
-
-msgid "     --page-title-template=TEMPLATE"
-msgstr "     --page-title-template=SZABLON"
-
-msgid " -d, --dpi=RESOLUTION"
-msgstr " -d, --dpi=ROZDZIELCZOŚĆ"
-
-msgid "     --page-size=WxH"
-msgstr "     --page-size=SZERxWYS"
-
-msgid "     --filter-text=COMMAND-LINE"
-msgstr "     --filter-text=LINIA-POLECEŃ"
-
-#, c-format
-msgid "PDF error (%d): %s"
-msgstr "Błąd pliku PDF (%d): %s"
-
-#, c-format
-msgid "PDF error: %s"
-msgstr "Błąd pliku PDF: %s"
-
-msgid "Unable to set antialias parameter"
-msgstr "Nie można ustawić parametru antyaliasingu"
-
-msgid "Unable to set vector antialias parameter"
-msgstr "Nie można ustawić parametru antyaliasingu grafiki wektorowej"
-
-msgid "Cannot find link destination"
-msgstr "Nie można odnaleźć celu łącza"
-
-msgid "Page not found"
-msgstr "Nie znaleziono strony"
-
 #, c-format
 msgid "Warning: %s"
 msgstr "Ostrzeżenie: %s"
 
-msgid "Warning: Unable to convert link with a remote go-to action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź-do"
-
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
 
+msgid "Warning: Unable to convert link with a remote go-to action"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź-do"
+
 msgid "Warning: Unknown link action"
 msgstr "Ostrzeżenie: Nieznana akcja łącza"
-
-msgid "No page for a bookmark"
-msgstr "Brak strony dla zakładki"
-
-msgid "No title for a bookmark"
-msgstr "Brak tytułu dla zakładki"
 
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Ostrzeżenie: metadata[%s] nie jest poprawną datą"
 
-#, c-format
-msgid "Duplicate page identifier: %s"
-msgstr "Powtórzony identyfikator strony: %s"
-
-#, c-format
-msgid "Duplicate page title: %s"
-msgstr "Powtórzony tytuł strony: %s"
-
-msgid "Unexpected output from djvused"
-msgstr "Nieoczekiwany wynik z djvused"
+msgid "adding non-raster data with `djvused`"
+msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
 
 msgid "creating document outline with `djvused`"
 msgstr "tworzenie konspektu dokumentu za pomocą `djvused`"
-
-msgid "setting metadata with `djvused`"
-msgstr "ustawianie metadanych za pomocą `djvused`"
-
-msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
-msgstr "ustawianie metadanych za pomocą `djvused` (omijanie błędu DjVuLibre)"
 
 #, c-format
 msgid "creating multi-page indirect document (%d page)"
@@ -193,282 +378,50 @@ msgstr[0] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strona)"
 msgstr[1] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strony)"
 msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%d stron)"
 
-#, c-format
-msgid "guessed resolution: %s dpi"
-msgstr "odgadnięta rozdzielczość: %s dpi"
+msgid "creating new background image with `c44`"
+msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
 
-msgid "unable to guess resolution"
-msgstr "nie udało się odgadnąć rozdzielczości"
+msgid "encoding layers with `csepdjvu`"
+msgstr "kodowanie warstw za pomocą `csepdjvu`"
+
+msgid "encoding monochrome image with `cjb2`"
+msgstr "kodowanie obrazu monochromatycznego za pomocą `cjb2`"
 
 #, c-format
 msgid "estimated resolution: %d dpi"
 msgstr "oszacowana rozdzielczość: %d dpi"
 
-msgid "I won't write DjVu data to a terminal."
-msgstr "Nie wypiszę danych DjVu na terminal."
+msgid "extracting XMP metadata"
+msgstr "wyodrębnianie metadanych XMP"
 
-msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
-msgstr ""
-"pdf2djvu zostało skompilowane bez obsługi OpenMP; wielowątkowość jest "
-"wyłączona."
+msgid "extracting annotations"
+msgstr "wyodrębnianie adnotacji"
+
+msgid "extracting document outline"
+msgstr "wyodrębnianie konspektu dokumentu"
+
+msgid "extracting document-information metadata"
+msgstr "wyodrębnianie metadanych dokumentu"
 
 #, c-format
-msgid "page #%d -> #%d"
-msgstr "strona #%d -> #%d"
-
-msgid "rendering page (1st pass)"
-msgstr "tworzenie strony (pierwszy przebieg)"
+msgid "guessed resolution: %s dpi"
+msgstr "odgadnięta rozdzielczość: %s dpi"
 
 #, c-format
 msgid "image size: %dx%d"
 msgstr "wymiary obrazu: %dx%d"
 
-msgid "rendering page (2nd pass)"
-msgstr "tworzenie strony (drugi przebieg)"
-
-msgid "preparing data for `csepdjvu`"
-msgstr "przygotowywanie danych dla `csepdjvu`"
-
-msgid "storing foreground image"
-msgstr "zapisywanie obrazu pierwszoplanowego"
-
-msgid "rendering background image"
-msgstr "tworzenie obrazu tła"
-
-msgid "Unexpected subsampled bitmap width"
-msgstr "Nieoczekiwana szerokość podpróbkowanej bitmapy"
-
-msgid "Unexpected subsampled bitmap height"
-msgstr "Nieoczekiwana wysokość podpróbkowanej bitmapy"
-
-msgid "storing background image"
-msgstr "zapisywanie obrazu tła"
-
-msgid "storing dummy background image"
-msgstr "zapisywanie pustego obrazu tła"
-
-msgid "storing text layer"
-msgstr "zapisywanie warstwy tekstowej"
-
-msgid "encoding layers with `csepdjvu`"
-msgstr "kodowanie warstw za pomocą `csepdjvu`"
-
-msgid "recovering images with `djvuextract`"
-msgstr "wyodrębnianie obrazów za pomocą `djvuextract`"
-
-msgid "encoding monochrome image with `cjb2`"
-msgstr "kodowanie obrazu monochromatycznego za pomocą `cjb2`"
-
-msgid "creating new background image with `c44`"
-msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
-
-msgid "recovering image chunks with `djvuextract`"
-msgstr "wyodrębnianie urywków obrazu za pomocą `djvuextract`"
-
-msgid "recovering text with `djvused`"
-msgstr "wyodrębnianie tekstu za pomocą `djvused`"
-
-msgid "re-assembling page with `djvumake`"
-msgstr "składanie strony za pomocą `djvumake`"
-
-msgid "extracting annotations"
-msgstr "wyodrębnianie adnotacji"
-
-msgid "adding non-raster data with `djvused`"
-msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
-
 #, c-format
-msgid "%zu bytes out"
-msgid_plural "%zu bytes out"
-msgstr[0] "%zu bajt wyjściowy"
-msgstr[1] "%zu bajty wyjściowe"
-msgstr[2] "%zu bajtów wyjściowych"
-
-msgid "extracting XMP metadata"
-msgstr "wyodrębnianie metadanych XMP"
-
-msgid "extracting document-information metadata"
-msgstr "wyodrębnianie metadanych dokumentu"
-
-msgid "extracting document outline"
-msgstr "wyodrębnianie konspektu dokumentu"
-
-#, c-format
-msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
-msgstr ""
-"%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
-"wyjściowych"
-
-#, c-format
-msgid "I/O error (%s)"
-msgstr "Błąd We/Wy (%s)"
-
-msgid "Integer overflow"
-msgstr "Przekroczenie zakresu liczb całkowitych"
-
-msgid "Operation not permitted"
-msgstr "Operacja niedozwolona"
-
-msgid "No such file or directory"
-msgstr "Nie ma takiego pliku ani katalogu"
-
-msgid "No such process"
-msgstr "Nie ma takiego procesu"
-
-msgid "Interrupted function call"
-msgstr "Przerwane wywołanie systemowe"
-
-msgid "Interrupted system call"
-msgstr "Przerwane wywołanie systemowe"
-
-msgid "Input/output error"
-msgstr "Błąd wejścia/wyjścia"
-
-msgid "No such device or address"
-msgstr "Nie ma takiego urządzenia ani adresu"
-
-msgid "Arg list too long"
-msgstr "Lista argumentów za długa"
-
-msgid "Argument list too long"
-msgstr "Lista argumentów za długa"
-
-msgid "Exec format error"
-msgstr "Błędny format pliku wykonywalnego"
-
-msgid "Bad file descriptor"
-msgstr "Błędny deskryptor pliku"
-
-msgid "No child processes"
-msgstr "Brak procesów potomnych"
-
-msgid "Resource temporarily unavailable"
-msgstr "Zasoby chwilowo niedostępne"
-
-msgid "Not enough space"
-msgstr "Nie można przydzielić pamięci"
-
-msgid "Cannot allocate memory"
-msgstr "Nie można przydzielić pamięci"
-
-msgid "Permission denied"
-msgstr "Brak dostępu"
-
-msgid "Bad address"
-msgstr "Błędny adres"
-
-msgid "Resource device"
-msgstr "Urządzenie lub zasoby zajęte"
-
-msgid "Device or resource busy"
-msgstr "Urządzenie lub zasoby zajęte"
-
-msgid "File exists"
-msgstr "Plik istnieje"
-
-msgid "Improper link"
-msgstr "Błędne dowiązanie między urządzeniami"
-
-msgid "Invalid cross-device link"
-msgstr "Błędne dowiązanie między urządzeniami"
-
-msgid "No such device"
-msgstr "Nie ma takiego urządzenia"
-
-msgid "Not a directory"
-msgstr "Nie jest katalogiem"
-
-msgid "Is a directory"
-msgstr "Jest katalogiem"
-
-msgid "Invalid argument"
-msgstr "Zły argument"
-
-msgid "Too many open files in system"
-msgstr "Za dużo otwartych plików w systemie"
-
-msgid "Too many open files"
-msgstr "Za dużo otwartych plików"
-
-msgid "Inappropriate I/O control operation"
-msgstr "Niewłaściwy ioctl dla urządzenia"
-
-msgid "Inappropriate ioctl for device"
-msgstr "Niewłaściwy ioctl dla urządzenia"
-
-msgid "File too large"
-msgstr "Plik zbyt duży"
-
-msgid "No space left on device"
-msgstr "Brak miejsca na urządzeniu"
-
-msgid "Invalid seek"
-msgstr "Błędne przesunięcie"
-
-msgid "Illegal seek"
-msgstr "Błędne przesunięcie"
-
-msgid "Read-only file system"
-msgstr "System plików wyłącznie do odczytu"
-
-msgid "Too many links"
-msgstr "Za dużo dowiązań"
-
-msgid "Broken pipe"
-msgstr "Przerwany potok"
-
-msgid "Domain error"
-msgstr "Argument liczbowy spoza dziedziny"
-
-msgid "Numerical argument out of domain"
-msgstr "Argument liczbowy spoza dziedziny"
-
-msgid "Result too large"
-msgstr "Wynik liczbowy poza zakresem"
-
-msgid "Numerical result out of range"
-msgstr "Wynik liczbowy poza zakresem"
-
-msgid "Resource deadlock avoided"
-msgstr "Uniknięto zakleszczenia zasobów"
-
-msgid "Filename too long"
-msgstr "Za długa nazwa pliku"
-
-msgid "File name too long"
-msgstr "Za długa nazwa pliku"
-
-msgid "No locks available"
-msgstr "Brak dostępnych blokad"
-
-msgid "Function not implemented"
-msgstr "Nie zaimplementowana funkcja"
-
-msgid "Directory not empty"
-msgstr "Katalog nie jest pusty"
-
-msgid "Illegal byte sequence"
-msgstr "Błędny lub niepełny znak wielobajtowy"
-
-msgid "Invalid or incomplete multibyte or wide character"
-msgstr "Błędny lub niepełny znak wielobajtowy"
-
-msgid "possibly memory allocation error"
-msgstr "prawdopodobnie błąd przydziału pamięci"
+msgid "page #%d -> #%d"
+msgstr "strona #%d -> #%d"
 
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu powinien być uruchamiany z poziomu wiersza poleceń."
-
-msgid "Unknown error"
-msgstr "Nieznany błąd"
 
 msgid ""
 "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
 msgstr ""
 "pdf2djvu zostało skompilowane bez GNOME XSLT; transformacje XML są wyłączone."
-
-msgid "No pages selected"
-msgstr "Nie wybrano stron"
 
 msgid ""
 "pdf2djvu was built without GraphicsMagick; advanced color quantization is "
@@ -477,8 +430,55 @@ msgstr ""
 "pdf2djvu zostało skompilowane bez GraphicsMagick; zaawansowana kwantyzacja "
 "kolorów jest wyłączona."
 
-msgid "Unable to load document"
-msgstr "Nie można załadować dokumentu"
+msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
+msgstr ""
+"pdf2djvu zostało skompilowane bez obsługi OpenMP; wielowątkowość jest "
+"wyłączona."
 
-msgid "Invalid date format"
-msgstr "Błędny format daty"
+msgid "possibly memory allocation error"
+msgstr "prawdopodobnie błąd przydziału pamięci"
+
+msgid "preparing data for `csepdjvu`"
+msgstr "przygotowywanie danych dla `csepdjvu`"
+
+msgid "re-assembling page with `djvumake`"
+msgstr "składanie strony za pomocą `djvumake`"
+
+msgid "recovering image chunks with `djvuextract`"
+msgstr "wyodrębnianie urywków obrazu za pomocą `djvuextract`"
+
+msgid "recovering images with `djvuextract`"
+msgstr "wyodrębnianie obrazów za pomocą `djvuextract`"
+
+msgid "recovering text with `djvused`"
+msgstr "wyodrębnianie tekstu za pomocą `djvused`"
+
+msgid "rendering background image"
+msgstr "tworzenie obrazu tła"
+
+msgid "rendering page (1st pass)"
+msgstr "tworzenie strony (pierwszy przebieg)"
+
+msgid "rendering page (2nd pass)"
+msgstr "tworzenie strony (drugi przebieg)"
+
+msgid "setting metadata with `djvused`"
+msgstr "ustawianie metadanych za pomocą `djvused`"
+
+msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
+msgstr "ustawianie metadanych za pomocą `djvused` (omijanie błędu DjVuLibre)"
+
+msgid "storing background image"
+msgstr "zapisywanie obrazu tła"
+
+msgid "storing dummy background image"
+msgstr "zapisywanie pustego obrazu tła"
+
+msgid "storing foreground image"
+msgstr "zapisywanie obrazu pierwszoplanowego"
+
+msgid "storing text layer"
+msgstr "zapisywanie warstwy tekstowej"
+
+msgid "unable to guess resolution"
+msgstr "nie udało się odgadnąć rozdzielczości"
