@@ -1,0 +1,990 @@
+# German translation of the pdf2djvu manpage.
+# This file is distributed under the same license as the pdf2djvu package.
+# Copyright © 2011 Chris Leick <c.leick@vollbio.de>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdf2djvu 0.7.8\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"POT-Creation-Date: 2011-05-11 00:21+0300\n"
+"PO-Revision-Date: 2011-05-04 21:35+0200\n"
+"Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
+"Language-Team: German <debian-l10n-german@lists.debian.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. type: Content of the p entity
+msgid "pdf2djvu"
+msgstr "pdf2djvu"
+
+#. type: Content of the version entity
+msgid "0.7.8"
+msgstr "0.7.8"
+
+#. type: Content of: <refentry><refentryinfo><title>
+msgid "&p; manual"
+msgstr "&p; Handbuch"
+
+#. type: Content of: <refentry><refentryinfo><author><affiliation><address>
+#, no-wrap
+msgid ""
+"                <email>jwilk@jwilk.net</email>\n"
+"            "
+msgstr ""
+"                <email>jwilk@jwilk.net</email>\n"
+"            "
+
+#. type: Content of: <refentry><refentryinfo>
+msgid ""
+"<productname>&p;</productname> <author> <firstname>Jakub</firstname> "
+"<surname>Wilk</surname> <affiliation> <placeholder type=\"address\" id=\"0\"/"
+"> </affiliation> </author> <copyright> <year>2007</year> <year>2008</year> "
+"<year>2009</year> <year>2010</year> <year>2011</year> <holder>Jakub Wilk</"
+"holder> </copyright>"
+msgstr ""
+"<productname>&p;</productname> <author> <firstname>Jakub</firstname> "
+"<surname>Wilk</surname> <affiliation> <placeholder type=\"address\" id=\"0\"/"
+"> </affiliation> </author> <copyright> <year>2007</year> <year>2008</year> "
+"<year>2009</year> <year>2010</year> <year>2011</year> <holder>Jakub Wilk</"
+"holder> </copyright>"
+
+#. type: Content of: <refentry><refnamediv><refname>
+msgid "&p;"
+msgstr "&p;"
+
+#. type: Content of: <refentry><refmeta><manvolnum>
+msgid "1"
+msgstr "1"
+
+#. type: Content of: <refentry><refmeta><refmiscinfo>
+msgid "&version;"
+msgstr "&version;"
+
+#. type: Content of: <refentry><refnamediv><refpurpose>
+msgid "creates DjVu files from PDF files"
+msgstr "Erzeugt DjVu-Dateien aus PDF-Dateien"
+
+#. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
+msgid ""
+"<command>&p;</command> <arg choice='opt'> <group choice='req'> <arg "
+"choice='plain'><option>-o</option></arg> <arg choice='plain'><option>--"
+"output</option></arg> </group> <arg choice='plain'><replaceable>output-djvu-"
+"file</replaceable></arg> </arg> <arg choice='opt' "
+"rep='repeat'><replaceable>option</replaceable></arg> <arg "
+"choice='plain'><replaceable>pdf-file</replaceable></arg>"
+msgstr ""
+"<command>&p;</command> <arg choice='opt'> <group choice='req'> <arg "
+"choice='plain'><option>-o</option></arg> <arg choice='plain'><option>--"
+"output</option></arg> </group> <arg choice='plain'><replaceable>Ausgabe-DjVu-"
+"Datei</replaceable></arg> </arg> <arg choice='opt' "
+"rep='repeat'><replaceable>Option</replaceable></arg> <arg "
+"choice='plain'><replaceable>PDF-Datei</replaceable></arg>"
+
+#. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
+msgid ""
+"<command>&p;</command> <arg choice='plain'> <group choice='req'> <arg "
+"choice='plain'><option>-i</option></arg> <arg choice='plain'><option>--"
+"indirect</option></arg> </group> <arg choice='plain'><replaceable>index-djvu-"
+"file</replaceable></arg> </arg> <arg choice='opt' "
+"rep='repeat'><replaceable>option</replaceable></arg> <arg "
+"choice='plain'><replaceable>pdf-file</replaceable></arg>"
+msgstr ""
+"<command>&p;</command> <arg choice='plain'> <group choice='req'> <arg "
+"choice='plain'><option>-i</option></arg> <arg choice='plain'><option>--"
+"indirect</option></arg> </group> <arg choice='plain'><replaceable>Index-DjVu-"
+"Datei</replaceable></arg> </arg> <arg choice='opt' "
+"rep='repeat'><replaceable>Option</replaceable></arg> <arg "
+"choice='plain'><replaceable>PDF-Datei</replaceable></arg>"
+
+#. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
+msgid ""
+"<command>&p;</command> <group choice='req'> <arg choice='plain'><option>--"
+"version</option></arg> <arg choice='plain'><option>--help</option></arg> "
+"<arg choice='plain'><option>-h</option></arg> </group>"
+msgstr ""
+"<command>&p;</command> <group choice='req'> <arg choice='plain'><option>--"
+"version</option></arg> <arg choice='plain'><option>--help</option></arg> "
+"<arg choice='plain'><option>-h</option></arg> </group>"
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Description"
+msgstr "Beschreibung"
+
+#. type: Content of: <refentry><refsection><para>
+msgid ""
+"This program creates a DjVu file from the Portable Document Format file "
+"<filename><replaceable>pdf-file</replaceable></filename>."
+msgstr ""
+"Dieses Programm erstellt eine DjVu-Datei aus der Portable Document Format-"
+"Datei <filename><replaceable>PDF-Datei</replaceable></filename>."
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Options"
+msgstr "Optionen"
+
+#. type: Content of: <refentry><refsection><para>
+msgid "<command>&p;</command> accepts the following options:"
+msgstr "<command>&p;</command> akzeptiert die folgenden Optionen:"
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Document type, file names"
+msgstr "Dokumenttyp, Dateinamen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-o</option>"
+msgstr "<option>-o</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid ""
+"<option>--output=<filename><replaceable>output-djvu-file</replaceable></"
+"filename></option>"
+msgstr ""
+"<option>--output=<filename><replaceable>Ausgabe-DjVu-Datei</replaceable></"
+"filename></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Generate a bundled multi-page document. Write the file into "
+"<filename><replaceable>output-djvu-file</replaceable></filename> instead of "
+"standard output."
+msgstr ""
+"generiert ein gebündeltes mehrseitiges Dokument; schreibt die Ausgabe in "
+"eine <filename><replaceable>Ausgabe-DjVu-Datei</replaceable></filename> "
+"anstatt auf die Standardausgabe"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-i</option>"
+msgstr "<option>-i</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid ""
+"<option>--indirect=<filename><replaceable>index-djvu-file</replaceable></"
+"filename></option>"
+msgstr ""
+"<option>--indirect=<filename><replaceable>Index-DjVu-Datei</replaceable></"
+"filename></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Generate an indirect multi-page document. Use <filename><replaceable>index-"
+"djvu-file</replaceable></filename> as the index file name; put the component "
+"files into the same directory. The directory must exist and be writable."
+msgstr ""
+"erstellt ein indirekt mehrseitiges Dokument; benutzt "
+"<filename><replaceable>Index-DjVu-Datei</replaceable></filename> als "
+"Indexdateinamen; legt die Komponentendateien im gleichen Verzeichnis ab. Das "
+"Verzeichnis muss existieren und beschreibbar sein."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--pageid-template=<replaceable>template</replaceable></option>"
+msgstr ""
+"<option>--pageid-template=<replaceable>Schablone</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the naming scheme for page identifiers.  Consult the <quote><link "
+"linkend='template-language' endterm='template-language.title'/></quote> "
+"section for the template language description."
+msgstr ""
+"gibt das Namesschema für Seitenbezeichner an. Lesen Sie den Abschnitt "
+"<quote><link linkend='template-language' endterm='template-language.title'/"
+"></quote> für die Sprachbeschreibung der Schablone."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"The default template is <quote><literal>p{page:04*}.djvu</literal></quote>."
+msgstr ""
+"Die Vorgabeschablone ist <quote><literal>p{page:04*}.djvu</literal></quote>."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "For portability reasons, page identifiers:"
+msgstr "Aus Portierbarkeitsgründen gilt für Seitenbezeichner:"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
+msgid ""
+"must consist only of lowercase ASCII letters, digits, <literal>_</literal>, "
+"<literal>+</literal>, <literal>-</literal> and dot,"
+msgstr ""
+"Sie dürfen nur aus kleingeschriebenen ASCII-Buchstaben, Ziffern, <literal>_</"
+"literal>, <literal>+</literal>, <literal>-</literal> und Punkten bestehen,"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
+msgid ""
+"cannot start with a <literal>+</literal>, <literal>-</literal> or a dot,"
+msgstr ""
+"sie dürfen nicht mit <literal>+</literal>, <literal>-</literal> oder einem "
+"Punkt beginnen,"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
+msgid "cannot contain two consecutive dots,"
+msgstr "sie dürfen keine zwei aufeinanderfolgenden Punkte enthalten,"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
+msgid ""
+"must end with the <literal>.djvu</literal> or the <literal>.djv</literal> "
+"extension."
+msgstr ""
+"sie müssen die Dateiendung <literal>.djvu</literal> oder <literal>.djv</"
+"literal> haben."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--pageid-prefix=<replaceable>prefix</replaceable></option>"
+msgstr "<option>--pageid-prefix=<replaceable>Präfix</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Equivalent to <quote><literal>--pageid-template=<replaceable>prefix</"
+"replaceable>{page:04*}.djvu</literal></quote>."
+msgstr ""
+"Entspricht <quote><literal>--pageid-template=<replaceable>Präfix</"
+"replaceable>{page:04*}.djvu</literal></quote>."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid ""
+"<option>--page-title-template=<replaceable>template</replaceable></option>"
+msgstr ""
+"<option>--page-title-template=<replaceable>Schablone</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the template for page titles.  Consult the <quote><link "
+"linkend='template-language' endterm='template-language.title'/></quote> "
+"section for the template language description."
+msgstr ""
+"gibt die Schablone für Seitentitel an. Lesen Sie den Abschnitt <quote><link "
+"linkend='template-language' endterm='template-language.title'/></quote> für "
+"die Sprachbeschreibung der Schablone."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "The default is to set no page titles."
+msgstr "Standardmäßig werden keine Seitentitel gesetzt."
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Resolution, page size"
+msgstr "Auflösung, Seitengröße"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-d</option>"
+msgstr "<option>-d</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--dpi=<replaceable>resolution</replaceable></option>"
+msgstr "<option>--dpi=<replaceable>Auflösung</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the desired resolution to <replaceable>resolution</replaceable> "
+"dots per inch. The default is 300 dpi. The allowed range is: 72 ≤ "
+"<replaceable>resolution</replaceable> ≤ 6000."
+msgstr ""
+"gibt die gewünschte Auflösung in <replaceable>Auflösung</replaceable> "
+"Punkten pro Zoll an. Die Vorgabe ist 300 dpi. Der erlaubte Bereich ist: 72 ≤ "
+"<replaceable>Auflösung</replaceable> ≤ 6000."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--media-box</option>"
+msgstr "<option>--media-box</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Use <firstterm>MediaBox</firstterm> to determine page size. "
+"<firstterm>CropBox</firstterm> is used by default."
+msgstr ""
+"Benutzen Sie <firstterm>MediaBox</firstterm>, um die Seitengröße "
+"festzulegen. Standardmäßig wird <firstterm>CropBox</firstterm> benutzt."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid ""
+"<option>--page-size=<replaceable>width</replaceable>x<replaceable>height</"
+"replaceable></option>"
+msgstr ""
+"<option>--page-size=<replaceable>Breite</replaceable>x<replaceable>Höhe</"
+"replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the preferred page size to <replaceable>width</replaceable> pixels "
+"× <replaceable>height</replaceable> pixels. The actual page size may be "
+"altered in order to respect aspect ratio and DjVu limitations on resolution. "
+"(This option takes precedence over <option>-d</option>/<option>--dpi</"
+"option>.)"
+msgstr ""
+"gibt die bevorzugte Seitengröße als <replaceable>Breite</replaceable> "
+"Bildpunkte x <replaceable>Höhe</replaceable> Bildpunkte an. Die tatsächliche "
+"Seitengröße könnte verändert werden, um das Seitenverhältnis und die DjVu-"
+"Einschränkungen für die Auflösung zu berücksichtigen. (Diese Option hat "
+"Vorrang gegenüber <option>-d</option>/<option>--dpi</option>.)"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--guess-dpi</option>"
+msgstr "<option>--guess-dpi</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Try to guess native resolution by inspecting embedded images. Use with care."
+msgstr ""
+"versucht die native Auflösung durch Untersuchen der eingebetteten Bilder "
+"abzuschätzen. Verwenden Sie dies mit Vorsicht."
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Image quality"
+msgstr "Bildqualität"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid ""
+"<option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>"
+"+<replaceable>n</replaceable></option>"
+msgstr ""
+"<option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>"
+"+<replaceable>n</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid ""
+"<option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</"
+"replaceable>,<replaceable>n</replaceable></option>"
+msgstr ""
+"<option>--bg-slices=<replaceable>n</replaceable>,<replaceable>…</"
+"replaceable>,<replaceable>n</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the encoding quality of the IW44 background layer. This option is "
+"similar to the <option>-slice</option> option of <command>c44</command>. "
+"Consult the <citerefentry> <refentrytitle>c44</refentrytitle> <manvolnum>1</"
+"manvolnum> </citerefentry> manual page for details. The default is "
+"<literal>72+11+10+10</literal>."
+msgstr ""
+"gibt die Kodierungsqualität für die IW44-Hintergrundebene an. Diese Option "
+"ist der Option <option>-slice</option> des Befehls <command>c44</command> "
+"ähnlich. Sehen Sie die Handbuchseite <citerefentry> <refentrytitle>c44</"
+"refentrytitle> <manvolnum>1</manvolnum> </citerefentry> ein, um Einzelheiten "
+"zu erfahren. Die Vorgabe ist <literal>72+11+10+10</literal>."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--bg-subsample=<replaceable>n</replaceable></option>"
+msgstr "<option>--bg-subsample=<replaceable>n</replaceable></option>"
+
+# http://de.wikipedia.org/wiki/Farbunterabtastung
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the background subsampling ratio. The default is 3. Valid values "
+"are integers between 1 and 12, inclusive."
+msgstr ""
+"gibt das Verhältnis der Hintergrund-Unterabtastung (subsampling) an. Vorgabe "
+"ist 3. Gültige Werte sind Ganzahlen von 1 bis einschließlich 12."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--fg-colors=default</option>"
+msgstr "<option>--fg-colors=default</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Try to preserve all the foreground layer colors.  This is the default."
+msgstr ""
+"versucht, alle Vordergrundebenenfarben zu bewahren. Dies ist die Vorgabe."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--fg-colors=web</option>"
+msgstr "<option>--fg-colors=web</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Reduce foreground layer colors to the web palette (216 colors).  This option "
+"is not recommended."
+msgstr ""
+"reduziert Vordergrundebenenfarben auf die Web-Palette (216 Farben). Diese "
+"Option wird nicht empfohlen."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--fg-colors=<replaceable>n</replaceable></option>"
+msgstr "<option>--fg-colors=<replaceable>n</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Use GraphicsMagick to reduce number of distinct colors in the foreground "
+"layer to <replaceable>n</replaceable>. Valid values are integers between 1 "
+"and 4080.  This option is not recommended."
+msgstr ""
+"benutzt GraphicsMagick, um die Anzahl verschiedener Farben in der "
+"Vordergrundebene auf <replaceable>n</replaceable> zu reduzieren. Gültige "
+"Werte sind Ganzzahlen zwischen 1 und 4080. Diese Option wird nicht empfohlen."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--fg-colors=black</option>"
+msgstr "<option>--fg-colors=black</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Discard any color information from the foreground layer."
+msgstr "jede Farbinformation der Vordergrundebene verwerfen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--monochrome</option>"
+msgstr "<option>--monochrome</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Render pages as monochrome bitmaps. With this option, <option>--bg-"
+"<replaceable>…</replaceable></option> and <option>--fg-<replaceable>…</"
+"replaceable></option> options are not respected."
+msgstr ""
+"Seiten als einfarbige Bitmaps berechnen und ausgeben. Mit dieser Option "
+"werden die Optionen <option>--bg-<replaceable>…</replaceable></option> und "
+"<option>--fg-<replaceable>…</replaceable></option> nicht berücksichtigt."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--loss-level=<replaceable>n</replaceable></option>"
+msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies the aggressiveness of the lossy compression. The default is 0 "
+"(lossless).  Valid values are integers between 0 and 200, inclusive. This "
+"option is similar to the <option>-losslevel</option> option of "
+"<command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</"
+"refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for "
+"details.  This option is respected only along with the <option>--monochrome</"
+"option> option."
+msgstr ""
+"gibt die Aggressivität der verlustbehafteten Komprimierung an. Vorgabe ist 0 "
+"(verlustfrei). Gültige Werte sind Ganzahlen von 0 bis einschließlich 200. "
+"Diese Option ähnelt der Option <option>-losslevel</option> von "
+"<command>cjb2</command>. Sehen Sie die Handbuchseite <citerefentry> "
+"<refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> "
+"ein, um weitere Einzelheiten zu erfahren. Diese Option wird nur zusammen mit "
+"der Option <option>--monochrome</option> berücksichtigt."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--lossy</option>"
+msgstr "<option>--lossy</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Synonym for <option>--loss-level=100</option>."
+msgstr "Synonym für <option>--loss-level=100</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--anti-alias</option>"
+msgstr "<option>--anti-alias</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Enable font and vector anti-aliasing.  This option is not recommended."
+msgstr ""
+"aktiviert Schrift- und Vektor-Kantenglättung. Diese Option wird nicht "
+"empfohlen."
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Extraction"
+msgstr "Auszug"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-metadata</option>"
+msgstr "<option>--no-metadata</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Don't extract the metadata."
+msgstr "die Metadaten nicht herausziehen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "By default:"
+msgstr "Standardmäßig:"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
+msgid ""
+"The following entries of the document information dictionary are extracted: "
+"<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</"
+"literal>, <literal>Creator</literal>, <literal>Producer</literal>, "
+"<literal>CreationDate</literal>, <literal>ModDate</literal>.  Timestamps are "
+"formatted according to <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC "
+"3999</ulink>, with date and time components separated by a single space."
+msgstr ""
+"Die folgenden Einträge des Dokumentinformations-Wörterbuchs werden "
+"extrahiert: <literal>Title</literal>, <literal>Author</literal>, "
+"<literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</"
+"literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>. "
+"Zeitstempel werden entspechend <ulink url='http://www.ietf.org/rfc/"
+"rfc3339'>RFC 3999</ulink> mit Datums- und Zeitbestandteilen, getrennt durch "
+"ein einzelnes Leerzeichen, formatiert."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
+msgid "The XMP metadata is extracted (or created) and updated accordingly."
+msgstr ""
+"Die XMP-Metadaten werden extrahiert (oder erzeugt) und dementsprechend "
+"aktualisiert."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--verbatim-metadata</option>"
+msgstr "<option>--verbatim-metadata</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Keep the original metadata intact."
+msgstr "die Original-Metadaten intakt lassen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-outline</option>"
+msgstr "<option>--no-outline</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Don't extract the document outline."
+msgstr "die Dokumentenübersicht nicht extrahieren"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--hyperlinks=border-avis</option>"
+msgstr "<option>--hyperlinks=border-avis</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Make hyperlink borders always visible."
+msgstr "Ränder von Querverweisen immer sichtbar machen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"By default, a hyperlink border is visible only when the mouse is over the "
+"hyperlink."
+msgstr ""
+"Standardmäßig sind die Ränder eines Querverweises nur sichtbar, wenn die "
+"Maus darüber steht."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option>"
+msgstr "<option>--hyperlinks=#<replaceable>RRGGBB</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Force the specified border color for hyperlinks."
+msgstr "die angegebene Randfarbe für Querverweise erzwingen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-hyperlinks</option>"
+msgstr "<option>--no-hyperlinks</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--hyperlinks=none</option>"
+msgstr "<option>--hyperlinks=none</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Don't extract hyperlinks."
+msgstr "Querverweise nicht extrahieren"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-text</option>"
+msgstr "<option>--no-text</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Don't extract the text."
+msgstr "den Text nicht extrahieren"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--words</option>"
+msgstr "<option>--words</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Extract the text. Record the location of every word. This is the default."
+msgstr ""
+"den Text extrahieren; die Position jedes Wortes aufzeichnen. Dies ist die "
+"Vorgabe."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--lines</option>"
+msgstr "<option>--lines</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Extract the text. Record the location of every line, rather that every word."
+msgstr ""
+"den Text extrahieren; die Position jeder Zeile statt jedes Wortes aufzeichnen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--crop-text</option>"
+msgstr "<option>--crop-text</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Extract no text outside the page boundary."
+msgstr "keinen Text außerhalb des Seitenrands extrahieren"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-nfkc</option>"
+msgstr "<option>--no-nfkc</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize "
+"the text."
+msgstr ""
+"den Text nicht entsprechend <ulink url='http://unicode.org/reports/"
+"tr15/'>NFKC</ulink> normalisieren."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--filter-text=<replaceable>command-line</replaceable></option>"
+msgstr "<option>--filter-text=<replaceable>Befehlszeile</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Filter the text through the <replaceable>command-line</replaceable>. The "
+"provided filter must preserve whitespace, control characters and decimal "
+"digits."
+msgstr ""
+"den Text über die <replaceable>Befehlszeile</replaceable> filtern. Der "
+"bereitgestellte Filter muss Leerräume, Steuerzeichen und dezimale Ziffern "
+"bewahren."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "This option implies <option>--no-nfkc</option>."
+msgstr "Diese Option impliziert <option>--no-nfkc</option>."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-p</option>"
+msgstr "<option>-p</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--pages=<replaceable>page-range</replaceable></option>"
+msgstr "<option>--pages=<replaceable>Seitenbereich</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-"
+"separated list of sub-ranges. Each sub-range is either a single page (e."
+"g. <literal>17</literal>) or a contiguous range of pages (e."
+"g. <literal>37-42</literal>). Pages are numbered from 1."
+msgstr ""
+"gibt die Seiten an, die umgewandelt werden. <replaceable>Seitenbereich</"
+"replaceable> ist eine durch Kommas getrennte Liste von Unterbereichen. Jeder "
+"Unterbereich ist entweder eine einzelne Seite (z.B. <literal>17</literal>) "
+"oder ein Bereich zusammenhängender Seiten (z.B. <literal>37-42</literal>). "
+"Seiten werde mit 1 beginnend nummeriert."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "The default is to convert all pages."
+msgstr "Standardmäßig werden alle Seiten umgewandelt."
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Performance"
+msgstr "Leistungsfähigkeit"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-j</option>"
+msgstr "<option>-j</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--jobs=<replaceable>n</replaceable></option>"
+msgstr "<option>--jobs=<replaceable>n</replaceable></option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid ""
+"Use <replaceable>n</replaceable> threads to perform conversion. The default "
+"is to use one thread."
+msgstr ""
+"benutzt <replaceable>n</replaceable> Threads, um die Umwandlung "
+"durchzuführen. Standardmäßig wird ein Thread benutzt."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-j0</option>"
+msgstr "<option>-j0</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--jobs=0</option>"
+msgstr "<option>--jobs=0</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Determine automatically how many threads to use to perform conversion."
+msgstr ""
+"legt automatisch fest, wieviele Threads für die Umwandlung benutzt werden"
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Verbosity, help"
+msgstr "Detailgrad, Hilfe"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-v</option>"
+msgstr "<option>-v</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--verbose</option>"
+msgstr "<option>--verbose</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Display more informational messages while converting the file."
+msgstr ""
+"während der Umwandlung der Datei weitere informative Nachrichten anzeigen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-q</option>"
+msgstr "<option>-q</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--quiet</option>"
+msgstr "<option>--quiet</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Don't display informational messages while converting the file."
+msgstr ""
+"während der Umwandlung der Datei keine informativen Nachrichten anzeigen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--version</option>"
+msgstr "<option>--version</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Output version information and exit."
+msgstr "die Versionsinformationen ausgeben und beenden"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>-h</option>"
+msgstr "<option>-h</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--help</option>"
+msgstr "<option>--help</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Display help and exit."
+msgstr "Hilfe anzeigen und beenden"
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Environment"
+msgstr "Umgebung"
+
+#. type: Content of: <refentry><refsection><para><variablelist><varlistentry><term>
+msgid "<varname>OMP_<replaceable>*</replaceable></varname>"
+msgstr "<varname>OMP_<replaceable>*</replaceable></varname>"
+
+#. type: Content of: <refentry><refsection><para><variablelist><varlistentry><listitem><para>
+msgid ""
+"Details of runtime behaviour with respect to parallelism can be controlled "
+"by several environment variables.  Please refer to the <ulink url='http://"
+"openmp.org/wp/openmp-specifications/'>OpenMP API specification</ulink> for "
+"details."
+msgstr ""
+"Einzelheiten des Verhaltens zur Laufzeit, die Parallelisierung "
+"berücksichtigen, können durch mehrere Umgebungsvariablen gesteuert werden. "
+"Bitte sehen Sie in die <ulink url='http://openmp.org/wp/openmp-"
+"specifications/'>OpenMP-API-Spezifikation</ulink>, um Einzelheiten zu "
+"erfahren."
+
+#. type: Content of: <refentry><refsection><para><variablelist><varlistentry><term>
+msgid "<varname>TMPDIR</varname>"
+msgstr "<varname>TMPDIR</varname>"
+
+#. type: Content of: <refentry><refsection><para><variablelist><varlistentry><listitem><para>
+msgid ""
+"<command>&p;</command> makes heavy use of temporary files. It will store "
+"them in a directory specified by this variable. The default is <filename>/"
+"tmp</filename>."
+msgstr ""
+"<command>&p;</command> macht stark von temporären Dateien Gebrauch. Es wird "
+"sie in dem durch diese Variable angegebenen Verzeichnis speichern. Vorgabe "
+"ist <filename>/tmp</filename>."
+
+#. type: Content of: <refentry><refsection><para>
+msgid ""
+"The following environment variables affects <command>&p;</command> on Unix "
+"systems: <placeholder type=\"variablelist\" id=\"0\"/>"
+msgstr ""
+"Die folgenden Umgebungsvariablen beeinflussen <command>&p;</command> auf "
+"Unix-Systemen: <placeholder type=\"variablelist\" id=\"0\"/>"
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Template language"
+msgstr "Schablonensprache"
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Template syntax"
+msgstr "Schablonensyntax"
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"The template language is roughly modelled on the <ulink url='http://docs."
+"python.org/library/string.html#format-string-syntax'>Python string "
+"formatting syntax</ulink>."
+msgstr ""
+"Die Schablonensprache ist ungefähr wie die <ulink url='http://docs.python."
+"org/library/string.html#format-string-syntax'>Phyton-"
+"Zeichenkettenformatierungssyntax</ulink> aufgebaut."
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"A template is a piece of text which contains <firstterm>fields</firstterm>, "
+"surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields "
+"are replaced with appropriately formatted values when the template is "
+"evaluated.  Moreover, <literal>{{</literal> is replaced with a single "
+"<literal>{</literal> and <literal>}}</literal> is replaced with a single "
+"<literal>}</literal>."
+msgstr ""
+"Eine Schablone ist ein Textteil, der <firstterm>Felder</firstterm> enthält, "
+"die von geschweiften Klammern <literal>{</literal><literal>}</literal> "
+"eingeschlossen werden. Felder werden durch entsprechend formatierte Werte "
+"ersetzt, wenn die Schablone ausgewertet wird. Außerdem werden <literal>{{</"
+"literal> durch eine einzelne <literal>{</literal> und <literal>}}</literal> "
+"durch eine einzelne <literal>}</literal> ersetzt."
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Field syntax"
+msgstr "Feldsyntax"
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"Each field consists of a variable name, optionally followed by a shift, "
+"optionally followed by a format specification."
+msgstr ""
+"Jedes Feld besteht aus einem Variablennamen, wahlweise gefolgt von einer "
+"Verschiebung, der wiederum wahlweise eine Formatangabe folgt."
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"The shift is a signed (i.e. starting with a <literal>+</literal> or "
+"<literal>-</literal> character) integer."
+msgstr ""
+"Die Verschiebung ist eine vorzeichenbehaftete (d.h. sie beginnt mit einem "
+"<literal>+</literal> oder <literal>-</literal>) Ganzzahl."
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"The format specification consists of a colon, followed by a width "
+"specification."
+msgstr ""
+"Die Formatangabe besteht aus einem Doppelpunkt gefolgt von einer "
+"Breitenangabe."
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"The width specification is a decimal integer defining the minimum field "
+"width. If not specified, then the field width will be determined by the "
+"content. Preceding the width specification with a zero (<literal>0</"
+"literal>) character enables zero-padding."
+msgstr ""
+"Die Breitenangabe ist eine dezimale Ganzzahl, die die Mindestbreite eines "
+"Feldes angibt. Falls sie nicht angegeben wird, wird die Feldbreite durch den "
+"Inhalt bestimmt. Wird der Breitenangabe eine Null (<literal>0</literal>) "
+"vorangestellt, wird Auffüllen mit Nullen aktiviert."
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"The width specification is optionally followed by an asterisk (<literal>*</"
+"literal>) character, which increases the minimum field width to the width of "
+"the longest possible content of the variable."
+msgstr ""
+"Der Breitenangabe folgt wahlweise ein Sternchen (<literal>*</literal>), das "
+"die Mindestbreite des Feldes auf die Breite des größtmöglichen Inhalts der "
+"Variable erhöht."
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Available variables"
+msgstr "Verfügbare Variablen"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<varname>page</varname>"
+msgstr "<varname>page</varname>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<varname>spage</varname>"
+msgstr "<varname>spage</varname>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Page number in the PDF document."
+msgstr "Seitenzahl im PDF-Dokument"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<varname>dpage</varname>"
+msgstr "<varname>dpage</varname>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Page number in the DjVu document."
+msgstr "Seitenzahl im DjVu-Dokument"
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Implementation details"
+msgstr "Implementierungseinzelheiten"
+
+#. type: Content of: <refentry><refsection><refsection><title>
+msgid "Layer separation algorithm"
+msgstr "Ebenen-Aufteilungsalgorithmus"
+
+# http://de.wikipedia.org/wiki/Rastergrafik
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
+msgid "Raster the page into a pixmap, in the usual manner."
+msgstr "die Seite auf die übliche Weise in eine Rastergrafik rastern"
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
+msgid ""
+"Raster the page into another pixmap, omitting the following page elements:"
+msgstr ""
+"die Seite in eine Rastergrafik rastern und die folgenden Seitenelemente "
+"weglassen:"
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
+msgid "text,"
+msgstr "Text"
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
+msgid "1 bit-per-pixel raster images,"
+msgstr "1 Bit-pro-Bildpunkt-Rasterbilder"
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
+msgid "vector elements (except fills of large areas)."
+msgstr "Vektorelemente (außer Füllungen großer Bereiche)"
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><orderedlist><listitem><para>
+msgid ""
+"If their colors match, classify the pixel as a part of the background layer."
+msgstr ""
+"Falls ihre Farben passen, werden die Bildpunkte als Teil der "
+"Hintergrundebene eingestuft."
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><orderedlist><listitem><para>
+msgid "Otherwise, classify the pixel as a part of the foreground layer."
+msgstr ""
+"Andernfalls werden die Bildpunkte als Teil der Vordergrundebene eingestuft."
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
+msgid ""
+"Compare both pixmaps, pixel by pixel: <placeholder type=\"orderedlist\" id="
+"\"0\"/>"
+msgstr ""
+"beide Rastergrafiken Bildpunkt für Bildpunkt vergleichen: <placeholder type="
+"\"orderedlist\" id=\"0\"/>"
+
+#. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para>
+msgid ""
+"For each page, do the following: <placeholder type=\"orderedlist\" id=\"0\"/>"
+msgstr ""
+"für jede Seite das Folgende tun: <placeholder type=\"orderedlist\" id=\"0\"/>"
+
+#. type: Content of: <refentry><refsection><refsection><para>
+msgid ""
+"Unless the <option>--monochrome</option> option is on, &p; uses the "
+"following naïve layer separation algorithm: <placeholder type=\"orderedlist"
+"\" id=\"0\"/>"
+msgstr ""
+"Außer wenn die Option <option>--monochrome</option> aktiviert ist, benutzt "
+"&p; den folgenden naiven Ebenen-Aufteilungsalgorithmus: <placeholder type="
+"\"orderedlist\" id=\"0\"/>"
+
+#. type: Content of: <refentry><refsection><title>
+msgid "Bug reports"
+msgstr "Fehlerberichte"
+
+#. type: Content of: <refentry><refsection><para>
+msgid ""
+"If you find a bug in &p;, please report it at <ulink url='http://code.google."
+"com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
+msgstr ""
+"Falls Sie einen Fehler in &p; finden, berichten Sie ihn bitte auf Englisch "
+"an <ulink url='http://code.google.com/p/pdf2djvu/issues/'>die "
+"Problemverfolgung</ulink>."
+
+#. type: Content of: <refentry><refsection><title>
+msgid "See also"
+msgstr "SIEHE AUCH"
+
+#. type: Content of: <refentry><refsection><para>
+msgid ""
+"<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> "
+"</citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> "
+"<manvolnum>1</manvolnum> </citerefentry>, <citerefentry> "
+"<refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </"
+"citerefentry>"
+msgstr ""
+"<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> "
+"</citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> "
+"<manvolnum>1</manvolnum> </citerefentry>, <citerefentry> "
+"<refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </"
+"citerefentry>"
