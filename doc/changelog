@@ -122,13 +122,12 @@ pdf2djvu (0.5.11) unstable; urgency=low
 pdf2djvu (0.5.10) unstable; urgency=low
 
   * Add Polish translation of the manual page.
-    Thanks to Mateusz Turcza for providing a patch.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 12 Jul 2009 12:58:27 +0200
 
 pdf2djvu (0.5.9) unstable; urgency=low
 
-  * Add the Polish translation.
+  * Add Polish translation by Mateusz Turcza.
   * Respect LC_NUMERIC locale settings.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jun 2009 23:20:32 +0200
