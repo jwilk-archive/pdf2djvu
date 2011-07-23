@@ -32,4 +32,8 @@ xml: $(XML_FILES)
 	sed -i -e '/^#:/ d' *.po
 	sed -i -e 's/<\(refentry\)>/<\1 lang="$(subst .,,$(suffix $(basename $(@))))">/' $(@)
 
+.PHONY: clean
+clean:
+	rm -f $(PACKAGE_NAME).[a-z][a-z].[1-9] $(PACKAGE_NAME).[a-z][a-z].xml $(PACKAGE_NAME).pot
+
 # vim:ts=4 sw=4 noet
