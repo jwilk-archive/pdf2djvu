@@ -40,8 +40,8 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 
 %.mo: %.po
 ifneq "$(quality-check)" ""
-	! grep -H '^#,.*fuzzy' $(<)
-	! msggrep -T -v -e . $(<) | grep .
+	! msgattrib --only-fuzzy $(<) | grep .
+	! msgattrib --untranslated $(<) | grep .
 endif
 	$(msgfmt) -o $(@) -c $(<)
 
