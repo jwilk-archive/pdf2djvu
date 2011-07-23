@@ -1,4 +1,4 @@
-# Copyright © 2009 Jakub Wilk
+# Copyright © 2009, 2011 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,10 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 	$(MSGMERGE) -o $(@) $(@) $(<)
 
 %.mo: %.po
+ifneq "$(quality-check)" ""
+	! grep -H '^#,.*fuzzy' $(<)
+	! msggrep -T -v -e . $(<) | grep .
+endif
 	$(MSGFMT) -o $(@) -c $(<)
 
 .PHONY: clean

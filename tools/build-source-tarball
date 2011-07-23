@@ -44,9 +44,9 @@ grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "pdf2djvu-$version/Makefile.common.in" \
     -e 's/@MSGMERGE@/msgmerge/' \
     -e 's/@XGETTEXT@/xgettext/'
 cat "pdf2djvu-$version/Makefile.common"
-make -C "pdf2djvu-$version/po/"
+make -C "pdf2djvu-$version/po/" 'quality-check=1'
 make -C "pdf2djvu-$version/doc/"
-make -C "pdf2djvu-$version/doc/po/"
+make -C "pdf2djvu-$version/doc/po/" 'quality-check=1'
 rm "pdf2djvu-$version/Makefile.common"
 
 # Prepare tests:

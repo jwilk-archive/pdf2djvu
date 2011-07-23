@@ -40,6 +40,10 @@ $(po_files): %.po: pdf2djvu.xml
 	touch $(@)
 
 %.xml: %.po
+ifneq "$(quality-check)" ""
+	! grep -H '^#,.*fuzzy' $(<)
+	! msggrep -T -v -e . $(<) | grep .
+endif
 	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
 	sed -i -e 's/<\(refentry\)>/<\1 lang="$(subst .,,$(suffix $(basename $(@))))">/' $(@)
 
