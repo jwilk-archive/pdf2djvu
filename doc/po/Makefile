@@ -12,7 +12,7 @@ XSLTPROC += --param man.output.lang.in.name.enabled 1
 
 PO4A_OPTIONS = \
 	--rm-backups \
-	--package-name=$(PACKAGE_NAME) \
+	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
 	--copyright-holder="Jakub Wilk"
@@ -34,6 +34,6 @@ xml: $(XML_FILES)
 
 .PHONY: clean
 clean:
-	rm -f $(PACKAGE_NAME).[a-z][a-z].[1-9] $(PACKAGE_NAME).[a-z][a-z].xml $(PACKAGE_NAME).pot
+	rm -f $(addprefix pdf2djvu.,[a-z][a-z].[1-9] [a-z][a-z].xml pot)
 
 # vim:ts=4 sw=4 noet

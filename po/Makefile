@@ -15,17 +15,17 @@ XGETTEXT_OPTIONS = \
 	--no-location \
 	--language=C++ \
 	--keyword=_ --keyword=N_ \
-	--package-name=$(PACKAGE_NAME) \
+	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT)
 
 .PHONY: all
-all: $(PACKAGE_NAME).pot $(PO_FILES) $(MO_FILES)
+all: pdf2djvu.pot $(PO_FILES) $(MO_FILES)
 
-$(PACKAGE_NAME).pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
+pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 	$(XGETTEXT) $(XGETTEXT_OPTIONS) -D $(srcdir) $(notdir $(SOURCE_FILES)) > $(@)
 
-%.po: $(PACKAGE_NAME).pot
+%.po: pdf2djvu.pot
 	$(MSGMERGE) -o $(@) $(@) $(<)
 
 %.mo: %.po
@@ -33,6 +33,6 @@ $(PACKAGE_NAME).pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 
 .PHONY: clean
 clean:
-	rm -f *.mo $(PACKAGE_NAME).pot
+	rm -f *.mo pdf2djvu.pot
 
 # vim:ts=4 sw=4 noet
