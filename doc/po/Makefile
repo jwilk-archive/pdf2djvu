@@ -10,30 +10,41 @@ include $(srcdir)/doc/Makefile.common
 
 XSLTPROC += --param man.output.lang.in.name.enabled 1
 
-PO4A_OPTIONS = \
-	--rm-backups \
+po4a-common-options = \
+	--format=docbook
+
+po4a-update-po = po4a-updatepo \
+	$(po4a-common-options) \
 	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
-	--copyright-holder="Jakub Wilk"
+	--copyright-holder="Jakub Wilk" \
+	--msgmerge-opt="--no-location"
 
-PO_FILES = $(wildcard *.po)
-XML_FILES = $(PO_FILES:.po=.xml)
-MAN_FILES = $(PO_FILES:.po=.1)
+po4a-translate = po4a-translate \
+	$(po4a-common-options)
+
+po_files = $(wildcard pdf2djvu.[a-z][a-z].po)
+xml_files = $(po_files:.po=.xml)
+man_files = $(po_files:.po=.1)
 
 .PHONY: all
-all: $(MAN_FILES)
+all: $(man_files)
 
 .PHONY: xml
-xml: $(XML_FILES)
+xml: $(xml_files)
+
+$(po_files): %.po: pdf2djvu.xml
+	$(po4a-update-po) -m $(<) -p $(@)
+	rm -f $(@)~
+	touch $(@)
 
 %.xml: %.po
-	po4a $(PO4A_OPTIONS) po4a.conf
-	sed -i -e '/^#:/ d' *.po
+	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
 	sed -i -e 's/<\(refentry\)>/<\1 lang="$(subst .,,$(suffix $(basename $(@))))">/' $(@)
 
 .PHONY: clean
 clean:
-	rm -f $(addprefix pdf2djvu.,[a-z][a-z].[1-9] [a-z][a-z].xml pot)
+	rm -f $(addprefix pdf2djvu.,[a-z][a-z].1 [a-z][a-z].xml pot) *~
 
 # vim:ts=4 sw=4 noet
