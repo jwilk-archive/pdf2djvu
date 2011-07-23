@@ -4,7 +4,7 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-pdf2djvu=`command -v ${pdf2djvu:-pdf2djvu}`
+pdf2djvu=$(command -v ${pdf2djvu:-pdf2djvu})
 
 pdf2djvu()
 {
