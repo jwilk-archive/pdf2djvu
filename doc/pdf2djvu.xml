@@ -348,6 +348,8 @@
                                 <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time
                                 components separated by a single space.
                             </para>
+                        </listitem>
+                        <listitem>
                             <para>
                                 The XMP metadata is extracted (or created) and updated accordingly.
                             </para>
