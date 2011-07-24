@@ -2,8 +2,10 @@ pdf2djvu (0.7.8) UNRELEASED; urgency=low
 
   * Add German translation by Chris Leick.
     http://bugs.debian.org/626315
+  * Add support for merging multiple PDFs into a single DjVu file.
+    http://bugs.debian.org/633628
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 23 Jul 2011 21:33:06 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 24 Jul 2011 03:01:04 +0200
 
 pdf2djvu (0.7.7) unstable; urgency=low
 

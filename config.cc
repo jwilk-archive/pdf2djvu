@@ -33,14 +33,6 @@ public:
   { }
 };
 
-class TooManyArguments : public Config::Error
-{
-public:
-  TooManyArguments()
-  : Config::Error(_("Too many arguments were specified"))
-  { }
-};
-
 class NoInputFile : public Config::Error
 {
 public:
@@ -180,7 +172,6 @@ Config::Config()
   this->monochrome = false;
   this->loss_level = 0;
   this->bg_slices = NULL;
-  this->file_name = NULL;
   this->pageid_template.reset(default_pageid_template("p"));
   this->n_jobs = 1;
 }
@@ -641,12 +632,14 @@ void Config::read_config(int argc, char * const argv[])
       throw std::logic_error(_("Unknown option"));
     }
   }
-  if (optind < argc - 1)
-    throw TooManyArguments();
-  else if (optind > argc - 1)
+  if (optind > argc - 1)
     throw NoInputFile();
   else
-    this->file_name = argv[optind];
+    while (optind < argc)
+    {
+      this->filenames.push_back(argv[optind]);
+      optind++;
+    }
 }
 
 void Config::usage(const Config::Error &error) const

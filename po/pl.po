@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.8\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2011-07-23 20:29+0200\n"
+"POT-Creation-Date: 2011-07-24 02:53+0200\n"
 "PO-Revision-Date: 2009-05-30 16:59+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -49,9 +49,9 @@ msgid " -o, --output=FILE"
 msgstr " -o, --output=PLIK"
 
 #, c-format
-msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"
+msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
 msgstr ""
-"%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %zu bajtów wejściowych, %zu bajtów "
+"%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %ju bajtów wejściowych, %zu bajtów "
 "wyjściowych"
 
 #, c-format
@@ -290,9 +290,6 @@ msgstr "Podana rozdzielczość jest spoza dozwolonego zakresu: %d .. %d"
 msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
 msgstr ""
 "Podany współczynnik próbkowania jest spoza dozwolonego zakresu: %u .. %u"
-
-msgid "Too many arguments were specified"
-msgstr "Podano za dużo argumentów"
 
 msgid "Too many links"
 msgstr "Za dużo dowiązań"

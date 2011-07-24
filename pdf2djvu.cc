@@ -117,6 +117,55 @@ public:
   }
 };
 
+class DocumentMap
+{
+protected:
+  intmax_t byte_size;
+  const std::vector<const char *> &filenames;
+  std::vector<int> map;
+public:
+  DocumentMap(const std::vector<const char *> &filenames_)
+  : byte_size(0),
+    filenames(filenames_)
+  { 
+    int n_all_pages = 0;
+    for (std::vector<const char*>::iterator it = config.filenames.begin(); it != config.filenames.end(); it++)
+    {
+      {
+        std::ifstream ifs(*it, std::ifstream::in | std::ifstream::binary);
+        ifs.seekg(0, std::ios::end);
+        this->byte_size += ifs.tellg();
+        ifs.close();
+      }
+      {
+        std::auto_ptr<pdf::Document> doc(new pdf::Document(*it));
+        int n_pages = doc->getNumPages();
+        this->map.push_back(n_all_pages);
+        n_all_pages += n_pages;
+      }
+    }
+    this->map.push_back(n_all_pages);
+  }
+
+  intmax_t get_byte_size(void)
+  {
+    return this->byte_size;
+  }
+
+  int get_n_pages(void)
+  {
+    return this->map.back();
+  }
+
+  void get(int n, const char *&filename, int &m)
+  {
+    assert(n >= 1);
+    size_t i = std::lower_bound(this->map.begin(), this->map.end(), n - 1) - this->map.begin();
+    filename = this->filenames.at(i);
+    m = n - this->map[i];
+  }
+};
+
 class Component
 {
 protected:
@@ -1200,22 +1249,15 @@ static int xmain(int argc, char * const argv[])
   pdf::Environment environment(argv[0]);
   environment.set_antialias(config.antialias);
 
-  size_t pdf_size;
-  {
-    std::ifstream ifs(config.file_name, std::ifstream::in | std::ifstream::binary);
-    ifs.seekg(0, std::ios::end);
-    pdf_size = ifs.tellg();
-    ifs.close();
-  }
-
-  std::auto_ptr<pdf::Document> doc(new pdf::Document(config.file_name));
+  DocumentMap document_map(config.filenames);
+  intmax_t pdf_byte_size = document_map.get_byte_size();
 
   pdf::splash::Color paper_color;
   pdf::set_color(paper_color, 0xff, 0xff, 0xff);
 
   intmax_t n_pixels = 0;
   intmax_t djvu_pages_size = 0;
-  int n_pages = doc->getNumPages();
+  int n_pages = document_map.get_n_pages();
   PageMap page_map;
   std::vector<int> page_numbers;
   std::auto_ptr<const Directory> output_dir;
@@ -1318,27 +1360,31 @@ static int xmain(int argc, char * const argv[])
 
   std::auto_ptr<pdf::Renderer> out1;
   std::auto_ptr<MutedRenderer> outm, outs;
+  std::auto_ptr<pdf::Document> doc;
+  const char *doc_filename = NULL;
 
-  debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
   bool crop = !config.use_media_box;
   debug(0)++;
-  #pragma omp parallel for private(out1, outm, outs, doc) reduction(+: djvu_pages_size) schedule(runtime)
+  #pragma omp parallel for private(out1, outm, outs, doc) firstprivate(doc_filename) reduction(+: djvu_pages_size) schedule(runtime)
   for (size_t i = 0; i < page_numbers.size(); i++)
   {
-    int n = page_numbers[i];
-    if (out1.get() == NULL)
+    int m, n = page_numbers[i];
+    const char *new_filename;
+    document_map.get(n, new_filename, m);
+    if (new_filename != doc_filename)
     {
-#if _OPENMP
-      assert(doc.get() == NULL);
-#endif
-      doc.reset(new pdf::Document(config.file_name));
-      assert(out1.get() == NULL);
+      doc_filename = new_filename;
+      doc.reset(new pdf::Document(doc_filename));
+      #pragma omp critical
+      {
+        debug(0)--;
+        debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
+        debug(0)++;
+      }
       out1.reset(new pdf::Renderer(paper_color, config.monochrome));
       out1->startDoc(doc->getXRef());
-      assert(outm.get() == NULL);
       outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
       outm->startDoc(doc->getXRef());
-      assert(outs.get() == NULL);
       if (!config.monochrome)
       {
         outs.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
@@ -1365,9 +1411,9 @@ static int xmain(int argc, char * const argv[])
     debug(0)++;
     debug(3) << _("rendering page (1st pass)") << std::endl;
     double page_width, page_height;
-    doc->get_page_size(n, crop, page_width, page_height);
-    int dpi = calculate_dpi(*doc, n, crop);
-    doc->display_page(outm.get(), n, dpi, dpi, crop, true);
+    doc->get_page_size(m, crop, page_width, page_height);
+    int dpi = calculate_dpi(*doc, m, crop);
+    doc->display_page(outm.get(), m, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
@@ -1375,7 +1421,7 @@ static int xmain(int argc, char * const argv[])
     if (!config.no_render && outm->has_skipped_elements())
     { /* Render the page second time, without skipping any elements. */
       debug(3) << _("rendering page (2nd pass)") << std::endl;
-      doc->display_page(out1.get(), n, dpi, dpi, crop, false);
+      doc->display_page(out1.get(), m, dpi, dpi, crop, false);
     }
     debug(3) << _("preparing data for `csepdjvu`") << std::endl;
     debug(0)++;
@@ -1401,7 +1447,7 @@ static int xmain(int argc, char * const argv[])
       double hdpi = sub_width / page_width;
       double vdpi = sub_height / page_height;
       debug(3) << _("rendering background image") << std::endl;
-      doc->display_page(outs.get(), n, hdpi, vdpi, crop, true);
+      doc->display_page(outs.get(), m, hdpi, vdpi, crop, true);
       if (sub_width != outs->getBitmapWidth())
         throw std::logic_error(_("Unexpected subsampled bitmap width"));
       if (sub_height != outs->getBitmapHeight())
@@ -1575,6 +1621,8 @@ static int xmain(int argc, char * const argv[])
   if (config.extract_metadata)
   {
     TemporaryFile sed_file;
+    /* Only first PDF document metadata is taken into account. */
+    doc.reset(new pdf::Document(config.filenames[0]));
     pdf::Metadata metadata(*doc);
     debug(3) << _("extracting XMP metadata") << std::endl;
     {
@@ -1652,13 +1700,13 @@ static int xmain(int argc, char * const argv[])
      */
     i18n::setup_locale();
     double bpp = 8.0 * djvu_size / n_pixels;
-    double ratio = 1.0 * pdf_size / djvu_size;
-    double percent_saved = (1.0 * pdf_size - djvu_size) * 100 / pdf_size;
+    double ratio = 1.0 * pdf_byte_size / djvu_size;
+    double percent_saved = (1.0 * pdf_byte_size - djvu_size) * 100 / pdf_byte_size;
     debug(0)--;
     debug(1)
       << string_printf(
-           _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %zu bytes in, %zu bytes out"),
-           bpp, ratio, percent_saved, pdf_size, djvu_size
+           _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"),
+           bpp, ratio, percent_saved, pdf_byte_size, djvu_size
          )
       << std::endl;
   }

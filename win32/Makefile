@@ -78,7 +78,7 @@ src/pdf2djvu/source-stamp: src/pdf2djvu_$(version).tar.gz
 	sed -i \
 		-e '/^extern/d; /^"C"$$/d; /^const char [*]_nl_/d; s/ + _nl_[a-z_]* + .*$$//' \
 		$(dir $@)/configure
-	sed -i -e 's/%zu/%Iu/g' \
+	sed -i -e 's/%zu/%Iu/g; s/%ju/%I64u/g' \
 		$(dir $@)/*.cc \
 		$(dir $@)/*.hh \
 		$(dir $@)/po/*.po*
