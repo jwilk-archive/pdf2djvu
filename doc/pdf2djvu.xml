@@ -50,7 +50,7 @@
             <arg choice='plain'><replaceable>output-djvu-file</replaceable></arg>
         </arg>
         <arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
-        <arg choice='plain'><replaceable>pdf-file</replaceable></arg>
+        <arg choice='plain' rep='repeat'><replaceable>pdf-file</replaceable></arg>
     </cmdsynopsis>
     <cmdsynopsis>
         <command>&p;</command>
@@ -62,7 +62,7 @@
             <arg choice='plain'><replaceable>index-djvu-file</replaceable></arg>
         </arg>
         <arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg>
-        <arg choice='plain'><replaceable>pdf-file</replaceable></arg>
+        <arg choice='plain' rep='repeat'><replaceable>pdf-file</replaceable></arg>
     </cmdsynopsis>
     <cmdsynopsis>
         <command>&p;</command>
@@ -77,8 +77,7 @@
 <refsection>
     <title>Description</title>
     <para>
-        This program creates a DjVu file from the Portable Document Format file
-        <filename><replaceable>pdf-file</replaceable></filename>.
+        This program creates a DjVu file from one or more Portable Document Format files.
     </para>
 </refsection>
 
@@ -356,6 +355,11 @@
                         </listitem>
                     </itemizedlist>
                 </para>
+                <note>
+                    <para>
+                        If multiple input documents are specified, only metadata of the first one is taken into account.
+                    </para>
+                </note>
             </listitem>
         </varlistentry>
         <varlistentry>
