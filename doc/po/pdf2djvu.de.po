@@ -114,16 +114,12 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #. type: Content of: <refentry><refsection><para>
-#, fuzzy
-#| msgid ""
-#| "This program creates a DjVu file from the Portable Document Format file "
-#| "<filename><replaceable>pdf-file</replaceable></filename>."
 msgid ""
 "This program creates a DjVu file from one or more Portable Document Format "
 "files."
 msgstr ""
-"Dieses Programm erstellt eine DjVu-Datei aus der Portable Document Format-"
-"Datei <filename><replaceable>PDF-Datei</replaceable></filename>."
+"Dieses Programm erzeugt eine DjVu-Datei aus einer oder mehreren "
+"Portable-Document-Format-Dateien."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Options"
@@ -521,6 +517,8 @@ msgid ""
 "If multiple input documents are specified, only metadata of the first one is "
 "taken into account."
 msgstr ""
+"Wenn mehrere Eingabedokumente ausgewählt wurden, werden nur Metadaten des "
+"ersten Dokumentes berücksichtigt."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--verbatim-metadata</option>"
