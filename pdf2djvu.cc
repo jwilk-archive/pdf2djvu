@@ -160,7 +160,7 @@ public:
   void get(int n, const char *&filename, int &m)
   {
     assert(n >= 1);
-    size_t i = std::lower_bound(this->map.begin(), this->map.end(), n - 1) - this->map.begin();
+    size_t i = std::upper_bound(this->map.begin(), this->map.end(), n - 1) - this->map.begin() - 1;
     filename = this->filenames.at(i);
     m = n - this->map[i];
   }
