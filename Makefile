@@ -61,7 +61,7 @@ install: all
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) pdf2djvu $(DESTDIR)$(bindir)
 ifneq ($(MAN_PAGES),)
-	for manpage in $(MAN_PAGES); \
+	set -e; for manpage in $(MAN_PAGES); \
 	do \
 		set -x; \
 		basename=`basename $$manpage`; \
@@ -73,7 +73,7 @@ ifneq ($(MAN_PAGES),)
 	done
 endif
 ifneq ($(MO_FILES),)
-	for locale in $(basename $(notdir $(MO_FILES))); \
+	set -e; for locale in $(basename $(notdir $(MO_FILES))); \
 	do \
 		$(INSTALL) -d $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/; \
 		$(INSTALL) -m 644 po/$$locale.mo $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/pdf2djvu.mo; \
