@@ -1,3 +1,9 @@
+pdf2djvu (0.7.9) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 26 Jul 2011 23:50:20 +0200
+
 pdf2djvu (0.7.8) unstable; urgency=low
 
   * Add German translation by Chris Leick.
