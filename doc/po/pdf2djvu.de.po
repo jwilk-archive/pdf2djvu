@@ -1,5 +1,5 @@
-# This file is distributed under the same license as the pdf2djvu package.
 # Copyright © 2011 Chris Leick <c.leick@vollbio.de>
+# This file is distributed under the same license as the pdf2djvu package.
 #
 msgid ""
 msgstr ""
