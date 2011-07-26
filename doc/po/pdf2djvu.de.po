@@ -981,7 +981,7 @@ msgstr ""
 
 #. type: Content of: <refentry><refsection><title>
 msgid "See also"
-msgstr "SIEHE AUCH"
+msgstr "Siehe auch"
 
 #. type: Content of: <refentry><refsection><para>
 msgid ""
