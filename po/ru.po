@@ -1,0 +1,486 @@
+# Copyright © 2011 Kyrill Detinov
+# This file is distributed under the same license as the pdf2djvu package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdf2djvu 0.7.9\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"POT-Creation-Date: 2011-07-26 22:48+0200\n"
+"PO-Revision-Date: 2011-07-26 19:43+0300\n"
+"Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "     --filter-text=COMMAND-LINE"
+msgstr "     --filter-text=КОМАНДНАЯ-СТРОКА"
+
+msgid "     --page-size=WxH"
+msgstr "     --page-size=ШИРxВЫС"
+
+msgid "     --page-title-template=TEMPLATE"
+msgstr "     --page-title-template=ШАБЛОН"
+
+msgid "     --pageid-prefix=NAME"
+msgstr "     --pageid-prefix=ИМЯ"
+
+msgid "     --pageid-template=TEMPLATE"
+msgstr "     --pageid-template=ШАБЛОН"
+
+msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
+msgstr "   pdf2djvu -i <файл-индекса-djvu> [параметры] <pdf-файл>"
+
+msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
+msgstr "   pdf2djvu [-o <результирующий-djvu-файл>] [параметры] <pdf-файл>"
+
+msgid " -d, --dpi=RESOLUTION"
+msgstr " -d, --dpi=РАЗРЕШЕНИЕ"
+
+msgid " -i, --indirect=FILE"
+msgstr " -i, --indirect=ФАЙЛ"
+
+msgid " -o, --output=FILE"
+msgstr " -o, --output=ФАЙЛ"
+
+#, c-format
+msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
+msgstr ""
+"%.3f бит/пиксел; %.3f:1, %.2f%% сохранено, %ju байт исходно, %zu байт "
+"результат"
+
+#, c-format
+msgid "%s is not a valid number"
+msgstr "%s не является правильным числом"
+
+#, c-format
+msgid "%zu bytes out"
+msgid_plural "%zu bytes out"
+msgstr[0] "%zu байт результат"
+msgstr[1] "%zu байта результат"
+msgstr[2] "%zu байт результат"
+
+msgid "Arg list too long"
+msgstr "Слишком длинный список аргументов"
+
+msgid "Argument list too long"
+msgstr "Слишком длинный список аргументов"
+
+msgid "Bad address"
+msgstr "Неправильный адрес"
+
+msgid "Bad file descriptor"
+msgstr "Неправильный дескриптор файла"
+
+msgid "Broken pipe"
+msgstr "Обрыв канала"
+
+msgid "Cannot allocate memory"
+msgstr "Невозможно выделить память"
+
+msgid "Cannot find link destination"
+msgstr "Назначение ссылки не найдено"
+
+msgid "Device or resource busy"
+msgstr "Устройство или ресурс занято"
+
+msgid "Directory not empty"
+msgstr "Каталог не пуст"
+
+#, fuzzy
+msgid "Domain error"
+msgstr "Ошибка области определения"
+
+#, c-format
+msgid "Duplicate page identifier: %s"
+msgstr "Повторный идентификатор страницы: %s"
+
+#, c-format
+msgid "Duplicate page title: %s"
+msgstr "Повторный заголовок страницы: %s"
+
+msgid "Exec format error"
+msgstr "Неправильный формат исполняемого файла"
+
+msgid "File exists"
+msgstr "Файл существует"
+
+msgid "File name too long"
+msgstr "Слишком длинное имя файла"
+
+msgid "File too large"
+msgstr "Файл слишком велик"
+
+msgid "Filename too long"
+msgstr "Слишком длинное имя файла"
+
+msgid "Function not implemented"
+msgstr "Функция не реализована"
+
+msgid "I won't write DjVu data to a terminal."
+msgstr "Я не буду писать DjVu в терминал."
+
+#, c-format
+msgid "I/O error (%s)"
+msgstr "Ошибка ввода/вывода (%s)"
+
+msgid "Illegal byte sequence"
+msgstr "Неверная последовательность байтов"
+
+#, fuzzy
+msgid "Illegal seek"
+msgstr "Неверное смещение"
+
+msgid "Improper link"
+msgstr "Ошибочная ссылка"
+
+msgid "Inappropriate I/O control operation"
+msgstr "Неподходящая операция ввода/вывода"
+
+msgid "Inappropriate ioctl for device"
+msgstr "Неподходящий ioctl для устройства"
+
+msgid "Input/output error"
+msgstr "Ошибка ввода/вывода"
+
+msgid "Integer overflow"
+msgstr "Целочисленное переполнение"
+
+msgid "Interrupted function call"
+msgstr "Прерванный вызов функции"
+
+msgid "Interrupted system call"
+msgstr "Прерванный системный вызов"
+
+msgid "Invalid argument"
+msgstr "Неверный аргумент"
+
+msgid "Invalid cross-device link"
+msgstr "Неверная ссылка между устройствами"
+
+msgid "Invalid date format"
+msgstr "Неверный формат даты"
+
+msgid "Invalid or incomplete multibyte or wide character"
+msgstr "Неверный или неполный многобайтовый символ"
+
+msgid "Invalid output file name"
+msgstr "Неправильное имя выходного файла"
+
+#, fuzzy
+msgid "Invalid seek"
+msgstr "Недопустимое смещение"
+
+msgid "Is a directory"
+msgstr "Это каталог"
+
+msgid "No child processes"
+msgstr "Нет дочерних процессов"
+
+msgid "No input file name was specified"
+msgstr "Не указано имя входного файла"
+
+msgid "No locks available"
+msgstr "Нет доступных блокировок"
+
+msgid "No page for a bookmark"
+msgstr "Нет страницы для закладки"
+
+msgid "No pages selected"
+msgstr "Не выбраны страницы"
+
+msgid "No space left on device"
+msgstr "На устройстве закончилось место"
+
+msgid "No such device"
+msgstr "Нет такого устройства"
+
+msgid "No such device or address"
+msgstr "Нет такого устройства или адреса"
+
+msgid "No such file or directory"
+msgstr "Нет такого файла или каталога"
+
+msgid "No such process"
+msgstr "Нет такого процесса"
+
+msgid "No title for a bookmark"
+msgstr "Нет названия для закладки"
+
+msgid "Not a directory"
+msgstr "Не является каталогом"
+
+msgid "Not enough space"
+msgstr "Недостаточно места"
+
+msgid "Numerical argument out of domain"
+msgstr "Числовой аргумент вне области определения"
+
+msgid "Numerical result out of range"
+msgstr "Числовой результат вне представимого диапазона"
+
+msgid "Operation not permitted"
+msgstr "Действие не разрешено"
+
+msgid "Options: "
+msgstr "Параметры:"
+
+#, c-format
+msgid "PDF error (%d): %s"
+msgstr "Ошибка PDF (%d): %s"
+
+#, c-format
+msgid "PDF error: %s"
+msgstr "Ошибка PDF: %s"
+
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+msgid "Pageid cannot start with a '+' or a '-' character"
+msgstr "Идентификатор страницы не может начинаться со знаков '+' или '-'"
+
+msgid ""
+"Pageid cannot start with a '.' character or contain two consecutive '.' "
+"characters"
+msgstr ""
+"Идентификатор страницы не может начинаться со знака '.' или включать два "
+"последовательных знака '.'"
+
+msgid ""
+"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr ""
+"Идентификатор страницы должен включать только буквы, цифры и знаки  '_', "
+"'+', '-' и '.'"
+
+msgid "Pageid must end with the '.djvu' or the '.djv' extension"
+msgstr ""
+"Идентификатор страницы должен заканчиваться суффиксом '.djvu' или '.djv'"
+
+msgid "Permission denied"
+msgstr "Доступ запрещён"
+
+msgid "Read-only file system"
+msgstr "Файловая система доступна только для чтения"
+
+msgid "Resource deadlock avoided"
+msgstr "Предотвращена тупиковая ситуация при обращении к ресурсу"
+
+#, fuzzy
+msgid "Resource device"
+msgstr "Устройство или ресурс занято"
+
+msgid "Resource temporarily unavailable"
+msgstr "Ресурс временно недоступен"
+
+msgid "Result too large"
+msgstr "Результат слишком велик"
+
+#, c-format
+msgid ""
+"The specified number of foreground colors is outside the allowed range: "
+"%u .. %u"
+msgstr ""
+"Указанное количество цветов переднего плана находится за пределами "
+"разрешённого диапазона: %u .. %u"
+
+#, c-format
+msgid "The specified resolution is outside the allowed range: %d .. %d"
+msgstr ""
+"Указанное разрешение находится за пределами разрешённого диапазона: %d .. %d"
+
+#, c-format
+msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
+msgstr ""
+"Заданное соотношение разделения находится за пределами разрешённого "
+"диапазона: %u .. %u"
+
+msgid "Too many links"
+msgstr "Слишком много ссылок"
+
+msgid "Too many open files"
+msgstr "Слишком много открытых файлов"
+
+msgid "Too many open files in system"
+msgstr "Слишком много открытых файлов в системе"
+
+msgid "Unable to load document"
+msgstr "Невозможно загрузить документ"
+
+msgid "Unable to parse command-line options"
+msgstr "Невозможно разобрать параметры командной строки"
+
+msgid "Unable to parse hyperlinks options"
+msgstr "Невозможно разобрать параметры ссылок"
+
+msgid "Unable to parse page numbers"
+msgstr "Невозможно разобрать номера страниц"
+
+msgid "Unable to parse page size"
+msgstr "Невозможно разобрать размер страницы"
+
+msgid "Unable to parse page title template specification"
+msgstr "Невозможно разобрать спецификацию шаблона названия страницы"
+
+msgid "Unable to parse pageid template specification"
+msgstr "Невозможно разобрать спецификацию шаблона идентификатора страницы"
+
+msgid "Unable to set antialias parameter"
+msgstr "Невозможно выставить параметры сглаживания"
+
+msgid "Unable to set vector antialias parameter"
+msgstr "Невозможно выставить параметры векторного сглаживания"
+
+msgid "Unexpected output from djvused"
+msgstr "Неожиданный вывод из djvused"
+
+msgid "Unexpected subsampled bitmap height"
+msgstr "Неожиданная высота разделённого растрового изображения"
+
+msgid "Unexpected subsampled bitmap width"
+msgstr "Неожиданная ширина разделённого растрового изображения"
+
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+msgid "Unknown option"
+msgstr "Неизвестный параметр"
+
+msgid "Usage: "
+msgstr "Использование:"
+
+#, c-format
+msgid "Warning: %s"
+msgstr "Предупреждение: %s"
+
+#, fuzzy
+msgid "Warning: Unable to convert link with a named action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с названным действием"
+
+msgid "Warning: Unable to convert link with a remote go-to action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с удалённым действием"
+
+msgid "Warning: Unknown link action"
+msgstr "Предупреждение: неизвестное действие ссылки"
+
+#, c-format
+msgid "Warning: metadata[%s] is not a valid date"
+msgstr "Предупреждение: метаданные[%s] являются недопустимой датой"
+
+msgid "adding non-raster data with `djvused`"
+msgstr "добавление нерастровых данных с `djvused`"
+
+msgid "creating document outline with `djvused`"
+msgstr "создание оглавления документа с `djvused`"
+
+#, c-format
+msgid "creating multi-page indirect document (%d page)"
+msgid_plural "creating multi-page indirect document (%d pages)"
+msgstr[0] "создание многостраничного раздельного документа (%d страница)"
+msgstr[1] "создание многостраничного раздельного документа (%d страницы)"
+msgstr[2] "создание многостраничного раздельного документа (%d страниц)"
+
+msgid "creating new background image with `c44`"
+msgstr "создание нового фонового изображения с `c44`"
+
+msgid "encoding layers with `csepdjvu`"
+msgstr "кодирование слоёв с `csepdjvu`"
+
+msgid "encoding monochrome image with `cjb2`"
+msgstr "кодирование монохромного изображения с `cjb2`"
+
+#, c-format
+msgid "estimated resolution: %d dpi"
+msgstr "ожидаемое разрешение: %d dpi"
+
+msgid "extracting XMP metadata"
+msgstr "извлечение метаданных XMP"
+
+msgid "extracting annotations"
+msgstr "извлечение аннотации"
+
+msgid "extracting document outline"
+msgstr "извлечение оглавления документа"
+
+msgid "extracting document-information metadata"
+msgstr "извлечение метаданных информации документа"
+
+#, c-format
+msgid "guessed resolution: %s dpi"
+msgstr "предполагаемое разрешение: %s dpi"
+
+#, c-format
+msgid "image size: %dx%d"
+msgstr "размер изображения: %dx%d"
+
+#, c-format
+msgid "page #%d -> #%d"
+msgstr "страница #%d -> #%d"
+
+msgid "pdf2djvu is intended to be run from the command prompt."
+msgstr "pdf2djvu предназначен для запуска из командной строки."
+
+msgid ""
+"pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+msgstr "pdf2djvu скомпилирован без GNOME XSLT; XML-преобразования отключены."
+
+msgid ""
+"pdf2djvu was built without GraphicsMagick; advanced color quantization is "
+"disabled."
+msgstr ""
+"pdf2djvu скомпилирован без GraphicsMagick; улучшенное квантование цвета "
+"отключено."
+
+msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
+msgstr ""
+"pdf2djvu скомпилирован без поддержки OpenMP; многопоточность отключена."
+
+msgid "possibly memory allocation error"
+msgstr "вероятно, ошибка выделения памяти"
+
+msgid "preparing data for `csepdjvu`"
+msgstr "подготовка данных для `csepdjvu`"
+
+msgid "re-assembling page with `djvumake`"
+msgstr "пересборка страницы с `djvumake`"
+
+msgid "recovering image chunks with `djvuextract`"
+msgstr "восстановление кусков рисунка с `djvuextract`"
+
+msgid "recovering images with `djvuextract`"
+msgstr "восстановление рисунков с `djvuextract`"
+
+msgid "recovering text with `djvused`"
+msgstr "восстановление текста с `djvused`"
+
+msgid "rendering background image"
+msgstr "рендеринг фонового изображения"
+
+msgid "rendering page (1st pass)"
+msgstr "рендеринг страницы (1-ый проход)"
+
+msgid "rendering page (2nd pass)"
+msgstr "рендеринг страницы (2-ой проход)"
+
+msgid "setting metadata with `djvused`"
+msgstr "присвоение метаданных с `djvused`"
+
+msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
+msgstr "присвоение метаданных с `djvused` (обходя ошибку DjVuLibre)"
+
+msgid "storing background image"
+msgstr "сохранение фонового изображения"
+
+msgid "storing dummy background image"
+msgstr "сохранение пустого фонового изображения"
+
+msgid "storing foreground image"
+msgstr "сохранение изображения переднего плана"
+
+msgid "storing text layer"
+msgstr "сохранение текстового слоя"
+
+msgid "unable to guess resolution"
+msgstr "невозможно оценить разрешение"
