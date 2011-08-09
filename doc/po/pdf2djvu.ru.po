@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.9\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2011-07-24 22:46+0200\n"
-"PO-Revision-Date: 2011-08-08 23:12+0300\n"
+"PO-Revision-Date: 2011-08-10 00:28+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: openSUSE Translation Team\n"
 "Language: ru\n"
@@ -72,7 +72,7 @@ msgstr "Описание"
 
 #. type: Content of: <refentry><refsection><para>
 msgid "This program creates a DjVu file from one or more Portable Document Format files."
-msgstr "Программа создаёт DjVu-файл из одного или нескольких Portable Document Format фалов."
+msgstr "Программа создаёт DjVu-файл из одного или нескольких Portable Document Format файлов."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Options"
@@ -80,7 +80,7 @@ msgstr "Параметры"
 
 #. type: Content of: <refentry><refsection><para>
 msgid "<command>&p;</command> accepts the following options:"
-msgstr "<command>&p;</command> допускаются следующие параметры:"
+msgstr "<command>&p;</command> допускает следующие параметры:"
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Document type, file names"
@@ -156,7 +156,7 @@ msgstr "<option>--page-title-template=<replaceable>шаблон</replaceable></o
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the template for page titles.  Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote> section for the template language description."
-msgstr "Устанавливает шаблон заголовков страниц. Обратитесь за справкой к <quote><link linkend='template-language' endterm='template-language.title'/></quote> секции описания языка шаблонов."
+msgstr "Устанавливает шаблон заголовков страниц. Обратитесь за справкой к секции описания языка шаблонов <quote><link linkend='template-language' endterm='template-language.title'/></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "The default is to set no page titles."
@@ -192,7 +192,7 @@ msgstr "<option>--page-size=<replaceable>ширина</replaceable>x<replaceable
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the preferred page size to <replaceable>width</replaceable> pixels × <replaceable>height</replaceable> pixels. The actual page size may be altered in order to respect aspect ratio and DjVu limitations on resolution. (This option takes precedence over <option>-d</option>/<option>--dpi</option>.)"
-msgstr "Устанавливает предпочитаемый размер страницы в <replaceable>ширина</replaceable> пикселов × <replaceable>высота</replaceable> пикселов. Действительный размер страницы может изменяться для соблюдения соотношения и из-за ограничений DjVu. Этот параметр имеет приоритет над <option>-d</option>/<option>--dpi</option>.)"
+msgstr "Устанавливает предпочитаемый размер страницы в <replaceable>ширина</replaceable> пикселов × <replaceable>высота</replaceable> пикселов. Действительный размер страницы может изменяться для соблюдения соотношения и из-за ограничений DjVu. (Этот параметр имеет приоритет над <option>-d</option>/<option>--dpi</option>.)"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--guess-dpi</option>"
@@ -248,7 +248,7 @@ msgstr "<option>--fg-colors=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Use GraphicsMagick to reduce number of distinct colors in the foreground layer to <replaceable>n</replaceable>. Valid values are integers between 1 and 4080.  This option is not recommended."
-msgstr "Использовать GraphicsMagick для уменьшения количества явных цветов в слое переднего плана. Допустимые значения от 1 до 4080. Не рекомендуется использовать."
+msgstr "Использует GraphicsMagick для уменьшения количества явных цветов в слое переднего плана. Допустимые значения от 1 до 4080. Не рекомендуется использовать."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--fg-colors=black</option>"
@@ -520,7 +520,7 @@ msgstr "<varname>OMP_<replaceable>*</replaceable></varname>"
 
 #. type: Content of: <refentry><refsection><para><variablelist><varlistentry><listitem><para>
 msgid "Details of runtime behaviour with respect to parallelism can be controlled by several environment variables.  Please refer to the <ulink url='http://openmp.org/wp/openmp-specifications/'>OpenMP API specification</ulink> for details."
-msgstr "Поведением с точки зрения распараллеливания можно управлять с помощью нескольких переменных окружения. За деталями обратитесь к <ulink url='http://openmp.org/wp/openmp-specifications/'>спецификации OpenMP API</ulink>."
+msgstr "Поведением, с точки зрения распараллеливания, можно управлять с помощью нескольких переменных окружения. За деталями обратитесь к <ulink url='http://openmp.org/wp/openmp-specifications/'>спецификации OpenMP API</ulink>."
 
 #. type: Content of: <refentry><refsection><para><variablelist><varlistentry><term>
 msgid "<varname>TMPDIR</varname>"
@@ -544,7 +544,7 @@ msgstr "Синтаксис шаблонов"
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The template language is roughly modelled on the <ulink url='http://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
-msgstr "Язык шаблонов составлен по образцу <ulink url='http://docs.python.org/library/string.html#format-string-syntax'>синтаксиса форматирования строк в Python</ulink>."
+msgstr "Язык шаблонов использует как образец <ulink url='http://docs.python.org/library/string.html#format-string-syntax'>синтаксис форматирования строк в Python</ulink>."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields are replaced with appropriately formatted values when the template is evaluated.  Moreover, <literal>{{</literal> is replaced with a single <literal>{</literal> and <literal>}}</literal> is replaced with a single <literal>}</literal>."
@@ -652,7 +652,7 @@ msgstr "Сообщения об ошибках"
 
 #. type: Content of: <refentry><refsection><para>
 msgid "If you find a bug in &p;, please report it at <ulink url='http://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
-msgstr "Если вы нашли ошибку в &p;, сообщите о ней в <ulink url='http://code.google.com/p/pdf2djvu/issues/'>систему отслеживания ошибок</ulink>."
+msgstr "Если вы нашли ошибку в &p;, сообщите о ней в <ulink url='http://code.google.com/p/pdf2djvu/issues/'>баг-трекер</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "See also"
