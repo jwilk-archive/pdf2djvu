@@ -173,7 +173,7 @@ msgid ""
 "files into the same directory. The directory must exist and be writable."
 msgstr ""
 "Создать раздельный многостраничный документ. Использовать "
-"<filename><replaceable>индексный-djvu-файл</replaceable></filename> как имя "
+"<filename><replaceable>файл-индекса-djvu</replaceable></filename> как имя "
 "файла индекса; поместить файлы-компоненты в один и тот же каталог. Каталог "
 "должен существовать и иметь разрешение на запись."
 
