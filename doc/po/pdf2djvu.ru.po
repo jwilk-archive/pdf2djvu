@@ -277,7 +277,7 @@ msgid ""
 "dots per inch. The default is 300 dpi. The allowed range is: 72 ≤ "
 "<replaceable>resolution</replaceable> ≤ 6000."
 msgstr ""
-"Устанавливает желаемое разрешение <replaceable>resolution</replaceable> "
+"Устанавливает желаемое разрешение <replaceable>разрешение</replaceable> "
 "точек на дюйм. По умолчанию 300 dpi. Разрешённый диапазон: 72 ≤ "
 "<replaceable>разрешение</replaceable> ≤ 6000."
 
