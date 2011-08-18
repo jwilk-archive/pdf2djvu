@@ -1,8 +1,8 @@
-pdf2djvu (0.7.9) UNRELEASED; urgency=low
+pdf2djvu (0.7.9) unstable; urgency=low
 
   * Add Russian translation by Kyrill Detinov.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 26 Jul 2011 23:51:36 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Aug 2011 20:44:29 +0200
 
 pdf2djvu (0.7.8) unstable; urgency=low
 
