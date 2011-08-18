@@ -141,8 +141,8 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://poppler.freedesktop.org/poppler-0.16.4.tar.gz
-	echo '0e48e54d6e6d7269f049cf9d060e3ed078cad69808bda8a6da285a7b41c3a2a6  src/poppler-0.16.4.tar.gz' | sha256sum -c
+	cd src && wget -c http://poppler.freedesktop.org/poppler-0.16.7.tar.gz
+	echo 'fab4e8af2d34d4142a718819fd747d40930b71ef520ee0e6bcc94e2c44f22bcd  src/poppler-0.16.7.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../poppler-*.tar.gz
 	rm src/poppler-*.tar.gz
 	touch $@
