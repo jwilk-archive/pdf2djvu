@@ -623,7 +623,7 @@ public:
   MutedRenderer(pdf::splash::Color &paper_color, bool monochrome, const ComponentList &page_files)
   : Renderer(paper_color, monochrome), page_files(page_files)
   {
-    this->clear_texts();
+    this->clear();
   }
 
   const std::vector<sexpr::Ref> &get_annotations() const
@@ -1457,8 +1457,7 @@ static int xmain(int argc, char * const argv[])
       sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
       sep_file << bmp;
       nonwhite_background_color = false;
-      outs->clear_texts();
-      outs->clear_annotations();
+      outs->clear();
     }
     else
     {
@@ -1526,7 +1525,7 @@ static int xmain(int argc, char * const argv[])
         DjVuCommand cjb2("cjb2");
         cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
         pbm_file << "P4 " << width << " " << height << std::endl;
-        pdf::Pixmap bmp(out1.get());
+        pdf::Pixmap bmp(outm->has_skipped_elements() ? out1.get() : outm.get());
         pbm_file << bmp;
         pbm_file.close();
         cjb2();
@@ -1592,6 +1591,7 @@ static int xmain(int argc, char * const argv[])
       sed_file << "." << std::endl;
       outm->clear_annotations();
     }
+    outm->clear();
     sed_file.close();
     { /* Add per-page non-raster data into the DjVu file: */
       debug(3) << _("adding non-raster data with `djvused`") << std::endl;
