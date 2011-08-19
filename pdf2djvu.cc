@@ -1618,11 +1618,11 @@ static int xmain(int argc, char * const argv[])
     *djvm << (*page_files)[n];
   }
   djvm->create();
+  /* Only first PDF document metadata/outline is taken into account. */
+  doc.reset(new pdf::Document(config.filenames[0]));
   if (config.extract_metadata)
   {
     TemporaryFile sed_file;
-    /* Only first PDF document metadata is taken into account. */
-    doc.reset(new pdf::Document(config.filenames[0]));
     pdf::Metadata metadata(*doc);
     debug(3) << _("extracting XMP metadata") << std::endl;
     {
