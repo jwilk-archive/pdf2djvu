@@ -7,7 +7,9 @@
 pdf2djvu = ../pdf2djvu
 export pdf2djvu
 
-test_scripts = $(wildcard test-*.sh)
+all_test_scripts = $(wildcard test-*.sh)
+skipped_test_scripts = $(wildcard $(addprefix test-,$(addsuffix .sh,$(skip))))
+test_scripts = $(filter-out $(skipped_test_scripts),$(all_test_scripts))
 tests = $(test_scripts:.sh=)
 
 stamp_files = $(tests:%=%.stamp)
