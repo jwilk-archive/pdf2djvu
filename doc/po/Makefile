@@ -13,13 +13,19 @@ XSLTPROC += --param man.output.lang.in.name.enabled 1
 po4a-common-options = \
 	--format=docbook
 
-po4a-update-po = po4a-updatepo \
+po4a-getext-options = \
 	$(po4a-common-options) \
 	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
-	--copyright-holder="Jakub Wilk" \
+	--copyright-holder="Jakub Wilk"
+
+po4a-update-po = po4a-updatepo \
+	$(po4a-getext-options) \
 	--msgmerge-opt="--no-location"
+
+po4a-gettextize = po4a-gettextize \
+	$(po4a-getext-options)
 
 po4a-translate = po4a-translate \
 	$(po4a-common-options)
@@ -33,6 +39,9 @@ all: $(man_files)
 
 .PHONY: xml
 xml: $(xml_files)
+
+pdf2djvu.pot: pdf2djvu.xml
+	$(po4a-gettextize) -m $(<) -p $(@)
 
 $(po_files): %.po: pdf2djvu.xml
 	$(po4a-update-po) -m $(<) -p $(@)
