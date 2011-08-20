@@ -1,4 +1,4 @@
-# Copyright © 2009 Jakub Wilk
+# Copyright © 2009, 2011 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -7,27 +7,27 @@
 pdf2djvu = ../pdf2djvu
 export pdf2djvu
 
-TEST_SCRIPTS = $(wildcard test-*.sh)
-TESTS = $(TEST_SCRIPTS:.sh=)
+test_scripts = $(wildcard test-*.sh)
+tests = $(test_scripts:.sh=)
 
-STAMP_FILES = $(TESTS:%=%.stamp)
-PDF_FILES = $(TESTS:%=%.pdf)
-DJVU_FILES = $(TESTS:%=%.djvu)
+stamp_files = $(tests:%=%.stamp)
+pdf_files = $(tests:%=%.pdf)
+djvu_files = $(tests:%=%.djvu)
 
-IN_FILES = $(wildcard *.in)
+in_files = $(wildcard *.in)
 
-GENERATED_FILES = $(IN_FILES:.in=) $(STAMP_FILES) $(PDF_FILES)
+generated_files = $(in_files:.in=) $(stamp_files) $(pdf_files)
 
 .PHONY: all
-all: $(GENERATED_FILES)
+all: $(generated_files)
 
 .PHONY: prepare
-prepare: $(IN_FILES:.in=) $(PDF_FILES)
+prepare: $(in_files:.in=) $(pdf_files)
 	rm -f *.log *.pyc
 
 .PHONY: clean
 clean:
-	rm -f $(GENERATED_FILES) *.log *.djvu *.pyc
+	rm -f $(generated_files) *.log *.djvu *.pyc
 
 %.stamp: %.sh %.pdf $(pdf2djvu)
 	sh -e -x $(<)
