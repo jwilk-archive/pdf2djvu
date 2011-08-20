@@ -12,7 +12,7 @@
 
 . ./common.sh
 
-for settings in default web black
+for settings in 1 2 4 255 256 652
 do
     test_pdf2djvu "--fg-colors=$settings"
     ddjvu "$djvu_file" > /dev/null
