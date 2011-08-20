@@ -237,7 +237,7 @@ pdf2djvu (0.5.1) unstable; urgency=low
 pdf2djvu (0.5.0) unstable; urgency=low
 
   * Drop support for poppler < 0.7.3.
-  * Allow to compile with MinGW.
+  * Allow compiling with MinGW.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 28 Dec 2008 16:24:08 +0100
 
@@ -446,7 +446,7 @@ pdf2djvu (0.2) unstable; urgency=low
 
   * Include hyperlinks to a particular page.
   * Include outline/bookmarks.
-  * Add compatibility layer to allow link with poppler < 0.5.
+  * Add compatibility layer to allow linking with poppler < 0.5.
   * Better exception handling.
   * Fix some other minor bugs.
 
