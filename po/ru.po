@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pdf2djvu 0.7.10\n"
+"Project-Id-Version: pdf2djvu 0.7.11\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2011-08-08 01:12+0200\n"
+"POT-Creation-Date: 2011-08-29 23:37+0200\n"
 "PO-Revision-Date: 2011-07-30 02:08+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
