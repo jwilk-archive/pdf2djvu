@@ -77,7 +77,11 @@ namespace pdf
 
   namespace link
   {
+#if POPPLER_VERSION < 1700
     typedef ::Link Link;
+#else
+    typedef ::AnnotLink Link;
+#endif
     typedef ::LinkAction Action;
     typedef ::LinkDest Destination;
     typedef ::LinkGoTo GoTo;

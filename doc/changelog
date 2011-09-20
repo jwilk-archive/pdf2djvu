@@ -1,8 +1,9 @@
 pdf2djvu (0.7.11) UNRELEASED; urgency=low
 
-  * 
+  * Fix build failure with Poppler ≥ 0.17. Thanks to Vincent Untz for the bug
+    report and the patch.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 29 Aug 2011 23:37:02 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 20 Sep 2011 14:15:39 +0200
 
 pdf2djvu (0.7.10) unstable; urgency=low
 
