@@ -83,7 +83,7 @@ pdf2djvu (0.7.4) unstable; urgency=low
 
 pdf2djvu (0.7.3) unstable; urgency=low
 
-  * Add a few const annotation to fix build failure with poppler ≥ 0.13.
+  * Add a few const annotation to fix build failure with Poppler ≥ 0.13.
     Thanks to Rakesh Pandit for the bug report and the patch.
     http://code.google.com/p/pdf2djvu/issues/detail?id=48
   * Fix handling of the --indirect option.
@@ -136,7 +136,7 @@ pdf2djvu (0.6.0) unstable; urgency=low
     http://code.google.com/p/pdf2djvu/issues/detail?id=27
   * Add support for correcting XMP metadata.
     http://code.google.com/p/pdf2djvu/issues/detail?id=12
-  * Fix resolution detection (poppler ≥ 0.11.1 only).
+  * Fix resolution detection (Poppler ≥ 0.11.1 only).
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 01 Oct 2009 18:30:33 +0200
 
@@ -144,7 +144,7 @@ pdf2djvu (0.5.11) unstable; urgency=low
 
   * Document how to deal with CJK PDFs.
   * Windows: make it feasible to use poppler-data.
-  * Add support for poppler ≥ 0.11.1.
+  * Add support for Poppler ≥ 0.11.1.
     http://code.google.com/p/pdf2djvu/issues/detail?id=40
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 31 Jul 2009 17:07:07 +0200
@@ -243,7 +243,7 @@ pdf2djvu (0.5.1) unstable; urgency=low
 
 pdf2djvu (0.5.0) unstable; urgency=low
 
-  * Drop support for poppler < 0.7.3.
+  * Drop support for Poppler < 0.7.3.
   * Allow compiling with MinGW.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 28 Dec 2008 16:24:08 +0100
@@ -259,13 +259,13 @@ pdf2djvu (0.4.12) unstable; urgency=low
   * Convert document outline if it is existent but empty.
     Thanks to Chris Karakas for the bug report.
   * Hyperlinks without borders no longer cause segmentation faults
-    (poppler ≥ 0.7 only).
+    (Poppler ≥ 0.7 only).
 
  -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Jul 2008 14:13:15 +0200
 
 pdf2djvu (0.4.11) unstable; urgency=low
 
-  * Find text position more accurately (poppler ≥ 0.6 only).
+  * Find text position more accurately (Poppler ≥ 0.6 only).
     That should partially fix an issue with rotated text, too.
   * Work around an issue with subsampled image resolution.
 
@@ -279,7 +279,7 @@ pdf2djvu (0.4.10) unstable; urgency=low
   * Handle rotated PDF pages properly.
     Thanks to John Goerzen for the bug report.
     http://code.google.com/p/pdf2djvu/issues/detail?id=4
-  * Extract hyperlinks border colors (poppler ≥ 0.7 only).
+  * Extract hyperlinks border colors (Poppler ≥ 0.7 only).
     http://code.google.com/p/pdf2djvu/issues/detail?id=3
   * Make page references in the form "#<page-id>", instead of "#<page-no>".
   * Fix a regression which disabled the --fg-colors option.
@@ -391,15 +391,15 @@ pdf2djvu (0.3.6) unstable; urgency=low
   * Fix a file descriptior leak.
     Thanks to Victor Ivrii for the report.
   * Fix a regression with locating hyperlinks.
-  * Fix hyperlinks extraction (poppler 0.6 only).
+  * Fix hyperlinks extraction (Poppler 0.6 only).
     Thanks to Victor Ivrii for the report.
-  * Find text position more accurately (poppler 0.6 only).
+  * Find text position more accurately (Poppler 0.6 only).
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Dec 2007 21:28:32 +0100
 
 pdf2djvu (0.3.5) unstable; urgency=low
 
-  * Fix a regression with rendering background layer (poppler 0.4 only).
+  * Fix a regression with rendering background layer (Poppler 0.4 only).
   * Better bitonal image recognition.
   * Coordinate space transformations are now done correctly.
 
@@ -409,7 +409,7 @@ pdf2djvu (0.3.4) unstable; urgency=low
 
   * Turn bookmark errors into warnings.
   * Add --no-metadata, --no-outline, --no-hyperlinks options.
-  * Fix erroneous color conversion (poppler 0.4 only).
+  * Fix erroneous color conversion (Poppler 0.4 only).
   * Recognize more link actions.
   * Provide the manual page.
 
@@ -453,7 +453,7 @@ pdf2djvu (0.2) unstable; urgency=low
 
   * Include hyperlinks to a particular page.
   * Include outline/bookmarks.
-  * Add compatibility layer to allow linking with poppler < 0.5.
+  * Add compatibility layer to allow linking with Poppler < 0.5.
   * Better exception handling.
   * Fix some other minor bugs.
 
