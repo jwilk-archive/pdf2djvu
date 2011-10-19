@@ -36,7 +36,7 @@ pdf2djvu: string-format.o
 pdf2djvu: system.o
 pdf2djvu: xmp.o
 pdf2djvu:
-	$(LINK.cc) $(^) $(LDFLAGS) $(LDLIBS) -o $(@)
+	$(LINK.cc) $(^) $(LDLIBS) -o $(@)
 
 XML_FILES = $(wildcard *.xml)
 XML_HH_FILES = $(XML_FILES:.xml=.hh)
