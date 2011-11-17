@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.12\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2011-08-20 14:13+0300\n"
+"POT-Creation-Date: 2011-11-17 01:34+0100\n"
 "PO-Revision-Date: 2011-05-04 21:35+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -22,6 +22,10 @@ msgstr "pdf2djvu"
 #. type: Content of the version entity
 msgid "0.7.12"
 msgstr "0.7.12"
+
+#. type: Attribute 'lang' of: <refentry>
+msgid "en"
+msgstr "de"
 
 #. type: Content of: <refentry><refentryinfo><title>
 msgid "&p; manual"

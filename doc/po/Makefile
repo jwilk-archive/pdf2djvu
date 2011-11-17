@@ -54,7 +54,6 @@ ifneq "$(quality-check)" ""
 	! msgattrib --untranslated $(<) | grep .
 endif
 	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
-	sed -i -e 's/<\(refentry\)>/<\1 lang="$(subst .,,$(suffix $(basename $(@))))">/' $(@)
 
 .PHONY: clean
 clean:
