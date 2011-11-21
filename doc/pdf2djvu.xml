@@ -12,20 +12,8 @@
     <productname>&p;</productname>
     <author>
         <firstname>Jakub</firstname> <surname>Wilk</surname>
-        <affiliation>
-            <address>
-                <email>jwilk@jwilk.net</email>
-            </address>
-        </affiliation>
+        <email>jwilk@jwilk.net</email>
     </author>
-    <copyright>
-        <year>2007</year>
-        <year>2008</year>
-        <year>2009</year>
-        <year>2010</year>
-        <year>2011</year>
-        <holder>Jakub Wilk</holder>
-    </copyright>
 </refentryinfo>
 
 <refmeta>
