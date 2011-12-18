@@ -460,8 +460,12 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
   for (unsigned int i = 0; i < n_colors; i++)
   {
     const Magick::Color &color = image.colorMap(i);
-    char buffer[] = { color.redQuantum(), color.greenQuantum(), color.blueQuantum() };
-    stream.write(buffer, 3);
+    unsigned char buffer[3] = {
+      color.redQuantum(),
+      color.greenQuantum(),
+      color.blueQuantum()
+    };
+    stream.write(reinterpret_cast<char*>(buffer), 3);
   }
   for (int y = 0; y < height; y++)
   {
