@@ -30,7 +30,11 @@ void WebSafeQuantizer::output_web_palette(std::ostream &stream)
   for (int g = 0; g < 6; g++)
   for (int b = 0; b < 6; b++)
   {
-    unsigned char buffer[] = { 51 * r, 51 * g, 51 * b };
+    unsigned char buffer[3] = {
+      static_cast<unsigned char>(51 * r),
+      static_cast<unsigned char>(51 * g),
+      static_cast<unsigned char>(51 * b)
+    };
     stream.write(reinterpret_cast<char*>(buffer), 3);
   }
 }
