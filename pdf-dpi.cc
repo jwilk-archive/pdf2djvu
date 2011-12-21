@@ -18,10 +18,10 @@ protected:
 
 #if POPPLER_VERSION < 1101
   virtual void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
+    pdf::Bool invert, pdf::Bool inline_image)
 #else
   virtual void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::Bool invert, pdf::Bool inline_image)
+    pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
 #endif
   {
     this->process_image(state, width, height);
