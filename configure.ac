@@ -222,10 +222,7 @@ AC_EGREP_HEADER(__mingw_vsnprintf, stdio.h,
 
 # Turn on compile warnings
 
-if test "$GXX" = yes
-then
-  CXXFLAGS="$CXXFLAGS -Wall"
-fi
+AX_CXXFLAGS_WARN_ALL(CXXFLAGS)
 
 # Output files
 
