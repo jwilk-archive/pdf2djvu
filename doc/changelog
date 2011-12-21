@@ -1,8 +1,8 @@
 pdf2djvu (0.7.12) UNRELEASED; urgency=low
 
-  * 
+  * Fix resolution detection.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 19 Oct 2011 18:00:54 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 21 Dec 2011 19:08:18 +0100
 
 pdf2djvu (0.7.11) unstable; urgency=low
 
