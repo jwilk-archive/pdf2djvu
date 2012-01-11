@@ -499,6 +499,11 @@ public:
     );
   }
 
+  void drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
+  {
+     pdf::Renderer::drawLink(link, catalog); /* just call the inherited method */
+  }
+
   void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
   {
     sexpr::GCLock gc_lock;
