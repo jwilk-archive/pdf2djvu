@@ -1,0 +1,482 @@
+# Copyright © 2012 Serhij Dubyk
+# This file is distributed under the same license as the pdf2djvu package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdf2djvu 0.7.12\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"POT-Creation-Date: 2012-01-13 14:28+0100\n"
+"PO-Revision-Date: 2012-01-13 14:59+0300\n"
+"Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
+"Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "     --filter-text=COMMAND-LINE"
+msgstr "     --filter-text=КОМАНДНА-РЯДОК"
+
+msgid "     --page-size=WxH"
+msgstr "     --page-size=ШИРxВИС"
+
+msgid "     --page-title-template=TEMPLATE"
+msgstr "     --page-title-template=ШАБЛОН"
+
+msgid "     --pageid-prefix=NAME"
+msgstr "     --pageid-prefix=ІМ’Я"
+
+msgid "     --pageid-template=TEMPLATE"
+msgstr "     --pageid-template=ШАБЛОН"
+
+msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
+msgstr "   pdf2djvu  -i <файл-індексу-djvu>       [параметри] <pdf-файл>"
+
+msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
+msgstr "   pdf2djvu [-o <результуючий-djvu-файл>] [параметри] <pdf-файл>"
+
+msgid " -d, --dpi=RESOLUTION"
+msgstr " -d, --dpi=РОЗДІЛЬНА_ЗДАТНІСТЬ"
+
+msgid " -i, --indirect=FILE"
+msgstr " -i, --indirect=ФАЙЛ"
+
+msgid " -o, --output=FILE"
+msgstr " -o, --output=ФАЙЛ"
+
+#, c-format
+msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
+msgstr ""
+"%.3f біт/піксель; %.3f:1, %.2f%% збережено, %ju байт початково, %zu байт в "
+"результаті"
+
+#, c-format
+msgid "%s is not a valid number"
+msgstr "%s не є правильним числом"
+
+#, c-format
+msgid "%zu bytes out"
+msgid_plural "%zu bytes out"
+msgstr[0] "%zu байт в результаті"
+msgstr[1] "%zu байти в результаті"
+msgstr[2] "%zu байтів в результаті"
+
+msgid "Arg list too long"
+msgstr "Занадто довгий список аргументів"
+
+msgid "Argument list too long"
+msgstr "Занадто довгий список аргументів"
+
+msgid "Bad address"
+msgstr "Неправильна адреса"
+
+msgid "Bad file descriptor"
+msgstr "Неправильний дескриптор файлу"
+
+msgid "Broken pipe"
+msgstr "Обрив каналу"
+
+msgid "Cannot allocate memory"
+msgstr "Неможливо виділити пам’ять"
+
+msgid "Cannot find link destination"
+msgstr "Призначення посилання не знайдено"
+
+msgid "Device or resource busy"
+msgstr "Пристрій чи ресурс зайнято"
+
+msgid "Directory not empty"
+msgstr "Тека не порожня"
+
+msgid "Domain error"
+msgstr "Помилка області визначення"
+
+#, c-format
+msgid "Duplicate page identifier: %s"
+msgstr "Повторний ідентифікатор сторінки: %s"
+
+#, c-format
+msgid "Duplicate page title: %s"
+msgstr "Повторний заголовок сторінки: %s"
+
+msgid "Exec format error"
+msgstr "Неправильний формат виконуваного файлу"
+
+msgid "File exists"
+msgstr "Файл існує"
+
+msgid "File name too long"
+msgstr "Надто довге ім’я файлу"
+
+msgid "File too large"
+msgstr "Файл занадто великий"
+
+msgid "Filename too long"
+msgstr "Надто довге ім’я файлу"
+
+msgid "Function not implemented"
+msgstr "Функція не реалізована"
+
+msgid "I won't write DjVu data to a terminal."
+msgstr "Я не буду писати DjVu в термінал."
+
+#, c-format
+msgid "I/O error (%s)"
+msgstr "Помилка вводу/виводу (%s)"
+
+msgid "Illegal byte sequence"
+msgstr "Невірна послідовність байтів"
+
+msgid "Illegal seek"
+msgstr "Неправильна операція зміщення"
+
+msgid "Improper link"
+msgstr "Помилкове посилання"
+
+msgid "Inappropriate I/O control operation"
+msgstr "Невідповідна операція введення/виводу"
+
+msgid "Inappropriate ioctl for device"
+msgstr "Непридатний ioctl для пристрою"
+
+msgid "Input/output error"
+msgstr "Помилка вводу/виводу"
+
+msgid "Integer overflow"
+msgstr "Цілочисельне переповнювання"
+
+msgid "Interrupted function call"
+msgstr "Перерваний виклик функції"
+
+msgid "Interrupted system call"
+msgstr "Перерваний системний виклик"
+
+msgid "Invalid argument"
+msgstr "Неправильний аргумент"
+
+msgid "Invalid cross-device link"
+msgstr "Невірне посилання між пристроями"
+
+msgid "Invalid date format"
+msgstr "Невірний формат дати"
+
+msgid "Invalid or incomplete multibyte or wide character"
+msgstr "Неправильний або неповний багатобайтний символ"
+
+msgid "Invalid output file name"
+msgstr "Неправильне ім’я вихідного файлу"
+
+msgid "Invalid seek"
+msgstr "Неправильна операція зміщення"
+
+msgid "Is a directory"
+msgstr "Це тека"
+
+msgid "No child processes"
+msgstr "Немає дочірніх процесів"
+
+msgid "No input file name was specified"
+msgstr "Не вказано назву вхідного файлу"
+
+msgid "No locks available"
+msgstr "Немає доступних блокувань"
+
+msgid "No page for a bookmark"
+msgstr "Немає сторінки для закладки"
+
+msgid "No pages selected"
+msgstr "Не вибрані сторінки"
+
+msgid "No space left on device"
+msgstr "На пристрої закінчилося місце"
+
+msgid "No such device"
+msgstr "Немає такого пристрою"
+
+msgid "No such device or address"
+msgstr "Немає такого пристрою чи адреси"
+
+msgid "No such file or directory"
+msgstr "Немає такого файлу чи теки"
+
+msgid "No such process"
+msgstr "Немає такого процесу"
+
+msgid "No title for a bookmark"
+msgstr "Немає назви для закладки"
+
+msgid "Not a directory"
+msgstr "Не є текою"
+
+msgid "Not enough space"
+msgstr "Недостатньо місця"
+
+msgid "Numerical argument out of domain"
+msgstr "Числовий аргумент поза області визначення"
+
+msgid "Numerical result out of range"
+msgstr "Числовий результат поза можливим діапазоном"
+
+msgid "Operation not permitted"
+msgstr "Дія не дозволена"
+
+msgid "Options: "
+msgstr "Параметри: "
+
+#, c-format
+msgid "PDF error (%d): %s"
+msgstr "Помилка PDF (%d): %s"
+
+#, c-format
+msgid "PDF error: %s"
+msgstr "Помилка PDF: %s"
+
+msgid "Page not found"
+msgstr "Сторінку не знайдено"
+
+msgid "Pageid cannot start with a '+' or a '-' character"
+msgstr "Ідентифікатор сторінки не може починатися зі знаків „+“ чи „-“"
+
+msgid ""
+"Pageid cannot start with a '.' character or contain two consecutive '.' "
+"characters"
+msgstr ""
+"Ідентифікатор сторінки не може починатися зі знаку „.“ або включати два "
+"послідовних знаки „.“"
+
+msgid ""
+"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr ""
+"Ідентифікатор сторінки повинен включати лише букви, цифри та знаки „_“, „+“, "
+"„-“ та „.“ "
+
+msgid "Pageid must end with the '.djvu' or the '.djv' extension"
+msgstr ""
+"Ідентифікатор сторінки повинен закінчуватися розширенням „*.djvu“ або „*.djv“"
+
+msgid "Permission denied"
+msgstr "Доступ заборонено"
+
+msgid "Read-only file system"
+msgstr "Файлова система доступна лише для читання"
+
+msgid "Resource deadlock avoided"
+msgstr "Попереджено тупикову ситуацію при зверненні до ресурсу"
+
+msgid "Resource device"
+msgstr "Пристрій або ресурс зайнято"
+
+msgid "Resource temporarily unavailable"
+msgstr "Ресурс тимчасово недоступний"
+
+msgid "Result too large"
+msgstr "Результат занадто великий"
+
+#, c-format
+msgid ""
+"The specified number of foreground colors is outside the allowed range: "
+"%u .. %u"
+msgstr ""
+"Зазначена кількість кольорів переднього плану знаходиться за межами "
+"дозволеного діапазону: %u ..%u"
+
+#, c-format
+msgid "The specified resolution is outside the allowed range: %d .. %d"
+msgstr ""
+"Зазначена роздільна здатність знаходиться за межами дозволеного діапазону: "
+"%d .. %d"
+
+#, c-format
+msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
+msgstr ""
+"Задане співвідношення підвибірки знаходиться за межами дозволеного "
+"діапазону: %u .. %u"
+
+msgid "Too many links"
+msgstr "Надто багато посилань"
+
+msgid "Too many open files"
+msgstr "Надто багато відкритих файлів"
+
+msgid "Too many open files in system"
+msgstr "Надто багато відкритих файлів у системі"
+
+msgid "Unable to load document"
+msgstr "Неможливо завантажити документ"
+
+msgid "Unable to parse command-line options"
+msgstr "Неможливо розібрати параметри командного рядка"
+
+msgid "Unable to parse hyperlinks options"
+msgstr "Неможливо розібрати параметри посилань"
+
+msgid "Unable to parse page numbers"
+msgstr "Неможливо розібрати номери сторінок"
+
+msgid "Unable to parse page size"
+msgstr "Неможливо розібрати розмір сторінки"
+
+msgid "Unable to parse page title template specification"
+msgstr "Неможливо розібрати специфікацію шаблону назви сторінки"
+
+msgid "Unable to parse pageid template specification"
+msgstr "Неможливо розібрати специфікацію шаблону ідентифікатора сторінки"
+
+msgid "Unable to set antialias parameter"
+msgstr "Неможливо виставити параметри згладжування"
+
+msgid "Unable to set vector antialias parameter"
+msgstr "Неможливо виставити параметри векторного згладжування"
+
+msgid "Unexpected output from djvused"
+msgstr "Неочікуваний вивід з djvused"
+
+msgid "Unexpected subsampled bitmap height"
+msgstr "Неочікувана висота розділеного растрового зображення"
+
+msgid "Unexpected subsampled bitmap width"
+msgstr "Неочікувана ширина розділеного растрового зображення"
+
+msgid "Unknown error"
+msgstr "Невідома помилка"
+
+msgid "Unknown option"
+msgstr "Невідомий параметр"
+
+msgid "Usage: "
+msgstr "Використання: "
+
+#, c-format
+msgid "Warning: %s"
+msgstr "Попередження: %s"
+
+msgid "Warning: Unable to convert link with a named action"
+msgstr "Попередження: неможливо перетворити посилання з дією"
+
+msgid "Warning: Unable to convert link with a remote go-to action"
+msgstr "Попередження: неможливо перетворити посилання на зовнішній документ"
+
+msgid "Warning: Unknown link action"
+msgstr "Попередження: невідома дія посилання"
+
+#, c-format
+msgid "Warning: metadata[%s] is not a valid date"
+msgstr "Попередження: метадані[%s] є неприпустимою датою"
+
+msgid "adding non-raster data with `djvused`"
+msgstr "додавання нерастрових даних з „djvused“"
+
+msgid "creating document outline with `djvused`"
+msgstr "створення змісту документа з „djvused“"
+
+#, c-format
+msgid "creating multi-page indirect document (%d page)"
+msgid_plural "creating multi-page indirect document (%d pages)"
+msgstr[0] "створення багатосторінкового роздільного документа (%d сторінка)"
+msgstr[1] "створення багатосторінкового роздільного документа (%d сторінки)"
+msgstr[2] "створення багатосторінкового роздільного документа (%d сторінок)"
+
+msgid "creating new background image with `c44`"
+msgstr "створення нового фонового зображення з „c44“"
+
+msgid "encoding layers with `csepdjvu`"
+msgstr "кодування шарів з „csepdjvu“"
+
+msgid "encoding monochrome image with `cjb2`"
+msgstr "кодування монохромного зображення з „cjb2“"
+
+#, c-format
+msgid "estimated resolution: %d dpi"
+msgstr "очікувана роздільна здатність: %d dpi"
+
+msgid "extracting XMP metadata"
+msgstr "витягнення метаданих XMP"
+
+msgid "extracting annotations"
+msgstr "витягнення анотацій"
+
+msgid "extracting document outline"
+msgstr "витягнення змісту документа"
+
+msgid "extracting document-information metadata"
+msgstr "витягнення метаданих інформації документа"
+
+#, c-format
+msgid "guessed resolution: %s dpi"
+msgstr "передбачувана роздільна здатність: %s dpi"
+
+#, c-format
+msgid "image size: %dx%d"
+msgstr "розмір зображення: %dx%d"
+
+#, c-format
+msgid "page #%d -> #%d"
+msgstr "сторінка №%d ⇒ №%d"
+
+msgid "pdf2djvu is intended to be run from the command prompt."
+msgstr "pdf2djvu призначений для запуску з командного рядка."
+
+msgid ""
+"pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+msgstr "pdf2djvu скомпільований без GNOME XSLT; XML-перетворення відключені."
+
+msgid ""
+"pdf2djvu was built without GraphicsMagick; advanced color quantization is "
+"disabled."
+msgstr ""
+"Pdf2djvu скомпільований без GraphicsMagick; покращене квантування кольору "
+"відключено."
+
+msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
+msgstr ""
+"Pdf2djvu скомпільований без підтримки OpenMP; багатопотоковість відключена."
+
+msgid "possibly memory allocation error"
+msgstr "ймовірно, помилка виділення пам’яті"
+
+msgid "preparing data for `csepdjvu`"
+msgstr "підготовка даних для „csepdjvu“"
+
+msgid "re-assembling page with `djvumake`"
+msgstr "перезбирання сторінки з „djvumake“"
+
+msgid "recovering image chunks with `djvuextract`"
+msgstr "відновлення шматків малюнка з „djvuextract“"
+
+msgid "recovering images with `djvuextract`"
+msgstr "відновлення малюнків з „djvuextract“"
+
+msgid "recovering text with `djvused`"
+msgstr "відновлення тексту з „djvused“"
+
+msgid "rendering background image"
+msgstr "промальовка фонового зображення"
+
+msgid "rendering page (1st pass)"
+msgstr "промальовка сторінки (1-ий прохід)"
+
+msgid "rendering page (2nd pass)"
+msgstr "промальовка сторінки (2-ий прохід)"
+
+msgid "setting metadata with `djvused`"
+msgstr "присвоєння метаданих з „djvused“"
+
+msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
+msgstr "присвоєння метаданих з „djvused“ (оминаючи помилку DjVuLibre)"
+
+msgid "storing background image"
+msgstr "збереження фонового зображення"
+
+msgid "storing dummy background image"
+msgstr "збереження порожнього фонового зображення"
+
+msgid "storing foreground image"
+msgstr "збереження зображення переднього плану"
+
+msgid "storing text layer"
+msgstr "збереження текстового шару"
+
+msgid "unable to guess resolution"
+msgstr "неможливо оцінити роздільну здатність"
