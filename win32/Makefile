@@ -411,7 +411,7 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 
 src/libjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://ftp.debian.org/pool/main/libj/libjpeg6b/libjpeg6b_6b1.orig.tar.gz
+	cd src && wget -c http://ftp.debian.org/debian/pool/main/libj/libjpeg6b/libjpeg6b_6b1.orig.tar.gz
 	echo 'dbe673129e69eaaed47e3cfccf86b1582fa19862a3ce8189ea8f8cfc1800d9aa  src/libjpeg6b_6b1.orig.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libjpeg6b_*.tar.gz
 	rm src/libjpeg6b_*.tar.gz
