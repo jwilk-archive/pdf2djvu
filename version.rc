@@ -12,7 +12,7 @@ BEGIN
             VALUE "ProductName", PACKAGE_STRING
             VALUE "FileDescription", "PDF to DjVu converter\0"
             VALUE "FileVersion", PACKAGE_VERSION
-            VALUE "LegalCopyright", "Copyright © 2007, 2008, 2009, 2010, 2011 Jakub Wilk\0"
+            VALUE "LegalCopyright", "Copyright © 2007, 2008, 2009, 2010, 2011, 2012 Jakub Wilk\0"
             VALUE "Comments", "This package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.\0"
         END
     END

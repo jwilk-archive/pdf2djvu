@@ -1030,18 +1030,28 @@ namespace encoding
   template <>
   std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &converter)
   {
-    int rc;
     const std::string &string = converter.string;
-    size_t length = converter.string.length();
-    Array<char> buffer(length);
-    string.copy(buffer, length);
-    rc = CharToOemBuff(buffer, buffer, length);
-    if (rc == 0)
-    {
-      /* This should actually never happen. */
-      throw_win32_error("CharToOemBuff");
-    }
-    stream.write(buffer, length);
+    size_t wide_length, new_length, length = converter.string.length();
+    if (length == 0)
+      return stream;
+    Array<char> buffer(length * 2);
+    Array<wchar_t> wide_buffer(length);
+    wide_length = MultiByteToWideChar(
+      CP_ACP, 0,
+      string.c_str(), length,
+      wide_buffer, length
+    );
+    if (wide_length == 0)
+      throw_win32_error("MultiByteToWideChar");
+    new_length = WideCharToMultiByte(
+      GetConsoleOutputCP(), 0,
+      wide_buffer, wide_length,
+      buffer, length * 2,
+      NULL, NULL
+    );
+    if (new_length == 0)
+      throw_win32_error("WideCharToMultiByte");
+    stream.write(buffer, new_length);
     return stream;
   }
 #else

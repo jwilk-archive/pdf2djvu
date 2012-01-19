@@ -2,8 +2,10 @@ pdf2djvu (0.7.12) UNRELEASED; urgency=low
 
   * Fix resolution detection.
   * Add Ukrainian translation by Serhij Dubyk.
+  * Windows: honour console output encoding.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=64
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 13 Jan 2012 14:40:07 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 20 Jan 2012 20:01:50 +0100
 
 pdf2djvu (0.7.11) unstable; urgency=low
 
