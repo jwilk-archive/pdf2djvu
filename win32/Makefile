@@ -15,8 +15,8 @@ djvulibre_tools = djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
-export CC = $(host)-gcc -D__USE_MINGW_ANSI_STDIO
-export CXX = $(host)-g++ -D__USE_MINGW_ANSI_STDIO
+export CC = $(host)-gcc
+export CXX = $(host)-g++
 export AS = $(host)-as
 export DLLTOOL = $(host)-dlltool
 export OBJDUMP = $(host)-objdump
@@ -28,6 +28,7 @@ export LDFLAGS = -L$(usr)/lib
 
 export CFLAGS = -Os
 export CXXFLAGS = -Os
+export CPPFLAGS = -D__USE_MINGW_ANSI_STDIO
 
 .PHONY: all
 all:
