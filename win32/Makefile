@@ -91,6 +91,7 @@ src/pdf2djvu/config.status: src/djvulibre/install-stamp
 src/pdf2djvu/config.status: src/libxslt/install-stamp
 src/pdf2djvu/config.status: src/poppler/install-stamp
 src/pdf2djvu/config.status: src/gettext/install-stamp
+src/pdf2djvu/config.status: src/mingwrt/install-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--bindir=$(usr)/dist/ \
@@ -448,5 +449,15 @@ src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	cp src/urw-fonts/*.pfb dist/fonts/
 	rst2html COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $@
+
+# MinGW runtime
+
+src/mingwrt/install-stamp:
+	mkdir -p $(dir $@) bin/
+	cp $(shell $(CXX) -print-file-name=libstdc++-6.dll) bin/
+	cp $(shell $(CXX) -print-file-name=libgcc_s_sjlj-1.dll) bin/
+	$(call ship_dll,libstdc++)
+	$(call ship_dll,libgcc_s)
+	touch $(@)
 
 # vim:ts=4 sw=4 noet
