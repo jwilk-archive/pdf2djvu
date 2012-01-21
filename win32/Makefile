@@ -265,7 +265,7 @@ src/libxslt/source-stamp:
 	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  src/libxslt-1.1.26.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
 	rm src/libxslt-*.tar.gz
-	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' src/libxslt/libxslt/libxslt.h
+	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' $(dir $@)/libxslt/libxslt.h
 	touch $@
 
 src/libxslt/config.status: src/libxslt/source-stamp
@@ -447,7 +447,7 @@ src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	mkdir -p dist/fonts/ dist/doc/
-	cp src/urw-fonts/*.pfb dist/fonts/
+	cp $(dir $@)/*.pfb dist/fonts/
 	rst2html COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $@
 
