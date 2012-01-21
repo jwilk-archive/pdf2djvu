@@ -228,6 +228,7 @@ src/libxml2/source-stamp:
 	cd src && wget -c http://xmlsoft.org/sources/libxml2-2.7.8.tar.gz
 	echo 'cda23bc9ebd26474ca8f3d67e7d1c4a1f1e7106364b690d822e009fdc3c417ec  src/libxml2-2.7.8.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxml2-*.tar.gz
+	sed -i -e '/^#undef v\?snprintf$$/d' $(dir $@)/config.h.in
 	rm src/libxml2-*.tar.gz
 	rm -r src/libxml2/test
 	rm -r src/libxml2/result
