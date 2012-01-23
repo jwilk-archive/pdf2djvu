@@ -21,7 +21,8 @@ xgettext = $(XGETTEXT) \
 	--keyword=_ --keyword=N_ \
 	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
-	--msgid-bugs-address=$(PACKAGE_BUGREPORT)
+	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
+	--add-comments=L10N:
 
 msgmerge = $(MSGMERGE) \
 	$(gettext-common-options)
