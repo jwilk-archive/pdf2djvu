@@ -64,54 +64,103 @@ std::string POSIXError::error_message(const std::string &context)
   /* Win32 systems tends to return POSIX-style error messages in English.
    * Translation is required.
    */
+  /* L10N: Windows error message for EPERM */
   N_("Operation not permitted");
+  /* L10N: Windows error message for ENOENT */
   N_("No such file or directory");
+  /* L10N: Windows error message for ESRCH */
   N_("No such process");
+  /* L10N: Windows error message for EINTR */
   N_("Interrupted function call");
+  /* L10N: Windows error message for EINTR */
   N_("Interrupted system call");
+  /* L10N: Windows error message for EIO */
   N_("Input/output error");
+  /* L10N: Windows error message for ENXIO */
   N_("No such device or address");
+  /* L10N: Windows error message for E2BIG */
   N_("Arg list too long");
+  /* L10N: Windows error message for E2BIG */
   N_("Argument list too long");
+  /* L10N: Windows error message for ENOEXEC */
   N_("Exec format error");
+  /* L10N: Windows error message for EBADF */
   N_("Bad file descriptor");
+  /* L10N: Windows error message for ECHILD */
   N_("No child processes");
+  /* L10N: Windows error message for EAGAIN */
   N_("Resource temporarily unavailable");
+  /* L10N: Windows error message for ENOMEM */
   N_("Not enough space");
+  /* L10N: Windows error message for ENOMEM */
   N_("Cannot allocate memory");
+  /* L10N: Windows error message for EACCES */
   N_("Permission denied");
+  /* L10N: Windows error message for EFAULT */
   N_("Bad address");
+  /* L10N: Windows error message for EBUSY */
   N_("Resource device");
+  /* L10N: Windows error message for EBUSY */
   N_("Device or resource busy");
+  /* L10N: Windows error message for EEXISTS */
   N_("File exists");
+  /* L10N: Windows error message for EXDEV */
   N_("Improper link");
+  /* L10N: Windows error message for EXDEV */
   N_("Invalid cross-device link");
+  /* L10N: Windows error message for ENODEV */
   N_("No such device");
+  /* L10N: Windows error message for ENOTDIR */
   N_("Not a directory");
+  /* L10N: Windows error message for EISDIR */
   N_("Is a directory");
+  /* L10N: Windows error message for EINVAL */
   N_("Invalid argument");
+  /* L10N: Windows error message for ENFILE */
   N_("Too many open files in system");
+  /* L10N: Windows error message for EMFILE */
   N_("Too many open files");
+  /* L10N: Windows error message for ENOTTY */
   N_("Inappropriate I/O control operation");
+  /* L10N: Windows error message for ENOTTY */
   N_("Inappropriate ioctl for device");
+  /* L10N: Windows error message for EFBIG */
   N_("File too large");
+  /* L10N: Windows error message for ENOSPC */
   N_("No space left on device");
+  /* L10N: Windows error message for ESEEK */
   N_("Invalid seek");
+  /* L10N: Windows error message for ESEEK */
   N_("Illegal seek");
+  /* L10N: Windows error message for EROFS */
   N_("Read-only file system");
+  /* L10N: Windows error message for EMLINK */
   N_("Too many links");
+  /* L10N: Windows error message for EPIPE */
   N_("Broken pipe");
+  /* L10N: Windows error message for EDOM */
   N_("Domain error");
+  /* L10N: Windows error message for EDOM */
   N_("Numerical argument out of domain");
+  /* L10N: Windows error message for ERANGE */
   N_("Result too large");
+  /* L10N: Windows error message for ERANGE */
   N_("Numerical result out of range");
+  /* L10N: Windows error message for EDEADLK */
   N_("Resource deadlock avoided");
+  /* L10N: Windows error message for ENAMETOOLONG */
   N_("Filename too long");
+  /* L10N: Windows error message for ENAMETOOLONG */
   N_("File name too long");
+  /* L10N: Windows error message for ENOLOCK */
   N_("No locks available");
+  /* L10N: Windows error message for ENOSYS */
   N_("Function not implemented");
+  /* L10N: Windows error message for ENOTEMPTY */
   N_("Directory not empty");
+  /* L10N: Windows error message for EILSEQ */
   N_("Illegal byte sequence");
+  /* L10N: Windows error message for EILSEQ */
   N_("Invalid or incomplete multibyte or wide character");
   message = _(strerror(errno));
 #else

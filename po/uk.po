@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.12\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-01-13 14:28+0100\n"
+"POT-Creation-Date: 2012-01-23 21:34+0100\n"
 "PO-Revision-Date: 2012-01-13 14:59+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -63,33 +63,42 @@ msgstr[0] "%zu байт в результаті"
 msgstr[1] "%zu байти в результаті"
 msgstr[2] "%zu байтів в результаті"
 
+#. L10N: Windows error message for E2BIG
 msgid "Arg list too long"
 msgstr "Занадто довгий список аргументів"
 
+#. L10N: Windows error message for E2BIG
 msgid "Argument list too long"
 msgstr "Занадто довгий список аргументів"
 
+#. L10N: Windows error message for EFAULT
 msgid "Bad address"
 msgstr "Неправильна адреса"
 
+#. L10N: Windows error message for EBADF
 msgid "Bad file descriptor"
 msgstr "Неправильний дескриптор файлу"
 
+#. L10N: Windows error message for EPIPE
 msgid "Broken pipe"
 msgstr "Обрив каналу"
 
+#. L10N: Windows error message for ENOMEM
 msgid "Cannot allocate memory"
 msgstr "Неможливо виділити пам’ять"
 
 msgid "Cannot find link destination"
 msgstr "Призначення посилання не знайдено"
 
+#. L10N: Windows error message for EBUSY
 msgid "Device or resource busy"
 msgstr "Пристрій чи ресурс зайнято"
 
+#. L10N: Windows error message for ENOTEMPTY
 msgid "Directory not empty"
 msgstr "Тека не порожня"
 
+#. L10N: Windows error message for EDOM
 msgid "Domain error"
 msgstr "Помилка області визначення"
 
@@ -101,21 +110,27 @@ msgstr "Повторний ідентифікатор сторінки: %s"
 msgid "Duplicate page title: %s"
 msgstr "Повторний заголовок сторінки: %s"
 
+#. L10N: Windows error message for ENOEXEC
 msgid "Exec format error"
 msgstr "Неправильний формат виконуваного файлу"
 
+#. L10N: Windows error message for EEXISTS
 msgid "File exists"
 msgstr "Файл існує"
 
+#. L10N: Windows error message for ENAMETOOLONG
 msgid "File name too long"
 msgstr "Надто довге ім’я файлу"
 
+#. L10N: Windows error message for EFBIG
 msgid "File too large"
 msgstr "Файл занадто великий"
 
+#. L10N: Windows error message for ENAMETOOLONG
 msgid "Filename too long"
 msgstr "Надто довге ім’я файлу"
 
+#. L10N: Windows error message for ENOSYS
 msgid "Function not implemented"
 msgstr "Функція не реалізована"
 
@@ -126,60 +141,75 @@ msgstr "Я не буду писати DjVu в термінал."
 msgid "I/O error (%s)"
 msgstr "Помилка вводу/виводу (%s)"
 
+#. L10N: Windows error message for EILSEQ
 msgid "Illegal byte sequence"
 msgstr "Невірна послідовність байтів"
 
+#. L10N: Windows error message for ESEEK
 msgid "Illegal seek"
 msgstr "Неправильна операція зміщення"
 
+#. L10N: Windows error message for EXDEV
 msgid "Improper link"
 msgstr "Помилкове посилання"
 
+#. L10N: Windows error message for ENOTTY
 msgid "Inappropriate I/O control operation"
 msgstr "Невідповідна операція введення/виводу"
 
+#. L10N: Windows error message for ENOTTY
 msgid "Inappropriate ioctl for device"
 msgstr "Непридатний ioctl для пристрою"
 
+#. L10N: Windows error message for EIO
 msgid "Input/output error"
 msgstr "Помилка вводу/виводу"
 
 msgid "Integer overflow"
 msgstr "Цілочисельне переповнювання"
 
+#. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
 msgstr "Перерваний виклик функції"
 
+#. L10N: Windows error message for EINTR
 msgid "Interrupted system call"
 msgstr "Перерваний системний виклик"
 
+#. L10N: Windows error message for EINVAL
 msgid "Invalid argument"
 msgstr "Неправильний аргумент"
 
+#. L10N: Windows error message for EXDEV
 msgid "Invalid cross-device link"
 msgstr "Невірне посилання між пристроями"
 
 msgid "Invalid date format"
 msgstr "Невірний формат дати"
 
+#. L10N: Windows error message for EILSEQ
 msgid "Invalid or incomplete multibyte or wide character"
 msgstr "Неправильний або неповний багатобайтний символ"
 
 msgid "Invalid output file name"
 msgstr "Неправильне ім’я вихідного файлу"
 
+#. L10N: Windows error message for ESEEK
 msgid "Invalid seek"
 msgstr "Неправильна операція зміщення"
 
+#. L10N: Windows error message for EISDIR
 msgid "Is a directory"
 msgstr "Це тека"
 
+#. L10N: Windows error message for ECHILD
 msgid "No child processes"
 msgstr "Немає дочірніх процесів"
 
 msgid "No input file name was specified"
 msgstr "Не вказано назву вхідного файлу"
 
+#. L10N: Windows error message for ENOLOCK
 msgid "No locks available"
 msgstr "Немає доступних блокувань"
 
@@ -189,36 +219,46 @@ msgstr "Немає сторінки для закладки"
 msgid "No pages selected"
 msgstr "Не вибрані сторінки"
 
+#. L10N: Windows error message for ENOSPC
 msgid "No space left on device"
 msgstr "На пристрої закінчилося місце"
 
+#. L10N: Windows error message for ENODEV
 msgid "No such device"
 msgstr "Немає такого пристрою"
 
+#. L10N: Windows error message for ENXIO
 msgid "No such device or address"
 msgstr "Немає такого пристрою чи адреси"
 
+#. L10N: Windows error message for ENOENT
 msgid "No such file or directory"
 msgstr "Немає такого файлу чи теки"
 
+#. L10N: Windows error message for ESRCH
 msgid "No such process"
 msgstr "Немає такого процесу"
 
 msgid "No title for a bookmark"
 msgstr "Немає назви для закладки"
 
+#. L10N: Windows error message for ENOTDIR
 msgid "Not a directory"
 msgstr "Не є текою"
 
+#. L10N: Windows error message for ENOMEM
 msgid "Not enough space"
 msgstr "Недостатньо місця"
 
+#. L10N: Windows error message for EDOM
 msgid "Numerical argument out of domain"
 msgstr "Числовий аргумент поза області визначення"
 
+#. L10N: Windows error message for ERANGE
 msgid "Numerical result out of range"
 msgstr "Числовий результат поза можливим діапазоном"
 
+#. L10N: Windows error message for EPERM
 msgid "Operation not permitted"
 msgstr "Дія не дозволена"
 
@@ -256,21 +296,27 @@ msgid "Pageid must end with the '.djvu' or the '.djv' extension"
 msgstr ""
 "Ідентифікатор сторінки повинен закінчуватися розширенням „*.djvu“ або „*.djv“"
 
+#. L10N: Windows error message for EACCES
 msgid "Permission denied"
 msgstr "Доступ заборонено"
 
+#. L10N: Windows error message for EROFS
 msgid "Read-only file system"
 msgstr "Файлова система доступна лише для читання"
 
+#. L10N: Windows error message for EDEADLK
 msgid "Resource deadlock avoided"
 msgstr "Попереджено тупикову ситуацію при зверненні до ресурсу"
 
+#. L10N: Windows error message for EBUSY
 msgid "Resource device"
 msgstr "Пристрій або ресурс зайнято"
 
+#. L10N: Windows error message for EAGAIN
 msgid "Resource temporarily unavailable"
 msgstr "Ресурс тимчасово недоступний"
 
+#. L10N: Windows error message for ERANGE
 msgid "Result too large"
 msgstr "Результат занадто великий"
 
@@ -294,12 +340,15 @@ msgstr ""
 "Задане співвідношення підвибірки знаходиться за межами дозволеного "
 "діапазону: %u .. %u"
 
+#. L10N: Windows error message for EMLINK
 msgid "Too many links"
 msgstr "Надто багато посилань"
 
+#. L10N: Windows error message for EMFILE
 msgid "Too many open files"
 msgstr "Надто багато відкритих файлів"
 
+#. L10N: Windows error message for ENFILE
 msgid "Too many open files in system"
 msgstr "Надто багато відкритих файлів у системі"
 
