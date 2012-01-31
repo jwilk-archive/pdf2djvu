@@ -81,8 +81,8 @@
   <rdf:li
     stEvt:action='converted'
     stEvt:parameters='from application/pdf to image/vnd.djvu'
-    softwareAgent='{$djvu-producer}'
-    when='{$now}'
+    stEvt:softwareAgent='{$djvu-producer}'
+    stEvt:when='{$now}'
   />
 </xsl:template>
 
