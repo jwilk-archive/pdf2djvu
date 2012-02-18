@@ -1,2 +1,3 @@
 Since May 2009 pdf2djvu development has been supported by the Polish Ministry
-of Science and Higher Education's grant no. N N519 384036.
+of Science and Higher Education's grant no. N N519 384036 (2009 - 2012,
+https://bitbucket.org/jsbien/ndt).
