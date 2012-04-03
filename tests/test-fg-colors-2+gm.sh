@@ -1,1 +1,0 @@
-test-fg-colors-1+gm.sh
