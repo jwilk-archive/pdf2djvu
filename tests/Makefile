@@ -35,14 +35,15 @@ all: $(generated_files) $(pdf2djvu)
 
 .PHONY: prepare
 prepare: $(in_files:.in=) $(pdf_files)
-	rm -f *.log *.pyc
+	rm -f *.pyc
 
 .PHONY: clean
 clean:
-	rm -f $(generated_files) *.log *.djvu *.pyc
+	rm -f $(generated_files) *.djvu *.pyc
 
 %.pdf: %.tex
 	pdftex $(<)
+	rm -f $(<:.tex=.log)
 
 %: %.in
 	./$(<)
