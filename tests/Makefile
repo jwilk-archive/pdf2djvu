@@ -23,7 +23,6 @@ tests = $(test_scripts:.sh=)
 
 stamp_files = $(tests:%=%.stamp)
 pdf_files = $(tests:%=%.pdf)
-djvu_files = $(tests:%=%.djvu)
 
 in_files = $(wildcard *.in)
 
