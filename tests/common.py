@@ -15,15 +15,34 @@ import xml.etree.cElementTree as etree
 
 re.compile.M = re.M
 re = re.compile
+re.type = type(re(''))
 
 from nose.tools import (
     assert_true,
     assert_equal,
-    assert_multi_line_equal,
     assert_not_equal,
-    assert_regexp_matches as assert_grep
 )
-assert_multi_line_equal.im_class.maxDiff = None
+
+try:
+    from nose.tools import assert_multi_line_equal
+except ImportError:
+    assert_multi_line_equal = assert_equal
+else:
+    assert_multi_line_equal.im_class.maxDiff = None
+
+try:
+    from nose.tools import assert_regexp_matches as assert_grep
+except ImportError:
+    def assert_grep(text, expected_regexp, msg=None):
+        '''Fail the test unless the text matches the regular expression.'''
+        if not isinstance(expected_regexp, re.type):
+            expected_regexp = re(expected_regexp)
+        if expected_regexp.search(text):
+            return
+        if msg is None:
+            msg = "Regexp didn't match"
+        msg = '%s: %r not found in %r' % (msg, expected_regexp.pattern, text)
+        raise AssertionError(msg)
 
 def assert_well_formed_xml(xml):
     try:
@@ -33,7 +52,6 @@ def assert_well_formed_xml(xml):
 
 class ipc_result(object):
 
-    _re_type = type(re(''))
 
     def __init__(self, stdout, stderr, rc):
         self.stdout = stdout
@@ -43,7 +61,7 @@ class ipc_result(object):
     def assert_(self, stdout='', stderr='', rc=0):
         if stderr is None:
             pass
-        elif isinstance(stderr, self._re_type):
+        elif isinstance(stderr, re.type):
             assert_grep(self.stderr, stderr)
         else:
             assert_multi_line_equal(self.stderr, stderr)
@@ -51,7 +69,7 @@ class ipc_result(object):
             assert_equal(self.rc, rc)
         if stdout is None:
             pass
-        elif isinstance(stdout, self._re_type):
+        elif isinstance(stdout, re.type):
             assert_grep(self.stdout, stdout)
         else:
             assert_multi_line_equal(self.stdout, stdout)
