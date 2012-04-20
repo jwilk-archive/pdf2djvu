@@ -1,8 +1,10 @@
 pdf2djvu (0.7.13) UNRELEASED; urgency=low
 
-  * 
+  * Windows: trap errors from external commands. Thanks to Andres Aule for the
+    bug report.
+    http://code.google.com/p/pdf2djvu/issues/detail?id=65
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 23 Jan 2012 21:37:03 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 20 Apr 2012 21:16:25 +0200
 
 pdf2djvu (0.7.12) unstable; urgency=low
 

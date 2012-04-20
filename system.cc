@@ -415,8 +415,10 @@ void Command::call(std::ostream *my_stdout, bool quiet)
 {
   int status = 0;
   unsigned long rc;
+  PROCESS_INFORMATION process_info;
   HANDLE read_end, write_end, error_handle;
   SECURITY_ATTRIBUTES security_attributes;
+  memset(&process_info, 0, sizeof process_info);
   security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
   security_attributes.lpSecurityDescriptor = NULL;
   security_attributes.bInheritHandle = true;
@@ -460,8 +462,6 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   }
   {
     const std::string &command_line = argv_to_command_line(this->argv);
-    PROCESS_INFORMATION process_info;
-    memset(&process_info, 0, sizeof process_info);
     STARTUPINFO startup_info;
     memset(&startup_info, 0, sizeof startup_info);
     startup_info.cb = sizeof startup_info;
@@ -484,14 +484,13 @@ void Command::call(std::ostream *my_stdout, bool quiet)
       status = -1;
     else
     {
-      CloseHandle(process_info.hProcess); /* ignore errors */
-      CloseHandle(process_info.hThread); /* ignore errors */
       if (error_handle != INVALID_HANDLE_VALUE)
         CloseHandle(error_handle); /* ignore errors */
     }
   }
   if (status == 0)
   {
+    unsigned long exit_code;
     CloseHandle(write_end); /* ignore errors */
     while (true)
     {
@@ -507,6 +506,24 @@ void Command::call(std::ostream *my_stdout, bool quiet)
         my_stdout->write(buffer, nbytes);
     }
     CloseHandle(read_end); /* ignore errors */
+    rc = WaitForSingleObject(process_info.hProcess, INFINITE);
+    if (rc == WAIT_FAILED)
+      throw_win32_error("WaitForSingleObject");
+    rc = GetExitCodeProcess(process_info.hProcess, &exit_code);
+    CloseHandle(process_info.hProcess); /* ignore errors */
+    CloseHandle(process_info.hThread); /* ignore errors */
+    if (rc == 0)
+      status = -1;
+    else if (exit_code != 0)
+    {
+      std::ostringstream message;
+      message
+        << "system(\""
+        << this->command
+        << " ...\") failed"
+        << " with exit code " << exit_code;
+      throw CommandFailed(message.str());
+    }
   }
   if (status < 0)
   {
@@ -593,7 +610,9 @@ std::string Command::filter(const std::string &command_line, const std::string s
   int status = 0;
   unsigned long rc;
   HANDLE stdin_read, stdin_write, stdout_read, stdout_write, error_handle;
+  PROCESS_INFORMATION process_info;
   SECURITY_ATTRIBUTES security_attributes;
+  memset(&process_info, 0, sizeof process_info);
   security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
   security_attributes.lpSecurityDescriptor = NULL;
   security_attributes.bInheritHandle = true;
@@ -627,8 +646,6 @@ std::string Command::filter(const std::string &command_line, const std::string s
       throw_win32_error("DuplicateHandle");
   }
   {
-    PROCESS_INFORMATION process_info;
-    memset(&process_info, 0, sizeof process_info);
     STARTUPINFO startup_info;
     memset(&startup_info, 0, sizeof startup_info);
     startup_info.cb = sizeof startup_info;
@@ -652,14 +669,13 @@ std::string Command::filter(const std::string &command_line, const std::string s
       status = -1;
     else
     {
-      CloseHandle(process_info.hProcess); /* ignore errors */
-      CloseHandle(process_info.hThread); /* ignore errors */
       if (error_handle != INVALID_HANDLE_VALUE)
         CloseHandle(error_handle); /* ignore errors */
     }
   }
   if (status == 0)
   {
+    unsigned long exit_code;
     std::ostringstream stream;
     CloseHandle(stdin_read); /* ignore errors */
     CloseHandle(stdout_write); /* ignore errors */
@@ -684,6 +700,24 @@ std::string Command::filter(const std::string &command_line, const std::string s
     if (rc == WAIT_FAILED)
       throw_win32_error("WaitForSingleObject");
     CloseHandle(thread_handle); /* ignore errors */
+    rc = WaitForSingleObject(process_info.hProcess, INFINITE);
+    if (rc == WAIT_FAILED)
+      throw_win32_error("WaitForSingleObject");
+    rc = GetExitCodeProcess(process_info.hProcess, &exit_code);
+    CloseHandle(process_info.hProcess); /* ignore errors */
+    CloseHandle(process_info.hThread); /* ignore errors */
+    if (rc == 0)
+      status = -1;
+    else if (exit_code != 0)
+    {
+      std::ostringstream message;
+      message
+        << "system(\""
+        << command_line
+        << "\") failed"
+        << " with exit code " << exit_code;
+      throw CommandFailed(message.str());
+    }
     return stream.str();
   }
   if (status < 0)
