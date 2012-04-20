@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-04-20 22:05+0200\n"
+"POT-Creation-Date: 2012-04-20 22:14+0200\n"
 "PO-Revision-Date: 2012-01-13 14:59+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -130,7 +130,7 @@ msgstr ""
 msgid "External command \"%s\" failed with exit code %u"
 msgstr ""
 
-#. L10N: Windows error message for EEXISTS
+#. L10N: Windows error message for EEXIST
 msgid "File exists"
 msgstr "Файл існує"
 

@@ -102,7 +102,7 @@ std::string POSIXError::error_message(const std::string &context)
   N_("Resource device");
   /* L10N: Windows error message for EBUSY */
   N_("Device or resource busy");
-  /* L10N: Windows error message for EEXISTS */
+  /* L10N: Windows error message for EEXIST */
   N_("File exists");
   /* L10N: Windows error message for EXDEV */
   N_("Improper link");
