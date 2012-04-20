@@ -757,9 +757,13 @@ std::string Command::filter(const std::string &command_line, const std::string s
     if (fputs(string.c_str(), fp) == EOF)
       throw_posix_error("fputs");
     rc = pclose(fp);
-    if (rc != 0)
+    if (rc == -1)
       throw_posix_error("pclose");
-    exit(0);
+    else if (WIFEXITED(rc))
+      exit(WEXITSTATUS(rc));
+    else
+      exit(-1);
+    exit(rc);
   }
   else
   {
