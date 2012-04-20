@@ -398,14 +398,23 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   status = xsystem.rdbuf()->status();
   if (status != 0)
   {
-    std::ostringstream message;
-    message
-      << "system(\""
-      << this->command
-      << " ...\") failed";
+    std::string message;
     if (WIFEXITED(status))
-      message << " with exit code " << WEXITSTATUS(status);
-    throw CommandFailed(message.str());
+    {
+      message = string_printf(
+        _("External command \"%s ...\" failed with exit code %u"),
+        this->command.c_str(),
+        static_cast<unsigned int>(WEXITSTATUS(status))
+      );
+    }
+    else
+    {
+      message = string_printf(
+        _("External command \"%s ...\" failed"),
+        this->command.c_str()
+      );
+    }
+    throw CommandFailed(message);
   }
 }
 
@@ -516,23 +525,21 @@ void Command::call(std::ostream *my_stdout, bool quiet)
       status = -1;
     else if (exit_code != 0)
     {
-      std::ostringstream message;
-      message
-        << "system(\""
-        << this->command
-        << " ...\") failed"
-        << " with exit code " << exit_code;
-      throw CommandFailed(message.str());
+      std::string message = string_printf(
+        _("External command \"%s ...\" failed with exit code %u"),
+        this->command.c_str(),
+        static_cast<unsigned int>(exit_code)
+      );
+      throw CommandFailed(message);
     }
   }
   if (status < 0)
   {
-    std::ostringstream message;
-    message
-      << "system(\""
-      << this->command
-      << " ...\") failed";
-    throw Win32Error(message.str());
+    std::string message = string_printf(
+      _("External command \"%s ...\" failed"),
+      this->command.c_str()
+    );
+    throw Win32Error(message);
   }
 }
 
@@ -568,12 +575,11 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     status = -1;
   if (status < 0)
   {
-    std::ostringstream message;
-    message
-      << "system(\""
-      << this->command
-      << " ...\") failed";
-    throw_posix_error(message.str());
+    std::string message = string_printf(
+      _("External command \"%s ...\" failed"),
+      this->command.c_str()
+    );
+    throw_posix_error(message);
   }
 }
 
@@ -710,24 +716,22 @@ std::string Command::filter(const std::string &command_line, const std::string s
       status = -1;
     else if (exit_code != 0)
     {
-      std::ostringstream message;
-      message
-        << "system(\""
-        << command_line
-        << "\") failed"
-        << " with exit code " << exit_code;
-      throw CommandFailed(message.str());
+      std::string message = string_printf(
+        _("External command \"%s\" failed with exit code %u"),
+        command_line.c_str(),
+        static_cast<unsigned int>(exit_code)
+      );
+      throw CommandFailed(message);
     }
     return stream.str();
   }
   if (status < 0)
   {
-    std::ostringstream message;
-    message
-      << "system(\""
-      << command_line
-      << "\") failed";
-    throw Win32Error(message.str());
+    std::string message = string_printf(
+      _("External command \"%s\" failed"),
+      command_line.c_str()
+    );
+    throw Win32Error(message);
   }
   return string; /* Should not really happen. */
 }
@@ -787,14 +791,23 @@ std::string Command::filter(const std::string &command_line, const std::string s
       throw_posix_error("wait");
     if (status != 0)
     {
-      std::ostringstream message;
-      message
-        << "system(\""
-        << command_line
-        << "\") failed";
+      std::string message;
       if (WIFEXITED(status))
-        message << " with exit code " << WEXITSTATUS(status);
-      throw CommandFailed(message.str());
+      {
+        message = string_printf(
+          _("External command \"%s\" failed with exit code %u"),
+          command_line.c_str(),
+          static_cast<unsigned int>(WEXITSTATUS(status))
+        );
+      }
+      else
+      {
+        message = string_printf(
+          _("External command \"%s\" failed"),
+          command_line.c_str()
+        );
+      }
+      throw CommandFailed(message);
     }
     return stream.str();
   }
