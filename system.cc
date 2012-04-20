@@ -569,7 +569,27 @@ void Command::call(std::ostream *my_stdout, bool quiet)
       if (my_stdout != NULL)
         my_stdout->write(buffer, nbytes);
     }
-    status = status || pclose(file);
+    int wait_status = pclose(file);
+    if (wait_status == -1)
+      throw_posix_error("pclose");
+    else if (status == 0)
+    {
+      if (WIFEXITED(wait_status))
+      {
+        unsigned int exit_code = WEXITSTATUS(wait_status);
+        if (exit_code != 0)
+        {
+          std::string message = string_printf(
+            _("External command \"%s ...\" failed with exit code %u"),
+            this->command.c_str(),
+            exit_code
+          );
+          throw CommandFailed(message);
+        }
+      }
+      else
+        status = -1;
+    }
   }
   else
     status = -1;
