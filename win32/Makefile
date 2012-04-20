@@ -146,6 +146,7 @@ src/poppler/source-stamp:
 	cd src && wget -c http://poppler.freedesktop.org/poppler-0.16.7.tar.gz
 	echo 'fab4e8af2d34d4142a718819fd747d40930b71ef520ee0e6bcc94e2c44f22bcd  src/poppler-0.16.7.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../poppler-*.tar.gz
+	cd $(dir $@) && sed -i -e 's/^void str\(cat\|cpy\)/void poppler_str\1/' test/perf-test.cc
 	rm src/poppler-*.tar.gz
 	touch $@
 
