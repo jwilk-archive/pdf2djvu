@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-04-20 22:14+0200\n"
+"POT-Creation-Date: 2012-05-24 15:49+0200\n"
 "PO-Revision-Date: 2011-05-17 23:28+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -50,9 +50,19 @@ msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
 msgstr ""
 "%.3f Bits/Bildpunkt; %.3f:1, %.2f%% gespeichert, %ju Byte rein, %zu Byte raus"
 
+#. L10N: "<error-category> (<position>): <error-message>"
+#, c-format
+msgid "%s (%d): %s"
+msgstr "%s (%d): %s"
+
 #, c-format
 msgid "%s is not a valid number"
 msgstr "%s ist keine gültige Zahl."
+
+#. L10N: "<error-category>: <error-message>"
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
 
 #, c-format
 msgid "%zu bytes out"
@@ -181,6 +191,9 @@ msgstr "Eingabe-/Ausgabefehler"
 msgid "Integer overflow"
 msgstr "Ganzzahlenüberlauf"
 
+msgid "Internal Poppler error"
+msgstr ""
+
 #. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
 msgstr "unterbrochener Funktionsaufruf"
@@ -278,13 +291,19 @@ msgstr "Operation nicht unterstützt"
 msgid "Options: "
 msgstr "Optionen: "
 
-#, c-format
-msgid "PDF error (%d): %s"
-msgstr "PDF-Fehler (%d): %s"
+msgid "PDF error"
+msgstr "PDF-Fehler"
 
-#, c-format
-msgid "PDF error: %s"
-msgstr "PDF-Fehler: %s"
+#, fuzzy
+msgid "PDF feature not implemented"
+msgstr "Funktion nicht implementiert"
+
+#, fuzzy
+msgid "PDF syntax error"
+msgstr "PDF-Fehler"
+
+msgid "PDF syntax warning"
+msgstr ""
 
 msgid "Page not found"
 msgstr "Seite nicht gefunden"
@@ -313,6 +332,9 @@ msgstr "Seitenidentifikationsnummer muss die Endung ».djvu« oder ».djv« habe
 #. L10N: Windows error message for EACCES
 msgid "Permission denied"
 msgstr "Zugriff verweigert"
+
+msgid "Poppler configuration error"
+msgstr ""
 
 #. L10N: Windows error message for EROFS
 msgid "Read-only file system"

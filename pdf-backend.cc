@@ -1,4 +1,4 @@
-/* Copyright © 2007, 2008, 2009, 2010 Jakub Wilk
+/* Copyright © 2007, 2008, 2009, 2010, 2012 Jakub Wilk
  * Copyright © 2009 Mateusz Turcza
  *
  * This package is free software; you can redistribute it and/or modify
@@ -32,23 +32,74 @@
  * ======================
  */
 
+#if POPPLER_VERSION < 1900
 static void poppler_error_handler(int pos, char *message, va_list args)
 {
   std::string format;
   std::string expanded_message = string_vprintf(message, args);
   const char *c_message = expanded_message.c_str();
+  const char *category = _("PDF error");
   if (pos >= 0)
   {
     error_log <<
-      string_printf(_("PDF error (%d): %s"), pos, c_message);
+      /* L10N: "<error-category> (<position>): <error-message>" */
+      string_printf(_("%s (%d): %s"), category, pos, c_message);
   }
   else
   {
     error_log <<
-      string_printf(_("PDF error: %s"), c_message);
+      /* L10N: "<error-category>: <error-message>" */
+      string_printf(_("%s: %s"), category, c_message);
   }
   error_log << std::endl;
 }
+#else
+static void poppler_error_handler(void *data, ErrorCategory category, int pos, char *message)
+{
+  std::string format;
+  const char *category_name = _("PDF error");
+  switch (category)
+  {
+    case errSyntaxWarning:
+      category_name = _("PDF syntax warning");
+      break;
+    case errSyntaxError:
+      category_name = _("PDF syntax error");
+      break;
+    case errConfig:
+      category_name = _("Poppler configuration error");
+      break;
+    case errCommandLine:
+      break; /* should not happen */	
+    case errIO:
+      category_name = _("Input/output error");
+      break;
+    case errNotAllowed:
+      category_name = _("Permission denied");
+      break;
+    case errUnimplemented:
+      category_name = _("PDF feature not implemented");
+      break;
+    case errInternal:
+      category_name = _("Internal Poppler error");
+      break;
+  }
+
+  if (pos >= 0)
+  {
+    error_log <<
+      /* L10N: "<error-category> (<position>): <error-message>" */
+      string_printf(_("%s (%d): %s"), category_name, pos, message);
+  }
+  else
+  {
+    error_log <<
+      /* L10N: "<error-category>: <error-message>" */
+      string_printf(_("%s: %s"), category_name, message);
+  }
+  error_log << std::endl;
+}
+#endif
 
 pdf::Environment::Environment(const char *argv0)
 {
@@ -61,7 +112,11 @@ pdf::Environment::Environment(const char *argv0)
   Cwd cwd(argv0_dir_name);
 #endif
   globalParams = new GlobalParams();
+#if POPPLER_VERSION < 1900
   setErrorFunction(poppler_error_handler);
+#else
+  setErrorCallback(poppler_error_handler, NULL);
+#endif
 }
 
 void pdf::Environment::set_antialias(bool value)

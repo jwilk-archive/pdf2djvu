@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-04-20 22:14+0200\n"
+"POT-Creation-Date: 2012-05-24 15:49+0200\n"
 "PO-Revision-Date: 2012-01-13 14:59+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -52,9 +52,19 @@ msgstr ""
 "%.3f біт/піксель; %.3f:1, %.2f%% збережено, %ju байт початково, %zu байт в "
 "результаті"
 
+#. L10N: "<error-category> (<position>): <error-message>"
+#, c-format
+msgid "%s (%d): %s"
+msgstr "%s (%d): %s"
+
 #, c-format
 msgid "%s is not a valid number"
 msgstr "%s не є правильним числом"
+
+#. L10N: "<error-category>: <error-message>"
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
 
 #, c-format
 msgid "%zu bytes out"
@@ -184,6 +194,9 @@ msgstr "Помилка вводу/виводу"
 msgid "Integer overflow"
 msgstr "Цілочисельне переповнювання"
 
+msgid "Internal Poppler error"
+msgstr ""
+
 #. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
 msgstr "Перерваний виклик функції"
@@ -281,13 +294,19 @@ msgstr "Дія не дозволена"
 msgid "Options: "
 msgstr "Параметри: "
 
-#, c-format
-msgid "PDF error (%d): %s"
-msgstr "Помилка PDF (%d): %s"
+msgid "PDF error"
+msgstr "Помилка PDF"
 
-#, c-format
-msgid "PDF error: %s"
-msgstr "Помилка PDF: %s"
+#, fuzzy
+msgid "PDF feature not implemented"
+msgstr "Функція не реалізована"
+
+#, fuzzy
+msgid "PDF syntax error"
+msgstr "Помилка PDF"
+
+msgid "PDF syntax warning"
+msgstr ""
 
 msgid "Page not found"
 msgstr "Сторінку не знайдено"
@@ -315,6 +334,9 @@ msgstr ""
 #. L10N: Windows error message for EACCES
 msgid "Permission denied"
 msgstr "Доступ заборонено"
+
+msgid "Poppler configuration error"
+msgstr ""
 
 #. L10N: Windows error message for EROFS
 msgid "Read-only file system"
