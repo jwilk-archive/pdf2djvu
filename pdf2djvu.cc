@@ -1387,13 +1387,13 @@ static int xmain(int argc, char * const argv[])
         debug(0)++;
       }
       out1.reset(new pdf::Renderer(paper_color, config.monochrome));
-      out1->startDoc(doc->getXRef());
+      out1->start_doc(doc.get());
       outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
-      outm->startDoc(doc->getXRef());
+      outm->start_doc(doc.get());
       if (!config.monochrome)
       {
         outs.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
-        outs->startDoc(doc->getXRef());
+        outs->start_doc(doc.get());
       }
     }
     assert(doc.get() != NULL);

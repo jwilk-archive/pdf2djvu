@@ -125,6 +125,14 @@ namespace pdf
     virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
     virtual void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)  { }
     std::vector<std::string> link_border_colors;
+    void start_doc(::PDFDoc *doc)
+    {
+#if POPPLER_VERSION < 1900
+      this->startDoc(doc->getXRef());
+#else
+      this->startDoc(doc);
+#endif
+    }
   protected:
     static void convert_path(gfx::State *state, pdf::splash::Path &splash_path);
   };
