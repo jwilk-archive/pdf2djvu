@@ -16,6 +16,8 @@
 
 #include <stdint.h>
 
+#include "version.hh"
+
 #include <GfxState.h>
 #include <Link.h>
 #include <PDFDoc.h>
