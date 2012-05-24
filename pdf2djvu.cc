@@ -499,12 +499,7 @@ public:
     );
   }
 
-  void drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
-  {
-     pdf::Renderer::drawLink(link, catalog); /* just call the inherited method */
-  }
-
-  void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)
+  void draw_link(pdf::link::Link *link, const std::string &border_color)
   {
     sexpr::GCLock gc_lock;
     if (!config.hyperlinks.extract)
@@ -523,7 +518,7 @@ public:
       int page;
       try
       {
-        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), catalog);
+        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), this->catalog);
       }
       catch (NoLinkDestination &ex)
       {

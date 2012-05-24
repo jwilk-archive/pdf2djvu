@@ -117,13 +117,20 @@ namespace pdf
       pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, gFalse, paper_color)
     { }
 
+#if POPPLER_VERSION < 1900
     void processLink(pdf::link::Link *link, pdf::Catalog *catalog)
     {
       this->drawLink(link, catalog);
     }
-
+#else
+    void processLink(pdf::link::Link *link)
+    {
+      this->drawLink(link, NULL);
+    }
+#endif
     virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
-    virtual void drawLink(pdf::link::Link *link, const std::string &border_color, pdf::Catalog *catalog)  { }
+    virtual void draw_link(pdf::link::Link *link, const std::string &border_color)
+    { }
     std::vector<std::string> link_border_colors;
     void start_doc(::PDFDoc *doc)
     {
@@ -132,8 +139,10 @@ namespace pdf
 #else
       this->startDoc(doc);
 #endif
+      this->catalog = doc->getCatalog();
     }
   protected:
+    pdf::Catalog *catalog;
     static void convert_path(gfx::State *state, pdf::splash::Path &splash_path);
   };
 

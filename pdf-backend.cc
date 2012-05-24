@@ -457,7 +457,7 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
     border_color = this->link_border_colors.back();
     this->link_border_colors.pop_back();
   }
-  this->drawLink(link, border_color, catalog);
+  this->draw_link(link, border_color);
 }
 
 
