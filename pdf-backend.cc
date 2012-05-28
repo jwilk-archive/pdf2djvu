@@ -710,4 +710,11 @@ pdf::NFKC::~NFKC() throw ()
   gfree(this->data);
 }
 
+#if POPPLER_VERSION >= 1900
+/* Preempt this poppler function, so that it doesn't stand in our way. */
+pdf::Bool unicodeIsAlphabeticPresentationForm(Unicode c) {
+  return 0;
+}
+#endif
+
 // vim:ts=2 sw=2 et
