@@ -13,8 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "     --filter-text=COMMAND-LINE"
 msgstr "     --filter-text=КОМАНДНАЯ-СТРОКА"
@@ -48,9 +47,7 @@ msgstr " -o, --output=ФАЙЛ"
 
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
-msgstr ""
-"%.3f бит/пиксел; %.3f:1, %.2f%% сохранено, %ju байт исходно, %zu байт "
-"результат"
+msgstr "%.3f бит/пиксел; %.3f:1, %.2f%% сохранено, %ju байт исходно, %zu байт результат"
 
 #. L10N: "<error-category> (<position>): <error-message>"
 #, c-format
@@ -312,22 +309,14 @@ msgstr "Страница не найдена"
 msgid "Pageid cannot start with a '+' or a '-' character"
 msgstr "Идентификатор страницы не может начинаться со знаков '+' или '-'"
 
-msgid ""
-"Pageid cannot start with a '.' character or contain two consecutive '.' "
-"characters"
-msgstr ""
-"Идентификатор страницы не может начинаться со знака '.' или включать два "
-"последовательных знака '.'"
+msgid "Pageid cannot start with a '.' character or contain two consecutive '.' characters"
+msgstr "Идентификатор страницы не может начинаться со знака '.' или включать два последовательных знака '.'"
 
-msgid ""
-"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
-msgstr ""
-"Идентификатор страницы должен включать только буквы, цифры и знаки  '_', "
-"'+', '-' и '.'"
+msgid "Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr "Идентификатор страницы должен включать только буквы, цифры и знаки  '_', '+', '-' и '.'"
 
 msgid "Pageid must end with the '.djvu' or the '.djv' extension"
-msgstr ""
-"Идентификатор страницы должен заканчиваться расширением '.djvu' или '.djv'"
+msgstr "Идентификатор страницы должен заканчиваться расширением '.djvu' или '.djv'"
 
 #. L10N: Windows error message for EACCES
 msgid "Permission denied"
@@ -357,23 +346,16 @@ msgid "Result too large"
 msgstr "Результат слишком велик"
 
 #, c-format
-msgid ""
-"The specified number of foreground colors is outside the allowed range: "
-"%u .. %u"
-msgstr ""
-"Указанное количество цветов переднего плана находится за пределами "
-"разрешённого диапазона: %u .. %u"
+msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
+msgstr "Указанное количество цветов переднего плана находится за пределами разрешённого диапазона: %u .. %u"
 
 #, c-format
 msgid "The specified resolution is outside the allowed range: %d .. %d"
-msgstr ""
-"Указанное разрешение находится за пределами разрешённого диапазона: %d .. %d"
+msgstr "Указанное разрешение находится за пределами разрешённого диапазона: %d .. %d"
 
 #, c-format
 msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr ""
-"Заданное соотношение подвыборки находится за пределами разрешённого "
-"диапазона: %u .. %u"
+msgstr "Заданное соотношение подвыборки находится за пределами разрешённого диапазона: %u .. %u"
 
 #. L10N: Windows error message for EMLINK
 msgid "Too many links"
@@ -502,20 +484,14 @@ msgstr "страница #%d -> #%d"
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu предназначен для запуска из командной строки."
 
-msgid ""
-"pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+msgid "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
 msgstr "pdf2djvu скомпилирован без GNOME XSLT; XML-преобразования отключены."
 
-msgid ""
-"pdf2djvu was built without GraphicsMagick; advanced color quantization is "
-"disabled."
-msgstr ""
-"pdf2djvu скомпилирован без GraphicsMagick; улучшенное квантование цвета "
-"отключено."
+msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
+msgstr "pdf2djvu скомпилирован без GraphicsMagick; улучшенное квантование цвета отключено."
 
 msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
-msgstr ""
-"pdf2djvu скомпилирован без поддержки OpenMP; многопоточность отключена."
+msgstr "pdf2djvu скомпилирован без поддержки OpenMP; многопоточность отключена."
 
 msgid "possibly memory allocation error"
 msgstr "вероятно, ошибка выделения памяти"

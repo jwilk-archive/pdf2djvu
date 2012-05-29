@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-05-24 15:49+0200\n"
+"POT-Creation-Date: 2012-05-28 17:24+0200\n"
 "PO-Revision-Date: 2011-05-17 23:28+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -47,8 +47,7 @@ msgstr " -o, --output=DATEI"
 
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
-msgstr ""
-"%.3f Bits/Bildpunkt; %.3f:1, %.2f%% gespeichert, %ju Byte rein, %zu Byte raus"
+msgstr "%.3f Bits/Bildpunkt; %.3f:1, %.2f%% gespeichert, %ju Byte rein, %zu Byte raus"
 
 #. L10N: "<error-category> (<position>): <error-message>"
 #, c-format
@@ -309,22 +308,13 @@ msgid "Page not found"
 msgstr "Seite nicht gefunden"
 
 msgid "Pageid cannot start with a '+' or a '-' character"
-msgstr ""
-"Seitenidentifikationsnummer darf nicht mit einem »+«- oder einem »-«-Zeichen "
-"beginnen"
+msgstr "Seitenidentifikationsnummer darf nicht mit einem »+«- oder einem »-«-Zeichen beginnen"
 
-msgid ""
-"Pageid cannot start with a '.' character or contain two consecutive '.' "
-"characters"
-msgstr ""
-"Seitenidentifikationsnummer darf nicht mit einem ».«-Zeichen beginnen oder "
-"zwei aufeinanderfolgende ».«-Zeichen enthalten"
+msgid "Pageid cannot start with a '.' character or contain two consecutive '.' characters"
+msgstr "Seitenidentifikationsnummer darf nicht mit einem ».«-Zeichen beginnen oder zwei aufeinanderfolgende ».«-Zeichen enthalten"
 
-msgid ""
-"Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
-msgstr ""
-"Seitenidentifikationsnummer darf nur aus Buchstaben, Ziffern und den Zeichen "
-"»_«, »+«, »-« sowie ».« bestehen"
+msgid "Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr "Seitenidentifikationsnummer darf nur aus Buchstaben, Ziffern und den Zeichen »_«, »+«, »-« sowie ».« bestehen"
 
 msgid "Pageid must end with the '.djvu' or the '.djv' extension"
 msgstr "Seitenidentifikationsnummer muss die Endung ».djvu« oder ».djv« haben"
@@ -357,23 +347,16 @@ msgid "Result too large"
 msgstr "Ergebnis zu groß"
 
 #, c-format
-msgid ""
-"The specified number of foreground colors is outside the allowed range: "
-"%u .. %u"
-msgstr ""
-"Die angegebene Anzahl der Vordergrundfarben liegt außerhalb des erlaubten "
-"Bereichs: %u … %u"
+msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
+msgstr "Die angegebene Anzahl der Vordergrundfarben liegt außerhalb des erlaubten Bereichs: %u … %u"
 
 #, c-format
 msgid "The specified resolution is outside the allowed range: %d .. %d"
-msgstr ""
-"Die angegebene Auflösung liegt außerhalb des erlaubten Bereichs: %d … %d"
+msgstr "Die angegebene Auflösung liegt außerhalb des erlaubten Bereichs: %d … %d"
 
 #, c-format
 msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr ""
-"Das angegebene Verhältnis der Unterabtastung (subsampling) liegt außerhalb "
-"des erlaubten Bereichs: %u … %u"
+msgstr "Das angegebene Verhältnis der Unterabtastung (subsampling) liegt außerhalb des erlaubten Bereichs: %u … %u"
 
 #. L10N: Windows error message for EMLINK
 msgid "Too many links"
@@ -406,8 +389,7 @@ msgid "Unable to parse page title template specification"
 msgstr "Seitentitel-Schablonenangabe konnte nicht ausgewertet werden"
 
 msgid "Unable to parse pageid template specification"
-msgstr ""
-"Seitenidentifikationsnummern-Schablonenangabe konnte nicht ausgewertet werden"
+msgstr "Seitenidentifikationsnummern-Schablonenangabe konnte nicht ausgewertet werden"
 
 msgid "Unable to set antialias parameter"
 msgstr "Kantenglättungsparameter kann nicht gesetzt werden"
@@ -441,8 +423,7 @@ msgid "Warning: Unable to convert link with a named action"
 msgstr "Warnung: Link mit einer benannten Aktion kann nicht umgewandelt werden"
 
 msgid "Warning: Unable to convert link with a remote go-to action"
-msgstr ""
-"Warnung: Link mit einem fernen Sprungbefehl kann nicht umgewandelt werden"
+msgstr "Warnung: Link mit einem fernen Sprungbefehl kann nicht umgewandelt werden"
 
 msgid "Warning: Unknown link action"
 msgstr "Warnung: unbekannte Link-Aktion"
@@ -503,22 +484,14 @@ msgstr "Seite #%d -> #%d"
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu ist für die Ausführung von der Befehlszeile gedacht."
 
-msgid ""
-"pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
-msgstr ""
-"pdf2djvu wurde ohne GNOME-XSLT gebaut. XML-Umwandlungen sind deaktiviert."
+msgid "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+msgstr "pdf2djvu wurde ohne GNOME-XSLT gebaut. XML-Umwandlungen sind deaktiviert."
 
-msgid ""
-"pdf2djvu was built without GraphicsMagick; advanced color quantization is "
-"disabled."
-msgstr ""
-"pdf2djvu wurde ohne GraphicsMagick gebaut. Fortgeschrittene "
-"Farbquantifizierung ist deaktiviert."
+msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
+msgstr "pdf2djvu wurde ohne GraphicsMagick gebaut. Fortgeschrittene Farbquantifizierung ist deaktiviert."
 
 msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
-msgstr ""
-"Pdf2djvu wurde ohne OpenMP-Unterstützung gebaut. Die Verwendung mehrerer "
-"Threads ist deaktiviert."
+msgstr "Pdf2djvu wurde ohne OpenMP-Unterstützung gebaut. Die Verwendung mehrerer Threads ist deaktiviert."
 
 msgid "possibly memory allocation error"
 msgstr "möglicher Speicherreservierungsfehler"
@@ -551,8 +524,7 @@ msgid "setting metadata with `djvused`"
 msgstr "Metadaten werden mit »djvused« gesetzt"
 
 msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
-msgstr ""
-"Metadaten werden mit »djvused« gesetzt (umgehen eines DjVuLibre-Fehlers)"
+msgstr "Metadaten werden mit »djvused« gesetzt (umgehen eines DjVuLibre-Fehlers)"
 
 msgid "storing background image"
 msgstr "Hintergrundbild wird gespeichert"

@@ -13,7 +13,8 @@ SOURCE_FILES = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
 
 gettext-common-options = \
 	--no-location \
-	--sort-output
+	--sort-output \
+	--no-wrap \
 
 xgettext = $(XGETTEXT) \
 	$(gettext-common-options) \
@@ -23,7 +24,6 @@ xgettext = $(XGETTEXT) \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
 	--add-comments=L10N: \
-	--no-wrap \
 
 msgmerge = $(MSGMERGE) \
 	$(gettext-common-options)
