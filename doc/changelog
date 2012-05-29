@@ -9,8 +9,9 @@ pdf2djvu (0.7.13) UNRELEASED; urgency=low
   * Fix build failure with Poppler ≥ 0.19. Thanks to Kyrill Detinov for the
     bug report.
     https://code.google.com/p/pdf2djvu/issues/detail?id=66
+  * Update Russian translation. Thanks to Kyrill Detinov.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 24 May 2012 15:50:19 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 29 May 2012 18:28:05 +0200
 
 pdf2djvu (0.7.12) unstable; urgency=low
 

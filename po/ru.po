@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-05-24 15:49+0200\n"
-"PO-Revision-Date: 2011-07-30 02:08+0300\n"
+"POT-Creation-Date: 2012-05-28 17:24+0200\n"
+"PO-Revision-Date: 2012-05-29 20:14+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -126,19 +126,19 @@ msgstr "Неправильный формат исполняемого файл�
 
 #, c-format
 msgid "External command \"%s ...\" failed"
-msgstr ""
+msgstr "Не удалось выполнить внешнюю команду \"%s ...\""
 
 #, c-format
 msgid "External command \"%s ...\" failed with exit code %u"
-msgstr ""
+msgstr "Не удалось выполнить внешнюю команду \"%s ...\". Код выхода %u"
 
 #, c-format
 msgid "External command \"%s\" failed"
-msgstr ""
+msgstr "Не удалось выполнить внешнюю команду \"%s\""
 
 #, c-format
 msgid "External command \"%s\" failed with exit code %u"
-msgstr ""
+msgstr "Не удалось выполнить внешнюю команду \"%s\". Код выхода %u"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
@@ -195,7 +195,7 @@ msgid "Integer overflow"
 msgstr "Целочисленное переполнение"
 
 msgid "Internal Poppler error"
-msgstr ""
+msgstr "Внутренняя ошибка Poppler"
 
 #. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
@@ -297,16 +297,14 @@ msgstr "Параметры:"
 msgid "PDF error"
 msgstr "Ошибка PDF"
 
-#, fuzzy
 msgid "PDF feature not implemented"
-msgstr "Функция не реализована"
+msgstr "Свойство PDF не реализовано"
 
-#, fuzzy
 msgid "PDF syntax error"
-msgstr "Ошибка PDF"
+msgstr "Ошибка синтаксиса в PDF-файле"
 
 msgid "PDF syntax warning"
-msgstr ""
+msgstr "Предупреждение о синтаксической ошибке в PDF-файле"
 
 msgid "Page not found"
 msgstr "Страница не найдена"
@@ -336,7 +334,7 @@ msgid "Permission denied"
 msgstr "Доступ запрещён"
 
 msgid "Poppler configuration error"
-msgstr ""
+msgstr "Ошибка конфигурации Poppler"
 
 #. L10N: Windows error message for EROFS
 msgid "Read-only file system"
