@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2012-05-28 17:24+0200\n"
-"PO-Revision-Date: 2012-01-13 14:59+0300\n"
+"PO-Revision-Date: 2012-05-31 11:58+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
 "Language: uk\n"
@@ -16,25 +16,25 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "     --filter-text=COMMAND-LINE"
-msgstr "     --filter-text=КОМАНДНА-РЯДОК"
+msgstr "     --filter-text=КОМАНДНИЙ_РЯДОК"
 
 msgid "     --page-size=WxH"
-msgstr "     --page-size=ШИРxВИС"
+msgstr "     --page-size=ШИР×ВИС"
 
 msgid "     --page-title-template=TEMPLATE"
 msgstr "     --page-title-template=ШАБЛОН"
 
 msgid "     --pageid-prefix=NAME"
-msgstr "     --pageid-prefix=ІМ’Я"
+msgstr "     --pageid-prefix=НАЗВА"
 
 msgid "     --pageid-template=TEMPLATE"
 msgstr "     --pageid-template=ШАБЛОН"
 
 msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
-msgstr "   pdf2djvu  -i <файл-індексу-djvu>       [параметри] <pdf-файл>"
+msgstr "   pdf2djvu  -i <файл_djvu-індексу>       [параметри] <pdf-файл>"
 
 msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
-msgstr "   pdf2djvu [-o <результуючий-djvu-файл>] [параметри] <pdf-файл>"
+msgstr "   pdf2djvu [-o <результуючий_djvu-файл>] [параметри] <pdf-файл>"
 
 msgid " -d, --dpi=RESOLUTION"
 msgstr " -d, --dpi=РОЗДІЛЬНА_ЗДАТНІСТЬ"
@@ -123,19 +123,19 @@ msgstr "Неправильний формат виконуваного файл�
 
 #, c-format
 msgid "External command \"%s ...\" failed"
-msgstr ""
+msgstr "Не вдалося виконати зовнішню команду „%s …“"
 
 #, c-format
 msgid "External command \"%s ...\" failed with exit code %u"
-msgstr ""
+msgstr "Не вдалося виконати зовнішню команду „%s …“. Код виходу %u"
 
 #, c-format
 msgid "External command \"%s\" failed"
-msgstr ""
+msgstr "Не вдалося виконати зовнішню команду „%s“"
 
 #, c-format
 msgid "External command \"%s\" failed with exit code %u"
-msgstr ""
+msgstr "Не вдалося виконати зовнішню команду „%s“. Код виходу %u"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
@@ -192,7 +192,7 @@ msgid "Integer overflow"
 msgstr "Цілочисельне переповнювання"
 
 msgid "Internal Poppler error"
-msgstr ""
+msgstr "Внутрішня помилка Poppler"
 
 #. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
@@ -294,16 +294,14 @@ msgstr "Параметри: "
 msgid "PDF error"
 msgstr "Помилка PDF"
 
-#, fuzzy
 msgid "PDF feature not implemented"
-msgstr "Функція не реалізована"
+msgstr "Властивість PDF не реалізована"
 
-#, fuzzy
 msgid "PDF syntax error"
-msgstr "Помилка PDF"
+msgstr "Помилка синтаксису у PDF-файлі"
 
 msgid "PDF syntax warning"
-msgstr ""
+msgstr "Попередження про синтаксичну помилку у PDF-файлі"
 
 msgid "Page not found"
 msgstr "Сторінку не знайдено"
@@ -318,14 +316,14 @@ msgid "Pageid must consist only of letters, digits, '_', '+', '-' and '.' charac
 msgstr "Ідентифікатор сторінки повинен включати лише букви, цифри та знаки „_“, „+“, „-“ та „.“ "
 
 msgid "Pageid must end with the '.djvu' or the '.djv' extension"
-msgstr "Ідентифікатор сторінки повинен закінчуватися розширенням „*.djvu“ або „*.djv“"
+msgstr "Ідентифікатор сторінки повинен мати розширення „*.djvu“ або „*.djv“"
 
 #. L10N: Windows error message for EACCES
 msgid "Permission denied"
 msgstr "Доступ заборонено"
 
 msgid "Poppler configuration error"
-msgstr ""
+msgstr "Помилка налаштування Poppler"
 
 #. L10N: Windows error message for EROFS
 msgid "Read-only file system"
@@ -349,15 +347,15 @@ msgstr "Результат занадто великий"
 
 #, c-format
 msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
-msgstr "Зазначена кількість кольорів переднього плану знаходиться за межами дозволеного діапазону: %u ..%u"
+msgstr "Зазначена кількість кольорів переднього плану знаходиться поза межами дозволеного діапазону: %u .. %u"
 
 #, c-format
 msgid "The specified resolution is outside the allowed range: %d .. %d"
-msgstr "Зазначена роздільна здатність знаходиться за межами дозволеного діапазону: %d .. %d"
+msgstr "Зазначена роздільна здатність знаходиться поза межами дозволеного діапазону: %d .. %d"
 
 #, c-format
 msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr "Задане співвідношення підвибірки знаходиться за межами дозволеного діапазону: %u .. %u"
+msgstr "Задане співвідношення підвибірки знаходиться поза межами дозволеного діапазону: %u .. %u"
 
 #. L10N: Windows error message for EMLINK
 msgid "Too many links"
@@ -399,7 +397,7 @@ msgid "Unable to set vector antialias parameter"
 msgstr "Неможливо виставити параметри векторного згладжування"
 
 msgid "Unexpected output from djvused"
-msgstr "Неочікуваний вивід з djvused"
+msgstr "Неочікуваний вивід з „djvused“"
 
 msgid "Unexpected subsampled bitmap height"
 msgstr "Неочікувана висота розділеного растрового зображення"
@@ -477,7 +475,7 @@ msgstr "передбачувана роздільна здатність: %s dpi
 
 #, c-format
 msgid "image size: %dx%d"
-msgstr "розмір зображення: %dx%d"
+msgstr "розмір зображення: %d×%d"
 
 #, c-format
 msgid "page #%d -> #%d"
