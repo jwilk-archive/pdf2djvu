@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.13\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2012-05-28 17:24+0200\n"
-"PO-Revision-Date: 2011-05-17 23:28+0100\n"
+"PO-Revision-Date: 2012-05-29 08:18+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -122,19 +122,19 @@ msgstr "Fehler des Ausführungsformats"
 
 #, c-format
 msgid "External command \"%s ...\" failed"
-msgstr ""
+msgstr "externer Befehl »%s …« fehlgeschlagen"
 
 #, c-format
 msgid "External command \"%s ...\" failed with exit code %u"
-msgstr ""
+msgstr "externer Befehl »%s …« mit Exit-Kode %u fehlgeschlagen"
 
 #, c-format
 msgid "External command \"%s\" failed"
-msgstr ""
+msgstr "externer Befehl »%s« fehlgeschlagen"
 
 #, c-format
 msgid "External command \"%s\" failed with exit code %u"
-msgstr ""
+msgstr "externer Befehl »%s« mit Exit-Kode %u fehlgeschlagen"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
@@ -191,7 +191,7 @@ msgid "Integer overflow"
 msgstr "Ganzzahlenüberlauf"
 
 msgid "Internal Poppler error"
-msgstr ""
+msgstr "interner Poppler-Fehler"
 
 #. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
@@ -293,16 +293,14 @@ msgstr "Optionen: "
 msgid "PDF error"
 msgstr "PDF-Fehler"
 
-#, fuzzy
 msgid "PDF feature not implemented"
-msgstr "Funktion nicht implementiert"
+msgstr "PDF-Fähigkeit nicht implementiert"
 
-#, fuzzy
 msgid "PDF syntax error"
-msgstr "PDF-Fehler"
+msgstr "PDF-Syntaxfehler"
 
 msgid "PDF syntax warning"
-msgstr ""
+msgstr "PDF-Syntaxwarnung"
 
 msgid "Page not found"
 msgstr "Seite nicht gefunden"
@@ -324,7 +322,7 @@ msgid "Permission denied"
 msgstr "Zugriff verweigert"
 
 msgid "Poppler configuration error"
-msgstr ""
+msgstr "Poppler-Konfigurationsfehler"
 
 #. L10N: Windows error message for EROFS
 msgid "Read-only file system"

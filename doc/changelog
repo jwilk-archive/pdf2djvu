@@ -12,8 +12,10 @@ pdf2djvu (0.7.13) UNRELEASED; urgency=low
   * Update Russian translation. Thanks to Kyrill Detinov.
   * Update Ukrainian translation. Thanks to Serhij Dubyk.
   * Add Ukrainian translation of the manual page by Serhij Dubyk.
+  * Update German translation. Thanks to Chris Leick.
+    http://bugs.debian.org/675573
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 31 May 2012 11:37:41 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 02 Jun 2012 10:58:26 +0200
 
 pdf2djvu (0.7.12) unstable; urgency=low
 
