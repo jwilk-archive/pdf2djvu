@@ -184,8 +184,8 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.24.tar.gz
-	echo 'c0734c81d22a0e458c3fb5efd4c3eab051bcb6ad8740f5a5784c1f5699482534  src/djvulibre-3.5.24.tar.gz' | sha256sum -c
+	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.25.2.tar.gz
+	echo '619becf24cf2b9289d5102a19bb81424f68008f90ded841085f07c32e5d48158  src/djvulibre-3.5.25.2.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../djvulibre-*.tar.gz
 	sed -i \
 		-e '/LIBS=-lmsvcp60/d' \
@@ -193,8 +193,6 @@ src/djvulibre/source-stamp:
 		$(dir $@)/configure
 	sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' $(dir $@)/libdjvu/atomic.cpp
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
-	sed -i -e '1a #include <stddef.h>' $(dir $@)/libdjvu/*.h # Fix FTBFS with GCC 4.6
-	sed -i -e 's/^#ifndef NO_MMX$$/#if 0/' $(dir $@)/libdjvu/MMX.h # Disable MMX code, broken with GCC 4.6
 	rm src/djvulibre-*.tar.gz
 	touch $@
 
