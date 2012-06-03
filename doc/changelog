@@ -250,7 +250,7 @@ pdf2djvu (0.5.3) unstable; urgency=low
 pdf2djvu (0.5.2) unstable; urgency=low
 
   * Add --verbatim-metadata option.
-  * Better support for Windows systems.
+  * Improve support for Windows systems.
     http://code.google.com/p/pdf2djvu/issues/detail?id=15
     http://code.google.com/p/pdf2djvu/issues/detail?id=16
     http://code.google.com/p/pdf2djvu/issues/detail?id=18
@@ -261,7 +261,7 @@ pdf2djvu (0.5.1) unstable; urgency=low
 
   * Fix several memory leaks.
   * On Unix systems, respect the TMPDIR variable.
-  * Better support for Windows systems.
+  * Improve support for Windows systems.
   * Document differences between pdf2djvu and djvudigital.
     http://code.google.com/p/pdf2djvu/issues/detail?id=14
 
@@ -426,7 +426,7 @@ pdf2djvu (0.3.6) unstable; urgency=low
 pdf2djvu (0.3.5) unstable; urgency=low
 
   * Fix a regression with rendering background layer (Poppler 0.4 only).
-  * Better bitonal image recognition.
+  * Improve bitonal image recognition.
   * Coordinate space transformations are now done correctly.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 28 Nov 2007 16:13:57 +0100
@@ -480,7 +480,7 @@ pdf2djvu (0.2) unstable; urgency=low
   * Include hyperlinks to a particular page.
   * Include outline/bookmarks.
   * Add compatibility layer to allow linking with Poppler < 0.5.
-  * Better exception handling.
+  * Improve exception handling.
   * Fix some other minor bugs.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Tue, 30 Oct 2007 21:36:53 +0100
