@@ -1,4 +1,4 @@
-pdf2djvu (0.7.13) UNRELEASED; urgency=low
+pdf2djvu (0.7.13) unstable; urgency=low
  
   * XMP: put ‘softwareAgent’ and ‘when’ attributes in stEvt namespace.
   * Rewrite test-suite runner from scratch, using nosetests.
@@ -14,7 +14,7 @@ pdf2djvu (0.7.13) UNRELEASED; urgency=low
   * Update German translation. Thanks to Chris Leick.
     http://bugs.debian.org/675573
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 02 Jun 2012 10:58:26 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 03 Jun 2012 22:04:29 +0200
 
 pdf2djvu (0.7.12) unstable; urgency=low
 
