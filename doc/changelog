@@ -5,7 +5,6 @@ pdf2djvu (0.7.13) UNRELEASED; urgency=low
   * Windows: trap errors from external commands. Thanks to Andres Aule for the
     bug report.
     http://code.google.com/p/pdf2djvu/issues/detail?id=65
-  * Windows: fix compliation issues with recent MinGW-w64.
   * Fix build failure with Poppler ≥ 0.19. Thanks to Kyrill Detinov for the
     bug report.
     https://code.google.com/p/pdf2djvu/issues/detail?id=66
@@ -60,7 +59,6 @@ pdf2djvu (0.7.8) unstable; urgency=low
     http://bugs.debian.org/626315
   * Add support for merging multiple PDFs into a single DjVu file.
     http://bugs.debian.org/633628
-  * Windows: cross compile using MinGW-w64.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 24 Jul 2011 22:41:20 +0200
 
@@ -92,7 +90,6 @@ pdf2djvu (0.7.5) unstable; urgency=low
   * Windows: fix handling of non-ASCII filenames in CJK locales. Thanks to Lu
     Wei for the bugreport.
     http://code.google.com/p/pdf2djvu/issues/detail?id=53
-  * Overhaul Windows cross-compiling code.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 19 Jan 2011 23:56:19 +0100
 
