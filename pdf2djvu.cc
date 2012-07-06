@@ -506,6 +506,11 @@ public:
       return;
     double x1, y1, x2, y2;
     pdf::link::Action *link_action = link->getAction();
+    if (link_action == NULL)
+    {
+      debug(1) << _("Warning: Unable to convert link without an action") << std::endl;
+      return;
+    }
     std::string uri;
     link->getRect(&x1, &y1, &x2, &y2);
     switch (link_action->getKind())
