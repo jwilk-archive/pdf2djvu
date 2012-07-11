@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e -u
+set -x
 for file in install-sh config.sub config.guess
 do
   cp $(ls -d /usr/share/automake*/$file | head -n1) tools/
