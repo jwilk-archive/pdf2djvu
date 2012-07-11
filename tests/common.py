@@ -52,7 +52,6 @@ def assert_well_formed_xml(xml):
 
 class ipc_result(object):
 
-
     def __init__(self, stdout, stderr, rc):
         self.stdout = stdout
         self.stderr = stderr
