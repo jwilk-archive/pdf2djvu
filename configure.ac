@@ -17,8 +17,8 @@ AC_LANG(C++)
 
 AC_PROG_CXX
 AC_PROG_INSTALL
-AC_TRY_CPP(
-  [#include <winver.h>],
+AC_PREPROC_IFELSE(
+  [AC_LANG_SOURCE([[#include <winver.h>]])],
   [AC_CHECK_TOOL(WINDRES, windres)]
 )
 
@@ -141,7 +141,7 @@ PACKAGE_STRING="$PACKAGE_STRING)"
 
 AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name and version of this package)
 
-AC_TRY_CPP
+AC_PREPROC_IFELSE([AC_LANG_SOURCE([[]])])
 
 have_pstreams=maybe
 AC_CHECK_FUNC(fork, 
@@ -151,8 +151,8 @@ AC_CHECK_FUNC(fork,
 AC_MSG_CHECKING(for PStreams)
 if test "$have_pstreams" = "maybe"
 then
-  AC_TRY_CPP(
-    [#include <pstream.h>],
+  AC_PREPROC_IFELSE(
+    [AC_LANG_SOURCE([[#include <pstream.h>]])],
     [
       AC_DEFINE(HAVE_PSTREAM_H, 1, [Define if you have the <pstream.h> file])
       have_pstreams=yes
@@ -161,8 +161,8 @@ then
 fi
 if test "$have_pstreams" = "maybe"
 then
-  AC_TRY_CPP(
-    [#include <pstreams/pstream.h>],
+  AC_PREPROC_IFELSE(
+    [AC_LANG_SOURCE([[#include <pstreams/pstream.h>]])],
     [
       AC_DEFINE(HAVE_PSTREAMS_PSTREAM_H, 1, [Define if you have the <pstreams/pstream.h> file])
       have_pstreams=yes
@@ -185,7 +185,7 @@ AM_GNU_GETTEXT_VERSION(0.17)
 # Checks for typedefs, structures, and compiler characteristics.
 
 AC_MSG_CHECKING(for wchar_t encoding)
-AC_TRY_CPP([
+AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 
 #if defined(__STDC_ISO_10646__)
@@ -194,7 +194,7 @@ AC_TRY_CPP([
 #else
 #error
 #endif
-],
+]])],
   [
     AC_MSG_RESULT(UTF-32 or UTF-16)
     have_unicode_wchar_t=yes
