@@ -29,7 +29,9 @@ rm -Rf *.cache
 cd ..
 
 # Build the manual page and translations:
-sed -n -e '/^AC_INIT(\(.*\), *\(.*\), *\(.*\), .*, .*)$/ { s//PACKAGE_NAME=\1\nPACKAGE_VERSION=\2\nPACKAGE_BUGREPORT=\3/p; q }' "pdf2djvu-$version/configure.ac" > "pdf2djvu-$version/Makefile.common"
+sed -n -e '/^AC_INIT(\[\([^]]*\)\], *\[\([^]]*\)\], *\[\([^]]*\)\],.*/ { s//PACKAGE_NAME=\1\nPACKAGE_VERSION=\2\nPACKAGE_BUGREPORT=\3/p; q }' \
+    "pdf2djvu-$version/configure.ac" \
+    > "pdf2djvu-$version/Makefile.common"
 grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "pdf2djvu-$version/Makefile.common.in" \
 | sed >> "pdf2djvu-$version/Makefile.common" \
     -e 's/@MSGFMT@/msgfmt/' \
