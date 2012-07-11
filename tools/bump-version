@@ -4,7 +4,7 @@ windows_version="$(printf -- '%s' "$version" | sed -e 's/[.]/,/g'),0"
 set -e
 set -x
 dch -m -v "$version" -c doc/changelog
-sed -i -r -e "s/(AC_INIT[(]pdf2djvu,) [0-9.]+/\1 $version/" configure.ac
+sed -i -r -e "s/(AC_INIT[(]\[pdf2djvu\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
 sed -i -r -e "s/(VERSION) [0-9,]+/\1 $windows_version/" version.rc
 sed -i -r -e "s/<(!ENTITY version) '[0-9.]+'>/<\1 '$version'>/" doc/*.xml
 sed -i -r -e 's/(Project-Id-Version: pdf2djvu) [0-9.]+/\1 '"$version"'/' po/*.po $(ls po/*.pot) doc/po/*.po $(ls doc/po/*.pot)
