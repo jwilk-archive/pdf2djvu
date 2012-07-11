@@ -96,6 +96,7 @@ class case(object):
     def run(self, *commandline):
         child = ipc.Popen(list(commandline), stdout=ipc.PIPE, stderr=ipc.PIPE)
         stdout, stderr = child.communicate()
+        stderr = re('^(?:  \S+ --> \S+ \(\d+ bytes\)\n)+$').sub('', stderr) # strip djvuextract cruft
         return ipc_result(stdout, stderr, child.returncode)
 
     def _pdf2djvu(self, *args):
