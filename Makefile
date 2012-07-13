@@ -43,11 +43,11 @@ XML_HH_FILES = $(XML_FILES:.xml=.hh)
 
 .PHONY: clean
 clean:
-	$(RM) pdf2djvu *.o paths.hh $(XML_HH_FILES)
+	rm -f pdf2djvu *.o paths.hh $(XML_HH_FILES)
 
 .PHONY: distclean
 distclean: clean
-	$(RM) version.hh Makefile.common config.status config.log
+	rm -f version.hh Makefile.common config.status config.log
 
 .PHONY: test
 test: pdf2djvu
