@@ -1,12 +1,12 @@
-# Copyright © 2011 Kyrill Detinov
+# Copyright © 2011, 2012 Kyrill Detinov
 # This file is distributed under the same license as the pdf2djvu package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.14\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-07-06 09:59+0200\n"
-"PO-Revision-Date: 2012-05-29 20:14+0300\n"
+"POT-Creation-Date: 2012-08-19 17:17+0200\n"
+"PO-Revision-Date: 2012-08-19 18:46+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -424,9 +424,8 @@ msgstr "Предупреждение: невозможно преобразов�
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Предупреждение: невозможно преобразовать ссылку на внешний документ"
 
-#, fuzzy
 msgid "Warning: Unable to convert link without an action"
-msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+msgstr "Предупреждение: невозможно преобразовать ссылку без действия"
 
 msgid "Warning: Unknown link action"
 msgstr "Предупреждение: неизвестное действие ссылки"

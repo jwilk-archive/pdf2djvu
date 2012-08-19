@@ -3,8 +3,9 @@ pdf2djvu (0.7.14) UNRELEASED; urgency=low
   * Ignore links with no action. (Previously such links would cause segfault).
     Thanks to Krzysztof Szafran for the bug report.
   * Update German translation. Thanks to Chris Leick.
+  * Update Russian translation. Thanks to Kyrill Detinov.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 19 Aug 2012 17:21:39 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 19 Aug 2012 17:44:35 +0200
 
 pdf2djvu (0.7.13) unstable; urgency=low
  
