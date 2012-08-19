@@ -1,12 +1,12 @@
-# Copyright © 2011 Chris Leick <c.leick@vollbio.de>
+# Copyright © 2011, 2012 Chris Leick <c.leick@vollbio.de>
 # This file is distributed under the same license as the pdf2djvu package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.14\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2012-07-06 09:59+0200\n"
-"PO-Revision-Date: 2012-05-29 08:18+0100\n"
+"POT-Creation-Date: 2012-08-19 17:17+0200\n"
+"PO-Revision-Date: 2012-08-19 11:50+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -94,7 +94,7 @@ msgid "Cannot allocate memory"
 msgstr "Speicher kann nicht reserviert werden"
 
 msgid "Cannot find link destination"
-msgstr "Link-Ziel kann nicht gefunden werden"
+msgstr "Verweisziel kann nicht gefunden werden"
 
 #. L10N: Windows error message for EBUSY
 msgid "Device or resource busy"
@@ -173,7 +173,7 @@ msgstr "illegale Positionierung"
 
 #. L10N: Windows error message for EXDEV
 msgid "Improper link"
-msgstr "ungeeigneter Link"
+msgstr "ungeeigneter Verweis"
 
 #. L10N: Windows error message for ENOTTY
 msgid "Inappropriate I/O control operation"
@@ -207,7 +207,7 @@ msgstr "ungültiges Argument"
 
 #. L10N: Windows error message for EXDEV
 msgid "Invalid cross-device link"
-msgstr "falscher Link über Gerätegrenzen hinweg"
+msgstr "falscher Verweis über Gerätegrenzen hinweg"
 
 msgid "Invalid date format"
 msgstr "ungültiges Datumsformat"
@@ -358,7 +358,7 @@ msgstr "Das angegebene Verhältnis der Unterabtastung (subsampling) liegt außer
 
 #. L10N: Windows error message for EMLINK
 msgid "Too many links"
-msgstr "zu viele Links"
+msgstr "zu viele Verweise"
 
 #. L10N: Windows error message for EMFILE
 msgid "Too many open files"
@@ -418,17 +418,16 @@ msgid "Warning: %s"
 msgstr "Warnung: %s"
 
 msgid "Warning: Unable to convert link with a named action"
-msgstr "Warnung: Link mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
 
 msgid "Warning: Unable to convert link with a remote go-to action"
-msgstr "Warnung: Link mit einem fernen Sprungbefehl kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einem fernen Sprungbefehl kann nicht umgewandelt werden"
 
-#, fuzzy
 msgid "Warning: Unable to convert link without an action"
-msgstr "Warnung: Link mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis ohne Aktion kann nicht umgewandelt werden"
 
 msgid "Warning: Unknown link action"
-msgstr "Warnung: unbekannte Link-Aktion"
+msgstr "Warnung: unbekannte Verweisaktion"
 
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
