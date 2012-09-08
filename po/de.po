@@ -47,7 +47,7 @@ msgstr " -o, --output=DATEI"
 
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
-msgstr "%.3f Bits/Bildpunkt; %.3f:1, %.2f%% gespeichert, %ju Byte rein, %zu Byte raus"
+msgstr "%.3f Bits/Bildpunkt; %.3f:1, %.2f%% gespart, %ju Byte rein, %zu Byte raus"
 
 #. L10N: "<error-category> (<position>): <error-message>"
 #, c-format
