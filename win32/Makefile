@@ -321,8 +321,8 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.8.0.tar.gz
-	echo 'fa2a1c6eea654d9fce7a4b1220f10c99cdec848dccaf1625c01f076b31382335  src/fontconfig-2.8.0.tar.gz' | sha256sum -c
+	cd src && wget -c http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.9.0.tar.gz
+	echo 'ca7e25071cf044bdcdaf7c48845243c115b9269b4e369c6bd78a29e71f01b41a  src/fontconfig-2.9.0.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../fontconfig-*.tar.gz
 	rm src/fontconfig-*.tar.gz
 	sed -i -e 's/"append"/"prepend"/g' src/fontconfig/conf.d/*-urw-aliases.conf
