@@ -185,8 +185,8 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.25.2.tar.gz
-	echo '619becf24cf2b9289d5102a19bb81424f68008f90ded841085f07c32e5d48158  src/djvulibre-3.5.25.2.tar.gz' | sha256sum -c
+	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.25.3.tar.gz
+	echo '898d7ed6dd2fa311a521baa95407a91b20a872d80c45e8245442d64f142cb1e0  src/djvulibre-3.5.25.3.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../djvulibre-*.tar.gz
 	sed -i \
 		-e '/LIBS=-lmsvcp60/d' \
