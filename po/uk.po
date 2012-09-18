@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.14\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2012-07-06 09:59+0200\n"
-"PO-Revision-Date: 2012-05-31 11:58+0300\n"
-"Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
+"PO-Revision-Date: 2012-09-18 11:33+0300\n"
+"Last-Translator: Serhij Dubyk / Сергій Дубик <dubyk@library.lviv.ua>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -424,9 +424,8 @@ msgstr "Попередження: неможливо перетворити по
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Попередження: неможливо перетворити посилання на зовнішній документ"
 
-#, fuzzy
 msgid "Warning: Unable to convert link without an action"
-msgstr "Попередження: неможливо перетворити посилання з дією"
+msgstr "Попередження: неможливо перетворити посилання без дії"
 
 msgid "Warning: Unknown link action"
 msgstr "Попередження: невідома дія посилання"
