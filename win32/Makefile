@@ -294,8 +294,8 @@ src/libxslt/install-stamp: src/libxslt/build-stamp
 
 src/freetype/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://download.savannah.gnu.org/releases/freetype/freetype-2.4.4.tar.bz2
-	echo '4b8281c7dc4d375c6b65d3c6f4808e488a313fab47d7be82aad2c871c8480fef  src/freetype-2.4.4.tar.bz2' | sha256sum -c
+	cd src && wget -c http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2
+	echo 'c4204ac1d48e99d4375a2f32bf4f3f92780a9d9f015e64e57e852f6c004859b9  src/freetype-2.4.9.tar.bz2' | sha256sum -c
 	cd $(dir $@) && $(untar) ../freetype-*.tar.bz2
 	rm src/freetype-*.tar.bz2
 	touch $@
