@@ -25,7 +25,11 @@
 #include <Error.h>
 #include <GlobalParams.h>
 #include <PDFDocEncoding.h>
+#if POPPLER_VERSION < 2100
 #include <UTF8.h>
+#else
+#include <UTF.h>
+#endif
 #include <UnicodeTypeTable.h>
 
 /* class pdf::Environment
