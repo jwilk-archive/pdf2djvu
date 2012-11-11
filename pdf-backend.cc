@@ -25,9 +25,10 @@
 #include <Error.h>
 #include <GlobalParams.h>
 #include <PDFDocEncoding.h>
-#if POPPLER_VERSION < 2100
+#if (POPPLER_VERSION < 2100) || (POPPLER_VERSION >= 2101)
 #include <UTF8.h>
-#else
+#endif
+#if POPPLER_VERSION >= 2100
 #include <UTF.h>
 #endif
 #include <UnicodeTypeTable.h>
