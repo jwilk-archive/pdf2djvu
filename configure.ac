@@ -5,7 +5,7 @@ dnl | it under the terms of the GNU General Public License as published by
 dnl | the Free Software Foundation; version 2 dated June, 1991.
 
 AC_PREREQ(2.61)
-AC_INIT([pdf2djvu], [0.7.15], [http://code.google.com/p/pdf2djvu/issues/], [pdf2djvu], [http://pdf2djvu.googlecode.com/])
+AC_INIT([pdf2djvu], [0.7.16], [http://code.google.com/p/pdf2djvu/issues/], [pdf2djvu], [http://pdf2djvu.googlecode.com/])
 AC_CONFIG_AUX_DIR(tools)
 AC_LANG(C++)
 
