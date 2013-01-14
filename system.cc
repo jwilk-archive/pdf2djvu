@@ -318,7 +318,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
    *    number of backslashes is odd, the last backslash escapes the next
    *    double quotation mark as described in rule 3.
    *
-   * See <http://msdn.microsoft.com/library/en-us/vccelng/htm/progs_12.asp>.
+   * See <http://msdn.microsoft.com/en-us/library/ms880421.aspx>.
    */
   for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
   {
