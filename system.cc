@@ -358,13 +358,13 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
   for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
   {
     buffer << "'";
-    if (parg->find_first_of("\\\'") == std::string::npos)
+    if (parg->find("\'") == std::string::npos)
       buffer << *parg;
     else
       for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++)
       {
-        if (*pch == '\\' || *pch == '\'')
-          buffer << "'\"\\" << *pch << "\"'";
+        if (*pch == '\'')
+          buffer << "'\\''";
         else
           buffer << *pch;
       }
