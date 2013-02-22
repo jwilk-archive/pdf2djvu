@@ -26,10 +26,12 @@ xgettext = $(XGETTEXT) \
 	--add-comments=L10N: \
 
 msgmerge = $(MSGMERGE) \
-	$(gettext-common-options)
+	$(gettext-common-options) \
+	--verbose \
 
 msgfmt = $(MSGFMT) \
-	--check
+	--check \
+	--verbose \
 
 .PHONY: all
 all: pdf2djvu.pot $(PO_FILES) $(MO_FILES)
