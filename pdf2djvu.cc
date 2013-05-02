@@ -992,7 +992,7 @@ public:
       debug(3) << _("setting metadata with `djvused`") << std::endl;
       DjVuCommand djvused("djvused");
       djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
-      djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
+      djvused(); // djvused -s -f <metadata-sed-file> <index-djvu-file>
     }
     else
     {
