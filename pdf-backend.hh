@@ -62,6 +62,11 @@ namespace pdf
   typedef ::Catalog Catalog;
   typedef ::GooString String;
   typedef ::GBool Bool;
+#if POPPLER_VERSION < 2300
+  typedef int Offset;
+#else
+  typedef ::Goffset Offset;
+#endif
 
 /* type definitions — annotations
  * ==============================

@@ -38,7 +38,7 @@
  */
 
 #if POPPLER_VERSION < 1900
-static void poppler_error_handler(int pos, char *message, va_list args)
+static void poppler_error_handler(pdf::Offset pos, char *message, va_list args)
 {
   std::string format;
   std::string expanded_message = string_vprintf(message, args);
@@ -48,7 +48,7 @@ static void poppler_error_handler(int pos, char *message, va_list args)
   {
     error_log <<
       /* L10N: "<error-category> (<position>): <error-message>" */
-      string_printf(_("%s (%d): %s"), category, pos, c_message);
+      string_printf(_("%s (%jd): %s"), category, static_cast<intmax_t>(pos), c_message);
   }
   else
   {
@@ -59,7 +59,7 @@ static void poppler_error_handler(int pos, char *message, va_list args)
   error_log << std::endl;
 }
 #else
-static void poppler_error_handler(void *data, ErrorCategory category, int pos, char *message)
+static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, char *message)
 {
   std::string format;
   const char *category_name = _("PDF error");
@@ -94,7 +94,7 @@ static void poppler_error_handler(void *data, ErrorCategory category, int pos, c
   {
     error_log <<
       /* L10N: "<error-category> (<position>): <error-message>" */
-      string_printf(_("%s (%d): %s"), category_name, pos, message);
+      string_printf(_("%s (%jd): %s"), category_name, static_cast<intmax_t>(pos), message);
   }
   else
   {

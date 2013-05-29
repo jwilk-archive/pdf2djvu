@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.17\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2013-02-22 18:09+0100\n"
+"POT-Creation-Date: 2013-05-30 00:47+0200\n"
 "PO-Revision-Date: 2012-09-18 11:33+0300\n"
 "Last-Translator: Serhij Dubyk / Сергій Дубик <dubyk@library.lviv.ua>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -51,8 +51,8 @@ msgstr "%.3f біт/піксель; %.3f:1, %.2f%% збережено, %ju ба�
 
 #. L10N: "<error-category> (<position>): <error-message>"
 #, c-format
-msgid "%s (%d): %s"
-msgstr "%s (%d): %s"
+msgid "%s (%jd): %s"
+msgstr "%s (%jd): %s"
 
 #, c-format
 msgid "%s is not a valid number"
