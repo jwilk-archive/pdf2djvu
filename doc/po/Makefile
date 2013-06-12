@@ -15,6 +15,7 @@ po4a-common-options = \
 
 po4a-getext-options = \
 	$(po4a-common-options) \
+	--master-charset=UTF-8 \
 	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
