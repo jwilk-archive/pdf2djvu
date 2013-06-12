@@ -1,8 +1,8 @@
 pdf2djvu (0.7.18) UNRELEASED; urgency=low
 
-  * 
+  * Make the xml2c script more portable.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 30 May 2013 22:59:56 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 12 Jun 2013 11:00:47 +0200
 
 pdf2djvu (0.7.17) unstable; urgency=low
 
