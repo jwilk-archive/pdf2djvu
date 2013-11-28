@@ -17,6 +17,10 @@
 #include "string-format.hh"
 #include "i18n.hh"
 
+#if __cplusplus < 201103
+#define decltype typeof
+#endif
+
 namespace string_format
 {
 
@@ -125,7 +129,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     case WIDTH_2:
       if (*it >= '0' && *it <= '9')
       {
-        if (this->width > (std::numeric_limits<typeof (this->width)>::max() - 9) / 10)
+        if (this->width > (std::numeric_limits<decltype(this->width)>::max() - 9) / 10)
           throw IntegerOverflow();
         this->width = this->width * 10 + (*it - '0');
       }
