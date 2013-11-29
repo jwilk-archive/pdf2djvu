@@ -61,6 +61,8 @@ public:
   { };
 };
 
+class File;
+
 class Command
 {
 protected:
@@ -81,6 +83,7 @@ public:
   };
   explicit Command(const std::string& command);
   Command &operator <<(const std::string& arg);
+  Command &operator <<(const File& arg);
   Command &operator <<(int i);
   void operator()(std::ostream &my_stdout, bool quiet = false);
   void operator()(bool quiet = false);

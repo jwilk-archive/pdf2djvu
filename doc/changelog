@@ -2,8 +2,11 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
 
   * Make the xml2c script more portable.
   * In C++11 mode, use “decltype” instead of “typeof”.
+  * Fix build failure with libc++ in C++98 mode.
+    Thanks to Angelo Graziosi for the bug report.
+    https://code.google.com/p/pdf2djvu/issues/detail?id=88
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 28 Nov 2013 11:13:41 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 28 Nov 2013 14:05:13 +0100
 
 pdf2djvu (0.7.17) unstable; urgency=low
 

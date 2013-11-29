@@ -275,6 +275,12 @@ Command &Command::operator <<(const std::string& arg)
   return *this;
 }
 
+Command &Command::operator <<(const File& arg)
+{
+  this->argv.push_back(arg);
+  return *this;
+}
+
 Command &Command::operator <<(int i)
 {
   std::ostringstream stream;
