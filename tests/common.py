@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # encoding=UTF-8
 
-# Copyright © 2009, 2012 Jakub Wilk
+# Copyright © 2009, 2012, 2013 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -155,8 +155,8 @@ class case(object):
         return xmp
 
 def rainbow(width, height):
-    import Image
-    import ImageColor
+    from PIL import Image
+    from PIL import ImageColor
     image = Image.new('RGB', (width, height))
     pixels = image.load()
     for x in xrange(width):
