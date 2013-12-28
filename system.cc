@@ -1411,7 +1411,7 @@ void prevent_pop_out(void)
 {
 #if WIN32
   /* GetConsoleProcessList() function is not available for some systems (e.g.,
-   * Wine, Windows 98), so it's not desireable to import it at link time.
+   * Wine, Windows 98), so it's not desirable to import it at link time.
    */
   typedef DWORD (WINAPI *get_console_process_list_fn)(LPDWORD, DWORD);
   get_console_process_list_fn get_console_process_list;
