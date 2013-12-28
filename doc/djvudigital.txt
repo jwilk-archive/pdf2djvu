@@ -7,7 +7,7 @@ The list below outlines some differences between the converters.
 Superiorities of djvudigital
 ----------------------------
 
--  djvudigital uses a `sophisticated layer seperation algorithm`_.
+-  djvudigital uses a `sophisticated layer separation algorithm`_.
    pdf2djvu uses a simple one.
 
 -  djvudigital is typically much faster than pdf2djvu.
@@ -41,7 +41,7 @@ Superiorities of pdf2djvu
 .. _DjVuLibre:
    http://djvu.sourceforge.net/
 
-.. _sophisticated layer seperation algorithm:
+.. _sophisticated layer separation algorithm:
    http://leon.bottou.org/papers/bottou-2001
 
 .. _Ghostscript driver:

@@ -7,8 +7,8 @@ DjVuLibre
 DjVuLibre_ is an implementation of DjVu_, including viewers, browser
 plugins, decoders, simple encoders, and utilities.
 
-Compatiblity
-------------
+Compatibility
+-------------
 DjVuLibre 3.5.21 or newer is required. For Debian/Ubuntu, 3.5.20-5 is
 sufficient.
 
