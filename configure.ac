@@ -4,7 +4,7 @@ dnl | This package is free software; you can redistribute it and/or modify
 dnl | it under the terms of the GNU General Public License as published by
 dnl | the Free Software Foundation; version 2 dated June, 1991.
 
-AC_PREREQ(2.61)
+AC_PREREQ(2.62)
 AC_INIT([pdf2djvu], [0.7.18], [http://code.google.com/p/pdf2djvu/issues/], [pdf2djvu], [http://pdf2djvu.googlecode.com/])
 AC_CONFIG_AUX_DIR(tools)
 AC_LANG(C++)
@@ -202,12 +202,7 @@ AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
   ]
 )
 
-AC_ARG_ENABLE(openmp, AS_HELP_STRING([--disable-openmp], [do not use the OpenMP API]))
-if test "$enable_openmp" != "no"
-then
-  AX_OPENMP
-  AC_SUBST(OPENMP_CXXFLAGS)
-fi
+AC_OPENMP
 
 AC_MSG_CHECKING(for MinGW ANSI stdio)
 AC_EGREP_HEADER(__mingw_vsnprintf, stdio.h,

@@ -5,8 +5,10 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Fix build failure with libc++ in C++98 mode.
     Thanks to Angelo Graziosi for the bug report.
     https://code.google.com/p/pdf2djvu/issues/detail?id=88
+  * Use the standard AC_OPENMP macro in the configure script (instead of
+    3rd-party AX_OPENMP).
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 28 Nov 2013 14:05:13 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 16 Feb 2014 21:40:10 +0100
 
 pdf2djvu (0.7.17) unstable; urgency=low
 
