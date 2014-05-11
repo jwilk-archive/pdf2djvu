@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.18\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2011-11-21 19:54+0100\n"
+"POT-Creation-Date: 2014-05-11 22:47+0200\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -424,7 +424,7 @@ msgid "<option>--pages=<replaceable>page-range</replaceable></option>"
 msgstr "<option>--pages=<replaceable>діапазон_сторінок</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1."
+msgid "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1."
 msgstr "Встановлює сторінки для конвертування. <replaceable>діапазон_сторінок</replaceable> — це поділюваний комами список піддіапазонів. кожен піддіапазон є одиночною сторінкою (наприклад, <literal>17</literal>) або послідовним діапазоном сторінок (наприклад, <literal>37-42</literal>). Сторінки нумеруються з 1."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
