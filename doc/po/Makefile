@@ -23,7 +23,7 @@ po4a-getext-options = \
 
 po4a-update-po = po4a-updatepo \
 	$(po4a-getext-options) \
-	--msgmerge-opt="--no-location"
+	--msgmerge-opt="--no-location --no-wrap"
 
 po4a-gettextize = po4a-gettextize \
 	$(po4a-getext-options)
