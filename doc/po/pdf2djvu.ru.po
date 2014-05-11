@@ -780,11 +780,11 @@ msgstr "Синтаксис шаблонов"
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid ""
-"The template language is roughly modelled on the <ulink url='http://docs."
+"The template language is roughly modelled on the <ulink url='https://docs."
 "python.org/library/string.html#format-string-syntax'>Python string "
 "formatting syntax</ulink>."
 msgstr ""
-"Язык шаблонов использует как образец <ulink url='http://docs.python.org/"
+"Язык шаблонов использует как образец <ulink url='https://docs.python.org/"
 "library/string.html#format-string-syntax'>синтаксис форматирования строк в "
 "Python</ulink>."
 

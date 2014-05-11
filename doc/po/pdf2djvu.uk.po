@@ -540,8 +540,8 @@ msgid "Template syntax"
 msgstr "Синтаксис шаблонів"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-msgid "The template language is roughly modelled on the <ulink url='http://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
-msgstr "Мова шаблонів використовує як зразок <ulink url='http://docs.python.org/library/string.html#format-string-syntax'>синтаксис форматування рядків у Python-і</ulink>."
+msgid "The template language is roughly modelled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
+msgstr "Мова шаблонів використовує як зразок <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>синтаксис форматування рядків у Python-і</ulink>."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields are replaced with appropriately formatted values when the template is evaluated.  Moreover, <literal>{{</literal> is replaced with a single <literal>{</literal> and <literal>}}</literal> is replaced with a single <literal>}</literal>."

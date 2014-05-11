@@ -788,11 +788,11 @@ msgstr "Schablonensyntax"
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid ""
-"The template language is roughly modelled on the <ulink url='http://docs."
+"The template language is roughly modelled on the <ulink url='https://docs."
 "python.org/library/string.html#format-string-syntax'>Python string "
 "formatting syntax</ulink>."
 msgstr ""
-"Die Schablonensprache ist ungefähr wie die <ulink url='http://docs.python."
+"Die Schablonensprache ist ungefähr wie die <ulink url='https://docs.python."
 "org/library/string.html#format-string-syntax'>Phyton-"
 "Zeichenkettenformatierungssyntax</ulink> aufgebaut."
 
