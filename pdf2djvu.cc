@@ -1699,7 +1699,7 @@ static int xmain(int argc, char * const argv[])
       }
     }
     /* Poppler resets the LC_NUMERIC locale settings:
-     * http://bugs.debian.org/533425
+     * https://bugs.debian.org/533425
      *
      * We need to work around this bug.
      */

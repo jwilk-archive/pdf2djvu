@@ -14,7 +14,7 @@ from common import (
 
 class test(case):
     '''
-    http://code.google.com/p/pdf2djvu/issues/detail?id=12
+    https://code.google.com/p/pdf2djvu/issues/detail?id=12
     fixed in [490a08283fb4]
     '''
     def test_verbatim(self):

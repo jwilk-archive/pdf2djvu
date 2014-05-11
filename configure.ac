@@ -5,7 +5,7 @@ dnl | it under the terms of the GNU General Public License as published by
 dnl | the Free Software Foundation; version 2 dated June, 1991.
 
 AC_PREREQ(2.62)
-AC_INIT([pdf2djvu], [0.7.18], [http://code.google.com/p/pdf2djvu/issues/], [pdf2djvu], [http://pdf2djvu.googlecode.com/])
+AC_INIT([pdf2djvu], [0.7.18], [https://code.google.com/p/pdf2djvu/issues/], [pdf2djvu], [https://pdf2djvu.googlecode.com/])
 AC_CONFIG_AUX_DIR(tools)
 AC_LANG(C++)
 
@@ -38,7 +38,7 @@ do
   fi
 done
 
-# Test for Debian bug #458211 <http://bugs.debian/458211>.
+# Test for Debian bug #458211 <https://bugs.debian/458211>.
 # csepdjvu affected by the bug is unable to use subsample ratio 12.
 # Prior to pdf2djvu 0.5.0, pdf2djvu simply dissalowed subsample ratio 12 by
 # itself.
@@ -49,7 +49,7 @@ yes 0 | head -n 144 >> conftest.458211.pbm
 printf 'P6 1 1 255 xxx' >> conftest.458211.sep
 "$djvulibre_bin_path/csepdjvu" conftest.458211.sep conftest.458211.djvu 2>/dev/null || djvulibre_bugs="$djvulibre_bugs 458211"
 
-# Test for Debian bug #471149 <http://bugs.debian.org/471149>.
+# Test for Debian bug #471149 <https://bugs.debian.org/471149>.
 # djvused affected by the bug is unable to correctly set annotations.
 printf 'P1 3 3 0 0 0 0 0 0 0 0 0' > conftest.471149.pbm
 "$djvulibre_bin_path/cjb2" conftest.471149.pbm conftest.471149.djvu
@@ -65,7 +65,7 @@ then
   djvulibre_bugs="$djvulibre_bugs 471149"
 fi
 
-# Test for Debian bug #458086 <http://bugs.debian.org/458086>.
+# Test for Debian bug #458086 <https://bugs.debian.org/458086>.
 # djvused affected by the bug is unable to set bookmarks for indirect
 # multi-page documents.
 # Prior to pdf2djvu 0.5.3, the bug was worked around.
@@ -91,7 +91,7 @@ then
     then
       result="$result, "
     fi
-    result="${result}<http://bugs.debian.org/$bug>"
+    result="${result}<https://bugs.debian.org/$bug>"
   done
   AC_MSG_RESULT(buggy)
   AC_MSG_ERROR(See $result for details.)

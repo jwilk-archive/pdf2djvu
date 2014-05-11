@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.18\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2011-11-21 19:54+0100\n"
 "PO-Revision-Date: 2009-06-20 10:25+0300\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
@@ -481,14 +481,14 @@ msgid ""
 "<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</"
 "literal>, <literal>Creator</literal>, <literal>Producer</literal>, "
 "<literal>CreationDate</literal>, <literal>ModDate</literal>.  Timestamps are "
-"formatted according to <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC "
+"formatted according to <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC "
 "3999</ulink>, with date and time components separated by a single space."
 msgstr ""
 "Wyodrębniane są następujące hasła słownika informacji o dokumencie: "
 "<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</"
 "literal>, <literal>Creator</literal>, <literal>Producer</literal>, "
 "<literal>CreationDate</literal>, <literal>ModDate</literal>.  Zapisy daty i "
-"czasu są formatowane wg <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC "
+"czasu są formatowane wg <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC "
 "3999</ulink>, z datą i czasem oddzielonymi pojedynczą spacją."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
@@ -946,10 +946,10 @@ msgstr "Raporty o błędach"
 
 #. type: Content of: <refentry><refsection><para>
 msgid ""
-"If you find a bug in &p;, please report it at <ulink url='http://code.google."
+"If you find a bug in &p;, please report it at <ulink url='https://code.google."
 "com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
 msgstr ""
-"Błędy znalezione w &p; proszę zgłaszać w <ulink url='http://code.google.com/"
+"Błędy znalezione w &p; proszę zgłaszać w <ulink url='https://code.google.com/"
 "p/pdf2djvu/issues/'>systemie śledzenia problemów</ulink>."
 
 #. type: Content of: <refentry><refsection><title>

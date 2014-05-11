@@ -14,7 +14,7 @@ from common import (
 
 class test(case):
     '''
-    http://code.google.com/p/pdf2djvu/issues/detail?id=20
+    https://code.google.com/p/pdf2djvu/issues/detail?id=20
     fixed in [c06a41afdc46]
     '''
     def test_no_crop(self):

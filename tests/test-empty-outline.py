@@ -12,7 +12,7 @@ from common import (
 
 class test(case):
     '''
-    http://bugs.debian.org/508391
+    https://bugs.debian.org/508391
     fixed in [f5d4727b2490]
     '''
     def test(self):

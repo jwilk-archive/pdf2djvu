@@ -12,7 +12,7 @@ from common import (
 
 class test(case):
     '''
-    http://code.google.com/p/pdf2djvu/issues/detail?id=5
+    https://code.google.com/p/pdf2djvu/issues/detail?id=5
     fixed in [1a39024ea13a]
     '''
     def test(self):

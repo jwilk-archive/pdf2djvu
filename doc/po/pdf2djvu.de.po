@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.18\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2011-11-21 19:54+0100\n"
 "PO-Revision-Date: 2011-05-04 21:35+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
@@ -355,7 +355,7 @@ msgstr ""
 msgid "<option>--bg-subsample=<replaceable>n</replaceable></option>"
 msgstr "<option>--bg-subsample=<replaceable>n</replaceable></option>"
 
-# http://de.wikipedia.org/wiki/Farbunterabtastung
+# https://de.wikipedia.org/wiki/Farbunterabtastung
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid ""
 "Specifies the background subsampling ratio. The default is 3. Valid values "
@@ -483,14 +483,14 @@ msgid ""
 "<literal>Title</literal>, <literal>Author</literal>, <literal>Subject</"
 "literal>, <literal>Creator</literal>, <literal>Producer</literal>, "
 "<literal>CreationDate</literal>, <literal>ModDate</literal>.  Timestamps are "
-"formatted according to <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC "
+"formatted according to <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC "
 "3999</ulink>, with date and time components separated by a single space."
 msgstr ""
 "Die folgenden Einträge des Dokumentinformations-Wörterbuchs werden "
 "extrahiert: <literal>Title</literal>, <literal>Author</literal>, "
 "<literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</"
 "literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>. "
-"Zeitstempel werden entspechend <ulink url='http://www.ietf.org/rfc/"
+"Zeitstempel werden entspechend <ulink url='https://www.ietf.org/rfc/"
 "rfc3339'>RFC 3999</ulink> mit Datums- und Zeitbestandteilen, getrennt durch "
 "ein einzelnes Leerzeichen, formatiert."
 
@@ -894,7 +894,7 @@ msgstr "Implementierungseinzelheiten"
 msgid "Layer separation algorithm"
 msgstr "Ebenen-Aufteilungsalgorithmus"
 
-# http://de.wikipedia.org/wiki/Rastergrafik
+# https://de.wikipedia.org/wiki/Rastergrafik
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
 msgid "Raster the page into a pixmap, in the usual manner."
 msgstr "die Seite auf die übliche Weise in eine Rastergrafik rastern"
@@ -960,11 +960,11 @@ msgstr "Fehlerberichte"
 
 #. type: Content of: <refentry><refsection><para>
 msgid ""
-"If you find a bug in &p;, please report it at <ulink url='http://code.google."
+"If you find a bug in &p;, please report it at <ulink url='https://code.google."
 "com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
 msgstr ""
 "Falls Sie einen Fehler in &p; finden, berichten Sie ihn bitte auf Englisch "
-"an <ulink url='http://code.google.com/p/pdf2djvu/issues/'>die "
+"an <ulink url='https://code.google.com/p/pdf2djvu/issues/'>die "
 "Problemverfolgung</ulink>."
 
 #. type: Content of: <refentry><refsection><title>

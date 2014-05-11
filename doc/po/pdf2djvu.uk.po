@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.18\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/pdf2djvu/issues/\n"
+"Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2011-11-21 19:54+0100\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
@@ -304,8 +304,8 @@ msgid "By default:"
 msgstr "За умовчанням:"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
-msgid "The following entries of the document information dictionary are extracted: <literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>.  Timestamps are formatted according to <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time components separated by a single space."
-msgstr "Витягуються наступні значення інформації документа: <literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>. Часові позначки форматуються відповідно до стандарту <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>. Дата і час розділені одиночним пропуском."
+msgid "The following entries of the document information dictionary are extracted: <literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>.  Timestamps are formatted according to <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time components separated by a single space."
+msgstr "Витягуються наступні значення інформації документа: <literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>. Часові позначки форматуються відповідно до стандарту <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>. Дата і час розділені одиночним пропуском."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
 msgid "The XMP metadata is extracted (or created) and updated accordingly."
@@ -648,8 +648,8 @@ msgid "Bug reports"
 msgstr "Повідомлення про помилки"
 
 #. type: Content of: <refentry><refsection><para>
-msgid "If you find a bug in &p;, please report it at <ulink url='http://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
-msgstr "Якщо Ви знайшли помилку у &p;, повідомте про неї на <ulink url='http://code.google.com/p/pdf2djvu/issues/'>баг-трекер</ulink>."
+msgid "If you find a bug in &p;, please report it at <ulink url='https://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
+msgstr "Якщо Ви знайшли помилку у &p;, повідомте про неї на <ulink url='https://code.google.com/p/pdf2djvu/issues/'>баг-трекер</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "See also"

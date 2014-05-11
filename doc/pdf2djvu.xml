@@ -332,7 +332,7 @@
                                 <literal>Creator</literal>, <literal>Producer</literal>,
                                 <literal>CreationDate</literal>, <literal>ModDate</literal>.
                                 Timestamps are formatted according to
-                                <ulink url='http://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time
+                                <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time
                                 components separated by a single space.
                             </para>
                         </listitem>
@@ -670,7 +670,7 @@
     <title>Bug reports</title>
     <para>
         If you find a bug in &p;, please report it at <ulink
-        url='http://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>.
+        url='https://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>.
     </para>
 </refsection>
 

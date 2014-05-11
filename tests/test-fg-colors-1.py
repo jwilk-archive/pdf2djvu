@@ -12,11 +12,11 @@ from common import (
 
 class test(case):
     '''
-    http://code.google.com/p/pdf2djvu/issues/detail?id=47
+    https://code.google.com/p/pdf2djvu/issues/detail?id=47
     fixed in [3d0f55ae5a65]
     '''
     '''
-    http://code.google.com/p/pdf2djvu/issues/detail?id=45
+    https://code.google.com/p/pdf2djvu/issues/detail?id=45
     fixed in [fc7df6c4d3d3]
     '''
     def test(self):

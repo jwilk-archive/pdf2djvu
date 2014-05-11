@@ -15,7 +15,7 @@ from common import (
 
 class test(case):
     '''
-    http://code.google.com/p/pdf2djvu/issues/detail?id=23
+    https://code.google.com/p/pdf2djvu/issues/detail?id=23
     fixed in [ede3c622526a]
     '''
     def test_bundled(self):
