@@ -8,6 +8,7 @@ do
 done
 rm -f tools/config.rpath
 cp /usr/share/gettext/config.rpath tools/
+mkdir -p m4
 ${ACLOCAL:-aclocal} -I m4 --install
 ${AUTOCONF:-autoconf}
 ${AUTOHEADER:-autoheader}
