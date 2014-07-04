@@ -15,7 +15,7 @@ cat <<EOF >&2
 I will copy header files from $source_dir into $include_dir
 Press enter to continue
 EOF
-read n
+read
 mkdir -p "$include_dir/goo"
 mkdir -p "$include_dir/splash"
 cp "$source_dir/poppler/"*.h "$include_dir"
