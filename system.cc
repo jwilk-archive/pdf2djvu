@@ -1307,7 +1307,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
 {
 #ifdef __MINGW32__
   /* MinGW32 implementations of ``basename()`` and ``dirname()`` are broken:
-   * https://bugs.debian.org/607215
+   * https://bugs.debian.org/625918
    * Therefore, we cannot use the generic code. This implementation is less
    * sophisticated than MinGW32 one, yet it should be sufficient for our
    * purposes.
