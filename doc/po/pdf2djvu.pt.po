@@ -546,7 +546,7 @@ msgstr "A linguagem de modelo é mais ou menos modelada na <ulink url='https://d
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields are replaced with appropriately formatted values when the template is evaluated.  Moreover, <literal>{{</literal> is replaced with a single <literal>{</literal> and <literal>}}</literal> is replaced with a single <literal>}</literal>."
-msgstr "um modelo é um pedaço de texto que contém <firstterm>campos</firstterm>, limitados por chavetas <literal>{</literal><literal>}</literal>.  Os campos são substituídos por valores formatados apropriadamente quando o modelo é avaliado. Além disso, <literal>{{</literal> é substituído por uma única <literal>{</literal> e <literal>}}</literal> é substituído por uma única <literal>}</literal>."
+msgstr "Um modelo é um pedaço de texto que contém <firstterm>campos</firstterm>, limitados por chavetas <literal>{</literal><literal>}</literal>.  Os campos são substituídos por valores formatados apropriadamente quando o modelo é avaliado. Além disso, <literal>{{</literal> é substituído por uma única <literal>{</literal> e <literal>}}</literal> é substituído por uma única <literal>}</literal>."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Field syntax"
