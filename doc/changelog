@@ -8,8 +8,9 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Use the standard AC_OPENMP macro in the configure script (instead of
     3rd-party AX_OPENMP).
   * Use HTTPS URLs when they are available, in documentation and code.
+  * Add Portugese translation by Américo Monteiro.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 11 May 2014 22:21:45 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 18 Aug 2014 21:01:41 +0200
 
 pdf2djvu (0.7.17) unstable; urgency=low
 

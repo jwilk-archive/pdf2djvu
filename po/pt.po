@@ -1,0 +1,546 @@
+# Copyright © 2014 Américo Monteiro <a_monteiro@gmx.com>
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 dated June, 1991.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdf2djvu 0.7.18\n"
+"Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
+"POT-Creation-Date: 2014-08-18 20:53+0200\n"
+"PO-Revision-Date: 2014-08-16 00:09+0100\n"
+"Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
+"Language-Team: Portuguese <traduz@debianpt.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgid "     --filter-text=COMMAND-LINE"
+msgstr "     --filter-text=LINHA-DE-COMANDOS"
+
+msgid "     --page-size=WxH"
+msgstr "     --page-size=Largura-x-Altura"
+
+msgid "     --page-title-template=TEMPLATE"
+msgstr "     --page-title-template=MODELO"
+
+msgid "     --pageid-prefix=NAME"
+msgstr "     --pageid-prefix=NOME"
+
+msgid "     --pageid-template=TEMPLATE"
+msgstr "     --pageid-template=MODELO"
+
+msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
+msgstr "   pdf2djvu  -i <index-djvu-file>   [opções] <pdf-file>"
+
+msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
+msgstr "   pdf2djvu [-o <output-djvu-file>] [opções] <pdf-file>"
+
+msgid " -d, --dpi=RESOLUTION"
+msgstr " -d, --dpi=RESOLUÇÃO"
+
+msgid " -i, --indirect=FILE"
+msgstr " -i, --indirect=FICHEIRO"
+
+msgid " -o, --output=FILE"
+msgstr " -o, --output=FICHEIRO"
+
+#, c-format
+msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
+msgstr "%.3f bits/pixel; %.3f:1, %.2f%% gravados %ju bytes dentro, %zu bytes fora"
+
+#. L10N: "<error-category> (<position>): <error-message>"
+#, c-format
+msgid "%s (%jd): %s"
+msgstr "%s (%jd): %s"
+
+#, c-format
+msgid "%s is not a valid number"
+msgstr "%s não é um número válido"
+
+#. L10N: "<error-category>: <error-message>"
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#, c-format
+msgid "%zu bytes out"
+msgid_plural "%zu bytes out"
+msgstr[0] "%zu byte fora"
+msgstr[1] "%zu bytes fora"
+
+#. L10N: Windows error message for E2BIG
+msgid "Arg list too long"
+msgstr "Lista de argumentos demasiado longa"
+
+#. L10N: Windows error message for E2BIG
+msgid "Argument list too long"
+msgstr "Lista de argumentos demasiado longa"
+
+#. L10N: Windows error message for EFAULT
+msgid "Bad address"
+msgstr "Mau endereço"
+
+#. L10N: Windows error message for EBADF
+msgid "Bad file descriptor"
+msgstr "Mau descritor de ficheiro"
+
+#. L10N: Windows error message for EPIPE
+msgid "Broken pipe"
+msgstr "Pipe quebrado"
+
+#. L10N: Windows error message for ENOMEM
+msgid "Cannot allocate memory"
+msgstr "Incapaz de alocar memória"
+
+msgid "Cannot find link destination"
+msgstr "Incapaz de encontrar ligação ao destino"
+
+#. L10N: Windows error message for EBUSY
+msgid "Device or resource busy"
+msgstr "Dispositivo ou recurso ocupado"
+
+#. L10N: Windows error message for ENOTEMPTY
+msgid "Directory not empty"
+msgstr "Directório não vazio"
+
+#. L10N: Windows error message for EDOM
+msgid "Domain error"
+msgstr "Erro do domínio"
+
+#, c-format
+msgid "Duplicate page identifier: %s"
+msgstr "Duplicar identificador de pagina: %s"
+
+#, c-format
+msgid "Duplicate page title: %s"
+msgstr "Duplicar título de página: %s"
+
+#. L10N: Windows error message for ENOEXEC
+msgid "Exec format error"
+msgstr "Erro de formato executável"
+
+#, c-format
+msgid "External command \"%s ...\" failed"
+msgstr "Comando externo \"%s ...\" falhou"
+
+#, c-format
+msgid "External command \"%s ...\" failed with exit code %u"
+msgstr "Comando externo \"%s ...\" falhou com código de saída %u"
+
+#, c-format
+msgid "External command \"%s\" failed"
+msgstr "Comando externo \"%s\" falhou"
+
+#, c-format
+msgid "External command \"%s\" failed with exit code %u"
+msgstr "Comando externo \"%s\" falhou com código de saída %u"
+
+#. L10N: Windows error message for EEXIST
+msgid "File exists"
+msgstr "Ficheiro existe"
+
+#. L10N: Windows error message for ENAMETOOLONG
+msgid "File name too long"
+msgstr "Nome de ficheiro demasiado longo"
+
+#. L10N: Windows error message for EFBIG
+msgid "File too large"
+msgstr "Ficheiro demasiado grande"
+
+#. L10N: Windows error message for ENAMETOOLONG
+msgid "Filename too long"
+msgstr "Nome de ficheiro demasiado longo"
+
+#. L10N: Windows error message for ENOSYS
+msgid "Function not implemented"
+msgstr "Função não implementada"
+
+msgid "I won't write DjVu data to a terminal."
+msgstr "Eu não escrevo dados DjVu num terminal."
+
+#, c-format
+msgid "I/O error (%s)"
+msgstr "Erro de I/O (%s)"
+
+#. L10N: Windows error message for EILSEQ
+msgid "Illegal byte sequence"
+msgstr "Sequência de bytes ilegal"
+
+#. L10N: Windows error message for ESEEK
+msgid "Illegal seek"
+msgstr "Busca ilegal"
+
+#. L10N: Windows error message for EXDEV
+msgid "Improper link"
+msgstr "Ligação imprópria"
+
+#. L10N: Windows error message for ENOTTY
+msgid "Inappropriate I/O control operation"
+msgstr "Operação de controle I/O inapropriada"
+
+#. L10N: Windows error message for ENOTTY
+msgid "Inappropriate ioctl for device"
+msgstr "ioctl inapropriado para dispositivo"
+
+#. L10N: Windows error message for EIO
+msgid "Input/output error"
+msgstr "Erro de entrada/saída"
+
+msgid "Integer overflow"
+msgstr "overflow de número inteiro"
+
+msgid "Internal Poppler error"
+msgstr "Erro de Poppler interno"
+
+#. L10N: Windows error message for EINTR
+msgid "Interrupted function call"
+msgstr "Chamada de função interrompida"
+
+#. L10N: Windows error message for EINTR
+msgid "Interrupted system call"
+msgstr "Chamada de sistema interrompida"
+
+#. L10N: Windows error message for EINVAL
+msgid "Invalid argument"
+msgstr "Argumento inválido"
+
+#. L10N: Windows error message for EXDEV
+msgid "Invalid cross-device link"
+msgstr "Ligação de dispositivo cruzado inválida"
+
+msgid "Invalid date format"
+msgstr "Formato de data inválido"
+
+#. L10N: Windows error message for EILSEQ
+msgid "Invalid or incomplete multibyte or wide character"
+msgstr "Inválido multi-byte incompleto ou caractere largo"
+
+msgid "Invalid output file name"
+msgstr "Nome de ficheiro de saída inválido"
+
+#. L10N: Windows error message for ESEEK
+msgid "Invalid seek"
+msgstr "Busca inválida"
+
+#. L10N: Windows error message for EISDIR
+msgid "Is a directory"
+msgstr "É um directório"
+
+#. L10N: Windows error message for ECHILD
+msgid "No child processes"
+msgstr "Nenhum processo filho"
+
+msgid "No input file name was specified"
+msgstr "Não foi especificado nenhum nome de ficheiro para saída"
+
+#. L10N: Windows error message for ENOLOCK
+msgid "No locks available"
+msgstr "Nenhuma tranca disponível"
+
+msgid "No page for a bookmark"
+msgstr "Nenhuma página para um favorito"
+
+msgid "No pages selected"
+msgstr "Nenhuma página seleccionada"
+
+#. L10N: Windows error message for ENOSPC
+msgid "No space left on device"
+msgstr "Não há espaço livre no dispositivo"
+
+#. L10N: Windows error message for ENODEV
+msgid "No such device"
+msgstr "Dispositivo inexistente"
+
+#. L10N: Windows error message for ENXIO
+msgid "No such device or address"
+msgstr "Não existe tal dispositivo ou endereço"
+
+#. L10N: Windows error message for ENOENT
+msgid "No such file or directory"
+msgstr "Não existe tal ficheiro ou directório"
+
+#. L10N: Windows error message for ESRCH
+msgid "No such process"
+msgstr "Não existe tal processo"
+
+msgid "No title for a bookmark"
+msgstr "Nenhum título para um favorito"
+
+#. L10N: Windows error message for ENOTDIR
+msgid "Not a directory"
+msgstr "Não é um directório"
+
+#. L10N: Windows error message for ENOMEM
+msgid "Not enough space"
+msgstr "Não há espaço suficiente"
+
+#. L10N: Windows error message for EDOM
+msgid "Numerical argument out of domain"
+msgstr "Argumento numérico fora do domínio"
+
+#. L10N: Windows error message for ERANGE
+msgid "Numerical result out of range"
+msgstr "Resultado numérico fora do limite"
+
+#. L10N: Windows error message for EPERM
+msgid "Operation not permitted"
+msgstr "Operação não permitida"
+
+msgid "Options: "
+msgstr "Opções:"
+
+msgid "PDF error"
+msgstr "Erro do PDF"
+
+msgid "PDF feature not implemented"
+msgstr "Funcionalidade de PDF não implementada"
+
+msgid "PDF syntax error"
+msgstr "Erro de sintaxe do PDF"
+
+msgid "PDF syntax warning"
+msgstr "Aviso de sintaxe do PDF"
+
+msgid "Page not found"
+msgstr "Página não encontrada"
+
+msgid "Pageid cannot start with a '+' or a '-' character"
+msgstr "Pageid não pode começar com um caractere '+' ou a '-'"
+
+msgid "Pageid cannot start with a '.' character or contain two consecutive '.' characters"
+msgstr "Pageid não pode começar com um caractere '.' ou conter dois caracteres '.' consecutivos"
+
+msgid "Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+msgstr "Pageid tem de consistir apenas de letras, dígitos e caracteres '_', '+', '-' e '.'"
+
+msgid "Pageid must end with the '.djvu' or the '.djv' extension"
+msgstr "Pageid tem de acabar com a extensão '.djvu' ou '.djv'"
+
+#. L10N: Windows error message for EACCES
+msgid "Permission denied"
+msgstr "Permissão negada"
+
+msgid "Poppler configuration error"
+msgstr "Erro de configuração de Poppler"
+
+#. L10N: Windows error message for EROFS
+msgid "Read-only file system"
+msgstr "Sistema de ficheiros só de leitura"
+
+#. L10N: Windows error message for EDEADLK
+msgid "Resource deadlock avoided"
+msgstr "Recurso deadlock evitado"
+
+#. L10N: Windows error message for EBUSY
+msgid "Resource device"
+msgstr "Dispositivo de recurso"
+
+#. L10N: Windows error message for EAGAIN
+msgid "Resource temporarily unavailable"
+msgstr "Recurso temporariamente indisponível"
+
+#. L10N: Windows error message for ERANGE
+msgid "Result too large"
+msgstr "Resultado muito grande"
+
+#, c-format
+msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
+msgstr "O número especificado de cores do primeiro plano está fora do limite permitido: %u .. %u"
+
+#, c-format
+msgid "The specified resolution is outside the allowed range: %d .. %d"
+msgstr "A resolução especificada está fora do limite permitido: %d .. %d"
+
+#, c-format
+msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
+msgstr "O rácio de sub-amostragem especificado está fora do limite permitido: %u .. %u"
+
+#. L10N: Windows error message for EMLINK
+msgid "Too many links"
+msgstr "Demasiadas ligações"
+
+#. L10N: Windows error message for EMFILE
+msgid "Too many open files"
+msgstr "Demasiados ficheiros abertos"
+
+#. L10N: Windows error message for ENFILE
+msgid "Too many open files in system"
+msgstr "Demasiados ficheiros abertos no sistema"
+
+msgid "Unable to load document"
+msgstr "Incapaz de carregar documento"
+
+msgid "Unable to parse command-line options"
+msgstr "Incapaz de analisar opções da linha de comandos"
+
+msgid "Unable to parse hyperlinks options"
+msgstr "Incapaz de analisar opções de hiperligações"
+
+msgid "Unable to parse page numbers"
+msgstr "Incapaz de analisar números de páginas"
+
+msgid "Unable to parse page size"
+msgstr "Incapaz de analisar tamanho de página"
+
+msgid "Unable to parse page title template specification"
+msgstr "Incapaz de analisar especificação de modelo de título de página"
+
+msgid "Unable to parse pageid template specification"
+msgstr "Incapaz de analisar especificação de modelo de pageid"
+
+msgid "Unable to set antialias parameter"
+msgstr "Incapaz de definir parâmetro antialias"
+
+msgid "Unable to set vector antialias parameter"
+msgstr "Incapaz de definir parâmetro antialias vectorial"
+
+msgid "Unexpected output from djvused"
+msgstr "Resultados inesperados de djvused"
+
+msgid "Unexpected subsampled bitmap height"
+msgstr "Altura de mapa de bits de sub-amostragem inesperada"
+
+msgid "Unexpected subsampled bitmap width"
+msgstr "Largura de mapa de bits de sub-amostragem inesperada"
+
+msgid "Unknown error"
+msgstr "Erro desconhecido"
+
+msgid "Unknown option"
+msgstr "Opção desconhecida"
+
+msgid "Usage: "
+msgstr "Utilização: "
+
+#, c-format
+msgid "Warning: %s"
+msgstr "Aviso: %s"
+
+msgid "Warning: Unable to convert link with a named action"
+msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
+
+msgid "Warning: Unable to convert link with a remote go-to action"
+msgstr "Aviso: Incapaz de converter ligação com uma acção go-to remota"
+
+msgid "Warning: Unable to convert link without an action"
+msgstr "Aviso: Incapaz de converter ligação sem uma acção"
+
+msgid "Warning: Unknown link action"
+msgstr "Aviso: Acção de ligação desconhecida"
+
+#, c-format
+msgid "Warning: metadata[%s] is not a valid date"
+msgstr "Aviso: os meta-dados[%s] não são uma data válida"
+
+msgid "adding non-raster data with `djvused`"
+msgstr "a adicionar dados não-raster com o `djvused`"
+
+msgid "creating document outline with `djvused`"
+msgstr "a criar o bordo do documento com o `djvused`"
+
+#, c-format
+msgid "creating multi-page indirect document (%d page)"
+msgid_plural "creating multi-page indirect document (%d pages)"
+msgstr[0] "a criar documento indirecto de multi-páginas (%d página)"
+msgstr[1] "a criar documento indirecto de multi-páginas (%d páginas)"
+
+msgid "creating new background image with `c44`"
+msgstr "a criar nova imagem de fundo com o `c44`"
+
+msgid "encoding layers with `csepdjvu`"
+msgstr "a codificar camadas com o `csepdjvu`"
+
+msgid "encoding monochrome image with `cjb2`"
+msgstr "a codificar imagem monocromática com o `cjb2`"
+
+#, c-format
+msgid "estimated resolution: %d dpi"
+msgstr "resolução estimada: %d dpi"
+
+msgid "extracting XMP metadata"
+msgstr "a extrair meta-dados XMP"
+
+msgid "extracting annotations"
+msgstr "a extrair anotações"
+
+msgid "extracting document outline"
+msgstr "a extrair bordos do documento"
+
+msgid "extracting document-information metadata"
+msgstr "a extrair meta-dados de informação do documento"
+
+#, c-format
+msgid "guessed resolution: %s dpi"
+msgstr "resolução adivinhada: %s dpi"
+
+#, c-format
+msgid "image size: %dx%d"
+msgstr "tamanho de imagem: %dx%d"
+
+#, c-format
+msgid "page #%d -> #%d"
+msgstr "página #%d -> #%d"
+
+msgid "pdf2djvu is intended to be run from the command prompt."
+msgstr "pdf2djvu destina-se a ser accionado a partir da linha de comandos."
+
+msgid "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+msgstr "pdf2djvu foi compilado sem XSLT do GNOME XSLT; as transformações XML estão desactivadas."
+
+msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
+msgstr "pdf2djvu foi compilado sem GraphicsMagick; a quantização de cores avançada está desactivada."
+
+msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
+msgstr "pdf2djvu foi compilado sem suporte a OpenMP, a s múltiplas linhas de execução estão desactivas."
+
+msgid "possibly memory allocation error"
+msgstr "possível erro de alocação de memória"
+
+msgid "preparing data for `csepdjvu`"
+msgstr "a preparar dados para o `csepdjvu`"
+
+msgid "re-assembling page with `djvumake`"
+msgstr "a re-montar a página com o  `djvumake`"
+
+msgid "recovering image chunks with `djvuextract`"
+msgstr "a recuperar pedaços de imagem com o `djvuextract`"
+
+msgid "recovering images with `djvuextract`"
+msgstr "a recuperar imagens com o `djvuextract`"
+
+msgid "recovering text with `djvused`"
+msgstr "a recuperar texto com o `djvused`"
+
+msgid "rendering background image"
+msgstr "a renderizar imagem de fundo"
+
+msgid "rendering page (1st pass)"
+msgstr "a renderizar página (1º passo)"
+
+msgid "rendering page (2nd pass)"
+msgstr "a renderizar página (2º passo)"
+
+msgid "setting metadata with `djvused`"
+msgstr "a definir meta-dados com o `djvused`"
+
+msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
+msgstr "a definir meta-dados com o `djvused` (a contornar um bug da DjVuLibre)"
+
+msgid "storing background image"
+msgstr "a gravar imagem de fundo"
+
+msgid "storing dummy background image"
+msgstr "a gravar imagem fantoche de fundo"
+
+msgid "storing foreground image"
+msgstr "a gravar imagem de primeiro plano"
+
+msgid "storing text layer"
+msgstr "a gravar camada de texto"
+
+msgid "unable to guess resolution"
+msgstr "incapaz de adivinhar a resolução"
