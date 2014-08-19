@@ -9,6 +9,7 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
     3rd-party AX_OPENMP).
   * Use HTTPS URLs when they are available, in documentation and code.
   * Add Portugese translation by Américo Monteiro.
+    https://bugs.debian.org/758262
 
  -- Jakub Wilk <jwilk@jwilk.net>  Mon, 18 Aug 2014 21:01:41 +0200
 
