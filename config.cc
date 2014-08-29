@@ -221,10 +221,10 @@ static void string::replace(std::string &s, char c1, char c2)
 
 static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
 {
-  std::vector<std::string> splitted;
+  std::vector<std::string> split;
   string::replace(s, '_', '-');
-  string::split(s, ',', splitted);
-  for (std::vector<std::string>::const_iterator it = splitted.begin(); it != splitted.end(); it++)
+  string::split(s, ',', split);
+  for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); it++)
   {
     if (*it == "border-avis")
     {
