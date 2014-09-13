@@ -5,7 +5,7 @@ set -x
 for file in install-sh config.sub config.guess
 do
     rm -f tools/$file
-    cp $(ls -d /usr/share/automake*/$file | head -n1) tools/
+    cp /usr/share/libtool/config/$file tools/
 done
 rm -f tools/config.rpath
 cp /usr/share/gettext/config.rpath tools/
