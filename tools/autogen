@@ -4,8 +4,8 @@ set -x
 [ -e configure.ac ]
 for file in install-sh config.sub config.guess
 do
-  rm -f tools/$file
-  cp $(ls -d /usr/share/automake*/$file | head -n1) tools/
+    rm -f tools/$file
+    cp $(ls -d /usr/share/automake*/$file | head -n1) tools/
 done
 rm -f tools/config.rpath
 cp /usr/share/gettext/config.rpath tools/
@@ -13,3 +13,5 @@ mkdir -p m4
 ${ACLOCAL:-aclocal} -I m4 --install
 ${AUTOCONF:-autoconf}
 ${AUTOHEADER:-autoheader}
+
+# vim:ts=4 sw=4 et
