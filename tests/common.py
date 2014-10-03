@@ -167,4 +167,4 @@ def rainbow(width, height):
             pixels[x, y] = color
     return image
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

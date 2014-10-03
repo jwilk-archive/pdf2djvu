@@ -21,4 +21,4 @@ class test(case):
         r = self.print_meta()
         r.assert_(stdout=re('Title\t"%s"' % title.replace('\\', '\\\\')))
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

@@ -21,4 +21,4 @@ class test(case):
         r = self.djvudump()
         r.assert_(stdout=re('BG44.* 10x11$', re.M))
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

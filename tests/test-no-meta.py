@@ -18,4 +18,4 @@ class test(case):
         self.pdf2djvu('--no-metadata', '--dpi=72').assert_()
         self.print_meta().assert_()
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

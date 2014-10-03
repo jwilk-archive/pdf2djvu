@@ -19,4 +19,4 @@ class test(case):
         self.pdf2djvu().assert_()
         self.print_outline().assert_()
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

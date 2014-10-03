@@ -28,4 +28,4 @@ class test(case):
         assert_well_formed_xml(xmp)
         assert_grep(xmp, '>image/vnd.djvu<')
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

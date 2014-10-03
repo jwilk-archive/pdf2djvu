@@ -461,4 +461,4 @@ src/mingwrt/install-stamp:
 	$(call ship_dll,libgcc_s)
 	touch $(@)
 
-# vim:ts=4 sw=4 noet
+# vim:ts=4 sts=4 sw=4 noet

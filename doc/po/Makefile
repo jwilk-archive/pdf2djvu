@@ -60,4 +60,4 @@ endif
 clean:
 	rm -f $(addprefix pdf2djvu.,[a-z][a-z].1 [a-z][a-z].xml pot) *~
 
-# vim:ts=4 sw=4 noet
+# vim:ts=4 sts=4 sw=4 noet

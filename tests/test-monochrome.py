@@ -22,4 +22,4 @@ class test(case):
         r = self.djvudump()
         r.assert_(stdout=re.compile(r'Sjbz \[[0-9]{4,}\]'))
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

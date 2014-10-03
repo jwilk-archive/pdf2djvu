@@ -32,4 +32,4 @@ class test(case):
         r = self.print_pure_txt()
         r.assert_(stdout=re('^%s *$' % self.text_no_nfkc, re.M))
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

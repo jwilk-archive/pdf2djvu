@@ -33,4 +33,4 @@ Entity: line 1: parser error : Couldn't find end of Start Tag broken line 1
         xmp = self.extract_xmp()
         assert_grep(xmp, '<broken')
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

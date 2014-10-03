@@ -27,4 +27,4 @@ class test(case):
             r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)][)]$',
         ))
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

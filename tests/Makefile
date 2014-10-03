@@ -51,4 +51,4 @@ clean:
 ../pdf2djvu:
 	$(MAKE) -C ../
 
-# vim:ts=4 sw=4 noet
+# vim:ts=4 sts=4 sw=4 noet

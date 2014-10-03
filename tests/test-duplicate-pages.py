@@ -28,4 +28,4 @@ class test(case):
         r.assert_(stderr=re.compile('^Duplicate page identifier:', re.M), rc=None)
         assert_not_equal(r.rc, 0)
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

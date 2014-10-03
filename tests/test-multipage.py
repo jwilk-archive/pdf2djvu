@@ -18,4 +18,4 @@ class test(case):
     def test(self):
         self.pdf2djvu('--pages=2').assert_()
 
-# vim:ts=4 sw=4 et
+# vim:ts=4 sts=4 sw=4 et

@@ -7,4 +7,4 @@ XSLTPROC = xsltproc --nonet --param man.charmap.use.subset 0
 	$(XSLTPROC) $(XSL) $(<)
 	$(srcdir)/tools/fix-manpage $(@)
 
-# vim:ts=4
+# vim:ts=4 sts=4
