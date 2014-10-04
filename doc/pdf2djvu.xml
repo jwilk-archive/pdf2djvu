@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE refentry PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.docbook.org/xml/4.5/docbookx.dtd' 
+<!DOCTYPE refentry PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.docbook.org/xml/4.5/docbookx.dtd'
 [
     <!ENTITY p 'pdf2djvu'>
     <!ENTITY version '0.7.18'>
@@ -213,7 +213,7 @@
             <listitem>
                 <para>
                     Specifies the encoding quality of the IW44 background layer. This option is similar to
-                    the <option>-slice</option> option of <command>c44</command>. Consult the 
+                    the <option>-slice</option> option of <command>c44</command>. Consult the
                     <citerefentry>
                         <refentrytitle>c44</refentrytitle>
                         <manvolnum>1</manvolnum>
@@ -284,12 +284,12 @@
                 <para>
                     Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).
                     Valid values are integers between 0 and 200, inclusive. This option is similar to
-                    the <option>-losslevel</option> option of <command>cjb2</command>; consult the 
+                    the <option>-losslevel</option> option of <command>cjb2</command>; consult the
                     <citerefentry>
                         <refentrytitle>cjb2</refentrytitle>
                         <manvolnum>1</manvolnum>
                     </citerefentry>
-                    manual page for details. 
+                    manual page for details.
                     This option is respected only along with the <option>--monochrome</option> option.
                 </para>
             </listitem>
@@ -441,7 +441,7 @@
                     Filter the text through the <replaceable>command-line</replaceable>. The provided filter must
                     preserve whitespace, control characters and decimal digits.
                 </para>
-                <para> 
+                <para>
                     This option implies <option>--no-nfkc</option>.
                 </para>
             </listitem>
