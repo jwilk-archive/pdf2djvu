@@ -392,7 +392,8 @@ public:
       this->skipped_elements = true;
       return;
     }
-    Renderer::drawImage(state, object, stream, width, height, color_map, interpolate, mask_colors, inline_image);
+    Renderer::drawImage(state, object, stream, width, height, color_map,
+        /* interpolate */ 0, mask_colors, inline_image);
   }
 
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
@@ -405,8 +406,8 @@ public:
       return;
     }
     Renderer::drawMaskedImage(state, object, stream, width, height,
-      color_map, interpolate,
-      mask_stream, mask_width, mask_height, mask_invert, mask_interpolate);
+      color_map, /* interpolate */ 0,
+      mask_stream, mask_width, mask_height, mask_invert, /* mask_interpolate */ 0);
   }
 
   void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
@@ -420,8 +421,8 @@ public:
       return;
     }
     Renderer::drawSoftMaskedImage(state, object, stream, width, height,
-      color_map, interpolate,
-      mask_stream, mask_width, mask_height, mask_color_map, mask_interpolate);
+      color_map, /* interpolate */ 0,
+      mask_stream, mask_width, mask_height, mask_color_map, /* mask_interpolate */ 0);
   }
 
   pdf::Bool interpretType3Chars() { return false; }
