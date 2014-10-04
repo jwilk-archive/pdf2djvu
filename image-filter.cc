@@ -392,7 +392,7 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 
 GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
 : Quantizer(config)
-{ 
+{
   static bool initialized = false;
   if (!initialized)
   {

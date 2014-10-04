@@ -1,5 +1,5 @@
 dnl | Copyright © 2008, 2009, 2010, 2011 Jakub Wilk
-dnl | 
+dnl |
 dnl | This package is free software; you can redistribute it and/or modify
 dnl | it under the terms of the GNU General Public License as published by
 dnl | the Free Software Foundation; version 2 dated June, 1991.
@@ -140,7 +140,7 @@ AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name an
 AC_PREPROC_IFELSE([AC_LANG_SOURCE([[]])])
 
 have_pstreams=maybe
-AC_CHECK_FUNC(fork, 
+AC_CHECK_FUNC(fork,
   [AC_DEFINE(HAVE_FORK, 1, [Define if fork(3) is available.])],
   [have_pstreams=no]
 )

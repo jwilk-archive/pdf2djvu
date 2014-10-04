@@ -127,7 +127,7 @@ public:
   DocumentMap(const std::vector<const char *> &filenames_)
   : byte_size(0),
     filenames(filenames_)
-  { 
+  {
     int n_all_pages = 0;
     for (std::vector<const char*>::iterator it = config.filenames.begin(); it != config.filenames.end(); it++)
     {

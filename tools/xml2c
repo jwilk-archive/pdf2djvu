@@ -7,7 +7,7 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 exec sed -e '
-/<!--# *\(.*\) *#-->/ {
+/<!--# *\(.*[^ ]\) *#-->/ {
   s//\1/
   b
 }
