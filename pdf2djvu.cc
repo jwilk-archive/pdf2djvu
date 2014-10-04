@@ -294,6 +294,14 @@ public:
   }
 };
 
+class MainRenderer: public pdf::Renderer
+{
+public:
+  MainRenderer(pdf::splash::Color &paper_color, bool monochrome)
+  : Renderer(paper_color, monochrome)
+  { }
+};
+
 class MutedRenderer: public pdf::Renderer
 {
 protected:
@@ -1363,7 +1371,7 @@ static int xmain(int argc, char * const argv[])
   if (page_numbers.size() == 0)
     throw Config::NoPagesSelected();
 
-  std::auto_ptr<pdf::Renderer> out1;
+  std::auto_ptr<MainRenderer> out1;
   std::auto_ptr<MutedRenderer> outm, outs;
   std::auto_ptr<pdf::Document> doc;
   const char *doc_filename = NULL;
@@ -1386,7 +1394,7 @@ static int xmain(int argc, char * const argv[])
         debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
         debug(0)++;
       }
-      out1.reset(new pdf::Renderer(paper_color, config.monochrome));
+      out1.reset(new MainRenderer(paper_color, config.monochrome));
       out1->start_doc(doc.get());
       outm.reset(new MutedRenderer(paper_color, config.monochrome, *page_files));
       outm->start_doc(doc.get());
@@ -1437,7 +1445,9 @@ static int xmain(int argc, char * const argv[])
     bool has_foreground = false;
     bool has_text = false;
     (*quantizer)(
-        outm->has_skipped_elements() ? out1.get() : outm.get(),
+        outm->has_skipped_elements()
+        ? static_cast<pdf::Renderer*>(out1.get())
+        : static_cast<pdf::Renderer*>(outm.get()),
         outm.get(),
         width, height,
         background_color, has_foreground, has_background,
@@ -1530,7 +1540,11 @@ static int xmain(int argc, char * const argv[])
         DjVuCommand cjb2("cjb2");
         cjb2 << "-losslevel" << config.loss_level << pbm_file << sjbz_file;
         pbm_file << "P4 " << width << " " << height << std::endl;
-        pdf::Pixmap bmp(outm->has_skipped_elements() ? out1.get() : outm.get());
+        pdf::Pixmap bmp(
+          outm->has_skipped_elements()
+          ? static_cast<pdf::Renderer*>(out1.get())
+          : static_cast<pdf::Renderer*>(outm.get())
+        );
         pbm_file << bmp;
         pbm_file.close();
         cjb2();
