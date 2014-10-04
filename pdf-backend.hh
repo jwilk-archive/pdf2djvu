@@ -119,7 +119,7 @@ namespace pdf
   {
   public:
     Renderer(pdf::splash::Color &paper_color, bool monochrome = false) :
-      pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, gFalse, paper_color)
+      pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, false, paper_color)
     { }
 
 #if POPPLER_VERSION < 1900

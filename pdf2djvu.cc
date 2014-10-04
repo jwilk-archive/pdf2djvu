@@ -424,7 +424,7 @@ public:
       mask_stream, mask_width, mask_height, mask_color_map, mask_interpolate);
   }
 
-  pdf::Bool interpretType3Chars() { return gFalse; }
+  pdf::Bool interpretType3Chars() { return false; }
 
   void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
     CharCode code, int n_bytes, Unicode *unistr, int length)
@@ -594,7 +594,7 @@ public:
 
   pdf::Bool useDrawChar()
   {
-    return gTrue;
+    return true;
   }
 
   void stroke(pdf::gfx::State *state)
