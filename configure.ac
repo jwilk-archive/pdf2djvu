@@ -99,7 +99,7 @@ else
   AC_MSG_RESULT(ok)
 fi
 
-PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.7.3)
+PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.11.1)
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED(POPPLER_VERSION_STRING, "$poppler_version", Define to the version of poppler)
 PACKAGE_STRING="$PACKAGE_STRING, poppler $poppler_version"

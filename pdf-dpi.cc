@@ -16,50 +16,30 @@ protected:
   double max_;
   void process_image(pdf::gfx::State *state, int width, int height);
 
-#if POPPLER_VERSION < 1101
-  virtual void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::Bool invert, pdf::Bool inline_image)
-#else
   virtual void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
-#endif
-  {
-    this->process_image(state, width, height);
-  }
-#if POPPLER_VERSION < 1101
-  virtual void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, int *mask_colors, pdf::Bool inline_image)
-#else
-  virtual void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate, int *mask_colors, pdf::Bool inline_image)
-#endif
   {
     this->process_image(state, width, height);
   }
 
-#if POPPLER_VERSION < 1101
-  virtual void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert)
-#else
+  virtual void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate, int *mask_colors, pdf::Bool inline_image)
+  {
+    this->process_image(state, width, height);
+  }
+
   virtual void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
     pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
     pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert, pdf::Bool mask_interpolate)
-#endif
   {
     this->process_image(state, width, height);
     this->process_image(state, mask_width, mask_height);
   }
 
-#if POPPLER_VERSION < 1101
-  virtual void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
-    int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Stream *mask_stream,
-    int mask_width, int mask_height, pdf::gfx::ImageColorMap *mask_color_map)
-#else
   virtual void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
     int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
     pdf::Stream *mask_stream, int mask_width, int mask_height,
     pdf::gfx::ImageColorMap *mask_color_map, pdf::Bool mask_interpolate)
-#endif
   {
     this->process_image(state, width, height);
     this->process_image(state, mask_width, mask_height);

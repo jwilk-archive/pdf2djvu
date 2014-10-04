@@ -10,8 +10,9 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Use HTTPS URLs when they are available, in documentation and code.
   * Add Portugese translation by Américo Monteiro.
     https://bugs.debian.org/758262
+  * Drop support for Poppler < 0.11.1.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 18 Aug 2014 21:01:41 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 04 Oct 2014 22:16:07 +0200
 
 pdf2djvu (0.7.17) unstable; urgency=low
 
