@@ -1737,4 +1737,4 @@ catch (std::runtime_error &ex)
   exit(1);
 }
 
-// vim:ts=2 sw=2 et
+// vim:ts=2 sts=2 sw=2 et

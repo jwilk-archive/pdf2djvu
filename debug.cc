@@ -49,4 +49,4 @@ DebugStream &operator<<(DebugStream &stream, std::ostream& (*pf)(std::ostream&))
   return stream;
 }
 
-// vim:ts=2 sw=2 et
+// vim:ts=2 sts=2 sw=2 et

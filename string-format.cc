@@ -276,4 +276,4 @@ std::string string_format::Template::format(const Bindings &bindings) const
   return stream.str();
 }
 
-// vim:ts=2 sw=2 et
+// vim:ts=2 sts=2 sw=2 et

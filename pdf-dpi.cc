@@ -127,4 +127,4 @@ pdf::dpi::Guess pdf::dpi::Guesser::operator[](int n)
   return pdf::dpi::Guess(min, max);
 }
 
-// vim:ts=2 sw=2 et
+// vim:ts=2 sts=2 sw=2 et

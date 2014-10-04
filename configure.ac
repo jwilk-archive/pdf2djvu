@@ -271,4 +271,4 @@ Please file a bug to $PACKAGE_BUGREPORT.
 _ACEOF
 fi
 
-# vim:ts=2 sw=2 et
+# vim:ts=2 sts=2 sw=2 et

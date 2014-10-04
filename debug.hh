@@ -66,4 +66,4 @@ static inline DebugStream &operator<<(DebugStream &stream, const tp &object)
 
 #endif
 
-// vim:ts=2 sw=2 et
+// vim:ts=2 sts=2 sw=2 et

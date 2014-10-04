@@ -56,4 +56,4 @@ static inline std::ostream & operator <<(std::ostream &stream, const pdf::dpi::G
 
 #endif
 
-// vim:ts=2 sw=2 et
+// vim:ts=2 sts=2 sw=2 et
