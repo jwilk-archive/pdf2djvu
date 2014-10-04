@@ -300,6 +300,43 @@ public:
   MainRenderer(pdf::splash::Color &paper_color, bool monochrome)
   : Renderer(paper_color, monochrome)
   { }
+
+  /* Disable image interpolation, which has detrimental effect on compression ratio.
+   * https://bugs.debian.org/760396
+   */
+
+  void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
+  {
+    pdf::Renderer::drawImageMask(state, object, stream, width, height,
+        invert, /* interpolate */ 0, inline_image);
+  }
+
+  void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate, int *mask_colors, pdf::Bool inline_image)
+  {
+    pdf::Renderer::drawImage(state, object, stream, width, height,
+        color_map, /* interpolate */ 0, mask_colors, inline_image);
+  }
+
+  void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
+    pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert, pdf::Bool mask_interpolate)
+  {
+    pdf::Renderer::Renderer::drawMaskedImage(state, object, stream, width, height,
+      color_map, /* interpolate */ 0,
+      mask_stream, mask_width, mask_height, mask_invert, /* mask_interpolate */ 0);
+  }
+
+  void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
+    int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
+    pdf::Stream *mask_stream, int mask_width, int mask_height,
+    pdf::gfx::ImageColorMap *mask_color_map, pdf::Bool mask_interpolate)
+  {
+    pdf::Renderer::drawSoftMaskedImage(state, object, stream, width, height,
+      color_map, /* interpolate */ 0,
+      mask_stream, mask_width, mask_height, mask_color_map, /* mask_interpolate */ 0);
+  }
 };
 
 class MutedRenderer: public pdf::Renderer
