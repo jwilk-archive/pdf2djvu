@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # encoding=UTF-8
 
-# Copyright © 2009, 2012, 2013 Jakub Wilk
+# Copyright © 2009, 2012, 2013, 2014 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -164,6 +164,16 @@ def rainbow(width, height):
             hue = 255 * x // (width - 1)
             luminance = 100 * y // height
             color = ImageColor.getrgb('hsl(%(hue)d, 100%%, %(luminance)d%%)' % locals())
+            pixels[x, y] = color
+    return image
+
+def checkboard(width, height):
+    from PIL import Image
+    image = Image.new('1', (width, height))
+    pixels = image.load()
+    for x in xrange(width):
+        for y in xrange(height):
+            color = 0xff * ((x ^ y) & 1)
             pixels[x, y] = color
     return image
 
