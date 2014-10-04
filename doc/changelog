@@ -46,7 +46,7 @@ pdf2djvu (0.7.14) unstable; urgency=low
  -- Jakub Wilk <jwilk@jwilk.net>  Tue, 18 Sep 2012 17:27:28 +0200
 
 pdf2djvu (0.7.13) unstable; urgency=low
- 
+
   * XMP: put ‘softwareAgent’ and ‘when’ attributes in stEvt namespace.
   * Rewrite test-suite runner from scratch, using nosetests.
   * Windows: trap errors from external commands. Thanks to Andres Aule for the
