@@ -8,7 +8,7 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Use the standard AC_OPENMP macro in the configure script (instead of
     3rd-party AX_OPENMP).
   * Use HTTPS URLs when they are available, in documentation and code.
-  * Add Portugese translation by Américo Monteiro.
+  * Add Portuguese translation by Américo Monteiro.
     https://bugs.debian.org/758262
   * Drop support for Poppler < 0.11.1.
 
