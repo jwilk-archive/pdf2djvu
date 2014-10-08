@@ -16,7 +16,7 @@ class test(case):
     https://bugs.debian.org/760396
     '''
     def test(self):
-        self.pdf2djvu().assert_()
+        self.pdf2djvu('--dpi=72').assert_()
         r = self.djvudump()
         r.assert_(stdout=re(r'\A(\s+(?!FG)\S+.*\n)+\Z'))
 

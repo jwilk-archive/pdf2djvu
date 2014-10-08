@@ -9,7 +9,7 @@
 
 from common import checkboard
 
-image = checkboard(2, 2)
+image = checkboard(8, 8)
 image.save('test-interpolation.png')
 
 # vim:ts=4 sts=4 sw=4 et

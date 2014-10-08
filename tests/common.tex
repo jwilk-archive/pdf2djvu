@@ -19,7 +19,7 @@
 \edef\3{\string\3}%
 
 \def\pdfpageimage#1{
-    \setbox0\hbox{\pdfximage attr {/Interpolate true} {#1}\pdfrefximage\pdflastximage}%
+    \setbox0\hbox{\pdfximage{#1}\pdfrefximage\pdflastximage}%
     \pdfpagewidth=\wd0
     \pdfpageheight=\ht0
     \shipout\box0
