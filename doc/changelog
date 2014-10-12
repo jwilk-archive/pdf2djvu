@@ -14,8 +14,9 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Disable image interpolation, which has detrimental effect on compression ratio.
     Thanks to Vincent Fourmond for the bug report.
     https://bugs.debian.org/760396
+  * Improve error handling.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 04 Oct 2014 22:16:07 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 12 Oct 2014 20:43:02 +0200
 
 pdf2djvu (0.7.17) unstable; urgency=low
 

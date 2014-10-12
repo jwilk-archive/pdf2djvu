@@ -1369,6 +1369,7 @@ static int xmain(int argc, char * const argv[])
   debug(0)++;
   #pragma omp parallel for private(out1, outm, outs, doc) firstprivate(doc_filename) reduction(+: djvu_pages_size) schedule(runtime)
   for (size_t i = 0; i < page_numbers.size(); i++)
+  try
   {
     int m, n = page_numbers[i];
     const char *new_filename;
@@ -1619,6 +1620,19 @@ static int xmain(int argc, char * const argv[])
 #undef debug
 #endif
   }
+  /* These exception handlers duplicate the ones in main(), for the sake of OMP.
+   * They should be kept in sync.
+   */
+  catch (std::ios_base::failure &ex)
+  {
+    error_log << string_printf(_("I/O error (%s)"), ex.what()) << std::endl;
+    exit(2);
+  }
+  catch (std::runtime_error &ex)
+  {
+    error_log << ex << std::endl;
+    exit(1);
+  }
   /* Separate loop to avoid parallelization: */
   for (size_t i = 0; i < page_numbers.size(); i++)
   {
@@ -1729,6 +1743,7 @@ try
   i18n::setup(argv[0]);
   xmain(argc, argv);
 }
+/* Please keep the exception handlers in sync with the ones in xmain(). */
 catch (std::ios_base::failure &ex)
 {
   error_log << string_printf(_("I/O error (%s)"), ex.what()) << std::endl;
