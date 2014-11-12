@@ -371,7 +371,7 @@ src/gettext/config.status: src/winiconv/install-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
 		--disable-libasprintf
-	touch $@	
+	touch $@
 
 src/gettext/build-stamp: src/gettext/config.status
 	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ \
