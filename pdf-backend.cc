@@ -75,7 +75,7 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
       category_name = _("Poppler configuration error");
       break;
     case errCommandLine:
-      break; /* should not happen */	
+      break; /* should not happen */
     case errIO:
       category_name = _("Input/output error");
       break;
