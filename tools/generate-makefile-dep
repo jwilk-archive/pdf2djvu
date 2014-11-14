@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright © 2009, 2011 Jakub Wilk
+# Copyright © 2009, 2011, 2014 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -8,8 +8,6 @@
 
 : "${CXX:=g++}"
 "$CXX" -MM *.cc \
-| sed -n -e '/\\ *$/ { H; d; }; H; x; s/[\\\n]/ /g; s/^ //; p; s/.*//; x;' \
-| sort \
 | while read line
 do
   target=$(printf '%s' "$line" | cut -d: -f1)
@@ -18,6 +16,7 @@ do
   do
     echo "$target: $dep"
   done
-done > Makefile.dep
+done \
+| sort > Makefile.dep
 
 # vim:ts=2 sts=2 sw=2 et
