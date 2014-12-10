@@ -547,7 +547,7 @@ msgstr "Le mise en forme du modèle est plus ou moins calquée sur la <ulink url
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields are replaced with appropriately formatted values when the template is evaluated.  Moreover, <literal>{{</literal> is replaced with a single <literal>{</literal> and <literal>}}</literal> is replaced with a single <literal>}</literal>."
-msgstr "Un modèle est un morceau de texte qui contient des <firstterm>champs</firstterm>, entourés par des accolades <literal>{</literal><literal>}</literal>. Les champs sont remplacés par des valeurs mises en forme de manière appropriée lorsque le modèle est évalué. De plus, <literal>{{</literal> est remplacé par un seul <literal>{</literal> et <literal>}}</literal>est remplacé par un seul <literal>}</literal>."
+msgstr "Un modèle est un morceau de texte qui contient des <firstterm>champs</firstterm>, entourés par des accolades <literal>{</literal><literal>}</literal>. Les champs sont remplacés par des valeurs mises en forme de manière appropriée lorsque le modèle est évalué. De plus, <literal>{{</literal> est remplacé par un seul <literal>{</literal> et <literal>}}</literal> est remplacé par un seul <literal>}</literal>."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Field syntax"
