@@ -36,12 +36,6 @@ Compatibility
 -------------
 Poppler 0.7.3 or newer is required.
 
-Security warning
-----------------
-Every upstream poppler version prior to 0.10.6 is affected by at least
-one serious security bug. **You have been warned**.
-
-
 PStreams (recommended)
 ======================
 PStreams_ allows you to run another program from your C++ application
