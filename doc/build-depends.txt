@@ -34,7 +34,7 @@ Note that some Linux distributions are already shipping those files.
 
 Compatibility
 -------------
-Poppler 0.7.3 or newer is required.
+Poppler 0.11.1 or newer is required.
 
 PStreams (recommended)
 ======================
