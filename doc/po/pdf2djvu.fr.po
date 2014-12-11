@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.18\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2014-12-09 15:48+0100\n"
-"PO-Revision-Date: 2014-11-18 12:14+0100\n"
+"PO-Revision-Date: 2014-12-11 06:44+0100\n"
 "Last-Translator: Jean-Paul Guillonneau <guillonneau.jeanpaul@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "Language: fr\n"
@@ -69,7 +69,7 @@ msgstr "Description"
 
 #. type: Content of: <refentry><refsection><para>
 msgid "This program creates a DjVu file from one or more Portable Document Format files."
-msgstr "Ce programme crée un fichier DjVu à partir d'un ou plusieurs fichiers au format de document portable (PDF)."
+msgstr "Ce programme crée un fichier DjVu à partir d’un ou plusieurs fichiers au format de document portable (PDF)."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Options"
@@ -105,7 +105,7 @@ msgstr "<option>--indirect=<filename><replaceable>fichier-index-djvu</replaceabl
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Generate an indirect multi-page document. Use <filename><replaceable>index-djvu-file</replaceable></filename> as the index file name; put the component files into the same directory. The directory must exist and be writable."
-msgstr "Produire un document multi-page complément. Utiliser <filename><replaceable>fichier-index-djvu</replaceable></filename> comme nom de fichier d'index ; mettre les fichiers éléments dans le même répertoire. Le répertoire doit exister et être accessible en lecture."
+msgstr "Produire un document multi-page complément. Utiliser <filename><replaceable>fichier-index-djvu</replaceable></filename> comme nom de fichier d’index ; mettre les fichiers éléments dans le même répertoire. Le répertoire doit exister et être accessible en lecture."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--pageid-template=<replaceable>template</replaceable></option>"
@@ -137,7 +137,7 @@ msgstr "ne peuvent pas contenir deux points consécutifs,"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
 msgid "must end with the <literal>.djvu</literal> or the <literal>.djv</literal> extension."
-msgstr "doivent se terminer par l'extension <literal>.djvu</literal> ou <literal>.djv</literal>."
+msgstr "doivent se terminer par l’extension <literal>.djvu</literal> ou <literal>.djv</literal>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--pageid-prefix=<replaceable>prefix</replaceable></option>"
@@ -189,7 +189,7 @@ msgstr "<option>--page-size=<replaceable>largeur</replaceable>x<replaceable>haut
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the preferred page size to <replaceable>width</replaceable> pixels × <replaceable>height</replaceable> pixels. The actual page size may be altered in order to respect aspect ratio and DjVu limitations on resolution. (This option takes precedence over <option>-d</option>/<option>--dpi</option>.)"
-msgstr "Indiquer la taille préférée de page à <replaceable>largeur</replaceable> pixels × <replaceable>hauteur</replaceable> pixels. La taille réelle de la page peut être modifiée afin de respecter le ratio d'aspect et les limites de résolution de DjVu (Cette option prend le pas sur <option>-d</option>/<option>--dpi</option>.)."
+msgstr "Indiquer la taille préférée de page à <replaceable>largeur</replaceable> pixels × <replaceable>hauteur</replaceable> pixels. La taille réelle de la page peut être modifiée afin de respecter le ratio d’aspect et les limites de résolution de DjVu (Cette option prend le pas sur <option>-d</option>/<option>--dpi</option>.)."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--guess-dpi</option>"
@@ -201,7 +201,7 @@ msgstr "Essayer de deviner la résolution native en examinant les images incorpo
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Image quality"
-msgstr "Qualité d'image"
+msgstr "Qualité d’image"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--bg-slices=<replaceable>n</replaceable>+<replaceable>…</replaceable>+<replaceable>n</replaceable></option>"
@@ -237,7 +237,7 @@ msgstr "<option>--fg-colors=web</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Reduce foreground layer colors to the web palette (216 colors).  This option is not recommended."
-msgstr "Réduire les couleurs du calque de premier plan à celles de la palette Web (216 couleurs). Cette option n'est pas recommandée."
+msgstr "Réduire les couleurs du calque de premier plan à celles de la palette Web (216 couleurs). Cette option n’est pas recommandée."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--fg-colors=<replaceable>n</replaceable></option>"
@@ -245,7 +245,7 @@ msgstr "<option>--fg-colors=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Use GraphicsMagick to reduce number of distinct colors in the foreground layer to <replaceable>n</replaceable>. Valid values are integers between 1 and 4080.  This option is not recommended."
-msgstr "Utiliser GraphicsMagick pour réduire le nombre de couleurs distinctes dans le calque de premier plan à <replaceable>n</replaceable>. Les valeurs autorisées sont des entiers compris entre 1 et 4080. Cette option n'est pas recommandée."
+msgstr "Utiliser GraphicsMagick pour réduire le nombre de couleurs distinctes dans le calque de premier plan à <replaceable>n</replaceable>. Les valeurs autorisées sont des entiers compris entre 1 et 4080. Cette option n’est pas recommandée."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--fg-colors=black</option>"
@@ -269,7 +269,7 @@ msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option is respected only along with the <option>--monochrome</option> option."
-msgstr "Spécifie l'agressivité de la compression avec perte. La valeur par défaut est 0 (sans perte). Les valeurs autorisées sont des entiers compris entre 0 et 200, inclus. Cette option est similaire à l’option <option>-losslevel</option> de <command>cjb2</command> ; consulter la page de manuel de <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> pour plus de détails. Cette option est respectée seulement avec l’option <option>--monochrome</option>."
+msgstr "Spécifie l’agressivité de la compression avec perte. La valeur par défaut est 0 (sans perte). Les valeurs autorisées sont des entiers compris entre 0 et 200, inclus. Cette option est similaire à l’option <option>-losslevel</option> de <command>cjb2</command> ; consulter la page de manuel de <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> pour plus de détails. Cette option est respectée seulement avec l’option <option>--monochrome</option>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--lossy</option>"
@@ -285,7 +285,7 @@ msgstr "<option>--anti-alias</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Enable font and vector anti-aliasing.  This option is not recommended."
-msgstr "Activer la police et le vecteur anticrénelage. Cette option n'est pas recommandée."
+msgstr "Activer la police et le vecteur anticrénelage. Cette option n’est pas recommandée."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Extraction"
@@ -305,7 +305,7 @@ msgstr "Par défaut :"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
 msgid "The following entries of the document information dictionary are extracted: <literal>Title</literal>, <literal>Author</literal>, <literal>Subject</literal>, <literal>Creator</literal>, <literal>Producer</literal>, <literal>CreationDate</literal>, <literal>ModDate</literal>.  Timestamps are formatted according to <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, with date and time components separated by a single space."
-msgstr "Les entrées suivantes du dictionnaire de l'information du document sont extraites : <literal>titre</literal>, <literal>auteur</literal>, <literal>sujet</literal>, <literal>créateur</literal>, <literal>producteur</literal>, <literal>date de création</literal>, <literal>date de modification</literal>. Les horodatages sont formatés selon la <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, avec les composants date et heure séparés par une espace unique."
+msgstr "Les entrées suivantes du dictionnaire de l’information du document sont extraites : <literal>titre</literal>, <literal>auteur</literal>, <literal>sujet</literal>, <literal>créateur</literal>, <literal>producteur</literal>, <literal>date de création</literal>, <literal>date de modification</literal>. Les horodatages sont formatés selon la <ulink url='https://www.ietf.org/rfc/rfc3339'>RFC 3999</ulink>, avec les composants date et heure séparés par une espace unique."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para><itemizedlist><listitem><para>
 msgid "The XMP metadata is extracted (or created) and updated accordingly."
@@ -377,7 +377,7 @@ msgstr "<option>--words</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Extract the text. Record the location of every word. This is the default."
-msgstr "Extraire le texte. Enregistrer l'emplacement de chaque mot. Cela est fait par défaut."
+msgstr "Extraire le texte. Enregistrer l’emplacement de chaque mot. Cela est fait par défaut."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--lines</option>"
@@ -385,7 +385,7 @@ msgstr "<option>--lines</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Extract the text. Record the location of every line, rather that every word."
-msgstr "Extraire le texte. Enregistrer l'emplacement de chaque ligne, plutôt que de chaque mot."
+msgstr "Extraire le texte. Enregistrer l’emplacement de chaque ligne, plutôt que de chaque mot."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--crop-text</option>"
@@ -445,7 +445,7 @@ msgstr "<option>--jobs=<replaceable>n</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Use <replaceable>n</replaceable> threads to perform conversion. The default is to use one thread."
-msgstr "Utiliser <replaceable>n</replaceable> processus légers pour effectuer la conversion. La valeur par défaut est d'utiliser un processus."
+msgstr "Utiliser <replaceable>n</replaceable> processus légers pour effectuer la conversion. La valeur par défaut est d’utiliser un processus."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>-j0</option>"
@@ -473,7 +473,7 @@ msgstr "<option>--verbose</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Display more informational messages while converting the file."
-msgstr "Afficher davantage de messages d'information lors de la conversion du fichier."
+msgstr "Afficher davantage de messages d’information lors de la conversion du fichier."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>-q</option>"
@@ -485,7 +485,7 @@ msgstr "<option>--quiet</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Don't display informational messages while converting the file."
-msgstr "Ne pas afficher de message d'information lors de la conversion du fichier."
+msgstr "Ne pas afficher de message d’information lors de la conversion du fichier."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--version</option>"
@@ -505,7 +505,7 @@ msgstr "<option>--help</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Display help and exit."
-msgstr "Afficher l'aide et quitter."
+msgstr "Afficher l’aide et quitter."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Environment"
@@ -517,7 +517,7 @@ msgstr "<varname>OMP_<replaceable>*</replaceable></varname>"
 
 #. type: Content of: <refentry><refsection><para><variablelist><varlistentry><listitem><para>
 msgid "Details of runtime behaviour with respect to parallelism can be controlled by several environment variables.  Please refer to the <ulink url='http://openmp.org/wp/openmp-specifications/'>OpenMP API specification</ulink> for details."
-msgstr "Les détails du comportement d'exécution concernant le parallélisme peuvent être contrôlés par plusieurs variables d'environnement. Se référer à la <ulink url='http://openmp.org/wp/openmp-specifications/'>spécification de l’interface de programmation (API) OpenMP</ulink> pour plus de détails."
+msgstr "Les détails du comportement d’exécution concernant le parallélisme peuvent être contrôlés par plusieurs variables d’environnement. Se référer à la <ulink url='http://openmp.org/wp/openmp-specifications/'>spécification de l’interface de programmation (API) OpenMP</ulink> pour plus de détails."
 
 #. type: Content of: <refentry><refsection><para><variablelist><varlistentry><term>
 msgid "<varname>TMPDIR</varname>"
@@ -529,7 +529,7 @@ msgstr "<command>&p;</command> fait un usage intensif de fichiers temporaires. I
 
 #. type: Content of: <refentry><refsection><para>
 msgid "The following environment variables affects <command>&p;</command> on Unix systems: <placeholder type=\"variablelist\" id=\"0\"/>"
-msgstr "Les variables d'environnement suivantes affectent <command>&p;</command> sur les systèmes Unix : <placeholder type=\"variablelist\" id=\"0\"/>"
+msgstr "Les variables d’environnement suivantes affectent <command>&p;</command> sur les systèmes Unix : <placeholder type=\"variablelist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Template language"
@@ -541,7 +541,7 @@ msgstr "Syntaxe de modèle"
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The template language is roughly modelled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
-msgstr "Le mise en forme du modèle est plus ou moins calquée sur la <ulink url='http://docs.python.org/library/string.html#format-string-syntax'>syntaxe de formatage de chaîne en Python</ulink>."
+msgstr "Le mise en forme du modèle est plus ou moins calquée sur la <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>syntaxe de formatage de chaîne en Python</ulink>."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields are replaced with appropriately formatted values when the template is evaluated.  Moreover, <literal>{{</literal> is replaced with a single <literal>{</literal> and <literal>}}</literal> is replaced with a single <literal>}</literal>."
@@ -553,7 +553,7 @@ msgstr "Syntaxe de champ"
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "Each field consists of a variable name, optionally followed by a shift, optionally followed by a format specification."
-msgstr "Chaque champ est constitué d'un nom de variable, éventuellement suivi d'un décalage, suivi éventuellement d'une indication de format."
+msgstr "Chaque champ est constitué d’un nom de variable, éventuellement suivi d’un décalage, suivi éventuellement d’une indication de format."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The shift is a signed (i.e. starting with a <literal>+</literal> or <literal>-</literal> character) integer."
@@ -561,15 +561,15 @@ msgstr "Le décalage est un entier signé (c.-à-d. commençant par un caractèr
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The format specification consists of a colon, followed by a width specification."
-msgstr "L’indication de format est constituée d'un deux-points, suivi d'une indication de largeur."
+msgstr "L’indication de format est constituée d’un deux-points, suivi d’une indication de largeur."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The width specification is a decimal integer defining the minimum field width. If not specified, then the field width will be determined by the content. Preceding the width specification with a zero (<literal>0</literal>) character enables zero-padding."
-msgstr "L’indication de largeur est un entier décimal définissant la largeur minimale de champ. Si elle n'est pas indiquée, alors la largeur du champ sera déterminée par le contenu. Mettre le caractère zéro (<literal>0</literal>) avant la précision de largeur permet le remplissage par des zéros."
+msgstr "L’indication de largeur est un entier décimal définissant la largeur minimale de champ. Si elle n’est pas indiquée, alors la largeur du champ sera déterminée par le contenu. Mettre le caractère zéro (<literal>0</literal>) avant la précision de largeur permet le remplissage par des zéros."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The width specification is optionally followed by an asterisk (<literal>*</literal>) character, which increases the minimum field width to the width of the longest possible content of the variable."
-msgstr "L’indication de largeur peut être suivie d'un astérisque (<literal>*</literal>), ce qui augmente la largeur minimale de champ à la plus grande dimension possible du contenu de la variable."
+msgstr "L’indication de largeur peut être suivie d’un astérisque (<literal>*</literal>), ce qui augmente la largeur minimale de champ à la plus grande dimension possible du contenu de la variable."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Available variables"
@@ -597,7 +597,7 @@ msgstr "Numéro de page dans le document DjVu."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Implementation details"
-msgstr "Détails d'implémentation"
+msgstr "Détails d’implémentation"
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Layer separation algorithm"
@@ -641,7 +641,7 @@ msgstr "Pour chaque page, procéder comme suit : <placeholder type=\"orderedlis
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "Unless the <option>--monochrome</option> option is on, &p; uses the following naïve layer separation algorithm: <placeholder type=\"orderedlist\" id=\"0\"/>"
-msgstr "À moins que l'option <option>--monochrome</option> soit activée, &p; utilise le simple algorithme de séparation de calques suivant : <placeholder type=\"orderedlist\" id=\"0\"/>"
+msgstr "À moins que l’option <option>--monochrome</option> soit activée, &p; utilise le simple algorithme de séparation de calques suivant : <placeholder type=\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Bug reports"
