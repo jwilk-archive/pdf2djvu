@@ -85,7 +85,7 @@ src/pdf2djvu/source-stamp: src/pdf2djvu_$(version).tar.gz
 		$(dir $@)/*.hh \
 		$(dir $@)/po/*.po*
 	rm -f $(dir $@)/paths.hh
-	touch $@
+	touch $(@)
 
 src/pdf2djvu/config.status: src/pdf2djvu/source-stamp
 src/pdf2djvu/config.status: src/djvulibre/install-stamp
@@ -101,7 +101,7 @@ src/pdf2djvu/config.status: src/mingwrt/install-stamp
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
-	touch $@
+	touch $(@)
 
 src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	mkdir -p dist/doc/
@@ -123,7 +123,7 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 			rst2html $$file > $(usr)/dist/doc/$${file%.txt}.html; \
 		done
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/changelog > dist/doc/changelog.txt
-	touch $@
+	touch $(@)
 
 # Various libraries
 
@@ -138,7 +138,7 @@ src/libs-install-stamp: src/poppler/install-stamp
 src/libs-install-stamp: src/winiconv/install-stamp
 	mkdir -p dist/doc/
 	rst2html COPYING.libs.txt > dist/doc/COPYING.libs.html
-	touch $@
+	touch $(@)
 
 # Poppler
 
@@ -149,7 +149,7 @@ src/poppler/source-stamp:
 	cd $(dir $@) && $(untar) ../poppler-*.tar.gz
 	cd $(dir $@) && sed -i -e 's/^void str\(cat\|cpy\)/void poppler_str\1/' test/perf-test.cc
 	rm src/poppler-*.tar.gz
-	touch $@
+	touch $(@)
 
 src/poppler/config.status: src/poppler/source-stamp
 src/poppler/config.status: src/fontconfig/install-stamp
@@ -174,12 +174,12 @@ src/poppler/config.status: src/libjpeg/install-stamp
 
 src/poppler/build-stamp: src/poppler/config.status
 	$(MAKE) -C $(dir $@)
-	touch $@
+	touch $(@)
 
 src/poppler/install-stamp: src/poppler/build-stamp
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libpoppler)
-	touch $@
+	touch $(@)
 
 # DjVuLibre
 
@@ -195,7 +195,7 @@ src/djvulibre/source-stamp:
 	sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' $(dir $@)/libdjvu/atomic.cpp
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	rm src/djvulibre-*.tar.gz
-	touch $@
+	touch $(@)
 
 src/djvulibre/config.status: src/djvulibre/source-stamp
 src/djvulibre/config.status: src/libjpeg/config.status
@@ -206,7 +206,7 @@ src/djvulibre/config.status: src/libjpeg/config.status
 src/djvulibre/build-stamp: src/djvulibre/config.status
 	$(MAKE) -C $(dir $@)/libdjvu
 	$(MAKE) -C $(dir $@)/tools
-	touch $@
+	touch $(@)
 
 src/djvulibre/install-stamp: src/djvulibre/build-stamp
 	mkdir -p dist/
@@ -219,7 +219,7 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 		chmod a-x dist/$$tool.exe; \
 	done
 	$(call ship_dll,libdjvulibre)
-	touch $@
+	touch $(@)
 
 # libxml2
 
@@ -232,7 +232,7 @@ src/libxml2/source-stamp:
 	rm src/libxml2-*.tar.gz
 	rm -r src/libxml2/test
 	rm -r src/libxml2/result
-	touch $@
+	touch $(@)
 
 src/libxml2/config.status: src/libxml2/source-stamp
 	cd $(dir $@) && \
@@ -248,14 +248,14 @@ src/libxml2/config.status: src/libxml2/source-stamp
 
 src/libxml2/build-stamp: src/libxml2/config.status
 	$(MAKE) -C $(dir $@)
-	touch $@
+	touch $(@)
 
 src/libxml2/install-stamp: src/libxml2/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
 	cp xmlexports.h include/libxml2/libxml/xmlexports.h
 	$(call ship_dll,libxml2)
-	touch $@
+	touch $(@)
 
 # libxslt
 
@@ -266,7 +266,7 @@ src/libxslt/source-stamp:
 	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
 	rm src/libxslt-*.tar.gz
 	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' $(dir $@)/libxslt/libxslt.h
-	touch $@
+	touch $(@)
 
 src/libxslt/config.status: src/libxslt/source-stamp
 src/libxslt/config.status: src/libxml2/install-stamp
@@ -282,13 +282,13 @@ src/libxslt/config.status: src/libxml2/install-stamp
 
 src/libxslt/build-stamp: src/libxslt/config.status
 	$(MAKE) -C $(dir $@)/libxslt/
-	touch $@
+	touch $(@)
 
 src/libxslt/install-stamp: src/libxslt/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@)/libxslt/ install
 	$(call ship_dll,libxslt)
-	touch $@
+	touch $(@)
 
 # FreeType
 
@@ -298,24 +298,24 @@ src/freetype/source-stamp:
 	echo 'c4204ac1d48e99d4375a2f32bf4f3f92780a9d9f015e64e57e852f6c004859b9  src/freetype-2.4.9.tar.bz2' | sha256sum -c
 	cd $(dir $@) && $(untar) ../freetype-*.tar.bz2
 	rm src/freetype-*.tar.bz2
-	touch $@
+	touch $(@)
 
 src/freetype/config.status: src/freetype/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--without-zlib \
 		--disable-static
-	touch $@
+	touch $(@)
 
 src/freetype/build-stamp: src/freetype/config.status
 	$(MAKE) -C $(dir $@)
-	touch $@
+	touch $(@)
 
 src/freetype/install-stamp: src/freetype/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libfreetype)
-	touch $@
+	touch $(@)
 
 # fontconfig
 
@@ -326,7 +326,7 @@ src/fontconfig/source-stamp:
 	cd $(dir $@) && $(untar) ../fontconfig-*.tar.gz
 	rm src/fontconfig-*.tar.gz
 	sed -i -e 's/"append"/"prepend"/g' src/fontconfig/conf.d/*-urw-aliases.conf
-	touch $@
+	touch $(@)
 
 src/fontconfig/config.status: src/fontconfig/source-stamp
 src/fontconfig/config.status: src/freetype/install-stamp
@@ -341,7 +341,7 @@ src/fontconfig/config.status: src/libxml2/install-stamp
 
 src/fontconfig/build-stamp: src/fontconfig/config.status
 	$(MAKE) -C $(dir $@)/
-	touch $@
+	touch $(@)
 
 src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	mkdir -p dist/etc/fonts/conf.d/
@@ -350,7 +350,7 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	cp etc/fonts/fonts.conf dist/etc/fonts/
 	cp etc/fonts/fonts.dtd dist/etc/fonts/
 	cp etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
-	touch $@
+	touch $(@)
 
 # GNU gettext
 
@@ -362,7 +362,7 @@ src/gettext/source-stamp:
 	rm src/gettext-*.tar.gz
 	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
 	sed -r -i -e 's/(-DENABLE_RELOCATABLE)=1/\1=0/' $(dir $@)/gettext-runtime/intl/Makefile.in
-	touch $@
+	touch $(@)
 
 src/gettext/config.status: src/gettext/source-stamp
 src/gettext/config.status: src/winiconv/install-stamp
@@ -371,19 +371,19 @@ src/gettext/config.status: src/winiconv/install-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
 		--disable-libasprintf
-	touch $@
+	touch $(@)
 
 src/gettext/build-stamp: src/gettext/config.status
 	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ \
 		aliaspath='\""; return NULL; "\"' \
 		localedir='.'
-	touch $@
+	touch $(@)
 
 src/gettext/install-stamp: src/gettext/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ install
 	$(call ship_dll,libintl)
-	touch $@
+	touch $(@)
 
 # winiconv
 
@@ -396,11 +396,11 @@ src/winiconv/source-stamp:
 	rm -r src/tml/
 	rm src/win-iconv-*.zip
 	sed -i -e '/iconv(/ s/const//' $(dir $@)/iconv.h
-	touch $@
+	touch $(@)
 
 src/winiconv/build-stamp: src/winiconv/source-stamp
 	$(CC) $(CFLAGS) -shared $(dir $@)/win_iconv.c -o $(dir $@)/libiconv.dll
-	touch $@
+	touch $(@)
 
 src/winiconv/install-stamp: src/winiconv/build-stamp
 	mkdir -p include/ bin/ lib/ dist/
@@ -408,7 +408,7 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 	cp $(dir $@)/libiconv.dll bin/
 	cp $(dir $@)/libiconv.dll lib/
 	$(call ship_dll,libiconv)
-	touch $@
+	touch $(@)
 
 # libjpeg
 
@@ -418,7 +418,7 @@ src/libjpeg/source-stamp:
 	echo 'dbe673129e69eaaed47e3cfccf86b1582fa19862a3ce8189ea8f8cfc1800d9aa  src/libjpeg6b_6b1.orig.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libjpeg6b_*.tar.gz
 	rm src/libjpeg6b_*.tar.gz
-	touch $@
+	touch $(@)
 
 src/libjpeg/config.status: src/libjpeg/source-stamp
 	cd $(dir $@) && \
@@ -427,29 +427,29 @@ src/libjpeg/config.status: src/libjpeg/source-stamp
 
 src/libjpeg/build-stamp: src/libjpeg/config.status
 	$(MAKE) -C $(dir $@)
-	touch $@
+	touch $(@)
 
 src/libjpeg/install-stamp: src/libjpeg/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libjpeg)
-	touch $@
+	touch $(@)
 
 # URW fonts
 
 src/urw-fonts/source-stamp:
 	mkdir -p $(dir $@)
 	cd $(dir $@) && wget -A '*.pfb' -r -nd -np http://svn.ghostscript.com/ghostscript/trunk/urw-fonts/
-	touch $@
+	touch $(@)
 
 src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
-	touch $@
+	touch $(@)
 
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	mkdir -p dist/fonts/ dist/doc/
 	cp $(dir $@)/*.pfb dist/fonts/
 	rst2html COPYING.fonts.txt > dist/doc/COPYING.fonts.html
-	touch $@
+	touch $(@)
 
 # MinGW runtime
 
