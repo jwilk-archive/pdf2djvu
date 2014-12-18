@@ -13,7 +13,7 @@ use warnings;
 
 if (/^[.]SH /) {
     s/(\\[(][,~'][a-z])/\U$1/g; # https://bugs.debian.org/758262#20
-    s/\\[(]ss/SS/g;
+    s/\\[(]ss/SS/g; # https://bugs.debian.org/773444
 }
 
 # vim:ts=4 sts=4 sw=4 et
