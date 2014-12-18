@@ -1,4 +1,4 @@
-pdf2djvu (0.7.18) UNRELEASED; urgency=low
+pdf2djvu (0.7.18) unstable; urgency=low
 
   * Make the xml2c script more portable.
   * In C++11 mode, use “decltype” instead of “typeof”.
@@ -17,7 +17,7 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Drop support for Poppler < 0.11.1.
   * Improve error handling.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Dec 2014 12:44:51 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Dec 2014 13:25:10 +0100
 
 pdf2djvu (0.7.17) unstable; urgency=low
 
