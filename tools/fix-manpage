@@ -9,11 +9,11 @@
 use strict;
 use warnings;
 
-# Work-around for DocBook XSL capitalization bug:
-# https://bugs.debian.org/758262#20
+# Work-arounds for DocBook XSL capitalization bugs
 
 if (/^[.]SH /) {
-    s/(\\[(][,~'][a-z])/\U$1/g;
+    s/(\\[(][,~'][a-z])/\U$1/g; # https://bugs.debian.org/758262#20
+    s/\\[(]ss/SS/g;
 }
 
 # vim:ts=4 sts=4 sw=4 et
