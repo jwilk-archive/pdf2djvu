@@ -13,6 +13,7 @@ pdf2djvu (0.7.18) UNRELEASED; urgency=low
   * Add French translation of the manual page by Majid Redouane and 
     Jean-Paul Guillonneau.
   * Fix capitalization error in the German manual page.
+    Thanks to Chris Leick for help.
   * Drop support for Poppler < 0.11.1.
   * Improve error handling.
 
