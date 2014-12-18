@@ -47,7 +47,7 @@ rm "pdf2djvu-$version/Makefile.common"
 make -C "pdf2djvu-$version/tests/" prepare
 
 # Tarball with raw source:
-tar -czf "$pwd/pdf2djvu_$version.tar.gz" "pdf2djvu-$version"
+tar -czf "$pwd/pdf2djvu-$version.tar.gz" "pdf2djvu-$version"
 
 # Cleanup:
 rm -Rf "$buildroot"
