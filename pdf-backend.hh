@@ -118,9 +118,7 @@ namespace pdf
   class Renderer : public pdf::splash::OutputDevice
   {
   public:
-    Renderer(pdf::splash::Color &paper_color, bool monochrome = false) :
-      pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, false, paper_color)
-    { }
+    Renderer(pdf::splash::Color &paper_color, bool monochrome = false);
 
 #if POPPLER_VERSION < 1900
     void processLink(pdf::link::Link *link, pdf::Catalog *catalog)
@@ -301,6 +299,7 @@ namespace pdf
   {
   public:
     Environment(const char *argv0);
+    static bool antialias;
     void set_antialias(bool value);
     class UnableToSetParameter : public std::runtime_error
     {
