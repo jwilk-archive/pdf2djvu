@@ -861,7 +861,7 @@ public:
   }
   virtual void set_outline(File &outline_sed_file) = 0;
   virtual void set_metadata(File &metadata_sed_file) = 0;
-  virtual ~DjVm() throw () { /* just to shut up compilers */ }
+  virtual ~DjVm() throw () { /* just to silence compilers */ }
 };
 
 void DjVm::remember(const Component &component)
