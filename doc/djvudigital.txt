@@ -48,6 +48,6 @@ Superiorities of pdf2djvu
    http://djvu.sourceforge.net/gsdjvu.html
 
 .. _bug report:
-   http://sf.net/tracker/index.php?func=detail&aid=1997033&group_id=32953&atid=406583
+   http://sourceforge.net/p/djvu/bugs/109/
 
 .. vim:ft=rst ts=3 sw=3 et tw=72

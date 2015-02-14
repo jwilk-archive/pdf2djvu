@@ -42,7 +42,7 @@ namespace sexpr
   class GCLock
   /* Having a live `sexpr::GCLock` object disables garbage-collecting of S-expressions.
    * The purpose is to work around a nasty bug in old DjVuLibre releases:
-   * http://sf.net/tracker/?func=detail&aid=1915053&group_id=32953&atid=406583
+   * http://sourceforge.net/p/djvu/bugs/96/
    */
   {
   public:

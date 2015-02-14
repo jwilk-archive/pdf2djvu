@@ -14,7 +14,7 @@ from common import (
 
 class test(case):
     '''
-    http://sf.net/tracker/?func=detail&aid=1972089&group_id=32953&atid=406583
+    http://sourceforge.net/p/djvu/bugs/106/
     fixed in [5e3937296514]
     '''
     def test(self):

@@ -15,9 +15,7 @@ namespace djvu
   /* ``djvumake`` used to require dpi ≥ 72.
    * The library itself enforces dpi ≤ 6000.
    *
-   * See
-   * <http://sf.net/tracker/?func=detail&aid=1956093&group_id=32953&atid=406583>
-   * for details.
+   * See http://sourceforge.net/p/djvu/bugs/103/ for details.
    */
 
   static const unsigned int max_fg_colors = 4080;
