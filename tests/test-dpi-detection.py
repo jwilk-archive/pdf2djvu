@@ -13,10 +13,6 @@ from common import (
 )
 
 class test(case):
-    '''
-    http://sourceforge.net/p/djvu/bugs/106/
-    fixed in [5e3937296514]
-    '''
     def test(self):
         self.pdf2djvu('--guess-dpi').assert_()
         r = self.djvudump()
