@@ -29,8 +29,15 @@ expected_outline_sexpr = '''\
 '''
 
 class test(case):
-    def test(self):
+
+    def test_multi_page(self):
         self.pdf2djvu().assert_()
+        self.print_outline().assert_(stdout=expected_outline_sexpr)
+
+    def test_single_page(self):
+        # Make sure that outline is preserved in single-page documents without
+        # shared annotation chunk.
+        self.pdf2djvu('-p1', '--no-metadata').assert_()
         self.print_outline().assert_(stdout=expected_outline_sexpr)
 
 # vim:ts=4 sts=4 sw=4 et
