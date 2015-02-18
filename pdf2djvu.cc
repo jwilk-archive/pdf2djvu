@@ -986,8 +986,8 @@ public:
     size_t size = this->components.size();
     debug(3)
       << string_printf(ngettext(
-           "creating multi-page indirect document (%d page)",
-           "creating multi-page indirect document (%d pages)",
+           "creating multi-page indirect document (%zu page)",
+           "creating multi-page indirect document (%zu pages)",
            size), size
          )
       << std::endl;
