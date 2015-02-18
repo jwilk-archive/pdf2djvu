@@ -20,7 +20,7 @@ AC_PREPROC_IFELSE(
 
 # Checks for libraries.
 
-PKG_CHECK_MODULES(DJVULIBRE, ddjvuapi >= 3.5.17)
+PKG_CHECK_MODULES([DJVULIBRE], [ddjvuapi >= 3.5.21])
 djvulibre_bin_path=$($PKG_CONFIG --variable exec_prefix ddjvuapi)/bin
 AC_SUBST(djvulibre_bindir, "$djvulibre_bin_path")
 djvulibre_version=$($PKG_CONFIG --modversion ddjvuapi)
