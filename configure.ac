@@ -40,7 +40,7 @@ done
 
 # Test for Debian bug #458211 <https://bugs.debian/458211>.
 # csepdjvu affected by the bug is unable to use subsample ratio 12.
-# Prior to pdf2djvu 0.5.0, pdf2djvu simply dissalowed subsample ratio 12 by
+# Prior to pdf2djvu 0.5.0, pdf2djvu simply disallowed subsample ratio 12 by
 # itself.
 echo 'P1 12 12' > conftest.458211.pbm
 yes 0 | head -n 144 >> conftest.458211.pbm
