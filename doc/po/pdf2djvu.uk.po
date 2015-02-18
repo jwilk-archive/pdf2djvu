@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pdf2djvu 0.7.19\n"
+"Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2014-05-11 22:47+0200\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
@@ -21,8 +21,8 @@ msgid "pdf2djvu"
 msgstr "pdf2djvu"
 
 #. type: Content of the version entity
-msgid "0.7.19"
-msgstr "0.7.19"
+msgid "0.7.20"
+msgstr "0.7.20"
 
 #. type: Attribute 'lang' of: <refentry>
 msgid "en"
