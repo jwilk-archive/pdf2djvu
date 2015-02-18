@@ -39,7 +39,7 @@ all:
 # Source tarballs
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
-src_tarball_name = pdf2djvu-win32-source_$(version)
+src_tarball_name = pdf2djvu-win32-source-$(version)
 export TAR_OPTIONS = --owner root --group root --mode a+rX --format ustar
 export XZ_OPT = -6e
 
@@ -74,7 +74,7 @@ install: src/urw-fonts/install-stamp
 
 # pdf2djvu
 
-src/pdf2djvu/source-stamp: src/pdf2djvu_$(version).tar.gz
+src/pdf2djvu/source-stamp: src/pdf2djvu-$(version).tar.xz
 	mkdir -p $(dir $@)
 	cd $(dir $@) && $(untar) $(CURDIR)/$(<)
 	sed -i \
