@@ -11,6 +11,10 @@ debug.o: debug.cc
 debug.o: debug.hh
 debug.o: system.hh
 debug.o: version.hh
+djvu-outline.o: djvu-outline.cc
+djvu-outline.o: djvu-outline.hh
+djvu-outline.o: i18n.hh
+djvu-outline.o: version.hh
 i18n.o: i18n.cc
 i18n.o: i18n.hh
 i18n.o: paths.hh
@@ -39,6 +43,7 @@ pdf-dpi.o: pdf-dpi.hh
 pdf-dpi.o: version.hh
 pdf2djvu.o: config.hh
 pdf2djvu.o: debug.hh
+pdf2djvu.o: djvu-outline.hh
 pdf2djvu.o: djvuconst.hh
 pdf2djvu.o: i18n.hh
 pdf2djvu.o: image-filter.hh

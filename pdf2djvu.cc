@@ -21,6 +21,7 @@
 #include <omp.h>
 #endif
 
+#include "djvu-outline.hh"
 #include "pdf-backend.hh"
 #include "pdf-dpi.hh"
 #include "config.hh"
@@ -656,14 +657,12 @@ public:
   { }
 };
 
-static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
-  const ComponentList &page_files)
+void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
+  djvu::OutlineBase &djvu_outline, const ComponentList &page_files)
 {
-  sexpr::GCLock gc_lock;
   pdf::Object current, next;
   if (!pdf::dict_lookup(node, "First", &current)->isDict())
-    return sexpr::nil;
-  sexpr::Ref list = sexpr::nil;
+    return;
   while (current.isDict())
   {
     try
@@ -690,16 +689,13 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
           throw NoPageForBookmark();
         page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action.get()), catalog);
       }
-      sexpr::Ref expr = sexpr::nil;
-      expr = pdf_outline_to_djvu_outline(&current, catalog, page_files);
       {
-        std::ostringstream strstream;
-        strstream << "#" << page_files.get_file_name(page);
-        sexpr::Ref pexpr = sexpr::string(strstream.str());
-        expr = sexpr::cons(pexpr, expr);
+        djvu::OutlineItem &djvu_outline_item = djvu_outline.add(
+          title_str,
+          std::string("#") + page_files.get_file_name(page)
+        );
+        pdf_outline_to_djvu_outline(&current, catalog, djvu_outline_item, page_files);
       }
-      expr = sexpr::cons(sexpr::string(title_str), expr);
-      list = sexpr::cons(expr, list);
     }
     catch (BookmarkError &ex)
     {
@@ -711,31 +707,21 @@ static sexpr::Expr pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *
     current = next;
   }
   current.free();
-  list.reverse();
-  return list;
 }
 
-static bool pdf_outline_to_djvu_outline(pdf::Document &doc, std::ostream &stream,
+static void pdf_outline_to_djvu_outline(pdf::Document &doc, djvu::Outline &djvu_outline,
   const ComponentList &page_files)
-/* Convert the PDF outline to DjVu outline. Save the resulting S-expression
- * into the stream.
+/* Convert the PDF outline to DjVu outline.
  *
  * Return ``true`` if the outline exist and is non-empty.
  * Return ``false`` otherwise.
  */
 {
-  sexpr::GCLock gc_lock;
   pdf::Catalog *catalog = doc.getCatalog();
-  pdf::Object *outlines = catalog->getOutline();
-  if (!outlines->isDict())
-    return false;
-  static sexpr::Ref symbol_bookmarks = sexpr::symbol("bookmarks");
-  sexpr::Ref expr = pdf_outline_to_djvu_outline(outlines, catalog, page_files);
-  if (expr == sexpr::nil)
-    return false;
-  expr = sexpr::cons(symbol_bookmarks, expr);
-  stream << expr;
-  return true;
+  pdf::Object *pdf_outline = catalog->getOutline();
+  if (!pdf_outline->isDict())
+    return;
+  pdf_outline_to_djvu_outline(pdf_outline, catalog, djvu_outline, page_files);
 }
 
 static void add_meta_string(const char *key, const std::string &value, std::ostream &stream)
@@ -852,14 +838,13 @@ protected:
   void remember(const Component &component);
 public:
   virtual void add(const Component &compontent) = 0;
-  virtual void create() = 0;
   virtual void commit() = 0;
   DjVm &operator <<(const Component &component)
   {
     this->add(component);
     return *this;
   }
-  virtual void set_outline(File &outline_sed_file) = 0;
+  virtual void set_outline(const djvu::Outline &outline) = 0;
   virtual void set_metadata(File &metadata_sed_file) = 0;
   virtual ~DjVm() throw () { /* just to silence compilers */ }
 };
@@ -897,9 +882,8 @@ public:
   ~BundledDjVm() throw ()
   { }
   virtual void add(const Component &component);
-  virtual void set_outline(File &outlines_sed_file);
+  virtual void set_outline(const djvu::Outline &outline);
   virtual void set_metadata(File &metadata_sed_file);
-  virtual void create();
   virtual void commit();
 };
 
@@ -908,6 +892,8 @@ class IndirectDjVm : public DjVm
 protected:
   File &index_file;
   std::vector<Component> components;
+  bool needs_shared_ant;
+  std::auto_ptr<std::ostringstream> outline_stream;
   class UnexpectedDjvuSedOutput : public std::runtime_error
   {
   public:
@@ -915,10 +901,12 @@ protected:
     : std::runtime_error(_("Unexpected output from djvused"))
     { };
   };
-  void do_create(const std::vector<Component> &components, bool shared_ant = false);
+  void create_bare(const std::vector<Component> &components);
+  void create(const std::vector<Component> &components, bool bare=false);
 public:
   explicit IndirectDjVm(File &index_file)
-  : index_file(index_file)
+  : index_file(index_file),
+    needs_shared_ant(false)
   { }
 
   virtual ~IndirectDjVm() throw ()
@@ -930,25 +918,20 @@ public:
     this->components.push_back(component);
   }
 
-  virtual void set_outline(File &outlines_sed_file)
+  virtual void set_outline(const djvu::Outline &outline)
   {
-    debug(3) << _("creating document outline with `djvused`") << std::endl;
-    DjVuCommand djvused("djvused");
-    djvused << "-s" << "-f" << outlines_sed_file << this->index_file;
-    djvused(); // djvused -s -f <outlines-sed-file> <index-djvu-file>
+    if (!outline)
+    {
+      this->outline_stream.reset(NULL);
+      return;
+    }
+    this->outline_stream.reset(new std::ostringstream);
+    *this->outline_stream << outline;
   }
 
   virtual void set_metadata(File &metadata_sed_file)
   {
     size_t size = this->components.size();
-    if (size <= 2)
-    {
-      debug(3) << _("setting metadata with `djvused`") << std::endl;
-      DjVuCommand djvused("djvused");
-      djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
-      djvused(); // djvused -s -f <metadata-sed-file> <index-djvu-file>
-    }
-    else
     {
       /* Using ``djvused`` to add shared annotations to a indirect multi-page
        * document could be unacceptably slow:
@@ -956,7 +939,7 @@ public:
        *
        * We need to work around this bug.
        */
-      debug(3) << _("setting metadata with `djvused` (working around a DjVuLibre bug)") << std::endl;
+      debug(3) << _("setting metadata with `djvused`") << std::endl;
       std::vector<Component> dummy_components;
       TemporaryFile dummy_sed_file;
       /* For an indirect document, ``create-shared-ant`` is, surprisingly, not
@@ -977,7 +960,7 @@ public:
          * - Add the dummy shared annotation.
          */
         dummy_components.push_back(this->components[i]);
-        this->do_create(dummy_components);
+        this->create_bare(dummy_components);
         DjVuCommand djvused("djvused");
         djvused << "-s" << "-f" << dummy_sed_file << this->index_file;
         djvused(); // djvused -s -f <dummy-sed-file> <output-djvu-file>
@@ -985,16 +968,15 @@ public:
       }
       /* For the last page, use the desired annotations. */
       dummy_components.push_back(this->components[size - 1]);
-      this->do_create(dummy_components);
+      this->create_bare(dummy_components);
       DjVuCommand djvused("djvused");
       djvused << "-s" << "-f" << metadata_sed_file << this->index_file;
       djvused(); // djvused -s -f <metadata-sed-file> <output-djvu-file>
-      /* Finally, recreate the index. */
-      this->do_create(this->components, true /* include shared annotations */);
+      this->needs_shared_ant = true;
     }
   }
 
-  virtual void create()
+  virtual void commit()
   {
     size_t size = this->components.size();
     debug(3)
@@ -1004,11 +986,9 @@ public:
            size), size
          )
       << std::endl;
-    this->do_create(this->components);
+    this->create(this->components);
   }
 
-  virtual void commit()
-  { }
 };
 
 void BundledDjVm::add(const Component &component)
@@ -1024,9 +1004,9 @@ void BundledDjVm::add(const Component &component)
   *this->indirect_djvm << component;
 }
 
-void BundledDjVm::set_outline(File &outlines_sed_file)
+void BundledDjVm::set_outline(const djvu::Outline &outline)
 {
-  this->indirect_djvm->set_outline(outlines_sed_file);
+  this->indirect_djvm->set_outline(outline);
 }
 
 void BundledDjVm::set_metadata(File &metadata_sed_file)
@@ -1034,13 +1014,9 @@ void BundledDjVm::set_metadata(File &metadata_sed_file)
   this->indirect_djvm->set_metadata(metadata_sed_file);
 }
 
-void BundledDjVm::create()
-{
-  this->indirect_djvm->create();
-}
-
 void BundledDjVm::commit()
 {
+  this->indirect_djvm->commit();
   this->converter
     << "-b"
     << *this->index_file
@@ -1049,12 +1025,18 @@ void BundledDjVm::commit()
   this->index_file.reset(NULL);
 }
 
-void IndirectDjVm::do_create(const std::vector<Component> &components, bool shared_ant)
+void IndirectDjVm::create_bare(const std::vector<Component> &components)
+{
+  this->create(components, true);
+}
+
+void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
 {
   size_t size = components.size();
   this->index_file.reopen(true); // (re)open and truncate
   this->index_file.write(djvu::binary::djvm_head, sizeof djvu::binary::djvm_head);
   this->index_file << djvu::binary::version;
+  bool shared_ant = !bare && this->needs_shared_ant;
   for (int i = 1; i >= 0; i--)
     index_file << static_cast<char>(((size + shared_ant) >> (8 * i)) & 0xff);
   {
@@ -1079,13 +1061,29 @@ void IndirectDjVm::do_create(const std::vector<Component> &components, bool shar
     bzz << "-e" << bzz_file << "-";
     bzz(index_file);
   }
-  size = this->index_file.size();
-  this->index_file.seekg(8, std::ios::beg);
-  for (int i = 3; i >= 0; i--)
-    this->index_file << static_cast<char>(((size - 12) >> (8 * i)) & 0xff);
+  size_t dirm_off = this->index_file.size();
   this->index_file.seekg(20, std::ios::beg);
   for (int i = 3; i >= 0; i--)
-    this->index_file << static_cast<char>(((size - 24) >> (8 * i)) & 0xff);
+    this->index_file << static_cast<char>(((dirm_off - 24) >> (8 * i)) & 0xff);
+  if (!bare && this->outline_stream.get())
+  {
+    TemporaryFile bzz_file;
+    this->index_file.seekg(0, std::ios::end);
+    index_file.write("NAVM\0\0\0", 8);
+    bzz_file << this->outline_stream->str();
+    bzz_file.close();
+    DjVuCommand bzz("bzz");
+    bzz << "-e" << bzz_file << "-";
+    bzz(index_file);
+    size_t outline_off = index_file.size();
+    this->index_file.seekg(dirm_off + 4, std::ios::beg);
+    for (int i = 3; i >= 0; i--)
+      this->index_file << static_cast<char>(((outline_off - dirm_off - 8) >> (8 * i)) & 0xff);
+  }
+  size_t off = this->index_file.size();
+  this->index_file.seekg(8, std::ios::beg);
+  for (int i = 3; i >= 0; i--)
+    this->index_file << static_cast<char>(((off - 12) >> (8 * i)) & 0xff);
   this->index_file.close();
 }
 
@@ -1222,6 +1220,7 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<DjVm> djvm;
   std::auto_ptr<ComponentList> page_files;
   std::auto_ptr<Quantizer> quantizer;
+  djvu::Outline djvu_outline;
   if (config.monochrome)
     quantizer.reset(new DummyQuantizer(config));
   else
@@ -1594,7 +1593,6 @@ static int xmain(int argc, char * const argv[])
     int n = page_numbers[i];
     *djvm << (*page_files)[n];
   }
-  djvm->create();
   /* Only first PDF document metadata/outline is taken into account. */
   doc.reset(new pdf::Document(config.filenames[0]));
   if (config.extract_metadata)
@@ -1638,21 +1636,9 @@ static int xmain(int argc, char * const argv[])
   }
   if (config.extract_outline)
   {
-    bool nonempty_outline;
-    TemporaryFile sed_file;
     debug(3) << _("extracting document outline") << std::endl;
-    if (config.format == config.FORMAT_BUNDLED)
-    {
-      /* Shared annotations chunk in necessary to preserve multi-file document
-       * structure. (Single-file documents cannot contain document outline.) */
-      sed_file << "create-shared-ant" << std::endl;
-    }
-    sed_file << "set-outline" << std::endl;
-    nonempty_outline = pdf_outline_to_djvu_outline(*doc, sed_file, *page_files);
-    sed_file << std::endl << "." << std::endl;
-    sed_file.close();
-    if (nonempty_outline)
-      djvm->set_outline(sed_file);
+    pdf_outline_to_djvu_outline(*doc, djvu_outline, *page_files);
+    djvm->set_outline(djvu_outline);
   }
   djvm->commit();
   {

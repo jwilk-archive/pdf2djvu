@@ -26,6 +26,7 @@ paths.hh: tools/generate-paths-hh Makefile.common
 
 pdf2djvu: config.o
 pdf2djvu: debug.o
+pdf2djvu: djvu-outline.o
 pdf2djvu: i18n.o
 pdf2djvu: image-filter.o
 pdf2djvu: pdf-backend.o
