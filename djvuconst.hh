@@ -22,18 +22,7 @@ namespace djvu
 
   static const unsigned int max_subsample_ratio = 12;
 
-  static const unsigned int version = 1;
-
   static const char shared_ant_file_name[] = "shared_anno.iff";
-
-  namespace binary
-  {
-
-    static const char version = static_cast<char>(djvu::version);
-
-    static const char djvm_head[] = "AT&TFORM\0\0\0\0DJVMDIRM\0\0\0";
-
-  }
 
 }
 

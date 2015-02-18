@@ -1034,8 +1034,7 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
 {
   size_t size = components.size();
   this->index_file.reopen(true); // (re)open and truncate
-  this->index_file.write(djvu::binary::djvm_head, sizeof djvu::binary::djvm_head);
-  this->index_file << djvu::binary::version;
+  this->index_file.write("AT&TFORM\0\0\0\0DJVMDIRM\0\0\0\0\1", 25);
   bool shared_ant = !bare && this->needs_shared_ant;
   for (int i = 1; i >= 0; i--)
     index_file << static_cast<char>(((size + shared_ant) >> (8 * i)) & 0xff);
