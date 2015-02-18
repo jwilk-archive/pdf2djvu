@@ -756,7 +756,7 @@ private:
   TemporaryComponentList& operator=(const TemporaryComponentList&); // not defined
 protected:
   std::auto_ptr<const TemporaryDirectory> directory;
-  std::auto_ptr<const TemporaryFile> shared_ant_file;
+  std::auto_ptr<TemporaryFile> shared_ant_file;
 
   virtual File *create_file(const std::string &pageid)
   {
@@ -767,7 +767,10 @@ public:
   : ComponentList(n, page_map),
     directory(new TemporaryDirectory()),
     shared_ant_file(new TemporaryFile(*directory, djvu::shared_ant_file_name))
-  { }
+  {
+    shared_ant_file->write("AT&TFORM\0\0\0\4DJVI", 16);
+    shared_ant_file->close();
+  }
 
   virtual ~TemporaryComponentList() throw ()
   {
@@ -870,13 +873,15 @@ class IndirectDjVm;
 class BundledDjVm : public DjVm
 {
 protected:
+  size_t size;
   File &output_file;
   DjVuCommand converter;
   std::auto_ptr<IndirectDjVm> indirect_djvm;
   std::auto_ptr<TemporaryFile> index_file;
 public:
   explicit BundledDjVm(File &output_file)
-  : output_file(output_file),
+  : size(0),
+    output_file(output_file),
     converter("djvmcvt")
   { }
   ~BundledDjVm() throw ()
@@ -989,6 +994,11 @@ public:
     this->create(this->components);
   }
 
+  void require_shared_ant()
+  {
+    this->needs_shared_ant = true;
+  }
+
 };
 
 void BundledDjVm::add(const Component &component)
@@ -1002,11 +1012,17 @@ void BundledDjVm::add(const Component &component)
   }
   /* No need to call ``this->remember(component)``. */
   *this->indirect_djvm << component;
+  this->size++;
 }
 
 void BundledDjVm::set_outline(const djvu::Outline &outline)
 {
   this->indirect_djvm->set_outline(outline);
+  if (this->size < 2)
+    /* Some old DjVuLibre versions (at least 3.5.23) don't preserve outline in
+     * single-page documents without shared annotation chunk. Let's work around
+     * this problem. */
+    this->indirect_djvm->require_shared_ant();
 }
 
 void BundledDjVm::set_metadata(File &metadata_sed_file)
