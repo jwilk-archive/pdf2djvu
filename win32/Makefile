@@ -41,7 +41,7 @@ all:
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
 src_tarball_name = pdf2djvu-win32-source_$(version)
 export TAR_OPTIONS = --owner root --group root --mode a+rX --format ustar
-export XZ_OPT = -8
+export XZ_OPT = -6e
 
 .PHONY:
 source-dist:
