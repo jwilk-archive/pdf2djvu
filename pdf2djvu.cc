@@ -1663,8 +1663,8 @@ static int xmain(int argc, char * const argv[])
       djvu_size += djvu_pages_size;
       try
       {
-        ExistingFile shared_anno(*output_dir, djvu::shared_ant_file_name);
-        djvu_size += shared_anno.size();
+        ExistingFile shared_ant(*output_dir, djvu::shared_ant_file_name);
+        djvu_size += shared_ant.size();
       }
       catch (std::ios_base::failure &ex)
       {
