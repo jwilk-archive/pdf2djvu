@@ -37,34 +37,7 @@ do
     AC_MSG_ERROR($tool not found)
   fi
 done
-
-# Test for Debian bug #458211 <https://bugs.debian/458211>.
-# csepdjvu affected by the bug is unable to use subsample ratio 12.
-# Prior to pdf2djvu 0.5.0, pdf2djvu simply disallowed subsample ratio 12 by
-# itself.
-echo 'P1 12 12' > conftest.458211.pbm
-yes 0 | head -n 144 >> conftest.458211.pbm
-"$djvulibre_bin_path/cjb2" conftest.458211.pbm conftest.458211.djvu
-"$djvulibre_bin_path/ddjvu" -format=rle conftest.458211.djvu conftest.458211.sep
-printf 'P6 1 1 255 xxx' >> conftest.458211.sep
-"$djvulibre_bin_path/csepdjvu" conftest.458211.sep conftest.458211.djvu 2>/dev/null || djvulibre_bugs="$djvulibre_bugs 458211"
-
-if test -n "$djvulibre_bugs"
-then
-  result=''
-  for bug in $djvulibre_bugs
-  do
-    if test -n "$result"
-    then
-      result="$result, "
-    fi
-    result="${result}<https://bugs.debian.org/$bug>"
-  done
-  AC_MSG_RESULT(buggy)
-  AC_MSG_ERROR(See $result for details.)
-else
-  AC_MSG_RESULT(ok)
-fi
+AC_MSG_RESULT([ok])
 
 PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.11.1)
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
