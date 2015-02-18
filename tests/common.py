@@ -159,7 +159,7 @@ class case(object):
     def require_feature(self, feature):
         r = self.pdf2djvu('--version')
         r.assert_(stderr=re('^pdf2djvu '), rc=1)
-        if feature not in r.stdout:
+        if feature not in r.stderr:
             raise SkipTest(feature + ' support missing')
 
 def rainbow(width, height):
