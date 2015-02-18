@@ -1,4 +1,4 @@
-/* Copyright © 2009 Jakub Wilk
+/* Copyright © 2009-2013 Jakub Wilk
  * Copyright © 2009 Mateusz Turcza
  *
  * This package is free software; you can redistribute it and/or modify
