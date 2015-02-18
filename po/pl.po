@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2014-05-11 22:23+0200\n"
+"POT-Creation-Date: 2015-02-18 15:00+0100\n"
 "PO-Revision-Date: 2012-07-06 09:59+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -106,6 +106,9 @@ msgstr "Urządzenie lub zasoby zajęte"
 #. L10N: Windows error message for ENOTEMPTY
 msgid "Directory not empty"
 msgstr "Katalog nie jest pusty"
+
+msgid "Document outline too large"
+msgstr "Zbyt duży konspekt dokumentu"
 
 #. L10N: Windows error message for EDOM
 msgid "Domain error"
@@ -439,15 +442,12 @@ msgstr "Ostrzeżenie: metadata[%s] nie jest poprawną datą"
 msgid "adding non-raster data with `djvused`"
 msgstr "dodawanie danych nierastrowych za pomocą `djvused`"
 
-msgid "creating document outline with `djvused`"
-msgstr "tworzenie konspektu dokumentu za pomocą `djvused`"
-
 #, c-format
-msgid "creating multi-page indirect document (%d page)"
-msgid_plural "creating multi-page indirect document (%d pages)"
-msgstr[0] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strona)"
-msgstr[1] "tworzenie wielostronicowego dokumentu rozdzielonego (%d strony)"
-msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%d stron)"
+msgid "creating multi-page indirect document (%zu page)"
+msgid_plural "creating multi-page indirect document (%zu pages)"
+msgstr[0] "tworzenie wielostronicowego dokumentu rozdzielonego (%zu strona)"
+msgstr[1] "tworzenie wielostronicowego dokumentu rozdzielonego (%zu strony)"
+msgstr[2] "tworzenie wielostronicowego dokumentu rozdzielonego (%zu stron)"
 
 msgid "creating new background image with `c44`"
 msgstr "tworzenie nowego obrazu tła za pomocą `c44`"
@@ -527,9 +527,6 @@ msgstr "tworzenie strony (drugi przebieg)"
 
 msgid "setting metadata with `djvused`"
 msgstr "ustawianie metadanych za pomocą `djvused`"
-
-msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
-msgstr "ustawianie metadanych za pomocą `djvused` (omijanie błędu DjVuLibre)"
 
 msgid "storing background image"
 msgstr "zapisywanie obrazu tła"

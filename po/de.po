@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2014-05-11 22:23+0200\n"
+"POT-Creation-Date: 2015-02-18 15:00+0100\n"
 "PO-Revision-Date: 2012-08-19 11:50+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -104,6 +104,9 @@ msgstr "Gerät oder Ressource ausgelastet"
 #. L10N: Windows error message for ENOTEMPTY
 msgid "Directory not empty"
 msgstr "Verzeichnis nicht leer"
+
+msgid "Document outline too large"
+msgstr ""
 
 #. L10N: Windows error message for EDOM
 msgid "Domain error"
@@ -437,14 +440,11 @@ msgstr "Warnung: Metadatum[%s] ist kein gültiges Datum"
 msgid "adding non-raster data with `djvused`"
 msgstr "nicht gerasterte Daten werden mit »djvused« hinzugefügt"
 
-msgid "creating document outline with `djvused`"
-msgstr "ein Entwurf des Dokuments wird mit »djvused« erstellt"
-
 #, c-format
-msgid "creating multi-page indirect document (%d page)"
-msgid_plural "creating multi-page indirect document (%d pages)"
-msgstr[0] "ein mehrseitiges indirektes Dokument wird erstellt (%d Seite)"
-msgstr[1] "ein mehrseitiges indirektes Dokument wird erstellt (%d Seiten)"
+msgid "creating multi-page indirect document (%zu page)"
+msgid_plural "creating multi-page indirect document (%zu pages)"
+msgstr[0] "ein mehrseitiges indirektes Dokument wird erstellt (%zu Seite)"
+msgstr[1] "ein mehrseitiges indirektes Dokument wird erstellt (%zu Seiten)"
 
 msgid "creating new background image with `c44`"
 msgstr "neues Hintergrundbild wird mit »c44« erstellt"
@@ -524,9 +524,6 @@ msgstr "Seite wird aufgebaut (zweiter Durchgang)"
 
 msgid "setting metadata with `djvused`"
 msgstr "Metadaten werden mit »djvused« gesetzt"
-
-msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
-msgstr "Metadaten werden mit »djvused« gesetzt (umgehen eines DjVuLibre-Fehlers)"
 
 msgid "storing background image"
 msgstr "Hintergrundbild wird gespeichert"

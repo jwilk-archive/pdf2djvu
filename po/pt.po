@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2014-08-18 20:53+0200\n"
+"POT-Creation-Date: 2015-02-18 15:00+0100\n"
 "PO-Revision-Date: 2014-08-16 00:09+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -106,6 +106,9 @@ msgstr "Dispositivo ou recurso ocupado"
 #. L10N: Windows error message for ENOTEMPTY
 msgid "Directory not empty"
 msgstr "Directório não vazio"
+
+msgid "Document outline too large"
+msgstr ""
 
 #. L10N: Windows error message for EDOM
 msgid "Domain error"
@@ -439,14 +442,11 @@ msgstr "Aviso: os meta-dados[%s] não são uma data válida"
 msgid "adding non-raster data with `djvused`"
 msgstr "a adicionar dados não-raster com o `djvused`"
 
-msgid "creating document outline with `djvused`"
-msgstr "a criar o bordo do documento com o `djvused`"
-
 #, c-format
-msgid "creating multi-page indirect document (%d page)"
-msgid_plural "creating multi-page indirect document (%d pages)"
-msgstr[0] "a criar documento indirecto de multi-páginas (%d página)"
-msgstr[1] "a criar documento indirecto de multi-páginas (%d páginas)"
+msgid "creating multi-page indirect document (%zu page)"
+msgid_plural "creating multi-page indirect document (%zu pages)"
+msgstr[0] "a criar documento indirecto de multi-páginas (%zu página)"
+msgstr[1] "a criar documento indirecto de multi-páginas (%zu páginas)"
 
 msgid "creating new background image with `c44`"
 msgstr "a criar nova imagem de fundo com o `c44`"
@@ -526,9 +526,6 @@ msgstr "a renderizar página (2º passo)"
 
 msgid "setting metadata with `djvused`"
 msgstr "a definir meta-dados com o `djvused`"
-
-msgid "setting metadata with `djvused` (working around a DjVuLibre bug)"
-msgstr "a definir meta-dados com o `djvused` (a contornar um bug da DjVuLibre)"
 
 msgid "storing background image"
 msgstr "a gravar imagem de fundo"
