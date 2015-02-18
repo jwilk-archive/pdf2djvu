@@ -125,8 +125,8 @@ class case(object):
             self.get_djvu_file()
         )
 
-    def print_pure_txt(self):
-        return self.djvused('print-pure-txt')
+    def print_text(self):
+        return self.run('djvutxt', self.get_djvu_file())
 
     def print_outline(self):
         return self.djvused('print-outline')

@@ -24,12 +24,12 @@ class test(case):
 
     def test_nfkc(self):
         self.pdf2djvu().assert_()
-        r = self.print_pure_txt()
+        r = self.print_text()
         r.assert_(stdout=re('^%s *$' % self.text_nfkc, re.M))
 
     def test_no_nfkc(self):
         self.pdf2djvu('--no-nfkc').assert_()
-        r = self.print_pure_txt()
+        r = self.print_text()
         r.assert_(stdout=re('^%s *$' % self.text_no_nfkc, re.M))
 
 # vim:ts=4 sts=4 sw=4 et
