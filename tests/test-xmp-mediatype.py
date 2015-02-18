@@ -24,6 +24,7 @@ class test(case):
         assert_grep(xmp, '>application/pdf<')
 
     def test_no_verbatim(self):
+        self.require_feature('GNOME XSLT')
         self.pdf2djvu().assert_()
         xmp = self.extract_xmp()
         assert_well_formed_xml(xmp)

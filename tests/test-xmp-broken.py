@@ -18,6 +18,7 @@ class test(case):
         assert_grep(xmp, '<broken')
 
     def test_no_verbatim(self):
+        self.require_feature('GNOME XSLT')
         r = self.pdf2djvu()
         r.assert_(stderr='''\
 Entity: line 1: parser error : error parsing attribute name
