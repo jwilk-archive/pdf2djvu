@@ -51,8 +51,8 @@ $(po_files): %.po: pdf2djvu.xml
 
 %.xml: %.po
 ifneq "$(quality-check)" ""
-	! msgattrib --only-fuzzy $(<) | grep .
-	! msgattrib --untranslated $(<) | grep .
+	! msgattrib --only-fuzzy $(<) | grep ''
+	! msgattrib --untranslated $(<) | grep ''
 endif
 	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
 
