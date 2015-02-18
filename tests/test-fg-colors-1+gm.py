@@ -24,6 +24,7 @@ class test(case):
             yield self._test, i
 
     def _test(self, i):
+        self.require_feature('GraphicsMagick')
         self.pdf2djvu('--fg-colors=%d' % i).assert_()
         r = self.decode()
         r.assert_(stdout=None)

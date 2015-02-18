@@ -156,6 +156,12 @@ class case(object):
         xmp = eval(xmp)
         return xmp
 
+    def require_feature(self, feature):
+        r = self.pdf2djvu('--version')
+        r.assert_(stderr=re('^pdf2djvu '), rc=1)
+        if feature not in r.stdout:
+            raise SkipTest(feature + ' support missing')
+
 def rainbow(width, height):
     from PIL import Image
     from PIL import ImageColor
