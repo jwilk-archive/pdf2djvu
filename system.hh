@@ -219,7 +219,11 @@ void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit);
 
 std::string string_vprintf(const char *message, va_list args);
-std::string string_printf(const char *message, ...);
+std::string string_printf(const char *message, ...)
+#if defined(__GNUC__)
+__attribute__ ((format (printf, 1, 2)))
+#endif
+;
 
 bool is_stream_a_tty(const std::ostream &ostream);
 
