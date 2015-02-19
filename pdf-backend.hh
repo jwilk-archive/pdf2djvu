@@ -298,7 +298,7 @@ namespace pdf
   class Environment
   {
   public:
-    Environment(const char *argv0);
+    Environment();
     static bool antialias;
     void set_antialias(bool value);
     class UnableToSetParameter : public std::runtime_error

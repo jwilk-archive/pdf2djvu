@@ -3,8 +3,10 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
   * Don't use djvused for setting document outline.
     It was too slow for very long documents.
     https://code.google.com/p/pdf2djvu/issues/detail?id=93
+  * Windows: correctly determine path to DjVuLibre binaries.
+    https://code.google.com/p/pdf2djvu/issues/detail?id=85
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 18 Feb 2015 12:27:15 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 19 Feb 2015 22:12:06 +0100
 
 pdf2djvu (0.7.19) unstable; urgency=low
 

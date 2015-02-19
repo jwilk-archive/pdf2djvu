@@ -1,4 +1,4 @@
-/* Copyright © 2007-2013 Jakub Wilk
+/* Copyright © 2007-2015 Jakub Wilk
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -182,6 +182,15 @@ public:
   explicit Cwd(const std::string &path);
   ~Cwd();
 };
+
+class ProgramDir
+: public std::string
+{
+public:
+  ProgramDir();
+};
+
+const static ProgramDir program_dir;
 
 #endif
 

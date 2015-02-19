@@ -1,4 +1,4 @@
-/* Copyright © 2007-2014 Jakub Wilk
+/* Copyright © 2007-2015 Jakub Wilk
  * Copyright © 2009 Mateusz Turcza
  *
  * This package is free software; you can redistribute it and/or modify
@@ -1139,6 +1139,30 @@ Cwd::~Cwd()
       abort();
     }
   }
+}
+
+#endif
+
+#if WIN32
+
+/* class ProgramDir
+ * ================
+ */
+
+ProgramDir::ProgramDir()
+{
+  char buffer[PATH_MAX];
+  size_t n = GetModuleFileName(NULL, buffer, sizeof buffer);
+  if (n == 0)
+    throw_win32_error("GetModuleFileName");
+  if (n >= sizeof buffer)
+  {
+    errno = ENAMETOOLONG;
+    throw_posix_error("GetModuleFileName");
+  }
+  std::string dirname, basename;
+  split_path(buffer, dirname, basename);
+  (*this) += dirname;
 }
 
 #endif

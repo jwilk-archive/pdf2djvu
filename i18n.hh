@@ -1,4 +1,4 @@
-/* Copyright © 2009 Jakub Wilk
+/* Copyright © 2009-2015 Jakub Wilk
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@ namespace i18n
 {
 
   void setup_locale();
-  void setup(const char *argv0);
+  void setup();
 }
 
 static inline void N_(const char *message_id)

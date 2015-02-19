@@ -1,4 +1,4 @@
-/* Copyright © 2009-2010 Jakub Wilk
+/* Copyright © 2009-2015 Jakub Wilk
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,14 @@ void i18n::setup_locale()
   /* Deliberately ignore errors. */
 }
 
-void i18n::setup(const char *argv0)
+void i18n::setup()
 {
-  std::string argv0_dir_name, argv0_file_name;
-  split_path(argv0, argv0_dir_name, argv0_file_name);
-  std::string localedir = absolute_path(paths::localedir, argv0_dir_name);
+#if WIN32
+  std::string basedir(program_dir);
+#else
+  std::string basedir("/");
+#endif
+  std::string localedir = absolute_path(paths::localedir, basedir);
   i18n::setup_locale();
   bindtextdomain(PACKAGE_NAME, localedir.c_str());
   /* Deliberately ignore errors. */
@@ -39,7 +42,7 @@ void i18n::setup_locale()
   /* Deliberately ignore errors. */
 }
 
-void i18n::setup(const char *argv0)
+void i18n::setup()
 {
   i18n::setup_locale();
 }

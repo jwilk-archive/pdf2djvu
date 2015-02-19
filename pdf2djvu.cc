@@ -804,20 +804,16 @@ protected:
     return DjVuCommand::dir_name + "/" + base_name;
   }
 public:
-  static void set_argv0(const char *argv0);
   explicit DjVuCommand(const std::string &base_name)
   : Command(full_path(base_name))
   { }
 };
 
-std::string DjVuCommand::dir_name("");
-
-void DjVuCommand::set_argv0(const char *argv0)
-{
-  std::string argv0_dir_name, argv0_file_name;
-  split_path(argv0, argv0_dir_name, argv0_file_name);
-  DjVuCommand::dir_name = absolute_path(paths::djvulibre_bindir, argv0_dir_name);
-}
+#if WIN32
+std::string DjVuCommand::dir_name(program_dir);
+#else
+std::string DjVuCommand::dir_name(paths::djvulibre_bindir);
+#endif
 
 class DjVm
 {
@@ -1194,7 +1190,6 @@ static void calculate_subsampled_size(int width, int height, int ratio, int &sub
 static int xmain(int argc, char * const argv[])
 {
   std::ios_base::sync_with_stdio(false);
-  DjVuCommand::set_argv0(argv[0]);
 
   try
   {
@@ -1216,7 +1211,7 @@ static int xmain(int argc, char * const argv[])
   if (config.output_stdout && is_stream_a_tty(std::cout))
     throw StdoutIsATerminal();
 
-  pdf::Environment environment(argv[0]);
+  pdf::Environment environment;
   environment.set_antialias(config.antialias);
 
   DocumentMap document_map(config.filenames);
@@ -1696,7 +1691,7 @@ static int xmain(int argc, char * const argv[])
 int main(int argc, char * const argv[])
 try
 {
-  i18n::setup(argv[0]);
+  i18n::setup();
   xmain(argc, argv);
 }
 /* Please keep the exception handlers in sync with the ones in xmain(). */

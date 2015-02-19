@@ -106,15 +106,13 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
 }
 #endif
 
-pdf::Environment::Environment(const char *argv0)
+pdf::Environment::Environment()
 {
 #if WIN32
   /* Change the current working directory to be able to read poppler data.
    * This is not required (and potentially harmful) for Unix installations.
    */
-  std::string argv0_dir_name, argv0_file_name;
-  split_path(argv0, argv0_dir_name, argv0_file_name);
-  Cwd cwd(argv0_dir_name);
+  Cwd cwd(program_dir);
 #endif
   globalParams = new GlobalParams();
 #if POPPLER_VERSION < 1900
