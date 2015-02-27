@@ -1336,28 +1336,54 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
    * sophisticated than MinGW32 one, yet it should be sufficient for our
    * purposes.
    */
+  size_t wlength, alength, length = path.length();
+  Array<wchar_t> wpath(length);
+  Array<char> apath(length);
+  wlength = MultiByteToWideChar(
+    CP_ACP, 0,
+    path.c_str(), length,
+    wpath, length
+  );
+  if (wlength == 0)
+    throw_win32_error("MultiByteToWideChar");
   bool append_dot = true;
   size_t l = 0, r = 0;
-  if (path.length() >= 2 && path[1] == ':')
+  if (wlength >= 2 && wpath[1] == L':')
     l = r = 2;
-  while (l < path.length() && (path[l] == '/' || path[l] == '\\'))
+  while (l < wlength && (wpath[l] == L'/' || wpath[l] == L'\\'))
   {
     l++, r++;
     append_dot = false;
   }
-  for (size_t i = l; i < path.length(); i++)
+  for (size_t i = l; i < wlength; i++)
   {
-    if (path[i] == '/' || path[i] == '\\')
+    if (wpath[i] == L'/' || path[i] == L'\\')
     {
       l = i;
       r = i + 1;
       append_dot = false;
     }
   }
-  directory_name = path.substr(0, l);
-  file_name = path.substr(r);
+  alength = WideCharToMultiByte(
+    GetConsoleOutputCP(), 0,
+    wpath, l,
+    apath, length * 2,
+    NULL, NULL
+  );
+  if (alength == 0)
+    throw_win32_error("WideCharToMultiByte");
+  directory_name = std::string(apath, alength);
   if (append_dot)
     directory_name += ".";
+  alength = WideCharToMultiByte(
+    CP_ACP, 0,
+    wpath + r, wlength - r,
+    apath, length * 2,
+    NULL, NULL
+  );
+  if (alength == 0 && r < wlength)
+    throw_win32_error("WideCharToMultiByte");
+  file_name = std::string(apath, alength);
 #else
   /* POSIX-compliant ``basename()`` and ``dirname()`` would split ``/foo/bar/``
    * into ``/foo`` and ``bar``, instead of desired ``foo/bar`` and an empty
