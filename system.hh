@@ -235,6 +235,7 @@ __attribute__ ((format (printf, 1, 2)))
 ;
 
 bool isatty(const std::ostream &ostream);
+void binmode(const std::ostream &ostream);
 
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name);
 

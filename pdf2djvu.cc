@@ -1208,8 +1208,12 @@ static int xmain(int argc, char * const argv[])
     exit(1);
   }
 
-  if (config.output_stdout && isatty(std::cout))
-    throw StdoutIsATerminal();
+  if (config.output_stdout)
+  {
+    if (isatty(std::cout))
+      throw StdoutIsATerminal();
+    binmode(std::cout);
+  }
 
   pdf::Environment environment;
   environment.set_antialias(config.antialias);

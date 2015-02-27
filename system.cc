@@ -1327,6 +1327,23 @@ bool isatty(const std::ostream &ostream)
   }
 }
 
+void binmode(const std::ostream &ostream)
+{
+#if WIN32
+  if (&ostream == &std::cout)
+  {
+    int rc = setmode(STDOUT_FILENO, O_BINARY);
+    if (rc == -1)
+      throw_posix_error("setmode");
+  }
+  else
+  {
+    /* not implemented */
+    throw std::invalid_argument("binmode");
+  }
+#endif
+}
+
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name)
 {
 #ifdef __MINGW32__

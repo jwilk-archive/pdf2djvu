@@ -7,8 +7,10 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
     https://code.google.com/p/pdf2djvu/issues/detail?id=85
   * Windows: fix path splitting is East-Asian locales.
     https://code.google.com/p/pdf2djvu/issues/detail?id=100
+  * Windows: fix stdout redirection.
+    https://code.google.com/p/pdf2djvu/issues/detail?id=101
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 27 Feb 2015 23:24:44 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 28 Feb 2015 00:15:26 +0100
 
 pdf2djvu (0.7.19) unstable; urgency=low
 
