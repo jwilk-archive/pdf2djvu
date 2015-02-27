@@ -1208,7 +1208,7 @@ static int xmain(int argc, char * const argv[])
     exit(1);
   }
 
-  if (config.output_stdout && is_stream_a_tty(std::cout))
+  if (config.output_stdout && isatty(std::cout))
     throw StdoutIsATerminal();
 
   pdf::Environment environment;

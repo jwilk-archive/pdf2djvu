@@ -234,7 +234,7 @@ __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
-bool is_stream_a_tty(const std::ostream &ostream);
+bool isatty(const std::ostream &ostream);
 
 void split_path(const std::string &path, std::string &directory_name, std::string &file_name);
 

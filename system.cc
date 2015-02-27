@@ -1313,7 +1313,7 @@ void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::s
   }
 }
 
-bool is_stream_a_tty(const std::ostream &ostream)
+bool isatty(const std::ostream &ostream)
 {
   if (&ostream == &std::cout)
     return isatty(STDOUT_FILENO);
@@ -1323,7 +1323,7 @@ bool is_stream_a_tty(const std::ostream &ostream)
      * See http://www.ginac.de/~kreckel/fileno/ for a more general
      * (although unportable, GCC-specific) solution.
      */
-    throw std::invalid_argument("is_a_tty(const std::ostream &)");
+    throw std::invalid_argument("isatty(const std::ostream &)");
   }
 }
 
