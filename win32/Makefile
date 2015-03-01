@@ -97,7 +97,8 @@ src/pdf2djvu/config.status: src/mingwrt/install-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--bindir=$(usr)/dist/ \
 		--localedir=$(usr)/dist/locale/ \
-		--without-graphicsmagick
+		--without-graphicsmagick \
+		--disable-openmp
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
