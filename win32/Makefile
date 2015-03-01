@@ -201,6 +201,7 @@ src/djvulibre/config.status: src/djvulibre/source-stamp
 src/djvulibre/config.status: src/libjpeg/config.status
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
+		--without-jpeg \
 		--disable-static
 
 src/djvulibre/build-stamp: src/djvulibre/config.status
