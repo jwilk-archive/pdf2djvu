@@ -1363,14 +1363,13 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
   );
   if (wlength == 0)
     throw_win32_error("MultiByteToWideChar");
-  bool append_dot = true;
   size_t l = 0, r = 0;
   if (wlength >= 2 && wpath[1] == L':')
     l = r = 2;
   while (l < wlength && (wpath[l] == L'/' || wpath[l] == L'\\'))
   {
-    l++, r++;
-    append_dot = false;
+    l++;
+    r++;
   }
   for (size_t i = l; i < wlength; i++)
   {
@@ -1378,7 +1377,6 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     {
       l = i;
       r = i + 1;
-      append_dot = false;
     }
   }
   alength = WideCharToMultiByte(
@@ -1387,11 +1385,14 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     apath, length * 2,
     NULL, NULL
   );
-  if (alength == 0 && l > 0)
-    throw_win32_error("WideCharToMultiByte");
-  directory_name = std::string(apath, alength);
-  if (append_dot)
-    directory_name += ".";
+  if (l > 0)
+  {
+    if (alength == 0)
+      throw_win32_error("WideCharToMultiByte");
+    directory_name = std::string(apath, alength);
+  }
+  else
+    directory_name = ".";
   alength = WideCharToMultiByte(
     CP_ACP, 0,
     wpath + r, wlength - r,
