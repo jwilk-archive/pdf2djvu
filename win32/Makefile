@@ -186,14 +186,10 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.25.3.tar.gz
-	echo '898d7ed6dd2fa311a521baa95407a91b20a872d80c45e8245442d64f142cb1e0  src/djvulibre-3.5.25.3.tar.gz' | sha256sum -c
+	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.27.tar.gz
+	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  src/djvulibre-3.5.27.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../djvulibre-*.tar.gz
-	sed -i \
-		-e '/LIBS=-lmsvcp60/d' \
-		-e 's/mingw32)/mingw32*)/' \
-		$(dir $@)/configure
-	sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' $(dir $@)/libdjvu/atomic.cpp
+	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	rm src/djvulibre-*.tar.gz
 	touch $(@)
@@ -216,7 +212,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 	$(MAKE) -C $(dir $@)/tools install
 	set -e && \
 	for tool in $(djvulibre_tools); do \
-		cp bin/$$tool dist/$$tool.exe; \
+		cp bin/$$tool.exe bin/$$tool; \
+		cp bin/$$tool.exe dist/; \
 		$(STRIP) dist/$$tool.exe; \
 		chmod a-x dist/$$tool.exe; \
 	done
