@@ -97,7 +97,8 @@ src/pdf2djvu/config.status: src/mingwrt/install-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--bindir=$(usr)/dist/ \
 		--localedir=$(usr)/dist/locale/ \
-		--without-graphicsmagick
+		--without-graphicsmagick \
+		--disable-openmp
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
@@ -117,7 +118,7 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 			locale="$${suffix%.*}"; \
 			xsltproc --nonet $(docbook_xsl) $$file > $(usr)/dist/doc/manual-page-$$locale.html; \
 		done
-	sed -e 's/$$/\r/' < src/pdf2djvu/COPYING > dist/doc/COPYING.txt
+	sed -e 's/$$/\r/' < src/pdf2djvu/doc/COPYING > dist/doc/COPYING.txt
 	cd src/pdf2djvu/doc && set -e && \
 		for file in *.txt; do \
 			rst2html $$file > $(usr)/dist/doc/$${file%.txt}.html; \
@@ -185,14 +186,10 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.25.3.tar.gz
-	echo '898d7ed6dd2fa311a521baa95407a91b20a872d80c45e8245442d64f142cb1e0  src/djvulibre-3.5.25.3.tar.gz' | sha256sum -c
+	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.27.tar.gz
+	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  src/djvulibre-3.5.27.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../djvulibre-*.tar.gz
-	sed -i \
-		-e '/LIBS=-lmsvcp60/d' \
-		-e 's/mingw32)/mingw32*)/' \
-		$(dir $@)/configure
-	sed -i -e 's/define USE_WIN32_INTERLOCKED 1/define USE_GCC_I386_ASM 1/' $(dir $@)/libdjvu/atomic.cpp
+	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	rm src/djvulibre-*.tar.gz
 	touch $(@)
@@ -201,6 +198,7 @@ src/djvulibre/config.status: src/djvulibre/source-stamp
 src/djvulibre/config.status: src/libjpeg/config.status
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
+		--without-jpeg \
 		--disable-static
 
 src/djvulibre/build-stamp: src/djvulibre/config.status
@@ -214,7 +212,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 	$(MAKE) -C $(dir $@)/tools install
 	set -e && \
 	for tool in $(djvulibre_tools); do \
-		cp bin/$$tool dist/$$tool.exe; \
+		cp bin/$$tool.exe bin/$$tool; \
+		cp bin/$$tool.exe dist/; \
 		$(STRIP) dist/$$tool.exe; \
 		chmod a-x dist/$$tool.exe; \
 	done
@@ -265,6 +264,7 @@ src/libxslt/source-stamp:
 	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  src/libxslt-1.1.26.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
 	rm src/libxslt-*.tar.gz
+	sed -i -e '/^#define.*nprintf/d' $(dir $@)/libxslt/win32config.h
 	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' $(dir $@)/libxslt/libxslt.h
 	touch $(@)
 
