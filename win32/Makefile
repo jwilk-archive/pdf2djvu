@@ -118,7 +118,7 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 			locale="$${suffix%.*}"; \
 			xsltproc --nonet $(docbook_xsl) $$file > $(usr)/dist/doc/manual-page-$$locale.html; \
 		done
-	sed -e 's/$$/\r/' < src/pdf2djvu/COPYING > dist/doc/COPYING.txt
+	sed -e 's/$$/\r/' < src/pdf2djvu/doc/COPYING > dist/doc/COPYING.txt
 	cd src/pdf2djvu/doc && set -e && \
 		for file in *.txt; do \
 			rst2html $$file > $(usr)/dist/doc/$${file%.txt}.html; \
