@@ -264,6 +264,7 @@ src/libxslt/source-stamp:
 	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  src/libxslt-1.1.26.tar.gz' | sha256sum -c
 	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
 	rm src/libxslt-*.tar.gz
+	sed -i -e '/^#define.*nprintf/d' $(dir $@)/libxslt/win32config.h
 	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' $(dir $@)/libxslt/libxslt.h
 	touch $(@)
 
