@@ -1387,7 +1387,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     apath, length * 2,
     NULL, NULL
   );
-  if (alength == 0)
+  if (alength == 0 && l > 0)
     throw_win32_error("WideCharToMultiByte");
   directory_name = std::string(apath, alength);
   if (append_dot)
