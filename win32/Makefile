@@ -10,7 +10,7 @@ docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xs
 
 version := $(shell cat ../doc/changelog | head -n1 | cut -d' ' -f2 | tr -d '()')
 
-djvulibre_tools = djvmcvt djvused bzz csepdjvu djvuextract cjb2 c44 djvumake
+djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
