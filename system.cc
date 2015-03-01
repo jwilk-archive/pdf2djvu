@@ -1382,7 +1382,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     }
   }
   alength = WideCharToMultiByte(
-    GetConsoleOutputCP(), 0,
+    CP_ACP, 0,
     wpath, l,
     apath, length * 2,
     NULL, NULL
