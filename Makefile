@@ -11,9 +11,9 @@ include $(srcdir)/Makefile.common
 all: pdf2djvu
 
 ifneq "$(WINDRES)" ""
-version.o: version.rc autoconf.hh
+win32-version.o: win32-version.rc autoconf.hh
 	$(WINDRES) -c 1252 -o $(@) $(<)
-pdf2djvu: version.o
+pdf2djvu: win32-version.o
 endif
 
 include Makefile.dep
