@@ -36,6 +36,23 @@ static std::string get_libxml2_version()
 
 #endif
 
+#if HAVE_GRAPHICSMAGICK
+
+#include <Magick++.h>
+
+static std::string get_gm_version()
+{
+    unsigned long n;
+    std::stringstream stream(
+        MagickLib::GetMagickVersion(&n)
+    );
+    std::string junk, result;
+    stream >> junk >> result;
+    return result;
+}
+
+#endif
+
 #if HAVE_PSTREAMS
 static std::string get_pstreams_version()
 {
@@ -54,7 +71,7 @@ const std::string get_version()
     stream << " (DjVuLibre " DJVULIBRE_VERSION_STRING;
     stream << ", Poppler " POPPLER_VERSION_STRING;
 #if HAVE_GRAPHICSMAGICK
-    stream << ", GraphicsMagick++ " GRAPHICSMAGICK_VERSION_STRING;
+    stream << ", GraphicsMagick++ " << get_gm_version();
 #endif
 #if HAVE_LIBXSLT
     stream << ", GNOME XSLT " << get_libxslt_version();
@@ -74,7 +91,7 @@ const std::string get_multiline_version()
     stream << "+ DjVuLibre " DJVULIBRE_VERSION_STRING << "\n";
     stream << "+ Poppler " POPPLER_VERSION_STRING << "\n";
 #if HAVE_GRAPHICSMAGICK
-    stream << "+ GraphicsMagick++ " GRAPHICSMAGICK_VERSION_STRING << "\n";
+    stream << "+ GraphicsMagick++ " << get_gm_version() << "\n";
 #endif
 #if HAVE_LIBXSLT
     stream << "+ GNOME XSLT " << get_libxslt_version() << "\n";

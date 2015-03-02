@@ -52,7 +52,6 @@ then
     [
       AC_DEFINE(HAVE_GRAPHICSMAGICK, 1, Define if you have GraphicsMagick++ installed)
       graphicsmagick_version=$($PKG_CONFIG --modversion GraphicsMagick++)
-      AC_DEFINE_UNQUOTED(GRAPHICSMAGICK_VERSION_STRING, "$graphicsmagick_version", Define to the version of GraphicsMagick++)
     ], [ : ]
   )
 fi
