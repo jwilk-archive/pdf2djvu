@@ -657,9 +657,16 @@ public:
   { }
 };
 
+static const int pdf_outline_max_depth = 0x100;
+
 void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
-  djvu::OutlineBase &djvu_outline, const ComponentList &page_files)
+  djvu::OutlineBase &djvu_outline, const ComponentList &page_files,
+  int depth)
 {
+  if (depth > pdf_outline_max_depth)
+    /* DjVu specification puts no limit on outline depth,
+     * but we want to avoid stack overflow because of very deep recursion. */
+    throw djvu::OutlineError();
   pdf::Object current, next;
   if (!pdf::dict_lookup(node, "First", &current)->isDict())
     return;
@@ -694,7 +701,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
           title_str,
           std::string("#") + page_files.get_file_name(page)
         );
-        pdf_outline_to_djvu_outline(&current, catalog, djvu_outline_item, page_files);
+        pdf_outline_to_djvu_outline(&current, catalog, djvu_outline_item, page_files, depth + 1);
       }
     }
     catch (BookmarkError &ex)
@@ -721,7 +728,7 @@ static void pdf_outline_to_djvu_outline(pdf::Document &doc, djvu::Outline &djvu_
   pdf::Object *pdf_outline = catalog->getOutline();
   if (!pdf_outline->isDict())
     return;
-  pdf_outline_to_djvu_outline(pdf_outline, catalog, djvu_outline, page_files);
+  pdf_outline_to_djvu_outline(pdf_outline, catalog, djvu_outline, page_files, 0);
 }
 
 static void add_meta_string(const char *key, const std::string &value, std::ostream &stream)

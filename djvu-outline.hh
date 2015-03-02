@@ -9,11 +9,19 @@
 #define PDF2DJVU_DJVU_OUTLINE_H
 
 #include <ostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
 namespace djvu
 {
+
+    class OutlineError
+    : public std::runtime_error
+    {
+    public:
+        OutlineError();
+    };
 
     class OutlineItem;
 
