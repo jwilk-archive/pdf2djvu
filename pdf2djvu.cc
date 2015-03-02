@@ -35,6 +35,7 @@
 #include "sexpr.hh"
 #include "system.hh"
 #include "xmp.hh"
+#include "version.hh"
 
 Config config;
 
@@ -1205,7 +1206,7 @@ static int xmain(int argc, char * const argv[])
   }
   catch (const Config::NeedVersion)
   {
-    error_log << PACKAGE_STRING << std::endl;
+    error_log << get_multiline_version();
     exit(1);
   }
   catch (const Config::Error &ex)

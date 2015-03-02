@@ -35,6 +35,7 @@ pdf2djvu: pdf2djvu.o
 pdf2djvu: sexpr.o
 pdf2djvu: string-format.o
 pdf2djvu: system.o
+pdf2djvu: version.o
 pdf2djvu: xmp.o
 pdf2djvu:
 	$(LINK.cc) $(^) $(LDLIBS) -o $(@)

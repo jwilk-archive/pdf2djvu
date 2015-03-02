@@ -1,4 +1,4 @@
-/* Copyright © 2009-2010 Jakub Wilk
+/* Copyright © 2009-2015 Jakub Wilk
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -7,6 +7,7 @@
 
 #include "i18n.hh"
 #include "autoconf.hh"
+#include "version.hh"
 #include "xmp.hh"
 
 #if HAVE_LIBXSLT
@@ -237,7 +238,9 @@ std::string xmp::transform(const std::string &data, const pdf::Metadata &metadat
   {
     std::vector<std::string> params;
     params.push_back("djvu-producer");
-    params.push_back(string_as_xpath(PACKAGE_STRING));
+    params.push_back(
+      string_as_xpath(get_version())
+    );
     params.push_back("now");
     params.push_back(string_as_xpath(pdf::Timestamp::now().format('T')));
     metadata.iterate<std::vector<std::string> >(add_meta_string, add_meta_date, params);

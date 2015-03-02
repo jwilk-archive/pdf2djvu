@@ -24,7 +24,6 @@ PKG_CHECK_MODULES([DJVULIBRE], [ddjvuapi >= 3.5.21])
 djvulibre_bin_path=$($PKG_CONFIG --variable exec_prefix ddjvuapi)/bin
 AC_SUBST(djvulibre_bindir, "$djvulibre_bin_path")
 djvulibre_version=$($PKG_CONFIG --modversion ddjvuapi)
-PACKAGE_STRING="$PACKAGE_STRING (DjVuLibre $djvulibre_version"
 AC_DEFINE_UNQUOTED(DJVULIBRE_VERSION_STRING, "$djvulibre_version", Define to the version of DjVuLibre)
 
 djvulibre_bugs=''
@@ -42,7 +41,6 @@ AC_MSG_RESULT([ok])
 PKG_CHECK_MODULES(POPPLER, poppler-splash >= 0.11.1)
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED(POPPLER_VERSION_STRING, "$poppler_version", Define to the version of poppler)
-PACKAGE_STRING="$PACKAGE_STRING, poppler $poppler_version"
 poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g')
 poppler_version=$(printf '%02d' $poppler_version | sed -e 's/^0*//g')
 AC_DEFINE_UNQUOTED(POPPLER_VERSION, $poppler_version, Define to the version of poppler, as integer)
@@ -55,7 +53,6 @@ then
       AC_DEFINE(HAVE_GRAPHICSMAGICK, 1, Define if you have GraphicsMagick++ installed)
       graphicsmagick_version=$($PKG_CONFIG --modversion GraphicsMagick++)
       AC_DEFINE_UNQUOTED(GRAPHICSMAGICK_VERSION_STRING, "$graphicsmagick_version", Define to the version of GraphicsMagick++)
-      PACKAGE_STRING="$PACKAGE_STRING, GraphicsMagick++ $graphicsmagick_version"
     ], [ : ]
   )
 fi
@@ -68,14 +65,11 @@ then
       AC_DEFINE(HAVE_LIBXSLT, 1, Define if you have GNOME XSLT library installed)
       libxml2_version=$($PKG_CONFIG --modversion libxml-2.0)
       libxslt_version=$($PKG_CONFIG --modversion libxslt)
-      PACKAGE_STRING="$PACKAGE_STRING, GNOME XSLT $libxslt_version, GNOME XML $libxml2_version"
+      AC_DEFINE_UNQUOTED([LIBXML2_VERSION_STRING], ["$libxml2_version"], [Define to the version of the GNOME XML library])
+      AC_DEFINE_UNQUOTED([LIBXSLT_VERSION_STRING], ["$libxslt_version"], [Define to the version of the GNOME XSLT library])
     ], [ : ]
   )
 fi
-
-PACKAGE_STRING="$PACKAGE_STRING)"
-
-AC_DEFINE_UNQUOTED(PACKAGE_STRING, "$PACKAGE_STRING", Define to the full name and version of this package)
 
 AC_PREPROC_IFELSE([AC_LANG_SOURCE([[]])])
 
