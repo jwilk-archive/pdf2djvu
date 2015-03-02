@@ -21,18 +21,18 @@
 #include <omp.h>
 #endif
 
-#include "djvu-outline.hh"
-#include "pdf-backend.hh"
-#include "pdf-dpi.hh"
 #include "config.hh"
 #include "debug.hh"
 #include "djvu-const.hh"
-#include "paths.hh"
+#include "djvu-outline.hh"
+#include "i18n.hh"
 #include "image-filter.hh"
+#include "paths.hh"
+#include "pdf-backend.hh"
+#include "pdf-dpi.hh"
 #include "sexpr.hh"
 #include "system.hh"
 #include "version.hh"
-#include "i18n.hh"
 #include "xmp.hh"
 
 Config config;
