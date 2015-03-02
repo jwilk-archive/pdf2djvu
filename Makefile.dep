@@ -55,6 +55,7 @@ pdf2djvu.o: pdf2djvu.cc
 pdf2djvu.o: sexpr.hh
 pdf2djvu.o: string-format.hh
 pdf2djvu.o: system.hh
+pdf2djvu.o: version.hh
 pdf2djvu.o: xmp.hh
 sexpr.o: sexpr.cc
 sexpr.o: sexpr.hh
@@ -67,9 +68,14 @@ system.o: debug.hh
 system.o: i18n.hh
 system.o: system.cc
 system.o: system.hh
+version.o: autoconf.hh
+version.o: system.hh
+version.o: version.cc
+version.o: version.hh
 xmp.o: autoconf.hh
 xmp.o: i18n.hh
 xmp.o: pdf-backend.hh
+xmp.o: version.hh
 xmp.o: xmp-dummy.hh
 xmp.o: xmp-xslt.hh
 xmp.o: xmp.cc
