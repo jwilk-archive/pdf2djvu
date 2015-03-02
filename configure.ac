@@ -26,7 +26,6 @@ AC_SUBST(djvulibre_bindir, "$djvulibre_bin_path")
 djvulibre_version=$($PKG_CONFIG --modversion ddjvuapi)
 AC_DEFINE_UNQUOTED(DJVULIBRE_VERSION_STRING, "$djvulibre_version", Define to the version of DjVuLibre)
 
-djvulibre_bugs=''
 AC_MSG_CHECKING(DjVuLibre fitness)
 for tool in bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 do
