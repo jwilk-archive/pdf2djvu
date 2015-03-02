@@ -9,8 +9,22 @@
 
 #include <sstream>
 
+#include <libdjvu/ddjvuapi.h>
+
 #include "system.hh"
 #include "version.hh"
+
+static std::string get_djvulibre_version()
+{
+#if DDJVUAPI_VERSION >= 20
+    std::string v = ddjvu_get_version_string();
+    if (v.compare(0, 10, "DjVuLibre-") == 0)
+        v.erase(0, 10);
+    return v;
+#else
+    return DJVULIBRE_VERSION_STRING;
+#endif
+}
 
 #if HAVE_LIBXSLT
 
@@ -68,7 +82,7 @@ const std::string get_version()
 {
     std::ostringstream stream;
     stream << PACKAGE_STRING;
-    stream << " (DjVuLibre " DJVULIBRE_VERSION_STRING;
+    stream << " (DjVuLibre " << get_djvulibre_version();
     stream << ", Poppler " POPPLER_VERSION_STRING;
 #if HAVE_GRAPHICSMAGICK
     stream << ", GraphicsMagick++ " << get_gm_version();
@@ -88,7 +102,7 @@ const std::string get_multiline_version()
 {
     std::ostringstream stream;
     stream << PACKAGE_STRING << "\n";
-    stream << "+ DjVuLibre " DJVULIBRE_VERSION_STRING << "\n";
+    stream << "+ DjVuLibre " << get_djvulibre_version() << "\n";
     stream << "+ Poppler " POPPLER_VERSION_STRING << "\n";
 #if HAVE_GRAPHICSMAGICK
     stream << "+ GraphicsMagick++ " << get_gm_version() << "\n";
