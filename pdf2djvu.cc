@@ -21,6 +21,8 @@
 #include <omp.h>
 #endif
 
+#include "autoconf.hh"
+
 #include "config.hh"
 #include "debug.hh"
 #include "djvu-const.hh"
@@ -32,7 +34,6 @@
 #include "pdf-dpi.hh"
 #include "sexpr.hh"
 #include "system.hh"
-#include "version.hh"
 #include "xmp.hh"
 
 Config config;

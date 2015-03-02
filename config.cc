@@ -14,12 +14,13 @@
 
 #include <getopt.h>
 
+#include "autoconf.hh"
+
 #include "config.hh"
 
 #include "debug.hh"
 #include "djvu-const.hh"
 #include "i18n.hh"
-#include "version.hh"
 
 class OptionsParseError : public Config::Error
 {

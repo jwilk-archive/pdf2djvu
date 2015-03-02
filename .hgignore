@@ -3,6 +3,8 @@ syntax: glob
 *.o
 Makefile.common
 aclocal.m4
+autoconf.hh
+autoconf.hh.in
 autom4te.cache
 config.guess
 config.log
@@ -26,8 +28,6 @@ tests/*.pyc
 tests/*.stamp
 tools/config.*
 tools/install-sh
-version.hh
-version.hh.in
 win32/*/
 xmp-dummy.hh
 xmp-xslt.hh

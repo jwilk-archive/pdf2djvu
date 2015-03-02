@@ -166,7 +166,7 @@ fi
 # Output files
 
 AC_CONFIG_FILES(Makefile.common)
-AC_CONFIG_HEADER(version.hh)
+AC_CONFIG_HEADER([autoconf.hh])
 AC_OUTPUT
 
 # Final remarks

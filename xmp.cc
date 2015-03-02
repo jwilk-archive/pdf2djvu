@@ -6,7 +6,7 @@
  */
 
 #include "i18n.hh"
-#include "version.hh"
+#include "autoconf.hh"
 #include "xmp.hh"
 
 #if HAVE_LIBXSLT

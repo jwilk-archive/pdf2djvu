@@ -5,7 +5,7 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#include "version.hh"
+#include "autoconf.hh"
 
 #if HAVE_GRAPHICSMAGICK
 #include <Magick++.h>

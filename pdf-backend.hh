@@ -16,7 +16,7 @@
 
 #include <stdint.h>
 
-#include "version.hh"
+#include "autoconf.hh"
 
 #include <GfxState.h>
 #include <Link.h>

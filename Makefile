@@ -11,7 +11,7 @@ include $(srcdir)/Makefile.common
 all: pdf2djvu
 
 ifneq "$(WINDRES)" ""
-version.o: version.rc version.hh
+version.o: version.rc autoconf.hh
 	$(WINDRES) -c 1252 -o $(@) $(<)
 pdf2djvu: version.o
 endif
@@ -48,7 +48,7 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	rm -f version.hh Makefile.common config.status config.log
+	rm -f autoconf.hh Makefile.common config.status config.log
 
 .PHONY: test
 test: pdf2djvu

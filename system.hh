@@ -13,7 +13,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "version.hh"
+#include "autoconf.hh"
 
 #if HAVE_PSTREAMS
 #  if HAVE_PSTREAM_H

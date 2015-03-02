@@ -8,7 +8,7 @@
 #ifndef PDF2DJVU_I18N
 #define PDF2DJVU_I18N
 
-#include "version.hh"
+#include "autoconf.hh"
 
 namespace i18n
 {
