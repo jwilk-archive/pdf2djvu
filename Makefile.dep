@@ -1,7 +1,7 @@
 config.o: config.cc
 config.o: config.hh
 config.o: debug.hh
-config.o: djvuconst.hh
+config.o: djvu-const.hh
 config.o: i18n.hh
 config.o: sexpr.hh
 config.o: string-format.hh
@@ -21,7 +21,7 @@ i18n.o: paths.hh
 i18n.o: system.hh
 i18n.o: version.hh
 image-filter.o: config.hh
-image-filter.o: djvuconst.hh
+image-filter.o: djvu-const.hh
 image-filter.o: i18n.hh
 image-filter.o: image-filter.cc
 image-filter.o: image-filter.hh
@@ -44,7 +44,7 @@ pdf-dpi.o: version.hh
 pdf2djvu.o: config.hh
 pdf2djvu.o: debug.hh
 pdf2djvu.o: djvu-outline.hh
-pdf2djvu.o: djvuconst.hh
+pdf2djvu.o: djvu-const.hh
 pdf2djvu.o: i18n.hh
 pdf2djvu.o: image-filter.hh
 pdf2djvu.o: paths.hh

@@ -17,7 +17,7 @@
 #include "config.hh"
 
 #include "debug.hh"
-#include "djvuconst.hh"
+#include "djvu-const.hh"
 #include "i18n.hh"
 #include "version.hh"
 

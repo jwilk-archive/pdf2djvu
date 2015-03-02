@@ -26,7 +26,7 @@
 #include "pdf-dpi.hh"
 #include "config.hh"
 #include "debug.hh"
-#include "djvuconst.hh"
+#include "djvu-const.hh"
 #include "paths.hh"
 #include "image-filter.hh"
 #include "sexpr.hh"

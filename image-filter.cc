@@ -18,7 +18,7 @@
 #include "image-filter.hh"
 
 #include "config.hh"
-#include "djvuconst.hh"
+#include "djvu-const.hh"
 #include "rle.hh"
 
 static void dummy_quantizer(int width, int height, int *background_color, std::ostream &stream);
