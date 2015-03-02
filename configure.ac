@@ -65,8 +65,6 @@ then
       AC_DEFINE(HAVE_LIBXSLT, 1, Define if you have GNOME XSLT library installed)
       libxml2_version=$($PKG_CONFIG --modversion libxml-2.0)
       libxslt_version=$($PKG_CONFIG --modversion libxslt)
-      AC_DEFINE_UNQUOTED([LIBXML2_VERSION_STRING], ["$libxml2_version"], [Define to the version of the GNOME XML library])
-      AC_DEFINE_UNQUOTED([LIBXSLT_VERSION_STRING], ["$libxslt_version"], [Define to the version of the GNOME XSLT library])
     ], [ : ]
   )
 fi

@@ -12,6 +12,30 @@
 #include "system.hh"
 #include "version.hh"
 
+#if HAVE_LIBXSLT
+
+#include <libxslt/xslt.h>
+
+static std::string get_libxslt_version()
+{
+    return string_printf("%d.%d.%d",
+        xsltLibxsltVersion / 10000,
+        (xsltLibxsltVersion / 100) % 100,
+        xsltLibxsltVersion % 100
+    );
+}
+
+static std::string get_libxml2_version()
+{
+    return string_printf("%d.%d.%d",
+        xsltLibxmlVersion / 10000,
+        (xsltLibxmlVersion / 100) % 100,
+        xsltLibxmlVersion % 100
+    );
+}
+
+#endif
+
 #if HAVE_PSTREAMS
 static std::string get_pstreams_version()
 {
@@ -33,8 +57,8 @@ const std::string get_version()
     stream << ", GraphicsMagick++ " GRAPHICSMAGICK_VERSION_STRING;
 #endif
 #if HAVE_LIBXSLT
-    stream << ", GNOME XSLT " LIBXSLT_VERSION_STRING;
-    stream << ", GNOME XML " LIBXML2_VERSION_STRING;
+    stream << ", GNOME XSLT " << get_libxslt_version();
+    stream << ", GNOME XML " << get_libxml2_version();
 #endif
 #if HAVE_PSTREAMS
     stream << ", PStreams " << get_pstreams_version();
@@ -53,8 +77,8 @@ const std::string get_multiline_version()
     stream << "+ GraphicsMagick++ " GRAPHICSMAGICK_VERSION_STRING << "\n";
 #endif
 #if HAVE_LIBXSLT
-    stream << "+ GNOME XSLT " LIBXSLT_VERSION_STRING << "\n";
-    stream << "+ GNOME XML " LIBXML2_VERSION_STRING << "\n";
+    stream << "+ GNOME XSLT " << get_libxslt_version() << "\n";
+    stream << "+ GNOME XML " << get_libxml2_version() << "\n";
 #endif
 #if HAVE_PSTREAMS
     stream << "+ PStreams " << get_pstreams_version() << "\n";
