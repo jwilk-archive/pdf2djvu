@@ -1,4 +1,4 @@
-# Copyright © 2014 Américo Monteiro <a_monteiro@gmx.com>
+# Copyright © 2014, 2015 Américo Monteiro <a_monteiro@gmx.com>
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
-"PO-Revision-Date: 2014-08-16 00:09+0100\n"
+"POT-Creation-Date: 2015-03-03 12:48+0100\n"
+"PO-Revision-Date: 2015-03-02 21:41+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "Language: pt\n"
@@ -108,7 +108,7 @@ msgid "Directory not empty"
 msgstr "Directório não vazio"
 
 msgid "Document outline too large"
-msgstr ""
+msgstr "Linha de contorno do documento muito larga"
 
 #. L10N: Windows error message for EDOM
 msgid "Domain error"
