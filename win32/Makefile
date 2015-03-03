@@ -364,7 +364,8 @@ src/gettext/config.status: src/winiconv/install-stamp
 	cd $(dir $@)/gettext-runtime/ && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
-		--disable-libasprintf
+		--disable-libasprintf \
+		--disable-threads
 	touch $(@)
 
 src/gettext/build-stamp: src/gettext/config.status
