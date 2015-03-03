@@ -1,4 +1,4 @@
-# Copyright © 2011, 2012 Kyrill Detinov
+# Copyright © 2011, 2012, 2013, 2014, 2015 Kyrill Detinov
 # This file is distributed under the same license as the pdf2djvu package.
 #
 msgid ""
@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
 "POT-Creation-Date: 2015-02-18 15:00+0100\n"
-"PO-Revision-Date: 2012-08-19 18:46+0300\n"
+"PO-Revision-Date: 2015-03-03 18:40+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -106,7 +106,7 @@ msgid "Directory not empty"
 msgstr "Каталог не пуст"
 
 msgid "Document outline too large"
-msgstr ""
+msgstr "Слишком длинное оглавление документа"
 
 #. L10N: Windows error message for EDOM
 msgid "Domain error"

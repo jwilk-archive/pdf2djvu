@@ -10,8 +10,9 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
   * Windows: fix stdout redirection.
     https://code.google.com/p/pdf2djvu/issues/detail?id=101
   * Update Portuguese translation. Thanks to Américo Monteiro.
+  * Update Russian translation. Thanks to Kyrill Detinov.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 03 Mar 2015 12:49:09 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 03 Mar 2015 19:36:17 +0100
 
 pdf2djvu (0.7.19) unstable; urgency=low
 
