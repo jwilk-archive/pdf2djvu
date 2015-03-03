@@ -461,4 +461,10 @@ src/mingwrt/install-stamp:
 	$(call ship_dll,libgcc_s)
 	touch $(@)
 
+# tests
+
+.PHONY: test
+test: install
+	 $(MAKE) -C ../tests/ pdf2djvu='../win32/dist/pdf2djvu.exe'
+
 # vim:ts=4 sts=4 sw=4 noet
