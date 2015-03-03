@@ -66,6 +66,8 @@ export ZIPOPT = -9 -X -r
 binary-dist: install
 	mkdir -p $(zipball_topdir)
 	cp -rl dist/* $(zipball_topdir)
+	chmod a-x $(zipball_topdir)/*.exe
+	chmod -R a+rX $(zipball_topdir)
 	zip $(zipball_name).zip $(zipball_topdir)
 	rm -r $(zipball_topdir)
 
@@ -208,7 +210,6 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 		cp bin/$$tool.exe bin/$$tool; \
 		cp bin/$$tool.exe dist/; \
 		$(STRIP) dist/$$tool.exe; \
-		chmod a-x dist/$$tool.exe; \
 	done
 	$(call ship_dll,libdjvulibre)
 	touch $(@)
