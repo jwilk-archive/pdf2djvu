@@ -102,7 +102,6 @@ src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	mkdir -p dist/doc/
 	$(MAKE) install -C $(dir $@)
-	mv dist/pdf2djvu dist/pdf2djvu.exe
 	$(STRIP) dist/pdf2djvu.exe
 	chmod a-x dist/pdf2djvu.exe
 	xsltproc --nonet $(docbook_xsl) src/pdf2djvu/doc/pdf2djvu.xml > dist/doc/manual-page.html

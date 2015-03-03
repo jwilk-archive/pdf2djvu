@@ -7,13 +7,15 @@
 srcdir = .
 include $(srcdir)/Makefile.common
 
+exe = pdf2djvu$(EXEEXT)
+
 .PHONY: all
-all: pdf2djvu
+all: $(exe)
 
 ifneq "$(WINDRES)" ""
 win32-version.o: win32-version.rc autoconf.hh
 	$(WINDRES) -c 65001 -o $(@) $(<)
-pdf2djvu: win32-version.o
+$(exe): win32-version.o
 endif
 
 include Makefile.dep
@@ -24,20 +26,20 @@ include Makefile.dep
 paths.hh: tools/generate-paths-hh Makefile.common
 	$(<) $(foreach var,localedir djvulibre_bindir,$(var) $($(var)))
 
-pdf2djvu: config.o
-pdf2djvu: debug.o
-pdf2djvu: djvu-outline.o
-pdf2djvu: i18n.o
-pdf2djvu: image-filter.o
-pdf2djvu: pdf-backend.o
-pdf2djvu: pdf-dpi.o
-pdf2djvu: pdf2djvu.o
-pdf2djvu: sexpr.o
-pdf2djvu: string-format.o
-pdf2djvu: system.o
-pdf2djvu: version.o
-pdf2djvu: xmp.o
-pdf2djvu:
+$(exe): config.o
+$(exe): debug.o
+$(exe): djvu-outline.o
+$(exe): i18n.o
+$(exe): image-filter.o
+$(exe): pdf-backend.o
+$(exe): pdf-dpi.o
+$(exe): pdf2djvu.o
+$(exe): sexpr.o
+$(exe): string-format.o
+$(exe): system.o
+$(exe): version.o
+$(exe): xmp.o
+$(exe):
 	$(LINK.cc) $(^) $(LDLIBS) -o $(@)
 
 XML_FILES = $(wildcard *.xml)
@@ -45,14 +47,14 @@ XML_HH_FILES = $(XML_FILES:.xml=.hh)
 
 .PHONY: clean
 clean:
-	rm -f pdf2djvu *.o paths.hh $(XML_HH_FILES)
+	rm -f $(exe) *.o paths.hh $(XML_HH_FILES)
 
 .PHONY: distclean
 distclean: clean
 	rm -f autoconf.hh Makefile.common config.status config.log
 
 .PHONY: test
-test: pdf2djvu
+test: $(exe)
 	$(MAKE) -C tests/
 
 MAN_PAGES = $(wildcard doc/*.1 doc/po/*.1)
@@ -61,7 +63,7 @@ MO_FILES = $(wildcard po/*.mo)
 .PHONY: install
 install: all
 	$(INSTALL) -d $(DESTDIR)$(bindir)
-	$(INSTALL) pdf2djvu $(DESTDIR)$(bindir)
+	$(INSTALL) $(exe) $(DESTDIR)$(bindir)
 ifneq ($(MAN_PAGES),)
 	set -e; for manpage in $(MAN_PAGES); \
 	do \

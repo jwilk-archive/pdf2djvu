@@ -1,4 +1,4 @@
-# Copyright © 2009-2012 Jakub Wilk
+# Copyright © 2009-2015 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,10 +13,12 @@
 #
 #    make skip='*+gm'
 
+srcdir = ..
+include $(srcdir)/Makefile.common
+
 export LC_ALL = C
 
-pdf2djvu = ../pdf2djvu
-export pdf2djvu
+export pdf2djvu = ../pdf2djvu$(EXEEXT)
 
 all_test_scripts = $(wildcard test-*.py)
 skipped_test_scripts = $(wildcard $(addprefix test-,$(addsuffix .py,$(skip))))
@@ -48,7 +50,7 @@ clean:
 %: %.in
 	./$(<)
 
-../pdf2djvu:
+../pdf2djvu$(EXEEXT):
 	$(MAKE) -C ../
 
 # vim:ts=4 sts=4 sw=4 noet
