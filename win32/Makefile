@@ -30,6 +30,8 @@ export CFLAGS = -Os
 export CXXFLAGS = -Os
 export CPPFLAGS = -D__USE_MINGW_ANSI_STDIO
 
+export WINEDEBUG ?= fixme+all,err+all
+
 .PHONY: all
 all:
 	@echo Usage:
