@@ -1,5 +1,6 @@
 pdf2djvu (0.7.20) UNRELEASED; urgency=low
 
+  [ Jakub Wilk ]
   * Don't use djvused for setting document outline.
     It was too slow for very long documents.
     https://code.google.com/p/pdf2djvu/issues/detail?id=93
@@ -14,8 +15,12 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
       https://code.google.com/p/pdf2djvu/issues/detail?id=100
     + Fix stdout redirection.
       https://code.google.com/p/pdf2djvu/issues/detail?id=101
-  * Update Portuguese translation. Thanks to Américo Monteiro.
-  * Update Russian translation. Thanks to Kyrill Detinov.
+
+  [ Américo Monteiro ]
+  * Update the Portuguese translation.
+
+  [ Kyrill Detinov ]
+  * Update the Russian translation.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Tue, 03 Mar 2015 19:36:17 +0100
 
@@ -29,6 +34,7 @@ pdf2djvu (0.7.19) unstable; urgency=low
 
 pdf2djvu (0.7.18) unstable; urgency=low
 
+  [ Jakub Wilk ]
   * Make the xml2c script more portable.
   * In C++11 mode, use “decltype” instead of “typeof”.
   * Fix build failure with libc++ in C++98 mode.
@@ -37,14 +43,17 @@ pdf2djvu (0.7.18) unstable; urgency=low
   * Use the standard AC_OPENMP macro in the configure script (instead of
     3rd-party AX_OPENMP).
   * Use HTTPS URLs when they are available, in documentation and code.
-  * Add Portuguese translation by Américo Monteiro.
-    https://bugs.debian.org/758262
-  * Add French translation of the manual page by Majid Redouane and 
-    Jean-Paul Guillonneau.
   * Fix capitalization error in the German manual page.
     Thanks to Chris Leick for help.
   * Drop support for Poppler < 0.11.1.
   * Improve error handling.
+
+  [ Américo Monteiro ]
+  * Add Portuguese translation.
+    https://bugs.debian.org/758262
+
+  [ Majid Redouane, Jean-Paul Guillonneau ]
+  + Add French translation of the manual page.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Dec 2014 13:25:10 +0100
 
@@ -68,16 +77,24 @@ pdf2djvu (0.7.15) unstable; urgency=low
 
 pdf2djvu (0.7.14) unstable; urgency=low
 
+  [ Jakub Wilk ]
   * Ignore links with no action. (Previously such links would cause segfault).
     Thanks to Krzysztof Szafran for the bug report.
-  * Update German translation. Thanks to Chris Leick.
-  * Update Russian translation. Thanks to Kyrill Detinov.
-  * Update Ukrainian translation. Thanks to Serhij Dubyk.
+
+  [ Chris Leick ]
+  * Update the German translation.
+
+  [ Kyrill Detinov ]
+  * Update the Russian translation.
+
+  [ Serhij Dubyk ]
+  * Update the Ukrainian translation.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Tue, 18 Sep 2012 17:27:28 +0200
 
 pdf2djvu (0.7.13) unstable; urgency=low
 
+  [ Jakub Wilk ]
   * XMP: put ‘softwareAgent’ and ‘when’ attributes in stEvt namespace.
   * Rewrite test-suite runner from scratch, using nosetests.
   * Windows: trap errors from external commands. Thanks to Andres Aule for the
@@ -86,20 +103,29 @@ pdf2djvu (0.7.13) unstable; urgency=low
   * Fix build failure with Poppler ≥ 0.19. Thanks to Kyrill Detinov for the
     bug report.
     https://code.google.com/p/pdf2djvu/issues/detail?id=66
-  * Update Russian translation. Thanks to Kyrill Detinov.
-  * Update Ukrainian translation. Thanks to Serhij Dubyk.
-  * Add Ukrainian translation of the manual page by Serhij Dubyk.
-  * Update German translation. Thanks to Chris Leick.
+
+  [ Kyrill Detinov ]
+  * Update the Russian translation.
+
+  [ Serhij Dubyk ]
+  * Update the Ukrainian translation.
+  * Add Ukrainian translation of the manual page.
+
+  [ Chris Leick ]
+  * Update the German translation.
     https://bugs.debian.org/675573
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 03 Jun 2012 22:04:29 +0200
 
 pdf2djvu (0.7.12) unstable; urgency=low
 
+  [ Jakub Wilk ]
   * Fix resolution detection.
-  * Add Ukrainian translation by Serhij Dubyk.
   * Windows: honour console output encoding.
     https://code.google.com/p/pdf2djvu/issues/detail?id=64
+
+  [ Serhij Dubyk ]
+  * Add Ukrainian translation.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 22 Jan 2012 00:16:38 +0100
 
@@ -126,15 +152,21 @@ pdf2djvu (0.7.10) unstable; urgency=low
 
 pdf2djvu (0.7.9) unstable; urgency=low
 
-  * Add Russian translation by Kyrill Detinov.
+  [ Kyrill Detinov ]
+  * Add Russian translation.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Aug 2011 20:44:29 +0200
 
 pdf2djvu (0.7.8) unstable; urgency=low
 
-  * Add German translation by Chris Leick.
-    Thanks also to Arno Töll for a translation update.
+  [ Chris Leick ]
+  * Add German translation.
     https://bugs.debian.org/626315
+
+  [ Arno Töll ]
+  * Update the German translation.
+
+  [ Jakub Wilk ]
   * Add support for merging multiple PDFs into a single DjVu file.
     https://bugs.debian.org/633628
 
@@ -261,7 +293,10 @@ pdf2djvu (0.5.10) unstable; urgency=low
 
 pdf2djvu (0.5.9) unstable; urgency=low
 
-  * Add Polish translation by Mateusz Turcza.
+  [ Mateusz Turcza ]
+  * Add Polish translation.
+
+  [ Jakub Wilk ]
   * Respect LC_NUMERIC locale settings.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jun 2009 23:20:32 +0200
