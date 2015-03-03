@@ -3,12 +3,17 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
   * Don't use djvused for setting document outline.
     It was too slow for very long documents.
     https://code.google.com/p/pdf2djvu/issues/detail?id=93
-  * Windows: correctly determine path to DjVuLibre binaries.
-    https://code.google.com/p/pdf2djvu/issues/detail?id=85
-  * Windows: fix path splitting is East-Asian locales.
-    https://code.google.com/p/pdf2djvu/issues/detail?id=100
-  * Windows: fix stdout redirection.
-    https://code.google.com/p/pdf2djvu/issues/detail?id=101
+  * Test suite: automatically skip tests that require features that were not
+    enabled at build time.
+  * Improve reporting of versions of the libraries in --version and XMP
+    metadata.
+  * Improve Windows support:
+    + Correctly determine path to DjVuLibre binaries.
+      https://code.google.com/p/pdf2djvu/issues/detail?id=85
+    + Fix path splitting is East-Asian locales.
+      https://code.google.com/p/pdf2djvu/issues/detail?id=100
+    + Fix stdout redirection.
+      https://code.google.com/p/pdf2djvu/issues/detail?id=101
   * Update Portuguese translation. Thanks to Américo Monteiro.
   * Update Russian translation. Thanks to Kyrill Detinov.
 
