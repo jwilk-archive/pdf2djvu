@@ -22,7 +22,10 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 03 Mar 2015 19:36:17 +0100
+  [ Chris Leick ]
+  * Update the German translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 06 Mar 2015 12:41:22 +0100
 
 pdf2djvu (0.7.19) unstable; urgency=low
 

@@ -1,4 +1,4 @@
-# Copyright © 2011, 2012 Chris Leick <c.leick@vollbio.de>
+# Copyright © 2011-2015 Chris Leick <c.leick@vollbio.de>
 #
 # This file is distributed under the same license as the pdf2djvu package.
 #
@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
 "Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
-"PO-Revision-Date: 2012-08-19 11:50+0100\n"
+"POT-Creation-Date: 2015-03-06 12:39+0100\n"
+"PO-Revision-Date: 2015-03-05 20:01+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -106,7 +106,7 @@ msgid "Directory not empty"
 msgstr "Verzeichnis nicht leer"
 
 msgid "Document outline too large"
-msgstr ""
+msgstr "Dokumententwurf zu lang"
 
 #. L10N: Windows error message for EDOM
 msgid "Domain error"
