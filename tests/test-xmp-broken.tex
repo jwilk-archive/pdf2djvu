@@ -1,4 +1,4 @@
-% Copyright © 2009-2012 Jakub Wilk
+% Copyright © 2009-2015 Jakub Wilk
 %
 % This package is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -6,7 +6,8 @@
 
 \input common
 
-\immediate\pdfobj stream {} % dummy stream to fool poppler
+% dummy stream to fool Poppler: https://bugs.debian.org/668777
+\immediate\pdfobj stream {}
 
 \immediate\pdfobj stream attr
 {/Type /Metadata /Subtype /XML}
