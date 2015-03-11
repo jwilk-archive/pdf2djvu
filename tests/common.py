@@ -96,7 +96,15 @@ class case(object):
         return self.get_source_file(strip_py=True) + '.djvu'
 
     def run(self, *commandline):
-        child = ipc.Popen(list(commandline), stdout=ipc.PIPE, stderr=ipc.PIPE)
+        env = dict(os.environ,
+            MALLOC_CHECK_='3',
+            MALLOC_PERTURB_=str(0xA5),
+        )
+        child = ipc.Popen(list(commandline),
+            stdout=ipc.PIPE,
+            stderr=ipc.PIPE,
+            env=env,
+        )
         stdout, stderr = child.communicate()
         stderr = re('^(?:  \S+ --> \S+ \(\d+ bytes\)\n)+$').sub('', stderr) # strip djvuextract cruft
         return ipc_result(stdout, stderr, child.returncode)
