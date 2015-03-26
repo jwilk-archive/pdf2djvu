@@ -25,7 +25,10 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
   [ Chris Leick ]
   * Update the German translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 06 Mar 2015 12:41:22 +0100
+  [ Serhij Dubyk ]
+  * Update the Ukrainian translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 26 Mar 2015 21:07:25 +0100
 
 pdf2djvu (0.7.19) unstable; urgency=low
 
