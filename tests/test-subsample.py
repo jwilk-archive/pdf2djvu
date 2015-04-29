@@ -23,7 +23,7 @@ class test(case):
     def test_12(self):
         # https://bugs.debian/458211
         # Prior to pdf2djvu 0.5.0, subsample ratio 12 was not allowed.
-        # Now we require a fixed verison of DjVuLibre.
+        # Now we require a fixed version of DjVuLibre.
         self.pdf2djvu('--bg-subsample=12', '--dpi=72').assert_()
         r = self.djvudump()
         r.assert_(stdout=re('BG44.* 9x9$', re.M))
