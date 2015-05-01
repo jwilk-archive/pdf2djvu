@@ -1,4 +1,4 @@
-pdf2djvu (0.7.20) UNRELEASED; urgency=low
+pdf2djvu (0.7.20) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Don't use djvused for setting document outline.
@@ -31,7 +31,7 @@ pdf2djvu (0.7.20) UNRELEASED; urgency=low
   [ Serhij Dubyk ]
   * Update the Ukrainian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 01 May 2015 13:43:21 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 01 May 2015 14:21:16 +0200
 
 pdf2djvu (0.7.19) unstable; urgency=low
 
