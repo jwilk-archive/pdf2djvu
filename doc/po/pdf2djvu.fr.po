@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.20\n"
-"Report-Msgid-Bugs-To: https://code.google.com/p/pdf2djvu/issues/\n"
+"Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2014-12-09 15:48+0100\n"
 "PO-Revision-Date: 2014-12-11 06:44+0100\n"
 "Last-Translator: Jean-Paul Guillonneau <guillonneau.jeanpaul@free.fr>\n"
@@ -648,8 +648,8 @@ msgid "Bug reports"
 msgstr "Rapports de bogue"
 
 #. type: Content of: <refentry><refsection><para>
-msgid "If you find a bug in &p;, please report it at <ulink url='https://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>."
-msgstr "Si vous trouvez un bogue dans &p;, veuillez le signaler au <ulink url='https://code.google.com/p/pdf2djvu/issues/'>système de suivi des bogues</ulink>."
+msgid "If you find a bug in &p;, please report it at <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>the issue tracker</ulink>."
+msgstr "Si vous trouvez un bogue dans &p;, veuillez le signaler au <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>système de suivi des bogues</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "See also"

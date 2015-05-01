@@ -670,7 +670,7 @@
     <title>Bug reports</title>
     <para>
         If you find a bug in &p;, please report it at <ulink
-        url='https://code.google.com/p/pdf2djvu/issues/'>the issue tracker</ulink>.
+        url='https://bitbucket.org/jwilk/pdf2djvu/issues'>the issue tracker</ulink>.
     </para>
 </refsection>
 

@@ -14,7 +14,7 @@ from common import (
 
 class test(case):
     '''
-    https://code.google.com/p/pdf2djvu/issues/detail?id=59
+    https://bitbucket.org/jwilk/pdf2djvu/issue/59
     fixed in [6c155e7cc346]
     '''
     def test(self):

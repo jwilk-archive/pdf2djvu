@@ -13,7 +13,7 @@ from common import (
 
 class test(case):
     '''
-    https://code.google.com/p/pdf2djvu/issues/detail?id=50
+    https://bitbucket.org/jwilk/pdf2djvu/issue/50
     '''
     def test(self):
         self.pdf2djvu('--pages=2').assert_()
