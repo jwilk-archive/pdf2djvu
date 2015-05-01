@@ -6,6 +6,7 @@ pdf2djvu (0.7.20) unstable; urgency=low
     https://bitbucket.org/jwilk/pdf2djvu/issue/93
   * Test suite: automatically skip tests that require features that were not
     enabled at build time.
+    https://bitbucket.org/jwilk/pdf2djvu/issue/55
   * Improve reporting of versions of the libraries in --version and XMP
     metadata.
   * Improve Windows support:
