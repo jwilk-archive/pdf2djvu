@@ -28,7 +28,7 @@ tools/autogen
 rm -Rf *.cache
 cd ..
 
-# Build the manual page and translations:
+# Generate Makefile.common:
 sed -n -e '/^AC_INIT(\[\([^]]*\)\], *\[\([^]]*\)\], *\[\([^]]*\)\],.*/ { s//PACKAGE_NAME=\1\nPACKAGE_VERSION=\2\nPACKAGE_BUGREPORT=\3/p; q }' \
     "pdf2djvu-$version/configure.ac" \
     > "pdf2djvu-$version/Makefile.common"
@@ -38,13 +38,17 @@ grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "pdf2djvu-$version/Makefile.common.in" \
     -e 's/@MSGMERGE@/msgmerge/' \
     -e 's/@XGETTEXT@/xgettext/'
 cat "pdf2djvu-$version/Makefile.common"
+
+# Build the manual page and translations:
 make -C "pdf2djvu-$version/po/" 'quality-check=1'
 make -C "pdf2djvu-$version/doc/"
 make -C "pdf2djvu-$version/doc/po/" all pdf2djvu.pot 'quality-check=1'
-rm "pdf2djvu-$version/Makefile.common"
 
 # Prepare tests:
 make -C "pdf2djvu-$version/tests/" prepare
+
+# Sweep Makefile.common:
+rm "pdf2djvu-$version/Makefile.common"
 
 # Tarball with raw source:
 tar -caf "$pwd/pdf2djvu-$version.tar.xz" "pdf2djvu-$version"
