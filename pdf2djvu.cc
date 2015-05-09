@@ -1518,7 +1518,8 @@ static int xmain(int argc, char * const argv[])
       }
       else if (nonwhite_background_color)
       {
-        TemporaryFile c44_file;
+        TemporaryDirectory c44_dir;
+        TemporaryFile c44_file(c44_dir, "bg.djvu");
         c44_file.close();
         { /* Create solid-color PPM image with subsample ratio 12: */
           TemporaryFile ppm_file;
