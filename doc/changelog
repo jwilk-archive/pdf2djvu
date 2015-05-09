@@ -1,9 +1,9 @@
-pdf2djvu (0.7.21) UNRELEASED; urgency=low
+pdf2djvu (0.7.21) unstable; urgency=low
 
   * Fix insecure use of /tmp when executing c44(1).
     https://bitbucket.org/jwilk/pdf2djvu/issue/103
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 09 May 2015 23:18:01 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 09 May 2015 23:21:40 +0200
 
 pdf2djvu (0.7.20) unstable; urgency=low
 
