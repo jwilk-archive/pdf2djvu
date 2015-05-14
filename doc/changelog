@@ -1,3 +1,11 @@
+pdf2djvu (0.7.22) UNRELEASED; urgency=low
+
+  [ Juan Francisco Cantero Hurtado ]
+  * Don't hardcode the Python interpreter path in script shebangs; use
+    “#!/usr/bin/env python” instead.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 14 May 2015 11:49:44 +0200
+
 pdf2djvu (0.7.21) unstable; urgency=low
 
   * Fix insecure use of /tmp when executing c44(1).
