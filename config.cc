@@ -86,7 +86,7 @@ class FgColorsOutsideRange : public Config::Error
 {
 public:
   FgColorsOutsideRange(unsigned int n, unsigned int m)
-  : Error(string_printf(_("The specified number of foreground colors is outside the allowed range: %u .. %u"), n, m))
+  : Config::Error(string_printf(_("The specified number of foreground colors is outside the allowed range: %u .. %u"), n, m))
   { }
 };
 
@@ -94,7 +94,7 @@ class SubsampleRatioOutsideRange : public Config::Error
 {
 public:
   SubsampleRatioOutsideRange(unsigned int n, unsigned int m)
-  : Error(string_printf(_("The specified subsampling ratio is outside the allowed range: %u .. %u"), n, m))
+  : Config::Error(string_printf(_("The specified subsampling ratio is outside the allowed range: %u .. %u"), n, m))
   { }
 };
 
