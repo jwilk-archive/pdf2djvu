@@ -106,6 +106,14 @@ public:
   { }
 };
 
+class InputOutputClash : public Config::Error
+{
+public:
+  explicit InputOutputClash(const std::string &path)
+  : Config::Error(string_printf(_("Input file is the same as output file: %s"), path.c_str()))
+  { }
+};
+
 class PageTitleTemplateParseError : public Config::Error
 {
 public:
@@ -649,6 +657,8 @@ void Config::read_config(int argc, char * const argv[])
     while (optind < argc)
     {
       this->filenames.push_back(argv[optind]);
+      if (is_same_file(this->output, argv[optind]))
+        throw InputOutputClash(this->output);
       optind++;
     }
 }

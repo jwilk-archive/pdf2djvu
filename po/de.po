@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.21\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-05-14 12:29+0200\n"
+"POT-Creation-Date: 2015-05-14 14:47+0200\n"
 "PO-Revision-Date: 2015-03-05 20:01+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -189,6 +189,10 @@ msgstr "ungeeignete E/A-Steuerungsoperation"
 #. L10N: Windows error message for ENOTTY
 msgid "Inappropriate ioctl for device"
 msgstr "ungeeigneter ioctl-Aufruf für das Gerät"
+
+#, c-format
+msgid "Input file is the same as output file: %s"
+msgstr ""
 
 #. L10N: Windows error message for EIO
 msgid "Input/output error"

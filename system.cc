@@ -1441,6 +1441,21 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
   return path;
 }
 
+bool is_same_file(const std::string path1, const std::string path2)
+{
+  struct stat st1, st2;
+  int rc;
+  rc = stat(path1.c_str(), &st1);
+  if (rc)
+    return false;
+  rc = stat(path2.c_str(), &st2);
+  if (rc)
+    return false;
+  return
+    (st1.st_dev == st2.st_dev) &&
+    (st1.st_ino == st2.st_ino);
+}
+
 #if defined(va_copy)
 #elif defined(__va_copy)
 #define va_copy __va_copy

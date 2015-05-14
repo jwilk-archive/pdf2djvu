@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.21\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-05-14 12:29+0200\n"
+"POT-Creation-Date: 2015-05-14 14:47+0200\n"
 "PO-Revision-Date: 2015-05-14 12:37+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -191,6 +191,10 @@ msgstr "Niewłaściwy ioctl dla urządzenia"
 #. L10N: Windows error message for ENOTTY
 msgid "Inappropriate ioctl for device"
 msgstr "Niewłaściwy ioctl dla urządzenia"
+
+#, c-format
+msgid "Input file is the same as output file: %s"
+msgstr ""
 
 #. L10N: Windows error message for EIO
 msgid "Input/output error"
