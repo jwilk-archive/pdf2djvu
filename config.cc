@@ -446,8 +446,8 @@ void Config::read_config(int argc, char * const argv[])
     { "indirect", 1, 0, OPT_INDIRECT },
     { "jobs", 1, 0, OPT_JOBS },
     { "lines", 0, 0, OPT_TEXT_LINES },
-    { "loss-level", 1, 0, OPT_LOSS_ANY }, /* deprecated alias */
-    { "losslevel", 1, 0, OPT_LOSS_ANY },
+    { "loss-level", 1, 0, OPT_LOSS_ANY },
+    { "losslevel", 1, 0, OPT_LOSS_ANY }, /* deprecated alias */
     { "lossy", 0, 0, OPT_LOSS_100 },
     { "media-box", 0, 0, OPT_MEDIA_BOX },
     { "monochrome", 0, 0, OPT_MONOCHROME },
