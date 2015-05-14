@@ -73,7 +73,7 @@ msgstr[1] "%zu bajty wyjściowe"
 msgstr[2] "%zu bajtów wyjściowych"
 
 msgid "--loss-level requires enabling --monochrome"
-msgstr ""
+msgstr "--loss-level wymaga włączenia --monochrome"
 
 #. L10N: Windows error message for E2BIG
 msgid "Arg list too long"
