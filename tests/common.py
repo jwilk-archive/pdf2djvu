@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # encoding=UTF-8
 
 # Copyright © 2009-2015 Jakub Wilk
