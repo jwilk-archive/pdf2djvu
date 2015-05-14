@@ -70,7 +70,7 @@ msgstr "Opis"
 
 #. type: Content of: <refentry><refsection><para>
 msgid "This program creates a DjVu file from one or more Portable Document Format files."
-msgstr "Program ten tworzy plik DjVu na podstawie jedngo lub więcej plików w formacie Portable Document Format."
+msgstr "Program ten tworzy plik DjVu na podstawie jednego lub więcej plików w formacie Portable Document Format."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Options"
