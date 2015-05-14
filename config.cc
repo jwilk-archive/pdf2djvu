@@ -98,6 +98,14 @@ public:
   { }
 };
 
+class LossLevelWithoutMonochrome : public Config::Error
+{
+public:
+  LossLevelWithoutMonochrome()
+  : Config::Error(_("--loss-level requires enabling --monochrome"))
+  { }
+};
+
 class PageTitleTemplateParseError : public Config::Error
 {
 public:
@@ -633,6 +641,8 @@ void Config::read_config(int argc, char * const argv[])
       throw std::logic_error(_("Unknown option"));
     }
   }
+  if (this->loss_level > 0 && !this->monochrome)
+    throw LossLevelWithoutMonochrome();
   if (optind > argc - 1)
     throw NoInputFile();
   else

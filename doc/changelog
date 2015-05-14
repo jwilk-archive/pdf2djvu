@@ -4,7 +4,11 @@ pdf2djvu (0.7.22) UNRELEASED; urgency=low
   * Don't hardcode the Python interpreter path in script shebangs; use
     “#!/usr/bin/env python” instead.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 14 May 2015 11:49:44 +0200
+  [ Jakub Wilk ]
+  * Don't silently ignore --loss-level when used without --monochrome.
+    https://bitbucket.org/jwilk/pdf2djvu/issue/8
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 14 May 2015 12:32:42 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 

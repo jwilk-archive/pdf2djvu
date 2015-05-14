@@ -290,7 +290,8 @@
                         <manvolnum>1</manvolnum>
                     </citerefentry>
                     manual page for details.
-                    This option is respected only along with the <option>--monochrome</option> option.
+                    This option can be used only if the <option>--monochrome</option> option is also enabled.
+                    <!-- https://bitbucket.org/jwilk/pdf2djvu/issue/86 -->
                 </para>
             </listitem>
         </varlistentry>

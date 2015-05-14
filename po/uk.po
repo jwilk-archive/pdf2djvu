@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.21\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-05-14 12:29+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -70,6 +70,9 @@ msgid_plural "%zu bytes out"
 msgstr[0] "%zu байт в результаті"
 msgstr[1] "%zu байти в результаті"
 msgstr[2] "%zu байтів в результаті"
+
+msgid "--loss-level requires enabling --monochrome"
+msgstr ""
 
 #. L10N: Windows error message for E2BIG
 msgid "Arg list too long"

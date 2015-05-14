@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.21\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2014-08-18 20:42+0200\n"
+"POT-Creation-Date: 2015-05-14 12:30+0200\n"
 "PO-Revision-Date: 2014-08-15 22:47+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -268,8 +268,11 @@ msgstr "Renderiza as páginas como mapas de bits monocromáticos. Com esta opç�
 msgid "<option>--loss-level=<replaceable>n</replaceable></option>"
 msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
 
+#.  https://bitbucket.org/jwilk/pdf2djvu/issue/86 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option is respected only along with the <option>--monochrome</option> option."
+#, fuzzy
+#| msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option is respected only along with the <option>--monochrome</option> option."
+msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option can be used only if the <option>--monochrome</option> option is also enabled."
 msgstr "Especifica a agressividade da compressão com perdas. A predefinição é 0 (sem perdas) Os valores válidos são números inteiros entre 0 e 200, inclusive. Esta opção é semelhante à opção <option>-losslevel</option> do <command>cjb2</command>; consulte o manual do <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> para detalhes. Esta opção é respeitada apenas juntamente com a opção <option>--monochrome</option>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>

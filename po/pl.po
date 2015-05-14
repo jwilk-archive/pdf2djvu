@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.7.21\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-05-14 12:29+0200\n"
 "PO-Revision-Date: 2012-07-06 09:59+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -71,6 +71,9 @@ msgid_plural "%zu bytes out"
 msgstr[0] "%zu bajt wyjściowy"
 msgstr[1] "%zu bajty wyjściowe"
 msgstr[2] "%zu bajtów wyjściowych"
+
+msgid "--loss-level requires enabling --monochrome"
+msgstr ""
 
 #. L10N: Windows error message for E2BIG
 msgid "Arg list too long"
