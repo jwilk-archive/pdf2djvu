@@ -200,7 +200,7 @@ msgid "Integer overflow"
 msgstr "Przekroczenie zakresu liczb całkowitych"
 
 msgid "Internal Poppler error"
-msgstr "Wewnętrzny bład Popplera"
+msgstr "Wewnętrzny błąd Popplera"
 
 #. L10N: Windows error message for EINTR
 msgid "Interrupted function call"
