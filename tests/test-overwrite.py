@@ -15,7 +15,9 @@ from common import (
 )
 
 class test(case):
-
+    '''
+    fixed in [e98f3c4cfa2e]
+    '''
     def test_overwrite(self):
         pdf_path = self.get_pdf_path()
         with open(pdf_path, 'rb') as pdf_file:
