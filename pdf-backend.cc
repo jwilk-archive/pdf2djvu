@@ -729,7 +729,8 @@ pdf::NFKC::~NFKC() throw ()
 
 #if POPPLER_VERSION >= 1900
 /* Preempt this poppler function, so that it doesn't stand in our way. */
-pdf::Bool unicodeIsAlphabeticPresentationForm(Unicode c) {
+pdf::Bool unicodeIsAlphabeticPresentationForm(Unicode c)
+{
   return 0;
 }
 #endif
