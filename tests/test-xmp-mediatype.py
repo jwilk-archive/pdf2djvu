@@ -7,9 +7,9 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 from common import (
-    case,
     assert_grep,
     assert_well_formed_xml,
+    case,
 )
 
 class test(case):

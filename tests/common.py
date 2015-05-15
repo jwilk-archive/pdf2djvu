@@ -19,9 +19,9 @@ re.type = type(re(''))
 from nose import SkipTest
 
 from nose.tools import (
-    assert_true,
     assert_equal,
     assert_not_equal,
+    assert_true,
 )
 
 try:
