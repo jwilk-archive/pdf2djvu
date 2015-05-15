@@ -105,7 +105,7 @@ class case(object):
             env=env,
         )
         stdout, stderr = child.communicate()
-        stderr = re('^(?:  \S+ --> \S+ \(\d+ bytes\)\n)+$').sub('', stderr) # strip djvuextract cruft
+        stderr = re('^(?:  \S+ --> \S+ \(\d+ bytes\)\n)+$').sub('', stderr)  # strip djvuextract cruft
         return ipc_result(stdout, stderr, child.returncode)
 
     def _pdf2djvu(self, *args):

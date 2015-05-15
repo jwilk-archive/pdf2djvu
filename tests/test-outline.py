@@ -41,4 +41,3 @@ class test(case):
         self.print_outline().assert_(stdout=expected_outline_sexpr)
 
 # vim:ts=4 sts=4 sw=4 et
-
