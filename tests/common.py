@@ -81,18 +81,18 @@ class case(object):
     def get_pdf2djvu_command(self):
         return self._pdf2djvu_command
 
-    def get_source_file(self, strip_py=False):
+    def get_source_path(self, strip_py=False):
         result = inspect.getsourcefile(type(self))
         if strip_py and result.endswith('.py'):
             return result[:-3]
         else:
             return result
 
-    def get_pdf_file(self):
-        return self.get_source_file(strip_py=True) + '.pdf'
+    def get_pdf_path(self):
+        return self.get_source_path(strip_py=True) + '.pdf'
 
-    def get_djvu_file(self):
-        return self.get_source_file(strip_py=True) + '.djvu'
+    def get_djvu_path(self):
+        return self.get_source_path(strip_py=True) + '.djvu'
 
     def run(self, *commandline):
         env = dict(os.environ,
@@ -112,28 +112,28 @@ class case(object):
         return self.run(
             self.get_pdf2djvu_command(),
             '-q',
-            self.get_pdf_file(),
+            self.get_pdf_path(),
             *args
         )
 
     def pdf2djvu(self, *args):
-        return self._pdf2djvu('-o', self.get_djvu_file(), *args)
+        return self._pdf2djvu('-o', self.get_djvu_path(), *args)
 
     def pdf2djvu_indirect(self, *args):
-        return self._pdf2djvu('-i', self.get_djvu_file(), *args)
+        return self._pdf2djvu('-i', self.get_djvu_path(), *args)
 
     def djvudump(self, *args):
-        return self.run('djvudump', self.get_djvu_file(), *args)
+        return self.run('djvudump', self.get_djvu_path(), *args)
 
     def djvused(self, expr):
         return self.run(
             'djvused',
             '-e', expr,
-            self.get_djvu_file()
+            self.get_djvu_path()
         )
 
     def print_text(self):
-        return self.run('djvutxt', self.get_djvu_file())
+        return self.run('djvutxt', self.get_djvu_path())
 
     def print_outline(self):
         return self.djvused('print-outline')
@@ -147,7 +147,7 @@ class case(object):
     def decode(self):
         return self.run(
             'ddjvu',
-            self.get_djvu_file()
+            self.get_djvu_path()
         )
 
     def extract_xmp(self):

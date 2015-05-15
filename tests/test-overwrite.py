@@ -17,14 +17,14 @@ from common import (
 class test(case):
 
     def test_overwrite(self):
-        pdf_path = self.get_pdf_file()
+        pdf_path = self.get_pdf_path()
         with open(pdf_path, 'rb') as pdf_file:
             pdf_before = pdf_file.read()
         self.run(
             self.get_pdf2djvu_command(),
             '-q',
-            self.get_pdf_file(),
-            '-o', self.get_pdf_file()
+            self.get_pdf_path(),
+            '-o', self.get_pdf_path()
         ).assert_(stderr=re('Input file is the same as output file'), rc=1)
         with open(pdf_path, 'rb') as pdf_file:
             pdf_after = pdf_file.read()
