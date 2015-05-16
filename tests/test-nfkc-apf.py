@@ -16,8 +16,8 @@ from common import (
 class test(case):
     '''
     fixed in [18b2ae04de2f], [fa7d4addf18e]
+    see also https://bitbucket.org/jwilk/pdf2djvu/issue/90
     '''
-
     text = u'\N{LATIN SMALL LIGATURE FL}uorogra\N{LATIN SMALL LIGATURE FI}a'
     text_nfkc = unicodedata.normalize('NFKC', text).encode('UTF-8')
     text_no_nfkc = text.encode('UTF-8')
