@@ -1440,7 +1440,7 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
   return path;
 }
 
-bool is_same_file(const std::string path1, const std::string path2)
+bool is_same_file(const std::string &path1, const std::string &path2)
 {
   struct stat st1, st2;
   int rc;

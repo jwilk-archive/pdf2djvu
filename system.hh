@@ -241,7 +241,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
 
 std::string absolute_path(const std::string &path, const std::string &dir_name);
 
-bool is_same_file(const std::string path1, const std::string path2);
+bool is_same_file(const std::string &path1, const std::string &path2);
 
 void prevent_pop_out();
 
