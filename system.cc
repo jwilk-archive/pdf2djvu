@@ -1235,15 +1235,14 @@ namespace encoding
       code = wstring[i];
       if (code_shift)
       {
-        /* A leading surrogate has been encountered. */
         if (code >= 0xdc00 && code < 0xe000)
         {
-          /* A trailing surrogate is encountered. */
+          /* trailing surrogate */
           code = code_shift + (code & 0x3ff);
         }
         else
         {
-          /* An unpaired surrogate is encountered. */
+          /* unpaired surrogate */
           errno = EILSEQ;
           throw_posix_error(__FUNCTION__);
         }
@@ -1251,13 +1250,13 @@ namespace encoding
       }
       else if (code >= 0xd800 && code < 0xdc00)
       {
-        /* A leading surrogate is encountered. */
+        /* leading surrogate */
         code_shift = 0x10000 + ((code & 0x3ff) << 10);
         continue;
       }
       if (code >= 0x110000 || (code & 0xfffe) == 0xfffe)
       {
-        /* Code is out of range or a non-character is encountered. */
+        /* code is out of range or a non-character */
         errno = EILSEQ;
         throw_posix_error(__FUNCTION__);
       }
