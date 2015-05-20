@@ -22,8 +22,10 @@ po/*.mo
 po/*.pot
 secret/*
 tests/*.djvu
+tests/*.jpeg
 tests/*.log
 tests/*.pdf
+tests/*.png
 tests/*.pyc
 tests/*.stamp
 tools/config.*
