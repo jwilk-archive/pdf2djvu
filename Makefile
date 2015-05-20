@@ -33,6 +33,7 @@ $(exe): i18n.o
 $(exe): image-filter.o
 $(exe): pdf-backend.o
 $(exe): pdf-dpi.o
+$(exe): pdf-unicode.o
 $(exe): pdf2djvu.o
 $(exe): sexpr.o
 $(exe): string-format.o

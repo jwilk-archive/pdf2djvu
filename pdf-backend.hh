@@ -268,36 +268,6 @@ namespace pdf
   };
 
 
-/* class pdf::NFKC
- * ===============
- */
-
-  class NFKC
-  {
-  public:
-    virtual int length() const = 0;
-    virtual operator const Unicode*() const = 0;
-  };
-
-  class FullNFKC : public NFKC
-  {
-  protected:
-    Unicode* data;
-    int length_;
-  public:
-    explicit FullNFKC(Unicode *, int length);
-    ~FullNFKC() throw ();
-    int length() const
-    {
-      return this->length_;
-    }
-    operator const Unicode*() const
-    {
-      return this->data;
-    }
-  };
-
-
 /* class pdf::Environment
  * ======================
  */
@@ -451,14 +421,6 @@ namespace pdf
 
   double get_path_area(pdf::splash::Path &path);
 
-/* Unicode → UTF-8 conversion
- * ==========================
- */
-
-  void write_as_utf8(std::ostream &stream, Unicode unicode_char);
-
-  std::string string_as_utf8(pdf::String *);
-  std::string string_as_utf8(pdf::Object &);
 }
 
 #endif

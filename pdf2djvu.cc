@@ -32,6 +32,7 @@
 #include "paths.hh"
 #include "pdf-backend.hh"
 #include "pdf-dpi.hh"
+#include "pdf-unicode.hh"
 #include "sexpr.hh"
 #include "system.hh"
 #include "xmp.hh"

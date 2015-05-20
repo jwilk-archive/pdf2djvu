@@ -35,12 +35,18 @@ pdf-backend.o: debug.hh
 pdf-backend.o: i18n.hh
 pdf-backend.o: pdf-backend.cc
 pdf-backend.o: pdf-backend.hh
+pdf-backend.o: pdf-unicode.hh
 pdf-backend.o: system.hh
 pdf-dpi.o: autoconf.hh
 pdf-dpi.o: i18n.hh
 pdf-dpi.o: pdf-backend.hh
 pdf-dpi.o: pdf-dpi.cc
 pdf-dpi.o: pdf-dpi.hh
+pdf-unicode.o: autoconf.hh
+pdf-unicode.o: i18n.hh
+pdf-unicode.o: pdf-backend.hh
+pdf-unicode.o: pdf-unicode.cc
+pdf-unicode.o: pdf-unicode.hh
 pdf2djvu.o: autoconf.hh
 pdf2djvu.o: config.hh
 pdf2djvu.o: debug.hh
@@ -51,6 +57,7 @@ pdf2djvu.o: image-filter.hh
 pdf2djvu.o: paths.hh
 pdf2djvu.o: pdf-backend.hh
 pdf2djvu.o: pdf-dpi.hh
+pdf2djvu.o: pdf-unicode.hh
 pdf2djvu.o: pdf2djvu.cc
 pdf2djvu.o: sexpr.hh
 pdf2djvu.o: string-format.hh
