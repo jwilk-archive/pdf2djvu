@@ -275,7 +275,7 @@ namespace pdf
   class NFKC
   {
   public:
-    virtual size_t length() const = 0;
+    virtual int length() const = 0;
     virtual operator const Unicode*() const = 0;
   };
 
@@ -283,13 +283,13 @@ namespace pdf
   {
   protected:
     Unicode* data;
-    int int_length;
+    int length_;
   public:
     explicit FullNFKC(Unicode *, int length);
     ~FullNFKC() throw ();
-    size_t length() const
+    int length() const
     {
-      return static_cast<size_t>(this->int_length);
+      return this->length_;
     }
     operator const Unicode*() const
     {

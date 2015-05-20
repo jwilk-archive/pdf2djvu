@@ -717,9 +717,10 @@ namespace pdf
  */
 
 pdf::FullNFKC::FullNFKC(Unicode *unistr, int length)
-: data(NULL), int_length(0)
+: data(NULL), length_(0)
 {
-  data = unicodeNormalizeNFKC(unistr, length, &this->int_length, NULL);
+  assert(length >= 0);
+  data = unicodeNormalizeNFKC(unistr, length, &this->length_, NULL);
 }
 
 pdf::FullNFKC::~FullNFKC() throw ()
