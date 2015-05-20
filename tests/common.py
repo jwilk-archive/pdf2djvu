@@ -48,7 +48,7 @@ except ImportError:
 def assert_well_formed_xml(xml):
     try:
         etree.fromstring(xml)
-    except SyntaxError, ex:
+    except SyntaxError as ex:
         raise AssertionError(ex)
 
 class ipc_result(object):
