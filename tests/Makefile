@@ -47,6 +47,10 @@ clean:
 	pdftex $(<)
 	rm -f $(<:.tex=.log)
 
+%.pdf: %.xetex
+	xetex --output-driver="xdvipdfmx -z0" $(<)
+	rm -f $(<:.xetex=.log)
+
 %: %.in
 	./$(<)
 

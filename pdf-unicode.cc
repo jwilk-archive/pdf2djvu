@@ -116,12 +116,48 @@ pdf::FullNFKC::~FullNFKC() throw ()
     gfree(this->data);
 }
 
-#if POPPLER_VERSION >= 1900
-/* Preempt this poppler function, so that it doesn't stand in our way. */
-pdf::Bool unicodeIsAlphabeticPresentationForm(Unicode c)
+/* class pdf::MinimalNFKC
+ * ======================
+ */
+
+const Unicode apf_min = 0xFB00;
+const Unicode apf_max = 0xFB4F;
+
+pdf::MinimalNFKC::MinimalNFKC(Unicode *unistr, int length)
 {
-    return 0;
-}
+    /* Poppler 0.19.0 (and later versions) performs NFKC normalization of
+     * characters from the Alphabetic Presentation Forms block
+     * (U+FB00–U+FB4F):
+     * https://bugs.freedesktop.org/show_bug.cgi?id=7002
+     * For older versions, we do the same normalization ourselves.
+     */
+#if POPPLER_VERSION >= 1900
+    std::basic_ostringstream<Unicode> stream;
+    for (int i = 0; i < length; i++) {
+        if (unistr[i] >= apf_min && unistr[i] <= apf_max) {
+            int clen;
+            Unicode *cstr = unicodeNormalizeNFKC(unistr + i, 1, &clen, NULL);
+            stream.write(cstr, clen);
+            gfree(cstr);
+        } else {
+            stream.write(unistr + i, 1);
+        }
+    }
+    this->string += stream.str();
+#else
+    this->string.append(unistr, length);
 #endif
+}
+
+int pdf::MinimalNFKC::length() const
+{
+    assert(this->string.length() <= INT_MAX);
+    return this->string.length();
+}
+
+pdf::MinimalNFKC::operator const Unicode*() const
+{
+    return this->string.c_str();
+}
 
 // vim:ts=4 sts=4 sw=4 et

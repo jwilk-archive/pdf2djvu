@@ -437,13 +437,10 @@ public:
     std::auto_ptr<pdf::NFKC> nfkc;
     const Unicode *const_unistr;
     if (config.text_nfkc)
-    {
       nfkc.reset(new pdf::FullNFKC(unistr, length));
-      const_unistr = *nfkc;
-      length = nfkc->length();
-    }
     else
-      const_unistr = unistr;
+      nfkc.reset(new pdf::MinimalNFKC(unistr, length));
+    const_unistr = *nfkc;
     add_text_comment(
       static_cast<int>(pox),
       static_cast<int>(poy),
@@ -453,7 +450,7 @@ public:
       static_cast<int>(py),
       static_cast<int>(pw),
       static_cast<int>(ph),
-      const_unistr, length
+      *nfkc, nfkc->length()
     );
   }
 

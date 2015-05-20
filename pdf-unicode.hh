@@ -62,6 +62,19 @@ namespace pdf
         }
     };
 
+/* class pdf::MinimalNFKC
+ * ======================
+ */
+
+    class MinimalNFKC : public NFKC
+    {
+    protected:
+        std::basic_string<Unicode> string;
+    public:
+        explicit MinimalNFKC(Unicode *, int length);
+        int length() const;
+        operator const Unicode*() const;
+    };
 }
 
 #endif

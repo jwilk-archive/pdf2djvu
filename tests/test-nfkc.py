@@ -15,9 +15,9 @@ from common import (
 
 class test(case):
     '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/90
+    fixed in [18b2ae04de2f], [fa7d4addf18e]
     '''
-    text = u'\N{LATIN SMALL LIGATURE FL}uorogra\N{LATIN SMALL LIGATURE FI}a'
+    text = u'bar\N{LATIN SMALL LETTER DZ}o'
     text_nfkc = unicodedata.normalize('NFKC', text).encode('UTF-8')
     text_no_nfkc = text.encode('UTF-8')
 
@@ -29,6 +29,6 @@ class test(case):
     def test_no_nfkc(self):
         self.pdf2djvu('--no-nfkc').assert_()
         r = self.print_text()
-        r.assert_(stdout=re('^%s *$' % self.text_nfkc, re.M))
+        r.assert_(stdout=re('^%s *$' % self.text_no_nfkc, re.M))
 
 # vim:ts=4 sts=4 sw=4 et
