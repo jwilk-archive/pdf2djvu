@@ -437,7 +437,7 @@ public:
     const Unicode *const_unistr;
     if (config.text_nfkc)
     {
-      nfkc.reset(new pdf::NFKC(unistr, length));
+      nfkc.reset(new pdf::FullNFKC(unistr, length));
       const_unistr = *nfkc;
       length = nfkc->length();
     }

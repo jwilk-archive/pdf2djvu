@@ -716,13 +716,13 @@ namespace pdf
  * ===============
  */
 
-pdf::NFKC::NFKC(Unicode *unistr, int length)
+pdf::FullNFKC::FullNFKC(Unicode *unistr, int length)
 : data(NULL), int_length(0)
 {
   data = unicodeNormalizeNFKC(unistr, length, &this->int_length, NULL);
 }
 
-pdf::NFKC::~NFKC() throw ()
+pdf::FullNFKC::~FullNFKC() throw ()
 {
   gfree(this->data);
 }
