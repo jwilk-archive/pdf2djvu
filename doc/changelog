@@ -1,4 +1,4 @@
-pdf2djvu (0.7.22) UNRELEASED; urgency=low
+pdf2djvu (0.8) UNRELEASED; urgency=low
 
   [ Juan Francisco Cantero Hurtado ]
   * Don't hardcode the Python interpreter path in script shebangs; use
@@ -17,7 +17,7 @@ pdf2djvu (0.7.22) UNRELEASED; urgency=low
     https://bitbucket.org/jwilk/pdf2djvu/issue/90
     https://bugs.freedesktop.org/show_bug.cgi?id=7002
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 20 May 2015 22:54:42 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 20 May 2015 23:04:52 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
