@@ -7,6 +7,8 @@
 
 #include "pdf-unicode.hh"
 
+#include <cassert>
+#include <climits>
 #include <sstream>
 
 #include <PDFDocEncoding.h>
