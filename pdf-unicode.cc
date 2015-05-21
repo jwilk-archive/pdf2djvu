@@ -133,7 +133,7 @@ pdf::MinimalNFKC::MinimalNFKC(Unicode *unistr, int length)
      * https://bugs.freedesktop.org/show_bug.cgi?id=7002
      * For older versions, we do the same normalization ourselves.
      */
-#if POPPLER_VERSION >= 1900
+#if POPPLER_VERSION < 1900
     std::basic_ostringstream<Unicode> stream;
     for (int i = 0; i < length; i++) {
         if (unistr[i] >= apf_min && unistr[i] <= apf_max) {
