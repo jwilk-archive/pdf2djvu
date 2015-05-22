@@ -317,16 +317,16 @@ std::string pdf::Timestamp::format(char separator) const
   format[8] = separator;
   struct tm tmp_timestamp = this->timestamp;
   if (mktime(&tmp_timestamp) == static_cast<time_t>(-1))
-    throw Invalid();
+    throw pdf::Timestamp::Invalid();
   if (strftime(buffer, sizeof buffer, format, &this->timestamp) != 19)
-    throw Invalid();
+    throw pdf::Timestamp::Invalid();
   stream << buffer;
   if (this->tz_sign)
   {
     if (this->tz_hour < 0 || this->tz_hour >= 24)
-      throw Invalid();
+      throw pdf::Timestamp::Invalid();
     if (this->tz_minute < 0 || this->tz_minute >= 60)
-      throw Invalid();
+      throw pdf::Timestamp::Invalid();
     stream
       << this->tz_sign
       << std::setw(2) << std::setfill('0') << this->tz_hour
