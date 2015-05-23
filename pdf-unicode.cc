@@ -110,7 +110,7 @@ pdf::FullNFKC::FullNFKC(Unicode *unistr, int length)
 : data(NULL), length_(0)
 {
     assert(length >= 0);
-    data = unicodeNormalizeNFKC(unistr, length, &this->length_, NULL);
+    this->data = unicodeNormalizeNFKC(unistr, length, &this->length_, NULL);
 }
 
 pdf::FullNFKC::~FullNFKC() throw ()
