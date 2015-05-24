@@ -820,6 +820,14 @@ std::string DjVuCommand::dir_name(program_dir);
 std::string DjVuCommand::dir_name(paths::djvulibre_bindir);
 #endif
 
+class DuplicatePage : public std::runtime_error
+{
+public:
+  DuplicatePage(int n)
+  : std::runtime_error(string_printf(_("Duplicate page: %d"), n))
+  { }
+};
+
 class DjVm
 {
 protected:
@@ -1325,6 +1333,8 @@ static int xmain(int argc, char * const argv[])
   for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
   {
     static int i = 1;
+    if (page_map.get(n, 0))
+      throw DuplicatePage(n);
     page_map.set(n, i);
     page_numbers.push_back(n);
     i++;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-05-14 14:47+0200\n"
+"POT-Creation-Date: 2015-05-24 18:45+0200\n"
 "PO-Revision-Date: 2015-03-02 21:41+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -123,6 +123,10 @@ msgstr "Duplicar identificador de pagina: %s"
 
 #, c-format
 msgid "Duplicate page title: %s"
+msgstr "Duplicar título de página: %s"
+
+#, fuzzy, c-format
+msgid "Duplicate page: %d"
 msgstr "Duplicar título de página: %s"
 
 #. L10N: Windows error message for ENOEXEC

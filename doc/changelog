@@ -16,8 +16,10 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
     Thanks to Dmitry Shachnev for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/90
     https://bugs.freedesktop.org/show_bug.cgi?id=7002
+  * Fail early if duplicate page numbers were specified in -p/--pages.
+    https://bitbucket.org/jwilk/pdf2djvu/issue/73
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 20 May 2015 23:04:52 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 24 May 2015 18:45:08 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
