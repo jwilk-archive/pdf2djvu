@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.8\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-05-24 18:45+0200\n"
-"PO-Revision-Date: 2015-03-02 21:41+0000\n"
+"PO-Revision-Date: 2015-05-25 22:08+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "Language: pt\n"
@@ -73,7 +73,7 @@ msgstr[0] "%zu byte fora"
 msgstr[1] "%zu bytes fora"
 
 msgid "--loss-level requires enabling --monochrome"
-msgstr ""
+msgstr "--loss-level requer a activação de --monochrome"
 
 #. L10N: Windows error message for E2BIG
 msgid "Arg list too long"
@@ -125,9 +125,9 @@ msgstr "Duplicar identificador de pagina: %s"
 msgid "Duplicate page title: %s"
 msgstr "Duplicar título de página: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Duplicate page: %d"
-msgstr "Duplicar título de página: %s"
+msgstr "Duplicar página: %d"
 
 #. L10N: Windows error message for ENOEXEC
 msgid "Exec format error"
@@ -198,7 +198,7 @@ msgstr "ioctl inapropriado para dispositivo"
 
 #, c-format
 msgid "Input file is the same as output file: %s"
-msgstr ""
+msgstr "O ficheiro a ler é o mesmo que o ficheiro a escrever: %s"
 
 #. L10N: Windows error message for EIO
 msgid "Input/output error"
