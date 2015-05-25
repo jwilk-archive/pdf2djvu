@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.8\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-05-25 16:39+0200\n"
-"PO-Revision-Date: 2015-05-25 12:54+0200\n"
+"PO-Revision-Date: 2015-05-25 16:43+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -430,10 +430,8 @@ msgid "<option>--pages=<replaceable>page-range</replaceable></option>"
 msgstr "<option>--pages=<replaceable>zakres stron</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1."
 msgid "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous range of pages (e.g. <literal>37-42</literal>).  Duplicate page numbers are not allowed.  Pages are numbered from 1."
-msgstr "Określa strony przeznaczone do konwersji. <replaceable>zakres-stron</replaceable> jest oddzielaną przecinkami listą podzakresów. Każdy podzakres to albo pojedyncza strona (np. <literal>17</literal>), albo ciągły zakres stron (np. <literal>37-42</literal>). Strony numerowane są od 1."
+msgstr "Określa strony przeznaczone do konwersji. <replaceable>zakres-stron</replaceable> jest oddzielaną przecinkami listą podzakresów. Każdy podzakres to albo pojedyncza strona (np. <literal>17</literal>), albo ciągły zakres stron (np. <literal>37-42</literal>). Numery stron nie mogą się powtarzać. Strony numerowane są od 1."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "The default is to convert all pages."
