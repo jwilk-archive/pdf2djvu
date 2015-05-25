@@ -10,7 +10,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Update the Polish translation.
   * Add sanity check that output file is distinct from all input files.
     https://bitbucket.org/jwilk/pdf2djvu/issue/98
-  * Perform NFKC normalization of characters from the Alphabetic Presentation
+  * Apply NFKC normalization on characters from the Alphabetic Presentation
     Forms block (U+FB00–U+FB4F), even when --no-nfkc were specified.
     This is what Poppler (≥ 0.19) does by default.
     Thanks to Dmitry Shachnev for the bug report.
