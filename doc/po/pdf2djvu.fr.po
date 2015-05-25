@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-05-14 12:30+0200\n"
+"POT-Creation-Date: 2015-05-25 12:49+0200\n"
 "PO-Revision-Date: 2014-12-11 06:44+0100\n"
 "Last-Translator: Jean-Paul Guillonneau <guillonneau.jeanpaul@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -403,8 +403,14 @@ msgid "<option>--no-nfkc</option>"
 msgstr "<option>--no-nfkc</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize the text."
-msgstr "Ne pas normaliser au standard <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> le texte."
+msgid "Do not apply <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text, except for characters from the <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), which are normalized unconditionally."
+msgstr ""
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+#, fuzzy
+#| msgid "The default is to convert all pages."
+msgid "The default is to apply NFKC normalization on all characters."
+msgstr "Par défaut, toutes les pages sont converties."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--filter-text=<replaceable>command-line</replaceable></option>"
@@ -661,3 +667,6 @@ msgstr "Voir aussi"
 #. type: Content of: <refentry><refsection><para>
 msgid "<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>"
 msgstr "<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>"
+
+#~ msgid "Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize the text."
+#~ msgstr "Ne pas normaliser au standard <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> le texte."
