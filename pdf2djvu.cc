@@ -1337,6 +1337,7 @@ static int xmain(int argc, char * const argv[])
       throw DuplicatePage(n);
     page_map.set(n, i);
     page_numbers.push_back(n);
+    *djvm << (*page_files)[n];
     i++;
   }
 
@@ -1616,12 +1617,6 @@ static int xmain(int argc, char * const argv[])
   {
     error_log << ex << std::endl;
     exit(1);
-  }
-  /* Separate loop to avoid parallelization: */
-  for (size_t i = 0; i < page_numbers.size(); i++)
-  {
-    int n = page_numbers[i];
-    *djvm << (*page_files)[n];
   }
   /* Only first PDF document metadata/outline is taken into account. */
   doc.reset(new pdf::Document(config.filenames[0]));
