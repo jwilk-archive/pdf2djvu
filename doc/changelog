@@ -20,7 +20,10 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Fail early on duplicate page identifies and duplicate page titles.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 25 May 2015 17:29:23 +0200
+  [ Américo Monteiro ]
+  * Update the Portuguese translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 26 May 2015 00:13:33 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
