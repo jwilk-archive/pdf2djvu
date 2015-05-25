@@ -7,7 +7,6 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   [ Jakub Wilk ]
   * Don't silently ignore --loss-level when used without --monochrome.
     https://bitbucket.org/jwilk/pdf2djvu/issue/8
-  * Update the Polish translation.
   * Add sanity check that output file is distinct from all input files.
     https://bitbucket.org/jwilk/pdf2djvu/issue/98
   * Apply NFKC normalization on characters from the Alphabetic Presentation
@@ -18,8 +17,9 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
     https://bugs.freedesktop.org/show_bug.cgi?id=7002
   * Fail early if duplicate page numbers were specified in -p/--pages.
     https://bitbucket.org/jwilk/pdf2djvu/issue/73
+  * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 24 May 2015 18:45:08 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 25 May 2015 16:44:58 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
