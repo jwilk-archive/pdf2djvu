@@ -1,4 +1,4 @@
-# Copyright © 2011 Chris Leick <c.leick@vollbio.de>
+# Copyright © 2011-2015 Chris Leick <c.leick@vollbio.de>
 #
 # This file is distributed under the same license as the pdf2djvu package.
 #
@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.8\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-05-25 16:38+0200\n"
-"PO-Revision-Date: 2011-05-04 21:35+0200\n"
+"PO-Revision-Date: 2015-05-26 21:35+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -271,10 +271,8 @@ msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
 
 #.  https://bitbucket.org/jwilk/pdf2djvu/issue/86 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option is respected only along with the <option>--monochrome</option> option."
 msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option can be used only if the <option>--monochrome</option> option is also enabled."
-msgstr "gibt die Aggressivität der verlustbehafteten Komprimierung an. Vorgabe ist 0 (verlustfrei). Gültige Werte sind Ganzahlen von 0 bis einschließlich 200. Diese Option ähnelt der Option <option>-losslevel</option> von <command>cjb2</command>. Sehen Sie die Handbuchseite <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> ein, um weitere Einzelheiten zu erfahren. Diese Option wird nur zusammen mit der Option <option>--monochrome</option> berücksichtigt."
+msgstr "gibt die Aggressivität der verlustbehafteten Komprimierung an. Vorgabe ist 0 (verlustfrei). Gültige Werte sind Ganzahlen von 0 bis einschließlich 200. Diese Option ähnelt der Option <option>-losslevel</option> von <command>cjb2</command>. Sehen Sie die Handbuchseite <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> ein, um weitere Einzelheiten zu erfahren. Diese Option kann nur benutzt werden, falls auch die Option <option>--monochrome</option> aktiviert ist."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--lossy</option>"
@@ -404,15 +402,14 @@ msgstr "keinen Text außerhalb des Seitenrands extrahieren"
 msgid "<option>--no-nfkc</option>"
 msgstr "<option>--no-nfkc</option>"
 
+# http://de.wikipedia.org/wiki/Unicodeblock_Alphabetische_Präsentationsformen
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Do not apply <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text, except for characters from the <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), which are normalized unconditionally."
-msgstr ""
+msgstr "Wenden Sie <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> nicht an, um den Text in Normalform zu bringen, außer für Zeichen des <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Unicodeblock Alphabetische Präsentationsformen</ulink> (U+FB00–U+FB4F), die bedingungslos normalisiert werden."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "The default is to convert all pages."
 msgid "The default is to apply NFKC normalization on all characters."
-msgstr "Standardmäßig werden alle Seiten umgewandelt."
+msgstr "Standardmäßig wird NFKC-Normalisierung auf alle Zeichen angewandt."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--filter-text=<replaceable>command-line</replaceable></option>"
@@ -435,10 +432,8 @@ msgid "<option>--pages=<replaceable>page-range</replaceable></option>"
 msgstr "<option>--pages=<replaceable>Seitenbereich</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous range of pages (e.g. <literal>37-42</literal>). Pages are numbered from 1."
 msgid "Specifies pages to convert. <replaceable>page-range</replaceable> is a comma-separated list of sub-ranges. Each sub-range is either a single page (e.g. <literal>17</literal>) or a contiguous range of pages (e.g. <literal>37-42</literal>).  Duplicate page numbers are not allowed.  Pages are numbered from 1."
-msgstr "gibt die Seiten an, die umgewandelt werden. <replaceable>Seitenbereich</replaceable> ist eine durch Kommas getrennte Liste von Unterbereichen. Jeder Unterbereich ist entweder eine einzelne Seite (z.B. <literal>17</literal>) oder ein Bereich zusammenhängender Seiten (z.B. <literal>37-42</literal>). Seiten werde mit 1 beginnend nummeriert."
+msgstr "gibt die Seiten an, die umgewandelt werden. <replaceable>Seitenbereich</replaceable> ist eine durch Kommas getrennte Liste von Unterbereichen. Jeder Unterbereich ist entweder eine einzelne Seite (z.B. <literal>17</literal>) oder ein Bereich zusammenhängender Seiten (z.B. <literal>37-42</literal>). Doppelte Seitennummmern sind nicht erlaubt. Seiten werde mit 1 beginnend nummeriert."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "The default is to convert all pages."
