@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.8\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-05-24 18:45+0200\n"
-"PO-Revision-Date: 2015-03-05 20:01+0100\n"
+"PO-Revision-Date: 2015-05-26 22:36+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -71,7 +71,7 @@ msgstr[0] "%zu Byte Ausgabe"
 msgstr[1] "%zu Byte Ausgabe"
 
 msgid "--loss-level requires enabling --monochrome"
-msgstr ""
+msgstr "--loss-level erfordert das Aktivieren von --monochrome"
 
 #. L10N: Windows error message for E2BIG
 msgid "Arg list too long"
@@ -123,9 +123,9 @@ msgstr "doppelter Seitenbezeichner: %s"
 msgid "Duplicate page title: %s"
 msgstr "doppelter Seitentitel: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Duplicate page: %d"
-msgstr "doppelter Seitentitel: %s"
+msgstr "doppelte Seite: %d"
 
 #. L10N: Windows error message for ENOEXEC
 msgid "Exec format error"
@@ -196,7 +196,7 @@ msgstr "ungeeigneter ioctl-Aufruf für das Gerät"
 
 #, c-format
 msgid "Input file is the same as output file: %s"
-msgstr ""
+msgstr "Eingabedatei ist mit Ausgabedatei identisch: %s"
 
 #. L10N: Windows error message for EIO
 msgid "Input/output error"
