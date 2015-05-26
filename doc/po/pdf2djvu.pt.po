@@ -664,6 +664,3 @@ msgstr "Veja também"
 #. type: Content of: <refentry><refsection><para>
 msgid "<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>"
 msgstr "<citerefentry> <refentrytitle>djvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>djvudigital</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>, <citerefentry> <refentrytitle>csepdjvu</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>"
-
-#~ msgid "Don't <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>-normalize the text."
-#~ msgstr "Não normaliza o texto com <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink>"
