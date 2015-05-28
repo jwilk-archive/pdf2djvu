@@ -1178,7 +1178,7 @@ static void calculate_subsampled_size(int width, int height, int ratio, int &sub
   /* DjVuLibre expects that:
    *
    *   sub_width = ceil(width / ratio)
-   *   sub_width = ceil(height / ratio)
+   *   sub_height = ceil(height / ratio)
    *
    * However, DjVu Reference (10.3) requires that:
    *
