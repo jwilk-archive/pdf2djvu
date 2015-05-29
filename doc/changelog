@@ -18,6 +18,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Fail early if duplicate page numbers were specified in -p/--pages.
     https://bitbucket.org/jwilk/pdf2djvu/issue/73
   * Fail early on duplicate page identifies and duplicate page titles.
+  * Improve error handling.
   * Update the Polish translation.
 
   [ Américo Monteiro ]
@@ -26,7 +27,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   [ Chris Leick ]
   * Update the German translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 26 May 2015 22:43:59 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 29 May 2015 14:08:45 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 

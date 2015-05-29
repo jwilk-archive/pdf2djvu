@@ -1468,12 +1468,15 @@ std::string string_vprintf(const char *message, va_list args)
   va_copy(args_copy, args);
   int length = vsnprintf(NULL, 0, message, args_copy);
   va_end(args_copy);
-  assert(length >= 0);
   if (length < 0)
     throw_posix_error("vsnprintf");
+  if (length == std::numeric_limits<int>::max())
+  {
+    errno = ENOMEM;
+    throw_posix_error("vsnprintf");
+  }
   Array<char> buffer(length + 1);
   length = vsprintf(buffer, message, args);
-  assert(length >= 0);
   if (length < 0)
     throw_posix_error("vsprintf");
   return static_cast<char*>(buffer);
