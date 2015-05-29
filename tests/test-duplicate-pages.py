@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2009-2014 Jakub Wilk
+# Copyright © 2009-2015 Jakub Wilk
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,15 +17,17 @@ class test(case):
     '''
     https://bitbucket.org/jwilk/pdf2djvu/issue/23
     fixed in [ede3c622526a]
+    https://bitbucket.org/jwilk/pdf2djvu/issue/73
+    fixed in [011677e4ea3e]
     '''
     def test_bundled(self):
         r = self.pdf2djvu('--pages=1,1')
-        r.assert_(stderr=re.compile('^Duplicate page identifier:', re.M), rc=None)
+        r.assert_(stderr=re.compile('^Duplicate page:', re.M), rc=None)
         assert_not_equal(r.rc, 0)
 
     def test_indirect(self):
         r = self.pdf2djvu_indirect('--pages=1,1')
-        r.assert_(stderr=re.compile('^Duplicate page identifier:', re.M), rc=None)
+        r.assert_(stderr=re.compile('^Duplicate page:', re.M), rc=None)
         assert_not_equal(r.rc, 0)
 
 # vim:ts=4 sts=4 sw=4 et
