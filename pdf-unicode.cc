@@ -122,8 +122,10 @@ pdf::FullNFKC::~FullNFKC() throw ()
  * ======================
  */
 
+#if POPPLER_VERSION < 1900
 const Unicode apf_min = 0xFB00;
 const Unicode apf_max = 0xFB4F;
+#endif
 
 pdf::MinimalNFKC::MinimalNFKC(Unicode *unistr, int length)
 {
