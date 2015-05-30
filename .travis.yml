@@ -1,0 +1,13 @@
+language: cpp
+compiler:
+ - gcc
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -y autoconf autoconf-archive automake djvulibre-bin fonts-linuxlibertine gettext libdjvulibre-dev libgraphicsmagick++-dev libpoppler-dev libpstreams-dev libxml2-utils libxslt-dev pkg-config python-imaging python-nose texlive-binaries texlive-fonts-recommended texlive-xetex
+before_script:
+ - tools/autogen
+script:
+ - ./configure
+ - make -C tests prepare
+ - make
+ - make test
