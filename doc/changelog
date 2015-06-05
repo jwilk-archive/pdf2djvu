@@ -6,7 +6,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
 
   [ Jakub Wilk ]
   * Don't silently ignore --loss-level when used without --monochrome.
-    https://bitbucket.org/jwilk/pdf2djvu/issue/8
+    https://bitbucket.org/jwilk/pdf2djvu/issue/86
   * Add sanity check that output file is distinct from all input files.
     https://bitbucket.org/jwilk/pdf2djvu/issue/98
   * Apply NFKC normalization on characters from the Alphabetic Presentation
