@@ -1,15 +1,31 @@
 language: cpp
 compiler:
 - gcc
+env:
+- POPPLER_VERSION=0.11.1
+- POPPLER_VERSION=0.17.0
+- POPPLER_VERSION=0.19.0
+- POPPLER_VERSION=0.21.0
+- POPPLER_VERSION=0.21.1
+- POPPLER_VERSION=0.23.0
+- POPPLER_VERSION=0.31.0
+- POPPLER_VERSION=0.33.0
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get install -y autoconf autoconf-archive automake djvulibre-bin fonts-linuxlibertine gettext libdjvulibre-dev libgraphicsmagick++-dev libpoppler-dev libpstreams-dev libxml2-utils libxslt-dev pkg-config python-imaging python-nose texlive-binaries texlive-fonts-recommended texlive-xetex
+- sudo apt-get install -y autoconf autoconf-archive automake djvulibre-bin fonts-linuxlibertine gettext libdjvulibre-dev libfontconfig-dev libgraphicsmagick++-dev libpstreams-dev libxml2-utils libxslt-dev pkg-config python-imaging python-nose texlive-binaries texlive-fonts-recommended texlive-xetex
+- if [ -z "${POPPLER_VERSION##0.3*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
+- wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
+- tar -xvvf poppler-*.tar.*
+- (cd poppler-*/ && ./configure --prefix=/usr --enable-xpdf-headers --enable-splash-output --disable-libopenjpeg --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
+- make -C poppler-*/
+- sudo make -C poppler-*/ install
 before_script:
 - tools/autogen
 script:
 - ./configure
 - make -C tests prepare
 - make
+- ./pdf2djvu --version
 - make test
 
 # vim:ts=2 sts=2 sw=2 et
