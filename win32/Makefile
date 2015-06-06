@@ -86,10 +86,10 @@ src/pdf2djvu/source-stamp: src/pdf2djvu-$(version).tar.xz
 
 src/pdf2djvu/config.status: src/pdf2djvu/source-stamp
 src/pdf2djvu/config.status: src/djvulibre/install-stamp
-src/pdf2djvu/config.status: src/libxslt/install-stamp
-src/pdf2djvu/config.status: src/poppler/install-stamp
 src/pdf2djvu/config.status: src/gettext/install-stamp
+src/pdf2djvu/config.status: src/libxslt/install-stamp
 src/pdf2djvu/config.status: src/mingwrt/install-stamp
+src/pdf2djvu/config.status: src/poppler/install-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--bindir=$(usr)/dist/ \
