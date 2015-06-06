@@ -96,6 +96,7 @@ src/pdf2djvu/config.status: src/poppler/install-stamp
 		--bindir=$(usr)/dist/ \
 		--localedir=$(usr)/dist/locale/ \
 		--with-graphicsmagick \
+		--with-xslt \
 		--disable-openmp
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
