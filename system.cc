@@ -848,6 +848,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
   /* Should not really happen. */
   errno = ENOSYS;
   throw_posix_error("fork");
+  return "";
 }
 
 #endif
