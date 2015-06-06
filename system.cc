@@ -1442,6 +1442,29 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
 
 bool is_same_file(const std::string &path1, const std::string &path2)
 {
+#if WIN32
+  BY_HANDLE_FILE_INFORMATION info1, info2;
+  HANDLE handle;
+  int ok;
+  handle = CreateFile(path1.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+  if (handle == INVALID_HANDLE_VALUE)
+    return false;
+  ok = GetFileInformationByHandle(handle, &info1);
+  CloseHandle(handle);
+  if (!ok)
+    return false;
+  handle = CreateFile(path2.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+  if (handle == INVALID_HANDLE_VALUE)
+    return false;
+  ok = GetFileInformationByHandle(handle, &info2);
+  CloseHandle(handle);
+  if (!ok)
+    return false;
+  return
+    (info1.dwVolumeSerialNumber == info2.dwVolumeSerialNumber) &&
+    (info1.nFileSizeLow == info2.nFileSizeLow) &&
+    (info1.nFileSizeHigh == info2.nFileSizeHigh);
+#else
   struct stat st1, st2;
   int rc;
   rc = stat(path1.c_str(), &st1);
@@ -1453,6 +1476,7 @@ bool is_same_file(const std::string &path1, const std::string &path2)
   return
     (st1.st_dev == st2.st_dev) &&
     (st1.st_ino == st2.st_ino);
+#endif
 }
 
 #if defined(va_copy)
