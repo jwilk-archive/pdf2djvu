@@ -21,6 +21,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Make --help and --version return with exit code 0.
   * Windows: build against GraphicsMagick.
     https://bitbucket.org/jwilk/pdf2djvu/issue/75
+  * Add configure option for disabling PStreams (--without-pstreams).
   * Improve error handling.
   * Update the Polish translation.
 
@@ -33,7 +34,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 06 Jun 2015 23:10:51 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 07 Jun 2015 01:07:52 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
