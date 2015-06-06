@@ -165,7 +165,7 @@ class case(object):
 
     def require_feature(self, feature):
         r = self.pdf2djvu('--version')
-        r.assert_(stderr=re('^pdf2djvu '), rc=1)
+        r.assert_(stderr=re('^pdf2djvu '), rc=0)
         if feature not in r.stderr:
             raise SkipTest(feature + ' support missing')
 
