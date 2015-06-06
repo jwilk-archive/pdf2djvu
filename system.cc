@@ -1056,7 +1056,7 @@ void TemporaryFile::construct()
   if (GetTempFileName(base_path_buffer, PACKAGE_NAME, 0, path_buffer) == 0)
     throw_win32_error("GetTempFileName");
   HANDLE handle = CreateFile(path_buffer, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL);
-  if (handle == 0)
+  if (handle == INVALID_HANLDE_VALUE)
     throw_win32_error("CreateFile");
   CloseHandle(handle); /* ignore errors */
 #endif
