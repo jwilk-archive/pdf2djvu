@@ -87,6 +87,7 @@ src/pdf2djvu/source-stamp: src/pdf2djvu-$(version).tar.xz
 src/pdf2djvu/config.status: src/pdf2djvu/source-stamp
 src/pdf2djvu/config.status: src/djvulibre/install-stamp
 src/pdf2djvu/config.status: src/gettext/install-stamp
+src/pdf2djvu/config.status: src/graphicsmagick/install-stamp
 src/pdf2djvu/config.status: src/libxslt/install-stamp
 src/pdf2djvu/config.status: src/mingwrt/install-stamp
 src/pdf2djvu/config.status: src/poppler/install-stamp
@@ -94,7 +95,7 @@ src/pdf2djvu/config.status: src/poppler/install-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--bindir=$(usr)/dist/ \
 		--localedir=$(usr)/dist/locale/ \
-		--without-graphicsmagick \
+		--with-graphicsmagick \
 		--disable-openmp
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
@@ -127,6 +128,7 @@ src/libs-install-stamp: src/djvulibre/install-stamp
 src/libs-install-stamp: src/fontconfig/install-stamp
 src/libs-install-stamp: src/freetype/install-stamp
 src/libs-install-stamp: src/gettext/install-stamp
+src/libs-install-stamp: src/graphicsmagick/install-stamp
 src/libs-install-stamp: src/libjpeg/install-stamp
 src/libs-install-stamp: src/libxml2/install-stamp
 src/libs-install-stamp: src/libxslt/install-stamp
@@ -211,6 +213,57 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 		$(STRIP) dist/$$tool.exe; \
 	done
 	$(call ship_dll,libdjvulibre)
+	touch $(@)
+
+# GraphicsMagick
+
+src/graphicsmagick/source-stamp:
+	mkdir -p $(dir $@)
+	cd src && wget -c ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.20.tar.xz
+	echo '35fa21da4c1479e08da8351c5b1e363adaca803a0064cfc83084363adce387c9  src/GraphicsMagick-1.3.20.tar.xz' | sha256sum -c
+	cd $(dir $@) && $(untar) ../GraphicsMagick-*.tar.xz
+	rm src/GraphicsMagick-*.tar.xz
+	touch $(@)
+
+src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
+	cd $(dir $@) && \
+		./configure --host=$(host) --prefix=$(usr) \
+			--disable-installed \
+			--disable-openmp --without-threads \
+			--enable-shared --disable-static \
+			--without-frozenpaths \
+			--without-perl \
+			--without-bzlib \
+			--without-dps \
+			--without-fpx \
+			--without-gslib \
+			--without-jbig \
+			--without-webp \
+			--without-jpeg \
+			--without-jp2 \
+			--without-lcms \
+			--without-lcms2 \
+			--without-lzma \
+			--without-png \
+			--without-tiff \
+			--without-trio \
+			--without-ttf \
+			--without-umem \
+			--without-wmf \
+			--without-xml \
+			--without-zlib \
+			--without-x \
+			--without-png
+
+src/graphicsmagick/build-stamp: src/graphicsmagick/config.status
+	sed -i -e '/^#define GM_BUILD_/d' $(dir $@)/magick/magick_config.h
+	$(MAKE) -C $(dir $@)
+	touch $(@)
+
+src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
+	mkdir -p dist/
+	$(MAKE) -C $(dir $@) install
+	$(call ship_dll,libGraphicsMagick)
 	touch $(@)
 
 # libxml2
