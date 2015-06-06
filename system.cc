@@ -16,8 +16,8 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <fcntl.h>
 #include <dirent.h>
+#include <fcntl.h>
 #include <libgen.h>
 #include <stdint.h>
 #include <sys/stat.h>
