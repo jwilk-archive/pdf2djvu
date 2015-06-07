@@ -44,7 +44,7 @@ poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[
 poppler_version=$(printf '%02d' $poppler_version | sed -e 's/^0*//g')
 AC_DEFINE_UNQUOTED(POPPLER_VERSION, $poppler_version, Define to the version of poppler, as integer)
 
-AC_ARG_WITH(graphicsmagick, AS_HELP_STRING([--without-graphicsmagick], [do not use the GraphicsMagick library]))
+AC_ARG_WITH(graphicsmagick, [AS_HELP_STRING([--without-graphicsmagick], [do not use the GraphicsMagick library])])
 if test "$with_graphicsmagick" != "no"
 then
   PKG_CHECK_MODULES(GRAPHICSMAGICK, GraphicsMagick++,
@@ -55,7 +55,7 @@ then
   )
 fi
 
-AC_ARG_WITH(xslt, AS_HELP_STRING([--without-xslt], [do not use the GNOME XSLT library]))
+AC_ARG_WITH(xslt, [AS_HELP_STRING([--without-xslt], [do not use the GNOME XSLT library])])
 if test "$with_xslt" != "no"
 then
   PKG_CHECK_MODULES(XSLT, libxslt,
