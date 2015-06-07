@@ -20,7 +20,7 @@ before_install:
 - make -C poppler-*/
 - sudo make -C poppler-*/ install
 before_script:
-- tools/autogen
+- private/autogen
 script:
 - ./configure
 - make -C tests prepare
