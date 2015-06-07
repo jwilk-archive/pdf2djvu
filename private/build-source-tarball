@@ -24,7 +24,7 @@ mv pdf2djvu "pdf2djvu-$version"
 
 # Autoconf & company:
 cd "pdf2djvu-$version"
-tools/autogen
+private/autogen
 rm -Rf *.cache
 cd ..
 
