@@ -13,7 +13,7 @@ The following software is required to build *pdf2djvu*:
 The following software is recommended:
 
 * gettext_ for internationalization;
-* Libxslt_ for correctly dealing with XMP metadata;
+* Exiv2_ for correctly dealing with XMP metadata;
 * GraphicsMagick_ for the ``--fg-colors=N`` option.
 
 For the ``-j``/``--jobs`` option, the compiler must support OpenMP_.
@@ -33,8 +33,8 @@ To run the tests, the following software is needed:
    https://wiki.freedesktop.org/www/Software/pkg-config/
 .. _gettext:
    https://www.gnu.org/software/gettext/
-.. _Libxslt:
-   http://xmlsoft.org/xslt/
+.. _Exiv2:
+   http://www.exiv2.org/
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
 .. _OpenMP:

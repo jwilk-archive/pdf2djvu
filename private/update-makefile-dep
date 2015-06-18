@@ -23,7 +23,7 @@ _colordiff()
   fi
 }
 
-make paths.hh $(ls *.xml | sed -e 's/[.]xml/.hh/') || exit 1
+make paths.hh || exit 1
 : "${CXX:=g++}"
 "$CXX" -MM *.cc \
 | while read line

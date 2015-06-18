@@ -29,7 +29,7 @@ class test(case):
         assert_is_none(xmp)
 
     def test_no_verbatim(self):
-        self.require_feature('GNOME XSLT')
+        self.require_feature('Exiv2')
         self.pdf2djvu().assert_()
         xmp = self.extract_xmp()
         assert_well_formed_xml(xmp)

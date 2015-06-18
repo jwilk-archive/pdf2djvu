@@ -33,10 +33,10 @@ addons:
     - fonts-linuxlibertine
     - gettext
     - libdjvulibre-dev
-    - libfontconfig1-dev
-    - libgraphicsmagick++1-dev
+    - libexiv2-dev
+    - libfontconfig-dev
+    - libgraphicsmagick++-dev
     - libxml2-utils
-    - libxslt1-dev
     - pkg-config
     - python-docutils
     - python-imaging

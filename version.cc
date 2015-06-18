@@ -33,28 +33,8 @@ static std::string get_djvulibre_version()
 #endif
 }
 
-#if HAVE_LIBXSLT
-
-#include <libxslt/xslt.h>
-
-static std::string get_libxslt_version()
-{
-    return string_printf("%d.%d.%d",
-        xsltLibxsltVersion / 10000,
-        (xsltLibxsltVersion / 100) % 100,
-        xsltLibxsltVersion % 100
-    );
-}
-
-static std::string get_libxml2_version()
-{
-    return string_printf("%d.%d.%d",
-        xsltLibxmlVersion / 10000,
-        (xsltLibxmlVersion / 100) % 100,
-        xsltLibxmlVersion % 100
-    );
-}
-
+#if HAVE_EXIV2
+#include <exiv2/exiv2.hpp>
 #endif
 
 #if HAVE_GRAPHICSMAGICK
@@ -83,9 +63,8 @@ const std::string get_version()
 #if HAVE_GRAPHICSMAGICK
     stream << ", GraphicsMagick++ " << get_gm_version();
 #endif
-#if HAVE_LIBXSLT
-    stream << ", GNOME XSLT " << get_libxslt_version();
-    stream << ", GNOME XML " << get_libxml2_version();
+#if HAVE_EXIV2
+    stream << ", Exiv2 " << Exiv2::version();
 #endif
     stream << ")";
     return stream.str();
@@ -100,9 +79,8 @@ const std::string get_multiline_version()
 #if HAVE_GRAPHICSMAGICK
     stream << "+ GraphicsMagick++ " << get_gm_version() << " (Q" << QuantumDepth << ")\n";
 #endif
-#if HAVE_LIBXSLT
-    stream << "+ GNOME XSLT " << get_libxslt_version() << "\n";
-    stream << "+ GNOME XML " << get_libxml2_version() << "\n";
+#if HAVE_EXIV2
+    stream << "+ Exiv2 " << Exiv2::version() << "\n";
 #endif
     return stream.str();
 }

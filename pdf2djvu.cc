@@ -1619,7 +1619,7 @@ static int xmain(int argc, char * const argv[])
         {
           xmp_bytes = xmp::transform(xmp_bytes, metadata);
         }
-        catch (xmp::XmlError &ex)
+        catch (xmp::Error &ex)
         {
           debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
         }

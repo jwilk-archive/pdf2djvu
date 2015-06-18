@@ -88,7 +88,7 @@ msgid "%s is not a valid number"
 msgstr "%s não é um número válido"
 
 #. L10N: "<error-category>: <error-message>"
-#: pdf-backend.cc
+#: xmp.cc pdf-backend.cc
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -565,10 +565,6 @@ msgstr "Altura de mapa de bits de sub-amostragem inesperada"
 msgid "Unexpected subsampled bitmap width"
 msgstr "Largura de mapa de bits de sub-amostragem inesperada"
 
-#: xmp.cc
-msgid "Unknown error"
-msgstr "Erro desconhecido"
-
 #: config.cc
 msgid "Unknown option"
 msgstr "Opção desconhecida"
@@ -602,6 +598,16 @@ msgstr "Aviso: Acção de ligação desconhecida"
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Aviso: os meta-dados[%s] não são uma data válida"
+
+#: xmp.cc
+#, fuzzy
+msgid "XMP error"
+msgstr "Erro do PDF"
+
+#: xmp.cc
+#, fuzzy
+msgid "XMP warning"
+msgstr "Aviso de sintaxe do PDF"
 
 #: pdf2djvu.cc
 msgid "adding non-raster data with `djvused`"
@@ -667,7 +673,8 @@ msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu destina-se a ser accionado a partir da linha de comandos."
 
 #: xmp.cc
-msgid "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+#, fuzzy
+msgid "pdf2djvu was built without Exiv2; XMP transformations are disabled."
 msgstr "pdf2djvu foi compilado sem XSLT do GNOME XSLT; as transformações XML estão desactivadas."
 
 #: image-filter.hh

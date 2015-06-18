@@ -14,262 +14,100 @@
 
 #include "xmp.hh"
 
-#include "i18n.hh"
 #include "autoconf.hh"
-#include "version.hh"
+#include "i18n.hh"
 
-#if HAVE_LIBXSLT
+#if HAVE_EXIV2
 
-#include <cstddef>
-#include <memory>
-#include <sstream>
+#include <cassert>
+#include <climits>
 #include <vector>
 
-#include <libxml/xmlIO.h>
-#include <libxml/xmlmemory.h>
-#include <libxml/xmlsave.h>
-#include <libxslt/transform.h>
-#include <libxslt/xslt.h>
-#include <libxslt/xsltInternals.h>
-#include <libxslt/xsltutils.h>
+#include <exiv2/exiv2.hpp>
 
-static void throw_xml_error()
+#include "debug.hh"
+#include "system.hh"
+#include "version.hh"
+
+static void maybe_set(Exiv2::XmpData &data, const char *key, const std::string &value)
 {
-  xmlErrorPtr error = xmlGetLastError();
-  if (error != NULL)
-    throw xmp::XmlError(error->message);
-  else
-    throw xmp::XmlError(_("Unknown error"));
+    if (value.length() == 0)
+        return;
+    Exiv2::XmpData::iterator it = data.findKey(Exiv2::XmpKey(key));
+    if (it == data.end())
+        data[key] = value;
 }
 
-class Xsl;
-
-class Xml
+static void set_history(Exiv2::XmpData &data, long n, const char *event, const std::string value)
 {
-protected:
-  xmlDocPtr c_xml;
-  Xml(xmlDocPtr c_xml)
-  : c_xml(c_xml)
-  { }
-public:
-  explicit Xml(const std::string &data)
-  {
-    this->c_xml = xmlReadMemory(data.c_str(), data.length(), NULL, NULL, XML_PARSE_NONET);
-    if (this->c_xml == NULL)
-      throw_xml_error();
-  }
+    const std::string key = string_printf("Xmp.xmpMM.History[%ld]/stEvt:%s", n, event);
+    data[key] = value;
+}
 
-  virtual ~Xml()
-  {
-    xmlFreeDoc(this->c_xml);
-  }
+static void error_handler(int level, const char *message)
+{
+    const char *category = (level == Exiv2::LogMsg::error)
+        ? _("XMP error")
+        : _("XMP warning");
+    error_log <<
+      /* L10N: "<error-category>: <error-message>" */
+      string_printf(_("%s: %s"), category, message);
+}
 
-  std::string serialize()
-  {
-    xmlBufferPtr buffer = xmlBufferCreate();
-    if (buffer == NULL)
-      throw_xml_error();
-    xmlSaveCtxtPtr context = xmlSaveToBuffer(buffer, "ASCII", XML_SAVE_NO_DECL);
-    if (context == NULL)
-    {
-      xmlBufferFree(buffer);
-      throw_xml_error();
+std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metadata)
+{
+    Exiv2::LogMsg::setHandler(error_handler);
+    Exiv2::XmpData data;
+    int rc;
+    rc = Exiv2::XmpParser::decode(data, ibytes);
+    if (rc != 0)
+        throw xmp::Error("cannot parse XMP metadata");
+    std::string obytes;
+    maybe_set(data, "Xmp.dc.title", metadata.title);
+    maybe_set(data, "Xmp.dc.creator", metadata.author);
+    maybe_set(data, "Xmp.dc.description", metadata.subject);
+    data["Xmp.dc.format"] = "image/vnd.djvu";
+    maybe_set(data, "Xmp.pdf.Keywords", metadata.keywords);
+    maybe_set(data, "Xmp.pdf.Producer", metadata.producer);
+    maybe_set(data, "Xmp.xmp.CreatorTool", metadata.creator);
+    try {
+        std::string date = metadata.creation_date.format('T');
+        maybe_set(data, "Xmp.xmp.CreateDate", date);
+    } catch (pdf::Timestamp::Invalid) {
+        /* Ignore the error. User should be warned elsewhere anyway. */
     }
-    xmlSaveDoc(context, this->c_xml);
-    xmlSaveClose(context);
-    std::string result = reinterpret_cast<const char*>(buffer->content);
-    xmlBufferFree(buffer);
-    return result;
-  }
-
-  friend class Xsl;
-};
-
-class Xsl : public Xml
-{
-protected:
-  xsltStylesheetPtr c_xsl;
-public:
-  explicit Xsl(const std::string &s)
-  : Xml(s)
-  {
-    this->c_xsl = xsltParseStylesheetDoc(this->c_xml);
-    if (this->c_xsl == NULL)
-      throw_xml_error();
-  }
-
-  virtual ~Xsl()
-  {
-    this->c_xml = NULL;
-    xsltFreeStylesheet(this->c_xsl);
-  }
-
-  Xml *transform(const Xml &xml, const std::vector<std::string> &params)
-  {
-    xmlDocPtr c_document;
-    const char **c_params = new const char*[params.size() + 1];
-    for (size_t i = 0; i < params.size(); i++)
-      c_params[i] = params[i].c_str();
-    c_params[params.size()] = NULL;
-    c_document = xsltApplyStylesheet(this->c_xsl, xml.c_xml, c_params);
-    delete[] c_params;
-    if (c_document == NULL)
-      throw_xml_error();
-    return new Xml(c_document);
-  }
-};
-
-class XmlEnvironment
-{
-public:
-  XmlEnvironment()
-  {
-    LIBXML_TEST_VERSION
-  }
-
-  ~XmlEnvironment()
-  {
-    xsltCleanupGlobals();
-    xmlCleanupParser();
-  }
-};
-
-static inline void char_as_xpath(char c, std::ostream &stream)
-{
-  if (c < 0 || c >= ' ' || c == '\r' || c == '\n' || c == '\t')
-    stream << c;
-  else
-  {
-    /* These are invalid characters for XML documents.
-     * Replace them with U+FFFD (replacement character).
-     *
-     * See
-     * http://www.w3.org/TR/REC-xml/#charsets
-     * for details.
-     */
-    stream << "\xef\xbf\xbd";
-  }
-}
-
-static void string_as_xpath(const std::string &string, std::ostream &stream)
-{
-  char quote = '"';
-  bool first = true;
-  std::string::const_iterator left = string.begin();
-  std::string::const_iterator right = string.begin();
-  while (right != string.end())
-  {
-    if (*right != quote)
-      right++;
-    else
-    {
-      if (right > left)
-      {
-        if (first)
-        {
-          stream << "concat(";
-          first = false;
-        }
-        else
-          stream << ',';
-        stream << quote;
-        while (left < right)
-          char_as_xpath(*left++, stream);
-        stream << quote;
-        left = right;
-      }
-      quote ^= ('"' ^ '\'');
+    try {
+        std::string date = metadata.mod_date.format('T');
+        maybe_set(data, "Xmp.xmp.ModifyDate", date);
+    } catch (pdf::Timestamp::Invalid) {
+        /* Ignore the error. User should be warned elsewhere anyway. */
     }
-  }
-  if (!first)
-    stream << ',';
-  stream << quote;
-  while (left < right)
-    char_as_xpath(*left++, stream);
-  stream << quote;
-  right++;
-  left = right;
-  if (!first)
-    stream << ')';
-}
-
-static std::string string_as_xpath(const std::string &string)
-{
-  std::ostringstream stream;
-  string_as_xpath(string, stream);
-  return stream.str();
-}
-
-#include "xmp-xslt.hh"
-#include "xmp-dummy.hh"
-
-static std::string pdf_key_to_xslt_key(const std::string &string)
-{
-  std::string result = "pdf";
-  for (std::string::const_iterator it = string.begin(); it != string.end(); it++)
-  {
-    if (*it >= 'A' && *it <= 'Z')
+    std::string now_date = pdf::Timestamp::now().format('T');
+    data["Xmp.xmp.MetadataDate"] = now_date;
+    if (data.findKey(Exiv2::XmpKey("Xmp.xmpMM.History")) == data.end()) {
+        Exiv2::Value::AutoPtr empty_seq = Exiv2::Value::create(Exiv2::xmpSeq);
+        data.add(Exiv2::XmpKey("Xmp.xmpMM.History"), empty_seq.get());
+    };
     {
-      result += '-';
-      result += *it - 'A' + 'a';
+        long n = data["Xmp.xmpMM.History"].count();
+        assert((n >= 0) && (n < LONG_MAX));
+        n++;
+        set_history(data, n, "action", "converted");
+        set_history(data, n, "parameters", "from application/pdf to image/vnd.djvu");
+        set_history(data, n, "softwareAgent", get_version());
+        set_history(data, n, "when", now_date);
     }
-    else
-      result += *it;
-  }
-  return result;
-}
-
-static void add_meta_string(const char *key, const std::string &value, std::vector<std::string> &params)
-{
-  params.push_back(pdf_key_to_xslt_key(key));
-  params.push_back(string_as_xpath(value));
-}
-
-static void add_meta_date(const char *key, const pdf::Timestamp &value, std::vector<std::string> &params)
-{
-  std::string string_value;
-  try
-  {
-    string_value = value.format('T');
-  }
-  catch (pdf::Timestamp::Invalid)
-  {
-    /* Ignore the error. User should be warned somewhere else anyway. */
-    return;
-  }
-  params.push_back(pdf_key_to_xslt_key(key));
-  params.push_back(string_as_xpath(string_value));
-}
-
-std::string xmp::transform(const std::string &data, const pdf::Metadata &metadata)
-{
-  std::string result;
-  XmlEnvironment xml_environment;
-  {
-    std::vector<std::string> params;
-    params.push_back("djvu-producer");
-    params.push_back(
-      string_as_xpath(get_version())
-    );
-    params.push_back("now");
-    params.push_back(string_as_xpath(pdf::Timestamp::now().format('T')));
-    metadata.iterate<std::vector<std::string> >(add_meta_string, add_meta_date, params);
-    Xml xmp(data.length() > 0 ? data : dummy_xmp);
-    Xsl xsl(xmp::xslt);
-    std::auto_ptr<Xml> transformed_data;
-    transformed_data.reset(xsl.transform(xmp, params));
-    result = transformed_data->serialize();
-  }
-  return result;
+    Exiv2::XmpParser::encode(obytes, data, Exiv2::XmpParser::omitPacketWrapper);
+    return obytes;
 }
 
 #else
 
 std::string xmp::transform(const std::string &data, const pdf::Metadata &metadata)
 {
-  throw XmlError(_("pdf2djvu was built without GNOME XSLT; XML transformations are disabled."));
+    throw xmp::Error(_("pdf2djvu was built without Exiv2; XMP transformations are disabled."));
 }
 
 #endif
 
-// vim:ts=2 sts=2 sw=2 et
+// vim:ts=4 sts=4 sw=4 et

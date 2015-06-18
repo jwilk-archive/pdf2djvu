@@ -25,19 +25,9 @@ class test(case):
         assert_regex(xmp, '<broken')
 
     def test_no_verbatim(self):
-        self.require_feature('GNOME XSLT')
+        self.require_feature('Exiv2')
         r = self.pdf2djvu()
-        r.assert_(stderr='''\
-Entity: line 1: parser error : error parsing attribute name
-<x:xmpmeta xmlns:x="adobe:ns:meta/"> <broken </x:xmpmeta>
-                                             ^
-Entity: line 1: parser error : attributes construct error
-<x:xmpmeta xmlns:x="adobe:ns:meta/"> <broken </x:xmpmeta>
-                                             ^
-Entity: line 1: parser error : Couldn't find end of Start Tag broken line 1
-<x:xmpmeta xmlns:x="adobe:ns:meta/"> <broken </x:xmpmeta>
-                                             ^
-''')
+        r.assert_(stderr='XMP error: XMP Toolkit error 201: XML parsing failure\n')
         xmp = self.extract_xmp()
         assert_regex(xmp, '<broken')
 

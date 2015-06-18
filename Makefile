@@ -27,9 +27,6 @@ endif
 
 include Makefile.dep
 
-%.hh: %.xml
-	tools/xml2c < $(<) > $(@)
-
 paths.hh: tools/generate-paths-hh
 	$(<) $(foreach var,localedir djvulibre_bindir,$(var) $($(var)))
 

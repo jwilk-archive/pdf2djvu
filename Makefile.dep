@@ -93,10 +93,10 @@ version.o: system.hh
 version.o: version.cc
 version.o: version.hh
 xmp.o: autoconf.hh
+xmp.o: debug.hh
 xmp.o: i18n.hh
 xmp.o: pdf-backend.hh
+xmp.o: system.hh
 xmp.o: version.hh
-xmp.o: xmp-dummy.hh
-xmp.o: xmp-xslt.hh
 xmp.o: xmp.cc
 xmp.o: xmp.hh

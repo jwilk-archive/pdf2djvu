@@ -1,4 +1,4 @@
-/* Copyright © 2009 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
  *
  * This file is part of pdfdjvu.
  *
@@ -22,17 +22,17 @@
 
 namespace xmp
 {
-  std::string transform(const std::string &data, const pdf::Metadata &metadata);
+    std::string transform(const std::string &data, const pdf::Metadata &metadata);
 
-  class XmlError : public std::runtime_error
-  {
-  public:
-    explicit XmlError(const std::string message)
-    : std::runtime_error(message)
-    { }
-  };
+    class Error : public std::runtime_error
+    {
+    public:
+        explicit Error(const std::string message)
+        : std::runtime_error(message)
+        { }
+    };
 }
 
 #endif
 
-// vim:ts=2 sts=2 sw=2 et
+// vim:ts=4 sts=4 sw=4 et

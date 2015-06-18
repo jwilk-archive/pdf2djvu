@@ -75,13 +75,13 @@ then
   )
 fi
 
-AC_ARG_WITH([xslt], [AS_HELP_STRING([--without-xslt], [do not use the GNOME XSLT library])])
-if test "$with_xslt" != "no"
+AC_ARG_WITH([exiv2], [AS_HELP_STRING([--without-exiv2], [do not use the Exiv2 library])])
+if test "$with_exiv2" != "no"
 then
-  PKG_CHECK_MODULES([XSLT], [libxslt],
+  PKG_CHECK_MODULES([EXIV2], [exiv2 >= 0.21],
     [
-      AC_DEFINE([HAVE_LIBXSLT], 1, [Define if you have GNOME XSLT library installed])
-      have_xslt=yes
+      AC_DEFINE([HAVE_EXIV2], 1, [Define if you have the Exiv2 library installed])
+      have_exiv2=yes
     ], [ : ]
   )
 fi
@@ -141,13 +141,12 @@ functionality.
 _ACEOF
 fi
 
-if test "$with_xslt" != "no" && test -z "$have_xslt"
+if test "$with_exiv2" != "no" && test -z "$have_exiv2"
 then
   cat <<_ACEOF
 
 WARNING: Updating XMP metadata will be disabled.
-Please consider installing the GNOME XSLT library to enable this
-functionality.
+Please consider installing the Exiv2 library to enable this functionality.
 _ACEOF
 fi
 

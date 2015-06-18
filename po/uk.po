@@ -79,7 +79,7 @@ msgid "%s is not a valid number"
 msgstr "%s не є правильним числом"
 
 #. L10N: "<error-category>: <error-message>"
-#: pdf-backend.cc
+#: xmp.cc pdf-backend.cc
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -557,10 +557,6 @@ msgstr "Неочікувана висота розділеного растро�
 msgid "Unexpected subsampled bitmap width"
 msgstr "Неочікувана ширина розділеного растрового зображення"
 
-#: xmp.cc
-msgid "Unknown error"
-msgstr "Невідома помилка"
-
 #: config.cc
 msgid "Unknown option"
 msgstr "Невідомий параметр"
@@ -594,6 +590,16 @@ msgstr "Попередження: невідома дія посилання"
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Попередження: метадані[%s] є неприпустимою датою"
+
+#: xmp.cc
+#, fuzzy
+msgid "XMP error"
+msgstr "Помилка PDF"
+
+#: xmp.cc
+#, fuzzy
+msgid "XMP warning"
+msgstr "Попередження про синтаксичну помилку у PDF-файлі"
 
 #: pdf2djvu.cc
 msgid "adding non-raster data with `djvused`"
@@ -660,7 +666,8 @@ msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu призначений для запуску з командного рядка."
 
 #: xmp.cc
-msgid "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
+#, fuzzy
+msgid "pdf2djvu was built without Exiv2; XMP transformations are disabled."
 msgstr "pdf2djvu скомпільований без GNOME XSLT; XML-перетворення відключені."
 
 #: image-filter.hh
