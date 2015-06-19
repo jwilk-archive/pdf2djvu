@@ -49,6 +49,7 @@ XML_HH_FILES = $(XML_FILES:.xml=.hh)
 .PHONY: clean
 clean:
 	rm -f $(exe) *.o paths.hh $(XML_HH_FILES)
+	$(MAKE) -C tests/ clean
 
 .PHONY: distclean
 distclean: clean
