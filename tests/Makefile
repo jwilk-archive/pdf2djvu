@@ -36,7 +36,7 @@ all: $(generated_files) $(pdf2djvu)
 	nosetests -v $(test_scripts)
 
 .PHONY: prepare
-prepare: $(in_files:.in=) $(pdf_files)
+prepare: $(generated_files)
 	rm -f *.pyc
 
 .PHONY: clean
