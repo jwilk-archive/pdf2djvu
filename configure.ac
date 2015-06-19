@@ -43,6 +43,18 @@ AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to th
 poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g')
 poppler_version=$(printf '%02d' $poppler_version | sed -e 's/^0*//g')
 AC_DEFINE_UNQUOTED([POPPLER_VERSION], [$poppler_version], [Define to the version of poppler, as integer])
+AC_MSG_CHECKING([for Poppler xpdf headers])
+original_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
+AC_PREPROC_IFELSE(
+  [AC_LANG_SOURCE([[#include <GfxState.h>]])],
+  [AC_MSG_RESULT([yes])],
+  [
+    AC_MSG_RESULT([no])
+    AC_MSG_FAILURE([missing Poppler xpdf headers])
+  ]
+)
+CPPFLAGS="$original_cppflags"
 
 AC_ARG_WITH([graphicsmagick], [AS_HELP_STRING([--without-graphicsmagick], [do not use the GraphicsMagick library])])
 if test "$with_graphicsmagick" != "no"
