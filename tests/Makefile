@@ -41,7 +41,11 @@ prepare: $(generated_files)
 
 .PHONY: clean
 clean:
-	rm -f $(generated_files) *.djvu *.pyc
+	rm -f *.djvu *.pyc
+
+.PHONY: vcs-clean
+vcs-clean: clean
+	rm -f $(generated_files)
 
 %.pdf: %.tex
 	pdftex $(<)
