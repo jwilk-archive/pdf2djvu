@@ -79,8 +79,6 @@ then
   )
 fi
 
-AC_PREPROC_IFELSE([AC_LANG_SOURCE([[]])])
-
 AC_ARG_WITH([pstreams], [AS_HELP_STRING([--without-pstreams], [do not use the PStreams library])])
 have_pstreams=maybe
 AC_CHECK_FUNC([fork],
