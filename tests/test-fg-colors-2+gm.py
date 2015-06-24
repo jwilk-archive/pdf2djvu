@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2012 Jakub Wilk
+# Copyright © 2012 Jakub Wilk <jwilk@jwilk.net>
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

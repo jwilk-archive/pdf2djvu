@@ -1,4 +1,4 @@
-# Copyright © 2009-2014 Jakub Wilk
+# Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
 #
 # This package is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ po4a-getext-options = \
 	--package-name=pdf2djvu \
 	--package-version=$(PACKAGE_VERSION) \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
-	--copyright-holder="Jakub Wilk"
+	--copyright-holder="Jakub Wilk <jwilk@jwilk.net>"
 
 po4a-update-po = po4a-updatepo \
 	$(po4a-getext-options) \
