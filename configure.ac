@@ -62,7 +62,7 @@ then
   PKG_CHECK_MODULES([GRAPHICSMAGICK], [GraphicsMagick++],
     [
       AC_DEFINE([HAVE_GRAPHICSMAGICK], 1, [Define if you have GraphicsMagick++ installed])
-      graphicsmagick_version=$($PKG_CONFIG --modversion GraphicsMagick++)
+      have_graphicsmagick=yes
     ], [ : ]
   )
 fi
@@ -73,8 +73,7 @@ then
   PKG_CHECK_MODULES([XSLT], [libxslt],
     [
       AC_DEFINE([HAVE_LIBXSLT], 1, [Define if you have GNOME XSLT library installed])
-      libxml2_version=$($PKG_CONFIG --modversion libxml-2.0)
-      libxslt_version=$($PKG_CONFIG --modversion libxslt)
+      have_xslt=yes
     ], [ : ]
   )
 fi
@@ -185,7 +184,7 @@ functionality.
 _ACEOF
 fi
 
-if test "$with_graphicsmagick" != "no" && test -z "$graphicsmagick_version"
+if test "$with_graphicsmagick" != "no" && test -z "$have_graphicsmagick"
 then
   cat <<_ACEOF
 
@@ -195,7 +194,7 @@ functionality.
 _ACEOF
 fi
 
-if test "$with_xslt" != "no" && test -z "$libxslt_version"
+if test "$with_xslt" != "no" && test -z "$have_xslt"
 then
   cat <<_ACEOF
 
