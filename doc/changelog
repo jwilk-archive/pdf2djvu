@@ -111,7 +111,7 @@ pdf2djvu (0.7.18) unstable; urgency=low
     https://bugs.debian.org/758262
 
   [ Majid Redouane, Jean-Paul Guillonneau ]
-  + Add French translation of the manual page.
+  * Add French translation of the manual page.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Dec 2014 13:25:10 +0100
 
