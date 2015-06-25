@@ -1,7 +1,8 @@
 The following software is required to build *pdf2djvu*:
 
 * DjVuLibre_ (>= 3.5.21), both the library and the command line tools;
-* Poppler_ (>= 0.11.1), including xpdf headers [#]_.
+* Poppler_ (>= 0.11.1), including xpdf headers [#]_;
+* pkg-config_.
  
 The following software is recommended:
 
@@ -13,6 +14,8 @@ The following software is recommended:
    http://djvu.sourceforge.net/
 .. _poppler:
    http://poppler.freedesktop.org/
+.. _pkg-config:
+   https://wiki.freedesktop.org/www/Software/pkg-config/
 .. _PStreams:
    http://pstreams.sourceforge.net/
 .. _Libxslt:
