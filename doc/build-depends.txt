@@ -1,72 +1,31 @@
-=====================================
-Packages required do build *pdf2djvu*
-=====================================
+The following software is required to build *pdf2djvu*:
 
-DjVuLibre
-=========
-DjVuLibre_ is an implementation of DjVu_, including viewers, browser
-plugins, decoders, simple encoders, and utilities.
+* DjVuLibre_ (>= 3.5.21), both the library and the command line tools;
+* Poppler_ (>= 0.11.1), including xpdf headers [#]_.
+ 
+The following software is recommended:
 
-Compatibility
--------------
-DjVuLibre 3.5.21 or newer is required.
+* PStreams_;
+* Libxslt_, for correctly dealing with XMP metadata;
+* GraphicsMagick_, for the ``--fg-colors=N`` option.
 
 .. _DjVuLibre:
    http://djvu.sourceforge.net/
-.. _DjVu:
-   http://djvu.org/
-
-poppler
-=======
-Poppler_ is a PDF rendering library derived from xpdf.
-
 .. _poppler:
    http://poppler.freedesktop.org/
-
-Header files
-------------
-You will need some ``*.h`` files which are not installed by default
-(``make install``) unless you use the ``--enable-xpdf-headers``
-configure option. Alternatively, you may use the
-``tools/install-poppler-h-files`` script to install them afterwards.
-
-Note that some Linux distributions are already shipping those files.
-
-Compatibility
--------------
-Poppler 0.11.1 or newer is required.
-
-PStreams (recommended)
-======================
-PStreams_ allows you to run another program from your C++ application
-and to transfer data between the two programs, similar to shell
-pipelines.
-
 .. _PStreams:
    http://pstreams.sourceforge.net/
-
-GNOME XSLT library (recommended)
-================================
-
-Libxslt_ is the XSLT C library developed for the GNOME project.
-
-This library is required to correctly deal with XMP metadata.
-
 .. _Libxslt:
    http://xmlsoft.org/xslt/
-
-GraphicsMagick (optional)
-=========================
-GraphicsMagick_ is a library to read, write, and manipulate images.
-
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
 
-an OpenMP implementation (recommended)
-======================================
-OpenMP_ is API for multi-platform shared-memory parallel programming.
+----
 
-.. _OpenMP:
-   http://openmp.org/
+.. [#]
+   Poppler must be compiled with the ``--enable-xpdf-headers``
+   configuration option enabled.
+   Alternatively, you may use the ``tools/install-poppler-h-files``
+   script to install the missing headers afterwards.
 
 .. vim:ft=rst ts=3 sw=3 et tw=72
