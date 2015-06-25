@@ -44,6 +44,7 @@ addons:
     - texlive-binaries
     - texlive-fonts-recommended
     - texlive-xetex
+    - uuid-dev
 cache:
   directories:
   - $HOME/.ccache

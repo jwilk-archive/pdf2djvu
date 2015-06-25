@@ -663,16 +663,17 @@ msgstr "Seite #%d -> #%d"
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu ist für die Ausführung von der Befehlszeile gedacht."
 
-#: xmp.cc
-msgid "pdf2djvu was built without Exiv2; XMP transformations are disabled."
-msgstr "pdf2djvu wurde ohne GNOME-XSLT gebaut. XML-Umwandlungen sind deaktiviert."
-
 #: image-filter.hh
 msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
 msgstr "pdf2djvu wurde ohne GraphicsMagick gebaut. Fortgeschrittene Farbquantifizierung ist deaktiviert."
 
 #: pdf2djvu.cc
 msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
+msgstr "Pdf2djvu wurde ohne OpenMP-Unterstützung gebaut. Die Verwendung mehrerer Threads ist deaktiviert."
+
+#: xmp.cc
+#, fuzzy
+msgid "pdf2djvu was built without support for updating XMP."
 msgstr "Pdf2djvu wurde ohne OpenMP-Unterstützung gebaut. Die Verwendung mehrerer Threads ist deaktiviert."
 
 #: system.cc

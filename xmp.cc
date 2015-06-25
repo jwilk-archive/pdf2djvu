@@ -17,13 +17,14 @@
 #include "autoconf.hh"
 #include "i18n.hh"
 
-#if HAVE_EXIV2
+#if HAVE_XMP
 
 #include <cassert>
 #include <climits>
 #include <vector>
 
 #include <exiv2/exiv2.hpp>
+#include <uuid.h>
 
 #include "debug.hh"
 #include "system.hh"
@@ -54,6 +55,15 @@ static void error_handler(int level, const char *message)
       string_printf(_("%s: %s"), category, message);
 }
 
+std::string gen_instanceid(void)
+{
+    char uuid_s[36 + 1];
+    uuid_t uuid;
+    uuid_generate_random(uuid);
+    uuid_unparse_lower(uuid, uuid_s);
+    return std::string("uuid:") + uuid_s;
+}
+
 std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metadata)
 {
     Exiv2::LogMsg::setHandler(error_handler);
@@ -62,6 +72,7 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
     rc = Exiv2::XmpParser::decode(data, ibytes);
     if (rc != 0)
         throw xmp::Error("cannot parse XMP metadata");
+    std::string instance_id = gen_instanceid();
     std::string obytes;
     maybe_set(data, "Xmp.dc.title", metadata.title);
     maybe_set(data, "Xmp.dc.creator", metadata.author);
@@ -88,12 +99,14 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
         Exiv2::Value::AutoPtr empty_seq = Exiv2::Value::create(Exiv2::xmpSeq);
         data.add(Exiv2::XmpKey("Xmp.xmpMM.History"), empty_seq.get());
     };
+    data["Xmp.xmpMM.InstanceID"] = instance_id;
     {
         long n = data["Xmp.xmpMM.History"].count();
         assert((n >= 0) && (n < LONG_MAX));
         n++;
         set_history(data, n, "action", "converted");
         set_history(data, n, "parameters", "from application/pdf to image/vnd.djvu");
+        set_history(data, n, "instanceID", instance_id);
         set_history(data, n, "softwareAgent", get_version());
         set_history(data, n, "when", now_date);
     }
@@ -105,7 +118,7 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
 
 std::string xmp::transform(const std::string &data, const pdf::Metadata &metadata)
 {
-    throw xmp::Error(_("pdf2djvu was built without Exiv2; XMP transformations are disabled."));
+    throw xmp::Error(_("pdf2djvu was built without support for updating XMP."));
 }
 
 #endif

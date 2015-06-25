@@ -75,15 +75,18 @@ then
   )
 fi
 
-AC_ARG_WITH([exiv2], [AS_HELP_STRING([--without-exiv2], [do not use the Exiv2 library])])
-if test "$with_exiv2" != "no"
+AC_ARG_ENABLE([xmp], [AS_HELP_STRING([--disable-xmp], [do not update XMP metadata])])
+if test "$enable_xmp" != "no"
 then
-  PKG_CHECK_MODULES([EXIV2], [exiv2 >= 0.21],
-    [
-      AC_DEFINE([HAVE_EXIV2], 1, [Define if you have the Exiv2 library installed])
-      have_exiv2=yes
-    ], [ : ]
-  )
+  PKG_CHECK_MODULES([EXIV2], [exiv2 >= 0.21], [have_exiv2=yes])
+  PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes])
+  if test -n "$have_exiv2" && test -n "$have_uuid"
+  then
+    AC_DEFINE([HAVE_XMP], 1, [Define if you have the Exiv2 and UUID libraries installed])
+    have_xmp=yes
+    AC_SUBST([XMP_CFLAGS], ["$EXIV2_CFLAGS $UUID_CFLAGS"])
+    AC_SUBST([XMP_LIBS], ["$EXIV2_LIBS $UUID_LIBS"])
+  fi
 fi
 
 AM_GNU_GETTEXT([external], [need-ngettext])
@@ -141,12 +144,13 @@ functionality.
 _ACEOF
 fi
 
-if test "$with_exiv2" != "no" && test -z "$have_exiv2"
+if test "$enable_exiv2" != "no" && test -z "$have_xmp"
 then
   cat <<_ACEOF
 
 WARNING: Updating XMP metadata will be disabled.
-Please consider installing the Exiv2 library to enable this functionality.
+Please consider installing the Exiv2 and UUID libraries to enable this
+functionality.
 _ACEOF
 fi
 

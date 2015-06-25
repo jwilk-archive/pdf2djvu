@@ -33,7 +33,7 @@ static std::string get_djvulibre_version()
 #endif
 }
 
-#if HAVE_EXIV2
+#if HAVE_XMP
 #include <exiv2/exiv2.hpp>
 #endif
 
@@ -63,7 +63,7 @@ const std::string get_version()
 #if HAVE_GRAPHICSMAGICK
     stream << ", GraphicsMagick++ " << get_gm_version();
 #endif
-#if HAVE_EXIV2
+#if HAVE_XMP
     stream << ", Exiv2 " << Exiv2::version();
 #endif
     stream << ")";
@@ -79,7 +79,7 @@ const std::string get_multiline_version()
 #if HAVE_GRAPHICSMAGICK
     stream << "+ GraphicsMagick++ " << get_gm_version() << " (Q" << QuantumDepth << ")\n";
 #endif
-#if HAVE_EXIV2
+#if HAVE_XMP
     stream << "+ Exiv2 " << Exiv2::version() << "\n";
 #endif
     return stream.str();

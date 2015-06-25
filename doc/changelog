@@ -5,6 +5,7 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
   * Improve XMP support:
     + Use the Exiv2 library (instead of the GNOME XSLT library with
       hand-crafted XSL stylesheets).
+    + Update the xmpMM:InstanceID property.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Tue, 08 Sep 2015 22:12:11 +0200
 
