@@ -13,7 +13,7 @@ env:
 before_install:
 - sudo apt-get update
 - sudo apt-get install -y autoconf autoconf-archive automake djvulibre-bin fonts-linuxlibertine gettext libdjvulibre-dev libfontconfig-dev libgraphicsmagick++-dev libpstreams-dev libxml2-utils libxslt-dev pkg-config python-imaging python-nose texlive-binaries texlive-fonts-recommended texlive-xetex
-- sudo apt-get install -y libxml2-utils
+- sudo apt-get install -y libxml2-utils python-docutils
 - if [ -z "${POPPLER_VERSION##0.3*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
@@ -28,6 +28,7 @@ script:
 - make
 - ./pdf2djvu --version
 - make test
+- grep -r -l ft=rst doc/ | xargs -t -n1 -I{} rst2pseudoxml --strict {} /dev/null
 - xmllint --noout --valid doc/*.xml
 
 # vim:ts=2 sts=2 sw=2 et
