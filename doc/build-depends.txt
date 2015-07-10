@@ -31,4 +31,4 @@ The following software is recommended:
    Alternatively, you may use the ``tools/install-poppler-h-files``
    script to install the missing headers afterwards.
 
-.. vim:ft=rst ts=3 sw=3 et tw=72
+.. vim:ft=rst ts=3 sts=3 sw=3 et tw=72

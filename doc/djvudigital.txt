@@ -50,4 +50,4 @@ Superiorities of pdf2djvu
 .. _bug report:
    http://sourceforge.net/p/djvu/bugs/109/
 
-.. vim:ft=rst ts=3 sw=3 et tw=72
+.. vim:ft=rst ts=3 sts=3 sw=3 et tw=72

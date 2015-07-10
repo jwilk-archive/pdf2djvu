@@ -10,4 +10,4 @@ For the Windows port:
 - rename the extracted directory to ``poppler-data``;
 - put it into the same directory as the ``pdf2djvu.exe`` file.
 
-.. vim:ft=rst ts=3 sw=3 et tw=72
+.. vim:ft=rst ts=3 sts=3 sw=3 et tw=72
