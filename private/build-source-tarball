@@ -47,9 +47,9 @@ grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "pdf2djvu-$version/Makefile.common.in" \
 cat "pdf2djvu-$version/Makefile.common"
 
 # Build the manual page and translations:
-make -C "pdf2djvu-$version/po/" 'quality-check=1'
+make -C "pdf2djvu-$version/po/" all check
 make -C "pdf2djvu-$version/doc/"
-make -C "pdf2djvu-$version/doc/po/" all pdf2djvu.pot 'quality-check=1'
+make -C "pdf2djvu-$version/doc/po/" all check pdf2djvu.pot
 
 # Prepare tests:
 make -C "pdf2djvu-$version/tests/" prepare

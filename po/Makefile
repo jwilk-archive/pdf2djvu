@@ -43,11 +43,12 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 	$(msgmerge) -o $(@) $(@) $(<)
 
 %.mo: %.po
-ifneq "$(quality-check)" ""
-	! msgattrib --only-fuzzy $(<) | grep ''
-	! msgattrib --untranslated $(<) | grep ''
-endif
 	$(msgfmt) -o $(@) -c $(<)
+
+.PHONY: check
+check: $(MO_FILES)
+	! ls $(PO_FILES) | xargs -t -L1 -I{} msgattrib --untranslated {}
+	! ls $(PO_FILES) | xargs -t -L1 -I{} msgattrib --only-fuzzy {}
 
 .PHONY: clean
 clean:

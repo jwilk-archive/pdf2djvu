@@ -50,11 +50,13 @@ $(po_files): %.po: pdf2djvu.xml
 	touch $(@)
 
 %.xml: %.po
-ifneq "$(quality-check)" ""
-	! msgattrib --only-fuzzy $(<) | grep ''
-	! msgattrib --untranslated $(<) | grep ''
-endif
 	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
+
+.PHONY: check
+check: $(MO_FILES)
+	ls $(po_files) | xargs -t -L1 -I{} msgfmt --check -o /dev/null {}
+	! ls $(po_files) | xargs -t -L1 -I{} msgattrib --untranslated {}
+	! ls $(po_files) | xargs -t -L1 -I{} msgattrib --only-fuzzy {}
 
 .PHONY: clean
 clean:
