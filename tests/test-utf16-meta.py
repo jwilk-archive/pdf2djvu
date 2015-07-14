@@ -22,6 +22,6 @@ class test(case):
         )
         self.pdf2djvu('--dpi=72').assert_()
         r = self.print_meta()
-        r.assert_(stdout=re('Title\t"%s"' % title.replace('\\', '\\\\')))
+        r.assert_(stdout=re('Title\t"{s}"'.format(s=title.replace('\\', '\\\\'))))
 
 # vim:ts=4 sts=4 sw=4 et

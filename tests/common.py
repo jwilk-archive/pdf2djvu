@@ -42,7 +42,7 @@ except ImportError:
             return
         if msg is None:
             msg = "Regexp didn't match"
-        msg = '%s: %r not found in %r' % (msg, expected_regexp.pattern, text)
+        msg = '{msg}: {re!r} not found in {text!r}'.format(msg=msg, re=expected_regexp.pattern, text=text)
         raise AssertionError(msg)
 
 def assert_well_formed_xml(xml):
@@ -139,7 +139,7 @@ class case(object):
         return self.djvused('print-outline')
 
     def print_ant(self, page):
-        return self.djvused('select %d; print-ant' % page)
+        return self.djvused('select {0}; print-ant'.format(page))
 
     def print_meta(self):
         return self.djvused('print-meta')
@@ -178,7 +178,7 @@ def rainbow(width, height):
         for y in xrange(height):
             hue = 255 * x // (width - 1)
             luminance = 100 * y // height
-            color = ImageColor.getrgb('hsl(%(hue)d, 100%%, %(luminance)d%%)' % locals())
+            color = ImageColor.getrgb('hsl({hue}, 100%, {lum}%)'.format(hue=hue, lum=luminance))
             pixels[x, y] = color
     return image
 

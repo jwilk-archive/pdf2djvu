@@ -24,7 +24,7 @@ class test(case):
             yield self._test, method
 
     def _test(self, method):
-        self.pdf2djvu('--fg-colors=%s' % method).assert_()
+        self.pdf2djvu('--fg-colors={method}'.format(method=method)).assert_()
         r = self.decode()
         r.assert_(stdout=None)
 
