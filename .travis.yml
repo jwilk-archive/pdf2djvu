@@ -40,15 +40,18 @@ before_install:
 - if [ -z "${POPPLER_VERSION##0.3*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
-- (cd poppler-*/ && ./configure --prefix=/usr --enable-xpdf-headers --enable-splash-output --disable-libopenjpeg --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
+- (cd poppler-*/ && ./configure --prefix="$HOME/opt/poppler" --enable-xpdf-headers --enable-splash-output --disable-libopenjpeg --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
 - make -C poppler-*/
-- sudo make -C poppler-*/ install
+- make -C poppler-*/ install
 before_script:
 - private/autogen
 script:
+- export PKG_CONFIG_PATH="$HOME/opt/poppler/lib/pkgconfig/"
+- export CPATH="$HOME/opt/poppler/include/"
 - ./configure
 - make -C tests prepare
 - make
+- export LD_LIBRARY_PATH="$HOME/opt/poppler/lib/"
 - ./pdf2djvu --version
 - make test
 - grep -r -l ft=rst doc/ | xargs -t -n1 -I{} rst2xml --strict {} /dev/null
