@@ -10,10 +10,29 @@ env:
 - POPPLER_VERSION=0.23.0
 - POPPLER_VERSION=0.31.0
 - POPPLER_VERSION=0.34.0
+addons:
+  apt:
+    packages:
+    - autoconf
+    - autoconf-archive
+    - automake
+    - djvulibre-bin
+    - fonts-linuxlibertine
+    - gettext
+    - libdjvulibre-dev
+    - libfontconfig1-dev
+    - libgraphicsmagick++1-dev
+    - libpstreams-dev
+    - libxml2-utils
+    - libxslt1-dev
+    - pkg-config
+    - python-docutils
+    - python-imaging
+    - python-nose
+    - texlive-binaries
+    - texlive-fonts-recommended
+    - texlive-xetex
 before_install:
-- sudo apt-get update
-- sudo apt-get install -y autoconf autoconf-archive automake djvulibre-bin fonts-linuxlibertine gettext libdjvulibre-dev libfontconfig-dev libgraphicsmagick++-dev libpstreams-dev libxml2-utils libxslt-dev pkg-config python-imaging python-nose texlive-binaries texlive-fonts-recommended texlive-xetex
-- sudo apt-get install -y libxml2-utils python-docutils
 - if [ -z "${POPPLER_VERSION##0.3*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
