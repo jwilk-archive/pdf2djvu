@@ -6,9 +6,9 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-if [ $# -ne 1 ]
+if [ $# -ge 2 ]
 then
-  printf '%s <version>\n' "$0" >&2
+  printf '%s [revision]\n' "$0" >&2
   exit 1
 fi
 if ! [ -d .hg ]
@@ -21,7 +21,11 @@ set -e
 set -x
 
 pwd="$PWD"
-version="$1"
+revision="${1:-tip}"
+date=$(hg log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
+version=$(hg cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f2 | tr -d '()')
+released=$(hg cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
+[ -n "$released" ] || version="${version}rc${date}"
 buildroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
 export TAR_OPTIONS="--owner root --group root --mode a+rX --format ustar"
 export XZ_OPT='-6e'
@@ -29,9 +33,8 @@ export XZ_OPT='-6e'
 cd "$buildroot"
 
 # Mercurial archive:
-hg archive -r "$version" -R "$pwd" pdf2djvu
+hg archive -r "$revision" -R "$pwd" pdf2djvu
 rm -f pdf2djvu/.hg*
-version=$(sed -e '/.*(\([0-9.]\+\)).*/ { s//\1/g; q; }' < pdf2djvu/doc/changelog)
 mv pdf2djvu "pdf2djvu-$version"
 
 # Autoconf & company:
