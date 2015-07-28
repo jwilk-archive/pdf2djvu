@@ -39,6 +39,7 @@ hg archive -r "$revision" -R "$pwd" "pdf2djvu-$version"
 
 # Remove files that only useful in a VCS checkout:
 rm -f "pdf2djvu-$version"/.hg*
+rm -f "pdf2djvu-$version"/.travis.yml
 
 # Autoconf & company:
 cd "pdf2djvu-$version"
