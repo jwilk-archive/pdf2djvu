@@ -32,45 +32,43 @@ sourceroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
 export TAR_OPTIONS='--owner root --group root --mode a+rX --format ustar'
 export XZ_OPT='-6e'
 
-cd "$sourceroot"
-
 # Mercurial archive:
-hg archive -r "$revision" -R "$pwd" "pdf2djvu-$version"
+hg archive -r "$revision" -R "$pwd" "$sourceroot/pdf2djvu-$version"
+cd "$sourceroot/pdf2djvu-$version"
 
 # Remove files that only useful in a VCS checkout:
-rm "pdf2djvu-$version"/.hg*
-rm "pdf2djvu-$version"/.travis.yml
-rm "pdf2djvu-$version"/private/build-source-tarball
+rm .hg*
+rm .travis.yml
+rm private/build-source-tarball
 
 # Autoconf & company:
-cd "pdf2djvu-$version"
 private/autogen
 rm -r *.cache
-cd ..
 
 # Generate Makefile.common:
 sed -n -e '/^AC_INIT(\[\([^]]*\)\], *\[\([^]]*\)\], *\[\([^]]*\)\],.*/ { s//PACKAGE_NAME=\1\nPACKAGE_VERSION=\2\nPACKAGE_BUGREPORT=\3/p; q }' \
-    "pdf2djvu-$version/configure.ac" \
-    > "pdf2djvu-$version/Makefile.common"
-grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "pdf2djvu-$version/Makefile.common.in" \
-| sed >> "pdf2djvu-$version/Makefile.common" \
+    "configure.ac" \
+    > "Makefile.common"
+grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "Makefile.common.in" \
+| sed >> "Makefile.common" \
     -e 's/@MSGFMT@/msgfmt/' \
     -e 's/@MSGMERGE@/msgmerge/' \
     -e 's/@XGETTEXT@/xgettext/'
-cat "pdf2djvu-$version/Makefile.common"
+cat "Makefile.common"
 
 # Build the manual page and translations:
-make -C "pdf2djvu-$version/po/" all check
-make -C "pdf2djvu-$version/doc/"
-make -C "pdf2djvu-$version/doc/po/" all check pdf2djvu.pot
+make -C po/ all check
+make -C doc/
+make -C doc/po/ all check pdf2djvu.pot
 
 # Prepare tests:
-make -C "pdf2djvu-$version/tests/" prepare
+make -C tests/ prepare
 
 # Sweep Makefile.common:
-rm "pdf2djvu-$version/Makefile.common"
+rm Makefile.common
 
 # Tarball with raw source:
+cd ..
 tar -caf "$pwd/pdf2djvu-$version.tar.xz" "pdf2djvu-$version"
 
 # Cleanup:
