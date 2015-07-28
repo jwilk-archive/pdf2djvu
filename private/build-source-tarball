@@ -28,11 +28,11 @@ released=$(hg cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASE
 printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 
 set -x
-buildroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
+sourceroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
 export TAR_OPTIONS='--owner root --group root --mode a+rX --format ustar'
 export XZ_OPT='-6e'
 
-cd "$buildroot"
+cd "$sourceroot"
 
 # Mercurial archive:
 hg archive -r "$revision" -R "$pwd" "pdf2djvu-$version"
@@ -74,7 +74,7 @@ rm "pdf2djvu-$version/Makefile.common"
 tar -caf "$pwd/pdf2djvu-$version.tar.xz" "pdf2djvu-$version"
 
 # Cleanup:
-rm -r "$buildroot"
+rm -r "$sourceroot"
 set +x
 cd "$pwd"
 ls -d "pdf2djvu-$version.tar.xz"
