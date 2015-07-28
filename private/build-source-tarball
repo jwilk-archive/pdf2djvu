@@ -21,6 +21,7 @@ set -e
 
 pwd="$PWD"
 revision="${1:-tip}"
+name=$(hg cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f 1)
 date=$(hg log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
 version=$(hg cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f2 | tr -d '()')
 released=$(hg cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
@@ -28,13 +29,13 @@ released=$(hg cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASE
 printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 
 set -x
-sourceroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
+sourceroot=$(mktemp -d -t "$name-source-XXXXXX")
 export TAR_OPTIONS='--owner root --group root --mode a+rX --format ustar'
 export XZ_OPT='-6e'
 
 # Mercurial archive:
-hg archive -r "$revision" -R "$pwd" "$sourceroot/pdf2djvu-$version"
-cd "$sourceroot/pdf2djvu-$version"
+hg archive -r "$revision" "$sourceroot/$name-$version"
+cd "$sourceroot"/*
 
 # Remove files that only useful in a VCS checkout:
 rm .hg*
@@ -69,12 +70,12 @@ rm Makefile.common
 
 # Tarball with raw source:
 cd ..
-tar -caf "$pwd/pdf2djvu-$version.tar.xz" "pdf2djvu-$version"
+tar -caf "$pwd/$name-$version.tar.xz" */
 
 # Cleanup:
 rm -r "$sourceroot"
 set +x
 cd "$pwd"
-ls -d "pdf2djvu-$version.tar.xz"
+ls -d "$name-$version.tar.xz"
 
 # vim:ts=4 sts=4 sw=4 et
