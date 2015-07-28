@@ -29,7 +29,7 @@ printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 
 set -x
 buildroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
-export TAR_OPTIONS="--owner root --group root --mode a+rX --format ustar"
+export TAR_OPTIONS='--owner root --group root --mode a+rX --format ustar'
 export XZ_OPT='-6e'
 
 cd "$buildroot"
