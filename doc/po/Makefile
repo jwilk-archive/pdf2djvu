@@ -52,11 +52,13 @@ $(po_files): %.po: pdf2djvu.xml
 %.xml: %.po
 	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
 
+GREP_COLOR = grep --color=auto
+
 .PHONY: check
 check: $(MO_FILES)
 	ls $(po_files) | xargs -t -L1 -I{} msgfmt --check -o /dev/null {}
-	! ls $(po_files) | xargs -t -L1 -I{} msgattrib --untranslated {}
-	! ls $(po_files) | xargs -t -L1 -I{} msgattrib --only-fuzzy {}
+	! ls $(po_files) | xargs -t -L1 -I{} msgattrib --untranslated {} | $(GREP_COLOR) '.*'
+	! ls $(po_files) | xargs -t -L1 -I{} msgattrib --only-fuzzy {} |  $(GREP_COLOR) '.*'
 
 .PHONY: clean
 clean:
