@@ -18,7 +18,6 @@ then
 fi
 
 set -e
-set -x
 
 pwd="$PWD"
 revision="${1:-tip}"
@@ -26,6 +25,9 @@ date=$(hg log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
 version=$(hg cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f2 | tr -d '()')
 released=$(hg cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
 [ -n "$released" ] || version="${version}rc${date}"
+printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
+
+set -x
 buildroot=$(mktemp -dt pdf2djvu-source-XXXXXXXX)
 export TAR_OPTIONS="--owner root --group root --mode a+rX --format ustar"
 export XZ_OPT='-6e'
