@@ -35,9 +35,10 @@ export XZ_OPT='-6e'
 cd "$buildroot"
 
 # Mercurial archive:
-hg archive -r "$revision" -R "$pwd" pdf2djvu
-rm -f pdf2djvu/.hg*
-mv pdf2djvu "pdf2djvu-$version"
+hg archive -r "$revision" -R "$pwd" "pdf2djvu-$version"
+
+# Remove files that only useful in a VCS checkout:
+rm -f "pdf2djvu-$version"/.hg*
 
 # Autoconf & company:
 cd "pdf2djvu-$version"
