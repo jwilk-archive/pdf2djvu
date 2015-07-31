@@ -35,7 +35,7 @@ addons:
 cache:
   directories:
   - $HOME/.ccache
-before_install:
+install:
 - export PATH="/usr/lib/ccache:$PATH"
 - if [ -z "${POPPLER_VERSION##0.3*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
