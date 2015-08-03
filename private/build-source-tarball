@@ -31,7 +31,7 @@ printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 set -x
 sourceroot=$(mktemp -d -t "$name-source-XXXXXX")
 export TAR_OPTIONS='--owner root --group root --mode a+rX --format ustar'
-export XZ_OPT='-6e'
+export XZ_OPT='-4e'
 
 # Mercurial archive:
 hg archive -r "$revision" "$sourceroot/$name-$version"
