@@ -12,6 +12,7 @@ version := $(shell cat ../doc/changelog | head -n1 | cut -d' ' -f2 | tr -d '()')
 
 djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
+wget = cd dcache && wget -c
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
@@ -78,9 +79,9 @@ install: src/urw-fonts/install-stamp
 
 # pdf2djvu
 
-src/pdf2djvu/source-stamp: src/pdf2djvu-$(version).tar.xz
+src/pdf2djvu/source-stamp: dcache/pdf2djvu-$(version).tar.xz
 	mkdir -p $(dir $@)
-	cd $(dir $@) && $(untar) $(CURDIR)/$(<)
+	$(untar) $(<) -C $(dir $@)
 	rm -f $(dir $@)/paths.hh
 	touch $(@)
 
@@ -143,11 +144,10 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://poppler.freedesktop.org/poppler-0.18.4.tar.gz
-	echo '33421148cdc8e043da291dece2cce1cea6220d49a50c00c56d56d6435501d42e  src/poppler-0.18.4.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../poppler-*.tar.gz
+	$(wget) http://poppler.freedesktop.org/poppler-0.18.4.tar.gz
+	echo '33421148cdc8e043da291dece2cce1cea6220d49a50c00c56d56d6435501d42e  dcache/poppler-0.18.4.tar.gz' | sha256sum -c
+	$(untar) dcache/poppler-*.tar.gz -C $(dir $@)
 	cd $(dir $@) && sed -i -e 's/^void str\(cat\|cpy\)/void poppler_str\1/' test/perf-test.cc
-	rm src/poppler-*.tar.gz
 	touch $(@)
 
 src/poppler/config.status: src/poppler/source-stamp
@@ -184,12 +184,11 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://downloads.sourceforge.net/djvu/djvulibre-3.5.27.tar.gz
-	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  src/djvulibre-3.5.27.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../djvulibre-*.tar.gz
+	$(wget) http://downloads.sourceforge.net/djvu/djvulibre-3.5.27.tar.gz
+	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  dcache/djvulibre-3.5.27.tar.gz' | sha256sum -c
+	$(untar) dcache/djvulibre-*.tar.gz -C $(dir $@)
 	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
-	rm src/djvulibre-*.tar.gz
 	touch $(@)
 
 src/djvulibre/config.status: src/djvulibre/source-stamp
@@ -220,10 +219,9 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.20.tar.xz
-	echo '35fa21da4c1479e08da8351c5b1e363adaca803a0064cfc83084363adce387c9  src/GraphicsMagick-1.3.20.tar.xz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../GraphicsMagick-*.tar.xz
-	rm src/GraphicsMagick-*.tar.xz
+	$(wget) ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.20.tar.xz
+	echo '35fa21da4c1479e08da8351c5b1e363adaca803a0064cfc83084363adce387c9  dcache/GraphicsMagick-1.3.20.tar.xz' | sha256sum -c
+	$(untar) dcache/GraphicsMagick-*.tar.xz -C $(dir $@)
 	touch $(@)
 
 src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
@@ -271,11 +269,10 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 
 src/libxml2/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://xmlsoft.org/sources/libxml2-2.7.8.tar.gz
-	echo 'cda23bc9ebd26474ca8f3d67e7d1c4a1f1e7106364b690d822e009fdc3c417ec  src/libxml2-2.7.8.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../libxml2-*.tar.gz
+	$(wget) http://xmlsoft.org/sources/libxml2-2.7.8.tar.gz
+	echo 'cda23bc9ebd26474ca8f3d67e7d1c4a1f1e7106364b690d822e009fdc3c417ec  dcache/libxml2-2.7.8.tar.gz' | sha256sum -c
+	$(untar) dcache/libxml2-*.tar.gz -C $(dir $@)
 	sed -i -e '/^#undef v\?snprintf$$/d' $(dir $@)/config.h.in
-	rm src/libxml2-*.tar.gz
 	rm -r src/libxml2/test
 	rm -r src/libxml2/result
 	touch $(@)
@@ -307,10 +304,9 @@ src/libxml2/install-stamp: src/libxml2/build-stamp
 
 src/libxslt/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://xmlsoft.org/sources/libxslt-1.1.26.tar.gz
-	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  src/libxslt-1.1.26.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../libxslt-*.tar.gz
-	rm src/libxslt-*.tar.gz
+	$(wget) http://xmlsoft.org/sources/libxslt-1.1.26.tar.gz
+	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  dcache/libxslt-1.1.26.tar.gz' | sha256sum -c
+	$(untar) dcache/libxslt-*.tar.gz -C $(dir $@)
 	sed -i -e '/^#define.*nprintf/d' $(dir $@)/libxslt/win32config.h
 	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' $(dir $@)/libxslt/libxslt.h
 	touch $(@)
@@ -341,10 +337,9 @@ src/libxslt/install-stamp: src/libxslt/build-stamp
 
 src/freetype/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2
-	echo 'c4204ac1d48e99d4375a2f32bf4f3f92780a9d9f015e64e57e852f6c004859b9  src/freetype-2.4.9.tar.bz2' | sha256sum -c
-	cd $(dir $@) && $(untar) ../freetype-*.tar.bz2
-	rm src/freetype-*.tar.bz2
+	$(wget) http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2
+	echo 'c4204ac1d48e99d4375a2f32bf4f3f92780a9d9f015e64e57e852f6c004859b9  dcache/freetype-2.4.9.tar.bz2' | sha256sum -c
+	$(untar) dcache/freetype-*.tar.bz2 -C $(dir $@)
 	touch $(@)
 
 src/freetype/config.status: src/freetype/source-stamp
@@ -368,10 +363,9 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.9.0.tar.gz
-	echo 'ca7e25071cf044bdcdaf7c48845243c115b9269b4e369c6bd78a29e71f01b41a  src/fontconfig-2.9.0.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../fontconfig-*.tar.gz
-	rm src/fontconfig-*.tar.gz
+	$(wget) http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.9.0.tar.gz
+	echo 'ca7e25071cf044bdcdaf7c48845243c115b9269b4e369c6bd78a29e71f01b41a  dcache/fontconfig-2.9.0.tar.gz' | sha256sum -c
+	$(untar) dcache/fontconfig-*.tar.gz -C $(dir $@)
 	sed -i -e 's/"append"/"prepend"/g' src/fontconfig/conf.d/*-urw-aliases.conf
 	touch $(@)
 
@@ -403,10 +397,9 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 
 src/gettext/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz
-	echo '93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9  src/gettext-0.18.1.1.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../gettext-*.tar.gz --exclude='gettext-tools'
-	rm src/gettext-*.tar.gz
+	$(wget) http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz
+	echo '93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9  dcache/gettext-0.18.1.1.tar.gz' | sha256sum -c
+	$(untar) dcache/gettext-*.tar.gz --exclude='gettext-tools' -C $(dir $@)
 	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
 	sed -r -i -e 's/(-DENABLE_RELOCATABLE)=1/\1=0/' $(dir $@)/gettext-runtime/intl/Makefile.in
 	touch $(@)
@@ -437,12 +430,11 @@ src/gettext/install-stamp: src/gettext/build-stamp
 
 src/winiconv/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c ftp://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/win-iconv-dev_tml-20100912_win32.zip
-	echo 'a5a8f1f6578ce6fcce88bd0fe3b4e7866d4fc158ee6d5dec164f10b443c82f6e  src/win-iconv-dev_tml-20100912_win32.zip' | sha256sum -c
-	unzip src/win-iconv-dev_tml-20100912_win32.zip 'src/tml/win_iconv/*'
+	$(wget) ftp://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/win-iconv-dev_tml-20100912_win32.zip
+	echo 'a5a8f1f6578ce6fcce88bd0fe3b4e7866d4fc158ee6d5dec164f10b443c82f6e  dcache/win-iconv-dev_tml-20100912_win32.zip' | sha256sum -c
+	unzip dcache/win-iconv-dev_tml-20100912_win32.zip 'src/tml/win_iconv/*'
 	mv src/tml/win_iconv/* $(dir $@)
 	rm -r src/tml/
-	rm src/win-iconv-*.zip
 	sed -i -e '/iconv(/ s/const//' $(dir $@)/iconv.h
 	touch $(@)
 
@@ -462,10 +454,9 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 
 src/libjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	cd src && wget -c http://ftp.debian.org/debian/pool/main/libj/libjpeg6b/libjpeg6b_6b1.orig.tar.gz
-	echo 'dbe673129e69eaaed47e3cfccf86b1582fa19862a3ce8189ea8f8cfc1800d9aa  src/libjpeg6b_6b1.orig.tar.gz' | sha256sum -c
-	cd $(dir $@) && $(untar) ../libjpeg6b_*.tar.gz
-	rm src/libjpeg6b_*.tar.gz
+	$(wget) http://ftp.debian.org/debian/pool/main/libj/libjpeg6b/libjpeg6b_6b1.orig.tar.gz
+	echo 'dbe673129e69eaaed47e3cfccf86b1582fa19862a3ce8189ea8f8cfc1800d9aa  dcache/libjpeg6b_6b1.orig.tar.gz' | sha256sum -c
+	$(untar) dcache/libjpeg6b_*.tar.gz -C $(dir $@)
 	touch $(@)
 
 src/libjpeg/config.status: src/libjpeg/source-stamp
