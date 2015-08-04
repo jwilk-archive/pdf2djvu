@@ -43,8 +43,8 @@ all:
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
 src_tarball_name = pdf2djvu-win32-source-$(version)
-export TAR_OPTIONS = --owner root --group root --mode a+rX --format ustar
-export XZ_OPT = -8e
+tar_opts = --owner root --group root --mode a+rX --format ustar
+xz_opts = -8e
 
 .PHONY: source-dist
 source-dist:
@@ -54,7 +54,7 @@ source-dist:
 	mkdir $(src_tarball_topdir)
 	cp -rl src/*/ $(src_tarball_topdir)/
 	find $(src_tarball_topdir) -name source-stamp -delete
-	tar -I 'xz -v' -cf $(src_tarball_name).tar.xz $(src_tarball_topdir)
+	tar $(tar_opts) -I 'xz -v $(xz_opts)' -cf $(src_tarball_name).tar.xz $(src_tarball_topdir)
 	rm -rf $(src_tarball_topdir)
 
 # Binary zipballs
