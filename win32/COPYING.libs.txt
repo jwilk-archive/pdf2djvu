@@ -1,8 +1,10 @@
 libdjvulibre-\*.dll
 ===================
-Copyright © 2001 AT&T
-
-Copyright © 2002 Leon Bottou and Yann Le Cun.
+| Copyright © 1999-2001 LizardTech, Inc.
+| Copyright © 2001 AT&T
+| Copyright © 2002 Yann Le Cun
+| Copyright © 2002-2008 Leon Bottou
+| Copyright © 2005 Ilya Mezhirov
 
 This software is subject to, and may be distributed under, the GNU General
 Public License, either Version 2 of the license, or (at your option) any later
