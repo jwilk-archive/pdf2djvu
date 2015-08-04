@@ -1,9 +1,11 @@
-/* Copyright © 2008-2009 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2008-2015 Jakub Wilk <jwilk@jwilk.net>
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 dated June, 1991.
  */
+
+#include <stdio.h>
 
 #include "sexpr.hh"
 
@@ -12,7 +14,7 @@ static std::ostream *puts_stream = NULL;
 static int my_puts(const char *s)
 {
   *puts_stream << s;
-  return -(!puts_stream->good());
+  return puts_stream->good() ? 0 : EOF;
 }
 
 namespace sexpr
