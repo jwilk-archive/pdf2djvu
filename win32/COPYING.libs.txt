@@ -29,6 +29,30 @@ PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 freetype\*.dll
 ==============
+| Copyright © 1990-1998 The Open Group
+| Copyright © 1995-2002 Jean-loup Gailly
+| Copyright © 1995-2002 Mark Adler
+| Copyright © 1996-2009 Just van Rossum
+| Copyright © 1996-2012 David Turner
+| Copyright © 1996-2012 Robert Wilhelm
+| Copyright © 1996-2012 Werner Lemberg
+| Copyright © 2000 Computing Research Labs, New Mexico State University
+| Copyright © 2000-2012 Francesco Zappa Nardelli
+| Copyright © 2002-2012 Roberto Alameda
+| Copyright © 2003 Huw D M Davies
+| Copyright © 2003-2012 Masatake YAMATO
+| Copyright © 2003-2012 Redhat K.K.
+| Copyright © 2004-2011 George Williams
+| Copyright © 2004-2012 Albert Chin-A-Young
+| Copyright © 2004-2012 suzuki toshiya
+| Copyright © 2007 Dmitry Timoshkov
+| Copyright © 2007-2011 Rahul Bhalerao
+| Copyright © 2007-2012 Dereg Clegg
+| Copyright © 2007-2012 Michael Toftdal
+| Copyright © 2009-2010 Mickey Gabel
+| Copyright © 2009-2011 Oran Agra
+| Copyright © 2010-2012 Joel Klinghed
+
 The FreeType 2 font engine is copyrighted work and cannot be used legally
 without a software license. In order to make this project usable to a vast
 majority of developers, we distribute it under two mutually exclusive
@@ -38,17 +62,24 @@ This means that *you* must choose *one* of the two licenses described below,
 then obey all its terms and conditions when using FreeType 2 in any of your
 projects or products.
 
-- The FreeType License, which is similar to the original BSD license *with* an
-  advertising clause that forces you to explicitly cite the FreeType project in
-  your product's documentation. All details are in the license file. This
-  license is suited to products which don't use the GNU General Public License.
+- The FreeType License, found in the file ‘FTL.TXT’, which is similar to the
+  original BSD license *with* an advertising clause that forces you to
+  explicitly cite the FreeType project in your product's documentation. All
+  details are in the license file. This license is suited to products which
+  don't use the GNU General Public License.
 
-- The GNU General Public License version 2, for programs which already use the
-  GPL. Note that the FTL is incompatible with the GPL due to its advertisement
-  clause.
+  Note that this license is compatible to the GNU General Public License
+  version 3, but not version 2.
 
-The contributed PCF driver comes with a license similar to that of the X
-Window System. It is compatible to the above two licenses.
+- The GNU General Public License version 2, found in ‘GPLv2.TXT’ (any later
+  version can be used also), for programs which already use the GPL. Note
+  that the FTL is incompatible with GPLv2 due to its advertisement clause.
+
+The contributed BDF and PCF drivers come with a license similar to that of the
+X Window System. It is compatible to the above two licenses.
+
+The gzip module uses the zlib license which too is compatible to the above two
+licenses.
 
 libfontconfig-\*.dll
 ====================
