@@ -10,7 +10,6 @@
 #include <cerrno>
 #include <cstdarg>
 #include <cstdlib>
-#include <cstdarg>
 #include <cstring>
 #include <limits>
 #include <sstream>
