@@ -477,8 +477,10 @@ src/libjpeg/install-stamp: src/libjpeg/build-stamp
 # URW fonts
 
 src/urw-fonts/source-stamp:
-	mkdir -p $(dir $@)
-	cd $(dir $@) && wget -A '*.pfb' -r -nd -np http://svn.ghostscript.com/ghostscript/trunk/urw-fonts/
+	mkdir -p dcache/urw-fonts/ $(dir $@)
+	cd dcache/urw-fonts/ && wget -c -A '*.pfb' -r -nd -np http://svn.ghostscript.com/ghostscript/tags/urw-fonts-1.0.7pre44/
+	[ "$$(cat dcache/urw-fonts/*.pfb | sha256sum)" = '41eab7d27c2ba72e68d851d7574a66f9a618d9cca10feb14e137b53917f3f2b2  -' ]
+	cp dcache/urw-fonts/*.pfb $(dir $@)
 	touch $(@)
 
 src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
