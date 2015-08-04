@@ -61,7 +61,7 @@ source-dist:
 
 zipball_topdir = pdf2djvu-$(version)
 zipball_name = pdf2djvu-win32-$(version)
-export ZIPOPT = -9 -X -r
+zip_opts = -9 -X -r
 
 .PHONY: binary-dist
 binary-dist: install
@@ -69,7 +69,7 @@ binary-dist: install
 	cp -rl dist/* $(zipball_topdir)
 	chmod a-x $(zipball_topdir)/*.exe
 	chmod -R a+rX $(zipball_topdir)
-	zip $(zipball_name).zip $(zipball_topdir)
+	zip $(zip_opts) $(zipball_name).zip $(zipball_topdir)
 	rm -r $(zipball_topdir)
 
 .PHONY: install
