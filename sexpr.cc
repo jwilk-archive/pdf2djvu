@@ -5,7 +5,7 @@
  * the Free Software Foundation; version 2 dated June, 1991.
  */
 
-#include <stdio.h>
+#include <cstdio>
 
 #include "sexpr.hh"
 
