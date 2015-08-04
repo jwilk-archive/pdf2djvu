@@ -11,3 +11,4 @@ Postscript or PDF file that consists of a document that contains text to be
 displayed or printed using this font, regardless of the conditions or license
 applying to the document itself.
 
+.. vim:ft=rst
