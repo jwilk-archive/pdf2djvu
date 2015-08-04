@@ -6,11 +6,36 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-if [ $# -ge 2 ]
+usage()
+{
+    printf '%s [--no-po-check] [revision]\n' "$0"
+}
+
+args=$(getopt -n "$0" -o 'h' --long help,no-po-check -- "$@")
+if [ $? -ne 0 ]
 then
-    printf '%s [revision]\n' "$0" >&2
+    usage >&2
     exit 1
 fi
+eval set -- "$args"
+
+opt_po_check=y
+while true
+do
+    case "$1" in
+        -h|--help) usage; exit 0;;
+        --no-po-check) opt_po_check=; shift;;
+        --) shift; break;;
+        *) printf '%s: internal error (%s)' "$0" "$1" >&2; exit 1;;
+    esac
+done
+
+if [ $# -ge 2 ]
+then
+    usage >&2
+    exit 1
+fi
+
 if ! [ -d .hg ]
 then
     printf '%s requires hg checkout\n' "$0" >&2
@@ -58,10 +83,11 @@ grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "Makefile.common.in" \
 cat "Makefile.common"
 
 # Build the manual page and translations:
-make -C po/ all check
+make -C po/ all
+[ -z "$opt_po_check"] || make -C po/ check
 make -C doc/
-make -C doc/po/ all check pdf2djvu.pot
-
+make -C doc/po/ all pdf2djvu.pot
+[ -z "$opt_po_check"] || make -C doc/po/ check
 # Prepare tests:
 make -C tests/ prepare
 
