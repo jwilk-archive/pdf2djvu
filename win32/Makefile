@@ -54,8 +54,7 @@ source-dist:
 	mkdir $(src_tarball_topdir)
 	cp -rl src/*/ $(src_tarball_topdir)/
 	find $(src_tarball_topdir) -name source-stamp -delete
-	tar -cf $(src_tarball_name).tar $(src_tarball_topdir)
-	xz -v $(src_tarball_name).tar
+	tar -I 'xz -v' -cf $(src_tarball_name).tar.xz $(src_tarball_topdir)
 	rm -rf $(src_tarball_topdir)
 
 # Binary zipballs
