@@ -17,7 +17,7 @@ then
     exit 1
 fi
 
-set -e
+set -e -u
 
 pwd="$PWD"
 revision="${1:-tip}"
