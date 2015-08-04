@@ -50,7 +50,8 @@ export XZ_OPT = -8e
 source-dist:
 	rm -rf src/*/
 	$(MAKE) $(shell grep '[^ ]*source[-]stamp:' Makefile | cut -d: -f1)
-	mkdir -p $(src_tarball_topdir)
+	rm -rf $(src_tarball_topdir)
+	mkdir $(src_tarball_topdir)
 	cp -rl src/*/ $(src_tarball_topdir)/
 	find $(src_tarball_topdir) -name source-stamp -delete
 	tar -cf $(src_tarball_name).tar $(src_tarball_topdir)
