@@ -7,7 +7,34 @@
 
 #include <cstdio>
 
+#include <libdjvu/ddjvuapi.h>
+#include <libdjvu/miniexp.h>
+
 #include "sexpr.hh"
+
+#if DDJVUAPI_VERSION >= 21
+
+static int my_puts(miniexp_io_t* io, const char *s)
+{
+  std::ostream *puts_stream = reinterpret_cast<std::ostream*>(io->data[0]);
+  *puts_stream << s;
+  return puts_stream->good() ? 0 : EOF;
+}
+
+namespace sexpr
+{
+  std::ostream &operator<<(std::ostream &stream, const sexpr::Ref &expr)
+  {
+    miniexp_io_t io;
+    miniexp_io_init(&io);
+    io.fputs = my_puts;
+    io.data[0] = &stream;
+    miniexp_pprin_r(&io, expr, 1 << 10);
+    return stream;
+  }
+}
+
+#else
 
 static std::ostream *puts_stream = NULL;
 
@@ -29,5 +56,7 @@ namespace sexpr
     return stream;
   }
 }
+
+#endif
 
 // vim:ts=2 sts=2 sw=2 et
