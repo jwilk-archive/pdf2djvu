@@ -29,7 +29,7 @@ namespace sexpr
     miniexp_io_init(&io);
     io.fputs = my_puts;
     io.data[0] = &stream;
-    miniexp_pprin_r(&io, expr, 1 << 10);
+    miniexp_prin_r(&io, expr);
     return stream;
   }
 }
@@ -51,7 +51,7 @@ namespace sexpr
     int (*old_minilisp_puts)(const char *s) = minilisp_puts;
     minilisp_puts = my_puts;
     puts_stream = &stream;
-    miniexp_pprin(expr, 1 << 10);
+    miniexp_prin(expr);
     minilisp_puts = old_minilisp_puts;
     return stream;
   }
