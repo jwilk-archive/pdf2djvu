@@ -225,7 +225,7 @@ libGraphicsMagick\*.dll
 1)
 
   In November 2002, the GraphicsMagick Group created GraphicsMagick from
-  ImageMagick Studio's ImageMagick and applied the "MIT" style license:
+  ImageMagick Studio's ImageMagick and applied the “MIT” style license:
 
   Copyright © 2002-2014 GraphicsMagick Group
 
