@@ -22,7 +22,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Windows: build against GraphicsMagick.
     https://bitbucket.org/jwilk/pdf2djvu/issue/75
   * Add configure option for disabling PStreams (--without-pstreams).
-  * Use the reentrant S-expression output API when it's avaiable
+  * Use the reentrant S-expression output API when it's available
     (DjVuLibre >= 3.5.25).
   * Improve error handling.
   * Update the Polish translation.
