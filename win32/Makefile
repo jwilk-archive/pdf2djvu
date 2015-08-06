@@ -40,6 +40,8 @@ all:
 	@echo '  make source-dist'
 	@echo '  make binary-dist'
 
+.PHONY: clean
+
 # Source tarballs
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
@@ -58,6 +60,13 @@ source-dist:
 	tar $(tar_opts) -I 'xz -v $(xz_opts)' -cf $(src_tarball_name).tar.xz $(src_tarball_topdir)
 	rm -rf $(src_tarball_topdir)
 
+.PHONY: clean-source
+clean: clean-source
+clean-source:
+	rm -rf src/
+	rm -rf $(src_tarball_topdir)
+	rm -f $(src_tarball_name).tar.xz
+
 # Binary zipballs
 
 zipball_topdir = pdf2djvu-$(version)
@@ -72,6 +81,14 @@ binary-dist: install
 	chmod -R a+rX $(zipball_topdir)
 	zip $(zip_opts) $(zipball_name).zip $(zipball_topdir)
 	rm -r $(zipball_topdir)
+
+.PHONY: clean-binary
+clean: clean-binary
+clean-binary:
+	rm -rf bin/ etc/ include/ lib/ share/
+	rm -rf dist/
+	rm -rf $(zipball_topdir)
+	rm -f $(zipball_name).zip
 
 .PHONY: install
 install: src/pdf2djvu/install-stamp
