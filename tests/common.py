@@ -79,7 +79,7 @@ class case(object):
     _pdf2djvu_command = os.getenv('pdf2djvu') or 'pdf2djvu'
 
     def get_pdf2djvu_command(self):
-        return self._pdf2djvu_command
+        return ('sh', '-c', self._pdf2djvu_command + ' "$@"', 'sh')
 
     def get_source_path(self, strip_py=False):
         result = inspect.getsourcefile(type(self))
@@ -109,12 +109,8 @@ class case(object):
         return ipc_result(stdout, stderr, child.returncode)
 
     def _pdf2djvu(self, *args):
-        return self.run(
-            self.get_pdf2djvu_command(),
-            '-q',
-            self.get_pdf_path(),
-            *args
-        )
+        args = self.get_pdf2djvu_command() + ('-q', self.get_pdf_path()) + args
+        return self.run(*args)
 
     def pdf2djvu(self, *args):
         return self._pdf2djvu('-o', self.get_djvu_path(), *args)
