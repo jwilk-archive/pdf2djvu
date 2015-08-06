@@ -32,7 +32,10 @@ in_files = $(wildcard *.in)
 generated_files = $(in_files:.in=) $(pdf_files)
 
 .PHONY: all
-all: $(generated_files) $(pdf2djvu)
+ifeq "$(origin pdf2djvu)" "file"
+all: $(pdf2djvu)
+endif
+all: $(generated_files)
 	nosetests -v $(test_scripts)
 
 .PHONY: prepare
