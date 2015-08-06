@@ -22,6 +22,8 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Windows: build against GraphicsMagick.
     https://bitbucket.org/jwilk/pdf2djvu/issue/75
   * Add configure option for disabling PStreams (--without-pstreams).
+  * Change the order libraries on linker command line.
+    Move libraries provided by the LIBS configure variable to the end.
   * Use the reentrant S-expression output API when it's available
     (DjVuLibre >= 3.5.25).
   * Improve error handling.
@@ -39,7 +41,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   [ Jean-Paul Guillonneau ]
   * Update the French translation of the manual page.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 05 Aug 2015 12:57:18 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 06 Aug 2015 12:50:45 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
