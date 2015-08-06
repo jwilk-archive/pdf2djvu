@@ -14,7 +14,6 @@ djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
 wget = cd dcache && wget -c
 untar = tar --strip-components=1 -xf
-ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
 export CC = $(host)-gcc
 export CXX = $(host)-g++
@@ -99,7 +98,8 @@ src/pdf2djvu/config.status: src/poppler/install-stamp
 		--localedir=$(usr)/dist/locale/ \
 		--with-graphicsmagick \
 		--with-xslt \
-		--disable-openmp
+		--disable-openmp \
+		LIBS='-lfontconfig -ljpeg'
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
@@ -159,7 +159,7 @@ src/poppler/config.status: src/libjpeg/install-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--with-font-configuration=fontconfig \
 		--enable-xpdf-headers \
-		--disable-static \
+		--disable-shared --enable-static \
 		--disable-cms \
 		--disable-abiword-output \
 		--disable-cairo-output \
@@ -178,7 +178,6 @@ src/poppler/build-stamp: src/poppler/config.status
 
 src/poppler/install-stamp: src/poppler/build-stamp
 	$(MAKE) -C $(dir $@) install
-	$(call ship_dll,libpoppler)
 	touch $(@)
 
 # DjVuLibre
@@ -188,7 +187,6 @@ src/djvulibre/source-stamp:
 	$(wget) http://downloads.sourceforge.net/djvu/djvulibre-3.5.27.tar.gz
 	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  dcache/djvulibre-3.5.27.tar.gz' | sha256sum -c
 	$(untar) dcache/djvulibre-*.tar.gz -C $(dir $@)
-	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	touch $(@)
 
@@ -196,7 +194,7 @@ src/djvulibre/config.status: src/djvulibre/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--without-jpeg \
-		--disable-static
+		--disable-shared --enable-static \
 
 src/djvulibre/build-stamp: src/djvulibre/config.status
 	$(MAKE) -C $(dir $@)/libdjvu
@@ -213,7 +211,6 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 		cp bin/$$tool.exe dist/; \
 		$(STRIP) dist/$$tool.exe; \
 	done
-	$(call ship_dll,libdjvulibre)
 	touch $(@)
 
 # GraphicsMagick
@@ -230,7 +227,7 @@ src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 			--disable-installed \
 			--disable-openmp --without-threads \
-			--enable-shared --disable-static \
+			--disable-shared --enable-static \
 			--without-frozenpaths \
 			--without-perl \
 			--without-bzlib \
@@ -263,7 +260,6 @@ src/graphicsmagick/build-stamp: src/graphicsmagick/config.status
 src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
-	$(call ship_dll,libGraphicsMagick)
 	touch $(@)
 
 # libxml2
@@ -281,7 +277,7 @@ src/libxml2/source-stamp:
 src/libxml2/config.status: src/libxml2/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
-		--disable-static \
+		--disable-shared --enable-static \
 		--with-minimum \
 		--with-html \
 		--with-output \
@@ -297,8 +293,6 @@ src/libxml2/build-stamp: src/libxml2/config.status
 src/libxml2/install-stamp: src/libxml2/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
-	cp xmlexports.h include/libxml2/libxml/xmlexports.h
-	$(call ship_dll,libxml2)
 	touch $(@)
 
 # libxslt
@@ -316,7 +310,7 @@ src/libxslt/config.status: src/libxslt/source-stamp
 src/libxslt/config.status: src/libxml2/install-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
-		--disable-static \
+		--disable-shared --enable-static \
 		--with-libxml-prefix=$(usr) \
 		--with-libxml-include-prefix=$(usr)/include/libxml2/ \
 		--without-crypto \
@@ -331,7 +325,6 @@ src/libxslt/build-stamp: src/libxslt/config.status
 src/libxslt/install-stamp: src/libxslt/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@)/libxslt/ install
-	$(call ship_dll,libxslt)
 	touch $(@)
 
 # FreeType
@@ -347,7 +340,7 @@ src/freetype/config.status: src/freetype/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--without-zlib \
-		--disable-static
+		--disable-shared --enable-static
 	touch $(@)
 
 src/freetype/build-stamp: src/freetype/config.status
@@ -357,7 +350,6 @@ src/freetype/build-stamp: src/freetype/config.status
 src/freetype/install-stamp: src/freetype/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
-	$(call ship_dll,libfreetype)
 	touch $(@)
 
 # fontconfig
@@ -378,7 +370,7 @@ src/fontconfig/config.status: src/libxml2/install-stamp
 		--with-freetype-config=$(usr)/freetype-config \
 		--with-add-fonts=CUSTOMFONTDIR \
 		--enable-libxml2 \
-		--disable-static \
+		--disable-shared --enable-static \
 		--disable-docs
 
 src/fontconfig/build-stamp: src/fontconfig/config.status
@@ -388,7 +380,6 @@ src/fontconfig/build-stamp: src/fontconfig/config.status
 src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	mkdir -p dist/etc/fonts/conf.d/
 	$(MAKE) -C $(dir $@)/ install RUN_FC_CACHE_TEST=false
-	$(call ship_dll,libfontconfig)
 	cp etc/fonts/fonts.conf dist/etc/fonts/
 	cp etc/fonts/fonts.dtd dist/etc/fonts/
 	cp etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
@@ -410,7 +401,7 @@ src/gettext/config.status: src/winiconv/install-stamp
 	cp lib/libiconv.dll $(dir $@)/gettext-runtime/
 	cd $(dir $@)/gettext-runtime/ && \
 		./configure --host=$(host) --prefix=$(usr) \
-		--disable-static \
+		--disable-shared --enable-static \
 		--disable-libasprintf \
 		--disable-threads
 	touch $(@)
@@ -424,7 +415,6 @@ src/gettext/build-stamp: src/gettext/config.status
 src/gettext/install-stamp: src/gettext/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ install
-	$(call ship_dll,libintl)
 	touch $(@)
 
 # winiconv
@@ -463,7 +453,7 @@ src/libjpeg/source-stamp:
 src/libjpeg/config.status: src/libjpeg/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
-		--disable-static
+		--disable-shared --enable-static \
 
 src/libjpeg/build-stamp: src/libjpeg/config.status
 	$(MAKE) -C $(dir $@)
@@ -472,7 +462,6 @@ src/libjpeg/build-stamp: src/libjpeg/config.status
 src/libjpeg/install-stamp: src/libjpeg/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
-	$(call ship_dll,libjpeg)
 	touch $(@)
 
 # URW fonts
@@ -499,8 +488,6 @@ src/mingwrt/install-stamp:
 	mkdir -p $(dir $@) bin/ dist/
 	cp $(shell $(CXX) -print-file-name=libstdc++-6.dll) bin/
 	cp $(shell $(CXX) -print-file-name=libgcc_s_sjlj-1.dll) bin/
-	$(call ship_dll,libstdc++)
-	$(call ship_dll,libgcc_s)
 	touch $(@)
 
 # tests
