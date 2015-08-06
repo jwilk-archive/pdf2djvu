@@ -1058,7 +1058,7 @@ void TemporaryFile::construct()
     throw_win32_error("GetTempFileName");
   HANDLE handle = CreateFile(path_buffer, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL);
   if (handle == INVALID_HANDLE_VALUE)
-    throw_win32_error("CreateFile");
+    throw_win32_error(path_buffer);
   CloseHandle(handle); /* ignore errors */
 #endif
   this->open(path_buffer);
