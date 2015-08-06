@@ -524,6 +524,6 @@ src/mingwrt/install-stamp:
 
 .PHONY: test
 test: install
-	 $(MAKE) -C ../tests/ pdf2djvu='../win32/dist/pdf2djvu.exe'
+	 $(MAKE) -C ../tests/ pdf2djvu='wine32 ../win32/dist/pdf2djvu.exe'
 
 # vim:ts=4 sts=4 sw=4 noet
