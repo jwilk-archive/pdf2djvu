@@ -4,15 +4,6 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
-# To test everything, run:
-#
-#    make
-#
-# You can use the ‘skip’ variable to skip some tests. E.g. to skip tests
-# requiring GraphicsMagick, run:
-#
-#    make skip='*+gm'
-
 srcdir = ..
 include $(srcdir)/Makefile.common
 
@@ -20,9 +11,7 @@ export LC_ALL = C
 
 export pdf2djvu = ../pdf2djvu$(EXEEXT)
 
-all_test_scripts = $(wildcard test-*.py)
-skipped_test_scripts = $(wildcard $(addprefix test-,$(addsuffix .py,$(skip))))
-test_scripts = $(filter-out $(skipped_test_scripts),$(all_test_scripts))
+test_scripts = $(wildcard test-*.py)
 tests = $(test_scripts:.py=)
 
 pdf_files = $(tests:%=%.pdf)
@@ -36,7 +25,7 @@ ifeq "$(origin pdf2djvu)" "file"
 all: $(pdf2djvu)
 endif
 all: $(generated_files)
-	nosetests -v $(test_scripts)
+	nosetests -v
 
 .PHONY: prepare
 prepare: $(generated_files)
