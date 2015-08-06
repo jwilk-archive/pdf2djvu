@@ -16,8 +16,10 @@ wget = cd dcache && wget -c
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
-export CC = $(host)-gcc
-export CXX = $(host)-g++
+static_flags = -static-libstdc++
+
+export CC = $(host)-gcc $(static_flags)
+export CXX = $(host)-g++ $(static_flags)
 export AS = $(host)-as
 export DLLTOOL = $(host)-dlltool
 export OBJDUMP = $(host)-objdump
@@ -497,9 +499,7 @@ src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 
 src/mingwrt/install-stamp:
 	mkdir -p $(dir $@) bin/ dist/
-	cp $(shell $(CXX) -print-file-name=libstdc++-6.dll) bin/
 	cp $(shell $(CXX) -print-file-name=libgcc_s_sjlj-1.dll) bin/
-	$(call ship_dll,libstdc++)
 	$(call ship_dll,libgcc_s)
 	touch $(@)
 
