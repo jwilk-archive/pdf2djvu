@@ -1,4 +1,4 @@
-pdf2djvu (0.8) UNRELEASED; urgency=low
+pdf2djvu (0.8) unstable; urgency=low
 
   [ Juan Francisco Cantero Hurtado ]
   * Don't hardcode the Python interpreter path in script shebangs; use
@@ -48,7 +48,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   [ Jean-Paul Guillonneau ]
   * Update the French translation of the manual page.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Aug 2015 14:41:10 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Aug 2015 14:42:08 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
