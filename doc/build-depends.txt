@@ -10,6 +10,8 @@ The following software is recommended:
 * Libxslt_, for correctly dealing with XMP metadata;
 * GraphicsMagick_, for the ``--fg-colors=N`` option.
 
+For the ``-j``/``--jobs`` option, the compiler must support OpenMP_.
+
 .. _DjVuLibre:
    http://djvu.sourceforge.net/
 .. _poppler:
@@ -22,6 +24,8 @@ The following software is recommended:
    http://xmlsoft.org/xslt/
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
+.. _OpenMP:
+   http://openmp.org/
 
 ----
 
