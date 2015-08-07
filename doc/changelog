@@ -21,12 +21,19 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   * Make --help and --version return with exit code 0.
   * Windows: build against GraphicsMagick.
     https://bitbucket.org/jwilk/pdf2djvu/issue/75
-  * Add configure option for disabling PStreams (--without-pstreams).
+  * Improve the configure script:
+    + Check if Poppler xpdf headers exist.
+    + Add option for disabling PStreams (--without-pstreams).
   * Change the order libraries on linker command line.
     Move libraries provided by the LIBS configure variable to the end.
   * Use the reentrant S-expression output API when it's available
     (DjVuLibre >= 3.5.25).
   * Improve error handling.
+  * Improve the test suite.
+  * Improve documentation:
+    + Simplify documentation about build dependencies.
+    + Document that pkg-config is required for building.
+    + Update poppler-data download URL.
   * Update the Polish translation.
 
   [ Américo Monteiro ]
@@ -41,7 +48,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
   [ Jean-Paul Guillonneau ]
   * Update the French translation of the manual page.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 06 Aug 2015 12:50:45 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Aug 2015 14:41:10 +0200
 
 pdf2djvu (0.7.21) unstable; urgency=low
 
