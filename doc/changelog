@@ -17,7 +17,7 @@ pdf2djvu (0.8) UNRELEASED; urgency=low
     https://bugs.freedesktop.org/show_bug.cgi?id=7002
   * Fail early if duplicate page numbers were specified in -p/--pages.
     https://bitbucket.org/jwilk/pdf2djvu/issue/73
-  * Fail early on duplicate page identifies and duplicate page titles.
+  * Fail early on duplicate page identifiers and duplicate page titles.
   * Make --help and --version return with exit code 0.
   * Windows: build against GraphicsMagick.
     https://bitbucket.org/jwilk/pdf2djvu/issue/75
