@@ -203,7 +203,7 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://downloads.sourceforge.net/djvu/djvulibre-3.5.27.tar.gz
+	$(wget) http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz
 	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  dcache/djvulibre-3.5.27.tar.gz' | sha256sum -c
 	$(untar) dcache/djvulibre-*.tar.gz -C $(dir $@)
 	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
