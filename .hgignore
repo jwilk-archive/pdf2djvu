@@ -30,6 +30,13 @@ tests/*.pyc
 tests/*.stamp
 tools/config.*
 tools/install-sh
-win32/*/
+win32/bin/
+win32/dcache/
+win32/dist/
+win32/etc/
+win32/include/
+win32/lib/
+win32/share/
+win32/src/
 xmp-dummy.hh
 xmp-xslt.hh
