@@ -36,20 +36,16 @@ then
     exit 1
 fi
 
-if ! [ -d .hg ]
-then
-    printf '%s requires hg checkout\n' "$0" >&2
-    exit 1
-fi
-
 set -e -u
 
+hgrepo="$(dirname "$0")/.."
+hg id -R "$hgrepo" >/dev/null
 pwd="$PWD"
 revision="${1:-tip}"
-name=$(hg cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f 1)
-date=$(hg log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
-version=$(hg cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f2 | tr -d '()')
-released=$(hg cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
+name=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f 1)
+date=$(hg --cwd "$hgrepo" log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
+version=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f2 | tr -d '()')
+released=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
 [ -n "$released" ] || version="${version}rc${date}"
 printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 
@@ -59,7 +55,7 @@ tar_opts='--owner root --group root --mode a+rX --format ustar'
 xz_opts='-4e'
 
 # Mercurial archive:
-hg archive -r "$revision" "$sourceroot/$name-$version"
+hg --cwd "$hgrepo" archive -r "$revision" "$sourceroot/$name-$version"
 cd "$sourceroot"/*
 
 # Remove files that only useful in a VCS checkout:
