@@ -8,10 +8,10 @@
 
 usage()
 {
-    printf '%s [--no-po-check] [revision]\n' "$0"
+    printf '%s [--print-name] [--no-po-check] [revision]\n' "$0"
 }
 
-args=$(getopt -n "$0" -o 'h' --long help,no-po-check -- "$@")
+args=$(getopt -n "$0" -o 'h' --long 'help,no-po-check,print-name' -- "$@")
 if [ $? -ne 0 ]
 then
     usage >&2
@@ -20,11 +20,13 @@ fi
 eval set -- "$args"
 
 opt_po_check=y
+opt_print_name=
 while true
 do
     case "$1" in
         -h|--help) usage; exit 0;;
         --no-po-check) opt_po_check=; shift;;
+        --print-name) opt_print_name=y; shift;;
         --) shift; break;;
         *) printf '%s: internal error (%s)' "$0" "$1" >&2; exit 1;;
     esac
@@ -48,6 +50,12 @@ version=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | cut -
 released=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
 [ -n "$released" ] || version="${version}rc${date}"
 printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
+
+if [ -n "$opt_print_name" ]
+then
+    printf '%s\n' "$name-$version.tar.xz"
+    exit 0
+fi
 
 set -x
 sourceroot=$(mktemp -d -t "$name-source-XXXXXX")
