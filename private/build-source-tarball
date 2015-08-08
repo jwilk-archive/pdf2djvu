@@ -84,10 +84,10 @@ cat "Makefile.common"
 
 # Build the manual page and translations:
 make -C po/ all
-[ -z "$opt_po_check"] || make -C po/ check
+[ -z "$opt_po_check" ] || make -C po/ check
 make -C doc/
 make -C doc/po/ all pdf2djvu.pot
-[ -z "$opt_po_check"] || make -C doc/po/ check
+[ -z "$opt_po_check" ] || make -C doc/po/ check
 # Prepare tests:
 make -C tests/ prepare
 
