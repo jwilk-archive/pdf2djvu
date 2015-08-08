@@ -1,10 +1,10 @@
 syntax: glob
 
 *.o
-Makefile.common
 aclocal.m4
 autoconf.hh
 autoconf.hh.in
+autoconf.mk
 autom4te.cache
 config.guess
 config.log

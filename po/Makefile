@@ -5,7 +5,7 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 srcdir = ..
-include $(srcdir)/Makefile.common
+include $(srcdir)/autoconf.mk
 
 PO_FILES = $(wildcard *.po)
 MO_FILES = $(PO_FILES:.po=.mo)

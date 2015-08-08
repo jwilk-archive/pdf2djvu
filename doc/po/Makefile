@@ -5,7 +5,8 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 srcdir = ../..
-include $(srcdir)/Makefile.common
+include $(srcdir)/autoconf.mk
+
 include $(srcdir)/doc/Makefile.common
 
 XSLTPROC += --param man.output.lang.in.name.enabled 1

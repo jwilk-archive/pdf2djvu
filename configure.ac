@@ -168,7 +168,7 @@ fi
 
 # Output files
 
-AC_CONFIG_FILES([Makefile.common])
+AC_CONFIG_FILES([autoconf.mk])
 AC_CONFIG_HEADER([autoconf.hh])
 AC_OUTPUT
 

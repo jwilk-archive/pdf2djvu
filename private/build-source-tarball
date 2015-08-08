@@ -71,16 +71,16 @@ rm private/build-source-tarball
 private/autogen
 rm -r *.cache
 
-# Generate Makefile.common:
+# Generate basic autoconf.mk:
 sed -n -e '/^AC_INIT(\[\([^]]*\)\], *\[\([^]]*\)\], *\[\([^]]*\)\],.*/ { s//PACKAGE_NAME=\1\nPACKAGE_VERSION=\2\nPACKAGE_BUGREPORT=\3/p; q }' \
     "configure.ac" \
-    > "Makefile.common"
-grep -E 'MSGFMT|MSGMERGE|XGETTEXT' "Makefile.common.in" \
-| sed >> "Makefile.common" \
+    > autoconf.mk
+grep -E 'MSGFMT|MSGMERGE|XGETTEXT' autoconf.mk.in \
+| sed >> autoconf.mk \
     -e 's/@MSGFMT@/msgfmt/' \
     -e 's/@MSGMERGE@/msgmerge/' \
     -e 's/@XGETTEXT@/xgettext/'
-cat "Makefile.common"
+cat autoconf.mk
 
 # Build the manual page and translations:
 make -C po/ all
@@ -91,8 +91,8 @@ make -C doc/po/ all pdf2djvu.pot
 # Prepare tests:
 make -C tests/ prepare
 
-# Sweep Makefile.common:
-rm Makefile.common
+# Sweep autoconf.mk:
+rm autoconf.mk
 
 # Tarball with raw source:
 cd ..

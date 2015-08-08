@@ -5,7 +5,7 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 srcdir = .
-include $(srcdir)/Makefile.common
+include $(srcdir)/autoconf.mk
 
 exe = pdf2djvu$(EXEEXT)
 
@@ -23,7 +23,7 @@ include Makefile.dep
 %.hh: %.xml
 	tools/xml2c < $(<) > $(@)
 
-paths.hh: tools/generate-paths-hh Makefile.common
+paths.hh: tools/generate-paths-hh
 	$(<) $(foreach var,localedir djvulibre_bindir,$(var) $($(var)))
 
 $(exe): config.o
@@ -53,7 +53,7 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	rm -f autoconf.hh Makefile.common config.status config.log
+	rm -f autoconf.hh autoconf.mk config.status config.log
 
 .PHONY: test
 test: $(exe)
