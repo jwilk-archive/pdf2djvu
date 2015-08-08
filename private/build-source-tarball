@@ -44,11 +44,16 @@ hgrepo="$(dirname "$0")/.."
 hg id -R "$hgrepo" >/dev/null
 pwd="$PWD"
 revision="${1:-tip}"
-name=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f 1)
-date=$(hg --cwd "$hgrepo" log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
-version=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | cut -d ' ' -f2 | tr -d '()')
-released=$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1 | grep -v -w UNRELEASED || true)
-[ -n "$released" ] || version="${version}rc${date}"
+read name version release urgency <<EOF
+$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1)
+EOF
+version=${version#(}
+version=${version%)}
+if [ "$release" = 'UNRELEASED;' ]
+then
+    date=$(hg --cwd "$hgrepo" log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
+    version="${version}rc${date}"
+fi
 printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 
 if [ -n "$opt_print_name" ]
