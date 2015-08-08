@@ -10,6 +10,7 @@ import inspect
 import os
 import re
 import subprocess as ipc
+import sys
 import xml.etree.cElementTree as etree
 
 re.compile.M = re.M
@@ -23,6 +24,20 @@ from nose.tools import (
     assert_not_equal,
     assert_true,
 )
+
+if sys.version_info >= (2, 7):
+    from nose.tools import (
+        assert_is,
+        assert_is_none,
+    )
+else:
+    def assert_is(x, y):
+        assert_true(
+            x is y,
+            msg='{0!r} is not {1!r}'.format(x, y)
+        )
+    def assert_is_none(obj):
+        assert_is(obj, None)
 
 try:
     from nose.tools import assert_multi_line_equal

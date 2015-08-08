@@ -8,7 +8,7 @@
 
 from common import (
     assert_grep,
-    assert_true,
+    assert_is_none,
     assert_well_formed_xml,
     case,
 )
@@ -20,7 +20,7 @@ class test(case):
     def test_verbatim(self):
         self.pdf2djvu('--verbatim-metadata').assert_()
         xmp = self.extract_xmp()
-        assert_true(xmp is None)
+        assert_is_none(xmp)
 
     def test_no_verbatim(self):
         self.require_feature('GNOME XSLT')
