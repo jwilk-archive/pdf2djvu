@@ -29,7 +29,10 @@ if sys.version_info >= (2, 7):
     from nose.tools import (
         assert_is,
         assert_is_none,
+        assert_multi_line_equal,
+        assert_regexp_matches,
     )
+    assert_multi_line_equal.im_class.maxDiff = None
 else:
     def assert_is(x, y):
         assert_true(
@@ -38,27 +41,15 @@ else:
         )
     def assert_is_none(obj):
         assert_is(obj, None)
-
-try:
-    from nose.tools import assert_multi_line_equal
-except ImportError:
     assert_multi_line_equal = assert_equal
-else:
-    assert_multi_line_equal.im_class.maxDiff = None
+    def assert_regexp_matches(text, regexp):
+        if isinstance(regexp, basestring):
+            regexp = re(regexp)
+        if not regexp.search(text):
+            message = "Regexp didn't match: {0!r} not found in {1!r}".format(regexp.pattern, text)
+            assert_true(False, msg=message)
 
-try:
-    from nose.tools import assert_regexp_matches as assert_grep
-except ImportError:
-    def assert_grep(text, expected_regexp, msg=None):
-        '''Fail the test unless the text matches the regular expression.'''
-        if not isinstance(expected_regexp, re.type):
-            expected_regexp = re(expected_regexp)
-        if expected_regexp.search(text):
-            return
-        if msg is None:
-            msg = "Regexp didn't match"
-        msg = '{msg}: {re!r} not found in {text!r}'.format(msg=msg, re=expected_regexp.pattern, text=text)
-        raise AssertionError(msg)
+assert_grep = assert_regexp_matches
 
 def assert_well_formed_xml(xml):
     try:
