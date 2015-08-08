@@ -29,8 +29,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-freetype\*.dll
-==============
+libfreetype\*.dll
+=================
 
 | Copyright © 1990-1998 The Open Group
 | Copyright © 1995-2002 Jean-loup Gailly
