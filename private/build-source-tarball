@@ -96,7 +96,7 @@ rm autoconf.mk
 
 # Tarball with raw source:
 cd ..
-tar $tar_opts -I 'xz $xz_opts' -cf "$pwd/$name-$version.tar.xz" */
+tar $tar_opts -I "xz $xz_opts" -cf "$pwd/$name-$version.tar.xz" */
 
 # Cleanup:
 rm -r "$sourceroot"
