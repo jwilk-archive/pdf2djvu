@@ -47,7 +47,7 @@ then
     exit 1
 fi
 pwd="$PWD"
-revision="${1:-tip}"
+revision=${1:-.}
 read name version release urgency <<EOF
 $(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1)
 EOF
