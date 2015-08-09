@@ -391,6 +391,8 @@ src/fontconfig/source-stamp:
 	$(wget) http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2
 	echo 'dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99  dcache/fontconfig-2.11.1.tar.bz2' | sha256sum -c
 	$(untar) dcache/fontconfig-2.11.1.tar.bz2 -C $(dir $@)
+	cd src/fontconfig/ && autoreconf -vfi
+	rm -rf src/fontconfig/*.cache/
 	sed -i -e 's/"append"/"prepend"/g' src/fontconfig/conf.d/*-urw-aliases.conf
 	touch $(@)
 
