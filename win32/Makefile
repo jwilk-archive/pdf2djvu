@@ -482,9 +482,12 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 
 src/libjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://ftp.debian.org/debian/pool/main/libj/libjpeg6b/libjpeg6b_6b1.orig.tar.gz
-	echo 'dbe673129e69eaaed47e3cfccf86b1582fa19862a3ce8189ea8f8cfc1800d9aa  dcache/libjpeg6b_6b1.orig.tar.gz' | sha256sum -c
-	$(untar) dcache/libjpeg6b_*.tar.gz -C $(dir $@)
+	$(wget) http://jpegclub.org/support/files/jpegsrc.v6b2.tar.gz
+	echo '6d2be0db82dda2e50c908b72aa22ed8cf42cc5aa5ae5f2b081498be6ef16eabc  dcache/jpegsrc.v6b2.tar.gz' | sha256sum -c
+	$(untar) dcache/jpegsrc.v6b2.tar.gz -C $(dir $@)
+	cd $(dir $@) && QUILT_PATCHES=../../patches/libjpeg quilt push -a
+	cd $(dir $@) && ACLOCAL=aclocal-1.11 AUTOMAKE=automake-1.11 autoreconf -vfi
+	rm -rf $(dir $@)/*.cache/
 	touch $(@)
 
 src/libjpeg/config.status: src/libjpeg/source-stamp
