@@ -58,13 +58,12 @@ then
     date=$(hg --cwd "$hgrepo" log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
     version="${version}rc${date}"
 fi
-printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
-
 if [ -n "$opt_print_name" ]
 then
     printf '%s\n' "$name-$version.tar.xz"
     exit 0
 fi
+printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
 
 set -x
 sourceroot=$(mktemp -d -t "$name-source-XXXXXX")
