@@ -8,7 +8,13 @@ usr = $(CURDIR)
 host = i686-w64-mingw32
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
+ifeq "$(wildcard ../.hg)" ""
 version := $(shell cat ../doc/changelog | head -n1 | cut -d' ' -f2 | tr -d '()')
+orig_src_tarball = pdf2djvu-$(version).tar.xz
+else
+orig_src_tarball := $(shell ../private/build-source-tarball --print-name)
+version = $(word 2,$(subst .tar, ,$(subst -, ,$(orig_src_tarball))))
+endif
 
 djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
@@ -98,7 +104,7 @@ install: src/urw-fonts/install-stamp
 
 # pdf2djvu
 
-src/pdf2djvu/source-stamp: dcache/pdf2djvu-$(version).tar.xz
+src/pdf2djvu/source-stamp: dcache/$(orig_src_tarball)
 	mkdir -p $(dir $@)
 	$(untar) $(<) -C $(dir $@)
 	rm -f $(dir $@)/paths.hh
