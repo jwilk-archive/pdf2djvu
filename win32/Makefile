@@ -532,6 +532,7 @@ src/mingwrt/install-stamp:
 
 .PHONY: test
 test: install
-	 $(MAKE) -C ../tests/ pdf2djvu='wine32 ../win32/dist/pdf2djvu.exe'
+	env -u FONTCONFIG_FILE -u FONTCONFIG_PATH XDG_CONFIG_HOME=/nonexistent \
+	$(MAKE) -C ../tests/ pdf2djvu='wine32 ../win32/dist/pdf2djvu.exe'
 
 # vim:ts=4 sts=4 sw=4 noet
