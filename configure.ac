@@ -15,7 +15,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PREPROC_IFELSE(
   [AC_LANG_SOURCE([[#include <winver.h>]])],
-  [AC_CHECK_TOOL(WINDRES, windres)]
+  [AC_CHECK_TOOL([WINDRES], [windres])]
 )
 
 # Checks for libraries.
