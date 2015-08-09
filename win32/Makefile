@@ -388,9 +388,9 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.9.0.tar.gz
-	echo 'ca7e25071cf044bdcdaf7c48845243c115b9269b4e369c6bd78a29e71f01b41a  dcache/fontconfig-2.9.0.tar.gz' | sha256sum -c
-	$(untar) dcache/fontconfig-*.tar.gz -C $(dir $@)
+	$(wget) http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2
+	echo 'dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99  dcache/fontconfig-2.11.1.tar.bz2' | sha256sum -c
+	$(untar) dcache/fontconfig-2.11.1.tar.bz2 -C $(dir $@)
 	sed -i -e 's/"append"/"prepend"/g' src/fontconfig/conf.d/*-urw-aliases.conf
 	touch $(@)
 
@@ -399,7 +399,6 @@ src/fontconfig/config.status: src/freetype/install-stamp
 src/fontconfig/config.status: src/libxml2/install-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
-		--with-freetype-config=$(usr)/freetype-config \
 		--with-add-fonts=CUSTOMFONTDIR \
 		--enable-libxml2 \
 		--disable-static \
@@ -414,7 +413,6 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	$(MAKE) -C $(dir $@)/ install RUN_FC_CACHE_TEST=false
 	$(call ship_dll,libfontconfig)
 	cp etc/fonts/fonts.conf dist/etc/fonts/
-	cp etc/fonts/fonts.dtd dist/etc/fonts/
 	cp etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
 	touch $(@)
 

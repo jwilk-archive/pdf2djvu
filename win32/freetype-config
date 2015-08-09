@@ -1,7 +1,0 @@
-#!/bin/sh
-case "$1" in
-   --cflags) printf '%s\n' "-I$(dirname "$0")/include/freetype2/";;
-   --libs) printf '%s\n' "-lfreetype";;
-esac
-
-# vim:ts=4 sts=4 sw=4 et
