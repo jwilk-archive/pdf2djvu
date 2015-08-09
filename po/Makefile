@@ -27,6 +27,7 @@ xgettext = $(XGETTEXT) \
 
 msgmerge = $(MSGMERGE) \
 	$(gettext-common-options) \
+	--update \
 	--verbose \
 
 msgfmt = $(MSGFMT) \
@@ -40,7 +41,7 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 	$(xgettext) -D $(srcdir) $(notdir $(SOURCE_FILES)) > $(@)
 
 %.po: pdf2djvu.pot
-	$(msgmerge) -o $(@) $(@) $(<)
+	$(msgmerge) $(@) $(<)
 
 %.mo: %.po
 	$(msgfmt) -o $(@) -c $(<)
