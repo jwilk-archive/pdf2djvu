@@ -362,14 +362,15 @@ src/libxslt/install-stamp: src/libxslt/build-stamp
 
 src/freetype/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2
-	echo 'c4204ac1d48e99d4375a2f32bf4f3f92780a9d9f015e64e57e852f6c004859b9  dcache/freetype-2.4.9.tar.bz2' | sha256sum -c
-	$(untar) dcache/freetype-*.tar.bz2 -C $(dir $@)
+	$(wget) http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2
+	echo '8469fb8124764f85029cc8247c31e132a2c5e51084ddce2a44ea32ee4ae8347e  dcache/freetype-2.6.tar.bz2' | sha256sum -c
+	$(untar) dcache/freetype-2.6.tar.bz2 -C $(dir $@)
 	touch $(@)
 
 src/freetype/config.status: src/freetype/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
+		--without-png \
 		--without-zlib \
 		--disable-static
 	touch $(@)
