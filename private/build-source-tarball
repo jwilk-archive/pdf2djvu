@@ -41,7 +41,11 @@ fi
 set -e -u
 
 hgrepo="$(dirname "$0")/.."
-hg id -R "$hgrepo" >/dev/null
+if ! [ -d "$hgrepo/.hg" ]
+then
+    printf '%s requires hg checkout\n' "$0" >&2
+    exit 1
+fi
 pwd="$PWD"
 revision="${1:-tip}"
 read name version release urgency <<EOF
