@@ -64,6 +64,7 @@ source-dist:
 	mkdir $(src_tarball_topdir)
 	cp -rl src/*/ $(src_tarball_topdir)/
 	find $(src_tarball_topdir) -name source-stamp -delete
+	find $(src_tarball_topdir) -type d -name .pc | xargs rm -rf
 	tar $(tar_opts) -I 'xz -v $(xz_opts)' -cf $(src_tarball_name).tar.xz $(src_tarball_topdir)
 	rm -rf $(src_tarball_topdir)
 
