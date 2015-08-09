@@ -172,11 +172,11 @@ pdf2djvu (0.7.13) unstable; urgency=low
   [ Jakub Wilk ]
   * XMP: put ‘softwareAgent’ and ‘when’ attributes in stEvt namespace.
   * Rewrite test-suite runner from scratch, using nosetests.
-  * Windows: trap errors from external commands. Thanks to Andres Aule for the
-    bug report.
+  * Windows: trap errors from external commands.
+    Thanks to Andres Aule for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/65
-  * Fix build failure with Poppler ≥ 0.19. Thanks to Kyrill Detinov for the
-    bug report.
+  * Fix build failure with Poppler ≥ 0.19.
+    Thanks to Kyrill Detinov for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/66
 
   [ Kyrill Detinov ]
@@ -206,8 +206,8 @@ pdf2djvu (0.7.12) unstable; urgency=low
 
 pdf2djvu (0.7.11) unstable; urgency=low
 
-  * Fix build failure with Poppler ≥ 0.17. Thanks to Vincent Untz for the bug
-    report and the patch.
+  * Fix build failure with Poppler ≥ 0.17.
+    Thanks to Vincent Untz for the bug report and the patch.
     https://bitbucket.org/jwilk/pdf2djvu/issue/61
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 06 Oct 2011 10:40:39 +0200
@@ -250,7 +250,8 @@ pdf2djvu (0.7.8) unstable; urgency=low
 pdf2djvu (0.7.7) unstable; urgency=low
 
   * Don't let the configure script look for windres if winver.h is not
-    available. Thanks to Andrew Isakov for the bug report.
+    available.
+    Thanks to Andrew Isakov for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/57
   * Fix build failure with GCC 4.6.
   * Make it possible to control how work is distributed between threads with
@@ -273,8 +274,8 @@ pdf2djvu (0.7.5) unstable; urgency=low
 
   * Don't allow page identifiers start with a ‘+’ or ‘-’ characters.
   * Document the use of TMPDIR environment variable.
-  * Windows: fix handling of non-ASCII filenames in CJK locales. Thanks to Lu
-    Wei for the bugreport.
+  * Windows: fix handling of non-ASCII filenames in CJK locales.
+    Thanks to Lu Wei for the bugreport.
     https://bitbucket.org/jwilk/pdf2djvu/issue/53
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 19 Jan 2011 23:56:19 +0100
