@@ -70,7 +70,7 @@ ifneq "$(MAN_PAGES)" ""
 	set -e; for manpage in $(MAN_PAGES); \
 	do \
 		set -x; \
-		basename=`basename $$manpage`; \
+		basename="$$(basename $$manpage)"; \
 		suffix="$${basename#*.}"; \
 		locale="$${suffix%.*}"; \
 		[ $$locale = $$suffix ] && locale=; \
