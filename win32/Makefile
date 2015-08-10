@@ -122,7 +122,7 @@ src/pdf2djvu/config.status: src/pdf2djvu/source-stamp
 src/pdf2djvu/config.status: src/djvulibre/install-stamp
 src/pdf2djvu/config.status: src/gettext/install-stamp
 src/pdf2djvu/config.status: src/graphicsmagick/install-stamp
-src/pdf2djvu/config.status: src/libxslt/install-stamp
+src/pdf2djvu/config.status: src/exiv2/install-stamp
 src/pdf2djvu/config.status: src/mingwrt/install-stamp
 src/pdf2djvu/config.status: src/poppler/install-stamp
 	cd $(dir $@) && \
@@ -130,7 +130,7 @@ src/pdf2djvu/config.status: src/poppler/install-stamp
 		--bindir=$(usr)/dist/ \
 		--localedir=$(usr)/dist/locale/ \
 		--with-graphicsmagick \
-		--with-xslt \
+		--enable-xmp \
 		--disable-openmp
 
 src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
@@ -164,8 +164,8 @@ src/libs-install-stamp: src/freetype/install-stamp
 src/libs-install-stamp: src/gettext/install-stamp
 src/libs-install-stamp: src/graphicsmagick/install-stamp
 src/libs-install-stamp: src/libjpeg/install-stamp
-src/libs-install-stamp: src/libxml2/install-stamp
-src/libs-install-stamp: src/libxslt/install-stamp
+src/libs-install-stamp: src/expat/install-stamp
+src/libs-install-stamp: src/exiv2/install-stamp
 src/libs-install-stamp: src/poppler/install-stamp
 src/libs-install-stamp: src/winiconv/install-stamp
 	mkdir -p dist/doc/
@@ -302,72 +302,55 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 	rm dist/libGraphicsMagickWand*.dll
 	touch $(@)
 
-# libxml2
+# Expat
 
-src/libxml2/source-stamp:
+src/expat/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://xmlsoft.org/sources/libxml2-2.7.8.tar.gz
-	echo 'cda23bc9ebd26474ca8f3d67e7d1c4a1f1e7106364b690d822e009fdc3c417ec  dcache/libxml2-2.7.8.tar.gz' | sha256sum -c
-	$(untar) dcache/libxml2-*.tar.gz -C $(dir $@)
-	sed -i -e '/^#undef v\?snprintf$$/d' $(dir $@)/config.h.in
-	rm -r $(dir $@)/test
-	rm -r $(dir $@)/result
+	$(wget) http://downloads.sourceforge.net/project/expat/expat/2.1.0/expat-2.1.0.tar.gz
+	echo '823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86  dcache/expat-2.1.0.tar.gz' | sha256sum -c
+	$(untar) dcache/expat-*.tar.gz -C $(dir $@)
 	touch $(@)
 
-src/libxml2/config.status: src/libxml2/source-stamp
+src/expat/config.status: src/expat/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
-		--disable-static \
-		--with-minimum \
-		--with-html \
-		--with-output \
-		--with-tree \
-		--with-writer \
-		--with-xpath \
-		--with-sax1
+		--disable-static
 
-src/libxml2/build-stamp: src/libxml2/config.status
+src/expat/build-stamp: src/expat/config.status
 	$(MAKE) -C $(dir $@)
 	touch $(@)
 
-src/libxml2/install-stamp: src/libxml2/build-stamp
+src/expat/install-stamp: src/expat/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
-	cp xmlexports.h include/libxml2/libxml/xmlexports.h
-	$(call ship_dll,libxml2)
+	$(call ship_dll,libexpat)
 	touch $(@)
 
-# libxslt
+# Exiv2
 
-src/libxslt/source-stamp:
+src/exiv2/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://xmlsoft.org/sources/libxslt-1.1.26.tar.gz
-	echo '55dd52b42861f8a02989d701ef716d6280bfa02971e967c285016f99c66e3db1  dcache/libxslt-1.1.26.tar.gz' | sha256sum -c
-	$(untar) dcache/libxslt-*.tar.gz -C $(dir $@)
-	sed -i -e '/^#define.*nprintf/d' $(dir $@)/libxslt/win32config.h
-	sed -i -e 's/^\(#if defined(WIN32)\).*/\1/' $(dir $@)/libxslt/libxslt.h
+	$(wget) http://www.exiv2.org/exiv2-0.25.tar.gz
+	echo 'c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4  dcache/exiv2-0.25.tar.gz' | sha256sum -c
+	$(untar) dcache/exiv2-*.tar.gz -C $(dir $@)
+	cd $(dir $@) && QUILT_PATCHES=../../patches/exiv2 quilt push -a
 	touch $(@)
 
-src/libxslt/config.status: src/libxslt/source-stamp
-src/libxslt/config.status: src/libxml2/install-stamp
+src/exiv2/config.status: src/exiv2/source-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
-		--with-libxml-prefix=$(usr) \
-		--with-libxml-include-prefix=$(usr)/include/libxml2/ \
-		--without-crypto \
-		--without-debug \
-		--without-debugger \
-		--without-plugins
+		--without-zlib \
+		--disable-lensdata
 
-src/libxslt/build-stamp: src/libxslt/config.status
-	$(MAKE) -C $(dir $@)/libxslt/
+src/exiv2/build-stamp: src/exiv2/config.status
+	$(MAKE) -C $(dir $@)
 	touch $(@)
 
-src/libxslt/install-stamp: src/libxslt/build-stamp
+src/exiv2/install-stamp: src/exiv2/build-stamp
 	mkdir -p dist/
-	$(MAKE) -C $(dir $@)/libxslt/ install
-	$(call ship_dll,libxslt)
+	$(MAKE) -C $(dir $@) install
+	$(call ship_dll,libexiv2)
 	touch $(@)
 
 # FreeType
@@ -413,11 +396,10 @@ src/fontconfig/source-stamp:
 
 src/fontconfig/config.status: src/fontconfig/source-stamp
 src/fontconfig/config.status: src/freetype/install-stamp
-src/fontconfig/config.status: src/libxml2/install-stamp
+src/fontconfig/config.status: src/expat/install-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--with-add-fonts=CUSTOMFONTDIR \
-		--enable-libxml2 \
 		--disable-static \
 		--disable-docs
 

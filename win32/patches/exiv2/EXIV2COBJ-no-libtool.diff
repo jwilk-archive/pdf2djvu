@@ -1,0 +1,15 @@
+Compile C files needed for exiv2 binary without libtool
+
+Forwarded: http://dev.exiv2.org/issues/1101
+
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -206,7 +206,7 @@
+ 	@$(MAKEDEPEND)
+ 	@$(POSTDEPEND)
+ 
+-%.o: %.c
++$(EXIV2COBJ): %.o: %.c
+ 	$(COMPILE.c) -o $@ $<
+ 	@$(MAKEDEPEND)
+ 	@$(POSTDEPEND)

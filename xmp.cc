@@ -24,7 +24,12 @@
 #include <vector>
 
 #include <exiv2/exiv2.hpp>
+
+#if WIN32
+#include "win32-uuid.h"
+#else
 #include <uuid.h>
+#endif
 
 #include "debug.hh"
 #include "system.hh"
