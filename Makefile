@@ -66,7 +66,7 @@ MO_FILES = $(wildcard po/*.mo)
 install: all
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) $(exe) $(DESTDIR)$(bindir)
-ifneq ($(MAN_PAGES),)
+ifneq "$(MAN_PAGES)" ""
 	set -e; for manpage in $(MAN_PAGES); \
 	do \
 		set -x; \
@@ -78,7 +78,7 @@ ifneq ($(MAN_PAGES),)
 		$(INSTALL) -m 644 $$manpage $(DESTDIR)$(mandir)/$$locale/man1/"$${basename%%.*}.$${basename##*.}"; \
 	done
 endif
-ifneq ($(MO_FILES),)
+ifneq "$(MO_FILES)" ""
 	set -e; for locale in $(basename $(notdir $(MO_FILES))); \
 	do \
 		$(INSTALL) -d $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/; \
