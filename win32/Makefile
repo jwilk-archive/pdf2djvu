@@ -143,10 +143,9 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 			xsltproc --nonet $(docbook_xsl) $$file > $(usr)/dist/doc/manual-page-$$locale.html; \
 		done
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/COPYING > dist/doc/COPYING.txt
-	cd src/pdf2djvu/doc && set -e && \
-		for file in *.txt; do \
-			rst2html $$file > $(usr)/dist/doc/$${file%.txt}.html; \
-		done
+	cd src/pdf2djvu/doc \
+		ls *.txt | sed -e '/build-/d; s/[.]txt$$//' \
+		| xargs -I{file} -t rst2html {file}.txt $(usr)/dist/doc/{file}.html
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/changelog > dist/doc/changelog.txt
 	touch $(@)
 
