@@ -163,7 +163,7 @@ src/libs-install-stamp: src/libxslt/install-stamp
 src/libs-install-stamp: src/poppler/install-stamp
 src/libs-install-stamp: src/winiconv/install-stamp
 	mkdir -p dist/doc/
-	rst2html COPYING.libs.txt > dist/doc/COPYING.libs.html
+	rst2html doc/COPYING.libs.txt > dist/doc/COPYING.libs.html
 	touch $(@)
 
 # Poppler
@@ -521,7 +521,7 @@ src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	mkdir -p dist/fonts/ dist/doc/
 	cp $(dir $@)/*.pfb dist/fonts/
-	rst2html COPYING.fonts.txt > dist/doc/COPYING.fonts.html
+	rst2html doc/COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $(@)
 
 # MinGW runtime
