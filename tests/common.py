@@ -228,4 +228,27 @@ def count_ppm_colors(b):
         result[pixel] += 1
     return result
 
+__all__ = [
+    # nose:
+    'assert_equal',
+    'assert_not_equal',
+    'assert_true',
+    'assert_in',
+    'assert_is',
+    'assert_is_none',
+    'assert_is_not_none',
+    'assert_multi_line_equal',
+    'assert_regexp_matches',
+    # our own asserts:
+    'assert_grep',
+    'assert_well_formed_xml',
+    # helper classes:
+    'ipc_result',
+    'case',
+    # image handling:
+    'rainbow',
+    'checkboard',
+    'count_ppm_colors',
+]
+
 # vim:ts=4 sts=4 sw=4 et
