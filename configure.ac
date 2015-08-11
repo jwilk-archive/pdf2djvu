@@ -7,6 +7,7 @@ dnl | the Free Software Foundation; version 2 dated June, 1991.
 AC_PREREQ(2.62)
 AC_INIT([pdf2djvu], [0.8.1], [https://bitbucket.org/jwilk/pdf2djvu/issues], [pdf2djvu], [http://jwilk.net/software/pdf2djvu])
 AC_CONFIG_AUX_DIR([tools])
+AC_CONFIG_MACRO_DIR([m4])
 AC_LANG([C++])
 
 # Checks for programs.
