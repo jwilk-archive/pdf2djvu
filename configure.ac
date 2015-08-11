@@ -163,7 +163,7 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
 AX_CXXFLAGS_WARN_ALL([CXXFLAGS])
 if test "$GXX" = yes
 then
-  CXXFLAGS="$CXXFLAGS -Werror=overloaded-virtual"
+  CXXFLAGS="$CXXFLAGS -Werror=overloaded-virtual -Werror=narrowing"
 fi
 
 # Output files
