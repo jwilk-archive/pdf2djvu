@@ -105,7 +105,7 @@ const std::string get_multiline_version()
     stream << "+ DjVuLibre " << get_djvulibre_version() << "\n";
     stream << "+ Poppler " POPPLER_VERSION_STRING << "\n";
 #if HAVE_GRAPHICSMAGICK
-    stream << "+ GraphicsMagick++ " << get_gm_version() << "\n";
+    stream << "+ GraphicsMagick++ " << get_gm_version() << " (Q" << QuantumDepth << ")\n";
 #endif
 #if HAVE_LIBXSLT
     stream << "+ GNOME XSLT " << get_libxslt_version() << "\n";
