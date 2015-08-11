@@ -33,7 +33,6 @@ if sys.version_info >= (2, 7):
         assert_in,
         assert_is,
         assert_is_none,
-        assert_is_not,
         assert_is_not_none,
         assert_multi_line_equal,
         assert_regexp_matches,
