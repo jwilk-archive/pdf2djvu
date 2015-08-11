@@ -161,10 +161,9 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
 # Turn on compile warnings
 
 AX_CXXFLAGS_WARN_ALL([CXXFLAGS])
-if test "$GXX" = yes
-then
-  CXXFLAGS="$CXXFLAGS -Werror=overloaded-virtual -Werror=narrowing"
-fi
+AC_DEFUN([P_MAYBE_ADD_FLAG], [AX_CHECK_COMPILE_FLAG([$1], [CXXFLAGS="$CXXFLAGS $1"])])
+P_MAYBE_ADD_FLAG([-Werror=overloaded-virtual])
+P_MAYBE_ADD_FLAG([-Werror=narrowing])
 
 # Output files
 
