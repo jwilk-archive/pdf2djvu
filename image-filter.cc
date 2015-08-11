@@ -403,6 +403,18 @@ GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
   }
 }
 
+static inline MagickLib::Quantum c2q(unsigned char c)
+{
+  using namespace MagickLib;
+  return ScaleCharToQuantum(c);
+}
+
+static inline unsigned char q2c(MagickLib::Quantum c)
+{
+  using namespace MagickLib;
+  return ScaleQuantumToChar(c);
+}
+
 void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
   int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream)
 {
@@ -440,10 +452,15 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       {
         if (!has_foreground && (p_fg[0] || p_fg[1] || p_fg[2]))
           has_foreground = true;
-        *ipixel = Magick::Color(p_fg[0], p_fg[1], p_fg[2], 0);
+        *ipixel = Magick::Color(
+          c2q(p_fg[0]),
+          c2q(p_fg[1]),
+          c2q(p_fg[2]),
+          OpaqueOpacity
+        );
       }
       else
-        *ipixel = Magick::Color(0, 0, 0, 0xff);
+        *ipixel = Magick::Color(0, 0, 0, TransparentOpacity);
       p_fg++, p_bg++, ipixel++;
     }
     p_fg.next_row(), p_bg.next_row(), image.syncPixels();
@@ -461,9 +478,9 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
   {
     const Magick::Color &color = image.colorMap(i);
     unsigned char buffer[3] = {
-      color.redQuantum(),
-      color.greenQuantum(),
-      color.blueQuantum()
+      q2c(color.redQuantum()),
+      q2c(color.greenQuantum()),
+      q2c(color.blueQuantum())
     };
     stream.write(reinterpret_cast<char*>(buffer), 3);
   }

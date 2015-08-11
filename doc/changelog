@@ -1,8 +1,8 @@
 pdf2djvu (0.8.1) UNRELEASED; urgency=low
 
-  * 
+  * Fix --fg-colors=N when GraphicsMagick was compiled with QuantumDepth > 8.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 09 Aug 2015 18:16:09 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 11 Aug 2015 16:16:36 +0200
 
 pdf2djvu (0.8) unstable; urgency=low
 

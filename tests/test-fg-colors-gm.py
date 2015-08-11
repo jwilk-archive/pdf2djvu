@@ -8,6 +8,7 @@
 
 from common import (
     assert_equal,
+    assert_in,
     case,
     count_ppm_colors,
 )
@@ -22,8 +23,8 @@ class test(case):
         yield self._test, 2, 3
         yield self._test, 4, 5
         yield self._test, 255, 241
-        yield self._test, 256, 245
-        yield self._test, 652, 245
+        yield self._test, 256, (245, 256)
+        yield self._test, 652, (245, 325)
 
     def _test(self, i, n):
         self.require_feature('GraphicsMagick')
@@ -36,6 +37,9 @@ class test(case):
         r = self.decode(mode='foreground')
         r.assert_(stdout=None)
         colors = count_ppm_colors(r.stdout)
-        assert_equal(len(colors), n)
+        if isinstance(n, tuple):
+            assert_in(len(colors), n)
+        else:
+            assert_equal(len(colors), n)
 
 # vim:ts=4 sts=4 sw=4 et

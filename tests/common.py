@@ -30,6 +30,7 @@ from nose.tools import (
 
 if sys.version_info >= (2, 7):
     from nose.tools import (
+        assert_in,
         assert_is,
         assert_is_none,
         assert_is_not,
@@ -39,6 +40,16 @@ if sys.version_info >= (2, 7):
     )
     assert_multi_line_equal.im_class.maxDiff = None
 else:
+    def assert_in(x, c):
+        assert_true(
+            x in c,
+            msg='{0!r} not found in {1!r}'.format(x, c)
+        )
+    def assert_is(x, y):
+        assert_true(
+            x is y,
+            msg='{0!r} is not {1!r}'.format(x, y)
+        )
     def assert_is(x, y):
         assert_true(
             x is y,
