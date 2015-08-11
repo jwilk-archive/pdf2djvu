@@ -244,9 +244,9 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.20.tar.xz
-	echo '35fa21da4c1479e08da8351c5b1e363adaca803a0064cfc83084363adce387c9  dcache/GraphicsMagick-1.3.20.tar.xz' | sha256sum -c
-	$(untar) dcache/GraphicsMagick-*.tar.xz -C $(dir $@)
+	$(wget) ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.21.tar.xz
+	echo '35fa21da4c1479e08da8351c5b1e363adaca803a0064cfc83084363adce387c9  dcache/GraphicsMagick-1.3.21.tar.xz' | sha256sum -c
+	$(untar) dcache/GraphicsMagick-1.3.21.tar.xz -C $(dir $@)
 	touch $(@)
 
 src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
