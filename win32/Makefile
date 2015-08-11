@@ -255,6 +255,7 @@ src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
 			--disable-installed \
 			--disable-openmp --without-threads \
 			--enable-shared --disable-static \
+			--with-quantum-depth=8 \
 			--without-frozenpaths \
 			--without-perl \
 			--without-bzlib \
