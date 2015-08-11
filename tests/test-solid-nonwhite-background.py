@@ -18,6 +18,6 @@ class test(case):
     def test(self):
         self.pdf2djvu().assert_()
         r = self.djvudump()
-        r.assert_(stdout=re('BG44 \[[0-9][0-9]\] .* 75x75'))
+        r.assert_(stdout=re(r'BG44 \[[0-9][0-9]\] .* 75x75'))
 
 # vim:ts=4 sts=4 sw=4 et
