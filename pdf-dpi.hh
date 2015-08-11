@@ -52,7 +52,7 @@ static inline std::ostream & operator <<(std::ostream &stream, const pdf::dpi::G
   if (guess.min() < guess.max())
     stream << ".." << guess.max();
   return stream;
-};
+}
 
 #endif
 
