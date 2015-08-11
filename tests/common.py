@@ -6,7 +6,9 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; version 2 dated June, 1991.
 
+import collections
 import inspect
+import itertools
 import os
 import re
 import subprocess as ipc
@@ -14,6 +16,7 @@ import sys
 import xml.etree.cElementTree as etree
 
 re.compile.M = re.M
+re.compile.DOTALL = re.DOTALL
 re = re.compile
 re.type = type(re(''))
 
@@ -29,6 +32,8 @@ if sys.version_info >= (2, 7):
     from nose.tools import (
         assert_is,
         assert_is_none,
+        assert_is_not,
+        assert_is_not_none,
         assert_multi_line_equal,
         assert_regexp_matches,
     )
@@ -39,8 +44,15 @@ else:
             x is y,
             msg='{0!r} is not {1!r}'.format(x, y)
         )
+    def assert_is_not(x, y):
+        assert_true(
+            x is not y,
+            msg='{0!r} is {1!r}'.format(x, y)
+        )
     def assert_is_none(obj):
         assert_is(obj, None)
+    def assert_is_not_none(obj):
+        assert_is_not(obj, None)
     assert_multi_line_equal = assert_equal
     def assert_regexp_matches(text, regexp):
         if isinstance(regexp, basestring):
@@ -146,10 +158,16 @@ class case(object):
     def print_meta(self):
         return self.djvused('print-meta')
 
-    def decode(self):
+    def decode(self, mode=None):
+        args = []
+        if mode is not None:
+            args += ['-mode={m}'.format(m=mode)]
         return self.run(
             'ddjvu',
-            self.get_djvu_path()
+            self.get_djvu_path(),
+            '-format=ppm',
+            '-subsample=1',
+            *args
         )
 
     def extract_xmp(self):
@@ -193,5 +211,16 @@ def checkboard(width, height):
             color = 0xff * ((x ^ y) & 1)
             pixels[x, y] = color
     return image
+
+_ppm_re = re('P6\s+\d+\s+\d+\s+255\s(.*)\Z', re.DOTALL)
+def count_ppm_colors(b):
+    match = _ppm_re.match(b)
+    assert_is_not_none(match)
+    pixels = match.group(1)
+    ipixels = iter(pixels)
+    result = collections.defaultdict(int)
+    for pixel in itertools.izip(ipixels, ipixels, ipixels):
+        result[pixel] += 1
+    return result
 
 # vim:ts=4 sts=4 sw=4 et
