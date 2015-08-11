@@ -66,8 +66,6 @@ else:
             message = "Regexp didn't match: {0!r} not found in {1!r}".format(regexp.pattern, text)
             assert_true(False, msg=message)
 
-assert_grep = assert_regexp_matches
-
 def assert_well_formed_xml(xml):
     try:
         etree.fromstring(xml)
@@ -85,7 +83,7 @@ class ipc_result(object):
         if stderr is None:
             pass
         elif isinstance(stderr, re.type):
-            assert_grep(self.stderr, stderr)
+            assert_regexp_matches(self.stderr, stderr)
         else:
             assert_multi_line_equal(self.stderr, stderr)
         if rc is not None:
@@ -93,7 +91,7 @@ class ipc_result(object):
         if stdout is None:
             pass
         elif isinstance(stdout, re.type):
-            assert_grep(self.stdout, stdout)
+            assert_regexp_matches(self.stdout, stdout)
         else:
             assert_multi_line_equal(self.stdout, stdout)
 
@@ -240,7 +238,6 @@ __all__ = [
     'assert_multi_line_equal',
     'assert_regexp_matches',
     # our own asserts:
-    'assert_grep',
     'assert_well_formed_xml',
     # helper classes:
     'ipc_result',

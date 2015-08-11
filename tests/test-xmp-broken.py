@@ -7,7 +7,7 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 from common import (
-    assert_grep,
+    assert_regexp_matches,
     case,
 )
 
@@ -15,7 +15,7 @@ class test(case):
     def test_verbatim(self):
         self.pdf2djvu('--verbatim-metadata').assert_()
         xmp = self.extract_xmp()
-        assert_grep(xmp, '<broken')
+        assert_regexp_matches(xmp, '<broken')
 
     def test_no_verbatim(self):
         self.require_feature('GNOME XSLT')
@@ -32,6 +32,6 @@ Entity: line 1: parser error : Couldn't find end of Start Tag broken line 1
                                              ^
 ''')
         xmp = self.extract_xmp()
-        assert_grep(xmp, '<broken')
+        assert_regexp_matches(xmp, '<broken')
 
 # vim:ts=4 sts=4 sw=4 et
