@@ -50,11 +50,6 @@ else:
             x is y,
             msg='{0!r} is not {1!r}'.format(x, y)
         )
-    def assert_is(x, y):
-        assert_true(
-            x is y,
-            msg='{0!r} is not {1!r}'.format(x, y)
-        )
     def assert_is_not(x, y):
         assert_true(
             x is not y,
