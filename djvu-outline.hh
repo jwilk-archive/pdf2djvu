@@ -61,7 +61,7 @@ namespace djvu
         friend std::ostream &operator<<(std::ostream &, const Outline &);
     };
 
-};
+}
 
 #endif
 
