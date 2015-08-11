@@ -7,7 +7,6 @@
 # the Free Software Foundation; version 2 dated June, 1991.
 
 from common import (
-    SkipTest,
     case,
     re,
 )
