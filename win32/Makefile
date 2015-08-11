@@ -301,8 +301,8 @@ src/libxml2/source-stamp:
 	echo 'cda23bc9ebd26474ca8f3d67e7d1c4a1f1e7106364b690d822e009fdc3c417ec  dcache/libxml2-2.7.8.tar.gz' | sha256sum -c
 	$(untar) dcache/libxml2-*.tar.gz -C $(dir $@)
 	sed -i -e '/^#undef v\?snprintf$$/d' $(dir $@)/config.h.in
-	rm -r src/libxml2/test
-	rm -r src/libxml2/result
+	rm -r $(dir $@)/test
+	rm -r $(dir $@)/result
 	touch $(@)
 
 src/libxml2/config.status: src/libxml2/source-stamp
@@ -368,8 +368,8 @@ src/freetype/source-stamp:
 	$(wget) http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2
 	echo '8469fb8124764f85029cc8247c31e132a2c5e51084ddce2a44ea32ee4ae8347e  dcache/freetype-2.6.tar.bz2' | sha256sum -c
 	$(untar) dcache/freetype-2.6.tar.bz2 -C $(dir $@)
-	cd src/freetype/ && ./autogen.sh
-	rm -rf src/freetype/builds/unix/*.cache/
+	cd $(dir $@) && ./autogen.sh
+	rm -rf $(dir $@)/builds/unix/*.cache/
 	touch $(@)
 
 src/freetype/config.status: src/freetype/source-stamp
@@ -397,9 +397,9 @@ src/fontconfig/source-stamp:
 	$(wget) http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2
 	echo 'dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99  dcache/fontconfig-2.11.1.tar.bz2' | sha256sum -c
 	$(untar) dcache/fontconfig-2.11.1.tar.bz2 -C $(dir $@)
-	cd src/fontconfig/ && autoreconf -vfi
-	rm -rf src/fontconfig/*.cache/
-	sed -i -e 's/"append"/"prepend"/g' src/fontconfig/conf.d/*-urw-aliases.conf
+	cd $(dir $@) && autoreconf -vfi
+	rm -rf $(dir $@)/*.cache/
+	sed -i -e 's/"append"/"prepend"/g' $(dir $@)/conf.d/*-urw-aliases.conf
 	touch $(@)
 
 src/fontconfig/config.status: src/fontconfig/source-stamp
