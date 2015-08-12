@@ -1,8 +1,15 @@
 dnl | Copyright © 2008-2015 Jakub Wilk <jwilk@jwilk.net>
 dnl |
-dnl | This package is free software; you can redistribute it and/or modify
-dnl | it under the terms of the GNU General Public License as published by
-dnl | the Free Software Foundation; version 2 dated June, 1991.
+dnl | This file is part of pdfdjvu.
+dnl |
+dnl | pdf2djvu is free software; you can redistribute it and/or modify
+dnl | it under the terms of the GNU General Public License version 2 as
+dnl | published by the Free Software Foundation.
+dnl |
+dnl | pdf2djvu is distributed in the hope that it will be useful, but
+dnl | WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+dnl | General Public License for more details.
 
 AC_PREREQ(2.62)
 AC_INIT([pdf2djvu], [0.8.1], [https://bitbucket.org/jwilk/pdf2djvu/issues], [pdf2djvu], [http://jwilk.net/software/pdf2djvu])
