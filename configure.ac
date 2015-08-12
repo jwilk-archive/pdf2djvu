@@ -10,7 +10,7 @@ AC_CONFIG_AUX_DIR([tools])
 AC_CONFIG_MACRO_DIR([m4])
 AC_LANG([C++])
 
-# Checks for programs.
+# Checks for programs:
 
 AC_PROG_CXX
 AC_PROG_INSTALL
@@ -19,7 +19,7 @@ AC_PREPROC_IFELSE(
   [AC_CHECK_TOOL([WINDRES], [windres])]
 )
 
-# Checks for libraries.
+# Checks for libraries:
 
 PKG_CHECK_MODULES([DJVULIBRE], [ddjvuapi >= 3.5.21])
 djvulibre_bin_path=$($PKG_CONFIG --variable exec_prefix ddjvuapi)/bin
@@ -120,9 +120,7 @@ fi
 AM_GNU_GETTEXT([external], [need-ngettext])
 AM_GNU_GETTEXT_VERSION(0.17)
 
-# Checks for header files.
-
-# Checks for typedefs, structures, and compiler characteristics.
+# Checks for typedefs, structures, and compiler characteristics:
 
 AC_MSG_CHECKING([whether wchar_t stores Unicode])
 AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
@@ -159,19 +157,19 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
   ]
 )
 
-# Turn on compile warnings
+# Turn on compile warnings:
 
 P_MAYBE_ADD_CXXFLAG([-Wall])
 P_MAYBE_ADD_CXXFLAG([-Werror=overloaded-virtual])
 P_MAYBE_ADD_CXXFLAG([-Werror=narrowing])
 
-# Output files
+# Output files:
 
 AC_CONFIG_FILES([autoconf.mk])
 AC_CONFIG_HEADER([autoconf.hh])
 AC_OUTPUT
 
-# Final remarks
+# Final remarks:
 
 if test "$ax_cv_cxx_openmp" = "unknown"
 then
