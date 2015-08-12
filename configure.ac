@@ -124,7 +124,7 @@ AM_GNU_GETTEXT_VERSION(0.17)
 
 # Checks for typedefs, structures, and compiler characteristics.
 
-AC_MSG_CHECKING([for wchar_t encoding])
+AC_MSG_CHECKING([whether wchar_t stores Unicode])
 AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 
@@ -136,12 +136,12 @@ AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 #endif
 ]])],
   [
-    AC_MSG_RESULT([UTF-32 or UTF-16])
+    AC_MSG_RESULT([yes])
     have_unicode_wchar_t=yes
-    AC_DEFINE([HAVE_UNICODE_WCHAR_T], 1, [Define if wchar_t encoding is UTF-32 or UTF-16])
+    AC_DEFINE([HAVE_UNICODE_WCHAR_T], 1, [Define if wchar_t stores Unicode])
   ],
   [
-    AC_MSG_RESULT([unknown])
+    AC_MSG_RESULT([maybe])
     have_unicode_wchar_t=maybe
   ]
 )
@@ -223,9 +223,9 @@ if test "$have_unicode_wchar_t" = maybe
 then
   cat <<_ACEOF
 
-WARNING: pdf2djvu assumes that wchar_t encoding is UTF-32 or UTF-16.
+WARNING: pdf2djvu assumes that wchar_t stores Unicode characters.
 This might NOT be the case for your system.
-Please file a bug to $PACKAGE_BUGREPORT.
+Please file a bug at $PACKAGE_BUGREPORT.
 _ACEOF
 fi
 
