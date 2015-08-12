@@ -161,22 +161,6 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
 
 # Turn on compile warnings
 
-AC_DEFUN(
-  [P_MAYBE_ADD_CXXFLAG],
-  [
-    copy_CXXFLAGS="$CXXFLAGS"
-    CXXFLAGS="$CXXFLAGS $1"
-    AC_MSG_CHECKING([whether $CXX accepts $1])
-    AC_COMPILE_IFELSE(
-      [AC_LANG_PROGRAM()],
-      [AC_MSG_RESULT([yes])],
-      [
-        AC_MSG_RESULT([no])
-        CXXFLAGS=$copy_CXXFLAGS
-      ]
-    )
-  ]
-)
 P_MAYBE_ADD_CXXFLAG([-Wall])
 P_MAYBE_ADD_CXXFLAG([-Werror=overloaded-virtual])
 P_MAYBE_ADD_CXXFLAG([-Werror=narrowing])
