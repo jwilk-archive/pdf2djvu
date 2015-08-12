@@ -12,6 +12,11 @@ The following software is recommended:
 
 For the ``-j``/``--jobs`` option, the compiler must support OpenMP_.
 
+To run the tests, the following software is needed:
+
+* Python (≥ 2.6);
+* nose_
+
 .. _DjVuLibre:
    http://djvu.sourceforge.net/
 .. _poppler:
@@ -26,6 +31,8 @@ For the ``-j``/``--jobs`` option, the compiler must support OpenMP_.
    http://www.graphicsmagick.org/
 .. _OpenMP:
    http://openmp.org/
+.. _nose:
+   https://nose.readthedocs.org/
 
 ----
 
