@@ -23,7 +23,7 @@ To run the tests, the following software is needed:
 * Python (≥ 2.6);
 * nose_.
 
-.. ---------
+.. ---------------------------------------------------------------------
 
 .. _DjVuLibre:
    http://djvu.sourceforge.net/
