@@ -21,4 +21,18 @@ AC_DEFUN(
     ]
 )
 
+AC_DEFUN(
+    [P_MAYBE_ADD_CXXFLAGS],
+    [
+        m4_foreach(
+            [p_flag], [$@],
+            [m4_ifval(
+                p_flag,
+                [P_MAYBE_ADD_CXXFLAG([p_flag])],
+                []
+            )]
+        )
+    ]
+)
+
 dnl vim:ts=4 sts=4 sw=4 et ft=config

@@ -159,9 +159,11 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
 
 # Turn on compile warnings:
 
-P_MAYBE_ADD_CXXFLAG([-Wall])
-P_MAYBE_ADD_CXXFLAG([-Werror=overloaded-virtual])
-P_MAYBE_ADD_CXXFLAG([-Werror=narrowing])
+P_MAYBE_ADD_CXXFLAGS(
+  [-Wall],
+  [-Werror=overloaded-virtual],
+  [-Werror=narrowing],
+)
 
 # Output files:
 
