@@ -37,7 +37,7 @@ if sys.version_info >= (2, 7):
         assert_multi_line_equal,
         assert_regexp_matches,
     )
-    assert_multi_line_equal.im_class.maxDiff = None
+    type(assert_multi_line_equal.__self__).maxDiff = None
 else:
     def assert_in(x, c):
         assert_true(
