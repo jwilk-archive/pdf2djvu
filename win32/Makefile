@@ -181,6 +181,7 @@ src/poppler/source-stamp:
 	$(untar) dcache/poppler-*.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	cd $(dir $@) && autoreconf -vfi
+	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
 
 src/poppler/config.status: src/poppler/source-stamp
@@ -255,7 +256,7 @@ src/graphicsmagick/source-stamp:
 	echo '9045304d991776b6a37e1b45b9b6ef152593ada0d49bc744263565617cbf3c1f  dcache/GraphicsMagick-1.3.21.tar.xz' | sha256sum -c
 	$(untar) dcache/GraphicsMagick-1.3.21.tar.xz -C $(dir $@)
 	cd $(dir $@) && autoreconf -vfi
-	rm -rf $(dir $@)/*.cache/
+	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
 	touch $(@)
 
 src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
@@ -405,7 +406,7 @@ src/fontconfig/source-stamp:
 	echo 'dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99  dcache/fontconfig-2.11.1.tar.bz2' | sha256sum -c
 	$(untar) dcache/fontconfig-2.11.1.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && autoreconf -vfi
-	rm -rf $(dir $@)/*.cache/
+	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	sed -i -e 's/"append"/"prepend"/g' $(dir $@)/conf.d/*-urw-aliases.conf
 	touch $(@)
 
@@ -497,7 +498,7 @@ src/libjpeg/source-stamp:
 	$(untar) dcache/jpegsrc.v6b2.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/libjpeg quilt push -a
 	cd $(dir $@) && ACLOCAL=aclocal-1.11 AUTOMAKE=automake-1.11 autoreconf -vfi
-	rm -rf $(dir $@)/*.cache/
+	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
 
 src/libjpeg/config.status: src/libjpeg/source-stamp
