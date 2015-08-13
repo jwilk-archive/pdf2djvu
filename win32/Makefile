@@ -202,7 +202,6 @@ src/poppler/config.status: src/libjpeg/install-stamp
 		--disable-utils \
 		--disable-libpng \
 		--disable-compile-warnings
-	sed -i -e 's!^\(#define POPPLER_DATADIR\) .*!\1 "./poppler-data/"!' $(dir $@)/config.h
 
 src/poppler/build-stamp: src/poppler/config.status
 	$(MAKE) -C $(dir $@)

@@ -3,8 +3,9 @@ pdf2djvu (0.8.1) UNRELEASED; urgency=low
   * Fix --fg-colors=N when GraphicsMagick was compiled with QuantumDepth > 8.
   * Report GraphicsMagick's QuantumDepth in --version.
   * Document what software is required to run the tests.
+  * Windows: fix loading Poppler data files.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 12 Aug 2015 10:42:46 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 13 Aug 2015 13:34:11 +0200
 
 pdf2djvu (0.8) unstable; urgency=low
 
