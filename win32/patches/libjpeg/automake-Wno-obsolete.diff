@@ -1,4 +1,6 @@
-Pass -Wno-obsolete to automake
+Pass -Wno-obsolete to automake.
+
+Lat-Update: 2015-08-13
 
 --- a/configure.ac
 +++ b/configure.ac
