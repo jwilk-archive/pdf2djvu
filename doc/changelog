@@ -1,4 +1,4 @@
-pdf2djvu (0.8.1) UNRELEASED; urgency=low
+pdf2djvu (0.8.1) unstable; urgency=low
 
   * Fix “--fg-colors=N” when GraphicsMagick was compiled with
     QuantumDepth > 8.
@@ -8,7 +8,7 @@ pdf2djvu (0.8.1) UNRELEASED; urgency=low
   * Windows: fix loading Poppler data files.
   * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 13 Aug 2015 13:34:11 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 13 Aug 2015 17:48:55 +0200
 
 pdf2djvu (0.8) unstable; urgency=low
 
