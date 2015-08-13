@@ -179,7 +179,8 @@ src/poppler/source-stamp:
 	$(wget) http://poppler.freedesktop.org/poppler-0.18.4.tar.gz
 	echo '33421148cdc8e043da291dece2cce1cea6220d49a50c00c56d56d6435501d42e  dcache/poppler-0.18.4.tar.gz' | sha256sum -c
 	$(untar) dcache/poppler-*.tar.gz -C $(dir $@)
-	cd $(dir $@) && sed -i -e '/^SUBDIRS =/ s/ test / /' Makefile*
+	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
+	cd $(dir $@) && autoreconf -vfi
 	touch $(@)
 
 src/poppler/config.status: src/poppler/source-stamp
