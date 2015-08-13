@@ -1,9 +1,12 @@
 pdf2djvu (0.8.1) UNRELEASED; urgency=low
 
-  * Fix --fg-colors=N when GraphicsMagick was compiled with QuantumDepth > 8.
-  * Report GraphicsMagick's QuantumDepth in --version.
+  * Fix “--fg-colors=N” when GraphicsMagick was compiled with
+    QuantumDepth > 8.
+  * Report GraphicsMagick's QuantumDepth in “--version”.
+  * Build with “-Werror=narrowing”.
   * Document what software is required to run the tests.
   * Windows: fix loading Poppler data files.
+  * Improve the test suite.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 13 Aug 2015 13:34:11 +0200
 
@@ -201,6 +204,7 @@ pdf2djvu (0.7.12) unstable; urgency=low
   * Fix resolution detection.
   * Windows: honour console output encoding.
     https://bitbucket.org/jwilk/pdf2djvu/issue/64
+  * Build with “-Werror=overloaded-virtual”.
 
   [ Serhij Dubyk ]
   * Add Ukrainian translation.
