@@ -14,7 +14,7 @@
 # General Public License for more details.
 
 from common import (
-    assert_regexp_matches,
+    assert_regex,
     assert_is_none,
     assert_well_formed_xml,
     case,
@@ -34,6 +34,6 @@ class test(case):
         self.pdf2djvu().assert_()
         xmp = self.extract_xmp()
         assert_well_formed_xml(xmp)
-        assert_regexp_matches(xmp, '>image/vnd.djvu<')
+        assert_regex(xmp, '>image/vnd.djvu<')
 
 # vim:ts=4 sts=4 sw=4 et

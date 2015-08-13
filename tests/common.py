@@ -42,8 +42,8 @@ if sys.version_info >= (2, 7):
         assert_is_none,
         assert_is_not_none,
         assert_multi_line_equal,
-        assert_regexp_matches,
     )
+    from nose.tools import assert_regexp_matches as assert_regex
     type(assert_multi_line_equal.__self__).maxDiff = None
 else:
     def assert_in(x, c):
@@ -66,11 +66,11 @@ else:
     def assert_is_not_none(obj):
         assert_is_not(obj, None)
     assert_multi_line_equal = assert_equal
-    def assert_regexp_matches(text, regexp):
-        if isinstance(regexp, basestring):
-            regexp = re(regexp)
-        if not regexp.search(text):
-            message = "Regexp didn't match: {0!r} not found in {1!r}".format(regexp.pattern, text)
+    def assert_regex(text, regex):
+        if isinstance(regex, basestring):
+            regex = re(regex)
+        if not regex.search(text):
+            message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
             assert_true(False, msg=message)
 
 def assert_well_formed_xml(xml):
@@ -90,7 +90,7 @@ class ipc_result(object):
         if stderr is None:
             pass
         elif isinstance(stderr, re.type):
-            assert_regexp_matches(self.stderr, stderr)
+            assert_regex(self.stderr, stderr)
         else:
             assert_multi_line_equal(self.stderr, stderr)
         if rc is not None:
@@ -98,7 +98,7 @@ class ipc_result(object):
         if stdout is None:
             pass
         elif isinstance(stdout, re.type):
-            assert_regexp_matches(self.stdout, stdout)
+            assert_regex(self.stdout, stdout)
         else:
             assert_multi_line_equal(self.stdout, stdout)
 
@@ -243,7 +243,7 @@ __all__ = [
     'assert_is_none',
     'assert_is_not_none',
     'assert_multi_line_equal',
-    'assert_regexp_matches',
+    'assert_regex',
     # our own asserts:
     'assert_well_formed_xml',
     # helper classes:
