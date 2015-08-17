@@ -15,7 +15,7 @@
 
 import re
 
-from common import (
+from tools import (
     assert_not_equal,
     case,
 )

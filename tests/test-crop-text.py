@@ -15,7 +15,7 @@
 
 import re
 
-from common import (
+from tools import (
     case,
 )
 

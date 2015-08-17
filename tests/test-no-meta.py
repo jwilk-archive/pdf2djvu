@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2009-2012 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is part of pdfdjvu.
 #
@@ -13,7 +13,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
-from common import (
+from tools import (
     case,
 )
 

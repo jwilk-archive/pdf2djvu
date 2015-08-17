@@ -15,7 +15,7 @@
 
 import unicodedata
 
-from common import (
+from tools import (
     case,
     re,
 )
