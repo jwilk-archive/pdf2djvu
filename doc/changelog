@@ -1,3 +1,9 @@
+pdf2djvu (0.8.2) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 17 Aug 2015 15:52:10 +0200
+
 pdf2djvu (0.8.1) unstable; urgency=low
 
   * Fix “--fg-colors=N” when GraphicsMagick was compiled with
