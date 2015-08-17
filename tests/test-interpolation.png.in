@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding=UTF-8
 
-# Copyright © 2014 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2015 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is part of pdfdjvu.
 #
@@ -14,7 +14,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
-from common import checkboard
+from tools import checkboard
 
 image = checkboard(8, 8)
 image.save('test-interpolation.png')
