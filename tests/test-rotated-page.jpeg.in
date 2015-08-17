@@ -14,7 +14,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
-from common import rainbow
+from tools import rainbow
 
 image = rainbow(255, 100)
 image.save('test-rotated-page.jpeg')
