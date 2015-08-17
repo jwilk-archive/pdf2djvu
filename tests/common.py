@@ -42,8 +42,8 @@ if sys.version_info >= (2, 7):
         assert_is_none,
         assert_is_not_none,
         assert_multi_line_equal,
+        assert_regexp_matches as assert_regex,
     )
-    from nose.tools import assert_regexp_matches as assert_regex
     type(assert_multi_line_equal.__self__).maxDiff = None
 else:
     def assert_in(x, c):
