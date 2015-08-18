@@ -35,7 +35,7 @@ do
         --no-po-check) opt_po_check=; shift;;
         --print-name) opt_print_name=y; shift;;
         --) shift; break;;
-        *) printf '%s: internal error (%s)' "$0" "$1" >&2; exit 1;;
+        *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
     esac
 done
 
