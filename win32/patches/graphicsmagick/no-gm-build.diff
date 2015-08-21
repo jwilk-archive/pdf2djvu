@@ -1,0 +1,22 @@
+Don't use the GM_BUILD_* macros.
+
+Last-Update: 2015-08-21
+
+--- a/magick/command.c
++++ b/magick/command.c
+@@ -16981,6 +16981,7 @@
+ #endif /* defined(HasZLIB) */
+   PrintFeature("ZLIB", supported);
+ 
++#if 0
+ #if defined(GM_BUILD_HOST)
+   (void) fprintf(stdout,"\nHost type: %.1024s\n", GM_BUILD_HOST);
+ #endif /* defined(GM_BUILD_HOST) */
+@@ -17018,6 +17019,7 @@
+ #if defined(GM_BUILD_LIBS)
+   (void) fprintf(stdout,"  LIBS     = %.1024s\n", GM_BUILD_LIBS);
+ #endif /* defined(GM_BUILD_LIBS) */
++#endif
+ 
+ #if defined(_VISUALC_)
+ 

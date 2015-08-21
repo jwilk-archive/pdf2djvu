@@ -255,6 +255,7 @@ src/graphicsmagick/source-stamp:
 	$(wget) ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.21.tar.xz
 	echo '9045304d991776b6a37e1b45b9b6ef152593ada0d49bc744263565617cbf3c1f  dcache/GraphicsMagick-1.3.21.tar.xz' | sha256sum -c
 	$(untar) dcache/GraphicsMagick-1.3.21.tar.xz -C $(dir $@)
+	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
 	touch $(@)
@@ -291,7 +292,6 @@ src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
 			--without-png
 
 src/graphicsmagick/build-stamp: src/graphicsmagick/config.status
-	sed -i -e '/^#define GM_BUILD_/d' $(dir $@)/magick/magick_config.h
 	$(MAKE) -C $(dir $@)
 	touch $(@)
 
