@@ -607,7 +607,7 @@ pdf2djvu (0.4.0) unstable; urgency=low
   * Don't crash on broken annotations.
   * Ensure that each character width is ≥ 1 pixel.
     Thanks to Victor Ivrii and Christian Ohm for bug reports.
-  * Do process I/O with pstreams, rather than with system(3) calls.
+  * Do process I/O with PStreams, rather than with system(3) calls.
   * More verbose error messages while option processing.
   * Include ")" and "\" in the text layer.
 
