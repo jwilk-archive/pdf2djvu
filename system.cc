@@ -563,7 +563,9 @@ void Command::call(std::ostream *my_stdout, bool quiet)
   int status;
   FILE *file;
   {
-    const std::string &command_line = argv_to_command_line(this->argv);
+    std::string command_line = argv_to_command_line(this->argv);
+    if (quiet)
+      command_line += " 2>/dev/null";
     file = ::popen(command_line.c_str(), "r");
   }
   if (file != NULL)
