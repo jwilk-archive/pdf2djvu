@@ -305,12 +305,54 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
-#if !HAVE_PSTREAMS
+#if HAVE_PSTREAMS
+
+void Command::call(std::ostream *my_stdout, bool quiet)
+{
+  int status;
+  redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
+  if (!xsystem.rdbuf()->error())
+  {
+    if (my_stdout != NULL)
+    {
+      xsystem.out();
+      copy_stream(xsystem, *my_stdout, false);
+    }
+    {
+      xsystem.err();
+      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
+    }
+    xsystem.close();
+  }
+  status = xsystem.rdbuf()->status();
+  if (status != 0)
+  {
+    std::string message;
+    if (WIFEXITED(status))
+    {
+      message = string_printf(
+        _("External command \"%s ...\" failed with exit code %u"),
+        this->command.c_str(),
+        static_cast<unsigned int>(WEXITSTATUS(status))
+      );
+    }
+    else
+    {
+      message = string_printf(
+        _("External command \"%s ...\" failed"),
+        this->command.c_str()
+      );
+    }
+    throw CommandFailed(message);
+  }
+}
+
+#elif WIN32
+
 static const std::string argv_to_command_line(const std::vector<std::string> &argv)
 /* Translate a sequence of arguments into a command line string. */
 {
   std::ostringstream buffer;
-#if WIN32
   /* Using the same rules as the MS C runtime:
    *
    * 1) Arguments are delimited by white space, which is either a space or a
@@ -366,72 +408,8 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
       buffer << '"';
     buffer << ' ';
   }
-#else
-  /* Assume POSIX shell. */
-  for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
-  {
-    buffer << "'";
-    if (parg->find("\'") == std::string::npos)
-      buffer << *parg;
-    else
-      for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++)
-      {
-        if (*pch == '\'')
-          buffer << "'\\''";
-        else
-          buffer << *pch;
-      }
-    buffer << "' ";
-  }
-#endif
   return buffer.str();
 }
-#endif
-
-
-#if HAVE_PSTREAMS
-
-void Command::call(std::ostream *my_stdout, bool quiet)
-{
-  int status;
-  redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
-  if (!xsystem.rdbuf()->error())
-  {
-    if (my_stdout != NULL)
-    {
-      xsystem.out();
-      copy_stream(xsystem, *my_stdout, false);
-    }
-    {
-      xsystem.err();
-      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
-    }
-    xsystem.close();
-  }
-  status = xsystem.rdbuf()->status();
-  if (status != 0)
-  {
-    std::string message;
-    if (WIFEXITED(status))
-    {
-      message = string_printf(
-        _("External command \"%s ...\" failed with exit code %u"),
-        this->command.c_str(),
-        static_cast<unsigned int>(WEXITSTATUS(status))
-      );
-    }
-    else
-    {
-      message = string_printf(
-        _("External command \"%s ...\" failed"),
-        this->command.c_str()
-      );
-    }
-    throw CommandFailed(message);
-  }
-}
-
-#elif WIN32
 
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
@@ -557,6 +535,28 @@ void Command::call(std::ostream *my_stdout, bool quiet)
 }
 
 #else
+
+static const std::string argv_to_command_line(const std::vector<std::string> &argv)
+/* Translate a sequence of arguments into a command line string. */
+{
+  std::ostringstream buffer;
+  for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++)
+  {
+    buffer << "'";
+    if (parg->find("\'") == std::string::npos)
+      buffer << *parg;
+    else
+      for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++)
+      {
+        if (*pch == '\'')
+          buffer << "'\\''";
+        else
+          buffer << *pch;
+      }
+    buffer << "' ";
+  }
+  return buffer.str();
+}
 
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
