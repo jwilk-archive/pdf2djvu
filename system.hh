@@ -41,6 +41,11 @@ public:
   { };
 };
 
+void throw_posix_error(const std::string &context);
+#ifdef WIN32
+void throw_win32_error(const std::string &context);
+#endif
+
 class NoSuchFileOrDirectory : public POSIXError
 {
 public:
@@ -77,8 +82,14 @@ public:
   Command &operator <<(const std::string& arg);
   Command &operator <<(const File& arg);
   Command &operator <<(int i);
-  void operator()(std::ostream &my_stdout, bool quiet = false);
-  void operator()(bool quiet = false);
+  void operator()(std::ostream &my_stdout, bool quiet = false)
+  {
+    this->call(&my_stdout, quiet);
+  }
+  void operator()(bool quiet = false)
+  {
+    this->call(NULL, quiet);
+  }
   static std::string filter(const std::string &command_line, const std::string string);
 };
 
@@ -236,6 +247,9 @@ std::string absolute_path(const std::string &path, const std::string &dir_name);
 bool is_same_file(const std::string &path1, const std::string &path2);
 
 void prevent_pop_out();
+
+extern const char unix_path_separator;
+extern const char path_separator;
 
 #endif
 

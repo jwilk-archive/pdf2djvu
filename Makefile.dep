@@ -70,6 +70,11 @@ string-format.o: autoconf.hh
 string-format.o: i18n.hh
 string-format.o: string-format.cc
 string-format.o: string-format.hh
+sys-command-posix.o: autoconf.hh
+sys-command-posix.o: i18n.hh
+sys-command-posix.o: sys-command-posix.cc
+sys-command-posix.o: system.hh
+sys-command-win32.o: sys-command-win32.cc
 system.o: autoconf.hh
 system.o: debug.hh
 system.o: i18n.hh
