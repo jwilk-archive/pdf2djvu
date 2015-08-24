@@ -34,6 +34,7 @@
 #include <windows.h>
 #endif
 
+#include "array.hh"
 #include "system.hh"
 #include "debug.hh"
 #include "i18n.hh"
@@ -276,35 +277,6 @@ void Directory::close(void)
   if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
     throw_posix_error(this->name);
 }
-
-/* class Array<tp>
- * ===============
- */
-
-template <typename tp>
-class Array
-{
-private:
-  Array(const Array &); // not defined
-  Array& operator=(const Array &); // not defined
-protected:
-  tp *buffer;
-public:
-  explicit Array(size_t size)
-  {
-    buffer = new tp[size];
-  }
-
-  operator tp * ()
-  {
-    return this->buffer;
-  }
-
-  ~Array() throw ()
-  {
-    delete[] this->buffer;
-  }
-};
 
 
 /* class TemporaryPathTemplate : Array<char>
