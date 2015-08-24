@@ -397,17 +397,19 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 
 #if HAVE_GRAPHICSMAGICK
 
+class GraphicsMagickInitializer
+{
+public:
+  GraphicsMagickInitializer(void)
+  {
+    Magick::InitializeMagick("");
+  }
+};
+
 GraphicsMagickQuantizer::GraphicsMagickQuantizer(const Config &config)
 : Quantizer(config)
 {
-  static bool initialized = false;
-  if (!initialized)
-  {
-    /* Call to InitializeMagick() is obligatory with GraphicsMagick ≥ 1.3.8.
-     */
-    Magick::InitializeMagick("");
-    initialized = true;
-  }
+  static GraphicsMagickInitializer gm_init;
 }
 
 static inline MagickLib::Quantum c2q(unsigned char c)
