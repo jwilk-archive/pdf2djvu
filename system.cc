@@ -33,16 +33,14 @@
 #if WIN32
 #include <climits>
 #include <windows.h>
+#else
+#include <sys/wait.h>
+#include <unistd.h>
 #endif
 
 #include "system.hh"
 #include "debug.hh"
 #include "i18n.hh"
-
-#if !HAVE_PSTREAMS && HAVE_FORK
-#include <sys/wait.h>
-#include <unistd.h>
-#endif
 
 #if USE_MINGW_ANSI_STDIO
 #define vsnprintf __mingw_vsnprintf
@@ -305,49 +303,7 @@ void Command::operator()(bool quiet)
   this->call(NULL, quiet);
 }
 
-#if HAVE_PSTREAMS
-
-void Command::call(std::ostream *my_stdout, bool quiet)
-{
-  int status;
-  redi::ipstream xsystem(this->command, this->argv, redi::pstream::pstdout | redi::pstream::pstderr);
-  if (!xsystem.rdbuf()->error())
-  {
-    if (my_stdout != NULL)
-    {
-      xsystem.out();
-      copy_stream(xsystem, *my_stdout, false);
-    }
-    {
-      xsystem.err();
-      copy_stream(xsystem, quiet ? dev_null : std::cerr, false);
-    }
-    xsystem.close();
-  }
-  status = xsystem.rdbuf()->status();
-  if (status != 0)
-  {
-    std::string message;
-    if (WIFEXITED(status))
-    {
-      message = string_printf(
-        _("External command \"%s ...\" failed with exit code %u"),
-        this->command.c_str(),
-        static_cast<unsigned int>(WEXITSTATUS(status))
-      );
-    }
-    else
-    {
-      message = string_printf(
-        _("External command \"%s ...\" failed"),
-        this->command.c_str()
-      );
-    }
-    throw CommandFailed(message);
-  }
-}
-
-#elif WIN32
+#if WIN32
 
 static const std::string argv_to_command_line(const std::vector<std::string> &argv)
 /* Translate a sequence of arguments into a command line string. */

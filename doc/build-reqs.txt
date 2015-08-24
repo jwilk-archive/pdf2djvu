@@ -12,7 +12,6 @@ The following software is required to build *pdf2djvu*:
 
 The following software is recommended:
 
-* PStreams_;
 * Libxslt_, for correctly dealing with XMP metadata;
 * GraphicsMagick_, for the ``--fg-colors=N`` option.
 

@@ -86,44 +86,6 @@ then
   )
 fi
 
-AC_ARG_WITH([pstreams], [AS_HELP_STRING([--without-pstreams], [do not use the PStreams library])])
-have_pstreams=maybe
-AC_CHECK_FUNC([fork],
-  [AC_DEFINE([HAVE_FORK], 1, [Define if fork(3) is available.])],
-  [have_pstreams=no]
-)
-if test "$with_pstreams" != "no"
-then
-  AC_MSG_CHECKING([for PStreams])
-  if test "$have_pstreams" = "maybe"
-  then
-    AC_PREPROC_IFELSE(
-      [AC_LANG_SOURCE([[#include <pstream.h>]])],
-      [
-        AC_DEFINE([HAVE_PSTREAM_H], 1, [Define if you have the <pstream.h> file])
-        have_pstreams=yes
-      ]
-    )
-  fi
-  if test "$have_pstreams" = "maybe"
-  then
-    AC_PREPROC_IFELSE(
-      [AC_LANG_SOURCE([[#include <pstreams/pstream.h>]])],
-      [
-        AC_DEFINE([HAVE_PSTREAMS_PSTREAM_H], 1, [Define if you have the <pstreams/pstream.h> file])
-        have_pstreams=yes
-      ]
-    )
-  fi
-  if test "$have_pstreams" = "yes"
-  then
-    AC_DEFINE([HAVE_PSTREAMS], 1, [Define if you have PStreams installed and usable])
-    AC_MSG_RESULT([yes])
-  else
-    AC_MSG_RESULT([no (or not usable)])
-  fi
-fi
-
 AM_GNU_GETTEXT([external], [need-ngettext])
 AM_GNU_GETTEXT_VERSION(0.17)
 

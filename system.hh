@@ -19,20 +19,9 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 #include "autoconf.hh"
-
-#if HAVE_PSTREAMS
-#  if HAVE_PSTREAM_H
-#    include <pstream.h>
-#  endif
-#  if HAVE_PSTREAMS_PSTREAM_H
-#    include <pstreams/pstream.h>
-#  endif
-#else
-#include <vector>
-#endif
-
 
 class OSError : public std::runtime_error
 {
@@ -74,11 +63,7 @@ class Command
 {
 protected:
   std::string command;
-#if HAVE_PSTREAMS
-  redi::pstreams::argv_type argv;
-#else
   std::vector<std::string> argv;
-#endif
   void call(std::ostream *my_stdout, bool quiet = false);
 public:
   class CommandFailed : public std::runtime_error

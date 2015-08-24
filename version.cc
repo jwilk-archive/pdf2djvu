@@ -74,17 +74,6 @@ static std::string get_gm_version()
 
 #endif
 
-#if HAVE_PSTREAMS
-static std::string get_pstreams_version()
-{
-    return string_printf("%d.%d.%d",
-        PSTREAMS_VERSION >> 8,
-        (PSTREAMS_VERSION >> 4) & 0xF,
-        PSTREAMS_VERSION & 0xF
-    );
-}
-#endif
-
 const std::string get_version()
 {
     std::ostringstream stream;
@@ -97,9 +86,6 @@ const std::string get_version()
 #if HAVE_LIBXSLT
     stream << ", GNOME XSLT " << get_libxslt_version();
     stream << ", GNOME XML " << get_libxml2_version();
-#endif
-#if HAVE_PSTREAMS
-    stream << ", PStreams " << get_pstreams_version();
 #endif
     stream << ")";
     return stream.str();
@@ -117,9 +103,6 @@ const std::string get_multiline_version()
 #if HAVE_LIBXSLT
     stream << "+ GNOME XSLT " << get_libxslt_version() << "\n";
     stream << "+ GNOME XML " << get_libxml2_version() << "\n";
-#endif
-#if HAVE_PSTREAMS
-    stream << "+ PStreams " << get_pstreams_version() << "\n";
 #endif
     return stream.str();
 }
