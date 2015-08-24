@@ -4,8 +4,9 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   * Make GraphicsMagick initialization thread-safe.
   * Rewrite the subprocess handling code to be thread-safe.
     Remove PStreams support.
+  * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 24 Aug 2015 23:42:44 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 25 Aug 2015 00:20:29 +0200
 
 pdf2djvu (0.8.1) unstable; urgency=low
 

@@ -137,21 +137,21 @@ msgstr "Błędny format pliku wykonywalnego"
 msgid "External command \"%s ...\" failed"
 msgstr "Zewnętrzne polecenie “%s …” nie powiodło się"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s ...\" failed with exit status %lu"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się; kod wyjścia %u"
+msgstr "Zewnętrzne polecenie “%s …” nie powiodło się; status wyjścia %lu"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s ...\" failed: %s"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się"
+msgstr "Zewnętrzne polecenie “%s …” nie powiodło się: %s"
 
 #, c-format
 msgid "External command \"%s\" failed"
 msgstr "Zewnętrzne polecenie “%s” nie powiodło się"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" failed with exit status %lu"
-msgstr "Zewnętrzne polecenie “%s” nie powiodło się; kod wyjścia %u"
+msgstr "Zewnętrzne polecenie “%s” nie powiodło się; status wyjścia %lu"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
