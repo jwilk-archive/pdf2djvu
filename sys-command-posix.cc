@@ -278,10 +278,11 @@ std::string Command::filter(const std::string &command_line, const std::string s
         if (status != 0) {
             std::string message;
             if (WIFEXITED(status)) {
+                unsigned int exit_status = WEXITSTATUS(status);
                 message = string_printf(
                     _("External command \"%s\" failed with exit code %u"),
                     command_line.c_str(),
-                    static_cast<unsigned int>(WEXITSTATUS(status))
+                    exit_status
                 );
             } else {
                 message = string_printf(
