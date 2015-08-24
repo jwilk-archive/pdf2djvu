@@ -206,10 +206,10 @@ void Command::call(std::ostream *my_stdout, bool quiet)
     }
     fd_close(error_pipe[0]);
     if (WIFEXITED(wait_status)) {
-        unsigned int exit_status = WEXITSTATUS(wait_status);
+        unsigned long exit_status = WEXITSTATUS(wait_status);
         if (exit_status != 0) {
             std::string message = string_printf(
-                _("External command \"%s ...\" failed with exit code %u"),
+                _("External command \"%s ...\" failed with exit code %lu"),
                 this->command.c_str(),
                 exit_status
             );
@@ -278,9 +278,9 @@ std::string Command::filter(const std::string &command_line, const std::string s
         if (status != 0) {
             std::string message;
             if (WIFEXITED(status)) {
-                unsigned int exit_status = WEXITSTATUS(status);
+                unsigned long exit_status = WEXITSTATUS(status);
                 message = string_printf(
-                    _("External command \"%s\" failed with exit code %u"),
+                    _("External command \"%s\" failed with exit code %lu"),
                     command_line.c_str(),
                     exit_status
                 );
