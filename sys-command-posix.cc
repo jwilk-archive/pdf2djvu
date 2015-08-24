@@ -108,6 +108,46 @@ static void report_posix_error(int fd, const char *context)
     write(fd, context, strlen(context));
 }
 
+const std::string signame(int sig)
+{
+    switch (sig) {
+#define s(n) case n: return "" # n "";
+    /* POSIX.1-1990: */
+    s(SIGHUP);
+    s(SIGINT);
+    s(SIGQUIT);
+    s(SIGILL);
+    s(SIGABRT);
+    s(SIGFPE);
+    s(SIGKILL);
+    s(SIGSEGV);
+    s(SIGPIPE);
+    s(SIGALRM);
+    s(SIGTERM);
+    s(SIGUSR1);
+    s(SIGUSR2);
+    s(SIGCHLD);
+    s(SIGCONT);
+    s(SIGSTOP);
+    s(SIGTSTP);
+    s(SIGTTIN);
+    s(SIGTTOU);
+    /* SUSv2 and POSIX.1-2001: */
+    s(SIGBUS);
+    s(SIGPOLL);
+    s(SIGPROF);
+    s(SIGSYS);
+    s(SIGTRAP);
+    s(SIGURG);
+    s(SIGVTALRM);
+    s(SIGXCPU);
+    s(SIGXFSZ);
+#undef s
+    default:
+        return string_printf(_("signal %d"), sig);
+    }
+}
+
 void Command::call(std::ostream *my_stdout, bool quiet)
 {
     int rc;
@@ -216,9 +256,11 @@ void Command::call(std::ostream *my_stdout, bool quiet)
             throw CommandFailed(message);
         }
     } else if (WIFSIGNALED(wait_status)) {
+        int sig = WTERMSIG(wait_status);
         std::string message = string_printf(
-            _("External command \"%s ...\" failed"),
-            this->command.c_str()
+            _("External command \"%s ...\" was terminated by %s"),
+            this->command.c_str(),
+            signame(sig).c_str()
         );
         throw CommandFailed(message);
     } else {
@@ -284,11 +326,17 @@ std::string Command::filter(const std::string &command_line, const std::string s
                     command_line.c_str(),
                     exit_status
                 );
-            } else {
+            } else if (WIFSIGNALED(status)) {
+                int sig = WTERMSIG(status);
                 message = string_printf(
-                    _("External command \"%s\" failed"),
-                    command_line.c_str()
+                    _("External command \"%s\" was terminated by %s"),
+                    command_line.c_str(),
+                    signame(sig)
                 );
+            } else {
+                // should not happen
+                errno = EINVAL;
+                throw_posix_error("wait()");
             }
             throw CommandFailed(message);
         }
