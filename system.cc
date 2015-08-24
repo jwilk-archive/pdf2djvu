@@ -35,9 +35,9 @@
 #endif
 
 #include "array.hh"
-#include "system.hh"
 #include "debug.hh"
 #include "i18n.hh"
+#include "system.hh"
 
 #if USE_MINGW_ANSI_STDIO
 #define vsnprintf __mingw_vsnprintf
