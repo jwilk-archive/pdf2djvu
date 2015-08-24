@@ -314,7 +314,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
                 stream.write(buffer, n);
         }
         int status;
-        writer_pid = wait(&status);
+        writer_pid = waitpid(writer_pid, &status, 0);
         if (writer_pid == static_cast<pid_t>(-1))
             throw_posix_error("wait");
         if (status != 0) {
