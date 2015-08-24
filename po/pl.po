@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-05-24 18:45+0200\n"
+"POT-Creation-Date: 2015-08-25 00:10+0200\n"
 "PO-Revision-Date: 2015-05-24 18:46+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -137,16 +137,20 @@ msgstr "Błędny format pliku wykonywalnego"
 msgid "External command \"%s ...\" failed"
 msgstr "Zewnętrzne polecenie “%s …” nie powiodło się"
 
-#, c-format
-msgid "External command \"%s ...\" failed with exit code %u"
+#, fuzzy, c-format
+msgid "External command \"%s ...\" failed with exit status %lu"
 msgstr "Zewnętrzne polecenie “%s …” nie powiodło się; kod wyjścia %u"
+
+#, fuzzy, c-format
+msgid "External command \"%s ...\" failed: %s"
+msgstr "Zewnętrzne polecenie “%s …” nie powiodło się"
 
 #, c-format
 msgid "External command \"%s\" failed"
 msgstr "Zewnętrzne polecenie “%s” nie powiodło się"
 
-#, c-format
-msgid "External command \"%s\" failed with exit code %u"
+#, fuzzy, c-format
+msgid "External command \"%s\" failed with exit status %lu"
 msgstr "Zewnętrzne polecenie “%s” nie powiodło się; kod wyjścia %u"
 
 #. L10N: Windows error message for EEXIST
