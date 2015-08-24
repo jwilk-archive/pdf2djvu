@@ -204,7 +204,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
             status = -1;
         else if (exit_code != 0) {
             std::string message = string_printf(
-                _("External command \"%s ...\" failed with exit code %lu"),
+                _("External command \"%s ...\" failed with exit status %lu"),
                 this->command.c_str(),
                 exit_code
             );
@@ -343,7 +343,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
             status = -1;
         else if (exit_code != 0) {
             std::string message = string_printf(
-                _("External command \"%s\" failed with exit code %lu"),
+                _("External command \"%s\" failed with exit status %lu"),
                 command_line.c_str(),
                 exit_code
             );
