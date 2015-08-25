@@ -62,12 +62,14 @@ Command &Command::operator <<(int i)
 
 static int get_max_fd()
 {
-    int max_fd_per_thread = 32; // rough estimate
+    int max_fd_per_thread = 16; // rough estimate
+    int max_fd = 16;
 #if _OPENMP
-    return max_fd_per_thread * omp_get_num_threads();
+    max_fd += max_fd_per_thread * omp_get_num_threads();
 #else
-    return max_fd_per_thread;
+    max_fd += max_fd_per_thread;
 #endif
+    return max_fd;
 }
 
 static void fd_close(int fd)
