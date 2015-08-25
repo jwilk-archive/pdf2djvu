@@ -15,6 +15,7 @@
 
 #if !WIN32
 
+#include <cassert>
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
@@ -23,6 +24,7 @@
 #include <vector>
 
 #include <fcntl.h>
+#include <poll.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -75,11 +77,22 @@ static void fd_close(int fd)
         throw_posix_error("close()");
 }
 
-static void mkfifo(int fd[2])
+static void mkfifo(int fd[2], int flags=0)
 {
     int rc = pipe(fd);
     if (rc < 0)
         throw_posix_error("pipe()");
+    if (!flags)
+        return;
+    for (int i = 0; i < 2; i++) {
+        int fdflags = fcntl(fd[i], F_GETFD);
+        if (fdflags < 0)
+            throw_posix_error("fcntl()");
+        fdflags |= flags;
+        int rc = fcntl(fd[i], F_SETFD, fdflags);
+        if (rc < 0)
+            throw_posix_error("fcntl()");
+    }
 }
 
 static int fd_set_cloexec(int fd_from, int fd_to)
@@ -148,18 +161,20 @@ const std::string signame(int sig)
     }
 }
 
-void Command::call(std::ostream *my_stdout, bool quiet)
+void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
 {
     int rc;
     int max_fd = get_max_fd();
-    int stdio_pipe[2];
+    int stdout_pipe[2];
+    int stdin_pipe[2];
     int error_pipe[2];
     size_t argc = this->argv.size();
     Array<const char *> c_argv(argc + 1);
     for (size_t i = 0; i < argc; i++)
         c_argv[i] = argv[i].c_str();
     c_argv[argc] = NULL;
-    mkfifo(stdio_pipe);
+    mkfifo(stdout_pipe);
+    mkfifo(stdin_pipe, O_NONBLOCK);
     mkfifo(error_pipe);
     pid_t pid = fork();
     if (pid < 0)
@@ -169,12 +184,17 @@ void Command::call(std::ostream *my_stdout, bool quiet)
          * At this point, only async-singal-safe functions can be used.
          * See the signal(7) manpage for the full list.
          */
-        rc = dup2(stdio_pipe[1], STDOUT_FILENO);
+        rc = dup2(stdin_pipe[0], STDIN_FILENO);
         if (rc < 0) {
             report_posix_error(error_pipe[1], "dup2()");
             abort();
         }
-        if (quiet) {
+        rc = dup2(stdout_pipe[1], STDOUT_FILENO);
+        if (rc < 0) {
+            report_posix_error(error_pipe[1], "dup2()");
+            abort();
+        }
+        if (!stderr_) {
             int fd = open("/dev/null", O_WRONLY);
             if (fd < 0) {
                 report_posix_error(error_pipe[1], "open()");
@@ -200,19 +220,57 @@ void Command::call(std::ostream *my_stdout, bool quiet)
         abort();
     }
     /* The parent: */
-    fd_close(stdio_pipe[1]);
+    fd_close(stdin_pipe[0]);
+    fd_close(stdout_pipe[1]);
     fd_close(error_pipe[1]);
     char buffer[BUFSIZ];
-    while (1) {
-        ssize_t nbytes = read(stdio_pipe[0], buffer, sizeof buffer);
-        if (nbytes < 0)
-            throw_posix_error("read()");
-        if (nbytes == 0)
-            break;
-        if (my_stdout)
-            my_stdout->write(buffer, nbytes);
+    struct pollfd fds[2];
+    if (stdin_)
+        fds[0].fd = stdin_pipe[1];
+    else {
+        fds[0].fd = -1;
+        fd_close(stdin_pipe[1]);
     }
-    fd_close(stdio_pipe[0]);
+    fds[0].events = POLLOUT;
+    fds[1].fd = stdout_pipe[0];
+    fds[1].events = POLLIN;
+    while (1) {
+        rc = poll(fds, 2, -1);
+        if (rc < 0)
+            throw_posix_error("poll()");
+        if (fds[0].revents) {
+            assert(stdin_);
+            std::streamsize rbytes = stdin_->readsome(buffer, sizeof buffer);
+            if (rbytes == 0) {
+                fd_close(stdin_pipe[1]);
+                fds[0].fd = -1;
+            } else {
+                ssize_t wbytes = write(stdin_pipe[1], buffer, rbytes);
+                if (wbytes < 0)
+                    throw_posix_error("write()");
+                stdin_->seekg(wbytes - rbytes, std::ios_base::cur);
+            }
+        }
+        if (fds[1].revents) {
+            ssize_t nbytes = read(stdout_pipe[0], buffer, sizeof buffer);
+            if (nbytes < 0)
+                throw_posix_error("read()");
+            if (nbytes == 0)
+                break;
+            if (stdout_)
+                stdout_->write(buffer, nbytes);
+        }
+    }
+    if (stdin_) {
+        std::streamsize rbytes = stdin_->readsome(buffer, 1);
+        if (rbytes > 0) {
+            // The child process terminated,
+            // even though it didn't receive the complete input.
+            errno = EPIPE;
+            throw_posix_error("write()");
+        }
+    }
+    fd_close(stdout_pipe[0]);
     int wait_status;
     pid = waitpid(pid, &wait_status, 0);
     if (pid < 0)
@@ -273,77 +331,12 @@ void Command::call(std::ostream *my_stdout, bool quiet)
 
 std::string Command::filter(const std::string &command_line, const std::string string)
 {
-    int rc;
-    int pipe_fds[2];
-    rc = pipe(pipe_fds);
-    if (rc != 0)
-        throw_posix_error("pipe");
-    pid_t writer_pid = fork();
-    if (writer_pid == -1)
-        throw_posix_error("fork");
-    else if (writer_pid == 0) {
-        /* Writer: */
-        close(pipe_fds[0]); /* Deliberately ignore errors. */
-        rc = dup2(pipe_fds[1], STDOUT_FILENO);
-        if (rc == -1)
-            throw_posix_error("dup2");
-        FILE *fp = popen(command_line.c_str(), "w");
-        if (fp == NULL)
-            throw_posix_error("popen");
-        if (fputs(string.c_str(), fp) == EOF)
-            throw_posix_error("fputs");
-        rc = pclose(fp);
-        if (rc == -1)
-            throw_posix_error("pclose");
-        else if (WIFEXITED(rc))
-            exit(WEXITSTATUS(rc));
-        else
-            exit(-1);
-        exit(rc);
-    } else {
-        /* Main process: */
-        close(pipe_fds[1]); /* Deliberately ignore errors. */
-        std::ostringstream stream;
-        while (1) {
-            char buffer[BUFSIZ];
-            ssize_t n = read(pipe_fds[0], buffer, sizeof buffer);
-            if (n < 0)
-                throw_posix_error("read");
-            else if (n == 0)
-                break;
-            else
-                stream.write(buffer, n);
-        }
-        int status;
-        writer_pid = waitpid(writer_pid, &status, 0);
-        if (writer_pid == static_cast<pid_t>(-1))
-            throw_posix_error("wait");
-        if (status != 0) {
-            std::string message;
-            if (WIFEXITED(status)) {
-                unsigned long exit_status = WEXITSTATUS(status);
-                message = string_printf(
-                    _("External command \"%s\" failed with exit status %lu"),
-                    command_line.c_str(),
-                    exit_status
-                );
-            } else if (WIFSIGNALED(status)) {
-                int sig = WTERMSIG(status);
-                message = string_printf(
-                    _("External command \"%s\" was terminated by %s"),
-                    command_line.c_str(),
-                    signame(sig)
-                );
-            } else {
-                // should not happen
-                errno = EINVAL;
-                throw_posix_error("wait()");
-            }
-            throw CommandFailed(message);
-        }
-        return stream.str();
-    }
-    return string; /* Should not really happen. */
+    std::istringstream stdin_(string);
+    std::ostringstream stdout_;
+    Command cmd("sh");
+    cmd << "-c" << command_line;
+    cmd.call(&stdin_, &stdout_, true);
+    return stdout_.str();
 }
 
 #endif

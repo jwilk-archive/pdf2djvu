@@ -15,6 +15,7 @@
 
 #if WIN32
 
+#include <cassert>
 #include <sstream>
 
 #include <windows.h>
@@ -109,8 +110,9 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
     return buffer.str();
 }
 
-void Command::call(std::ostream *my_stdout, bool quiet)
+void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
 {
+    assert(stdin_ == NULL); // stdin support not implemented yet
     int status = 0;
     unsigned long rc;
     PROCESS_INFORMATION process_info;
@@ -132,7 +134,7 @@ void Command::call(std::ostream *my_stdout, bool quiet)
         else
             throw_win32_error("SetHandleInformation");
     }
-    if (!quiet) {
+    if (stderr_) {
         error_handle = GetStdHandle(STD_ERROR_HANDLE);;
         if (error_handle != INVALID_HANDLE_VALUE) {
             rc = DuplicateHandle(
@@ -190,8 +192,8 @@ void Command::call(std::ostream *my_stdout, bool quiet)
                 status = -(GetLastError() != ERROR_BROKEN_PIPE);
                 break;
             }
-            if (my_stdout != NULL)
-                my_stdout->write(buffer, nbytes);
+            if (stdout_ != NULL)
+                stdout_->write(buffer, nbytes);
         }
         CloseHandle(read_end); /* ignore errors */
         rc = WaitForSingleObject(process_info.hProcess, INFINITE);

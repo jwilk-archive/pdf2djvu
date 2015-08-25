@@ -68,7 +68,7 @@ class Command
 protected:
   std::string command;
   std::vector<std::string> argv;
-  void call(std::ostream *my_stdout, bool quiet = false);
+  void call(std::istream *stdin_, std::ostream *stdout_, bool stderr_);
 public:
   class CommandFailed : public std::runtime_error
   {
@@ -81,13 +81,13 @@ public:
   Command &operator <<(const std::string& arg);
   Command &operator <<(const File& arg);
   Command &operator <<(int i);
-  void operator()(std::ostream &my_stdout, bool quiet = false)
+  void operator()(std::ostream &stdout_, bool quiet=false)
   {
-    this->call(&my_stdout, quiet);
+    this->call(NULL, &stdout_, !quiet);
   }
-  void operator()(bool quiet = false)
+  void operator()(bool quiet=false)
   {
-    this->call(NULL, quiet);
+    this->call(NULL, NULL, !quiet);
   }
   static std::string filter(const std::string &command_line, const std::string string);
 };
