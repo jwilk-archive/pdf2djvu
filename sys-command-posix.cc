@@ -77,21 +77,29 @@ static void fd_close(int fd)
         throw_posix_error("close()");
 }
 
-static void mkfifo(int fd[2], int flags=0)
+static void mkfifo(int fd[2], int add_flags=0)
 {
     int rc = pipe(fd);
     if (rc < 0)
         throw_posix_error("pipe()");
-    if (!flags)
-        return;
     for (int i = 0; i < 2; i++) {
-        int fdflags = fcntl(fd[i], F_GETFD);
-        if (fdflags < 0)
-            throw_posix_error("fcntl()");
-        fdflags |= flags;
-        int rc = fcntl(fd[i], F_SETFD, fdflags);
+        // file descriptor flags:
+        int rc = fcntl(fd[i], F_SETFD, FD_CLOEXEC);
         if (rc < 0)
-            throw_posix_error("fcntl()");
+            throw_posix_error("fcntl(fd, F_SETFD, FD_CLOEXEC)");
+        // file status flags:
+        int fd_add_flags = add_flags;
+        if (i == 0)
+            // non-blocking reads are not useful:
+            fd_add_flags &= ~O_NONBLOCK;
+        if (fd_add_flags) {
+            int status_flags = fcntl(fd[i], F_GETFL);
+            if (status_flags < 0)
+                throw_posix_error("fcntl(fd, F_GETFL)");
+            rc = fcntl(fd[i], F_SETFL, status_flags | fd_add_flags);
+            if (rc < 0)
+                throw_posix_error("fcntl(fd, F_SETFL, ...)");
+        }
     }
 }
 
