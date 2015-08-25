@@ -113,6 +113,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
 std::string Command::repr()
 {
     return string_printf(
+        // L10N: "<command> ..."
         _("%s ..."),
         this->command.c_str()
     );

@@ -172,6 +172,7 @@ std::string Command::repr()
         return this->argv[2];
     else
         return string_printf(
+            // L10N: "<command> ..."
             _("%s ..."),
             this->command.c_str()
         );
@@ -333,6 +334,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     } else if (WIFSIGNALED(wait_status)) {
         int sig = WTERMSIG(wait_status);
         std::string message = string_printf(
+            // L10N: the latter argument is either an untranslated signal name
+            // (such as "SIGSEGV") or a translated string "signal <N>"
             _("External command \"%s\" was terminated by %s"),
             this->repr().c_str(),
             signame(sig).c_str()
