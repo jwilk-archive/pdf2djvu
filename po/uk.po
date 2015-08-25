@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-25 01:21+0200\n"
+"POT-Creation-Date: 2015-08-25 14:37+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -54,6 +54,11 @@ msgstr "%.3f біт/піксель; %.3f:1, %.2f%% збережено, %ju ба�
 #, c-format
 msgid "%s (%jd): %s"
 msgstr "%s (%jd): %s"
+
+#. L10N: "<command> ..."
+#, c-format
+msgid "%s ..."
+msgstr "%s …"
 
 #, c-format
 msgid "%s is not a valid number"
@@ -133,32 +138,22 @@ msgid "Exec format error"
 msgstr "Неправильний формат виконуваного файлу"
 
 #, c-format
-msgid "External command \"%s ...\" failed"
-msgstr "Не вдалося виконати зовнішню команду „%s …“"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" failed with exit status %lu"
-msgstr "Не вдалося виконати зовнішню команду „%s …“. Код виходу %u"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" failed: %s"
-msgstr "Не вдалося виконати зовнішню команду „%s …“"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" was terminated by %s"
-msgstr "Не вдалося виконати зовнішню команду „%s …“"
-
-#, c-format
 msgid "External command \"%s\" failed"
 msgstr "Не вдалося виконати зовнішню команду „%s“"
 
 #, fuzzy, c-format
 msgid "External command \"%s\" failed with exit status %lu"
-msgstr "Не вдалося виконати зовнішню команду „%s“. Код виходу %u"
+msgstr "Не вдалося виконати зовнішню команду „%s“. Код виходу %lu"
 
 #, fuzzy, c-format
+msgid "External command \"%s\" failed: %s"
+msgstr "Не вдалося виконати зовнішню команду „%s“"
+
+#. L10N: the latter argument is either an untranslated signal name
+#. (such as "SIGSEGV") or a translated string "signal <N>"
+#, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "Не вдалося виконати зовнішню команду „%s …“"
+msgstr "Не вдалося виконати зовнішню команду „%s“"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"

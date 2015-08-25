@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-25 01:21+0200\n"
+"POT-Creation-Date: 2015-08-25 14:37+0200\n"
 "PO-Revision-Date: 2015-05-25 22:08+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -63,6 +63,11 @@ msgstr "%.3f bits/pixel; %.3f:1, %.2f%% gravados %ju bytes dentro, %zu bytes for
 #, c-format
 msgid "%s (%jd): %s"
 msgstr "%s (%jd): %s"
+
+#. L10N: "<command> ..."
+#, c-format
+msgid "%s ..."
+msgstr "%s ..."
 
 #, c-format
 msgid "%s is not a valid number"
@@ -141,32 +146,22 @@ msgid "Exec format error"
 msgstr "Erro de formato executável"
 
 #, c-format
-msgid "External command \"%s ...\" failed"
-msgstr "Comando externo \"%s ...\" falhou"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" failed with exit status %lu"
-msgstr "Comando externo \"%s ...\" falhou com código de saída %u"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" failed: %s"
-msgstr "Comando externo \"%s ...\" falhou"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" was terminated by %s"
-msgstr "Comando externo \"%s ...\" falhou"
-
-#, c-format
 msgid "External command \"%s\" failed"
 msgstr "Comando externo \"%s\" falhou"
 
 #, fuzzy, c-format
 msgid "External command \"%s\" failed with exit status %lu"
-msgstr "Comando externo \"%s\" falhou com código de saída %u"
+msgstr "Comando externo \"%s\" falhou com código de saída %lu"
 
 #, fuzzy, c-format
+msgid "External command \"%s\" failed: %s"
+msgstr "Comando externo \"%s\" falhou"
+
+#. L10N: the latter argument is either an untranslated signal name
+#. (such as "SIGSEGV") or a translated string "signal <N>"
+#, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "Comando externo \"%s ...\" falhou"
+msgstr "Comando externo \"%s\" falhou"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"

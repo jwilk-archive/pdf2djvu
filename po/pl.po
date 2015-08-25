@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-25 01:21+0200\n"
+"POT-Creation-Date: 2015-08-25 14:37+0200\n"
 "PO-Revision-Date: 2015-05-24 18:46+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -55,6 +55,11 @@ msgstr "%.3f bitów/piksel; %.3f:1, %.2f%% zysku, %ju bajtów wejściowych, %zu 
 #, c-format
 msgid "%s (%jd): %s"
 msgstr "%s (%jd): %s"
+
+#. L10N: "<command> ..."
+#, c-format
+msgid "%s ..."
+msgstr "%s …"
 
 #, c-format
 msgid "%s is not a valid number"
@@ -134,22 +139,6 @@ msgid "Exec format error"
 msgstr "Błędny format pliku wykonywalnego"
 
 #, c-format
-msgid "External command \"%s ...\" failed"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się"
-
-#, c-format
-msgid "External command \"%s ...\" failed with exit status %lu"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się; status wyjścia %lu"
-
-#, c-format
-msgid "External command \"%s ...\" failed: %s"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się: %s"
-
-#, fuzzy, c-format
-msgid "External command \"%s ...\" was terminated by %s"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się: %s"
-
-#, c-format
 msgid "External command \"%s\" failed"
 msgstr "Zewnętrzne polecenie “%s” nie powiodło się"
 
@@ -157,9 +146,15 @@ msgstr "Zewnętrzne polecenie “%s” nie powiodło się"
 msgid "External command \"%s\" failed with exit status %lu"
 msgstr "Zewnętrzne polecenie “%s” nie powiodło się; status wyjścia %lu"
 
+#, c-format
+msgid "External command \"%s\" failed: %s"
+msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
+
+#. L10N: the latter argument is either an untranslated signal name
+#. (such as "SIGSEGV") or a translated string "signal <N>"
 #, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "Zewnętrzne polecenie “%s …” nie powiodło się: %s"
+msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
