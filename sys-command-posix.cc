@@ -314,8 +314,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             throw_posix_error(child_error_reason);
         std::string child_error = POSIXError::error_message("");
         std::string message = string_printf(
-            _("External command \"%s ...\" failed: %s"),
-            this->command.c_str(),
+            _("External command \"%s\" failed: %s"),
+            this->repr().c_str(),
             child_error.c_str()
         );
         throw CommandFailed(message);
