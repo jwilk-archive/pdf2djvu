@@ -161,6 +161,22 @@ const std::string signame(int sig)
     }
 }
 
+std::string Command::repr()
+{
+    bool sh = (
+        this->argv.size() == 3 &&
+        this->argv[0] == std::string("sh") &&
+        this->argv[1] == std::string("-c")
+    );
+    if (sh)
+        return this->argv[2];
+    else
+        return string_printf(
+            _("%s ..."),
+            this->command.c_str()
+        );
+}
+
 void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
 {
     int rc;
@@ -308,8 +324,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         unsigned long exit_status = WEXITSTATUS(wait_status);
         if (exit_status != 0) {
             std::string message = string_printf(
-                _("External command \"%s ...\" failed with exit status %lu"),
-                this->command.c_str(),
+                _("External command \"%s\" failed with exit status %lu"),
+                this->repr().c_str(),
                 exit_status
             );
             throw CommandFailed(message);
@@ -317,8 +333,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     } else if (WIFSIGNALED(wait_status)) {
         int sig = WTERMSIG(wait_status);
         std::string message = string_printf(
-            _("External command \"%s ...\" was terminated by %s"),
-            this->command.c_str(),
+            _("External command \"%s\" was terminated by %s"),
+            this->repr().c_str(),
             signame(sig).c_str()
         );
         throw CommandFailed(message);

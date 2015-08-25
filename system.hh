@@ -68,6 +68,7 @@ class Command
 protected:
   std::string command;
   std::vector<std::string> argv;
+  std::string repr();
   void call(std::istream *stdin_, std::ostream *stdout_, bool stderr_);
 public:
   class CommandFailed : public std::runtime_error
