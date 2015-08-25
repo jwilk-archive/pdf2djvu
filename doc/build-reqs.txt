@@ -30,8 +30,6 @@ To run the tests, the following software is needed:
    http://poppler.freedesktop.org/
 .. _pkg-config:
    https://wiki.freedesktop.org/www/Software/pkg-config/
-.. _PStreams:
-   http://pstreams.sourceforge.net/
 .. _Libxslt:
    http://xmlsoft.org/xslt/
 .. _GraphicsMagick:
