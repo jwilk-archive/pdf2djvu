@@ -103,18 +103,15 @@ static void mkfifo(int fd[2], int add_flags=0)
     }
 }
 
-static int fd_set_cloexec(int fd_from, int fd_to)
+static int fd_close_range(int fd_from, int fd_to, int fd_except=-1)
 {
     for (int fd = fd_from; fd <= fd_to; fd++) {
-        int fdflags = fcntl(fd, F_GETFD);
-        if (fdflags < 0) {
-            if (errno == EBADF)
-                continue;
-            return -1;
-        }
-        fdflags |= FD_CLOEXEC;
-        int rc = fcntl(fd, F_SETFD, fdflags);
-        if (rc < 0)
+        if (fd == fd_except)
+            continue;
+        int rc = close(fd);
+        if (rc == 0 || errno == EBADF)
+            continue;
+        else
             return rc;
     }
     return 0;
@@ -231,9 +228,9 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
                 abort();
             }
         }
-        int rc = fd_set_cloexec(STDERR_FILENO + 1, max_fd);
+        int rc = fd_close_range(STDERR_FILENO + 1, max_fd, error_pipe[1]);
         if (rc < 0) {
-            report_posix_error(error_pipe[1], "fcntl()");
+            report_posix_error(error_pipe[1], "close()");
             abort();
         }
         execvp(c_argv[0],
