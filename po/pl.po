@@ -152,9 +152,9 @@ msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
 
 #. L10N: the latter argument is either an untranslated signal name
 #. (such as "SIGSEGV") or a translated string "signal <N>"
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
+msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez %s"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
