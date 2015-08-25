@@ -209,7 +209,8 @@ void Command::call(std::ostream *my_stdout, bool quiet)
             throw_posix_error("read()");
         if (nbytes == 0)
             break;
-        my_stdout->write(buffer, nbytes);
+        if (my_stdout)
+            my_stdout->write(buffer, nbytes);
     }
     fd_close(stdio_pipe[0]);
     int wait_status;
