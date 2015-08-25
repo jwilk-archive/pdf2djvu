@@ -110,6 +110,14 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
     return buffer.str();
 }
 
+std::string Command::repr()
+{
+    return string_printf(
+        _("%s ..."),
+        this->command.c_str()
+    );
+}
+
 void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
 {
     assert(stdin_ == NULL); // stdin support not implemented yet
@@ -206,8 +214,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             status = -1;
         else if (exit_code != 0) {
             std::string message = string_printf(
-                _("External command \"%s ...\" failed with exit status %lu"),
-                this->command.c_str(),
+                _("External command \"%s\" failed with exit status %lu"),
+                this->repr().c_str(),
                 exit_code
             );
             throw CommandFailed(message);
@@ -215,8 +223,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     }
     if (status < 0) {
         std::string message = string_printf(
-            _("External command \"%s ...\" failed"),
-            this->command.c_str()
+            _("External command \"%s\" failed"),
+            this->repr().c_str()
         );
         throw_win32_error(message);
     }
