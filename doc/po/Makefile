@@ -29,9 +29,17 @@ po4a-getext-options = \
 	--msgid-bugs-address=$(PACKAGE_BUGREPORT) \
 	--copyright-holder="Jakub Wilk <jwilk@jwilk.net>"
 
+msgmerge_opts = \
+	--no-location \
+	--no-wrap \
+
+ifneq "$(wildcard $(srcdir)/.hg/)" ""
+msgmerge_opts += --backup=off
+endif
+
 po4a-update-po = po4a-updatepo \
 	$(po4a-getext-options) \
-	--msgmerge-opt="--no-location --no-wrap"
+	--msgmerge-opt="$(msgmerge_opts)"
 
 po4a-gettextize = po4a-gettextize \
 	$(po4a-getext-options)
@@ -54,7 +62,6 @@ pdf2djvu.pot: pdf2djvu.xml
 
 $(po_files): %.po: pdf2djvu.xml
 	$(po4a-update-po) -m $(<) -p $(@)
-	rm -f $(@)~
 	touch $(@)
 
 %.xml: %.po
