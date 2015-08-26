@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-25 14:37+0200\n"
+"POT-Creation-Date: 2015-08-26 12:01+0200\n"
 "PO-Revision-Date: 2015-05-25 22:08+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -186,10 +186,6 @@ msgstr "Função não implementada"
 msgid "I won't write DjVu data to a terminal."
 msgstr "Eu não escrevo dados DjVu num terminal."
 
-#, c-format
-msgid "I/O error (%s)"
-msgstr "Erro de I/O (%s)"
-
 #. L10N: Windows error message for EILSEQ
 msgid "Illegal byte sequence"
 msgstr "Sequência de bytes ilegal"
@@ -217,6 +213,10 @@ msgstr "O ficheiro a ler é o mesmo que o ficheiro a escrever: %s"
 #. L10N: Windows error message for EIO
 msgid "Input/output error"
 msgstr "Erro de entrada/saída"
+
+#, c-format
+msgid "Input/output error (%s)"
+msgstr "Erro de entrada/saída (%s)"
 
 msgid "Integer overflow"
 msgstr "overflow de número inteiro"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-25 14:37+0200\n"
+"POT-Creation-Date: 2015-08-26 12:01+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -178,10 +178,6 @@ msgstr "Функція не реалізована"
 msgid "I won't write DjVu data to a terminal."
 msgstr "Я не буду писати DjVu в термінал."
 
-#, c-format
-msgid "I/O error (%s)"
-msgstr "Помилка вводу/виводу (%s)"
-
 #. L10N: Windows error message for EILSEQ
 msgid "Illegal byte sequence"
 msgstr "Невірна послідовність байтів"
@@ -209,6 +205,10 @@ msgstr ""
 #. L10N: Windows error message for EIO
 msgid "Input/output error"
 msgstr "Помилка вводу/виводу"
+
+#, c-format
+msgid "Input/output error (%s)"
+msgstr "Помилка вводу/виводу (%s)"
 
 msgid "Integer overflow"
 msgstr "Цілочисельне переповнювання"

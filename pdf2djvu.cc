@@ -1622,7 +1622,7 @@ static int xmain(int argc, char * const argv[])
    */
   catch (std::ios_base::failure &ex)
   {
-    error_log << string_printf(_("I/O error (%s)"), ex.what()) << std::endl;
+    error_log << string_printf(_("Input/output error (%s)"), ex.what()) << std::endl;
     exit(2);
   }
   catch (std::runtime_error &ex)
@@ -1724,7 +1724,7 @@ try
 /* Please keep the exception handlers in sync with the ones in xmain(). */
 catch (std::ios_base::failure &ex)
 {
-  error_log << string_printf(_("I/O error (%s)"), ex.what()) << std::endl;
+  error_log << string_printf(_("Input/output error (%s)"), ex.what()) << std::endl;
   exit(2);
 }
 catch (std::runtime_error &ex)
