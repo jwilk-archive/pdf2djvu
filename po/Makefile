@@ -37,6 +37,10 @@ msgmerge = $(MSGMERGE) \
 	--update \
 	--verbose \
 
+ifneq "$(wildcard $(srcdir)/.hg/)" ""
+msgmerge += --backup=off
+endif
+
 msgfmt = $(MSGFMT) \
 	--check \
 	--verbose \
