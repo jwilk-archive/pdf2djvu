@@ -1,6 +1,7 @@
 language: cpp
 compiler:
 - gcc
+- clang
 env:
 - POPPLER_VERSION=0.11.1
 - POPPLER_VERSION=0.17.0
