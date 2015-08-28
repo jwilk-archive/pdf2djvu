@@ -35,7 +35,6 @@ addons:
     - libdjvulibre-dev
     - libfontconfig1-dev
     - libgraphicsmagick++1-dev
-    - libpstreams-dev
     - libxml2-utils
     - libxslt1-dev
     - pkg-config
