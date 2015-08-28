@@ -33,7 +33,8 @@ Command::Command(const std::string& command) : command(command)
         else
             stream << *it;
     }
-    this->argv.push_back(stream.str());
+    this->command = stream.str();
+    this->argv.push_back(this->command);
 }
 
 Command &Command::operator <<(const std::string& arg)
