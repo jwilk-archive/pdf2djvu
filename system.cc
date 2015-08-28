@@ -47,11 +47,10 @@
  * =========
  */
 
-const char unix_path_separator = '/';
-#if !WIN32
-const char path_separator = unix_path_separator;
+#if WIN32
+static const char path_separator = '\\';
 #else
-const char path_separator = '\\';
+static const char path_separator = '/';
 #endif
 
 
@@ -793,12 +792,12 @@ std::string absolute_path(const std::string &path, const std::string &dir_name)
     return path;
   if (path[0] != '.')
     return path;
-  if (path.length() == 1 || (path.length() >= 2 && (path[1] == unix_path_separator || path[1] == path_separator)))
+  if (path.length() == 1 || (path.length() >= 2 && (path[1] == '/' || path[1] == path_separator)))
     return dir_name + path_separator + path.substr(std::min(static_cast<size_t>(2), path.length()));
   assert(path.length() >= 2);
   if (path[1] != '.')
     return path;
-  if (path.length() == 2 || (path.length() >= 3 && (path[2] == unix_path_separator || path[2] == path_separator)))
+  if (path.length() == 2 || (path.length() >= 3 && (path[2] == '/' || path[2] == path_separator)))
     return dir_name + path_separator + path;
   return path;
 }

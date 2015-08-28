@@ -248,9 +248,6 @@ bool is_same_file(const std::string &path1, const std::string &path2);
 
 void prevent_pop_out();
 
-extern const char unix_path_separator;
-extern const char path_separator;
-
 #endif
 
 // vim:ts=2 sts=2 sw=2 et

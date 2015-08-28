@@ -28,8 +28,8 @@ Command::Command(const std::string& command) : command(command)
     /* Convert path separators: */
     std::ostringstream stream;
     for (std::string::const_iterator it = command.begin(); it != command.end(); it++) {
-        if (*it == unix_path_separator)
-            stream << path_separator;
+        if (*it == '/')
+            stream << '\\';
         else
             stream << *it;
     }
