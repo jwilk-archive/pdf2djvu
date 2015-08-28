@@ -299,6 +299,7 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libGraphicsMagick)
+	rm dist/libGraphicsMagickWand*.dll
 	touch $(@)
 
 # libxml2
