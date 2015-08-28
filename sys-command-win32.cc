@@ -140,8 +140,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             /* Presumably it's Windows 9x, so the call is not supported.
              * Punt on security and let the pipe end be inherited.
              */
-        }
-        else
+        } else
             throw_win32_error("SetHandleInformation");
     }
     if (stderr_) {
@@ -239,7 +238,7 @@ public:
     const std::string &string;
     FilterWriterData(HANDLE handle, const std::string &string)
     : handle(handle),
-        string(string)
+      string(string)
     { }
 };
 
@@ -280,8 +279,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
             /* Presumably it's Windows 9x, so the call is not supported.
              * Punt on security and let the pipe end be inherited.
              */
-        }
-        else
+        } else
             throw_win32_error("SetHandleInformation");
     }
     error_handle = GetStdHandle(STD_ERROR_HANDLE);;
