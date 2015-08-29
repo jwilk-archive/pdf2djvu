@@ -20,10 +20,16 @@ private:
     Array& operator=(const Array &); // not defined
 protected:
     tp *buffer;
+    size_t size_;
 public:
     explicit Array(size_t size)
     {
         this->buffer = new tp[size];
+        this->size_ = size;
+    }
+    size_t size()
+    {
+        return this->size_;
     }
     operator tp * ()
     {
