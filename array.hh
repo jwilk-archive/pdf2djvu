@@ -12,6 +12,9 @@
  * General Public License for more details.
  */
 
+#ifndef PDF2DJVU_ARRAY_HH
+#define PDF2DJVU_ARRAY_HH
+
 #include <cstddef>
 
 template <typename tp>
@@ -42,5 +45,7 @@ public:
         delete[] this->buffer;
     }
 };
+
+#endif
 
 // vim:ts=4 sts=4 sw=4 et
