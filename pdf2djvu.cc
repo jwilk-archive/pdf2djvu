@@ -1093,7 +1093,7 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
       catch (encoding::Error &ex)
       {
         throw std::runtime_error(
-          string_printf(_("Failed to convert page title to UTF-8: %s"), ex.what())
+          string_printf(_("Unable to convert page title to UTF-8: %s"), ex.what())
         );
       }
     }

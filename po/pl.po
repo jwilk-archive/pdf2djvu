@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-29 21:09+0200\n"
+"POT-Creation-Date: 2015-08-29 21:11+0200\n"
 "PO-Revision-Date: 2015-05-24 18:46+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -155,10 +155,6 @@ msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
 #, c-format
 msgid "External command \"%s\" was terminated by %s"
 msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez %s"
-
-#, c-format
-msgid "Failed to convert page title to UTF-8: %s"
-msgstr ""
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
@@ -395,6 +391,10 @@ msgstr "Za dużo otwartych plików"
 #. L10N: Windows error message for ENFILE
 msgid "Too many open files in system"
 msgstr "Za dużo otwartych plików w systemie"
+
+#, c-format
+msgid "Unable to convert page title to UTF-8: %s"
+msgstr ""
 
 msgid "Unable to load document"
 msgstr "Nie można załadować dokumentu"

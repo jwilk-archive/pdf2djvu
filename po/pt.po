@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-29 21:09+0200\n"
+"POT-Creation-Date: 2015-08-29 21:11+0200\n"
 "PO-Revision-Date: 2015-05-25 22:08+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -162,10 +162,6 @@ msgstr "Comando externo \"%s\" falhou"
 #, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
 msgstr "Comando externo \"%s\" falhou"
-
-#, c-format
-msgid "Failed to convert page title to UTF-8: %s"
-msgstr ""
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
@@ -402,6 +398,10 @@ msgstr "Demasiados ficheiros abertos"
 #. L10N: Windows error message for ENFILE
 msgid "Too many open files in system"
 msgstr "Demasiados ficheiros abertos no sistema"
+
+#, c-format
+msgid "Unable to convert page title to UTF-8: %s"
+msgstr ""
 
 msgid "Unable to load document"
 msgstr "Incapaz de carregar documento"
