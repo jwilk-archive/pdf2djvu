@@ -12,6 +12,8 @@
  * General Public License for more details.
  */
 
+#include <cstddef>
+
 template <typename tp>
 class Array
 {
