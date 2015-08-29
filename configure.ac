@@ -88,30 +88,9 @@ fi
 
 AM_GNU_GETTEXT([external], [need-ngettext])
 AM_GNU_GETTEXT_VERSION(0.17)
+AM_ICONV
 
 # Checks for typedefs, structures, and compiler characteristics:
-
-AC_MSG_CHECKING([whether wchar_t stores Unicode])
-AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
-#include <stdlib.h>
-
-#if defined(__STDC_ISO_10646__)
-#elif defined(__WIN32__)
-#elif defined(__APPLE__)
-#else
-#error
-#endif
-]])],
-  [
-    AC_MSG_RESULT([yes])
-    have_unicode_wchar_t=yes
-    AC_DEFINE([HAVE_UNICODE_WCHAR_T], 1, [Define if wchar_t stores Unicode])
-  ],
-  [
-    AC_MSG_RESULT([maybe])
-    have_unicode_wchar_t=maybe
-  ]
-)
 
 AC_OPENMP
 
@@ -169,16 +148,6 @@ then
 WARNING: Updating XMP metadata will be disabled.
 Please consider installing the GNOME XSLT library to enable this
 functionality.
-_ACEOF
-fi
-
-if test "$have_unicode_wchar_t" = maybe
-then
-  cat <<_ACEOF
-
-WARNING: pdf2djvu assumes that wchar_t stores Unicode characters.
-This might NOT be the case for your system.
-Please file a bug at $PACKAGE_BUGREPORT.
 _ACEOF
 fi
 

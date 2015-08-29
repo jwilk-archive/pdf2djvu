@@ -1084,8 +1084,18 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     {
       bzz_file << it->get_basename() << '\0';
       const std::string *title = it->get_title();
-      if (title != NULL)
+      if (title == NULL)
+        continue;
+      try
+      {
         bzz_file << encoding::proxy<encoding::native, encoding::utf8>(*title) << '\0';
+      }
+      catch (encoding::Error &ex)
+      {
+        throw std::runtime_error(
+          string_printf("Failed to convert page title to UTF-8: %s", ex.what())
+        );
+      }
     }
     bzz_file.close();
     DjVuCommand bzz("bzz");

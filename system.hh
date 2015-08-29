@@ -200,6 +200,14 @@ const static ProgramDir program_dir;
 namespace encoding
 {
 
+  class Error : public POSIXError
+  {
+  public:
+    Error()
+    : POSIXError("")
+    { };
+  };
+
   enum encoding
   {
     native,

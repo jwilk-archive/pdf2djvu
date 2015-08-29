@@ -24,6 +24,7 @@
 
 #include <dirent.h>
 #include <fcntl.h>
+#include <iconv.h>
 #include <libgen.h>
 #include <stdint.h>
 #include <sys/stat.h>
@@ -575,75 +576,80 @@ namespace encoding
   }
 #endif
 
+  class IConv
+  {
+  protected:
+    iconv_t cd;
+  public:
+    IConv(const char *tocode, const char *fromcode="")
+    {
+      this->cd = iconv_open(tocode, fromcode);
+      if (this->cd == reinterpret_cast<void*>(-1))
+        throw_posix_error("iconv_open()");
+    }
+    ~IConv()
+    {
+      int rc = iconv_close(this->cd);
+      if (rc < 0)
+        throw_posix_error("iconv_close()");
+    }
+    size_t operator()(const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft)
+    {
+      /* Mac OS X provides an ``iconv()`` prototype which is not POSIX-compliant.
+       * To work around this bug, a special wrapper is used, which adapts itself
+       * to the expected type.
+       */
+      class const_adapter
+      {
+      protected:
+        const char **s;
+      public:
+        const_adapter(const char **s)
+        : s(s)
+        { }
+        operator char ** () const
+        {
+          return const_cast<char **>(s);
+        }
+        operator const char** () const
+        {
+          return s;
+        }
+      };
+      return iconv(this->cd, const_adapter(inbuf), inbytesleft, outbuf, outbytesleft);
+    }
+  };
+
   template <>
   std::ostream &operator <<(std::ostream &stream, const proxy<native, utf8> &converter)
   {
-    /* The following code assumes that wchar_t strings are UTF-32 or UTF-16.
-     * This is not necessarily the case for every system.
-     *
-     * See
-     * http://unicode.org/faq/utf_bom.html
-     * for description of both UTF-16 and UTF-8.
-     */
-    const std::string &string = converter.string;
-    size_t length = string.length();
-    Array<wchar_t> wstring(length + 1);
-    length = mbstowcs(wstring, string.c_str(), length + 1);
-    if (length == static_cast<size_t>(-1))
-      throw_posix_error("mbstowcs");
-    uint32_t code, code_shift = 0;
-    for (size_t i = 0; i < length; i++)
+    IConv iconv("UTF-8");
+    char outbuf[BUFSIZ];
+    char *outbuf_ptr = outbuf;
+    size_t outbuf_len = sizeof outbuf;
+    const char *inbuf = converter.string.c_str();
+    size_t inbuf_len = converter.string.length();
+    while (inbuf_len > 0)
     {
-      code = wstring[i];
-      if (code_shift)
+      size_t n = iconv(&inbuf, &inbuf_len, &outbuf_ptr, &outbuf_len);
+      if (n == static_cast<size_t>(-1))
       {
-        if (code >= 0xdc00 && code < 0xe000)
+        if (errno == E2BIG)
         {
-          /* trailing surrogate */
-          code = code_shift + (code & 0x3ff);
+          stream.write(outbuf, outbuf_ptr - outbuf);
+          outbuf_ptr = outbuf;
+          outbuf_len = sizeof outbuf;
         }
         else
-        {
-          /* unpaired surrogate */
-          errno = EILSEQ;
-          throw_posix_error(__FUNCTION__);
-        }
-        code_shift = 0;
+          throw encoding::Error();
       }
-      else if (code >= 0xd800 && code < 0xdc00)
+      else if (n > 0)
       {
-        /* leading surrogate */
-        code_shift = 0x10000 + ((code & 0x3ff) << 10);
-        continue;
-      }
-      if (code >= 0x110000 || (code & 0xfffe) == 0xfffe)
-      {
-        /* code is out of range or a non-character */
         errno = EILSEQ;
-        throw_posix_error(__FUNCTION__);
-      }
-      if (code < 0x80)
-      {
-        char ascii = code;
-        stream << ascii;
-      }
-      else
-      {
-        char buffer[4];
-        size_t nbytes;
-        for (nbytes = 2; nbytes < 4; nbytes++)
-          if (code < (1U << (5 * nbytes + 1)))
-            break;
-        buffer[0] = (0xff00 >> nbytes) & 0xff;
-        for (size_t i = nbytes - 1; i; i--)
-        {
-          buffer[i] = 0x80 | (code & 0x3f);
-          code >>= 6;
-        }
-        buffer[0] |= code;
-        stream.write(buffer, nbytes);
+        throw encoding::Error();
       }
     }
+    stream.write(outbuf, outbuf_ptr - outbuf);
     return stream;
   }
 }
