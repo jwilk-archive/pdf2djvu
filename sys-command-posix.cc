@@ -132,7 +132,7 @@ const std::string signame(int sig)
 {
     switch (sig) {
 #define s(n) case n: return "" # n "";
-    /* POSIX.1-1990: */
+    // POSIX.1-1990:
     s(SIGHUP);
     s(SIGINT);
     s(SIGQUIT);
@@ -152,7 +152,7 @@ const std::string signame(int sig)
     s(SIGTSTP);
     s(SIGTTIN);
     s(SIGTTOU);
-    /* SUSv2 and POSIX.1-2001: */
+    // SUSv2 and POSIX.1-2001:
     s(SIGBUS);
 #ifdef SIGPOLL
     // not supported on OpenBSD
@@ -207,10 +207,9 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     if (pid < 0)
         throw_posix_error("fork()");
     if (pid == 0) {
-        /* The child:
-         * At this point, only async-singal-safe functions can be used.
-         * See the signal(7) manpage for the full list.
-         */
+        // The child:
+        // At this point, only async-singal-safe functions can be used.
+        // See the signal(7) manpage for the full list.
         rc = dup2(stdin_pipe[0], STDIN_FILENO);
         if (rc < 0) {
             report_posix_error(error_pipe[1], "dup2()");
@@ -246,7 +245,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         report_posix_error(error_pipe[1], "\xff");
         abort();
     }
-    /* The parent: */
+    // The parent:
     fd_close(stdin_pipe[0]);
     fd_close(stdout_pipe[1]);
     fd_close(error_pipe[1]);

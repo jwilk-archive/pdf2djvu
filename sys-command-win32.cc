@@ -25,7 +25,7 @@
 
 Command::Command(const std::string& command) : command(command)
 {
-    /* Convert path separators: */
+    // Convert path separators:
     std::ostringstream stream;
     for (std::string::const_iterator it = command.begin(); it != command.end(); it++) {
         if (*it == '/')
@@ -57,31 +57,30 @@ Command &Command::operator <<(int i)
 }
 
 static const std::string argv_to_command_line(const std::vector<std::string> &argv)
-/* Translate a sequence of arguments into a command line string. */
+// Translate a sequence of arguments into a command line string.
 {
     std::ostringstream buffer;
-    /* Using the same rules as the MS C runtime:
-     *
-     * 1) Arguments are delimited by white space, which is either a space or a
-     *    tab.
-     *
-     * 2) A string surrounded by double quotation marks is interpreted as a
-     *    single argument, regardless of white space contained within. A
-     *    quoted string can be embedded in an argument.
-     *
-     * 3) A double quotation mark preceded by a backslash is interpreted as a
-     *    literal double quotation mark.
-     *
-     * 4) Backslashes are interpreted literally, unless they immediately
-     *    precede a double quotation mark.
-     *
-     * 5) If backslashes immediately precede a double quotation mark, every
-     *    pair of backslashes is interpreted as a literal backslash.  If the
-     *    number of backslashes is odd, the last backslash escapes the next
-     *    double quotation mark as described in rule 3.
-     *
-     * See <https://msdn.microsoft.com/en-us/library/ms880421.aspx>.
-     */
+    // Using the same rules as the MS C runtime:
+    //
+    // 1) Arguments are delimited by white space, which is either a space or a
+    //    tab.
+    //
+    // 2) A string surrounded by double quotation marks is interpreted as a
+    //    single argument, regardless of white space contained within. A
+    //    quoted string can be embedded in an argument.
+    //
+    // 3) A double quotation mark preceded by a backslash is interpreted as a
+    //    literal double quotation mark.
+    //
+    // 4) Backslashes are interpreted literally, unless they immediately
+    //    precede a double quotation mark.
+    //
+    // 5) If backslashes immediately precede a double quotation mark, every
+    //    pair of backslashes is interpreted as a literal backslash.  If the
+    //    number of backslashes is odd, the last backslash escapes the next
+    //    double quotation mark as described in rule 3.
+    //
+    // See <https://msdn.microsoft.com/en-us/library/ms880421.aspx>.
     for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++) {
         int backslashed = 0;
         bool need_quote = parg->find_first_of(" \t") != std::string::npos;
@@ -137,9 +136,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     rc = SetHandleInformation(read_end, HANDLE_FLAG_INHERIT, 0);
     if (rc == 0) {
         if (GetLastError() == ERROR_CALL_NOT_IMPLEMENTED) {
-            /* Presumably it's Windows 9x, so the call is not supported.
-             * Punt on security and let the pipe end be inherited.
-             */
+            // Presumably it's Windows 9x, so the call is not supported.
+            // Punt on security and let the pipe end be inherited.
         } else
             throw_win32_error("SetHandleInformation");
     }
@@ -158,10 +156,9 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         error_handle = CreateFile("nul",
             GENERIC_WRITE, FILE_SHARE_WRITE,
             &security_attributes, OPEN_EXISTING, 0, NULL);
-        /* Errors can be safely ignored:
-         * - For the Windows NT family, INVALID_HANDLE_VALUE does actually the right thing.
-         * - For Windows 9x, spurious debug messages could be generated, tough luck!
-         */
+        // Errors can be safely ignored:
+        // - For the Windows NT family, INVALID_HANDLE_VALUE does actually the right thing.
+        // - For Windows 9x, spurious debug messages could be generated, tough luck!
     }
     {
         const std::string &command_line = argv_to_command_line(this->argv);
@@ -187,12 +184,12 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             status = -1;
         else {
             if (error_handle != INVALID_HANDLE_VALUE)
-                CloseHandle(error_handle); /* ignore errors */
+                CloseHandle(error_handle); // ignore errors
         }
     }
     if (status == 0) {
         unsigned long exit_code;
-        CloseHandle(write_end); /* ignore errors */
+        CloseHandle(write_end); // ignore errors
         while (true) {
             char buffer[BUFSIZ];
             unsigned long nbytes;
@@ -204,13 +201,13 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             if (stdout_ != NULL)
                 stdout_->write(buffer, nbytes);
         }
-        CloseHandle(read_end); /* ignore errors */
+        CloseHandle(read_end); // ignore errors
         rc = WaitForSingleObject(process_info.hProcess, INFINITE);
         if (rc == WAIT_FAILED)
             throw_win32_error("WaitForSingleObject");
         rc = GetExitCodeProcess(process_info.hProcess, &exit_code);
-        CloseHandle(process_info.hProcess); /* ignore errors */
-        CloseHandle(process_info.hThread); /* ignore errors */
+        CloseHandle(process_info.hProcess); // ignore errors
+        CloseHandle(process_info.hThread); // ignore errors
         if (rc == 0)
             status = -1;
         else if (exit_code != 0) {
@@ -276,9 +273,8 @@ std::string Command::filter(const std::string &command_line, const std::string s
     );
     if (rc == 0) {
         if (GetLastError() == ERROR_CALL_NOT_IMPLEMENTED) {
-            /* Presumably it's Windows 9x, so the call is not supported.
-             * Punt on security and let the pipe end be inherited.
-             */
+            // Presumably it's Windows 9x, so the call is not supported.
+            // Punt on security and let the pipe end be inherited.
         } else
             throw_win32_error("SetHandleInformation");
     }
@@ -316,14 +312,14 @@ std::string Command::filter(const std::string &command_line, const std::string s
             status = -1;
         else {
             if (error_handle != INVALID_HANDLE_VALUE)
-                CloseHandle(error_handle); /* ignore errors */
+                CloseHandle(error_handle); // ignore errors
         }
     }
     if (status == 0) {
         unsigned long exit_code;
         std::ostringstream stream;
-        CloseHandle(stdin_read); /* ignore errors */
-        CloseHandle(stdout_write); /* ignore errors */
+        CloseHandle(stdin_read); // ignore errors
+        CloseHandle(stdout_write); // ignore errors
         FilterWriterData writer_data(stdin_write, string);
         HANDLE thread_handle = CreateThread(NULL, 0, filter_writer, &writer_data, 0, NULL);
         if (thread_handle == NULL)
@@ -338,17 +334,17 @@ std::string Command::filter(const std::string &command_line, const std::string s
             }
             stream.write(buffer, nbytes);
         }
-        CloseHandle(stdout_read); /* ignore errors */
+        CloseHandle(stdout_read); // ignore errors
         rc = WaitForSingleObject(thread_handle, INFINITE);
         if (rc == WAIT_FAILED)
             throw_win32_error("WaitForSingleObject");
-        CloseHandle(thread_handle); /* ignore errors */
+        CloseHandle(thread_handle); // ignore errors
         rc = WaitForSingleObject(process_info.hProcess, INFINITE);
         if (rc == WAIT_FAILED)
             throw_win32_error("WaitForSingleObject");
         rc = GetExitCodeProcess(process_info.hProcess, &exit_code);
-        CloseHandle(process_info.hProcess); /* ignore errors */
-        CloseHandle(process_info.hThread); /* ignore errors */
+        CloseHandle(process_info.hProcess); // ignore errors
+        CloseHandle(process_info.hThread); // ignore errors
         if (rc == 0)
             status = -1;
         else if (exit_code != 0) {
@@ -368,7 +364,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
         );
         throw_win32_error(message);
     }
-    return string; /* Should not really happen. */
+    return string; // should not really happen
 }
 
 #endif
