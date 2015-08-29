@@ -23,7 +23,7 @@ protected:
 public:
     explicit Array(size_t size)
     {
-        buffer = new tp[size];
+        this->buffer = new tp[size];
     }
     operator tp * ()
     {
