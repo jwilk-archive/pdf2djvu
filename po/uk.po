@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-26 12:01+0200\n"
+"POT-Creation-Date: 2015-08-29 21:09+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -154,6 +154,10 @@ msgstr "Не вдалося виконати зовнішню команду „
 #, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
 msgstr "Не вдалося виконати зовнішню команду „%s“"
+
+#, c-format
+msgid "Failed to convert page title to UTF-8: %s"
+msgstr ""
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
