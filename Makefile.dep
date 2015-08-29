@@ -70,6 +70,7 @@ string-format.o: autoconf.hh
 string-format.o: i18n.hh
 string-format.o: string-format.cc
 string-format.o: string-format.hh
+sys-command-posix.o: array.hh
 sys-command-posix.o: autoconf.hh
 sys-command-posix.o: i18n.hh
 sys-command-posix.o: sys-command-posix.cc
