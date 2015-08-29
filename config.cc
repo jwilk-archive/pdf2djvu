@@ -121,6 +121,14 @@ public:
   { }
 };
 
+class PageTitleEncodingError : public Config::Error
+{
+public:
+  explicit PageTitleEncodingError(const std::runtime_error &exc)
+  : Config::Error(string_printf(_("Unable to convert page title to UTF-8: %s"), exc.what()))
+  { }
+};
+
 class PageTitleTemplateParseError : public Config::Error
 {
 public:
@@ -635,7 +643,15 @@ void Config::read_config(int argc, char * const argv[])
     case OPT_PAGE_TITLE_TEMPLATE:
       try
       {
-        this->page_title_template.reset(new string_format::Template(optarg));
+        std::ostringstream sstream;
+        sstream << encoding::proxy<encoding::native, encoding::utf8>(optarg);
+        this->page_title_template.reset(
+          new string_format::Template(sstream.str())
+        );
+      }
+      catch (encoding::Error &exc)
+      {
+        throw PageTitleEncodingError(exc);
       }
       catch (string_format::ParseError)
       {
