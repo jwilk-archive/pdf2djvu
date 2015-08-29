@@ -394,7 +394,7 @@ msgstr "Za dużo otwartych plików w systemie"
 
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
-msgstr ""
+msgstr "Nie można przekonwertować tytułu strony na UTF-8: %s"
 
 msgid "Unable to load document"
 msgstr "Nie można załadować dokumentu"
