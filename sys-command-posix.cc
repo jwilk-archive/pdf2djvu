@@ -154,7 +154,10 @@ const std::string signame(int sig)
     s(SIGTTOU);
     /* SUSv2 and POSIX.1-2001: */
     s(SIGBUS);
+#ifdef SIGPOLL
+    // not supported on OpenBSD
     s(SIGPOLL);
+#endif
     s(SIGPROF);
     s(SIGSYS);
     s(SIGTRAP);
