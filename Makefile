@@ -46,6 +46,7 @@ $(exe): sexpr.o
 $(exe): string-format.o
 $(exe): sys-command-posix.o
 $(exe): sys-command-win32.o
+$(exe): sys-encoding.o
 $(exe): system.o
 $(exe): version.o
 $(exe): xmp.o

@@ -76,6 +76,10 @@ sys-command-posix.o: i18n.hh
 sys-command-posix.o: sys-command-posix.cc
 sys-command-posix.o: system.hh
 sys-command-win32.o: sys-command-win32.cc
+sys-encoding.o: array.hh
+sys-encoding.o: autoconf.hh
+sys-encoding.o: sys-encoding.cc
+sys-encoding.o: system.hh
 system.o: array.hh
 system.o: autoconf.hh
 system.o: debug.hh
