@@ -16,8 +16,7 @@
 #define PDF2DJVU_PDF_UNICODE_H
 
 #include <ostream>
-
-#include "autoconf.hh"
+#include <string>
 
 #include <CharTypes.h>
 
