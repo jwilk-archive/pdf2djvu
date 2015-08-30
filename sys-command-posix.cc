@@ -17,8 +17,10 @@
 
 #include <cassert>
 #include <cerrno>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <csignal>
 #include <sstream>
 #include <string>
 #include <vector>
