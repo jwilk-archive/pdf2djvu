@@ -15,9 +15,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <ctime>
 #include <iomanip>
-#include <iostream>
 #include <limits.h>
 #include <memory>
 #include <ostream>
@@ -31,7 +31,13 @@
 #include "system.hh"
 
 #include <Error.h>
+#include <GfxState.h>
 #include <GlobalParams.h>
+#include <PDFDoc.h>
+#include <goo/GooString.h>
+#include <goo/gtypes.h>
+#include <splash/SplashClip.h>
+#include <splash/SplashTypes.h>
 
 /* class pdf::Environment
  * ======================

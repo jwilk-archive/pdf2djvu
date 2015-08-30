@@ -16,25 +16,36 @@
 #ifndef PDF2DJVU_PDF_BACKEND_H
 #define PDF2DJVU_PDF_BACKEND_H
 
+#include <ctime>
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <stdint.h>
 
 #include "autoconf.hh"
 
+#include <Annot.h>
+#include <Catalog.h>
+#include <Dict.h>
 #include <GfxState.h>
 #include <Link.h>
+#include <Object.h>
+#include <OutputDev.h>
 #include <PDFDoc.h>
 #include <SplashOutputDev.h>
-
+#include <Stream.h>
+#include <goo/GooString.h>
+#include <goo/gtypes.h>
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>
+#include <splash/SplashClip.h>
 #include <splash/SplashFont.h>
 #include <splash/SplashGlyphBitmap.h>
 #include <splash/SplashPath.h>
+#include <splash/SplashTypes.h>
 
 #include "i18n.hh"
 
