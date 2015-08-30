@@ -16,6 +16,7 @@
 #define PDF2DJVU_SEXPR_H
 
 #include <iostream>
+#include <string>
 
 #include <libdjvu/miniexp.h>
 
