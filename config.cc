@@ -17,6 +17,7 @@
 #include <climits>
 #include <cstdlib>
 #include <limits>
+#include <sstream>
 #include <stdexcept>
 
 #include <getopt.h>
@@ -28,6 +29,7 @@
 #include "debug.hh"
 #include "djvu-const.hh"
 #include "i18n.hh"
+#include "system.hh"
 
 class OptionsParseError : public Config::Error
 {

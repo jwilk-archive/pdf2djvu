@@ -4,7 +4,6 @@ config.o: config.hh
 config.o: debug.hh
 config.o: djvu-const.hh
 config.o: i18n.hh
-config.o: sexpr.hh
 config.o: string-format.hh
 config.o: system.hh
 debug.o: autoconf.hh
@@ -28,7 +27,6 @@ image-filter.o: image-filter.cc
 image-filter.o: image-filter.hh
 image-filter.o: pdf-backend.hh
 image-filter.o: rle.hh
-image-filter.o: sexpr.hh
 image-filter.o: string-format.hh
 pdf-backend.o: autoconf.hh
 pdf-backend.o: debug.hh

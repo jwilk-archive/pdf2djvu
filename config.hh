@@ -18,13 +18,12 @@
 
 #include <climits>
 #include <memory>
-#include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "i18n.hh"
-#include "sexpr.hh"
 #include "string-format.hh"
 
 class Config
