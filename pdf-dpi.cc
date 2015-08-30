@@ -12,9 +12,12 @@
  * General Public License for more details.
  */
 
-#include "pdf-dpi.hh"
-
+#include <algorithm>
+#include <cmath>
 #include <limits>
+
+#include "pdf-dpi.hh"
+#include "pdf-backend.hh"
 
 class DpiGuessDevice : public pdf::OutputDevice
 {
@@ -52,15 +55,15 @@ protected:
     this->process_image(state, mask_width, mask_height);
   }
 
-  virtual GBool interpretType3Chars()
+  virtual pdf::Bool interpretType3Chars()
   {
     return false;
   }
-  virtual GBool upsideDown()
+  virtual pdf::Bool upsideDown()
   {
     return false;
   }
-  virtual GBool useDrawChar()
+  virtual pdf::Bool useDrawChar()
   {
     return false;
   }
