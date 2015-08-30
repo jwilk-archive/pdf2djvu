@@ -128,7 +128,7 @@ static void report_posix_error(int fd, const char *context)
     write(fd, context, strlen(context));
 }
 
-const std::string signame(int sig)
+const char * get_signal_name(int sig)
 {
     switch (sig) {
 #define s(n) case n: return "" # n "";
@@ -167,7 +167,7 @@ const std::string signame(int sig)
     s(SIGXFSZ);
 #undef s
     default:
-        return string_printf(_("signal %d"), sig);
+        return NULL;
     }
 }
 
@@ -342,13 +342,22 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         }
     } else if (WIFSIGNALED(wait_status)) {
         int sig = WTERMSIG(wait_status);
-        std::string message = string_printf(
-            // L10N: the latter argument is either an untranslated signal name
-            // (such as "SIGSEGV") or a translated string "signal <N>"
-            _("External command \"%s\" was terminated by %s"),
-            this->repr().c_str(),
-            signame(sig).c_str()
-        );
+        const char * signame = get_signal_name(sig);
+        std::string message;
+        if (signame)
+            message = string_printf(
+                // L10N: the latter argument is an untranslated signal name
+                // (such as "SIGSEGV")
+                _("External command \"%s\" was terminated by %s"),
+                this->repr().c_str(),
+                signame
+            );
+        else
+            message = string_printf(
+                _("External command \"%s\" was terminated by signal %d"),
+                this->repr().c_str(),
+                sig
+            );
         throw CommandFailed(message);
     } else {
         // should not happen
