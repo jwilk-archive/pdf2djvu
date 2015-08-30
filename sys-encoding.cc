@@ -12,8 +12,11 @@
  * General Public License for more details.
  */
 
-#include "array.hh"
 #include "system.hh"
+
+#include <cstdio>
+#include <ostream>
+#include <string>
 
 #include <errno.h>
 #include <iconv.h>
@@ -21,6 +24,8 @@
 #if WIN32
 #include <windows.h>
 #endif
+
+#include "array.hh"
 
 namespace encoding {
 
