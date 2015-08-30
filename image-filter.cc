@@ -20,12 +20,16 @@
 
 #include <bitset>
 #include <map>
+#include <ostream>
 #include <vector>
+
+#include <stdint.h>
 
 #include "image-filter.hh"
 
 #include "config.hh"
 #include "djvu-const.hh"
+#include "pdf-backend.hh"
 #include "rle.hh"
 
 static void dummy_quantizer(int width, int height, int *background_color, std::ostream &stream);

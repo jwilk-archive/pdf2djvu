@@ -16,6 +16,7 @@
 #ifndef PDF2DJVU_IMAGE_FILTER_H
 #define PDF2DJVU_IMAGE_FILTER_H
 
+#include <ostream>
 #include <stdexcept>
 
 #include "pdf-backend.hh"
