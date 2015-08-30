@@ -16,12 +16,12 @@
 #define PDF2DJVU_SYSTEM_HH
 
 #include <cstdarg>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <vector>
-
-#include "autoconf.hh"
 
 class OSError : public std::runtime_error
 {

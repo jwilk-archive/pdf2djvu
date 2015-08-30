@@ -6,7 +6,6 @@ config.o: djvu-const.hh
 config.o: i18n.hh
 config.o: string-format.hh
 config.o: system.hh
-debug.o: autoconf.hh
 debug.o: debug.cc
 debug.o: debug.hh
 debug.o: system.hh
@@ -75,7 +74,6 @@ sys-command-posix.o: sys-command-posix.cc
 sys-command-posix.o: system.hh
 sys-command-win32.o: sys-command-win32.cc
 sys-encoding.o: array.hh
-sys-encoding.o: autoconf.hh
 sys-encoding.o: sys-encoding.cc
 sys-encoding.o: system.hh
 system.o: array.hh

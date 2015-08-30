@@ -13,21 +13,23 @@
  * General Public License for more details.
  */
 
+#include "system.hh"
+
+#include <algorithm>
 #include <cassert>
 #include <cerrno>
 #include <cstdarg>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 #include <limits>
 #include <sstream>
 #include <stdexcept>
 
 #include <dirent.h>
-#include <fcntl.h>
 #include <libgen.h>
-#include <stdint.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <unistd.h>
 
 #if WIN32
@@ -35,9 +37,9 @@
 #endif
 
 #include "array.hh"
+#include "autoconf.hh"
 #include "debug.hh"
 #include "i18n.hh"
-#include "system.hh"
 
 #if USE_MINGW_ANSI_STDIO
 #define vsnprintf __mingw_vsnprintf
