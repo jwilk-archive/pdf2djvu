@@ -15,7 +15,7 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cmath>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -23,12 +23,16 @@
 #include <memory>
 #include <set>
 #include <sstream>
+#include <stdexcept>
+#include <string>
+#include <utility>
 #include <vector>
+
 #if _OPENMP
 #include <omp.h>
 #endif
 
-#include "autoconf.hh"
+#include <stdint.h>
 
 #include "config.hh"
 #include "debug.hh"
@@ -41,9 +45,10 @@
 #include "pdf-dpi.hh"
 #include "pdf-unicode.hh"
 #include "sexpr.hh"
+#include "string-format.hh"
 #include "system.hh"
-#include "xmp.hh"
 #include "version.hh"
+#include "xmp.hh"
 
 Config config;
 
