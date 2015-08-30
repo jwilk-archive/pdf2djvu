@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-08-30 11:34+0200\n"
-"PO-Revision-Date: 2015-05-24 18:46+0200\n"
+"PO-Revision-Date: 2015-08-30 11:51+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -156,9 +156,9 @@ msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
 msgid "External command \"%s\" was terminated by %s"
 msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" was terminated by signal %d"
-msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez %s"
+msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez sygnał %d"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
