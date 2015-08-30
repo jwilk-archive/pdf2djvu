@@ -140,25 +140,25 @@ msgstr "Błędny format pliku wykonywalnego"
 
 #, c-format
 msgid "External command \"%s\" failed"
-msgstr "Zewnętrzne polecenie “%s” nie powiodło się"
+msgstr "Zewnętrzne polecenie „%s” nie powiodło się"
 
 #, c-format
 msgid "External command \"%s\" failed with exit status %lu"
-msgstr "Zewnętrzne polecenie “%s” nie powiodło się; status wyjścia %lu"
+msgstr "Zewnętrzne polecenie „%s” nie powiodło się; status wyjścia %lu"
 
 #, c-format
 msgid "External command \"%s\" failed: %s"
-msgstr "Zewnętrzne polecenie “%s” nie powiodło się: %s"
+msgstr "Zewnętrzne polecenie „%s” nie powiodło się: %s"
 
 #. L10N: the latter argument is an untranslated signal name
 #. (such as "SIGSEGV")
 #, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez %s"
+msgstr "Zewnętrzne polecenie „%s” zostało przerwane przez %s"
 
 #, c-format
 msgid "External command \"%s\" was terminated by signal %d"
-msgstr "Zewnętrzne polecenie “%s” zostało przerwane przez sygnał %d"
+msgstr "Zewnętrzne polecenie „%s” zostało przerwane przez sygnał %d"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
