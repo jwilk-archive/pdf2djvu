@@ -12,8 +12,8 @@
  */
 
 #include <iomanip>
-#include <iostream>
 #include <limits>
+#include <ostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>

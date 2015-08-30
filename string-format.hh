@@ -16,6 +16,11 @@
 #define PDF2DJVU_STRING_FORMAT_HH
 
 #include <map>
+#include <ostream>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace string_format
 {
