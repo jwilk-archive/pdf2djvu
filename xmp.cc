@@ -19,8 +19,10 @@
 
 #if HAVE_LIBXSLT
 
-#include <sstream>
+#include <cstddef>
 #include <memory>
+#include <sstream>
+#include <vector>
 
 #include <libxml/xmlIO.h>
 #include <libxml/xmlmemory.h>
