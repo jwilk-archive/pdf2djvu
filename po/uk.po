@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-29 21:11+0200\n"
+"POT-Creation-Date: 2015-08-30 11:34+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -149,10 +149,14 @@ msgstr "Не вдалося виконати зовнішню команду „
 msgid "External command \"%s\" failed: %s"
 msgstr "Не вдалося виконати зовнішню команду „%s“"
 
-#. L10N: the latter argument is either an untranslated signal name
-#. (such as "SIGSEGV") or a translated string "signal <N>"
+#. L10N: the latter argument is an untranslated signal name
+#. (such as "SIGSEGV")
 #, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
+msgstr "Не вдалося виконати зовнішню команду „%s“"
+
+#, fuzzy, c-format
+msgid "External command \"%s\" was terminated by signal %d"
 msgstr "Не вдалося виконати зовнішню команду „%s“"
 
 #. L10N: Windows error message for EEXIST
@@ -548,10 +552,6 @@ msgstr "промальовка сторінки (2-ий прохід)"
 
 msgid "setting metadata with `djvused`"
 msgstr "присвоєння метаданих з „djvused“"
-
-#, c-format
-msgid "signal %d"
-msgstr ""
 
 msgid "storing background image"
 msgstr "збереження фонового зображення"

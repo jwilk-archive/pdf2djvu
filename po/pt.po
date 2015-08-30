@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-29 21:11+0200\n"
+"POT-Creation-Date: 2015-08-30 11:34+0200\n"
 "PO-Revision-Date: 2015-05-25 22:08+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -157,10 +157,14 @@ msgstr "Comando externo \"%s\" falhou com código de saída %lu"
 msgid "External command \"%s\" failed: %s"
 msgstr "Comando externo \"%s\" falhou"
 
-#. L10N: the latter argument is either an untranslated signal name
-#. (such as "SIGSEGV") or a translated string "signal <N>"
+#. L10N: the latter argument is an untranslated signal name
+#. (such as "SIGSEGV")
 #, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
+msgstr "Comando externo \"%s\" falhou"
+
+#, fuzzy, c-format
+msgid "External command \"%s\" was terminated by signal %d"
 msgstr "Comando externo \"%s\" falhou"
 
 #. L10N: Windows error message for EEXIST
@@ -555,10 +559,6 @@ msgstr "a renderizar página (2º passo)"
 
 msgid "setting metadata with `djvused`"
 msgstr "a definir meta-dados com o `djvused`"
-
-#, c-format
-msgid "signal %d"
-msgstr ""
 
 msgid "storing background image"
 msgstr "a gravar imagem de fundo"

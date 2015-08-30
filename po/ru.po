@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-29 21:11+0200\n"
+"POT-Creation-Date: 2015-08-30 11:34+0200\n"
 "PO-Revision-Date: 2015-05-31 13:40+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
@@ -148,10 +148,14 @@ msgstr "Не удалось выполнить внешнюю команду \"%
 msgid "External command \"%s\" failed: %s"
 msgstr "Не удалось выполнить внешнюю команду \"%s\""
 
-#. L10N: the latter argument is either an untranslated signal name
-#. (such as "SIGSEGV") or a translated string "signal <N>"
+#. L10N: the latter argument is an untranslated signal name
+#. (such as "SIGSEGV")
 #, fuzzy, c-format
 msgid "External command \"%s\" was terminated by %s"
+msgstr "Не удалось выполнить внешнюю команду \"%s\""
+
+#, fuzzy, c-format
+msgid "External command \"%s\" was terminated by signal %d"
 msgstr "Не удалось выполнить внешнюю команду \"%s\""
 
 #. L10N: Windows error message for EEXIST
@@ -547,10 +551,6 @@ msgstr "рендеринг страницы (2-ой проход)"
 
 msgid "setting metadata with `djvused`"
 msgstr "присвоение метаданных с `djvused`"
-
-#, c-format
-msgid "signal %d"
-msgstr ""
 
 msgid "storing background image"
 msgstr "сохранение фонового изображения"
