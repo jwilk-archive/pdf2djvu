@@ -15,6 +15,8 @@
 
 #if !WIN32
 
+#include "system.hh"
+
 #include <cassert>
 #include <cerrno>
 #include <cstdio>
@@ -36,7 +38,6 @@
 
 #include "array.hh"
 #include "i18n.hh"
-#include "system.hh"
 
 Command::Command(const std::string& command) : command(command)
 {

@@ -13,6 +13,8 @@
  * General Public License for more details.
  */
 
+#include "pdf-backend.hh"
+
 #include <algorithm>
 #include <cmath>
 #include <cstdarg>
@@ -25,12 +27,6 @@
 #include <sstream>
 #include <string>
 
-#include "debug.hh"
-#include "i18n.hh"
-#include "pdf-backend.hh"
-#include "pdf-unicode.hh"
-#include "system.hh"
-
 #include <Error.h>
 #include <GfxState.h>
 #include <GlobalParams.h>
@@ -39,6 +35,12 @@
 #include <goo/gtypes.h>
 #include <splash/SplashClip.h>
 #include <splash/SplashTypes.h>
+
+#include "debug.hh"
+#include "i18n.hh"
+#include "pdf-unicode.hh"
+#include "system.hh"
+
 
 /* class pdf::Environment
  * ======================

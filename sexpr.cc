@@ -12,12 +12,12 @@
  * General Public License for more details.
  */
 
+#include "sexpr.hh"
+
 #include <cstdio>
 
 #include <libdjvu/ddjvuapi.h>
 #include <libdjvu/miniexp.h>
-
-#include "sexpr.hh"
 
 #if DDJVUAPI_VERSION >= 21
 

@@ -12,14 +12,14 @@
  * General Public License for more details.
  */
 
-#include "autoconf.hh"
+#include "version.hh"
 
 #include <sstream>
 
 #include <libdjvu/ddjvuapi.h>
 
+#include "autoconf.hh"
 #include "system.hh"
-#include "version.hh"
 
 static std::string get_djvulibre_version()
 {

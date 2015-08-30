@@ -11,6 +11,8 @@
  * General Public License for more details.
  */
 
+#include "string-format.hh"
+
 #include <iomanip>
 #include <limits>
 #include <ostream>
@@ -19,7 +21,6 @@
 #include <string>
 #include <vector>
 
-#include "string-format.hh"
 #include "i18n.hh"
 
 #if __cplusplus < 201103

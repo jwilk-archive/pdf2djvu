@@ -12,10 +12,11 @@
  * General Public License for more details.
  */
 
+#include "i18n.hh"
+
 #include <clocale>
 #include <string>
 
-#include "i18n.hh"
 #include "paths.hh"
 #include "system.hh"
 

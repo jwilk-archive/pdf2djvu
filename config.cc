@@ -13,6 +13,8 @@
  * General Public License for more details.
  */
 
+#include "config.hh"
+
 #include <cerrno>
 #include <climits>
 #include <cstdlib>
@@ -23,9 +25,6 @@
 #include <getopt.h>
 
 #include "autoconf.hh"
-
-#include "config.hh"
-
 #include "debug.hh"
 #include "djvu-const.hh"
 #include "i18n.hh"

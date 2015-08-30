@@ -15,13 +15,14 @@
 
 #if WIN32
 
+#include "system.hh"
+
 #include <cassert>
 #include <sstream>
 
 #include <windows.h>
 
 #include "i18n.hh"
-#include "system.hh"
 
 Command::Command(const std::string& command) : command(command)
 {

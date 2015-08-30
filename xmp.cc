@@ -12,10 +12,11 @@
  * General Public License for more details.
  */
 
+#include "xmp.hh"
+
 #include "i18n.hh"
 #include "autoconf.hh"
 #include "version.hh"
-#include "xmp.hh"
 
 #if HAVE_LIBXSLT
 

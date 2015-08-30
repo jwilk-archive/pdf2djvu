@@ -12,11 +12,7 @@
  * General Public License for more details.
  */
 
-#include "autoconf.hh"
-
-#if HAVE_GRAPHICSMAGICK
-#include <Magick++.h>
-#endif
+#include "image-filter.hh"
 
 #include <bitset>
 #include <map>
@@ -25,12 +21,15 @@
 
 #include <stdint.h>
 
-#include "image-filter.hh"
-
+#include "autoconf.hh"
 #include "config.hh"
 #include "djvu-const.hh"
 #include "pdf-backend.hh"
 #include "rle.hh"
+
+#if HAVE_GRAPHICSMAGICK
+#include <Magick++.h>
+#endif
 
 static void dummy_quantizer(int width, int height, int *background_color, std::ostream &stream);
 
