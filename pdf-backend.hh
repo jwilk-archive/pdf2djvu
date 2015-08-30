@@ -27,8 +27,11 @@
 
 #include "autoconf.hh"
 
+// Poppler:
+#if POPPLER_VERSION >= 1702
 #include <Annot.h>
 #include <Catalog.h>
+#endif
 #include <Dict.h>
 #include <GfxState.h>
 #include <Link.h>
