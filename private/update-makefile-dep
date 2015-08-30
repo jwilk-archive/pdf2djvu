@@ -13,6 +13,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+_colordiff()
+{
+  if command -v colordiff >/dev/null
+  then
+    colordiff
+  else
+    cat
+  fi
+}
+
 make paths.hh $(ls *.xml | sed -e 's/[.]xml/.hh/') || exit 1
 : "${CXX:=g++}"
 "$CXX" -MM *.cc \
@@ -25,6 +35,8 @@ do
     echo "$target: $dep"
   done
 done \
-| sort > Makefile.dep
+| sort > Makefile.dep.new
+diff -u Makefile.dep Makefile.dep.new | _colordiff
+mv Makefile.dep.new Makefile.dep
 
 # vim:ts=2 sts=2 sw=2 et
