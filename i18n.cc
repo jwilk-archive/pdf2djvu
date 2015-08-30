@@ -13,6 +13,7 @@
  */
 
 #include <clocale>
+#include <string>
 
 #include "i18n.hh"
 #include "paths.hh"
