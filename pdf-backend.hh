@@ -28,16 +28,14 @@
 #include "autoconf.hh"
 
 // Poppler:
-#if POPPLER_VERSION >= 1702
+#include <PDFDoc.h>
 #include <Annot.h>
 #include <Catalog.h>
-#endif
 #include <Dict.h>
 #include <GfxState.h>
 #include <Link.h>
 #include <Object.h>
 #include <OutputDev.h>
-#include <PDFDoc.h>
 #include <SplashOutputDev.h>
 #include <Stream.h>
 #include <goo/GooString.h>
