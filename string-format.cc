@@ -1,4 +1,4 @@
-/* Copyright © 2009-2013 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
  * Copyright © 2009 Mateusz Turcza
  *
  * pdf2djvu is free software; you can redistribute it and/or modify
