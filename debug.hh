@@ -15,9 +15,10 @@
 #ifndef PDF2DJVU_DEBUG_H
 #define PDF2DJVU_DEBUG_H
 
-#include <iostream>
-#include <stdexcept>
+#include <ostream>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 
 #include "system.hh"
 

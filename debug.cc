@@ -12,6 +12,8 @@
  * General Public License for more details.
  */
 
+#include <iostream>
+
 #include "debug.hh"
 
 class DevNull : public std::ostream
