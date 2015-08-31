@@ -1,5 +1,6 @@
 pdf2djvu (0.8.2) UNRELEASED; urgency=low
 
+  [ Jakub Wilk ]
   * Always silence djvuextract's stderr.
   * Make GraphicsMagick initialization thread-safe.
   * Rewrite the subprocess handling code to be thread-safe.
@@ -8,7 +9,10 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   * Update the Polish translation.
   * Use iconv() for converting from locale encoding to UTF-8.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 29 Aug 2015 19:06:57 +0200
+  [ Américo Monteiro ]
+  * Update the Portuguese translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 31 Aug 2015 21:47:34 +0200
 
 pdf2djvu (0.8.1) unstable; urgency=low
 
