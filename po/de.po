@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-08-30 11:34+0200\n"
-"PO-Revision-Date: 2015-05-26 22:36+0200\n"
+"PO-Revision-Date: 2015-09-01 12:23+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -140,23 +140,23 @@ msgstr "Fehler des Ausführungsformats"
 msgid "External command \"%s\" failed"
 msgstr "externer Befehl »%s« fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" failed with exit status %lu"
-msgstr "externer Befehl »%s« mit Exit-Kode %lu fehlgeschlagen"
+msgstr "externer Befehl »%s« mit Exit-Status %lu fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" failed: %s"
-msgstr "externer Befehl »%s« fehlgeschlagen"
+msgstr "externer Befehl »%s« fehlgeschlagen: %s"
 
 #. L10N: the latter argument is an untranslated signal name
 #. (such as "SIGSEGV")
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "externer Befehl »%s« fehlgeschlagen"
+msgstr "externer Befehl »%s« wurde durch %s beendet"
 
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" was terminated by signal %d"
-msgstr "externer Befehl »%s« fehlgeschlagen"
+msgstr "externer Befehl »%s« wurde durch Signal %d beendet"
 
 #. L10N: Windows error message for EEXIST
 msgid "File exists"
@@ -396,7 +396,7 @@ msgstr "zu viele offene Dateien auf dem System"
 
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
-msgstr ""
+msgstr "Seitentitel kann nicht in UTF-8 umgewandelt werden: %s"
 
 msgid "Unable to load document"
 msgstr "Dokument kann nicht geladen werden"

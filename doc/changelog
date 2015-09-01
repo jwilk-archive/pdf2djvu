@@ -12,7 +12,10 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   [ Américo Monteiro ]
   * Update the Portuguese translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 31 Aug 2015 21:47:34 +0200
+  [ Chris Leick ]
+  * Update the German translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 01 Sep 2015 12:43:57 +0200
 
 pdf2djvu (0.8.1) unstable; urgency=low
 
