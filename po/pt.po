@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-30 11:34+0200\n"
+"POT-Creation-Date: 2015-09-02 00:11+0200\n"
 "PO-Revision-Date: 2015-08-31 19:51+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -25,552 +25,707 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
+#: config.cc
 msgid "     --filter-text=COMMAND-LINE"
 msgstr "     --filter-text=LINHA-DE-COMANDOS"
 
+#: config.cc
 msgid "     --page-size=WxH"
 msgstr "     --page-size=Largura-x-Altura"
 
+#: config.cc
 msgid "     --page-title-template=TEMPLATE"
 msgstr "     --page-title-template=MODELO"
 
+#: config.cc
 msgid "     --pageid-prefix=NAME"
 msgstr "     --pageid-prefix=NOME"
 
+#: config.cc
 msgid "     --pageid-template=TEMPLATE"
 msgstr "     --pageid-template=MODELO"
 
+#: config.cc
 msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
 msgstr "   pdf2djvu  -i <index-djvu-file>   [opções] <pdf-file>"
 
+#: config.cc
 msgid "   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>"
 msgstr "   pdf2djvu [-o <output-djvu-file>] [opções] <pdf-file>"
 
+#: config.cc
 msgid " -d, --dpi=RESOLUTION"
 msgstr " -d, --dpi=RESOLUÇÃO"
 
+#: config.cc
 msgid " -i, --indirect=FILE"
 msgstr " -i, --indirect=FICHEIRO"
 
+#: config.cc
 msgid " -o, --output=FILE"
 msgstr " -o, --output=FICHEIRO"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
 msgstr "%.3f bits/pixel; %.3f:1, %.2f%% gravados %ju bytes dentro, %zu bytes fora"
 
 #. L10N: "<error-category> (<position>): <error-message>"
+#: pdf-backend.cc
 #, c-format
 msgid "%s (%jd): %s"
 msgstr "%s (%jd): %s"
 
 #. L10N: "<command> ..."
+#: sys-command-win32.cc sys-command-posix.cc
 #, c-format
 msgid "%s ..."
 msgstr "%s ..."
 
+#: config.cc
 #, c-format
 msgid "%s is not a valid number"
 msgstr "%s não é um número válido"
 
 #. L10N: "<error-category>: <error-message>"
+#: pdf-backend.cc
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "%zu bytes out"
 msgid_plural "%zu bytes out"
 msgstr[0] "%zu byte fora"
 msgstr[1] "%zu bytes fora"
 
+#: config.cc
 msgid "--loss-level requires enabling --monochrome"
 msgstr "--loss-level requer a activação de --monochrome"
 
 #. L10N: Windows error message for E2BIG
+#: system.cc
 msgid "Arg list too long"
 msgstr "Lista de argumentos demasiado longa"
 
 #. L10N: Windows error message for E2BIG
+#: system.cc
 msgid "Argument list too long"
 msgstr "Lista de argumentos demasiado longa"
 
 #. L10N: Windows error message for EFAULT
+#: system.cc
 msgid "Bad address"
 msgstr "Mau endereço"
 
 #. L10N: Windows error message for EBADF
+#: system.cc
 msgid "Bad file descriptor"
 msgstr "Mau descritor de ficheiro"
 
 #. L10N: Windows error message for EPIPE
+#: system.cc
 msgid "Broken pipe"
 msgstr "Pipe quebrado"
 
 #. L10N: Windows error message for ENOMEM
+#: system.cc
 msgid "Cannot allocate memory"
 msgstr "Incapaz de alocar memória"
 
+#: pdf2djvu.cc
 msgid "Cannot find link destination"
 msgstr "Incapaz de encontrar ligação ao destino"
 
 #. L10N: Windows error message for EBUSY
+#: system.cc
 msgid "Device or resource busy"
 msgstr "Dispositivo ou recurso ocupado"
 
 #. L10N: Windows error message for ENOTEMPTY
+#: system.cc
 msgid "Directory not empty"
 msgstr "Directório não vazio"
 
+#: djvu-outline.cc
 msgid "Document outline too large"
 msgstr "Linha de contorno do documento muito larga"
 
 #. L10N: Windows error message for EDOM
+#: system.cc
 msgid "Domain error"
 msgstr "Erro do domínio"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Duplicar identificador de pagina: %s"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "Duplicate page title: %s"
 msgstr "Duplicar título de página: %s"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "Duplicate page: %d"
 msgstr "Duplicar página: %d"
 
 #. L10N: Windows error message for ENOEXEC
+#: system.cc
 msgid "Exec format error"
 msgstr "Erro de formato executável"
 
+#: sys-command-win32.cc
 #, c-format
 msgid "External command \"%s\" failed"
 msgstr "Comando externo \"%s\" falhou"
 
+#: sys-command-win32.cc sys-command-posix.cc
 #, c-format
 msgid "External command \"%s\" failed with exit status %lu"
 msgstr "Comando externo \"%s\" falhou com estado de saída %lu"
 
+#: sys-command-posix.cc
 #, c-format
 msgid "External command \"%s\" failed: %s"
 msgstr "Comando externo \"%s\" falhou: %s"
 
 #. L10N: the latter argument is an untranslated signal name
 #. (such as "SIGSEGV")
+#: sys-command-posix.cc
 #, c-format
 msgid "External command \"%s\" was terminated by %s"
 msgstr "Comando externo \"%s\" foi terminado por %s"
 
+#: sys-command-posix.cc
 #, c-format
 msgid "External command \"%s\" was terminated by signal %d"
 msgstr "Comando externo \"%s\" foi terminado pelo sinal %d"
 
 #. L10N: Windows error message for EEXIST
+#: system.cc
 msgid "File exists"
 msgstr "Ficheiro existe"
 
 #. L10N: Windows error message for ENAMETOOLONG
+#: system.cc
 msgid "File name too long"
 msgstr "Nome de ficheiro demasiado longo"
 
 #. L10N: Windows error message for EFBIG
+#: system.cc
 msgid "File too large"
 msgstr "Ficheiro demasiado grande"
 
 #. L10N: Windows error message for ENAMETOOLONG
+#: system.cc
 msgid "Filename too long"
 msgstr "Nome de ficheiro demasiado longo"
 
 #. L10N: Windows error message for ENOSYS
+#: system.cc
 msgid "Function not implemented"
 msgstr "Função não implementada"
 
+#: pdf2djvu.cc
 msgid "I won't write DjVu data to a terminal."
 msgstr "Eu não escrevo dados DjVu num terminal."
 
 #. L10N: Windows error message for EILSEQ
+#: system.cc
 msgid "Illegal byte sequence"
 msgstr "Sequência de bytes ilegal"
 
 #. L10N: Windows error message for ESEEK
+#: system.cc
 msgid "Illegal seek"
 msgstr "Busca ilegal"
 
 #. L10N: Windows error message for EXDEV
+#: system.cc
 msgid "Improper link"
 msgstr "Ligação imprópria"
 
 #. L10N: Windows error message for ENOTTY
+#: system.cc
 msgid "Inappropriate I/O control operation"
 msgstr "Operação de controle I/O inapropriada"
 
 #. L10N: Windows error message for ENOTTY
+#: system.cc
 msgid "Inappropriate ioctl for device"
 msgstr "ioctl inapropriado para dispositivo"
 
+#: config.cc
 #, c-format
 msgid "Input file is the same as output file: %s"
 msgstr "O ficheiro a ler é o mesmo que o ficheiro a escrever: %s"
 
 #. L10N: Windows error message for EIO
+#: pdf-backend.cc system.cc
 msgid "Input/output error"
 msgstr "Erro de entrada/saída"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "Input/output error (%s)"
 msgstr "Erro de entrada/saída (%s)"
 
+#: string-format.cc
 msgid "Integer overflow"
 msgstr "overflow de número inteiro"
 
+#: pdf-backend.cc
 msgid "Internal Poppler error"
 msgstr "Erro de Poppler interno"
 
 #. L10N: Windows error message for EINTR
+#: system.cc
 msgid "Interrupted function call"
 msgstr "Chamada de função interrompida"
 
 #. L10N: Windows error message for EINTR
+#: system.cc
 msgid "Interrupted system call"
 msgstr "Chamada de sistema interrompida"
 
 #. L10N: Windows error message for EINVAL
+#: system.cc
 msgid "Invalid argument"
 msgstr "Argumento inválido"
 
 #. L10N: Windows error message for EXDEV
+#: system.cc
 msgid "Invalid cross-device link"
 msgstr "Ligação de dispositivo cruzado inválida"
 
+#: pdf-backend.hh
 msgid "Invalid date format"
 msgstr "Formato de data inválido"
 
 #. L10N: Windows error message for EILSEQ
+#: system.cc
 msgid "Invalid or incomplete multibyte or wide character"
 msgstr "Inválido multi-byte incompleto ou caractere largo"
 
+#: config.cc
 msgid "Invalid output file name"
 msgstr "Nome de ficheiro de saída inválido"
 
 #. L10N: Windows error message for ESEEK
+#: system.cc
 msgid "Invalid seek"
 msgstr "Busca inválida"
 
 #. L10N: Windows error message for EISDIR
+#: system.cc
 msgid "Is a directory"
 msgstr "É um directório"
 
 #. L10N: Windows error message for ECHILD
+#: system.cc
 msgid "No child processes"
 msgstr "Nenhum processo filho"
 
+#: config.cc
 msgid "No input file name was specified"
 msgstr "Não foi especificado nenhum nome de ficheiro para saída"
 
 #. L10N: Windows error message for ENOLOCK
+#: system.cc
 msgid "No locks available"
 msgstr "Nenhuma tranca disponível"
 
+#: pdf2djvu.cc
 msgid "No page for a bookmark"
 msgstr "Nenhuma página para um favorito"
 
+#: config.hh
 msgid "No pages selected"
 msgstr "Nenhuma página seleccionada"
 
 #. L10N: Windows error message for ENOSPC
+#: system.cc
 msgid "No space left on device"
 msgstr "Não há espaço livre no dispositivo"
 
 #. L10N: Windows error message for ENODEV
+#: system.cc
 msgid "No such device"
 msgstr "Dispositivo inexistente"
 
 #. L10N: Windows error message for ENXIO
+#: system.cc
 msgid "No such device or address"
 msgstr "Não existe tal dispositivo ou endereço"
 
 #. L10N: Windows error message for ENOENT
+#: system.cc
 msgid "No such file or directory"
 msgstr "Não existe tal ficheiro ou directório"
 
 #. L10N: Windows error message for ESRCH
+#: system.cc
 msgid "No such process"
 msgstr "Não existe tal processo"
 
+#: pdf2djvu.cc
 msgid "No title for a bookmark"
 msgstr "Nenhum título para um favorito"
 
 #. L10N: Windows error message for ENOTDIR
+#: system.cc
 msgid "Not a directory"
 msgstr "Não é um directório"
 
 #. L10N: Windows error message for ENOMEM
+#: system.cc
 msgid "Not enough space"
 msgstr "Não há espaço suficiente"
 
 #. L10N: Windows error message for EDOM
+#: system.cc
 msgid "Numerical argument out of domain"
 msgstr "Argumento numérico fora do domínio"
 
 #. L10N: Windows error message for ERANGE
+#: system.cc
 msgid "Numerical result out of range"
 msgstr "Resultado numérico fora do limite"
 
 #. L10N: Windows error message for EPERM
+#: system.cc
 msgid "Operation not permitted"
 msgstr "Operação não permitida"
 
+#: config.cc
 msgid "Options: "
 msgstr "Opções:"
 
+#: pdf-backend.cc
 msgid "PDF error"
 msgstr "Erro do PDF"
 
+#: pdf-backend.cc
 msgid "PDF feature not implemented"
 msgstr "Funcionalidade de PDF não implementada"
 
+#: pdf-backend.cc
 msgid "PDF syntax error"
 msgstr "Erro de sintaxe do PDF"
 
+#: pdf-backend.cc
 msgid "PDF syntax warning"
 msgstr "Aviso de sintaxe do PDF"
 
+#: pdf2djvu.cc
 msgid "Page not found"
 msgstr "Página não encontrada"
 
+#: config.cc
 msgid "Pageid cannot start with a '+' or a '-' character"
 msgstr "Pageid não pode começar com um caractere '+' ou a '-'"
 
+#: config.cc
 msgid "Pageid cannot start with a '.' character or contain two consecutive '.' characters"
 msgstr "Pageid não pode começar com um caractere '.' ou conter dois caracteres '.' consecutivos"
 
+#: config.cc
 msgid "Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
 msgstr "Pageid tem de consistir apenas de letras, dígitos e caracteres '_', '+', '-' e '.'"
 
+#: config.cc
 msgid "Pageid must end with the '.djvu' or the '.djv' extension"
 msgstr "Pageid tem de acabar com a extensão '.djvu' ou '.djv'"
 
 #. L10N: Windows error message for EACCES
+#: pdf-backend.cc system.cc
 msgid "Permission denied"
 msgstr "Permissão negada"
 
+#: pdf-backend.cc
 msgid "Poppler configuration error"
 msgstr "Erro de configuração de Poppler"
 
 #. L10N: Windows error message for EROFS
+#: system.cc
 msgid "Read-only file system"
 msgstr "Sistema de ficheiros só de leitura"
 
 #. L10N: Windows error message for EDEADLK
+#: system.cc
 msgid "Resource deadlock avoided"
 msgstr "Recurso deadlock evitado"
 
 #. L10N: Windows error message for EBUSY
+#: system.cc
 msgid "Resource device"
 msgstr "Dispositivo de recurso"
 
 #. L10N: Windows error message for EAGAIN
+#: system.cc
 msgid "Resource temporarily unavailable"
 msgstr "Recurso temporariamente indisponível"
 
 #. L10N: Windows error message for ERANGE
+#: system.cc
 msgid "Result too large"
 msgstr "Resultado muito grande"
 
+#: config.cc
 #, c-format
 msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
 msgstr "O número especificado de cores do primeiro plano está fora do limite permitido: %u .. %u"
 
+#: config.cc
 #, c-format
 msgid "The specified resolution is outside the allowed range: %d .. %d"
 msgstr "A resolução especificada está fora do limite permitido: %d .. %d"
 
+#: config.cc
 #, c-format
 msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
 msgstr "O rácio de sub-amostragem especificado está fora do limite permitido: %u .. %u"
 
 #. L10N: Windows error message for EMLINK
+#: system.cc
 msgid "Too many links"
 msgstr "Demasiadas ligações"
 
 #. L10N: Windows error message for EMFILE
+#: system.cc
 msgid "Too many open files"
 msgstr "Demasiados ficheiros abertos"
 
 #. L10N: Windows error message for ENFILE
+#: system.cc
 msgid "Too many open files in system"
 msgstr "Demasiados ficheiros abertos no sistema"
 
+#: config.cc
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
 msgstr "Incapaz de converter o título da página para UTF-8: %s"
 
+#: pdf-backend.hh
 msgid "Unable to load document"
 msgstr "Incapaz de carregar documento"
 
+#: config.cc
 msgid "Unable to parse command-line options"
 msgstr "Incapaz de analisar opções da linha de comandos"
 
+#: config.cc
 msgid "Unable to parse hyperlinks options"
 msgstr "Incapaz de analisar opções de hiperligações"
 
+#: config.cc
 msgid "Unable to parse page numbers"
 msgstr "Incapaz de analisar números de páginas"
 
+#: config.cc
 msgid "Unable to parse page size"
 msgstr "Incapaz de analisar tamanho de página"
 
+#: config.cc
 msgid "Unable to parse page title template specification"
 msgstr "Incapaz de analisar especificação de modelo de título de página"
 
+#: config.cc
 msgid "Unable to parse pageid template specification"
 msgstr "Incapaz de analisar especificação de modelo de pageid"
 
+#: pdf-backend.cc
 msgid "Unable to set antialias parameter"
 msgstr "Incapaz de definir parâmetro antialias"
 
+#: pdf-backend.cc
 msgid "Unable to set vector antialias parameter"
 msgstr "Incapaz de definir parâmetro antialias vectorial"
 
+#: pdf2djvu.cc
 msgid "Unexpected output from djvused"
 msgstr "Resultados inesperados de djvused"
 
+#: pdf2djvu.cc
 msgid "Unexpected subsampled bitmap height"
 msgstr "Altura de mapa de bits de sub-amostragem inesperada"
 
+#: pdf2djvu.cc
 msgid "Unexpected subsampled bitmap width"
 msgstr "Largura de mapa de bits de sub-amostragem inesperada"
 
+#: xmp.cc
 msgid "Unknown error"
 msgstr "Erro desconhecido"
 
+#: config.cc
 msgid "Unknown option"
 msgstr "Opção desconhecida"
 
+#: config.cc
 msgid "Usage: "
 msgstr "Utilização: "
 
+#: system.cc pdf2djvu.cc
 #, c-format
 msgid "Warning: %s"
 msgstr "Aviso: %s"
 
+#: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
 
+#: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção go-to remota"
 
+#: pdf2djvu.cc
 msgid "Warning: Unable to convert link without an action"
 msgstr "Aviso: Incapaz de converter ligação sem uma acção"
 
+#: pdf2djvu.cc
 msgid "Warning: Unknown link action"
 msgstr "Aviso: Acção de ligação desconhecida"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Aviso: os meta-dados[%s] não são uma data válida"
 
+#: pdf2djvu.cc
 msgid "adding non-raster data with `djvused`"
 msgstr "a adicionar dados não-raster com o `djvused`"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "creating multi-page indirect document (%zu page)"
 msgid_plural "creating multi-page indirect document (%zu pages)"
 msgstr[0] "a criar documento indirecto de multi-páginas (%zu página)"
 msgstr[1] "a criar documento indirecto de multi-páginas (%zu páginas)"
 
+#: pdf2djvu.cc
 msgid "creating new background image with `c44`"
 msgstr "a criar nova imagem de fundo com o `c44`"
 
+#: pdf2djvu.cc
 msgid "encoding layers with `csepdjvu`"
 msgstr "a codificar camadas com o `csepdjvu`"
 
+#: pdf2djvu.cc
 msgid "encoding monochrome image with `cjb2`"
 msgstr "a codificar imagem monocromática com o `cjb2`"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "estimated resolution: %d dpi"
 msgstr "resolução estimada: %d dpi"
 
+#: pdf2djvu.cc
 msgid "extracting XMP metadata"
 msgstr "a extrair meta-dados XMP"
 
+#: pdf2djvu.cc
 msgid "extracting annotations"
 msgstr "a extrair anotações"
 
+#: pdf2djvu.cc
 msgid "extracting document outline"
 msgstr "a extrair bordos do documento"
 
+#: pdf2djvu.cc
 msgid "extracting document-information metadata"
 msgstr "a extrair meta-dados de informação do documento"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "guessed resolution: %s dpi"
 msgstr "resolução adivinhada: %s dpi"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "image size: %dx%d"
 msgstr "tamanho de imagem: %dx%d"
 
+#: pdf2djvu.cc
 #, c-format
 msgid "page #%d -> #%d"
 msgstr "página #%d -> #%d"
 
+#: system.cc
 msgid "pdf2djvu is intended to be run from the command prompt."
 msgstr "pdf2djvu destina-se a ser accionado a partir da linha de comandos."
 
+#: xmp.cc
 msgid "pdf2djvu was built without GNOME XSLT; XML transformations are disabled."
 msgstr "pdf2djvu foi compilado sem XSLT do GNOME XSLT; as transformações XML estão desactivadas."
 
+#: image-filter.hh
 msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
 msgstr "pdf2djvu foi compilado sem GraphicsMagick; a quantização de cores avançada está desactivada."
 
+#: pdf2djvu.cc
 msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
 msgstr "pdf2djvu foi compilado sem suporte a OpenMP, a s múltiplas linhas de execução estão desactivas."
 
+#: system.cc
 msgid "possibly memory allocation error"
 msgstr "possível erro de alocação de memória"
 
+#: pdf2djvu.cc
 msgid "preparing data for `csepdjvu`"
 msgstr "a preparar dados para o `csepdjvu`"
 
+#: pdf2djvu.cc
 msgid "re-assembling page with `djvumake`"
 msgstr "a re-montar a página com o  `djvumake`"
 
+#: pdf2djvu.cc
 msgid "recovering image chunks with `djvuextract`"
 msgstr "a recuperar pedaços de imagem com o `djvuextract`"
 
+#: pdf2djvu.cc
 msgid "recovering images with `djvuextract`"
 msgstr "a recuperar imagens com o `djvuextract`"
 
+#: pdf2djvu.cc
 msgid "recovering text with `djvused`"
 msgstr "a recuperar texto com o `djvused`"
 
+#: pdf2djvu.cc
 msgid "rendering background image"
 msgstr "a renderizar imagem de fundo"
 
+#: pdf2djvu.cc
 msgid "rendering page (1st pass)"
 msgstr "a renderizar página (1º passo)"
 
+#: pdf2djvu.cc
 msgid "rendering page (2nd pass)"
 msgstr "a renderizar página (2º passo)"
 
+#: pdf2djvu.cc
 msgid "setting metadata with `djvused`"
 msgstr "a definir meta-dados com o `djvused`"
 
+#: pdf2djvu.cc
 msgid "storing background image"
 msgstr "a gravar imagem de fundo"
 
+#: pdf2djvu.cc
 msgid "storing dummy background image"
 msgstr "a gravar imagem fantoche de fundo"
 
+#: pdf2djvu.cc
 msgid "storing foreground image"
 msgstr "a gravar imagem de primeiro plano"
 
+#: pdf2djvu.cc
 msgid "storing text layer"
 msgstr "a gravar camada de texto"
 
+#: pdf2djvu.cc
 msgid "unable to guess resolution"
 msgstr "incapaz de adivinhar a resolução"

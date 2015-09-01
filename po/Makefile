@@ -19,7 +19,7 @@ MO_FILES = $(PO_FILES:.po=.mo)
 SOURCE_FILES = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
 
 gettext-common-options = \
-	--no-location \
+	--add-location=file \
 	--sort-output \
 	--no-wrap \
 
