@@ -107,6 +107,8 @@ class case(object):
     _pdf2djvu_command = os.getenv('pdf2djvu') or 'pdf2djvu'
 
     def get_pdf2djvu_command(self):
+        if re(r'\A[[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
+            return (self._pdf2djvu_command,)
         return ('sh', '-c', self._pdf2djvu_command + ' "$@"', 'sh')
 
     def get_source_path(self, strip_py=False):
