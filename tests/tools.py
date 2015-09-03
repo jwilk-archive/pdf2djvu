@@ -241,7 +241,7 @@ def checkboard(width, height):
             pixels[x, y] = color
     return image
 
-_ppm_re = re('P6\s+\d+\s+\d+\s+255\s(.*)\Z', re.DOTALL)
+_ppm_re = re(r'P6\s+\d+\s+\d+\s+255\s(.*)\Z', re.DOTALL)
 def count_ppm_colors(b):
     match = _ppm_re.match(b)
     assert_is_not_none(match)
