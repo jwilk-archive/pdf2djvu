@@ -143,7 +143,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             throw_win32_error("SetHandleInformation");
     }
     if (stderr_) {
-        error_handle = GetStdHandle(STD_ERROR_HANDLE);;
+        error_handle = GetStdHandle(STD_ERROR_HANDLE);
         if (error_handle != INVALID_HANDLE_VALUE) {
             rc = DuplicateHandle(
                 GetCurrentProcess(), error_handle,
@@ -279,7 +279,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
         } else
             throw_win32_error("SetHandleInformation");
     }
-    error_handle = GetStdHandle(STD_ERROR_HANDLE);;
+    error_handle = GetStdHandle(STD_ERROR_HANDLE);
     if (error_handle != INVALID_HANDLE_VALUE) {
         rc = DuplicateHandle(
             GetCurrentProcess(), error_handle,
