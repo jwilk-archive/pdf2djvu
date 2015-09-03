@@ -27,6 +27,8 @@ re.compile.DOTALL = re.DOTALL
 re = re.compile
 re.type = type(re(''))
 
+import nose
+
 from nose import SkipTest
 
 from nose.tools import (
@@ -35,43 +37,55 @@ from nose.tools import (
     assert_true,
 )
 
-if sys.version_info >= (2, 7):
-    from nose.tools import (
-        assert_in,
-        assert_is,
-        assert_is_none,
-        assert_is_not_none,
-        assert_multi_line_equal,
-        assert_regexp_matches as assert_regex,
+def noseimport(vmaj, vmin, name=None):
+    def wrapper(f):
+        if sys.version_info >= (vmaj, vmin):
+            return getattr(nose.tools, name or f.__name__)
+        return f
+    return wrapper
+
+@noseimport(2, 7)
+def assert_in(x, c):
+    assert_true(
+        x in c,
+        msg='{0!r} not found in {1!r}'.format(x, c)
     )
+
+@noseimport(2, 7)
+def assert_is(x, y):
+    assert_true(
+        x is y,
+        msg='{0!r} is not {1!r}'.format(x, y)
+    )
+
+@noseimport(2, 7)
+def assert_is_not(x, y):
+    assert_true(
+        x is not y,
+        msg='{0!r} is {1!r}'.format(x, y)
+    )
+
+@noseimport(2, 7)
+def assert_is_none(obj):
+    assert_is(obj, None)
+
+@noseimport(2, 7)
+def assert_is_not_none(obj):
+    assert_is_not(obj, None)
+
+@noseimport(2, 7)
+def assert_multi_line_equal(x, y):
+    return assert_equal(x, y)
+if sys.version_info >= (2, 7):
     type(assert_multi_line_equal.__self__).maxDiff = None
-else:
-    def assert_in(x, c):
-        assert_true(
-            x in c,
-            msg='{0!r} not found in {1!r}'.format(x, c)
-        )
-    def assert_is(x, y):
-        assert_true(
-            x is y,
-            msg='{0!r} is not {1!r}'.format(x, y)
-        )
-    def assert_is_not(x, y):
-        assert_true(
-            x is not y,
-            msg='{0!r} is {1!r}'.format(x, y)
-        )
-    def assert_is_none(obj):
-        assert_is(obj, None)
-    def assert_is_not_none(obj):
-        assert_is_not(obj, None)
-    assert_multi_line_equal = assert_equal
-    def assert_regex(text, regex):
-        if isinstance(regex, basestring):
-            regex = re(regex)
-        if not regex.search(text):
-            message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
-            assert_true(False, msg=message)
+
+@noseimport(2, 7, 'assert_regexp_matches')
+def assert_regex(text, regex):
+    if isinstance(regex, basestring):
+        regex = re(regex)
+    if not regex.search(text):
+        message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
+        assert_true(False, msg=message)
 
 def assert_well_formed_xml(xml):
     try:
