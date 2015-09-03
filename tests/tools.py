@@ -129,11 +129,15 @@ class case(object):
             MALLOC_CHECK_='3',
             MALLOC_PERTURB_=str(0xA5),
         )
-        child = ipc.Popen(list(commandline),
-            stdout=ipc.PIPE,
-            stderr=ipc.PIPE,
-            env=env,
-        )
+        try:
+            child = ipc.Popen(list(commandline),
+                stdout=ipc.PIPE,
+                stderr=ipc.PIPE,
+                env=env,
+            )
+        except OSError as exc:
+            exc.filename = commandline[0]
+            raise
         stdout, stderr = child.communicate()
         return ipc_result(stdout, stderr, child.returncode)
 
