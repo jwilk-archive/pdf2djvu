@@ -13,16 +13,15 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
-import re
-
 from tools import (
     case,
+    re,
 )
 
 class test(case):
     def test_rot13(self):
         self.pdf2djvu('--filter-text', 'tr "a-zA-Z" "n-za-mN-ZA-M"').assert_()
         r = self.print_text()
-        r.assert_(stdout=re.compile('^Yberz vcfhz *\n'))
+        r.assert_(stdout=re('^Yberz vcfhz *\n'))
 
 # vim:ts=4 sts=4 sw=4 et

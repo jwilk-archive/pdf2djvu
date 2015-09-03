@@ -13,10 +13,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
-import re
-
 from tools import (
     case,
+    re,
 )
 
 class test(case):
@@ -26,11 +25,11 @@ class test(case):
     def test(self):
         self.pdf2djvu().assert_()
         r = self.print_ant(page=1)
-        r.assert_(stdout=re.compile(
+        r.assert_(stdout=re(
             r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)][)]$',
         ))
         r = self.print_ant(page=2)
-        r.assert_(stdout=re.compile(
+        r.assert_(stdout=re(
             r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)][)]$',
         ))
 
