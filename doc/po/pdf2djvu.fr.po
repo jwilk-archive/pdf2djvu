@@ -3,7 +3,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pdf2djvu 0.8.2\n"
+"Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-08-26 20:35+0200\n"
 "PO-Revision-Date: 2015-06-18 15:28+0200\n"
@@ -20,8 +20,8 @@ msgid "pdf2djvu"
 msgstr "pdf2djvu"
 
 #. type: Content of the version entity
-msgid "0.8.2"
-msgstr "0.8.2"
+msgid "0.9"
+msgstr "0.9"
 
 #. type: Attribute 'lang' of: <refentry>
 msgid "en"
