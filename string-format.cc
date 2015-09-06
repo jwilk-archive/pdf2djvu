@@ -51,7 +51,7 @@ namespace string_format
   protected:
     std::string variable;
     bool negative_offset;
-    uint_tp offset;
+    unsigned int offset;
     unsigned int width;
     bool auto_width;
     bool pad_0;
@@ -114,7 +114,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     case OFFSET_2:
       if (*it >= '0' && *it <= '9')
       {
-        if (this->offset > (std::numeric_limits<uint_tp>::max() - 9) / 10)
+        if (this->offset > (std::numeric_limits<decltype(this->offset)>::max() - 9) / 10)
           throw IntegerOverflow();
         this->offset = this->offset * 10 + (*it - '0');
       }
@@ -157,7 +157,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     this->variable = description;
 }
 
-static string_format::uint_tp shift(string_format::uint_tp value, string_format::uint_tp offset, bool negative_offset)
+static unsigned int shift(unsigned int value, unsigned int offset, bool negative_offset)
 {
   if (negative_offset)
   {
@@ -175,11 +175,11 @@ static string_format::uint_tp shift(string_format::uint_tp value, string_format:
 
 void string_format::VariableChunk::format(const Bindings &bindings, std::ostream &stream) const
 {
-  uint_tp value = shift(bindings.get(this->variable), this->offset, this->negative_offset);
+  unsigned int value = shift(bindings.get(this->variable), this->offset, this->negative_offset);
   unsigned int width = this->width;
   if (auto_width)
   {
-    uint_tp max_value = shift(bindings.get("max_" + this->variable), this->offset, this->negative_offset);
+    unsigned int max_value = shift(bindings.get("max_" + this->variable), this->offset, this->negative_offset);
     unsigned int max_digits = 0;
     while (max_value > 0)
     {

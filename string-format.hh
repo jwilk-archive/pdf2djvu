@@ -24,12 +24,11 @@
 
 namespace string_format
 {
-  typedef unsigned long uint_tp;
 
-  class Bindings : public std::map<std::string, uint_tp>
+  class Bindings : public std::map<std::string, unsigned int>
   {
   public:
-    uint_tp get(const std::string &value) const
+    unsigned int get(const std::string &value) const
     {
       const_iterator it = this->find(value);
       if (it == this->end())
