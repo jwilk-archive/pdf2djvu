@@ -177,7 +177,7 @@ void string_format::VariableChunk::format(const Bindings &bindings, std::ostream
 {
   unsigned int value = shift(bindings.get(this->variable), this->offset, this->negative_offset);
   unsigned int width = this->width;
-  if (auto_width)
+  if (this->auto_width)
   {
     unsigned int max_value = shift(bindings.get("max_" + this->variable), this->offset, this->negative_offset);
     unsigned int max_digits = 0;
