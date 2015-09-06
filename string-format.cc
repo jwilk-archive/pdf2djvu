@@ -13,8 +13,8 @@
 
 #include "string-format.hh"
 
+#include <climits>
 #include <iomanip>
-#include <limits>
 #include <ostream>
 #include <sstream>
 #include <stdexcept>
@@ -114,7 +114,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     case OFFSET_2:
       if (*it >= '0' && *it <= '9')
       {
-        if (this->offset > (std::numeric_limits<decltype(this->offset)>::max() - 9) / 10)
+        if (this->offset > (UINT_MAX - 9) / 10)
           throw IntegerOverflow();
         this->offset = this->offset * 10 + (*it - '0');
       }
@@ -135,7 +135,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     case WIDTH_2:
       if (*it >= '0' && *it <= '9')
       {
-        if (this->width > (std::numeric_limits<decltype(this->width)>::max() - 9) / 10)
+        if (this->width > (UINT_MAX - 9) / 10)
           throw IntegerOverflow();
         this->width = this->width * 10 + (*it - '0');
       }
