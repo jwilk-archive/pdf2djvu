@@ -1,7 +1,7 @@
 pdf2djvu (0.8.2) UNRELEASED; urgency=low
 
   [ Jakub Wilk ]
-  * Always silence djvuextract's stderr.
+  * Fix silencing djvuextract's stderr.
   * Make GraphicsMagick initialization thread-safe.
   * Rewrite the subprocess handling code to be thread-safe.
     Remove PStreams support.
