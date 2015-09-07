@@ -206,6 +206,7 @@ Config::Config()
   this->loss_level = 0;
   this->bg_slices = NULL;
   this->pageid_template.reset(default_pageid_template("p"));
+  this->page_title_template.reset(new string_format::Template(""));
   this->n_jobs = 1;
 }
 

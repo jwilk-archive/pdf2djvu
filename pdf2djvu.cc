@@ -185,27 +185,25 @@ public:
 class Component
 {
 protected:
-  std::auto_ptr<std::string> title;
+  std::string title;
   File *file;
 public:
-  explicit Component(File &file, const std::string *title = NULL)
-  : file(&file)
+  explicit Component(File &file, const std::string title = "")
+  : title(title),
+    file(&file)
   {
-    if (title != NULL)
-      this->title.reset(new std::string(*title));
     file.close();
   }
 
   Component(const Component &component)
-  : file(component.file)
+  : title(component.title),
+    file(component.file)
   {
-    if (component.title.get() != NULL)
-      this->title.reset(new std::string(*component.title));
   }
 
-  const std::string * get_title() const
+  const std::string & get_title() const
   {
-    return this->title.get();
+    return this->title;
   }
 
   const std::string & get_basename() const
@@ -275,12 +273,10 @@ protected:
     return bindings;
   }
 
-  std::string *get_title(int n) const
+  std::string get_title(int n) const
   {
-    if (config.page_title_template.get() == NULL)
-      return NULL;
     string_format::Bindings bindings = this->get_bindings(n);
-    return new std::string(config.page_title_template->format(bindings));
+    return config.page_title_template->format(bindings);
   }
 
   virtual File *create_file(const std::string &id)
@@ -880,12 +876,12 @@ void DjVm::remember(const Component &component)
   if (this->known_ids.count(id) > 0)
     throw DuplicateId(id);
   this->known_ids.insert(id);
-  const std::string *title = component.get_title();
-  if (title != NULL)
+  const std::string &title = component.get_title();
+  if (title.length() > 0)
   {
-    if (this->known_titles.count(*title) > 0)
-      throw DuplicateTitle(*title);
-    this->known_titles.insert(*title);
+    if (this->known_titles.count(title) > 0)
+      throw DuplicateTitle(title);
+    this->known_titles.insert(title);
   }
 }
 
@@ -1082,16 +1078,16 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     if (shared_ant)
       bzz_file << '\3';
     for (std::vector<Component>::const_iterator it = components.begin(); it != components.end(); it++)
-      bzz_file << (it->get_title() == NULL ? '\001' : '\101');
+      bzz_file << (it->get_title().length() == 0 ? '\001' : '\101');
     if (shared_ant)
       bzz_file << djvu::shared_ant_file_name << '\0';
     for (std::vector<Component>::const_iterator it = components.begin(); it != components.end(); it++)
     {
       bzz_file << it->get_basename() << '\0';
-      const std::string *title = it->get_title();
-      if (title == NULL)
+      const std::string &title = it->get_title();
+      if (title.length() == 0)
         continue;
-      bzz_file << *title << '\0';
+      bzz_file << title << '\0';
     }
     bzz_file.close();
     DjVuCommand bzz("bzz");
