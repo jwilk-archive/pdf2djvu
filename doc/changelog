@@ -5,11 +5,11 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   * Make GraphicsMagick initialization thread-safe.
   * Rewrite the subprocess handling code to be thread-safe.
     Remove PStreams support.
-  * Improve error handling.
-  * Update the Polish translation.
   * Use iconv() for converting from locale encoding to UTF-8.
-  * Improve the test suite.
   * Document that gettext is needed for internationalization.
+  * Improve error handling.
+  * Improve the test suite.
+  * Update the Polish translation.
 
   [ Américo Monteiro ]
   * Update the Portuguese translation.
