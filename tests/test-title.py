@@ -24,9 +24,9 @@ class test(case):
         self.pdf2djvu().assert_()
         r = self.ls()
         r.assert_(stdout=re(
-            '\n'
-            '\s*1\s+P\s+\d+\s+[\w.]+\n'
-            '\s*2\s+P\s+\d+\s+[\w.]+\n'
+            r'\n'
+            r'\s*1\s+P\s+\d+\s+[\w.]+\n'
+            r'\s*2\s+P\s+\d+\s+[\w.]+\n'
         ))
 
     def test_ascii(self):
@@ -34,9 +34,9 @@ class test(case):
         self.pdf2djvu('--page-title-template', template).assert_()
         r = self.ls()
         r.assert_(stdout=re(
-            '\n'
-            '\s*1\s+P\s+\d+\s+[\w.]+\s+T=#1\n'
-            '\s*2\s+P\s+\d+\s+[\w.]+\s+T=#2\n'
+            r'\n'
+            r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=#1\n'
+            r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=#2\n'
         ))
 
     def test_utf8(self):
@@ -44,9 +44,9 @@ class test(case):
         self.pdf2djvu('--page-title-template', template, encoding='UTF-8').assert_()
         r = self.ls()
         r.assert_(stdout=re(
-            '\n'
-            '\s*1\s+P\s+\d+\s+[\w.]+\s+T=№1\n'
-            '\s*2\s+P\s+\d+\s+[\w.]+\s+T=№2\n'
+            r'\n'
+            r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=№1\n'
+            r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=№2\n'
         ))
 
     def test_bad_encoding(self):
@@ -59,9 +59,9 @@ class test(case):
         self.pdf2djvu('--page-title-template', template, encoding='ISO8859-1').assert_()
         r = self.ls()
         r.assert_(stdout=re(
-            '\n'
-            '\s*1\s+P\s+\d+\s+[\w.]+\s+T=1º\n'
-            '\s*2\s+P\s+\d+\s+[\w.]+\s+T=2º\n'
+            r'\n'
+            r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=1º\n'
+            r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=2º\n'
         ))
 
 # vim:ts=4 sts=4 sw=4 et
