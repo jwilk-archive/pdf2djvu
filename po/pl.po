@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-07 18:08+0200\n"
+"POT-Creation-Date: 2015-09-07 18:09+0200\n"
 "PO-Revision-Date: 2015-08-30 11:51+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -496,6 +496,14 @@ msgstr "Za dużo otwartych plików"
 #: system.cc
 msgid "Too many open files in system"
 msgstr "Za dużo otwartych plików w systemie"
+
+#: string-format.cc
+msgid "Type error: expected number, not string"
+msgstr ""
+
+#: string-format.cc
+msgid "Type error: expected string, not number"
+msgstr ""
 
 #: config.cc
 #, c-format

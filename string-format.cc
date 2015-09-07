@@ -50,8 +50,7 @@ namespace string_format
   {
   protected:
     std::string variable;
-    bool negative_offset;
-    unsigned int offset;
+    int offset;
     unsigned int width;
     bool auto_width;
     bool pad_0;
@@ -70,10 +69,18 @@ namespace string_format
     { }
   };
 
+  class TypeError : public std::runtime_error
+  {
+  public:
+    explicit TypeError(const std::string &what)
+    : std::runtime_error(what)
+    { }
+  };
+
 }
 
 string_format::VariableChunk::VariableChunk(const std::string &description)
-: negative_offset(false), offset(0), width(0), auto_width(false), pad_0(false)
+: offset(0), width(0), auto_width(false), pad_0(false)
 {
   enum
   {
@@ -85,6 +92,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     END
   } mode = NAME;
   std::string::const_iterator it = description.begin();
+  int offset_sign = 1;
   while (it != description.end())
   {
     switch (mode)
@@ -97,7 +105,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
           mode = WIDTH_1;
         else
         {
-          this->negative_offset = *it == '-';
+          offset_sign = -1;
           mode = OFFSET_1;
         }
       }
@@ -114,7 +122,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
     case OFFSET_2:
       if (*it >= '0' && *it <= '9')
       {
-        if (this->offset > (UINT_MAX - 9) / 10)
+        if (this->offset > (INT_MAX - 9) / 10)
           throw IntegerOverflow();
         this->offset = this->offset * 10 + (*it - '0');
       }
@@ -155,31 +163,45 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
   }
   if (mode == NAME)
     this->variable = description;
+  this->offset *= offset_sign;
 }
 
-static unsigned int shift(unsigned int value, unsigned int offset, bool negative_offset)
+unsigned int string_format::Value::as_int(int offset)
 {
-  if (negative_offset)
+  if (!this->is_int)
+    throw TypeError(_("Type error: expected number, not string"));
+  if (offset < 0)
   {
-    if (offset > value)
-      value = 0;
+    unsigned int uoffset = -offset;
+    if (uoffset > this->v_uint)
+      return 0;
     else
-      value -= offset;
+      return this->v_uint - uoffset;
   }
-  else if (value + offset >= value)
-    value += offset;
   else
-    throw string_format::IntegerOverflow();
-  return value;
+  {
+    unsigned int uoffset = offset;
+    if (this->v_uint + uoffset >= this->v_uint)
+      return this->v_uint + uoffset;
+    else
+      throw string_format::IntegerOverflow();
+  }
+}
+
+const std::string & string_format::Value::as_string()
+{
+  if (this->is_int)
+    throw TypeError(_("Type error: expected string, not number"));
+  return this->v_string;
 }
 
 void string_format::VariableChunk::format(const Bindings &bindings, std::ostream &stream) const
 {
-  unsigned int value = shift(bindings.get(this->variable), this->offset, this->negative_offset);
+  Value value = bindings.get(this->variable);
   unsigned int width = this->width;
   if (this->auto_width)
   {
-    unsigned int max_value = shift(bindings.get("max_" + this->variable), this->offset, this->negative_offset);
+    unsigned int max_value = bindings.get("max_" + this->variable).as_int(this->offset);
     unsigned int max_digits = 0;
     while (max_value > 0)
     {
@@ -191,8 +213,17 @@ void string_format::VariableChunk::format(const Bindings &bindings, std::ostream
   }
   stream
     << std::setfill(this->pad_0 ? '0' : ' ')
-    << std::setw(width)
-    << value;
+    << std::setw(width);
+  try
+  {
+    stream << value.as_int(this->offset);
+  }
+  catch (TypeError)
+  {
+    if (this->offset != 0)
+      throw;
+    stream << value.as_string();
+  }
 }
 
 string_format::Template::Template(const std::string &source)

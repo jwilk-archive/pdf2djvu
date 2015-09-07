@@ -25,14 +25,34 @@
 namespace string_format
 {
 
-  class Bindings : public std::map<std::string, unsigned int>
+  class Value
+  {
+  protected:
+    bool is_int;
+    unsigned int v_uint;
+    std::string v_string;
+  public:
+    Value(unsigned int n=0)
+    : is_int(true), v_uint(n)
+    { };
+    Value(const std::string &s)
+    : is_int(false), v_string(s)
+    { };
+    Value(const char *s)
+    : is_int(false), v_string(s)
+    { };
+    unsigned int as_int(int offset=0);
+    const std::string &as_string();
+  };
+
+  class Bindings : public std::map<std::string, Value>
   {
   public:
-    unsigned int get(const std::string &value) const
+    Value get(const std::string &value) const
     {
       const_iterator it = this->find(value);
       if (it == this->end())
-        return 0;
+        return Value();
       return it->second;
     }
   };
