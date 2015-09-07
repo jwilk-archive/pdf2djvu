@@ -14,8 +14,10 @@
 # General Public License for more details.
 
 import collections
+import codecs
 import inspect
 import itertools
+import locale
 import os
 import re
 import subprocess as ipc
@@ -116,6 +118,26 @@ class ipc_result(object):
         else:
             assert_multi_line_equal(self.stdout, stdout)
 
+def _get_locale_for_encoding(encoding):
+    encoding = codecs.lookup(encoding).name
+    candidates = {
+        'utf-8': ['C.UTF-8', 'en_US.UTF-8'],
+        'iso8859-1': ['en_US.ISO8859-1'],
+    }[encoding]
+    old_locale = locale.setlocale(locale.LC_ALL)
+    try:
+        for new_locale in candidates:
+            try:
+                locale.setlocale(locale.LC_ALL, new_locale)
+            except locale.Error:
+                continue
+            return new_locale
+    finally:
+        locale.setlocale(locale.LC_ALL, old_locale)
+    raise SkipTest(
+        'locale {loc} is required'.format(loc=' or '.join(candidates))
+    )
+
 class case(object):
 
     _pdf2djvu_command = os.getenv('pdf2djvu') or 'pdf2djvu'
@@ -138,11 +160,19 @@ class case(object):
     def get_djvu_path(self):
         return self.get_source_path(strip_py=True) + '.djvu'
 
-    def run(self, *commandline):
+    def run(self, *commandline, **kwargs):
         env = dict(os.environ,
             MALLOC_CHECK_='3',
             MALLOC_PERTURB_=str(0xA5),
         )
+        for key, value in kwargs.items():
+            if key.isupper():
+                env[key] = value
+                continue
+            if key == 'encoding':
+                env['LC_ALL'] = _get_locale_for_encoding(value)
+                continue
+            raise TypeError('{key!r} is an invalid keyword argument for this function'.format(key=key))
         try:
             child = ipc.Popen(list(commandline),
                 stdout=ipc.PIPE,
@@ -155,12 +185,12 @@ class case(object):
         stdout, stderr = child.communicate()
         return ipc_result(stdout, stderr, child.returncode)
 
-    def _pdf2djvu(self, *args):
+    def _pdf2djvu(self, *args, **kwargs):
         args = self.get_pdf2djvu_command() + ('-q', self.get_pdf_path()) + args
-        return self.run(*args)
+        return self.run(*args, **kwargs)
 
-    def pdf2djvu(self, *args):
-        return self._pdf2djvu('-o', self.get_djvu_path(), *args)
+    def pdf2djvu(self, *args, **kwargs):
+        return self._pdf2djvu('-o', self.get_djvu_path(), *args, **kwargs)
 
     def pdf2djvu_indirect(self, *args):
         return self._pdf2djvu('-i', self.get_djvu_path(), *args)
@@ -168,11 +198,12 @@ class case(object):
     def djvudump(self, *args):
         return self.run('djvudump', self.get_djvu_path(), *args)
 
-    def djvused(self, expr):
+    def djvused(self, expr, **kwargs):
         return self.run(
             'djvused',
             '-e', expr,
-            self.get_djvu_path()
+            self.get_djvu_path(),
+            **kwargs
         )
 
     def print_text(self):
@@ -186,6 +217,9 @@ class case(object):
 
     def print_meta(self):
         return self.djvused('print-meta')
+
+    def ls(self):
+        return self.djvused('ls', encoding='UTF-8')
 
     def decode(self, mode=None):
         args = []
