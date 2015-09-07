@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-02 00:11+0200\n"
+"POT-Creation-Date: 2015-09-07 18:08+0200\n"
 "PO-Revision-Date: 2015-05-31 13:40+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
@@ -67,7 +67,7 @@ msgid "%s (%jd): %s"
 msgstr "%s (%jd): %s"
 
 #. L10N: "<command> ..."
-#: sys-command-win32.cc sys-command-posix.cc
+#: sys-command-posix.cc sys-command-win32.cc
 #, c-format
 msgid "%s ..."
 msgstr "%s ..."
@@ -173,7 +173,7 @@ msgstr "Неправильный формат исполняемого файл�
 msgid "External command \"%s\" failed"
 msgstr "Не удалось выполнить внешнюю команду \"%s\""
 
-#: sys-command-win32.cc sys-command-posix.cc
+#: sys-command-posix.cc sys-command-win32.cc
 #, fuzzy, c-format
 msgid "External command \"%s\" failed with exit status %lu"
 msgstr "Не удалось выполнить внешнюю команду \"%s\". Код выхода %lu"
@@ -560,7 +560,7 @@ msgstr "Неизвестный параметр"
 msgid "Usage: "
 msgstr "Использование:"
 
-#: system.cc pdf2djvu.cc
+#: pdf2djvu.cc system.cc
 #, c-format
 msgid "Warning: %s"
 msgstr "Предупреждение: %s"

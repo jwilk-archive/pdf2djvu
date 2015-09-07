@@ -49,7 +49,7 @@ msgfmt = $(MSGFMT) \
 all: pdf2djvu.pot $(PO_FILES) $(MO_FILES)
 
 pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
-	$(xgettext) -D $(srcdir) $(notdir $(SOURCE_FILES)) > $(@)
+	$(xgettext) -D $(srcdir) $(sort $(notdir $(SOURCE_FILES))) > $(@)
 
 %.po: pdf2djvu.pot
 	$(msgmerge) $(@) $(<)

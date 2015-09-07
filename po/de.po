@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.8.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-02 00:11+0200\n"
+"POT-Creation-Date: 2015-09-07 18:08+0200\n"
 "PO-Revision-Date: 2015-09-01 12:23+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -68,7 +68,7 @@ msgid "%s (%jd): %s"
 msgstr "%s (%jd): %s"
 
 #. L10N: "<command> ..."
-#: sys-command-win32.cc sys-command-posix.cc
+#: sys-command-posix.cc sys-command-win32.cc
 #, c-format
 msgid "%s ..."
 msgstr "%s …"
@@ -173,7 +173,7 @@ msgstr "Fehler des Ausführungsformats"
 msgid "External command \"%s\" failed"
 msgstr "externer Befehl »%s« fehlgeschlagen"
 
-#: sys-command-win32.cc sys-command-posix.cc
+#: sys-command-posix.cc sys-command-win32.cc
 #, c-format
 msgid "External command \"%s\" failed with exit status %lu"
 msgstr "externer Befehl »%s« mit Exit-Status %lu fehlgeschlagen"
@@ -560,7 +560,7 @@ msgstr "unbekannte Option"
 msgid "Usage: "
 msgstr "Aufruf: "
 
-#: system.cc pdf2djvu.cc
+#: pdf2djvu.cc system.cc
 #, c-format
 msgid "Warning: %s"
 msgstr "Warnung: %s"
