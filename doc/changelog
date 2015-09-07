@@ -9,6 +9,7 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   * Update the Polish translation.
   * Use iconv() for converting from locale encoding to UTF-8.
   * Improve the test suite.
+  * Document that gettext is needed for internationalization.
 
   [ Américo Monteiro ]
   * Update the Portuguese translation.
@@ -16,7 +17,7 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   [ Chris Leick ]
   * Update the German translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 05 Sep 2015 21:37:58 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Sep 2015 11:00:13 +0200
 
 pdf2djvu (0.8.1) unstable; urgency=low
 
