@@ -47,4 +47,15 @@ class test(case):
         self.pdf2djvu('-p1', '--no-metadata').assert_()
         self.print_outline().assert_(stdout=expected_outline_sexpr)
 
+    def test_iff_corruption(self):
+        # Make sure that the NAVM chunk begins on an even byte.
+        #
+        # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/110
+        # + introduced in 0.7.20
+        # + fixed in 0.8.2
+        #
+        # This particular choice of options seems to trigger odd-sized DIRM chunk:
+        self.pdf2djvu('-p1', '--no-metadata', '--page-title-template', 'xx').assert_()
+        self.print_outline().assert_(stdout=expected_outline_sexpr)
+
 # vim:ts=4 sts=4 sw=4 et

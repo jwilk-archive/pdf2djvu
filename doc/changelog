@@ -1,6 +1,9 @@
 pdf2djvu (0.8.2) UNRELEASED; urgency=low
 
   [ Jakub Wilk ]
+  * Fix file corruption for some documents with outline.
+    https://bitbucket.org/jwilk/pdf2djvu/issues/110
+    Regression introduced in 0.7.20.
   * Fix silencing djvuextract's stderr.
   * Make GraphicsMagick initialization thread-safe.
   * Rewrite the subprocess handling code to be thread-safe.
@@ -17,7 +20,7 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   [ Chris Leick ]
   * Update the German translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Sep 2015 11:00:13 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 08 Sep 2015 14:50:08 +0200
 
 pdf2djvu (0.8.1) unstable; urgency=low
 

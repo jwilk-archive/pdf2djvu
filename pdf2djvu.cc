@@ -1102,10 +1102,11 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
   this->index_file.seekg(20, std::ios::beg);
   for (int i = 3; i >= 0; i--)
     this->index_file << static_cast<char>(((dirm_off - 24) >> (8 * i)) & 0xff);
+  dirm_off += dirm_off & 1;
   if (!bare && this->outline_stream.get())
   {
     TemporaryFile bzz_file;
-    this->index_file.seekg(0, std::ios::end);
+    this->index_file.seekg(dirm_off, std::ios::beg);
     index_file.write("NAVM\0\0\0", 8);
     bzz_file << this->outline_stream->str();
     bzz_file.close();
