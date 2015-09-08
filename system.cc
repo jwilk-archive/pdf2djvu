@@ -33,6 +33,7 @@
 #include <unistd.h>
 
 #if WIN32
+#include <fcntl.h>
 #include <windows.h>
 #endif
 
