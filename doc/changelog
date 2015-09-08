@@ -1,4 +1,4 @@
-pdf2djvu (0.8.2) UNRELEASED; urgency=low
+pdf2djvu (0.8.2) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Fix file corruption for some documents with outline.
@@ -21,7 +21,7 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   [ Chris Leick ]
   * Update the German translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 08 Sep 2015 14:50:08 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 08 Sep 2015 20:43:24 +0200
 
 pdf2djvu (0.8.1) unstable; urgency=low
 
