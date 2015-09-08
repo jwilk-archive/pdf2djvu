@@ -4,10 +4,11 @@ pdf2djvu (0.8.2) UNRELEASED; urgency=low
   * Fix file corruption for some documents with outline.
     https://bitbucket.org/jwilk/pdf2djvu/issues/110
     Regression introduced in 0.7.20.
+  * Improve thread-safety:
+    + Make GraphicsMagick initialization thread-safe.
+    + Rewrite the subprocess handling code to be thread-safe.
+      Remove PStreams support.
   * Fix silencing djvuextract's stderr.
-  * Make GraphicsMagick initialization thread-safe.
-  * Rewrite the subprocess handling code to be thread-safe.
-    Remove PStreams support.
   * Use iconv() for converting from locale encoding to UTF-8.
   * Document that gettext is needed for internationalization.
   * Improve error handling.
