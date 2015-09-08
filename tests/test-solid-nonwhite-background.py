@@ -19,9 +19,8 @@ from tools import (
 )
 
 class test(case):
-    '''
-    fixed in [9a9650e7f06f]
-    '''
+    # + fixed in 0.3.6 [9a9650e7f06f]
+
     def test(self):
         self.pdf2djvu().assert_()
         r = self.djvudump()

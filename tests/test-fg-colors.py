@@ -20,10 +20,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/45
-    fixed in [fc7df6c4d3d3]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/45
+    # + fixed in 0.7.2 [fc7df6c4d3d3]
+
     def test(self):
         yield self._test, 'default', 325
         yield self._test, 'web', 43

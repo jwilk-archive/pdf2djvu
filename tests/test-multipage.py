@@ -19,9 +19,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/50
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/50
+    # + fixed in 0.7.4 [86ae2eb190bd]
+
     def test(self):
         self.pdf2djvu('--pages=2').assert_()
         r = self.print_text()

@@ -19,10 +19,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/59
-    fixed in [6c155e7cc346]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/59
+    # + fixed in 0.7.10 [6c155e7cc346]
+
     def test(self):
         self.pdf2djvu('--monochrome').assert_()
         r = self.djvudump()

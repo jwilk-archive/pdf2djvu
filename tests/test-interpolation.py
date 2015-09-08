@@ -20,9 +20,8 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bugs.debian.org/760396
-    '''
+    # Bug: https://bugs.debian.org/760396
+
     def test(self):
         self.pdf2djvu('--dpi=72').assert_()
         r = self.djvudump()

@@ -21,9 +21,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    fixed in [18b2ae04de2f], [fa7d4addf18e]
-    '''
+    # + fixed in 0.4.9 [18b2ae04de2f]
+    # + fixed in 0.4.11 [fa7d4addf18e]
+
     text = u'bar\N{LATIN SMALL LETTER DZ}o'
     text_nfkc = unicodedata.normalize('NFKC', text).encode('UTF-8')
     text_no_nfkc = text.encode('UTF-8')

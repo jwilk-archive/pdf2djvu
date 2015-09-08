@@ -18,10 +18,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/4
-    fixed in [b58852fbb5ec]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/4
+    # + fixed in 0.4.10 [b58852fbb5ec]
+
     def test(self):
         self.pdf2djvu().assert_()
 

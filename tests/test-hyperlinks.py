@@ -19,9 +19,10 @@ from tools import (
 )
 
 class test(case):
-    '''
-    fixed in [a244b65e0661], [2e5ab20f8a07]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/3
+    # + fixed in 0.4.10 [a244b65e0661]
+    # + fixed in 0.4.12 [2e5ab20f8a07]
+
     def test(self):
         self.pdf2djvu().assert_()
         r = self.print_ant(page=1)

@@ -21,14 +21,15 @@ from tools import (
 class test(case):
 
     def test_11(self):
-        # http://sourceforge.net/p/djvu/bugs/106/
-        # fixed in [5e3937296514]
+        # Bug: http://sourceforge.net/p/djvu/bugs/106/
+        # + fixed in 0.4.11 [5e3937296514]
         self.pdf2djvu('--bg-subsample=11', '--dpi=72').assert_()
         r = self.djvudump()
         r.assert_(stdout=re('BG44.* 10x11$', re.M))
 
     def test_12(self):
-        # https://bugs.debian/458211
+        # Bug: https://bugs.debian/458211
+        #
         # Prior to pdf2djvu 0.5.0, subsample ratio 12 was not allowed.
         # Now we require a fixed version of DjVuLibre.
         self.pdf2djvu('--bg-subsample=12', '--dpi=72').assert_()

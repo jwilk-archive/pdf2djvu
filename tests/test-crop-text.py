@@ -19,10 +19,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/20
-    fixed in [c06a41afdc46]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/20
+    # + fixed in 0.5.4 [c06a41afdc46]
+
     def test_no_crop(self):
         self.pdf2djvu().assert_()
         r = self.print_text()

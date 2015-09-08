@@ -18,10 +18,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bugs.debian.org/508391
-    fixed in [f5d4727b2490]
-    '''
+    # Bug: https://bugs.debian.org/508391
+    # + fixed in 0.4.12 [f5d4727b2490]
+
     def test(self):
         self.pdf2djvu().assert_()
         self.print_outline().assert_()

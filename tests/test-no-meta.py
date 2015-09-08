@@ -18,9 +18,8 @@ from tools import (
 )
 
 class test(case):
-    '''
-    fixed in [d1b09854a9bc]
-    '''
+    # + fixed in 0.7.10 [d1b09854a9bc]
+
     def test(self):
         self.pdf2djvu('--no-metadata', '--dpi=72').assert_()
         self.print_meta().assert_()

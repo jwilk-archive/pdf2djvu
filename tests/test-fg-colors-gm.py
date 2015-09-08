@@ -21,10 +21,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/47
-    fixed in [3d0f55ae5a65]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/47
+    # + fixed in 0.7.2 [3d0f55ae5a65]
+
     def test(self):
         yield self._test, 1, 2
         yield self._test, 2, 3

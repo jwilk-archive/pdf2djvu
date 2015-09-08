@@ -21,9 +21,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/90
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/90
+    # + fixed in 0.8
+
     text = u'\N{LATIN SMALL LIGATURE FL}uorogra\N{LATIN SMALL LIGATURE FI}a'
     text_nfkc = unicodedata.normalize('NFKC', text).encode('UTF-8')
     text_no_nfkc = text.encode('UTF-8')

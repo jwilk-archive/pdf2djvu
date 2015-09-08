@@ -20,12 +20,12 @@ from tools import (
 )
 
 class test(case):
-    '''
-    https://bitbucket.org/jwilk/pdf2djvu/issue/23
-    fixed in [ede3c622526a]
-    https://bitbucket.org/jwilk/pdf2djvu/issue/73
-    fixed in [011677e4ea3e]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/23
+    # + fixed in 0.5.5 [ede3c622526a]
+
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/73
+    # + fixed in 0.8 [011677e4ea3e]
+
     def test_bundled(self):
         r = self.pdf2djvu('--pages=1,1')
         r.assert_(stderr=re('^Duplicate page:', re.M), rc=None)

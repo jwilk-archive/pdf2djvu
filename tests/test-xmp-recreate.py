@@ -21,9 +21,8 @@ from tools import (
 )
 
 class test(case):
-    '''
-    fixed in [d8c60ea6bc37]
-    '''
+    # + fixed in 0.6.0 [d8c60ea6bc37]
+
     def test_verbatim(self):
         self.pdf2djvu('--verbatim-metadata').assert_()
         xmp = self.extract_xmp()

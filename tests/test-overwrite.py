@@ -20,9 +20,9 @@ from tools import (
 )
 
 class test(case):
-    '''
-    fixed in [e98f3c4cfa2e]
-    '''
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/98
+    # + fixed in 0.8 [e98f3c4cfa2e]
+
     def test_overwrite(self):
         pdf_path = self.get_pdf_path()
         with open(pdf_path, 'rb') as pdf_file:
