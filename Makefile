@@ -39,6 +39,7 @@ $(exe): djvu-outline.o
 $(exe): i18n.o
 $(exe): image-filter.o
 $(exe): pdf-backend.o
+$(exe): pdf-document-map.o
 $(exe): pdf-dpi.o
 $(exe): pdf-unicode.o
 $(exe): pdf2djvu.o

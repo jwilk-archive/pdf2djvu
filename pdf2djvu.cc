@@ -42,6 +42,7 @@
 #include "image-filter.hh"
 #include "paths.hh"
 #include "pdf-backend.hh"
+#include "pdf-document-map.hh"
 #include "pdf-dpi.hh"
 #include "pdf-unicode.hh"
 #include "sexpr.hh"
@@ -133,63 +134,15 @@ public:
   }
 };
 
-class DocumentMap
-{
-protected:
-  intmax_t byte_size;
-  const std::vector<const char *> &filenames;
-  std::vector<int> map;
-public:
-  DocumentMap(const std::vector<const char *> &filenames_)
-  : byte_size(0),
-    filenames(filenames_)
-  {
-    int n_all_pages = 0;
-    for (std::vector<const char*>::iterator it = config.filenames.begin(); it != config.filenames.end(); it++)
-    {
-      {
-        std::ifstream ifs(*it, std::ifstream::in | std::ifstream::binary);
-        ifs.seekg(0, std::ios::end);
-        this->byte_size += ifs.tellg();
-        ifs.close();
-      }
-      {
-        std::auto_ptr<pdf::Document> doc(new pdf::Document(*it));
-        int n_pages = doc->getNumPages();
-        this->map.push_back(n_all_pages);
-        n_all_pages += n_pages;
-      }
-    }
-    this->map.push_back(n_all_pages);
-  }
-
-  intmax_t get_byte_size(void)
-  {
-    return this->byte_size;
-  }
-
-  int get_n_pages(void)
-  {
-    return this->map.back();
-  }
-
-  void get(int n, const char *&filename, int &m)
-  {
-    assert(n >= 1);
-    size_t i = std::upper_bound(this->map.begin(), this->map.end(), n - 1) - this->map.begin() - 1;
-    filename = this->filenames.at(i);
-    m = n - this->map[i];
-  }
-};
-
 class Component
 {
 protected:
   std::string title;
+  bool title_set;
   File *file;
 public:
   explicit Component(File &file, const std::string title = "")
-  : title(title),
+  : title(title), title_set(false),
     file(&file)
   {
     file.close();
@@ -197,13 +150,21 @@ public:
 
   Component(const Component &component)
   : title(component.title),
+    title_set(component.title_set),
     file(component.file)
   {
   }
 
   const std::string & get_title() const
   {
+    assert(this->title_set);
     return this->title;
+  }
+
+  void set_title(const std::string &title)
+  {
+    this->title = title;
+    this->title_set = true;
   }
 
   const std::string & get_basename() const
@@ -273,23 +234,25 @@ protected:
     return bindings;
   }
 
-  std::string get_title(int n) const
-  {
-    string_format::Bindings bindings = this->get_bindings(n);
-    return config.page_title_template->format(bindings);
-  }
-
   virtual File *create_file(const std::string &id)
   = 0;
 
 public:
+
+  std::string get_title(int n, const std::string &label) const
+  {
+    string_format::Bindings bindings = this->get_bindings(n);
+    bindings["label"] = label;
+    return config.page_title_template->format(bindings);
+  }
+
   virtual Component &operator[](int n)
   {
     std::vector<Component*>::reference tmpfile_ptr = this->components.at(n - 1);
     if (tmpfile_ptr == NULL)
     {
       this->files[n - 1] = this->create_file(this->get_file_name(n));
-      tmpfile_ptr = new Component(*this->files[n - 1], this->get_title(n));
+      tmpfile_ptr = new Component(*this->files[n - 1]);
     }
     return *tmpfile_ptr;
   }
@@ -1246,7 +1209,7 @@ static int xmain(int argc, char * const argv[])
   pdf::Environment environment;
   environment.set_antialias(config.antialias);
 
-  DocumentMap document_map(config.filenames);
+  pdf::DocumentMap document_map(config.filenames);
   intmax_t pdf_byte_size = document_map.get_byte_size();
 
   pdf::splash::Color paper_color;
@@ -1352,8 +1315,15 @@ static int xmain(int argc, char * const argv[])
       throw DuplicatePage(n);
     page_map.set(n, i);
     page_numbers.push_back(n);
-    *djvm << (*page_files)[n];
     i++;
+  }
+  for (std::vector<int>::const_iterator np = page_numbers.begin(); np != page_numbers.end(); np++)
+  {
+    Component &component = (*page_files)[*np];
+    component.set_title(
+       page_files->get_title(*np, document_map.get(*np).label)
+    );
+    *djvm << component;
   }
 
   if (page_numbers.size() == 0)
@@ -1370,9 +1340,10 @@ static int xmain(int argc, char * const argv[])
   for (size_t i = 0; i < page_numbers.size(); i++)
   try
   {
-    int m, n = page_numbers[i];
-    const char *new_filename;
-    document_map.get(n, new_filename, m);
+    int n = page_numbers[i];
+    pdf::PageInfo pi = document_map.get(n);
+    const char * new_filename = pi.path;
+    int m = pi.local_pageno;
     if (new_filename != doc_filename)
     {
       doc_filename = new_filename;

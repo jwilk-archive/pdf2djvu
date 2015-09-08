@@ -34,6 +34,11 @@ pdf-backend.o: pdf-backend.cc
 pdf-backend.o: pdf-backend.hh
 pdf-backend.o: pdf-unicode.hh
 pdf-backend.o: system.hh
+pdf-document-map.o: autoconf.hh
+pdf-document-map.o: i18n.hh
+pdf-document-map.o: pdf-backend.hh
+pdf-document-map.o: pdf-document-map.cc
+pdf-document-map.o: pdf-document-map.hh
 pdf-dpi.o: autoconf.hh
 pdf-dpi.o: i18n.hh
 pdf-dpi.o: pdf-backend.hh
@@ -53,6 +58,7 @@ pdf2djvu.o: i18n.hh
 pdf2djvu.o: image-filter.hh
 pdf2djvu.o: paths.hh
 pdf2djvu.o: pdf-backend.hh
+pdf2djvu.o: pdf-document-map.hh
 pdf2djvu.o: pdf-dpi.hh
 pdf2djvu.o: pdf-unicode.hh
 pdf2djvu.o: pdf2djvu.cc
