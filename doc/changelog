@@ -64,7 +64,7 @@ pdf2djvu (0.8) unstable; urgency=low
   * Change the order libraries on linker command line.
     Move libraries provided by the LIBS configure variable to the end.
   * Use the reentrant S-expression output API when it's available
-    (DjVuLibre >= 3.5.25).
+    (DjVuLibre ≥ 3.5.25).
   * Improve error handling.
   * Improve the test suite.
   * Improve documentation:
