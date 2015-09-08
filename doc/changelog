@@ -307,7 +307,7 @@ pdf2djvu (0.7.5) unstable; urgency=low
   * Don't allow page identifiers start with a ‘+’ or ‘-’ characters.
   * Document the use of TMPDIR environment variable.
   * Windows: fix handling of non-ASCII filenames in CJK locales.
-    Thanks to Lu Wei for the bugreport.
+    Thanks to Lu Wei for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/53
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 19 Jan 2011 23:56:19 +0100
@@ -332,7 +332,7 @@ pdf2djvu (0.7.3) unstable; urgency=low
     Thanks to Rakesh Pandit for the bug report and the patch.
     https://bitbucket.org/jwilk/pdf2djvu/issue/48
   * Fix handling of the --indirect option.
-    Thanks to T S Mohan for the bugreport.
+    Thanks to T S Mohan for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/49
 
  -- Jakub Wilk <jwilk@jwilk.net>  Mon, 24 May 2010 19:59:43 +0200
