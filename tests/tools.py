@@ -13,12 +13,15 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+from __future__ import print_function
+
 import collections
 import codecs
 import inspect
 import itertools
 import locale
 import os
+import pipes
 import re
 import subprocess as ipc
 import sys
@@ -173,6 +176,7 @@ class case(object):
                 env['LC_ALL'] = _get_locale_for_encoding(value)
                 continue
             raise TypeError('{key!r} is an invalid keyword argument for this function'.format(key=key))
+        print('$', ' '.join(map(pipes.quote, commandline)))
         try:
             child = ipc.Popen(list(commandline),
                 stdout=ipc.PIPE,
