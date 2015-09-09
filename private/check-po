@@ -54,8 +54,11 @@ do
         printf '%s' "$m" | color_msgid
         ok=
     fi
-    printf '\n'
-    [ -n "$ok" ] || rc=1
+    if [ -z "$ok" ]
+    then
+        printf '\n'
+        rc=1
+    fi
 done
 exit $rc
 
