@@ -53,6 +53,7 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(source_files)
 
 %.po: pdf2djvu.pot
 	$(msgmerge) $(@) $(<)
+	touch $(@)
 
 %.mo: %.po
 	$(msgfmt) -o $(@) -c $(<)
