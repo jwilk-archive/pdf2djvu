@@ -14,9 +14,9 @@
 srcdir = ..
 include $(srcdir)/autoconf.mk
 
-PO_FILES = $(wildcard *.po)
-MO_FILES = $(PO_FILES:.po=.mo)
-SOURCE_FILES = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
+po_files = $(wildcard *.po)
+mo_files = $(po_files:.po=.mo)
+source_files = $(wildcard $(srcdir)/*.cc $(srcdir)/*.hh)
 
 gettext-common-options = \
 	--add-location=file \
@@ -46,10 +46,10 @@ msgfmt = $(MSGFMT) \
 	--verbose \
 
 .PHONY: all
-all: pdf2djvu.pot $(PO_FILES) $(MO_FILES)
+all: pdf2djvu.pot $(po_files) $(mo_files)
 
-pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
-	$(xgettext) -D $(srcdir) $(sort $(notdir $(SOURCE_FILES))) > $(@)
+pdf2djvu.pot: $(XGETTEXT_HELPER) $(source_files)
+	$(xgettext) -D $(srcdir) $(sort $(notdir $(source_files))) > $(@)
 
 %.po: pdf2djvu.pot
 	$(msgmerge) $(@) $(<)
@@ -58,7 +58,7 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 	$(msgfmt) -o $(@) -c $(<)
 
 .PHONY: check
-check: $(PO_FILES)
+check: $(po_files)
 	$(srcdir)/private/check-po $(^)
 
 .PHONY: clean
