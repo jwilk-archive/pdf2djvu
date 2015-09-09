@@ -44,6 +44,14 @@ static void maybe_set(Exiv2::XmpData &data, const char *key, const std::string &
         data[key] = value;
 }
 
+static std::string maybe_get(Exiv2::XmpData &data, const char *key)
+{
+    Exiv2::XmpData::iterator it = data.findKey(Exiv2::XmpKey(key));
+    if (it == data.end())
+        return "";
+    return it->toString();
+}
+
 static void set_history(Exiv2::XmpData &data, long n, const char *event, const std::string value)
 {
     const std::string key = string_printf("Xmp.xmpMM.History[%ld]/stEvt:%s", n, event);
@@ -60,7 +68,7 @@ static void error_handler(int level, const char *message)
       string_printf(_("%s: %s"), category, message);
 }
 
-std::string gen_instanceid(void)
+std::string gen_uuid(void)
 {
     char uuid_s[36 + 1];
     uuid_t uuid;
@@ -77,7 +85,9 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
     rc = Exiv2::XmpParser::decode(data, ibytes);
     if (rc != 0)
         throw xmp::Error("cannot parse XMP metadata");
-    std::string instance_id = gen_instanceid();
+    std::string instance_id = gen_uuid();
+    std::string document_id = gen_uuid();
+    std::string original_document_id;
     std::string obytes;
     maybe_set(data, "Xmp.dc.title", metadata.title);
     maybe_set(data, "Xmp.dc.creator", metadata.author);
@@ -105,6 +115,12 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
         data.add(Exiv2::XmpKey("Xmp.xmpMM.History"), empty_seq.get());
     };
     data["Xmp.xmpMM.InstanceID"] = instance_id;
+    original_document_id = maybe_get(data, "Xmp.xmpMM.OriginalDocumentID");
+    if (original_document_id.length() == 0)
+        original_document_id = maybe_get(data, "Xmp.xmpMM.DocumentID");
+    if (original_document_id.length() > 0)
+        data["Xmp.xmpMM.OriginalDocumentID"] = original_document_id;
+    data["Xmp.xmpMM.DocumentID"] = document_id;
     {
         long n = data["Xmp.xmpMM.History"].count();
         assert((n >= 0) && (n < LONG_MAX));

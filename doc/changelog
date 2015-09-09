@@ -7,9 +7,10 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
     + Use the Exiv2 library (instead of the GNOME XSLT library with
       hand-crafted XSL stylesheets).
     + Update the xmpMM:InstanceID property.
+    + Update the xmpMM:DocumentID property.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 09 Sep 2015 11:33:54 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 09 Sep 2015 12:52:18 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 
