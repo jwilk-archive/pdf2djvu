@@ -8,9 +8,11 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
       hand-crafted XSL stylesheets).
     + Update the xmpMM:InstanceID property.
     + Update the xmpMM:DocumentID property.
+    + Generate globally unique identifiers in the urn:uuid namespace.
+      https://tools.ietf.org/html/rfc4122#section-3
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 09 Sep 2015 12:52:18 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 09 Sep 2015 12:56:51 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 

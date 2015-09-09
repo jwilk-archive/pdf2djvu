@@ -74,7 +74,7 @@ std::string gen_uuid(void)
     uuid_t uuid;
     uuid_generate_random(uuid);
     uuid_unparse_lower(uuid, uuid_s);
-    return std::string("uuid:") + uuid_s;
+    return std::string("urn:uuid:") + uuid_s;
 }
 
 std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metadata)
