@@ -57,13 +57,9 @@ pdf2djvu.pot: $(XGETTEXT_HELPER) $(SOURCE_FILES)
 %.mo: %.po
 	$(msgfmt) -o $(@) -c $(<)
 
-GREP_COLOR = grep --color=auto
-
 .PHONY: check
-check: $(MO_FILES)
-	ls $(PO_FILES) | xargs -t -L1 -I{} msgfmt --check -o /dev/null {}
-	! ls $(PO_FILES) | xargs -t -L1 -I{} msgattrib --untranslated {} | $(GREP_COLOR) '.*'
-	! ls $(PO_FILES) | xargs -t -L1 -I{} msgattrib --only-fuzzy {} | $(GREP_COLOR) '.*'
+check: $(PO_FILES)
+	$(srcdir)/private/check-po $(^)
 
 .PHONY: clean
 clean:
