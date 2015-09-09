@@ -499,11 +499,11 @@ msgstr "Za dużo otwartych plików w systemie"
 
 #: string-format.cc
 msgid "Type error: expected number, not string"
-msgstr ""
+msgstr "Niezgodne typy: spodziewano się liczby, a nie napisu"
 
 #: string-format.cc
 msgid "Type error: expected string, not number"
-msgstr ""
+msgstr "Niezgodne typy: spodziewano się napisu, a nie liczby"
 
 #: config.cc
 #, c-format
@@ -593,14 +593,12 @@ msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Ostrzeżenie: metadata[%s] nie jest poprawną datą"
 
 #: xmp.cc
-#, fuzzy
 msgid "XMP metadata error"
-msgstr "Błąd pliku PDF"
+msgstr "Błąd w metadanych XMP"
 
 #: xmp.cc
-#, fuzzy
 msgid "XMP metadata warning"
-msgstr "Ostrzeżenie o błędzie składniowym w pliku PDF"
+msgstr "Ostrzeżenie o błędzie w metadanych XMP"
 
 #: pdf2djvu.cc
 msgid "adding non-raster data with `djvused`"
@@ -675,9 +673,8 @@ msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
 msgstr "pdf2djvu zostało skompilowane bez obsługi OpenMP; wielowątkowość jest wyłączona."
 
 #: xmp.cc
-#, fuzzy
 msgid "pdf2djvu was built without support for updating XMP."
-msgstr "pdf2djvu zostało skompilowane bez obsługi OpenMP; wielowątkowość jest wyłączona."
+msgstr "pdf2djvu zostało skompilowane bez możliwości aktualizacji metadanych XMP."
 
 #: system.cc
 msgid "possibly memory allocation error"
