@@ -38,6 +38,17 @@ do
         printf '%s' "$m" | color
         ok=
     fi
+    if command -v i18nspector > /dev/null
+    then
+        m=$(i18nspector "$po")
+        if [ -n "$m" ]
+        then
+            [ -z "$ok" ] || printf '%s:\n' "$po"
+            printf '%s:\n' '- warnings from i18nspector'
+            printf '%s' "$m" | color
+            ok=
+        fi
+    fi
     m=$(msgattrib --no-wrap --only-fuzzy "$po")
     if [ -n "$m" ]
     then
