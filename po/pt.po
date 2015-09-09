@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-07 18:09+0200\n"
+"POT-Creation-Date: 2015-09-09 11:28+0200\n"
 "PO-Revision-Date: 2015-08-31 19:51+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -88,7 +88,7 @@ msgid "%s is not a valid number"
 msgstr "%s não é um número válido"
 
 #. L10N: "<error-category>: <error-message>"
-#: xmp.cc pdf-backend.cc
+#: pdf-backend.cc xmp.cc
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -601,12 +601,12 @@ msgstr "Aviso: os meta-dados[%s] não são uma data válida"
 
 #: xmp.cc
 #, fuzzy
-msgid "XMP error"
+msgid "XMP metadata error"
 msgstr "Erro do PDF"
 
 #: xmp.cc
 #, fuzzy
-msgid "XMP warning"
+msgid "XMP metadata warning"
 msgstr "Aviso de sintaxe do PDF"
 
 #: pdf2djvu.cc

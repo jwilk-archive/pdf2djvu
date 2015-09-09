@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-07 18:09+0200\n"
+"POT-Creation-Date: 2015-09-09 11:28+0200\n"
 "PO-Revision-Date: 2015-05-31 13:40+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
@@ -78,7 +78,7 @@ msgid "%s is not a valid number"
 msgstr "%s не является правильным числом"
 
 #. L10N: "<error-category>: <error-message>"
-#: xmp.cc pdf-backend.cc
+#: pdf-backend.cc xmp.cc
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -592,12 +592,12 @@ msgstr "Предупреждение: метаданные[%s] являются 
 
 #: xmp.cc
 #, fuzzy
-msgid "XMP error"
+msgid "XMP metadata error"
 msgstr "Ошибка PDF"
 
 #: xmp.cc
 #, fuzzy
-msgid "XMP warning"
+msgid "XMP metadata warning"
 msgstr "Предупреждение о синтаксической ошибке в PDF-файле"
 
 #: pdf2djvu.cc

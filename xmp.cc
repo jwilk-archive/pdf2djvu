@@ -53,8 +53,8 @@ static void set_history(Exiv2::XmpData &data, long n, const char *event, const s
 static void error_handler(int level, const char *message)
 {
     const char *category = (level == Exiv2::LogMsg::error)
-        ? _("XMP error")
-        : _("XMP warning");
+        ? _("XMP metadata error")
+        : _("XMP metadata warning");
     error_log <<
       /* L10N: "<error-category>: <error-message>" */
       string_printf(_("%s: %s"), category, message);

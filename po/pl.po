@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-07 18:09+0200\n"
+"POT-Creation-Date: 2015-09-09 11:28+0200\n"
 "PO-Revision-Date: 2015-08-30 11:51+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -80,7 +80,7 @@ msgid "%s is not a valid number"
 msgstr "%s nie jest poprawną liczbą"
 
 #. L10N: "<error-category>: <error-message>"
-#: xmp.cc pdf-backend.cc
+#: pdf-backend.cc xmp.cc
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -594,12 +594,12 @@ msgstr "Ostrzeżenie: metadata[%s] nie jest poprawną datą"
 
 #: xmp.cc
 #, fuzzy
-msgid "XMP error"
+msgid "XMP metadata error"
 msgstr "Błąd pliku PDF"
 
 #: xmp.cc
 #, fuzzy
-msgid "XMP warning"
+msgid "XMP metadata warning"
 msgstr "Ostrzeżenie o błędzie składniowym w pliku PDF"
 
 #: pdf2djvu.cc
