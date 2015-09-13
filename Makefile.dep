@@ -39,6 +39,7 @@ pdf-document-map.o: i18n.hh
 pdf-document-map.o: pdf-backend.hh
 pdf-document-map.o: pdf-document-map.cc
 pdf-document-map.o: pdf-document-map.hh
+pdf-document-map.o: pdf-unicode.hh
 pdf-dpi.o: autoconf.hh
 pdf-dpi.o: i18n.hh
 pdf-dpi.o: pdf-backend.hh
