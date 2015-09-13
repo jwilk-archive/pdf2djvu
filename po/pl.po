@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-09-13 19:58+0200\n"
-"PO-Revision-Date: 2015-08-30 11:51+0200\n"
+"PO-Revision-Date: 2015-09-13 20:02+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -501,7 +501,7 @@ msgstr "Nie można przekonwertować tytułu strony na UTF-8: %s"
 #: string-format.cc
 #, c-format
 msgid "Unable to format field {%s}: %s"
-msgstr ""
+msgstr "Nie można sformatować pola {%s}: %s"
 
 #: pdf-backend.hh
 msgid "Unable to load document"
@@ -649,14 +649,12 @@ msgid "image size: %dx%d"
 msgstr "wymiary obrazu: %dx%d"
 
 #: string-format.cc
-#, fuzzy
 msgid "integer overflow"
-msgstr "Przekroczenie zakresu liczb całkowitych"
+msgstr "przekroczenie zakresu liczb całkowitych"
 
 #: string-format.cc
-#, fuzzy
 msgid "no such variable"
-msgstr "Nie ma takiego urządzenia"
+msgstr "nie ma takiej zmiennej"
 
 #: pdf2djvu.cc
 #, c-format
@@ -736,14 +734,12 @@ msgid "storing text layer"
 msgstr "zapisywanie warstwy tekstowej"
 
 #: string-format.cc
-#, fuzzy
 msgid "type error: expected number, not string"
-msgstr "Niezgodne typy: spodziewano się liczby, a nie napisu"
+msgstr "niezgodne typy: spodziewano się liczby, a nie napisu"
 
 #: string-format.cc
-#, fuzzy
 msgid "type error: expected string, not number"
-msgstr "Niezgodne typy: spodziewano się napisu, a nie liczby"
+msgstr "niezgodne typy: spodziewano się napisu, a nie liczby"
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"
@@ -751,4 +747,4 @@ msgstr "nie udało się odgadnąć rozdzielczości"
 
 #: string-format.cc
 msgid "unknown maximum width"
-msgstr ""
+msgstr "nieznana maksymalna szerokość"
