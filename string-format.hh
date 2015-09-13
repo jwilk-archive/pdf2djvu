@@ -48,13 +48,7 @@ namespace string_format
   class Bindings : public std::map<std::string, Value>
   {
   public:
-    Value get(const std::string &value) const
-    {
-      const_iterator it = this->find(value);
-      if (it == this->end())
-        return Value();
-      return it->second;
-    }
+    Value get(const std::string &value) const;
   };
 
   class Chunk

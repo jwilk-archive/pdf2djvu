@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-09 11:28+0200\n"
+"POT-Creation-Date: 2015-09-13 19:43+0200\n"
 "PO-Revision-Date: 2015-08-30 11:51+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -266,10 +266,6 @@ msgstr "Błąd wejścia/wyjścia"
 msgid "Input/output error (%s)"
 msgstr "Błąd wejścia/wyjścia (%s)"
 
-#: string-format.cc
-msgid "Integer overflow"
-msgstr "Przekroczenie zakresu liczb całkowitych"
-
 #: pdf-backend.cc
 msgid "Internal Poppler error"
 msgstr "Wewnętrzny błąd Popplera"
@@ -497,18 +493,15 @@ msgstr "Za dużo otwartych plików"
 msgid "Too many open files in system"
 msgstr "Za dużo otwartych plików w systemie"
 
-#: string-format.cc
-msgid "Type error: expected number, not string"
-msgstr "Niezgodne typy: spodziewano się liczby, a nie napisu"
-
-#: string-format.cc
-msgid "Type error: expected string, not number"
-msgstr "Niezgodne typy: spodziewano się napisu, a nie liczby"
-
 #: config.cc
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
 msgstr "Nie można przekonwertować tytułu strony na UTF-8: %s"
+
+#: string-format.cc
+#, c-format
+msgid "Unable to format field {%s}: %s"
+msgstr ""
 
 #: pdf-backend.hh
 msgid "Unable to load document"
@@ -655,6 +648,16 @@ msgstr "odgadnięta rozdzielczość: %s dpi"
 msgid "image size: %dx%d"
 msgstr "wymiary obrazu: %dx%d"
 
+#: string-format.cc
+#, fuzzy
+msgid "integer overflow"
+msgstr "Przekroczenie zakresu liczb całkowitych"
+
+#: string-format.cc
+#, fuzzy
+msgid "no such variable"
+msgstr "Nie ma takiego urządzenia"
+
 #: pdf2djvu.cc
 #, c-format
 msgid "page #%d -> #%d"
@@ -731,6 +734,16 @@ msgstr "zapisywanie obrazu pierwszoplanowego"
 #: pdf2djvu.cc
 msgid "storing text layer"
 msgstr "zapisywanie warstwy tekstowej"
+
+#: string-format.cc
+#, fuzzy
+msgid "type error: expected number, not string"
+msgstr "Niezgodne typy: spodziewano się liczby, a nie napisu"
+
+#: string-format.cc
+#, fuzzy
+msgid "type error: expected string, not number"
+msgstr "Niezgodne typy: spodziewano się napisu, a nie liczby"
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"

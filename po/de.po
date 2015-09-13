@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-09 11:28+0200\n"
+"POT-Creation-Date: 2015-09-13 19:43+0200\n"
 "PO-Revision-Date: 2015-09-01 12:23+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -264,10 +264,6 @@ msgstr "Eingabe-/Ausgabefehler"
 msgid "Input/output error (%s)"
 msgstr "Eingabe-/Ausgabefehler (%s)"
 
-#: string-format.cc
-msgid "Integer overflow"
-msgstr "Ganzzahlenüberlauf"
-
 #: pdf-backend.cc
 msgid "Internal Poppler error"
 msgstr "interner Poppler-Fehler"
@@ -495,18 +491,15 @@ msgstr "zu viele offene Dateien"
 msgid "Too many open files in system"
 msgstr "zu viele offene Dateien auf dem System"
 
-#: string-format.cc
-msgid "Type error: expected number, not string"
-msgstr ""
-
-#: string-format.cc
-msgid "Type error: expected string, not number"
-msgstr ""
-
 #: config.cc
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
 msgstr "Seitentitel kann nicht in UTF-8 umgewandelt werden: %s"
+
+#: string-format.cc
+#, c-format
+msgid "Unable to format field {%s}: %s"
+msgstr ""
 
 #: pdf-backend.hh
 msgid "Unable to load document"
@@ -654,6 +647,16 @@ msgstr "geschätzte Auflösung: %s dpi"
 msgid "image size: %dx%d"
 msgstr "Bildgröße: %dx%d"
 
+#: string-format.cc
+#, fuzzy
+msgid "integer overflow"
+msgstr "Ganzzahlenüberlauf"
+
+#: string-format.cc
+#, fuzzy
+msgid "no such variable"
+msgstr "kein derartiges Gerät"
+
 #: pdf2djvu.cc
 #, c-format
 msgid "page #%d -> #%d"
@@ -731,6 +734,14 @@ msgstr "Vordergrundbild wird gespeichert"
 #: pdf2djvu.cc
 msgid "storing text layer"
 msgstr "Textebene wird gespeichert"
+
+#: string-format.cc
+msgid "type error: expected number, not string"
+msgstr ""
+
+#: string-format.cc
+msgid "type error: expected string, not number"
+msgstr ""
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"

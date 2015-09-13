@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-09 11:28+0200\n"
+"POT-Creation-Date: 2015-09-13 19:43+0200\n"
 "PO-Revision-Date: 2015-08-31 19:51+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -273,10 +273,6 @@ msgstr "Erro de entrada/saída"
 msgid "Input/output error (%s)"
 msgstr "Erro de entrada/saída (%s)"
 
-#: string-format.cc
-msgid "Integer overflow"
-msgstr "overflow de número inteiro"
-
 #: pdf-backend.cc
 msgid "Internal Poppler error"
 msgstr "Erro de Poppler interno"
@@ -504,18 +500,15 @@ msgstr "Demasiados ficheiros abertos"
 msgid "Too many open files in system"
 msgstr "Demasiados ficheiros abertos no sistema"
 
-#: string-format.cc
-msgid "Type error: expected number, not string"
-msgstr ""
-
-#: string-format.cc
-msgid "Type error: expected string, not number"
-msgstr ""
-
 #: config.cc
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
 msgstr "Incapaz de converter o título da página para UTF-8: %s"
+
+#: string-format.cc
+#, c-format
+msgid "Unable to format field {%s}: %s"
+msgstr ""
 
 #: pdf-backend.hh
 msgid "Unable to load document"
@@ -663,6 +656,16 @@ msgstr "resolução adivinhada: %s dpi"
 msgid "image size: %dx%d"
 msgstr "tamanho de imagem: %dx%d"
 
+#: string-format.cc
+#, fuzzy
+msgid "integer overflow"
+msgstr "overflow de número inteiro"
+
+#: string-format.cc
+#, fuzzy
+msgid "no such variable"
+msgstr "Dispositivo inexistente"
+
 #: pdf2djvu.cc
 #, c-format
 msgid "page #%d -> #%d"
@@ -740,6 +743,14 @@ msgstr "a gravar imagem de primeiro plano"
 #: pdf2djvu.cc
 msgid "storing text layer"
 msgstr "a gravar camada de texto"
+
+#: string-format.cc
+msgid "type error: expected number, not string"
+msgstr ""
+
+#: string-format.cc
+msgid "type error: expected string, not number"
+msgstr ""
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"

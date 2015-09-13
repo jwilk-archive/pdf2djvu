@@ -10,9 +10,10 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
     + Update the xmpMM:DocumentID property.
     + Generate globally unique identifiers in the urn:uuid namespace.
       https://tools.ietf.org/html/rfc4122#section-3
+  * Improve error handling.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 09 Sep 2015 12:56:51 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 13 Sep 2015 19:53:23 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 

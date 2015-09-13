@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-09 11:28+0200\n"
+"POT-Creation-Date: 2015-09-13 19:43+0200\n"
 "PO-Revision-Date: 2015-05-31 13:40+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
@@ -264,10 +264,6 @@ msgstr "Ошибка ввода/вывода"
 msgid "Input/output error (%s)"
 msgstr "Ошибка ввода/вывода (%s)"
 
-#: string-format.cc
-msgid "Integer overflow"
-msgstr "Целочисленное переполнение"
-
 #: pdf-backend.cc
 msgid "Internal Poppler error"
 msgstr "Внутренняя ошибка Poppler"
@@ -495,17 +491,14 @@ msgstr "Слишком много открытых файлов"
 msgid "Too many open files in system"
 msgstr "Слишком много открытых файлов в системе"
 
-#: string-format.cc
-msgid "Type error: expected number, not string"
-msgstr ""
-
-#: string-format.cc
-msgid "Type error: expected string, not number"
-msgstr ""
-
 #: config.cc
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
+msgstr ""
+
+#: string-format.cc
+#, c-format
+msgid "Unable to format field {%s}: %s"
 msgstr ""
 
 #: pdf-backend.hh
@@ -655,6 +648,16 @@ msgstr "предполагаемое разрешение: %s dpi"
 msgid "image size: %dx%d"
 msgstr "размер изображения: %dx%d"
 
+#: string-format.cc
+#, fuzzy
+msgid "integer overflow"
+msgstr "Целочисленное переполнение"
+
+#: string-format.cc
+#, fuzzy
+msgid "no such variable"
+msgstr "Нет такого устройства"
+
 #: pdf2djvu.cc
 #, c-format
 msgid "page #%d -> #%d"
@@ -732,6 +735,14 @@ msgstr "сохранение изображения переднего план�
 #: pdf2djvu.cc
 msgid "storing text layer"
 msgstr "сохранение текстового слоя"
+
+#: string-format.cc
+msgid "type error: expected number, not string"
+msgstr ""
+
+#: string-format.cc
+msgid "type error: expected string, not number"
+msgstr ""
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"

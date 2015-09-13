@@ -22,6 +22,7 @@
 #include <vector>
 
 #include "i18n.hh"
+#include "system.hh"
 
 namespace string_format
 {
@@ -57,22 +58,38 @@ namespace string_format
     virtual void format(const Bindings &, std::ostream &) const;
   };
 
-  class IntegerOverflow : public std::overflow_error
+  class ValueError : public std::domain_error
   {
   public:
-    IntegerOverflow()
-    : std::overflow_error(_("Integer overflow"))
+    ValueError(const std::string &what)
+    : std::domain_error(what)
     { }
   };
 
-  class TypeError : public std::runtime_error
+  class ValueTypeError : public ValueError
   {
   public:
-    explicit TypeError(const std::string &what)
-    : std::runtime_error(what)
+    ValueTypeError(const std::string &what)
+    : ValueError(what)
     { }
   };
 
+  class FormatError : public std::runtime_error
+  {
+  public:
+    FormatError(const std::string &var, const std::string &what)
+    : std::runtime_error(string_printf(_("Unable to format field {%s}: %s"), var.c_str(), what.c_str()))
+    { }
+  };
+
+}
+
+string_format::Value string_format::Bindings::get(const std::string &value) const
+{
+  const_iterator it = this->find(value);
+  if (it == this->end())
+    throw ValueError(_("no such variable"));
+  return it->second;
 }
 
 string_format::VariableChunk::VariableChunk(const std::string &description)
@@ -113,19 +130,19 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
         mode = OFFSET_2;
       }
       else
-        throw ParseError();
+        throw string_format::ParseError();
       break;
     case OFFSET_2:
       if (*it >= '0' && *it <= '9')
       {
         if (this->offset > (INT_MAX - 9) / 10)
-          throw IntegerOverflow();
+          throw string_format::FormatError(this->variable, _("integer overflow"));
         this->offset = this->offset * 10 + (*it - '0');
       }
       else if (*it == ':')
         mode = WIDTH_1;
       else
-        throw ParseError();
+        throw string_format::ParseError();
       break;
     case WIDTH_1:
       if (*it == '0')
@@ -133,14 +150,14 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
       else if (*it >= '0' && *it <= '9')
         this->width = *it - '0';
       else
-        throw ParseError();
+        throw string_format::ParseError();
       mode = WIDTH_2;
       break;
     case WIDTH_2:
       if (*it >= '0' && *it <= '9')
       {
         if (this->width > (UINT_MAX - 9) / 10)
-          throw IntegerOverflow();
+          throw string_format::FormatError(this->variable, _("integer overflow"));
         this->width = this->width * 10 + (*it - '0');
       }
       else if (*it == '*')
@@ -149,10 +166,10 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
         mode = END;
       }
       else
-        throw ParseError();
+        throw string_format::ParseError();
       break;
     case END:
-      throw ParseError();
+      throw string_format::ParseError();
       break;
     }
     it++;
@@ -165,7 +182,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
 unsigned int string_format::Value::as_int(int offset)
 {
   if (!this->is_int)
-    throw TypeError(_("Type error: expected number, not string"));
+    throw string_format::ValueTypeError(_("type error: expected number, not string"));
   if (offset < 0)
   {
     unsigned int uoffset = -offset;
@@ -180,18 +197,19 @@ unsigned int string_format::Value::as_int(int offset)
     if (this->v_uint + uoffset >= this->v_uint)
       return this->v_uint + uoffset;
     else
-      throw string_format::IntegerOverflow();
+      throw string_format::ValueError(_("integer overflow"));
   }
 }
 
 const std::string & string_format::Value::as_string()
 {
   if (this->is_int)
-    throw TypeError(_("Type error: expected string, not number"));
+    throw string_format::ValueTypeError(_("type error: expected string, not number"));
   return this->v_string;
 }
 
 void string_format::VariableChunk::format(const Bindings &bindings, std::ostream &stream) const
+try
 {
   Value value = bindings.get(this->variable);
   unsigned int width = this->width;
@@ -214,12 +232,16 @@ void string_format::VariableChunk::format(const Bindings &bindings, std::ostream
   {
     stream << value.as_int(this->offset);
   }
-  catch (TypeError)
+  catch (string_format::ValueTypeError)
   {
     if (this->offset != 0)
       throw;
     stream << value.as_string();
   }
+}
+catch (string_format::ValueError &exc)
+{
+  throw FormatError(this->variable, exc.what());
 }
 
 string_format::Template::Template(const std::string &source)
@@ -256,7 +278,7 @@ string_format::Template::Template(const std::string &source)
         mode = TEXT;
       }
       else
-        throw ParseError();
+        throw string_format::ParseError();
       break;
     case FORMAT_1:
       if (*right == '{')
@@ -280,7 +302,7 @@ string_format::Template::Template(const std::string &source)
     right++;
   }
   if (mode != TEXT)
-    throw ParseError();
+    throw string_format::ParseError();
   if (left != source.end())
   {
     std::string text = source.substr(left - source.begin(), std::string::npos);
