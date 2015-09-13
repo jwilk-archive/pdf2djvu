@@ -23,10 +23,6 @@
 
 #include "i18n.hh"
 
-#if __cplusplus < 201103
-#define decltype typeof
-#endif
-
 namespace string_format
 {
 
