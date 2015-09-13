@@ -215,7 +215,15 @@ try
   unsigned int width = this->width;
   if (this->auto_width)
   {
-    unsigned int max_value = bindings.get("max_" + this->variable).as_int(this->offset);
+    unsigned int max_value;
+    try
+    {
+      max_value = bindings.get("max_" + this->variable).as_int(this->offset);
+    }
+    catch (string_format::ValueError &exc)
+    {
+      throw FormatError(this->variable, _("unknown maximum width"));
+    }
     unsigned int max_digits = 0;
     while (max_value > 0)
     {

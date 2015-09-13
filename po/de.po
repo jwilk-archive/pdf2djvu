@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-13 19:43+0200\n"
+"POT-Creation-Date: 2015-09-13 19:58+0200\n"
 "PO-Revision-Date: 2015-09-01 12:23+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -746,3 +746,7 @@ msgstr ""
 #: pdf2djvu.cc
 msgid "unable to guess resolution"
 msgstr "Auflösung kann nicht geschätzt werden"
+
+#: string-format.cc
+msgid "unknown maximum width"
+msgstr ""
