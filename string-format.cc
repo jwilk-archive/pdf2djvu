@@ -105,7 +105,7 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
           mode = WIDTH_1;
         else
         {
-          offset_sign = -1;
+          offset_sign = (*it == '+') ? +1 : -1;
           mode = OFFSET_1;
         }
       }
