@@ -19,7 +19,7 @@
 #include <ostream>
 
 /* Support for RLE formats.
- * Please refer to csepdjvu(1) for the format specifications.
+ * Please refer to csepdjvu(1) for the format specification.
  */
 
 namespace rle
