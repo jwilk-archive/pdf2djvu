@@ -99,7 +99,7 @@
             </listitem>
         </varlistentry>
         <varlistentry>
-            <term><option>--pageid-template=<replaceable>template</replaceable></option></term>
+            <term><option>--page-id-template=<replaceable>template</replaceable></option></term>
             <listitem>
                 <para>
                     Specifies the naming scheme for page identifiers.
@@ -138,11 +138,11 @@
             </listitem>
         </varlistentry>
         <varlistentry>
-            <term><option>--pageid-prefix=<replaceable>prefix</replaceable></option></term>
+            <term><option>--page-id-prefix=<replaceable>prefix</replaceable></option></term>
             <listitem>
                 <para>
                     Equivalent to
-                    <quote><literal>--pageid-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>.
+                    <quote><literal>--page-id-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>.
                 </para>
             </listitem>
         </varlistentry>

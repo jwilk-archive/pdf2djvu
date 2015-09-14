@@ -138,47 +138,47 @@ public:
   { }
 };
 
-class PageidTemplateParseError : public Config::Error
+class PageIdTemplateParseError : public Config::Error
 {
 public:
-  PageidTemplateParseError()
-  : Config::Error(_("Unable to parse pageid template specification"))
+  PageIdTemplateParseError()
+  : Config::Error(_("Unable to parse page identifier template specification"))
   { }
 };
 
-class PageidIllegalCharacter : public Config::Error
+class PageIdIllegalCharacter : public Config::Error
 {
 public:
-  PageidIllegalCharacter()
-  : Config::Error(_("Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"))
+  PageIdIllegalCharacter()
+  : Config::Error(_("Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"))
   { }
 };
 
-class PageidIllegalDot : public Config::Error
+class PageIdIllegalDot : public Config::Error
 {
 public:
-  PageidIllegalDot()
-  : Config::Error(_("Pageid cannot start with a '.' character or contain two consecutive '.' characters"))
+  PageIdIllegalDot()
+  : Config::Error(_("Page identifier cannot start with a '.' character or contain two consecutive '.' characters"))
   { }
 };
 
-class PageidIllegalPm : public Config::Error
+class PageIdIllegalPm : public Config::Error
 {
 public:
-  PageidIllegalPm()
-  : Config::Error(_("Pageid cannot start with a '+' or a '-' character"))
+  PageIdIllegalPm()
+  : Config::Error(_("Page identifier cannot start with a '+' or a '-' character"))
   { }
 };
 
-class PageidBadExtension : public Config::Error
+class PageIdBadExtension : public Config::Error
 {
 public:
-  PageidBadExtension()
-  : Config::Error(_("Pageid must end with the '.djvu' or the '.djv' extension"))
+  PageIdBadExtension()
+  : Config::Error(_("Page identifier must end with the '.djvu' or the '.djv' extension"))
   { }
 };
 
-string_format::Template* Config::default_pageid_template(const std::string &prefix)
+string_format::Template* Config::default_page_id_template(const std::string &prefix)
 {
   return new string_format::Template(prefix + "{spage:04*}.djvu");
 }
@@ -205,7 +205,7 @@ Config::Config()
   this->monochrome = false;
   this->loss_level = 0;
   this->bg_slices = NULL;
-  this->pageid_template.reset(default_pageid_template("p"));
+  this->page_id_template.reset(default_page_id_template("p"));
   this->page_title_template.reset(new string_format::Template(""));
   this->n_jobs = 1;
 }
@@ -390,37 +390,37 @@ static unsigned int parse_bg_subsample(const std::string &s)
   return n;
 }
 
-static void validate_pageid_template(string_format::Template &pageid_template)
+static void validate_page_id_template(string_format::Template &page_id_template)
 {
   string_format::Bindings empty_bindings;
-  std::string pageid = pageid_template.format(empty_bindings);
-  size_t length = pageid.length();
+  std::string page_id = page_id_template.format(empty_bindings);
+  size_t length = page_id.length();
   bool dot_allowed = false;
   bool pm_allowed = false;
-  for (std::string::const_iterator it = pageid.begin(); it != pageid.end(); it++)
+  for (std::string::const_iterator it = page_id.begin(); it != page_id.end(); it++)
   {
     if (!pm_allowed && (*it == '+' || *it == '-'))
     {
-      throw PageidIllegalPm();
+      throw PageIdIllegalPm();
     }
     if (*it == '.')
     {
       if (!dot_allowed)
-        throw PageidIllegalDot();
+        throw PageIdIllegalDot();
       dot_allowed = false;
     }
     else if ((*it >= 'a' && *it <= 'z') || (*it >= '0' && *it <= '9') || *it == '_' || *it == '-' || *it == '+')
       dot_allowed = true;
     else
-      throw PageidIllegalCharacter();
+      throw PageIdIllegalCharacter();
     pm_allowed = true;
   }
-  if (length >= 4 && pageid.substr(length - 4) == ".djv")
+  if (length >= 4 && page_id.substr(length - 4) == ".djv")
     ;
-  else if (length >= 5 && pageid.substr(length - 5) == ".djvu")
+  else if (length >= 5 && page_id.substr(length - 5) == ".djvu")
     ;
   else
-    throw PageidBadExtension();
+    throw PageIdBadExtension();
 }
 
 void Config::read_config(int argc, char * const argv[])
@@ -450,8 +450,8 @@ void Config::read_config(int argc, char * const argv[])
     OPT_NO_METADATA,
     OPT_NO_OUTLINE,
     OPT_NO_RENDER,
-    OPT_PAGEID_PREFIX,
-    OPT_PAGEID_TEMPLATE,
+    OPT_PAGE_ID_PREFIX,
+    OPT_PAGE_ID_TEMPLATE,
     OPT_PAGE_SIZE,
     OPT_PAGE_TITLE_TEMPLATE,
     OPT_TEXT_CROP,
@@ -491,10 +491,12 @@ void Config::read_config(int argc, char * const argv[])
     { "no-render", 0, 0, OPT_NO_RENDER },
     { "no-text", 0, 0, OPT_TEXT_NONE },
     { "output", 1, 0, OPT_OUTPUT },
+    { "page-id-prefix", 1, 0, OPT_PAGE_ID_PREFIX },
+    { "page-id-template", 1, 0, OPT_PAGE_ID_TEMPLATE },
     { "page-size", 1, 0, OPT_PAGE_SIZE },
     { "page-title-template", 1, 0, OPT_PAGE_TITLE_TEMPLATE },
-    { "pageid-prefix", 1, 0, OPT_PAGEID_PREFIX },
-    { "pageid-template", 1, 0, OPT_PAGEID_TEMPLATE },
+    { "pageid-prefix", 1, 0, OPT_PAGE_ID_PREFIX }, /* deprecated alias */
+    { "pageid-template", 1, 0, OPT_PAGE_ID_TEMPLATE }, /* deprecated alias */
     { "pages", 1, 0, OPT_PAGES },
     { "quiet", 0, 0, OPT_QUIET },
     { "verbatim-metadata", 0, 0, OPT_VERBATIM_METADATA },
@@ -627,20 +629,20 @@ void Config::read_config(int argc, char * const argv[])
       this->output = optarg;
       this->output_stdout = false;
       break;
-    case OPT_PAGEID_PREFIX:
-      this->pageid_template.reset(this->default_pageid_template(optarg));
-      validate_pageid_template(*this->pageid_template);
+    case OPT_PAGE_ID_PREFIX:
+      this->page_id_template.reset(this->default_page_id_template(optarg));
+      validate_page_id_template(*this->page_id_template);
       break;
-    case OPT_PAGEID_TEMPLATE:
+    case OPT_PAGE_ID_TEMPLATE:
       try
       {
-        this->pageid_template.reset(new string_format::Template(optarg));
+        this->page_id_template.reset(new string_format::Template(optarg));
       }
       catch (string_format::ParseError)
       {
-        throw PageidTemplateParseError();
+        throw PageIdTemplateParseError();
       }
-      validate_pageid_template(*this->pageid_template);
+      validate_page_id_template(*this->page_id_template);
       break;
     case OPT_PAGE_TITLE_TEMPLATE:
       try
@@ -702,8 +704,8 @@ void Config::usage(const Config::Error &error) const
     << std::endl << _("Options: ")
     << std::endl << _(" -i, --indirect=FILE")
     << std::endl << _(" -o, --output=FILE")
-    << std::endl << _("     --pageid-prefix=NAME")
-    << std::endl << _("     --pageid-template=TEMPLATE")
+    << std::endl << _("     --page-id-prefix=NAME")
+    << std::endl << _("     --page-id-template=TEMPLATE")
     << std::endl << _("     --page-title-template=TEMPLATE")
     << std::endl << _(" -d, --dpi=RESOLUTION")
     << std::endl <<   "     --guess-dpi"

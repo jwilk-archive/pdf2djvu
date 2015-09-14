@@ -260,7 +260,7 @@ public:
   std::string get_file_name(int n) const
   {
     string_format::Bindings bindings = this->get_bindings(n);
-    return config.pageid_template->format(bindings);
+    return config.page_id_template->format(bindings);
   }
 
   virtual ~ComponentList() throw ()
@@ -734,9 +734,9 @@ protected:
   std::auto_ptr<const TemporaryDirectory> directory;
   std::auto_ptr<TemporaryFile> shared_ant_file;
 
-  virtual File *create_file(const std::string &pageid)
+  virtual File *create_file(const std::string &page_id)
   {
-    return new TemporaryFile(*this->directory, pageid);
+    return new TemporaryFile(*this->directory, page_id);
   }
 public:
   explicit TemporaryComponentList(int n, const PageMap &page_map)
@@ -761,9 +761,9 @@ private:
   IndirectComponentList& operator=(const IndirectComponentList&); // not defined
 protected:
   const Directory &directory;
-  virtual File *create_file(const std::string &pageid)
+  virtual File *create_file(const std::string &page_id)
   {
-    return new File(this->directory, pageid);
+    return new File(this->directory, page_id);
   }
 public:
   IndirectComponentList(int n, const PageMap &page_map, const Directory &directory)

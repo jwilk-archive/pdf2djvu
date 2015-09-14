@@ -51,10 +51,10 @@ class test(case):
             rc=1
         )
 
-    def test_pageid(self):
+    def test_page_id(self):
         # {label} can be used in --page-title-template,
-        # but not it --pageid-template
-        r = self.pdf2djvu('--pageid-template', '{label}')
+        # but not it --page-id-template
+        r = self.pdf2djvu('--page-id-template', '{label}')
         r.assert_(
             stderr='Unable to format field {label}: no such variable\n',
             rc=1

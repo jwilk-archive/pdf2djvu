@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-08-26 20:35+0200\n"
+"POT-Creation-Date: 2015-09-14 17:33+0200\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -109,8 +109,8 @@ msgid "Generate an indirect multi-page document. Use <filename><replaceable>inde
 msgstr "Створити роздільний багатосторінковий документ. Використовувати <filename><replaceable>файл_djvu-індексу</replaceable></filename> як назву файлу індексу; розмістити файли-компоненти в одну й ту ж теку. Тека повинна існувати та мати дозвіл на запис."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-msgid "<option>--pageid-template=<replaceable>template</replaceable></option>"
-msgstr "<option>--pageid-template=<replaceable>шаблон</replaceable></option>"
+msgid "<option>--page-id-template=<replaceable>template</replaceable></option>"
+msgstr "<option>--page-id-template=<replaceable>шаблон</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the naming scheme for page identifiers.  Consult the <quote><link linkend='template-language' endterm='template-language.title'/></quote> section for the template language description."
@@ -141,12 +141,12 @@ msgid "must end with the <literal>.djvu</literal> or the <literal>.djv</literal>
 msgstr "повинен завершуватися розширенням <literal>.djvu</literal> чи <literal>.djv</literal>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-msgid "<option>--pageid-prefix=<replaceable>prefix</replaceable></option>"
-msgstr "<option>--pageid-prefix=<replaceable>префікс</replaceable></option>"
+msgid "<option>--page-id-prefix=<replaceable>prefix</replaceable></option>"
+msgstr "<option>--page-id-prefix=<replaceable>префікс</replaceable></option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Equivalent to <quote><literal>--pageid-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>."
-msgstr "Еквівалентно <quote><literal>--pageid-template=<replaceable>префікс</replaceable>{page:04*}.djvu</literal></quote>."
+msgid "Equivalent to <quote><literal>--page-id-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>."
+msgstr "Еквівалентно <quote><literal>--page-id-template=<replaceable>префікс</replaceable>{page:04*}.djvu</literal></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<option>--page-title-template=<replaceable>template</replaceable></option>"

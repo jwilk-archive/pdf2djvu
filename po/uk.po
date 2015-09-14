@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-13 19:58+0200\n"
+"POT-Creation-Date: 2015-09-14 17:28+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -21,20 +21,20 @@ msgid "     --filter-text=COMMAND-LINE"
 msgstr "     --filter-text=КОМАНДНИЙ_РЯДОК"
 
 #: config.cc
+msgid "     --page-id-prefix=NAME"
+msgstr "     --page-id-prefix=НАЗВА"
+
+#: config.cc
+msgid "     --page-id-template=TEMPLATE"
+msgstr "     --page-id-template=ШАБЛОН"
+
+#: config.cc
 msgid "     --page-size=WxH"
 msgstr "     --page-size=ШИР×ВИС"
 
 #: config.cc
 msgid "     --page-title-template=TEMPLATE"
 msgstr "     --page-title-template=ШАБЛОН"
-
-#: config.cc
-msgid "     --pageid-prefix=NAME"
-msgstr "     --pageid-prefix=НАЗВА"
-
-#: config.cc
-msgid "     --pageid-template=TEMPLATE"
-msgstr "     --pageid-template=ШАБЛОН"
 
 #: config.cc
 msgid "   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>"
@@ -408,25 +408,29 @@ msgstr "Помилка синтаксису у PDF-файлі"
 msgid "PDF syntax warning"
 msgstr "Попередження про синтаксичну помилку у PDF-файлі"
 
-#: pdf2djvu.cc
-msgid "Page not found"
-msgstr "Сторінку не знайдено"
-
 #: config.cc
-msgid "Pageid cannot start with a '+' or a '-' character"
+#, fuzzy
+msgid "Page identifier cannot start with a '+' or a '-' character"
 msgstr "Ідентифікатор сторінки не може починатися зі знаків „+“ чи „-“"
 
 #: config.cc
-msgid "Pageid cannot start with a '.' character or contain two consecutive '.' characters"
+#, fuzzy
+msgid "Page identifier cannot start with a '.' character or contain two consecutive '.' characters"
 msgstr "Ідентифікатор сторінки не може починатися зі знаку „.“ або включати два послідовних знаки „.“"
 
 #: config.cc
-msgid "Pageid must consist only of letters, digits, '_', '+', '-' and '.' characters"
+#, fuzzy
+msgid "Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"
 msgstr "Ідентифікатор сторінки повинен включати лише букви, цифри та знаки „_“, „+“, „-“ та „.“ "
 
 #: config.cc
-msgid "Pageid must end with the '.djvu' or the '.djv' extension"
+#, fuzzy
+msgid "Page identifier must end with the '.djvu' or the '.djv' extension"
 msgstr "Ідентифікатор сторінки повинен мати розширення „*.djvu“ або „*.djv“"
+
+#: pdf2djvu.cc
+msgid "Page not found"
+msgstr "Сторінку не знайдено"
 
 #. L10N: Windows error message for EACCES
 #: pdf-backend.cc system.cc
@@ -515,6 +519,11 @@ msgid "Unable to parse hyperlinks options"
 msgstr "Неможливо розібрати параметри посилань"
 
 #: config.cc
+#, fuzzy
+msgid "Unable to parse page identifier template specification"
+msgstr "Неможливо розібрати специфікацію шаблону ідентифікатора сторінки"
+
+#: config.cc
 msgid "Unable to parse page numbers"
 msgstr "Неможливо розібрати номери сторінок"
 
@@ -525,10 +534,6 @@ msgstr "Неможливо розібрати розмір сторінки"
 #: config.cc
 msgid "Unable to parse page title template specification"
 msgstr "Неможливо розібрати специфікацію шаблону назви сторінки"
-
-#: config.cc
-msgid "Unable to parse pageid template specification"
-msgstr "Неможливо розібрати специфікацію шаблону ідентифікатора сторінки"
 
 #: pdf-backend.cc
 msgid "Unable to set antialias parameter"
