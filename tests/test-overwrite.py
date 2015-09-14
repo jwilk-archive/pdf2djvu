@@ -27,11 +27,13 @@ class test(case):
         pdf_path = self.get_pdf_path()
         with open(pdf_path, 'rb') as pdf_file:
             pdf_before = pdf_file.read()
-        self.run(*(self.get_pdf2djvu_command() + (
+        cmdline = (self.get_pdf2djvu_command() + (
             '-q',
             self.get_pdf_path(),
             '-o', self.get_pdf_path()
-        ))).assert_(stderr=re('Input file is the same as output file:'), rc=1)
+        ))
+        r = self.run(*cmdline)
+        r.assert_(stderr=re('Input file is the same as output file:'), rc=1)
         with open(pdf_path, 'rb') as pdf_file:
             pdf_after = pdf_file.read()
         assert_equal(pdf_before, pdf_after)
