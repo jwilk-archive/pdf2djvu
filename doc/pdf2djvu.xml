@@ -607,16 +607,16 @@
         <title>Available variables</title>
         <variablelist>
             <varlistentry>
+                <term><varname>dpage</varname></term>
+                <listitem>
+                    <para>Page number in the DjVu document.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
                 <term><varname>page</varname></term>
                 <term><varname>spage</varname></term>
                 <listitem>
                     <para>Page number in the PDF document.</para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><varname>dpage</varname></term>
-                <listitem>
-                    <para>Page number in the DjVu document.</para>
                 </listitem>
             </varlistentry>
         </variablelist>

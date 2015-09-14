@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-14 19:42+0200\n"
+"POT-Creation-Date: 2015-09-14 19:51+0200\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -588,6 +588,14 @@ msgid "Available variables"
 msgstr "Доступні змінні"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<varname>dpage</varname>"
+msgstr "<varname>dpage</varname>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+msgid "Page number in the DjVu document."
+msgstr "Кількість сторінок в документі DjVu."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<varname>page</varname>"
 msgstr "<varname>page</varname>"
 
@@ -598,14 +606,6 @@ msgstr "<varname>spage</varname>"
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Page number in the PDF document."
 msgstr "Кількість сторінок в документі PDF."
-
-#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
-msgid "<varname>dpage</varname>"
-msgstr "<varname>dpage</varname>"
-
-#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Page number in the DjVu document."
-msgstr "Кількість сторінок в документі DjVu."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Implementation details"
