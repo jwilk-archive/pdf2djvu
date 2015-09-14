@@ -45,4 +45,15 @@ class test(case):
             r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)] [(]border_avis[)][)]$',
         ))
 
+    def test_border_color(self):
+        self.pdf2djvu('--hyperlinks=#3742ff').assert_()
+        r = self.print_ant(page=1)
+        r.assert_(stdout=re(
+            r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #3742ff[)][)]$',
+        ))
+        r = self.print_ant(page=2)
+        r.assert_(stdout=re(
+            r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #3742ff[)][)]$',
+        ))
+
 # vim:ts=4 sts=4 sw=4 et
