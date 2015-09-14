@@ -252,8 +252,14 @@ static unsigned int parse_bg_subsample(const std::string &s)
 
 static void validate_page_id_template(string_format::Template &page_id_template)
 {
-  string_format::Bindings empty_bindings;
-  std::string page_id = page_id_template.format(empty_bindings);
+  string_format::Bindings bindings;
+  bindings["max_spage"] = 0U;
+  bindings["spage"] = 0U;
+  bindings["max_page"] = 0U;
+  bindings["page"] = 0U;
+  bindings["max_dpage"] = 0U;
+  bindings["dpage"] = 0U;
+  std::string page_id = page_id_template.format(bindings);
   size_t length = page_id.length();
   bool dot_allowed = false;
   bool pm_allowed = false;
