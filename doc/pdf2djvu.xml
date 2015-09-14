@@ -619,6 +619,13 @@
                     <para>Page number in the PDF document.</para>
                 </listitem>
             </varlistentry>
+            <varlistentry>
+                <term><varname>label</varname></term>
+                <listitem>
+                    <para>Page label (logical page number) in the PDF document.</para>
+                    <para>This variable is available only for page titles.</para>
+                </listitem>
+            </varlistentry>
         </variablelist>
     </refsection>
 </refsection>

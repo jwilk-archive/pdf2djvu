@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-14 19:51+0200\n"
+"POT-Creation-Date: 2015-09-14 20:05+0200\n"
 "PO-Revision-Date: 2015-05-25 22:15+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -600,6 +600,22 @@ msgstr "<varname>spage</varname>"
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Page number in the PDF document."
 msgstr "Número de página no documento PDF."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<varname>label</varname>"
+msgstr "<varname>label</varname>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+#, fuzzy
+#| msgid "Page number in the PDF document."
+msgid "Page label (logical page number) in the PDF document."
+msgstr "Número de página no documento PDF."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+#, fuzzy
+#| msgid "The default is to set no page titles."
+msgid "This variable is available only for page titles."
+msgstr "A predefinição é não definir títulos de páginas."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Implementation details"
