@@ -31,7 +31,7 @@ class test(case):
             '-q',
             self.get_pdf_path(),
             '-o', self.get_pdf_path()
-        ))).assert_(stderr=re('Input file is the same as output file'), rc=1)
+        ))).assert_(stderr=re('Input file is the same as output file:'), rc=1)
         with open(pdf_path, 'rb') as pdf_file:
             pdf_after = pdf_file.read()
         assert_equal(pdf_before, pdf_after)
