@@ -30,154 +30,6 @@
 #include "i18n.hh"
 #include "system.hh"
 
-class OptionsParseError : public Config::Error
-{
-protected:
-  explicit OptionsParseError(const std::string &message)
-  : Config::Error(message)
-  { }
-public:
-  OptionsParseError()
-  : Config::Error(_("Unable to parse command-line options"))
-  { }
-};
-
-class NoInputFile : public Config::Error
-{
-public:
-  NoInputFile()
-  : Config::Error(_("No input file name was specified"))
-  { }
-};
-
-class InvalidOutputFileName : public Config::Error
-{
-public:
-  InvalidOutputFileName()
-  : Config::Error(_("Invalid output file name"))
-  { }
-};
-
-class PagesParseError : public Config::Error
-{
-public:
-  PagesParseError()
-  : Config::Error(_("Unable to parse page numbers"))
-  { }
-};
-
-class PageSizeParseError : public Config::Error
-{
-public:
-  PageSizeParseError()
-  : Config::Error(_("Unable to parse page size"))
-  { }
-};
-
-class HyperlinksOptionsParseError : public Config::Error
-{
-public:
-  HyperlinksOptionsParseError()
-  : Config::Error(_("Unable to parse hyperlinks options"))
-  { }
-};
-
-class DpiOutsideRange : public Config::Error
-{
-public:
-  DpiOutsideRange(int dpi_from, int dpi_to)
-  : Config::Error(string_printf(_("The specified resolution is outside the allowed range: %d .. %d"), dpi_from, dpi_to))
-  { }
-};
-
-class FgColorsOutsideRange : public Config::Error
-{
-public:
-  FgColorsOutsideRange(unsigned int n, unsigned int m)
-  : Config::Error(string_printf(_("The specified number of foreground colors is outside the allowed range: %u .. %u"), n, m))
-  { }
-};
-
-class SubsampleRatioOutsideRange : public Config::Error
-{
-public:
-  SubsampleRatioOutsideRange(unsigned int n, unsigned int m)
-  : Config::Error(string_printf(_("The specified subsampling ratio is outside the allowed range: %u .. %u"), n, m))
-  { }
-};
-
-class LossLevelWithoutMonochrome : public Config::Error
-{
-public:
-  LossLevelWithoutMonochrome()
-  : Config::Error(_("--loss-level requires enabling --monochrome"))
-  { }
-};
-
-class InputOutputClash : public Config::Error
-{
-public:
-  explicit InputOutputClash(const std::string &path)
-  : Config::Error(string_printf(_("Input file is the same as output file: %s"), path.c_str()))
-  { }
-};
-
-class PageTitleEncodingError : public Config::Error
-{
-public:
-  explicit PageTitleEncodingError(const std::runtime_error &exc)
-  : Config::Error(string_printf(_("Unable to convert page title to UTF-8: %s"), exc.what()))
-  { }
-};
-
-class PageTitleTemplateParseError : public Config::Error
-{
-public:
-  PageTitleTemplateParseError()
-  : Config::Error(_("Unable to parse page title template specification"))
-  { }
-};
-
-class PageIdTemplateParseError : public Config::Error
-{
-public:
-  PageIdTemplateParseError()
-  : Config::Error(_("Unable to parse page identifier template specification"))
-  { }
-};
-
-class PageIdIllegalCharacter : public Config::Error
-{
-public:
-  PageIdIllegalCharacter()
-  : Config::Error(_("Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"))
-  { }
-};
-
-class PageIdIllegalDot : public Config::Error
-{
-public:
-  PageIdIllegalDot()
-  : Config::Error(_("Page identifier cannot start with a '.' character or contain two consecutive '.' characters"))
-  { }
-};
-
-class PageIdIllegalPm : public Config::Error
-{
-public:
-  PageIdIllegalPm()
-  : Config::Error(_("Page identifier cannot start with a '+' or a '-' character"))
-  { }
-};
-
-class PageIdBadExtension : public Config::Error
-{
-public:
-  PageIdBadExtension()
-  : Config::Error(_("Page identifier must end with the '.djvu' or the '.djv' extension"))
-  { }
-};
-
 string_format::Template* Config::default_page_id_template(const std::string &prefix)
 {
   return new string_format::Template(prefix + "{spage:04*}.djvu");
@@ -280,8 +132,13 @@ static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
       options.border_color = *it;
       continue;
     }
-    throw HyperlinksOptionsParseError();
+    throw Config::Error(_("Unable to parse hyperlinks options"));
   }
+}
+
+static void bad_pages()
+{
+  throw Config::Error(_("Unable to parse page numbers"));
 }
 
 static void parse_pages(const std::string &s, std::vector< std::pair<int, int> > &result)
@@ -304,18 +161,18 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
     else if (*it == ',')
     {
       if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-        throw PagesParseError();
+        bad_pages();
       result.push_back(std::make_pair(value[0], value[1]));
       value[0] = value[1] = 0;
       state = 0;
     }
     else
-      throw PagesParseError();
+      bad_pages();
   }
   if (state == 0)
     value[1] = value[0];
   if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
-    throw PagesParseError();
+    bad_pages();
   result.push_back(std::make_pair(value[0], value[1]));
 }
 
@@ -328,25 +185,22 @@ static std::pair<int, int>parse_page_size(const std::string &s)
   if (x > 0 &&  y > 0 && c == 'x' && stream.eof() && !stream.fail())
     return std::make_pair(x, y);
   else
-    throw PageSizeParseError();
+    throw Config::Error(_("Unable to parse page size"));
 }
 
-class InvalidNumber : public Config::Error
+static void bad_number(const char *s)
 {
-public:
-  explicit InvalidNumber(const char *s)
-  : Config::Error(string_printf(_("%s is not a valid number"), s))
-  { }
-};
+  throw Config::Error(string_printf(_("%s is not a valid number"), s));
+}
 
 template <typename tp>
 tp string::as(const char *s)
 {
   long result = as<long>(s);
   if (result > std::numeric_limits<tp>::max())
-    throw InvalidNumber(s);
+    bad_number(s);
   if (result < std::numeric_limits<tp>::min())
-    throw InvalidNumber(s);
+    bad_number(s);
   return result;
 }
 
@@ -358,7 +212,7 @@ long string::as<long>(const char *s)
   errno = 0;
   result = strtol(s, &end_ptr, 10);
   if (*end_ptr != '\0' || errno == ERANGE)
-    throw InvalidNumber(s);
+    bad_number(s);
   return result;
 }
 
@@ -378,7 +232,10 @@ static unsigned int parse_fg_colors(const std::string &s)
     return Config::FG_COLORS_BLACK;
   long n = string::as<long>(s);
   if (n < 1 || n > static_cast<long>(djvu::max_fg_colors))
-    throw FgColorsOutsideRange(1, djvu::max_fg_colors);
+    throw Config::Error(string_printf(
+      _("The specified number of foreground colors is outside the allowed range: %u .. %u"),
+      1U, djvu::max_fg_colors
+    ));
   return n;
 }
 
@@ -386,7 +243,10 @@ static unsigned int parse_bg_subsample(const std::string &s)
 {
   long n = string::as<long>(optarg);
   if (n < 1 || n > static_cast<long>(djvu::max_subsample_ratio))
-    throw SubsampleRatioOutsideRange(1, djvu::max_subsample_ratio);
+    throw Config::Error(string_printf(
+      _("The specified subsampling ratio is outside the allowed range: %u .. %u"),
+      1, djvu::max_subsample_ratio
+    ));
   return n;
 }
 
@@ -401,18 +261,18 @@ static void validate_page_id_template(string_format::Template &page_id_template)
   {
     if (!pm_allowed && (*it == '+' || *it == '-'))
     {
-      throw PageIdIllegalPm();
+      throw Config::Error(_("Page identifier cannot start with a '+' or a '-' character"));
     }
     if (*it == '.')
     {
       if (!dot_allowed)
-        throw PageIdIllegalDot();
+        throw Config::Error(_("Page identifier cannot start with a '.' character or contain two consecutive '.' characters"));
       dot_allowed = false;
     }
     else if ((*it >= 'a' && *it <= 'z') || (*it >= '0' && *it <= '9') || *it == '_' || *it == '-' || *it == '+')
       dot_allowed = true;
     else
-      throw PageIdIllegalCharacter();
+      throw Config::Error(_("Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"));
     pm_allowed = true;
   }
   if (length >= 4 && page_id.substr(length - 4) == ".djv")
@@ -420,7 +280,7 @@ static void validate_page_id_template(string_format::Template &page_id_template)
   else if (length >= 5 && page_id.substr(length - 5) == ".djvu")
     ;
   else
-    throw PageIdBadExtension();
+    throw Config::Error(_("Page identifier must end with the '.djvu' or the '.djv' extension"));
 }
 
 void Config::read_config(int argc, char * const argv[])
@@ -513,13 +373,16 @@ void Config::read_config(int argc, char * const argv[])
     if (c < 0)
       break;
     if (c == 0)
-      throw OptionsParseError();
+      throw Config::Error(_("Unable to parse command-line options"));
     switch (c)
     {
     case OPT_DPI:
       this->dpi = string::as<int>(optarg);
       if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
-        throw DpiOutsideRange(djvu::min_dpi, djvu::max_dpi);
+        throw Config::Error(string_printf(
+          _("The specified resolution is outside the allowed range: %d .. %d"),
+          djvu::min_dpi, djvu::max_dpi
+        ));
       break;
     case OPT_GUESS_DPI:
       this->guess_dpi = true;
@@ -620,7 +483,7 @@ void Config::read_config(int argc, char * const argv[])
           /* ``djvmcvt`` does not support ``-`` as a file name.
            * Work-arounds are possible but not worthwhile.
            */
-          throw InvalidOutputFileName();
+          throw Config::Error(_("Invalid output file name"));
         }
       }
       break;
@@ -640,7 +503,7 @@ void Config::read_config(int argc, char * const argv[])
       }
       catch (string_format::ParseError)
       {
-        throw PageIdTemplateParseError();
+        throw Config::Error(_("Unable to parse page identifier template specification"));
       }
       validate_page_id_template(*this->page_id_template);
       break;
@@ -655,11 +518,16 @@ void Config::read_config(int argc, char * const argv[])
       }
       catch (encoding::Error &exc)
       {
-        throw PageTitleEncodingError(exc);
+        throw Config::Error(string_printf(
+          _("Unable to convert page title to UTF-8: %s"),
+          exc.what())
+        );
       }
       catch (string_format::ParseError)
       {
-        throw PageTitleTemplateParseError();
+        throw Config::Error(
+          _("Unable to parse page title template specification")
+        );
       }
       break;
     case OPT_JOBS:
@@ -677,15 +545,18 @@ void Config::read_config(int argc, char * const argv[])
     }
   }
   if (this->loss_level > 0 && !this->monochrome)
-    throw LossLevelWithoutMonochrome();
+    throw Config::Error(_("--loss-level requires enabling --monochrome"));
   if (optind > argc - 1)
-    throw NoInputFile();
+    throw Config::Error(_("No input file name was specified"));
   else
     while (optind < argc)
     {
       this->filenames.push_back(argv[optind]);
       if (is_same_file(this->output, argv[optind]))
-        throw InputOutputClash(this->output);
+        throw Config::Error(string_printf(
+          _("Input file is the same as output file: %s"),
+          this->output.c_str()
+        ));
       optind++;
     }
 }
