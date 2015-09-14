@@ -19,8 +19,10 @@ from tools import (
 )
 
 class test(case):
+
     # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/109
     # + fixed in 0.9 [dc1734ad4946]
+
     def test(self):
         self.pdf2djvu('--page-title-template', '{label}').assert_()
         r = self.ls()
@@ -31,5 +33,31 @@ class test(case):
             '\s*3\s+P\s+\d+\s+[\w.]+\s+T=i\n'
             '\s*4\s+P\s+\d+\s+[\w.]+\s+T=1\n'
         ))
+
+    def test_arithmetic(self):
+        def t(offset):
+            r = self.pdf2djvu('--page-title-template', '{label' + offset + '}')
+            r.assert_(
+                stderr='Unable to format field {label}: type error: expected number, not string\n',
+                rc=1
+            )
+        t('+1')
+        t('-1')
+
+    def test_auto_width(self):
+        r = self.pdf2djvu('--page-title-template', '{label:0*}')
+        r.assert_(
+            stderr='Unable to format field {label}: unknown maximum width\n',
+            rc=1
+        )
+
+    def test_pageid(self):
+        # {label} can be used in --page-title-template,
+        # but not it --pageid-template
+        r = self.pdf2djvu('--pageid-template', '{label}')
+        r.assert_(
+            stderr='Unable to format field {label}: no such variable\n',
+            rc=1
+        )
 
 # vim:ts=4 sts=4 sw=4 et
