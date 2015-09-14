@@ -56,4 +56,13 @@ class test(case):
             r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #3742ff[)][)]$',
         ))
 
+    def test_none(self):
+        def t(*args):
+            self.pdf2djvu(*args).assert_()
+            for n in (1, 2):
+                r = self.print_ant(page=n)
+                r.assert_(stdout='')
+        t('--hyperlinks=none')
+        t('--no-hyperlinks')
+
 # vim:ts=4 sts=4 sw=4 et
