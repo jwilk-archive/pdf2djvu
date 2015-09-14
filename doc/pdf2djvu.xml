@@ -637,12 +637,12 @@
                         <orderedlist>
                             <listitem>
                                 <para>
-                                    Raster the page into a pixmap, in the usual manner.
+                                    Rasterize the page into a pixmap, in the usual manner.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
-                                    Raster the page into another pixmap, omitting the following page elements:
+                                    Rasterize the page into another pixmap, omitting the following page elements:
                                     <itemizedlist>
                                         <listitem><para>text,</para></listitem>
                                         <listitem><para>1 bit-per-pixel raster images,</para></listitem>

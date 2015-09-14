@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-14 17:33+0200\n"
+"POT-Creation-Date: 2015-09-14 19:42+0200\n"
 "PO-Revision-Date: 2015-05-25 22:15+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -610,11 +610,11 @@ msgid "Layer separation algorithm"
 msgstr "Algoritmo de separação de camadas"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-msgid "Raster the page into a pixmap, in the usual manner."
+msgid "Rasterize the page into a pixmap, in the usual manner."
 msgstr "\"Rasteriza\" a página num mapa de pixeis, na maneira usual."
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-msgid "Raster the page into another pixmap, omitting the following page elements:"
+msgid "Rasterize the page into another pixmap, omitting the following page elements:"
 msgstr "\"Rasteriza\" a página em outro mapa de pixeis, omitindo os seguintes elementos da página:"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>

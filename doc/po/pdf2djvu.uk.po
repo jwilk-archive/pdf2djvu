@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-14 17:33+0200\n"
+"POT-Creation-Date: 2015-09-14 19:42+0200\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -616,11 +616,11 @@ msgid "Layer separation algorithm"
 msgstr "Алгоритм розділення шарів"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-msgid "Raster the page into a pixmap, in the usual manner."
+msgid "Rasterize the page into a pixmap, in the usual manner."
 msgstr "Перетворити сторінку в растрове зображення звичайним чином."
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-msgid "Raster the page into another pixmap, omitting the following page elements:"
+msgid "Rasterize the page into another pixmap, omitting the following page elements:"
 msgstr "Перетворити сторінку в інше растрове зображення пропускаючи наступні елементи сторінки:"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>

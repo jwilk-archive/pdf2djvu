@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-14 17:33+0200\n"
+"POT-Creation-Date: 2015-09-14 19:42+0200\n"
 "PO-Revision-Date: 2015-06-18 15:28+0200\n"
 "Last-Translator: Jean-Paul Guillonneau <guillonneau.jeanpaul@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -609,11 +609,11 @@ msgid "Layer separation algorithm"
 msgstr "Algorithme de séparation de calque"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-msgid "Raster the page into a pixmap, in the usual manner."
+msgid "Rasterize the page into a pixmap, in the usual manner."
 msgstr "Tramer la page dans un tableau de pixels, de la manière habituelle ;"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para>
-msgid "Raster the page into another pixmap, omitting the following page elements:"
+msgid "Rasterize the page into another pixmap, omitting the following page elements:"
 msgstr "Tramer la page dans une autre tableau de pixels, en omettant les éléments de page suivants :"
 
 #. type: Content of: <refentry><refsection><refsection><para><orderedlist><listitem><para><orderedlist><listitem><para><itemizedlist><listitem><para>
