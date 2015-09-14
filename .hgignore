@@ -38,5 +38,3 @@ win32/include/
 win32/lib/
 win32/share/
 win32/src/
-xmp-dummy.hh
-xmp-xslt.hh
