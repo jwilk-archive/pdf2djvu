@@ -65,4 +65,8 @@ class test(case):
         t('--hyperlinks=none')
         t('--no-hyperlinks')
 
+    def test_bad_argument(self):
+        r = self.pdf2djvu('--hyperlinks=off')
+        r.assert_(stderr=re('^Unable to parse hyperlinks options\n'), rc=1)
+
 # vim:ts=4 sts=4 sw=4 et
