@@ -410,24 +410,20 @@ msgid "PDF syntax warning"
 msgstr "Ostrzeżenie o błędzie składniowym w pliku PDF"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier cannot start with a '+' or a '-' character"
-msgstr "Pageid nie może rozpoczynać się od znaku '+' ani '-'"
+msgstr "Identyfikator strony nie może rozpoczynać się od znaku '+' ani '-'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier cannot start with a '.' character or contain two consecutive '.' characters"
-msgstr "Pageid nie może rozpoczynać się od znaku '.' ani zawierać dwóch występujących po sobie znaków '.'"
+msgstr "Identyfikator strony nie może rozpoczynać się od znaku '.' ani zawierać dwóch występujących po sobie znaków '.'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"
-msgstr "Pageid może zawierać jedynie litery, cyfry oraz znaki '_', '+', '-' i '.'"
+msgstr "Identyfikator strony może zawierać jedynie litery, cyfry oraz znaki '_', '+', '-' i '.'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier must end with the '.djvu' or the '.djv' extension"
-msgstr "Pageid musi kończyć się rozszerzeniem '.djvu' lub '.djv'"
+msgstr "Identyfikator strony musi kończyć się rozszerzeniem '.djvu' lub '.djv'"
 
 #: pdf2djvu.cc
 msgid "Page not found"
@@ -520,9 +516,8 @@ msgid "Unable to parse hyperlinks options"
 msgstr "Błąd przetwarzania opcji hiperłączy"
 
 #: config.cc
-#, fuzzy
 msgid "Unable to parse page identifier template specification"
-msgstr "Błąd przetwarzania specyfikacji szablonu pageid"
+msgstr "Błąd przetwarzania specyfikacji szablonu identyfikatora strony"
 
 #: config.cc
 msgid "Unable to parse page numbers"
