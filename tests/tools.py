@@ -144,6 +144,7 @@ def _get_locale_for_encoding(encoding):
 class case(object):
 
     _pdf2djvu_command = os.getenv('pdf2djvu') or 'pdf2djvu'
+    _feature_cache = {}
 
     def get_pdf2djvu_command(self):
         if re(r'\A[[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
@@ -251,9 +252,13 @@ class case(object):
         return xmp
 
     def require_feature(self, feature):
-        r = self.pdf2djvu('--version')
-        r.assert_(stderr=re('^pdf2djvu '), rc=0)
-        if feature not in r.stderr:
+        try:
+            feature_enabled = self._feature_cache[feature]
+        except KeyError:
+            r = self.pdf2djvu('--version')
+            r.assert_(stderr=re('^pdf2djvu '), rc=0)
+            self._feature_cache[feature] = feature_enabled = feature in r.stderr
+        if not feature_enabled:
             raise SkipTest(feature + ' support missing')
 
 def rainbow(width, height):
