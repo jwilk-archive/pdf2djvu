@@ -65,9 +65,10 @@ class test(case):
             self.require_feature('GraphicsMagick')
             r = self.pdf2djvu('--fg-colors={0}'.format(i))
             r.assert_(
-                stderr=re('^{0} is not a valid number\n'.format(i)),
+                stderr=re('^"{0}" is not a valid number\n'.format(i)),
                 rc=1,
             )
+        t('')
         t('1x')
         t('0x1')
         t(23 ** 17)

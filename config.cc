@@ -69,12 +69,6 @@ namespace string
   static void replace(std::string &, char, char);
 
   template <typename tp>
-  tp as(const char *);
-
-  template <>
-  long as<long>(const char *);
-
-  template <typename tp>
   tp as(const std::string &);
 }
 
@@ -188,38 +182,18 @@ static std::pair<int, int>parse_page_size(const std::string &s)
     throw Config::Error(_("Unable to parse page size"));
 }
 
-static void bad_number(const char *s)
-{
-  throw Config::Error(string_printf(_("%s is not a valid number"), s));
-}
-
-template <typename tp>
-tp string::as(const char *s)
-{
-  long result = as<long>(s);
-  if (result > std::numeric_limits<tp>::max())
-    bad_number(s);
-  if (result < std::numeric_limits<tp>::min())
-    bad_number(s);
-  return result;
-}
-
-template <>
-long string::as<long>(const char *s)
-{
-  char *end_ptr;
-  long result;
-  errno = 0;
-  result = strtol(s, &end_ptr, 10);
-  if (*end_ptr != '\0' || errno == ERANGE)
-    bad_number(s);
-  return result;
-}
-
 template <typename tp>
 tp string::as(const std::string &s)
 {
-  return as<tp>(s.c_str());
+  tp n;
+  std::istringstream stream(s);
+  stream >> n;
+  if (stream.fail() || !stream.eof())
+    throw Config::Error(string_printf(
+      _("\"%s\" is not a valid number"),
+      s.c_str())
+    );
+  return n;
 }
 
 static unsigned int parse_fg_colors(const std::string &s)

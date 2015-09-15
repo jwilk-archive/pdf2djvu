@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-14 17:28+0200\n"
+"POT-Creation-Date: 2015-09-15 13:25+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -56,6 +56,11 @@ msgstr " -i, --indirect=ФАЙЛ"
 msgid " -o, --output=FILE"
 msgstr " -o, --output=ФАЙЛ"
 
+#: config.cc
+#, fuzzy, c-format
+msgid "\"%s\" is not a valid number"
+msgstr "\"%s\" не є правильним числом"
+
 #: pdf2djvu.cc
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
@@ -72,11 +77,6 @@ msgstr "%s (%jd): %s"
 #, c-format
 msgid "%s ..."
 msgstr "%s …"
-
-#: config.cc
-#, c-format
-msgid "%s is not a valid number"
-msgstr "%s не є правильним числом"
 
 #. L10N: "<error-category>: <error-message>"
 #: pdf-backend.cc xmp.cc
