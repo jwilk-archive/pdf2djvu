@@ -14,10 +14,6 @@
 srcdir = ../..
 include $(srcdir)/autoconf.mk
 
-include $(srcdir)/doc/Makefile.common
-
-XSLTPROC += --param man.output.lang.in.name.enabled 1
-
 po4a-common-options = \
 	--format=docbook
 
@@ -47,25 +43,30 @@ po4a-gettextize = po4a-gettextize \
 po4a-translate = po4a-translate \
 	$(po4a-common-options)
 
-po_files = $(wildcard pdf2djvu.[a-z][a-z].po)
-xml_files = $(po_files:.po=.xml)
-man_files = $(po_files:.po=.1)
+source = ../manpage.xml
+po_files = $(wildcard *.po)
+langs = $(po_files:.po=)
+xml_files = $(addsuffix .xml,$(langs))
+man_files = $(addsuffix .1,$(addprefix pdf2djvu.,$(langs)))
 
 .PHONY: all
 all: $(man_files)
 
+pdf2djvu.%.1: %.xml
+	$(srcdir)/tools/build-manpage --lang $(<) $(@)
+
 .PHONY: xml
 xml: $(xml_files)
 
-pdf2djvu.pot: pdf2djvu.xml
+manpage.pot: $(source)
 	$(po4a-gettextize) -m $(<) -p $(@)
 
-$(po_files): %.po: pdf2djvu.xml
+$(po_files): %.po: $(source)
 	$(po4a-update-po) -m $(<) -p $(@)
 	touch $(@)
 
 %.xml: %.po
-	$(po4a-translate) -m pdf2djvu.xml -p $(<) -l $(@)
+	$(po4a-translate) -m $(source) -p $(<) -l $(@)
 
 .PHONY: check
 check: $(po_files)
@@ -73,6 +74,6 @@ check: $(po_files)
 
 .PHONY: clean
 clean:
-	rm -f $(addprefix pdf2djvu.,[a-z][a-z].1 [a-z][a-z].xml pot) *~
+	rm -f *.1 *.xml *.pot
 
 # vim:ts=4 sts=4 sw=4 noet

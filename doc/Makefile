@@ -1,10 +1,13 @@
 srcdir = ..
-include $(srcdir)/doc/Makefile.common
-
-xml_files = $(wildcard *.xml)
-man_files = $(xml_files:.xml=.1)
 
 .PHONY: all
-all: $(man_files)
+all: pdf2djvu.1
+
+pdf2djvu.1: manpage.xml
+	$(srcdir)/tools/build-manpage $(<) $(@)
+
+.PHONY: clean
+clean:
+	rm -f *.1
 
 # vim:ts=4 sts=4 sw=4 noet
