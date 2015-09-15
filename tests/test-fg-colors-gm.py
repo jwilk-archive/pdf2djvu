@@ -21,31 +21,30 @@ from tools import (
 )
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/47
-    # + fixed in 0.7.2 [3d0f55ae5a65]
 
     def test(self):
-        yield self._test, 1, 2
-        yield self._test, 2, 3
-        yield self._test, 4, 5
-        yield self._test, 255, 241
-        yield self._test, 256, (245, 256)
-        yield self._test, 652, (245, 325)
-
-    def _test(self, i, n):
-        self.require_feature('GraphicsMagick')
-        self.pdf2djvu(
-            '--dpi=72',
-            '--fg-colors={0}'.format(i)
-        ).assert_()
-        r = self.decode()
-        r.assert_(stdout=None)
-        r = self.decode(mode='foreground')
-        r.assert_(stdout=None)
-        colors = count_ppm_colors(r.stdout)
-        if isinstance(n, tuple):
-            assert_in(len(colors), n)
-        else:
-            assert_equal(len(colors), n)
+        # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/47
+        # + fixed in 0.7.2 [3d0f55ae5a65]
+        def t(i, n):
+            self.require_feature('GraphicsMagick')
+            self.pdf2djvu(
+                '--dpi=72',
+                '--fg-colors={0}'.format(i)
+            ).assert_()
+            r = self.decode()
+            r.assert_(stdout=None)
+            r = self.decode(mode='foreground')
+            r.assert_(stdout=None)
+            colors = count_ppm_colors(r.stdout)
+            if isinstance(n, tuple):
+                assert_in(len(colors), n)
+            else:
+                assert_equal(len(colors), n)
+        yield t, 1, 2
+        yield t, 2, 3
+        yield t, 4, 5
+        yield t, 255, 241
+        yield t, 256, (245, 256)
+        yield t, 652, (245, 325)
 
 # vim:ts=4 sts=4 sw=4 et
