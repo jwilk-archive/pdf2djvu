@@ -64,31 +64,14 @@ distclean: clean
 test: $(exe)
 	$(MAKE) -C tests/
 
-MAN_PAGES = $(wildcard doc/*.1 doc/po/*.1)
-MO_FILES = $(wildcard po/*.mo)
+man_pages = $(wildcard doc/*.1 doc/po/*.1)
+mo_files = $(wildcard po/*.mo)
 
 .PHONY: install
 install: all
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) $(exe) $(DESTDIR)$(bindir)
-ifneq "$(MAN_PAGES)" ""
-	set -e; for manpage in $(MAN_PAGES); \
-	do \
-		set -x; \
-		basename="$$(basename $$manpage)"; \
-		suffix="$${basename#*.}"; \
-		locale="$${suffix%.*}"; \
-		[ $$locale = $$suffix ] && locale=; \
-		$(INSTALL) -d $(DESTDIR)$(mandir)/$$locale/man1/; \
-		$(INSTALL) -m 644 $$manpage $(DESTDIR)$(mandir)/$$locale/man1/"$${basename%%.*}.$${basename##*.}"; \
-	done
-endif
-ifneq "$(MO_FILES)" ""
-	set -e; for locale in $(basename $(notdir $(MO_FILES))); \
-	do \
-		$(INSTALL) -d $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/; \
-		$(INSTALL) -m 644 po/$$locale.mo $(DESTDIR)$(localedir)/$$locale/LC_MESSAGES/pdf2djvu.mo; \
-	done
-endif
+	INSTALL='$(INSTALL)' tools/install-manpages $(DESTDIR)$(mandir) $(man_pages)
+	INSTALL='$(INSTALL)' tools/install-mo $(DESTDIR)$(localedir) $(mo_files)
 
 # vim:ts=4 sts=4 sw=4 noet
