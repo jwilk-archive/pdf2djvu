@@ -25,14 +25,14 @@ class test(case):
         r = self.ls()
         r.assert_(stdout=re(
             r'\n'
-            r'\s*1\s+P\s+\d+\s+p0001[.]djvu\n'
-            r'\s*2\s+P\s+\d+\s+p0002[.]djvu\n'
+            r'\s*1\s+P\s+\d+\s+p0001[.]djvu\s+T=1\n'
+            r'\s*2\s+P\s+\d+\s+p0002[.]djvu\s+T=2\n'
         ))
         self.pdf2djvu('--pages', '2').assert_()
         r = self.ls()
         r.assert_(stdout=re(
             r'\n'
-            r'\s*1\s+P\s+\d+\s+p0002[.]djvu\n'
+            r'\s*1\s+P\s+\d+\s+p0002[.]djvu\s+T=2\n'
         ))
 
     def test_spage(self):
@@ -41,7 +41,7 @@ class test(case):
             r = self.ls()
             r.assert_(stdout=re(
                 r'\n'
-                r'\s*1\s+P\s+\d+\s+p2[.]djvu\n'
+                r'\s*1\s+P\s+\d+\s+p2[.]djvu\sT=2\n'
             ))
         t('p{page}.djvu')
         t('p{spage}.djvu')
@@ -51,7 +51,7 @@ class test(case):
         r = self.ls()
         r.assert_(stdout=re(
             r'\n'
-            r'\s*1\s+P\s+\d+\s+p1[.]djvu\n'
+            r'\s*1\s+P\s+\d+\s+p1[.]djvu\s+T=2\n'
         ))
 
     def test_minus(self):
@@ -59,8 +59,8 @@ class test(case):
         r = self.ls()
         r.assert_(stdout=re(
             r'\n'
-            r'\s*1\s+P\s+\d+\s+p0[.]djvu\n'
-            r'\s*2\s+P\s+\d+\s+p1[.]djvu\n'
+            r'\s*1\s+P\s+\d+\s+p0[.]djvu\s+T=1\n'
+            r'\s*2\s+P\s+\d+\s+p1[.]djvu\s+T=2\n'
         ))
 
     def test_plus(self):
@@ -68,8 +68,8 @@ class test(case):
         r = self.ls()
         r.assert_(stdout=re(
             r'\n'
-            r'\s*1\s+P\s+\d+\s+p8[.]djvu\n'
-            r'\s*2\s+P\s+\d+\s+p9[.]djvu\n'
+            r'\s*1\s+P\s+\d+\s+p8[.]djvu\s+T=1\n'
+            r'\s*2\s+P\s+\d+\s+p9[.]djvu\s+T=2\n'
         ))
 
 # vim:ts=4 sts=4 sw=4 et

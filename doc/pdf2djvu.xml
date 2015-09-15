@@ -155,7 +155,7 @@
                     section for the template language description.
                 </para>
                 <para>
-                    The default is to set no page titles.
+                    The default template is <quote><literal>{label}</literal></quote>.
                 </para>
             </listitem>
         </varlistentry>

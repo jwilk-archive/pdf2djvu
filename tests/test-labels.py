@@ -24,15 +24,18 @@ class test(case):
     # + fixed in 0.9 [dc1734ad4946]
 
     def test(self):
-        self.pdf2djvu('--page-title-template', '{label}').assert_()
-        r = self.ls()
-        r.assert_(stdout=re(
-            '\n'
-            '\s*1\s+P\s+\d+\s+[\w.]+\s+T=one\n'
-            '\s*2\s+P\s+\d+\s+[\w.]+\s+T=Αʹ\n'
-            '\s*3\s+P\s+\d+\s+[\w.]+\s+T=i\n'
-            '\s*4\s+P\s+\d+\s+[\w.]+\s+T=1\n'
-        ))
+        def t(*args):
+            self.pdf2djvu(*args).assert_()
+            r = self.ls()
+            r.assert_(stdout=re(
+                '\n'
+                '\s*1\s+P\s+\d+\s+[\w.]+\s+T=one\n'
+                '\s*2\s+P\s+\d+\s+[\w.]+\s+T=Αʹ\n'
+                '\s*3\s+P\s+\d+\s+[\w.]+\s+T=i\n'
+                '\s*4\s+P\s+\d+\s+[\w.]+\s+T=1\n'
+            ))
+        t()
+        t('--page-title-template', '{label}')
 
     def test_arithmetic(self):
         def t(offset):

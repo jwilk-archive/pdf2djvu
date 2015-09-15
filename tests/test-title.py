@@ -21,7 +21,7 @@ from tools import (
 class test(case):
 
     def test_no_title(self):
-        self.pdf2djvu().assert_()
+        self.pdf2djvu('--page-title-template', '').assert_()
         r = self.ls()
         r.assert_(stdout=re(
             r'\n'
