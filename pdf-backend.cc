@@ -298,10 +298,24 @@ pdf::Timestamp pdf::Timestamp::now()
   time(&unix_now);
   if (unix_now == static_cast<time_t>(-1))
     throw pdf::Timestamp::Invalid();
-  struct tm *c_timestamp = gmtime(&unix_now);
-  if (c_timestamp == NULL)
+  struct tm *local_tm = localtime(&unix_now);
+  if (local_tm == NULL)
     throw pdf::Timestamp::Invalid();
-  result.timestamp = *c_timestamp;
+  time_t unix_now_l = timegm(local_tm);
+  if (unix_now_l == static_cast<time_t>(-1))
+    throw pdf::Timestamp::Invalid();
+  time_t tz_offset = unix_now_l - unix_now;
+  if (tz_offset >= 0)
+    result.tz_sign = '+';
+  else
+  {
+    result.tz_sign = '-';
+    tz_offset = -tz_offset;
+  }
+  tz_offset /= 60;
+  result.tz_hour = tz_offset / 60;
+  result.tz_minute = tz_offset % 60;
+  result.timestamp = *local_tm;
   return result;
 }
 
