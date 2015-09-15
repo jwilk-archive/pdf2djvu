@@ -18,6 +18,7 @@ from tools import (
     assert_in,
     case,
     count_ppm_colors,
+    re,
 )
 
 class test(case):
@@ -46,5 +47,29 @@ class test(case):
         yield t, 255, 241
         yield t, 256, (245, 256)
         yield t, 652, (245, 325)
+
+    def test_range_error(self):
+        def t(i):
+            self.require_feature('GraphicsMagick')
+            r = self.pdf2djvu('--fg-colors={0}'.format(i))
+            r.assert_(
+                stderr=re('^The specified number of foreground colors is outside the allowed range: 1 .. 4080\n'),
+                rc=1,
+            )
+        t('-1')
+        t(0)
+        t(4081)
+
+    def test_bad_number(self):
+        def t(i):
+            self.require_feature('GraphicsMagick')
+            r = self.pdf2djvu('--fg-colors={0}'.format(i))
+            r.assert_(
+                stderr=re('^{0} is not a valid number\n'.format(i)),
+                rc=1,
+            )
+        t('1x')
+        t('0x1')
+        t(23 ** 17)
 
 # vim:ts=4 sts=4 sw=4 et
