@@ -51,8 +51,6 @@ $(exe): xmp.o
 $(exe):
 	$(LINK.cc) $(^) $(LDLIBS) -o $(@)
 
-XML_FILES = $(wildcard *.xml)
-
 .PHONY: clean
 clean:
 	rm -f $(exe) *.o paths.hh
