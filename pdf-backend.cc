@@ -289,13 +289,12 @@ pdf::Timestamp::Timestamp()
 
 pdf::Timestamp pdf::Timestamp::now()
 {
-  time_t unix_now;
   pdf::Timestamp result;
   result.dummy = false;
   result.tz_sign = '+';
   result.tz_hour = 0;
   result.tz_minute = 0;
-  time(&unix_now);
+  time_t unix_now = time(NULL);
   if (unix_now == static_cast<time_t>(-1))
     throw_posix_error("time()");
   struct tm *local_tm = localtime(&unix_now);
