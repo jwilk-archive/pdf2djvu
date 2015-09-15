@@ -289,6 +289,7 @@ void Config::read_config(int argc, char * const argv[])
     OPT_NO_HLINKS,
     OPT_NO_METADATA,
     OPT_NO_OUTLINE,
+    OPT_NO_PAGE_TITLES,
     OPT_NO_RENDER,
     OPT_PAGE_ID_PREFIX,
     OPT_PAGE_ID_TEMPLATE,
@@ -328,6 +329,7 @@ void Config::read_config(int argc, char * const argv[])
     { "no-metadata", 0, 0, OPT_NO_METADATA },
     { "no-nfkc", 0, 0, OPT_TEXT_NO_NFKC },
     { "no-outline", 0, 0, OPT_NO_OUTLINE },
+    { "no-page-titles", 0, 0, OPT_NO_PAGE_TITLES },
     { "no-render", 0, 0, OPT_NO_RENDER },
     { "no-text", 0, 0, OPT_TEXT_NONE },
     { "output", 1, 0, OPT_OUTPUT },
@@ -510,6 +512,9 @@ void Config::read_config(int argc, char * const argv[])
         );
       }
       break;
+    case OPT_NO_PAGE_TITLES:
+      this->page_title_template.reset(new string_format::Template(""));
+      break;
     case OPT_JOBS:
       this->n_jobs = string::as<int>(optarg);
       break;
@@ -558,6 +563,7 @@ void Config::usage(const Config::Error &error) const
     << std::endl << _("     --page-id-prefix=NAME")
     << std::endl << _("     --page-id-template=TEMPLATE")
     << std::endl << _("     --page-title-template=TEMPLATE")
+    << std::endl <<   "     --no-page-titles"
     << std::endl << _(" -d, --dpi=RESOLUTION")
     << std::endl <<   "     --guess-dpi"
     << std::endl <<   "     --media-box"

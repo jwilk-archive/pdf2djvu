@@ -3,7 +3,8 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
   * Add support for PDF page labels in page titles.
     Use labels as default page titles.
     https://bitbucket.org/jwilk/pdf2djvu/issue/109
-  * Don't set page title if “--page-title-template” is empty.
+  * Add the “--no-page-title” option.
+    Also, don't set page title if “--page-title-template” is empty.
   * Rename “--pageid-prefix” as “--page-id-prefix”.
   * Rename “--pageid-template” as “--page-id-template”.
   * Improve XMP support:
@@ -16,7 +17,7 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
   * Improve error handling.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 15 Sep 2015 18:54:53 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 15 Sep 2015 22:53:23 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 

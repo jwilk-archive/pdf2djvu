@@ -21,13 +21,16 @@ from tools import (
 class test(case):
 
     def test_no_title(self):
-        self.pdf2djvu('--page-title-template', '').assert_()
-        r = self.ls()
-        r.assert_(stdout=re(
-            r'\n'
-            r'\s*1\s+P\s+\d+\s+[\w.]+\n'
-            r'\s*2\s+P\s+\d+\s+[\w.]+\n'
-        ))
+        def t(*args):
+            self.pdf2djvu(*args).assert_()
+            r = self.ls()
+            r.assert_(stdout=re(
+                r'\n'
+                r'\s*1\s+P\s+\d+\s+[\w.]+\n'
+                r'\s*2\s+P\s+\d+\s+[\w.]+\n'
+            ))
+        t('--page-title-template', '')
+        t('--no-page-titles')
 
     def test_ascii(self):
         template = '#{page}'
