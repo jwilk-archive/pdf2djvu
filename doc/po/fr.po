@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-15 18:56+0200\n"
+"POT-Creation-Date: 2015-09-15 22:57+0200\n"
 "PO-Revision-Date: 2015-06-18 15:28+0200\n"
 "Last-Translator: Jean-Paul Guillonneau <guillonneau.jeanpaul@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -159,6 +159,16 @@ msgstr "Indiquer le modèle pour les titres de page. Consulter la <quote><link l
 #, fuzzy
 msgid "The default template is <quote><literal>{label}</literal></quote>."
 msgstr "Le modèle par défaut est <quote><literal>{label}</literal></quote>."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-page-titles</option>"
+msgstr "<option>--no-page-titles</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+#, fuzzy
+#| msgid "Equivalent to <quote><literal>--page-id-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>."
+msgid "Don't set page titles.  Equivalent to <quote><literal>--page-title-template=</literal></quote>."
+msgstr "Équivalent à <quote><literal>--page-id-template=<replaceable>préfixe</replaceable>{page:04*}.djvu</literal></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Resolution, page size"

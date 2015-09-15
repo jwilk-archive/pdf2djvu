@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-15 18:56+0200\n"
+"POT-Creation-Date: 2015-09-15 22:57+0200\n"
 "PO-Revision-Date: 2015-05-26 21:35+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -160,6 +160,16 @@ msgstr "gibt die Schablone für Seitentitel an. Lesen Sie den Abschnitt <quote><
 #, fuzzy
 msgid "The default template is <quote><literal>{label}</literal></quote>."
 msgstr "Die Vorgabeschablone ist <quote><literal>{label}</literal></quote>."
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
+msgid "<option>--no-page-titles</option>"
+msgstr "<option>--no-page-titles</option>"
+
+#. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
+#, fuzzy
+#| msgid "Equivalent to <quote><literal>--page-id-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>."
+msgid "Don't set page titles.  Equivalent to <quote><literal>--page-title-template=</literal></quote>."
+msgstr "Entspricht <quote><literal>--page-id-template=<replaceable>Präfix</replaceable>{page:04*}.djvu</literal></quote>."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Resolution, page size"
