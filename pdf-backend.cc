@@ -297,13 +297,13 @@ pdf::Timestamp pdf::Timestamp::now()
   result.tz_minute = 0;
   time(&unix_now);
   if (unix_now == static_cast<time_t>(-1))
-    throw pdf::Timestamp::Invalid();
+    throw_posix_error("time()");
   struct tm *local_tm = localtime(&unix_now);
   if (local_tm == NULL)
-    throw pdf::Timestamp::Invalid();
+    throw_posix_error("localtime()");
   time_t unix_now_l = timegm(local_tm);
   if (unix_now_l == static_cast<time_t>(-1))
-    throw pdf::Timestamp::Invalid();
+    throw_posix_error("timegm()");
   time_t tz_offset = unix_now_l - unix_now;
   if (tz_offset >= 0)
     result.tz_sign = '+';
