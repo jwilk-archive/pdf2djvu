@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-09-15 13:25+0200\n"
-"PO-Revision-Date: 2015-09-13 20:02+0200\n"
+"PO-Revision-Date: 2015-09-15 13:30+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -58,9 +58,9 @@ msgid " -o, --output=FILE"
 msgstr " -o, --output=PLIK"
 
 #: config.cc
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a valid number"
-msgstr "\"%s\" nie jest poprawną liczbą"
+msgstr "„%s” nie jest poprawną liczbą"
 
 #: pdf2djvu.cc
 #, c-format
