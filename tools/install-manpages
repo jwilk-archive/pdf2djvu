@@ -19,7 +19,7 @@ usage()
 }
 
 set -e -u
-: ${INSTALL:=install}
+: "${INSTALL:=install}"
 [ $# -ge 1 ] || { usage; exit 1; }
 mandir="$1"
 shift
