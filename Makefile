@@ -52,11 +52,10 @@ $(exe):
 	$(LINK.cc) $(^) $(LDLIBS) -o $(@)
 
 XML_FILES = $(wildcard *.xml)
-XML_HH_FILES = $(XML_FILES:.xml=.hh)
 
 .PHONY: clean
 clean:
-	rm -f $(exe) *.o paths.hh $(XML_HH_FILES)
+	rm -f $(exe) *.o paths.hh
 	$(MAKE) -C tests/ clean
 
 .PHONY: distclean
