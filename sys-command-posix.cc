@@ -20,6 +20,7 @@
 #include <cassert>
 #include <cerrno>
 #include <cstdio>
+#include <cstddef>
 #include <cstdlib>
 #include <cstring>
 #include <csignal>
