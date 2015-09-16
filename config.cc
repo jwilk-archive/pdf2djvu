@@ -15,10 +15,8 @@
 
 #include "config.hh"
 
-#include <cerrno>
 #include <climits>
-#include <cstdlib>
-#include <limits>
+#include <cstddef>
 #include <sstream>
 #include <stdexcept>
 
