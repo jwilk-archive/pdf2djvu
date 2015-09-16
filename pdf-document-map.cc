@@ -5,6 +5,7 @@
 #include <fstream>
 #include <memory>
 
+#include "autoconf.hh"
 #include "pdf-backend.hh"
 #include "pdf-unicode.hh"
 
