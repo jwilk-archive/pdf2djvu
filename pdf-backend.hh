@@ -16,6 +16,7 @@
 #ifndef PDF2DJVU_PDF_BACKEND_H
 #define PDF2DJVU_PDF_BACKEND_H
 
+#include <cstddef>
 #include <ctime>
 #include <ostream>
 #include <stdexcept>
