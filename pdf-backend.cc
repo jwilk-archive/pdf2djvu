@@ -59,13 +59,13 @@ static void poppler_error_handler(pdf::Offset pos, char *message, va_list args)
   {
     error_log <<
       /* L10N: "<error-category> (<position>): <error-message>" */
-      string_printf(_("%s (%jd): %s"), category, static_cast<intmax_t>(pos), c_message);
+      string::printf(_("%s (%jd): %s"), category, static_cast<intmax_t>(pos), c_message);
   }
   else
   {
     error_log <<
       /* L10N: "<error-category>: <error-message>" */
-      string_printf(_("%s: %s"), category, c_message);
+      string::printf(_("%s: %s"), category, c_message);
   }
   error_log << std::endl;
 }
@@ -105,13 +105,13 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
   {
     error_log <<
       /* L10N: "<error-category> (<position>): <error-message>" */
-      string_printf(_("%s (%jd): %s"), category_name, static_cast<intmax_t>(pos), message);
+      string::printf(_("%s (%jd): %s"), category_name, static_cast<intmax_t>(pos), message);
   }
   else
   {
     error_log <<
       /* L10N: "<error-category>: <error-message>" */
-      string_printf(_("%s: %s"), category_name, message);
+      string::printf(_("%s: %s"), category_name, message);
   }
   error_log << std::endl;
 }

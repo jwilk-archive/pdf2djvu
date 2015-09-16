@@ -18,12 +18,16 @@
 #include <cstdarg>
 #include <string>
 
-std::string string_vprintf(const char *message, va_list args);
-std::string string_printf(const char *message, ...)
+namespace string {
+
+    std::string vprintf(const char *message, va_list args);
+    std::string printf(const char *message, ...)
 #if defined(__GNUC__)
-__attribute__ ((format (printf, 1, 2)))
+    __attribute__ ((format (printf, 1, 2)))
 #endif
-;
+    ;
+
+}
 
 #endif
 

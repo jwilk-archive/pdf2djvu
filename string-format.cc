@@ -78,7 +78,7 @@ namespace string_format
   {
   public:
     FormatError(const std::string &var, const std::string &what)
-    : std::runtime_error(string_printf(_("Unable to format field {%s}: %s"), var.c_str(), what.c_str()))
+    : std::runtime_error(string::printf(_("Unable to format field {%s}: %s"), var.c_str(), what.c_str()))
     { }
   };
 

@@ -453,7 +453,7 @@ public:
       }
       catch (NoLinkDestination &ex)
       {
-        debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+        debug(1) << string::printf(_("Warning: %s"), ex.what()) << std::endl;
         return;
       }
       std::ostringstream strstream;
@@ -677,7 +677,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
     }
     catch (BookmarkError &ex)
     {
-      debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+      debug(1) << string::printf(_("Warning: %s"), ex.what()) << std::endl;
     }
 
     pdf::dict_lookup(current, "Next", &next);
@@ -717,7 +717,7 @@ static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ost
   }
   catch (pdf::Timestamp::Invalid)
   {
-    debug(1) << string_printf(_("Warning: metadata[%s] is not a valid date"), key) << std::endl;
+    debug(1) << string::printf(_("Warning: metadata[%s] is not a valid date"), key) << std::endl;
   }
 }
 
@@ -797,7 +797,7 @@ class DuplicatePage : public std::runtime_error
 {
 public:
   DuplicatePage(int n)
-  : std::runtime_error(string_printf(_("Duplicate page: %d"), n))
+  : std::runtime_error(string::printf(_("Duplicate page: %d"), n))
   { }
 };
 
@@ -810,14 +810,14 @@ protected:
   {
   public:
     DuplicateId(const std::string &id)
-    : std::runtime_error(string_printf(_("Duplicate page identifier: %s"), id.c_str()))
+    : std::runtime_error(string::printf(_("Duplicate page identifier: %s"), id.c_str()))
     { }
   };
   class DuplicateTitle : public std::runtime_error
   {
   public:
     DuplicateTitle(const std::string &id)
-    : std::runtime_error(string_printf(_("Duplicate page title: %s"), id.c_str()))
+    : std::runtime_error(string::printf(_("Duplicate page title: %s"), id.c_str()))
     { }
   };
   void remember(const Component &component);
@@ -967,7 +967,7 @@ public:
   {
     size_t size = this->components.size();
     debug(3)
-      << string_printf(ngettext(
+      << string::printf(ngettext(
            "creating multi-page indirect document (%zu page)",
            "creating multi-page indirect document (%zu pages)",
            size), size
@@ -1110,7 +1110,7 @@ static int calculate_dpi(pdf::Document &doc, int n, bool crop)
       std::ostringstream guess_str;
       guess_str << guess;
       debug(2)
-        << string_printf(_("guessed resolution: %s dpi"), guess_str.str().c_str())
+        << string::printf(_("guessed resolution: %s dpi"), guess_str.str().c_str())
         << std::endl;
       return calculate_dpi(guess);
     }
@@ -1132,7 +1132,7 @@ static int calculate_dpi(pdf::Document &doc, int n, bool crop)
     else
       int_dpi = static_cast<int>(dpi);
       debug(2)
-        << string_printf(_("estimated resolution: %d dpi"), int_dpi)
+        << string::printf(_("estimated resolution: %d dpi"), int_dpi)
         << std::endl;
     return int_dpi;
   }
@@ -1252,7 +1252,7 @@ static int xmain(int argc, char * const argv[])
 #else
   if (config.n_jobs != 1)
   {
-    debug(1) << string_printf(_("Warning: %s"), _("pdf2djvu was built without OpenMP support; multi-threading is disabled.")) << std::endl;
+    debug(1) << string::printf(_("Warning: %s"), _("pdf2djvu was built without OpenMP support; multi-threading is disabled.")) << std::endl;
     config.n_jobs = 1;
   }
 #endif
@@ -1374,7 +1374,7 @@ static int xmain(int argc, char * const argv[])
     Component &component = (*page_files)[n];
     #pragma omp critical
     {
-      debug(1) << string_printf(_("page #%d -> #%d"), n, page_map.get(n));
+      debug(1) << string::printf(_("page #%d -> #%d"), n, page_map.get(n));
       if (config.n_jobs != 1)
         debug(2) << ":";
       debug(1) << std::endl;
@@ -1392,7 +1392,7 @@ static int xmain(int argc, char * const argv[])
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
     n_pixels += width * height;
-    debug(2) << string_printf(_("image size: %dx%d"), width, height) << std::endl;
+    debug(2) << string::printf(_("image size: %dx%d"), width, height) << std::endl;
     if (!config.no_render && outm->has_skipped_elements())
     { /* Render the page second time, without skipping any elements. */
       debug(3) << _("rendering page (2nd pass)") << std::endl;
@@ -1584,7 +1584,7 @@ static int xmain(int argc, char * const argv[])
     {
       size_t page_size = component.size();
       debug(2)
-        << string_printf(ngettext("%zu bytes out", "%zu bytes out", page_size), page_size)
+        << string::printf(ngettext("%zu bytes out", "%zu bytes out", page_size), page_size)
         << std::endl;
       djvu_pages_size += page_size;
     }
@@ -1598,7 +1598,7 @@ static int xmain(int argc, char * const argv[])
    */
   catch (std::ios_base::failure &ex)
   {
-    error_log << string_printf(_("Input/output error (%s)"), ex.what()) << std::endl;
+    error_log << string::printf(_("Input/output error (%s)"), ex.what()) << std::endl;
     exit(2);
   }
   catch (std::runtime_error &ex)
@@ -1623,7 +1623,7 @@ static int xmain(int argc, char * const argv[])
         }
         catch (xmp::Error &ex)
         {
-          debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+          debug(1) << string::printf(_("Warning: %s"), ex.what()) << std::endl;
         }
       debug(0)--;
       if (xmp_bytes.length())
@@ -1680,7 +1680,7 @@ static int xmain(int argc, char * const argv[])
     double percent_saved = (1.0 * pdf_byte_size - djvu_size) * 100 / pdf_byte_size;
     debug(0)--;
     debug(1)
-      << string_printf(
+      << string::printf(
            _("%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"),
            bpp, ratio, percent_saved, pdf_byte_size, djvu_size
          )
@@ -1700,7 +1700,7 @@ try
 /* Please keep the exception handlers in sync with the ones in xmain(). */
 catch (std::ios_base::failure &ex)
 {
-  error_log << string_printf(_("Input/output error (%s)"), ex.what()) << std::endl;
+  error_log << string::printf(_("Input/output error (%s)"), ex.what()) << std::endl;
   exit(2);
 }
 catch (std::runtime_error &ex)
