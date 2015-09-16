@@ -15,6 +15,7 @@
 
 #include "config.hh"
 
+#include <algorithm>
 #include <climits>
 #include <cstddef>
 #include <sstream>
@@ -64,9 +65,6 @@ Config::Config()
 namespace string
 {
   static void split(const std::string &, char, std::vector<std::string> &);
-
-  static void replace(std::string &, char, char);
-
   template <typename tp>
   tp as(const std::string &);
 }
@@ -85,23 +83,10 @@ static void string::split(const std::string &s, char c, std::vector<std::string>
   }
 }
 
-static void string::replace(std::string &s, char c1, char c2)
-{
-  size_t lpos = 0;
-  while (true)
-  {
-    size_t rpos = s.find(c1, lpos);
-    if (rpos == std::string::npos)
-      break;
-    s[rpos] = c2;
-    lpos = rpos + 1;
-  }
-}
-
 static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
 {
   std::vector<std::string> split;
-  string::replace(s, '_', '-');
+  std::replace(s.begin(), s.end(), '_', '-');
   string::split(s, ',', split);
   for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); it++)
   {

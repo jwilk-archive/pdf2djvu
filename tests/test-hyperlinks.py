@@ -35,15 +35,18 @@ class test(case):
         ))
 
     def test_border_avis(self):
-        self.pdf2djvu('--hyperlinks=border-avis').assert_()
-        r = self.print_ant(page=1)
-        r.assert_(stdout=re(
-            r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)] [(]border_avis[)][)]$',
-        ))
-        r = self.print_ant(page=2)
-        r.assert_(stdout=re(
-            r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)] [(]border_avis[)][)]$',
-        ))
+        def t(*args):
+            self.pdf2djvu(*args).assert_()
+            r = self.print_ant(page=1)
+            r.assert_(stdout=re(
+                r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)] [(]border_avis[)][)]$',
+            ))
+            r = self.print_ant(page=2)
+            r.assert_(stdout=re(
+                r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)] [(]border_avis[)][)]$',
+            ))
+        t('--hyperlinks', 'border-avis')
+        t('--hyperlinks', 'border_avis')
 
     def test_border_color(self):
         self.pdf2djvu('--hyperlinks=#3742ff').assert_()
