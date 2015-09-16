@@ -18,6 +18,7 @@ cxxflags=$(
     grep '^CXXFLAGS\s=' "$srcdir/autoconf.mk" \
     | grep -E -o -- '-I\S+'
 )
+PS4='$ '
 set -x
 exec iwyu $cxxflags "$@"
 
