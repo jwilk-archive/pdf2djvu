@@ -141,13 +141,12 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	mkdir -p dist/doc/
 	$(MAKE) install -C $(dir $@)
 	$(STRIP) dist/pdf2djvu.exe
-	xsltproc --nonet $(docbook_xsl) src/pdf2djvu/doc/pdf2djvu.xml > dist/doc/manual-page.html
+	xsltproc --nonet $(docbook_xsl) src/pdf2djvu/doc/manpage.xml > dist/doc/manpage.html
 	$(MAKE) -C $(dir $@)/doc/po/ xml
 	cd src/pdf2djvu/doc/po/ && set -e && \
-		for file in pdf2djvu.*.xml; do \
-			suffix="$${file#*.}"; \
-			locale="$${suffix%.*}"; \
-			xsltproc --nonet $(docbook_xsl) $$file > $(usr)/dist/doc/manual-page-$$locale.html; \
+		for file in *.xml; do \
+			locale="$${file%.*}"; \
+			xsltproc --nonet $(docbook_xsl) $$file > $(usr)/dist/doc/manpage-$$locale.html; \
 		done
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/COPYING > dist/doc/COPYING.txt
 	cd src/pdf2djvu/doc \
