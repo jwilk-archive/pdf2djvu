@@ -49,7 +49,7 @@ class test(case):
         t('--hyperlinks', 'border_avis')
 
     def test_border_color(self):
-        self.pdf2djvu('--hyperlinks=#3742ff').assert_()
+        self.pdf2djvu('--hyperlinks', '#3742ff').assert_()
         r = self.print_ant(page=1)
         r.assert_(stdout=re(
             r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #3742ff[)][)]$',
@@ -65,11 +65,11 @@ class test(case):
             for n in (1, 2):
                 r = self.print_ant(page=n)
                 r.assert_(stdout='')
-        t('--hyperlinks=none')
+        t('--hyperlinks', 'none')
         t('--no-hyperlinks')
 
     def test_bad_argument(self):
-        r = self.pdf2djvu('--hyperlinks=off')
+        r = self.pdf2djvu('--hyperlinks', 'off')
         r.assert_(stderr=re('^Unable to parse hyperlinks options\n'), rc=1)
 
 # vim:ts=4 sts=4 sw=4 et
