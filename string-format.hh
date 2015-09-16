@@ -19,7 +19,6 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace string_format
