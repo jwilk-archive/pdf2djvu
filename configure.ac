@@ -124,6 +124,10 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
   ]
 )
 
+# Checks for library functions:
+
+AC_CHECK_FUNCS([timegm])
+
 # Turn on compile warnings:
 
 P_MAYBE_ADD_CXXFLAGS(

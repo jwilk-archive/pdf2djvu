@@ -33,6 +33,7 @@ pdf-backend.o: i18n.hh
 pdf-backend.o: pdf-backend.cc
 pdf-backend.o: pdf-backend.hh
 pdf-backend.o: pdf-unicode.hh
+pdf-backend.o: sys-time.hh
 pdf-backend.o: system.hh
 pdf-document-map.o: autoconf.hh
 pdf-document-map.o: i18n.hh
@@ -84,6 +85,8 @@ sys-command-win32.o: sys-command-win32.cc
 sys-encoding.o: array.hh
 sys-encoding.o: sys-encoding.cc
 sys-encoding.o: system.hh
+sys-time.o: autoconf.hh
+sys-time.o: sys-time.cc
 system.o: array.hh
 system.o: autoconf.hh
 system.o: debug.hh
