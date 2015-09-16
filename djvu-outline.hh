@@ -15,6 +15,7 @@
 #ifndef PDF2DJVU_DJVU_OUTLINE_H
 #define PDF2DJVU_DJVU_OUTLINE_H
 
+#include <cstddef>
 #include <ostream>
 #include <stdexcept>
 #include <string>
