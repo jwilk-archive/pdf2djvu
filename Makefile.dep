@@ -70,6 +70,7 @@ pdf2djvu.o: pdf2djvu.cc
 pdf2djvu.o: sexpr.hh
 pdf2djvu.o: string-format.hh
 pdf2djvu.o: string-printf.hh
+pdf2djvu.o: string-utils.hh
 pdf2djvu.o: system.hh
 pdf2djvu.o: version.hh
 pdf2djvu.o: xmp.hh

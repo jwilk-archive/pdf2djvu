@@ -21,6 +21,8 @@
 namespace string {
 
     void split(const std::string &s, char c, std::vector<std::string> &result);
+    void replace_all(std::string& s, const std::string& pat, const std::string& repl);
+    void replace_all(std::string& s, char pat, const std::string& repl);
 
 }
 

@@ -49,6 +49,7 @@
 #include "sexpr.hh"
 #include "string-format.hh"
 #include "string-printf.hh"
+#include "string-utils.hh"
 #include "system.hh"
 #include "version.hh"
 #include "xmp.hh"
@@ -166,6 +167,11 @@ public:
   void set_title(const std::string &title)
   {
     this->title = title;
+    // TODO: issue a warning if the title contains null bytes
+    string::replace_all(
+      this->title, '\0',
+      "\xEF\xBF\xBD"  // U+FFFD REPLACEMENT CHARACTER
+    );
     this->title_set = true;
   }
 

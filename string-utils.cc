@@ -29,4 +29,18 @@ void string::split(const std::string &s, char c, std::vector<std::string> &resul
     }
 }
 
+void string::replace_all(std::string& s, const std::string& pat, const std::string& repl)
+{
+    size_t pos = 0;
+    while ((pos = s.find(pat, pos)) != std::string::npos) {
+         s.replace(pos, pat.length(), repl);
+         pos += repl.length();
+    }
+}
+
+void string::replace_all(std::string& s, char pat, const std::string& repl)
+{
+    replace_all(s, std::string(1, pat), repl);
+}
+
 // vim:ts=4 sts=4 sw=4 et
