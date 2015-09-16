@@ -19,7 +19,6 @@
 #include <libdjvu/ddjvuapi.h>
 
 #include "autoconf.hh"
-#include "system.hh"
 
 static std::string get_djvulibre_version()
 {
