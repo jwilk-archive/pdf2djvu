@@ -18,12 +18,10 @@
 #include <algorithm>
 #include <cassert>
 #include <cerrno>
-#include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <limits>
 #include <sstream>
 #include <stdexcept>
 
