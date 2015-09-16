@@ -14,6 +14,7 @@
 
 #include "system.hh"
 
+#include <cstddef>
 #include <cstdio>
 #include <ostream>
 #include <string>
