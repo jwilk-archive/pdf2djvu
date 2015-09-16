@@ -6,6 +6,7 @@ config.o: djvu-const.hh
 config.o: i18n.hh
 config.o: string-format.hh
 config.o: string-printf.hh
+config.o: string-utils.hh
 config.o: system.hh
 debug.o: debug.cc
 debug.o: debug.hh
@@ -84,6 +85,8 @@ string-printf.o: autoconf.hh
 string-printf.o: string-printf.cc
 string-printf.o: string-printf.hh
 string-printf.o: system.hh
+string-utils.o: string-utils.cc
+string-utils.o: string-utils.hh
 sys-command-posix.o: array.hh
 sys-command-posix.o: autoconf.hh
 sys-command-posix.o: i18n.hh

@@ -28,6 +28,7 @@
 #include "djvu-const.hh"
 #include "i18n.hh"
 #include "string-printf.hh"
+#include "string-utils.hh"
 #include "system.hh"
 
 string_format::Template* Config::default_page_id_template(const std::string &prefix)
@@ -64,24 +65,10 @@ Config::Config()
 
 namespace string
 {
-  static void split(const std::string &, char, std::vector<std::string> &);
   template <typename tp>
   tp as(const std::string &);
 }
 
-static void string::split(const std::string &s, char c, std::vector<std::string> &result)
-{
-  size_t lpos = 0;
-  while (true)
-  {
-    size_t rpos = s.find(c, lpos);
-    result.push_back(s.substr(lpos, rpos - lpos));
-    if (rpos == std::string::npos)
-      break;
-    else
-      lpos = rpos + 1;
-  }
-}
 
 static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
 {

@@ -43,6 +43,7 @@ $(exe): pdf2djvu.o
 $(exe): sexpr.o
 $(exe): string-format.o
 $(exe): string-printf.o
+$(exe): string-utils.o
 $(exe): sys-command-posix.o
 $(exe): sys-command-win32.o
 $(exe): sys-encoding.o
