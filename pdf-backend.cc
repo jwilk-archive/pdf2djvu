@@ -52,7 +52,7 @@
 static void poppler_error_handler(pdf::Offset pos, char *message, va_list args)
 {
   std::string format;
-  std::string expanded_message = string_vprintf(message, args);
+  std::string expanded_message = string::vprintf(message, args);
   const char *c_message = expanded_message.c_str();
   const char *category = _("PDF error");
   if (pos >= 0)
