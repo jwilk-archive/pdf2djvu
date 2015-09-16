@@ -32,6 +32,7 @@
 #endif
 
 #include "debug.hh"
+#include "string-printf.hh"
 #include "system.hh"
 #include "version.hh"
 

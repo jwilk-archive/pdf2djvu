@@ -22,7 +22,7 @@
 #include <vector>
 
 #include "i18n.hh"
-#include "system.hh"
+#include "string-printf.hh"
 
 namespace string_format
 {

@@ -47,6 +47,7 @@
 #include "pdf-unicode.hh"
 #include "sexpr.hh"
 #include "string-format.hh"
+#include "string-printf.hh"
 #include "system.hh"
 #include "version.hh"
 #include "xmp.hh"

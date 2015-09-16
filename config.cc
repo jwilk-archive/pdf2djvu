@@ -28,6 +28,7 @@
 #include "debug.hh"
 #include "djvu-const.hh"
 #include "i18n.hh"
+#include "string-printf.hh"
 #include "system.hh"
 
 string_format::Template* Config::default_page_id_template(const std::string &prefix)

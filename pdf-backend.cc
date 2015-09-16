@@ -39,6 +39,7 @@
 #include "debug.hh"
 #include "i18n.hh"
 #include "pdf-unicode.hh"
+#include "string-printf.hh"
 #include "sys-time.hh"
 #include "system.hh"
 

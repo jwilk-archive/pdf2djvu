@@ -15,7 +15,6 @@
 #ifndef PDF2DJVU_SYSTEM_HH
 #define PDF2DJVU_SYSTEM_HH
 
-#include <cstdarg>
 #include <cstddef>
 #include <fstream>
 #include <iostream>
@@ -237,13 +236,6 @@ namespace encoding
 
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek);
 void copy_stream(std::istream &istream, std::ostream &ostream, bool seek, std::streamsize limit);
-
-std::string string_vprintf(const char *message, va_list args);
-std::string string_printf(const char *message, ...)
-#if defined(__GNUC__)
-__attribute__ ((format (printf, 1, 2)))
-#endif
-;
 
 bool isatty(const std::ostream &ostream);
 void binmode(const std::ostream &ostream);

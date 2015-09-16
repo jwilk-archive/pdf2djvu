@@ -37,6 +37,7 @@
 #endif
 
 #include "array.hh"
+#include "string-printf.hh"
 #include "i18n.hh"
 
 Command::Command(const std::string& command) : command(command)

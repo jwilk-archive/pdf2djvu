@@ -41,10 +41,7 @@
 #include "autoconf.hh"
 #include "debug.hh"
 #include "i18n.hh"
-
-#if USE_MINGW_ANSI_STDIO
-#define vsnprintf __mingw_vsnprintf
-#endif
+#include "string-printf.hh"
 
 /* constants
  * =========
@@ -728,43 +725,6 @@ bool is_same_file(const std::string &path1, const std::string &path2)
     (st1.st_ino == st2.st_ino);
 #endif
 }
-
-#if defined(va_copy)
-#elif defined(__va_copy)
-#define va_copy __va_copy
-#else
-#define va_copy(dest, src) memcpy((dest), (src), sizeof (va_list))
-#endif
-
-std::string string_vprintf(const char *message, va_list args)
-{
-  va_list args_copy;
-  va_copy(args_copy, args);
-  int length = vsnprintf(NULL, 0, message, args_copy);
-  va_end(args_copy);
-  if (length < 0)
-    throw_posix_error("vsnprintf");
-  if (length == std::numeric_limits<int>::max())
-  {
-    errno = ENOMEM;
-    throw_posix_error("vsnprintf");
-  }
-  Array<char> buffer(length + 1);
-  length = vsprintf(buffer, message, args);
-  if (length < 0)
-    throw_posix_error("vsprintf");
-  return static_cast<char*>(buffer);
-}
-
-std::string string_printf(const char *message, ...)
-{
-  va_list args;
-  va_start(args, message);
-  std::string result = string_vprintf(message, args);
-  va_end(args);
-  return result;
-}
-
 
 void prevent_pop_out(void)
 {

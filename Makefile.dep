@@ -76,6 +76,9 @@ string-format.o: i18n.hh
 string-format.o: string-format.cc
 string-format.o: string-format.hh
 string-format.o: system.hh
+string-printf.o: autoconf.hh
+string-printf.o: string-printf.cc
+string-printf.o: string-printf.hh
 sys-command-posix.o: array.hh
 sys-command-posix.o: autoconf.hh
 sys-command-posix.o: i18n.hh

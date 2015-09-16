@@ -23,6 +23,7 @@
 #include <windows.h>
 
 #include "i18n.hh"
+#include "string-printf.hh"
 
 Command::Command(const std::string& command) : command(command)
 {
