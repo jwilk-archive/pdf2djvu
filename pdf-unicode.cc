@@ -21,6 +21,8 @@
 
 #include <stdint.h>
 
+#include "autoconf.hh"
+
 #include <CharTypes.h>
 #include <PDFDocEncoding.h>
 #if (POPPLER_VERSION < 2100) || (POPPLER_VERSION >= 2101)
