@@ -160,7 +160,7 @@ tp string::as(const std::string &s)
   std::istringstream stream(s);
   stream >> n;
   if (stream.fail() || !stream.eof())
-    throw Config::Error(string::printf(
+    throw Config::Error(string_printf(
       _("\"%s\" is not a valid number"),
       s.c_str())
     );
@@ -177,7 +177,7 @@ static unsigned int parse_fg_colors(const std::string &s)
     return Config::FG_COLORS_BLACK;
   long n = string::as<long>(s);
   if (n < 1 || n > static_cast<long>(djvu::max_fg_colors))
-    throw Config::Error(string::printf(
+    throw Config::Error(string_printf(
       _("The specified number of foreground colors is outside the allowed range: %u .. %u"),
       1U, djvu::max_fg_colors
     ));
@@ -188,7 +188,7 @@ static unsigned int parse_bg_subsample(const std::string &s)
 {
   long n = string::as<long>(optarg);
   if (n < 1 || n > static_cast<long>(djvu::max_subsample_ratio))
-    throw Config::Error(string::printf(
+    throw Config::Error(string_printf(
       _("The specified subsampling ratio is outside the allowed range: %u .. %u"),
       1, djvu::max_subsample_ratio
     ));
@@ -332,7 +332,7 @@ void Config::read_config(int argc, char * const argv[])
     case OPT_DPI:
       this->dpi = string::as<int>(optarg);
       if (this->dpi < djvu::min_dpi || this->dpi > djvu::max_dpi)
-        throw Config::Error(string::printf(
+        throw Config::Error(string_printf(
           _("The specified resolution is outside the allowed range: %d .. %d"),
           djvu::min_dpi, djvu::max_dpi
         ));
@@ -471,7 +471,7 @@ void Config::read_config(int argc, char * const argv[])
       }
       catch (encoding::Error &exc)
       {
-        throw Config::Error(string::printf(
+        throw Config::Error(string_printf(
           _("Unable to convert page title to UTF-8: %s"),
           exc.what())
         );
@@ -509,7 +509,7 @@ void Config::read_config(int argc, char * const argv[])
     {
       this->filenames.push_back(argv[optind]);
       if (is_same_file(this->output, argv[optind]))
-        throw Config::Error(string::printf(
+        throw Config::Error(string_printf(
           _("Input file is the same as output file: %s"),
           this->output.c_str()
         ));

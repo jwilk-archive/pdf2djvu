@@ -186,7 +186,7 @@ std::string Command::repr()
     if (sh)
         return this->argv[2];
     else
-        return string::printf(
+        return string_printf(
             // L10N: "<command> ..."
             _("%s ..."),
             this->command.c_str()
@@ -327,7 +327,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         if (child_error_reason[0] != '\xff')
             throw_posix_error(child_error_reason);
         std::string child_error = POSIXError::error_message("");
-        std::string message = string::printf(
+        std::string message = string_printf(
             _("External command \"%s\" failed: %s"),
             this->repr().c_str(),
             child_error.c_str()
@@ -338,7 +338,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     if (WIFEXITED(wait_status)) {
         unsigned long exit_status = WEXITSTATUS(wait_status);
         if (exit_status != 0) {
-            std::string message = string::printf(
+            std::string message = string_printf(
                 _("External command \"%s\" failed with exit status %lu"),
                 this->repr().c_str(),
                 exit_status
@@ -350,7 +350,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         const char * signame = get_signal_name(sig);
         std::string message;
         if (signame)
-            message = string::printf(
+            message = string_printf(
                 // L10N: the latter argument is an untranslated signal name
                 // (such as "SIGSEGV")
                 _("External command \"%s\" was terminated by %s"),
@@ -358,7 +358,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
                 signame
             );
         else
-            message = string::printf(
+            message = string_printf(
                 _("External command \"%s\" was terminated by signal %d"),
                 this->repr().c_str(),
                 sig

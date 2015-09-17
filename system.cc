@@ -194,7 +194,7 @@ static void warn_posix_error(const std::string &context)
   }
   catch (const POSIXError &e)
   {
-    error_log << string::printf(_("Warning: %s"), e.what()) << std::endl;
+    error_log << string_printf(_("Warning: %s"), e.what()) << std::endl;
   }
 }
 

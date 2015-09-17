@@ -36,7 +36,7 @@
 #define va_copy(dest, src) memcpy((dest), (src), sizeof (va_list))
 #endif
 
-std::string string::vprintf(const char *message, va_list args)
+std::string string_vprintf(const char *message, va_list args)
 {
     va_list args_copy;
     va_copy(args_copy, args);
@@ -55,11 +55,11 @@ std::string string::vprintf(const char *message, va_list args)
     return static_cast<char*>(buffer);
 }
 
-std::string string::printf(const char *message, ...)
+std::string string_printf(const char *message, ...)
 {
     va_list args;
     va_start(args, message);
-    std::string result = string::vprintf(message, args);
+    std::string result = string_vprintf(message, args);
     va_end(args);
     return result;
 }

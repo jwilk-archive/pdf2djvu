@@ -114,7 +114,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
 
 std::string Command::repr()
 {
-    return string::printf(
+    return string_printf(
         // L10N: "<command> ..."
         _("%s ..."),
         this->command.c_str()
@@ -213,7 +213,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         if (rc == 0)
             status = -1;
         else if (exit_code != 0) {
-            std::string message = string::printf(
+            std::string message = string_printf(
                 _("External command \"%s\" failed with exit status %lu"),
                 this->repr().c_str(),
                 exit_code
@@ -222,7 +222,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         }
     }
     if (status < 0) {
-        std::string message = string::printf(
+        std::string message = string_printf(
             _("External command \"%s\" failed"),
             this->repr().c_str()
         );
@@ -350,7 +350,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
         if (rc == 0)
             status = -1;
         else if (exit_code != 0) {
-            std::string message = string::printf(
+            std::string message = string_printf(
                 _("External command \"%s\" failed with exit status %lu"),
                 command_line.c_str(),
                 exit_code
@@ -360,7 +360,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
         return stream.str();
     }
     if (status < 0) {
-        std::string message = string::printf(
+        std::string message = string_printf(
             _("External command \"%s\" failed"),
             command_line.c_str()
         );

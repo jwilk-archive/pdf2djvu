@@ -55,7 +55,7 @@ static std::string maybe_get(Exiv2::XmpData &data, const char *key)
 
 static void set_history(Exiv2::XmpData &data, long n, const char *event, const std::string value)
 {
-    const std::string key = string::printf("Xmp.xmpMM.History[%ld]/stEvt:%s", n, event);
+    const std::string key = string_printf("Xmp.xmpMM.History[%ld]/stEvt:%s", n, event);
     data[key] = value;
 }
 
@@ -66,7 +66,7 @@ static void error_handler(int level, const char *message)
         : _("XMP metadata warning");
     error_log <<
       /* L10N: "<error-category>: <error-message>" */
-      string::printf(_("%s: %s"), category, message);
+      string_printf(_("%s: %s"), category, message);
 }
 
 std::string gen_uuid(void)
