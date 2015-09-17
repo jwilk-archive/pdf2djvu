@@ -12,8 +12,10 @@
  * General Public License for more details.
  */
 
-#ifndef PDF2DJVU_WIN32_UUID_H
-#define PDF2DJVU_WIN32_UUID_H
+#ifndef PDF2DJVU_SYS_UUID_H
+#define PDF2DJVU_SYS_UUID_H
+
+#if WIN32
 
 #include <stdexcept>
 
@@ -52,6 +54,12 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
     strcpy(out, s);
     RpcStringFree(&us);
 }
+
+#else
+
+#include <uuid.h>
+
+#endif
 
 #endif
 

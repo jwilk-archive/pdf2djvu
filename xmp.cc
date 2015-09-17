@@ -25,14 +25,9 @@
 
 #include <exiv2/exiv2.hpp>
 
-#if WIN32
-#include "win32-uuid.hh"
-#else
-#include <uuid.h>
-#endif
-
 #include "debug.hh"
 #include "string-printf.hh"
+#include "sys-uuid.hh"
 #include "system.hh"
 #include "version.hh"
 

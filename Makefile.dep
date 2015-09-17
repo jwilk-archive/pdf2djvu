@@ -115,6 +115,7 @@ xmp.o: debug.hh
 xmp.o: i18n.hh
 xmp.o: pdf-backend.hh
 xmp.o: string-printf.hh
+xmp.o: sys-uuid.hh
 xmp.o: system.hh
 xmp.o: version.hh
 xmp.o: xmp.cc
