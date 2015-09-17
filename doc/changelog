@@ -17,9 +17,10 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
     + Use correct timezone offset in xmp:MetadataDate.
   * Fix a few spelling mistakes in the manual page.
   * Improve error handling.
+  * Improve the test suite.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Sep 2015 18:47:58 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Sep 2015 19:33:12 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 
