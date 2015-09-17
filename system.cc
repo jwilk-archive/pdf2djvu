@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cerrno>
+#include <climits>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -473,7 +474,7 @@ Cwd::Cwd(const std::string &path)
     rc = getcwd(buffer, size) == NULL;
     if (rc != 0)
     {
-      if (errno == ERANGE && size < std::numeric_limits<size_t>::max() / 2)
+      if (errno == ERANGE && size < SIZE_MAX / 2)
       {
         size *= 2;
         continue;
