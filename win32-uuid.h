@@ -40,14 +40,14 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
     unsigned char *us;
     RPC_STATUS rc;
     rc = UuidToString(&uu, &us);
-	if (rc != RPC_S_OK)
+    if (rc != RPC_S_OK)
         throw UuidOperationFailure("UuidToString() failed");
     const char *s = reinterpret_cast<const char *>(us);
-	if (strlen(s) != 36U) {
+    if (strlen(s) != 36U) {
         RpcStringFree(&us);
         throw UuidOperationFailure("UuidToString() returned string of unexpected length");
     }
-	strcpy(out, s);
+    strcpy(out, s);
     RpcStringFree(&us);
 }
 
