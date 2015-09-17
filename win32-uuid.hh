@@ -19,6 +19,8 @@
 
 #include <rpc.h>
 
+#include "i18n.hh"
+
 class UuidOperationFailure : public std::runtime_error
 {
 public:
@@ -32,7 +34,7 @@ static void uuid_generate_random(uuid_t &uu)
     RPC_STATUS rc;
     rc = UuidCreate(&uu);
     if (rc != RPC_S_OK)
-        throw UuidOperationFailure("UuidCreate() failed");
+        throw UuidOperationFailure(_("UuidCreate() failed"));
 }
 
 static void uuid_unparse_lower(uuid_t &uu, char *out)
@@ -41,11 +43,11 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
     RPC_STATUS rc;
     rc = UuidToString(&uu, &us);
     if (rc != RPC_S_OK)
-        throw UuidOperationFailure("UuidToString() failed");
+        throw UuidOperationFailure(_("UuidToString() failed"));
     const char *s = reinterpret_cast<const char *>(us);
     if (strlen(s) != 36U) {
         RpcStringFree(&us);
-        throw UuidOperationFailure("UuidToString() returned string of unexpected length");
+        throw UuidOperationFailure(_("UuidToString(): unexpected string length"));
     }
     strcpy(out, s);
     RpcStringFree(&us);
