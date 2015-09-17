@@ -28,7 +28,6 @@
 #include "debug.hh"
 #include "string-printf.hh"
 #include "sys-uuid.hh"
-#include "system.hh"
 #include "version.hh"
 
 static void maybe_set(Exiv2::XmpData &data, const char *key, const std::string &value)
