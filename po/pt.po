@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-17 19:18+0200\n"
+"POT-Creation-Date: 2015-09-17 20:22+0200\n"
 "PO-Revision-Date: 2015-08-31 19:51+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -571,15 +571,15 @@ msgstr "Opção desconhecida"
 msgid "Usage: "
 msgstr "Utilização: "
 
-#: win32-uuid.hh
+#: sys-uuid.hh
 msgid "UuidCreate() failed"
 msgstr ""
 
-#: win32-uuid.hh
+#: sys-uuid.hh
 msgid "UuidToString() failed"
 msgstr ""
 
-#: win32-uuid.hh
+#: sys-uuid.hh
 msgid "UuidToString(): unexpected string length"
 msgstr ""
 
