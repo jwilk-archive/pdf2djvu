@@ -1,5 +1,6 @@
 pdf2djvu (0.9) UNRELEASED; urgency=low
 
+  [ Jakub Wilk ]
   * Add support for PDF page labels in page titles.
     Use labels as default page titles.
     https://bitbucket.org/jwilk/pdf2djvu/issue/109
@@ -20,7 +21,10 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
   * Improve the test suite.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Sep 2015 19:33:12 +0200
+  [ Américo Monteiro ]
+  * Update the Portuguese translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 18 Sep 2015 12:31:57 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 

@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-09-17 20:22+0200\n"
-"PO-Revision-Date: 2015-08-31 19:51+0100\n"
+"PO-Revision-Date: 2015-09-17 23:48+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "Language: pt\n"
@@ -66,7 +66,7 @@ msgid " -o, --output=FILE"
 msgstr " -o, --output=FICHEIRO"
 
 #: config.cc
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a valid number"
 msgstr "\"%s\" não é um número válido"
 
@@ -417,24 +417,20 @@ msgid "PDF syntax warning"
 msgstr "Aviso de sintaxe do PDF"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier cannot start with a '+' or a '-' character"
-msgstr "Pageid não pode começar com um caractere '+' ou a '-'"
+msgstr "O identificador de página não pode começar com um caractere '+' ou '-'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier cannot start with a '.' character or contain two consecutive '.' characters"
-msgstr "Pageid não pode começar com um caractere '.' ou conter dois caracteres '.' consecutivos"
+msgstr "O identificador de página pode começar com um caractere '.' ou conter dois caracteres '.' consecutivos"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"
-msgstr "Pageid tem de consistir apenas de letras, dígitos e caracteres '_', '+', '-' e '.'"
+msgstr "O identificador de página tem de consistir apenas de letras, dígitos e dos caracteres '_', '+', '-' e '.'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier must end with the '.djvu' or the '.djv' extension"
-msgstr "Pageid tem de acabar com a extensão '.djvu' ou '.djv'"
+msgstr "O identificador de página tem de acabar com a extensão '.djvu' ou '.djv'"
 
 #: pdf2djvu.cc
 msgid "Page not found"
@@ -512,7 +508,7 @@ msgstr "Incapaz de converter o título da página para UTF-8: %s"
 #: string-format.cc
 #, c-format
 msgid "Unable to format field {%s}: %s"
-msgstr ""
+msgstr "Incapaz de formatar o campo {%s}: %s"
 
 #: pdf-backend.hh
 msgid "Unable to load document"
@@ -527,9 +523,8 @@ msgid "Unable to parse hyperlinks options"
 msgstr "Incapaz de analisar opções de hiperligações"
 
 #: config.cc
-#, fuzzy
 msgid "Unable to parse page identifier template specification"
-msgstr "Incapaz de analisar especificação de modelo de pageid"
+msgstr "Incapaz de analisar a especificação de modelo do identificador de página"
 
 #: config.cc
 msgid "Unable to parse page numbers"
@@ -573,15 +568,15 @@ msgstr "Utilização: "
 
 #: sys-uuid.hh
 msgid "UuidCreate() failed"
-msgstr ""
+msgstr "UuidCreate() falhou"
 
 #: sys-uuid.hh
 msgid "UuidToString() failed"
-msgstr ""
+msgstr "UuidToString() falhou"
 
 #: sys-uuid.hh
 msgid "UuidToString(): unexpected string length"
-msgstr ""
+msgstr "UuidToString(): comprimento inesperado da string"
 
 #: pdf2djvu.cc system.cc
 #, c-format
@@ -610,14 +605,12 @@ msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Aviso: os meta-dados[%s] não são uma data válida"
 
 #: xmp.cc
-#, fuzzy
 msgid "XMP metadata error"
-msgstr "Erro do PDF"
+msgstr "Erro dos meta dados do XMP"
 
 #: xmp.cc
-#, fuzzy
 msgid "XMP metadata warning"
-msgstr "Aviso de sintaxe do PDF"
+msgstr "Aviso de meta dados do XMP"
 
 #: pdf2djvu.cc
 msgid "adding non-raster data with `djvused`"
@@ -674,14 +667,12 @@ msgid "image size: %dx%d"
 msgstr "tamanho de imagem: %dx%d"
 
 #: string-format.cc
-#, fuzzy
 msgid "integer overflow"
-msgstr "overflow de número inteiro"
+msgstr "overflow do número inteiro"
 
 #: string-format.cc
-#, fuzzy
 msgid "no such variable"
-msgstr "Dispositivo inexistente"
+msgstr "tal variável não existe"
 
 #: pdf2djvu.cc
 #, c-format
@@ -701,9 +692,8 @@ msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
 msgstr "pdf2djvu foi compilado sem suporte a OpenMP, a s múltiplas linhas de execução estão desactivas."
 
 #: xmp.cc
-#, fuzzy
 msgid "pdf2djvu was built without support for updating XMP."
-msgstr "pdf2djvu foi compilado sem suporte a OpenMP, a s múltiplas linhas de execução estão desactivas."
+msgstr "pdf2djvu foi compilado sem suporte para actualizar XMP."
 
 #: system.cc
 msgid "possibly memory allocation error"
@@ -763,11 +753,11 @@ msgstr "a gravar camada de texto"
 
 #: string-format.cc
 msgid "type error: expected number, not string"
-msgstr ""
+msgstr "erro de escrita: esperado número, não uma string"
 
 #: string-format.cc
 msgid "type error: expected string, not number"
-msgstr ""
+msgstr "erro de escrita: esperada string, não um número"
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"
@@ -775,4 +765,4 @@ msgstr "incapaz de adivinhar a resolução"
 
 #: string-format.cc
 msgid "unknown maximum width"
-msgstr ""
+msgstr "largura máxima desconhecida"
