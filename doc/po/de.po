@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-09-15 22:57+0200\n"
-"PO-Revision-Date: 2015-05-26 21:35+0200\n"
+"PO-Revision-Date: 2015-09-22 23:19+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -157,7 +157,6 @@ msgid "Specifies the template for page titles.  Consult the <quote><link linkend
 msgstr "gibt die Schablone für Seitentitel an. Lesen Sie den Abschnitt <quote><link linkend='template-language' endterm='template-language.title'/></quote> für die Sprachbeschreibung der Schablone."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
 msgid "The default template is <quote><literal>{label}</literal></quote>."
 msgstr "Die Vorgabeschablone ist <quote><literal>{label}</literal></quote>."
 
@@ -166,10 +165,8 @@ msgid "<option>--no-page-titles</option>"
 msgstr "<option>--no-page-titles</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "Equivalent to <quote><literal>--page-id-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>."
 msgid "Don't set page titles.  Equivalent to <quote><literal>--page-title-template=</literal></quote>."
-msgstr "Entspricht <quote><literal>--page-id-template=<replaceable>Präfix</replaceable>{page:04*}.djvu</literal></quote>."
+msgstr "setzt keine Seitentitel. Entspricht <quote><literal>--page-title-template=</literal></quote>"
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Resolution, page size"
@@ -619,16 +616,12 @@ msgid "<varname>label</varname>"
 msgstr "<varname>label</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "Page number in the PDF document."
 msgid "Page label (logical page number) in the PDF document."
-msgstr "Seitenzahl im PDF-Dokument"
+msgstr "Seitebeschriftung (logische Seitennummer) im PDF-Dokument"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
-#| msgid "The default is to set no page titles."
 msgid "This variable is available only for page titles."
-msgstr "Standardmäßig werden keine Seitentitel gesetzt."
+msgstr "Diese Variable ist nur für Seitentitel verfügbar."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "Implementation details"
