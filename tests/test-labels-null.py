@@ -24,9 +24,9 @@ class test(case):
         self.pdf2djvu().assert_()
         r = self.ls()
         r.assert_(stdout=re(
-            u'\n'
-            u'\s*1\s+P\s+\d+\s+[\w.]+\s+T=\uFFFDnul\uFFFDl\uFFFD\n'
-            u'\s*2\s+P\s+\d+\s+[\w.]+\s+T=1\n'.encode('UTF-8')
+            ur'\n'
+            ur'\s*1\s+P\s+\d+\s+[\w.]+\s+T=\uFFFDnul\uFFFDl\uFFFD\n'
+            ur'\s*2\s+P\s+\d+\s+[\w.]+\s+T=1\n'.encode('UTF-8')
         ))
 
 # vim:ts=4 sts=4 sw=4 et

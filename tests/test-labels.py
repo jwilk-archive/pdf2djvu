@@ -28,11 +28,11 @@ class test(case):
             self.pdf2djvu(*args).assert_()
             r = self.ls()
             r.assert_(stdout=re(
-                '\n'
-                '\s*1\s+P\s+\d+\s+[\w.]+\s+T=one\n'
-                '\s*2\s+P\s+\d+\s+[\w.]+\s+T=Αʹ\n'
-                '\s*3\s+P\s+\d+\s+[\w.]+\s+T=i\n'
-                '\s*4\s+P\s+\d+\s+[\w.]+\s+T=1\n'
+                r'\n'
+                r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=one\n'
+                r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=Αʹ\n'
+                r'\s*3\s+P\s+\d+\s+[\w.]+\s+T=i\n'
+                r'\s*4\s+P\s+\d+\s+[\w.]+\s+T=1\n'
             ))
         t()
         t('--page-title-template', '{label}')
