@@ -78,7 +78,7 @@ fi
 AC_ARG_ENABLE([xmp], [AS_HELP_STRING([--disable-xmp], [do not update XMP metadata])])
 if test "$enable_xmp" != "no"
 then
-  PKG_CHECK_MODULES([EXIV2], [exiv2 >= 0.21], [have_exiv2=yes])
+  PKG_CHECK_MODULES([EXIV2], [exiv2 >= 0.21], [have_exiv2=yes], [:])
   AC_MSG_CHECKING([for Windows RPC API])
   AC_PREPROC_IFELSE(
     [AC_LANG_SOURCE([[
@@ -166,7 +166,7 @@ functionality.
 _ACEOF
 fi
 
-if test "$enable_exiv2" != "no" && test -z "$have_xmp"
+if test "$enable_xmp" != "no" && test -z "$have_xmp"
 then
   cat <<_ACEOF
 
