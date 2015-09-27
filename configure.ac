@@ -93,7 +93,7 @@ then
       have_uuid=yes
     ], [
       AC_MSG_RESULT([no])
-      PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes])
+      PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes], [:])
     ]
   )
   if test -n "$have_exiv2" && test -n "$have_uuid"

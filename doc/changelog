@@ -1,8 +1,8 @@
 pdf2djvu (0.9.1) UNRELEASED; urgency=low
 
-  * Fix detection of Exiv2 in the configure script.
+  * Fix detection of libraries needed for XMP support in the configure script.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Sep 2015 23:29:01 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Sep 2015 23:32:11 +0200
 
 pdf2djvu (0.9) unstable; urgency=low
 
