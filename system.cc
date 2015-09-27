@@ -366,11 +366,11 @@ File::File(const Directory& directory, const std::string &name)
   this->open(stream.str().c_str());
 }
 
-size_t File::size()
+File::streamoff File::size()
 {
   File::streampos orig_pos = this->tellg();
   this->seekg(0, std::ios::end);
-  size_t result = this->tellg();
+  File::streamoff result = this->tellg();
   this->seekg(orig_pos);
   return result;
 }

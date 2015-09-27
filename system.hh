@@ -134,7 +134,7 @@ public:
   File(const Directory& directory, const std::string &name);
   virtual ~File() throw ()
   { }
-  size_t size();
+  File::streamoff size();
   void reopen(bool truncate = false);
   const std::string& get_basename() const;
   operator const std::string& () const;
