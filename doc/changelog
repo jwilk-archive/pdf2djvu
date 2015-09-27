@@ -1,4 +1,4 @@
-pdf2djvu (0.9) UNRELEASED; urgency=low
+pdf2djvu (0.9) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Add support for PDF page labels in page titles.
@@ -35,7 +35,7 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Sep 2015 17:21:49 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Sep 2015 17:45:49 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 
