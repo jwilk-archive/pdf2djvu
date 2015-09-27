@@ -60,6 +60,7 @@ xml: $(xml_files)
 
 manpage.pot: $(source)
 	$(po4a-gettextize) -m $(<) -p $(@)
+	sed -i -e 's/^\([#][.]\) *\([^ ].*[^ ]\) *$$/\1 \2/' $(@)
 
 $(po_files): %.po: $(source)
 	$(po4a-update-po) -m $(<) -p $(@)
