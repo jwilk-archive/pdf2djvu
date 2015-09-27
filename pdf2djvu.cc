@@ -1065,7 +1065,7 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     bzz << "-e" << bzz_file << "-";
     bzz(index_file);
   }
-  size_t dirm_off = this->index_file.size();
+  File::streamoff dirm_off = this->index_file.size();
   this->index_file.seekg(20, std::ios::beg);
   for (int i = 3; i >= 0; i--)
     this->index_file << static_cast<char>(((dirm_off - 24) >> (8 * i)) & 0xff);
@@ -1080,12 +1080,12 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     DjVuCommand bzz("bzz");
     bzz << "-e" << bzz_file << "-";
     bzz(index_file);
-    size_t outline_off = index_file.size();
+    File::streamoff outline_off = index_file.size();
     this->index_file.seekg(dirm_off + 4, std::ios::beg);
     for (int i = 3; i >= 0; i--)
       this->index_file << static_cast<char>(((outline_off - dirm_off - 8) >> (8 * i)) & 0xff);
   }
-  size_t off = this->index_file.size();
+  File::streamoff off = this->index_file.size();
   this->index_file.seekg(8, std::ios::beg);
   for (int i = 3; i >= 0; i--)
     this->index_file << static_cast<char>(((off - 12) >> (8 * i)) & 0xff);
