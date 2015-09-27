@@ -180,9 +180,9 @@ public:
     return this->file->get_basename();
   }
 
-  size_t size()
+  File::streamoff size()
   {
-    size_t result;
+    File::streamoff result;
     this->file->reopen();
     result = this->file->size();
     this->file->close();
