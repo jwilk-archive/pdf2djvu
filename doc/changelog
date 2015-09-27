@@ -17,6 +17,7 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
       https://tools.ietf.org/html/rfc4122#section-3
     + Use correct timezone offset in xmp:MetadataDate.
   * Fix a few spelling mistakes in the manual page.
+  * Fix support for files larger than 2GB on 32-bit systems.
   * Improve error handling.
   * Improve the test suite.
   * Update the Polish translation.
@@ -33,7 +34,7 @@ pdf2djvu (0.9) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Sep 2015 10:57:41 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Sep 2015 13:34:32 +0200
 
 pdf2djvu (0.8.2) unstable; urgency=low
 

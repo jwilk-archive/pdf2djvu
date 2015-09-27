@@ -13,6 +13,7 @@
  * General Public License for more details.
  */
 
+#include "autoconf.hh"
 #include "system.hh"
 
 #include <algorithm>
@@ -37,7 +38,6 @@
 #endif
 
 #include "array.hh"
-#include "autoconf.hh"
 #include "debug.hh"
 #include "i18n.hh"
 #include "string-printf.hh"

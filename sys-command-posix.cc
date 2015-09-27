@@ -15,6 +15,7 @@
 
 #if !WIN32
 
+#include "autoconf.hh"
 #include "system.hh"
 
 #include <cassert>

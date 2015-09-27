@@ -111,6 +111,8 @@ AM_ICONV
 
 # Checks for typedefs, structures, and compiler characteristics:
 
+AC_SYS_LARGEFILE
+
 AC_OPENMP
 
 AC_MSG_CHECKING([for MinGW ANSI stdio])
