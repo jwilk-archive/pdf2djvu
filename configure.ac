@@ -79,29 +79,35 @@ AC_ARG_ENABLE([xmp], [AS_HELP_STRING([--disable-xmp], [do not update XMP metadat
 if test "$enable_xmp" != "no"
 then
   PKG_CHECK_MODULES([EXIV2], [exiv2 >= 0.21], [have_exiv2=yes], [:])
-  AC_MSG_CHECKING([for Windows RPC API])
-  AC_PREPROC_IFELSE(
-    [AC_LANG_SOURCE([[
-      #if WIN32
-      #include <rpc.h>
-      #else
-      #error
-      #endif
-    ]])], [
-      AC_MSG_RESULT([yes])
-      UUID_LIBS='-lrpcrt4'
-      have_uuid=yes
-    ], [
-      AC_MSG_RESULT([no])
-      PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes], [:])
-    ]
-  )
-  if test -n "$have_exiv2" && test -n "$have_uuid"
+  if test "$have_exiv2"
   then
-    AC_DEFINE([HAVE_XMP], 1, [Define if you have the Exiv2 and UUID libraries installed])
-    have_xmp=yes
-    AC_SUBST([XMP_CFLAGS], ["$EXIV2_CFLAGS $UUID_CFLAGS"])
-    AC_SUBST([XMP_LIBS], ["$EXIV2_LIBS $UUID_LIBS"])
+    AC_MSG_CHECKING([for Windows RPC API])
+    AC_PREPROC_IFELSE(
+      [AC_LANG_SOURCE([[
+        #if WIN32
+        #include <rpc.h>
+        #else
+        #error
+        #endif
+      ]])], [
+        AC_MSG_RESULT([yes])
+        UUID_LIBS='-lrpcrt4'
+        have_uuid=yes
+      ], [
+        AC_MSG_RESULT([no])
+      ]
+    )
+    if test ! "$have_uuid"
+    then
+      PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes], [:])
+    fi
+    if test "$have_uuid"
+    then
+      AC_DEFINE([HAVE_XMP], 1, [Define if you have the Exiv2 and UUID libraries installed])
+      have_xmp=yes
+      AC_SUBST([XMP_CFLAGS], ["$EXIV2_CFLAGS $UUID_CFLAGS"])
+      AC_SUBST([XMP_LIBS], ["$EXIV2_LIBS $UUID_LIBS"])
+    fi
   fi
 fi
 
