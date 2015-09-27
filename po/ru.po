@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-09-17 20:22+0200\n"
-"PO-Revision-Date: 2015-05-31 13:40+0300\n"
+"PO-Revision-Date: 2015-09-27 11:36+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -56,7 +56,7 @@ msgid " -o, --output=FILE"
 msgstr " -o, --output=ФАЙЛ"
 
 #: config.cc
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a valid number"
 msgstr "\"%s\" не является правильным числом"
 
@@ -174,26 +174,26 @@ msgid "External command \"%s\" failed"
 msgstr "Не удалось выполнить внешнюю команду \"%s\""
 
 #: sys-command-posix.cc sys-command-win32.cc
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" failed with exit status %lu"
 msgstr "Не удалось выполнить внешнюю команду \"%s\". Код выхода %lu"
 
 #: sys-command-posix.cc
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" failed: %s"
-msgstr "Не удалось выполнить внешнюю команду \"%s\""
+msgstr "Не удалось выполнить внешнюю команду \"%s\": %s"
 
 #. L10N: the latter argument is an untranslated signal name
 #. (such as "SIGSEGV")
 #: sys-command-posix.cc
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" was terminated by %s"
-msgstr "Не удалось выполнить внешнюю команду \"%s\""
+msgstr "Внешняя команда \"%s\" прервана командой %s"
 
 #: sys-command-posix.cc
-#, fuzzy, c-format
+#, c-format
 msgid "External command \"%s\" was terminated by signal %d"
-msgstr "Не удалось выполнить внешнюю команду \"%s\""
+msgstr "Внешняя команда \"%s\" прервана сигналом %d"
 
 #. L10N: Windows error message for EEXIST
 #: system.cc
@@ -408,22 +408,18 @@ msgid "PDF syntax warning"
 msgstr "Предупреждение о синтаксической ошибке в PDF-файле"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier cannot start with a '+' or a '-' character"
 msgstr "Идентификатор страницы не может начинаться со знаков '+' или '-'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier cannot start with a '.' character or contain two consecutive '.' characters"
 msgstr "Идентификатор страницы не может начинаться со знака '.' или включать два последовательных знака '.'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"
 msgstr "Идентификатор страницы должен включать только буквы, цифры и знаки  '_', '+', '-' и '.'"
 
 #: config.cc
-#, fuzzy
 msgid "Page identifier must end with the '.djvu' or the '.djv' extension"
 msgstr "Идентификатор страницы должен заканчиваться расширением '.djvu' или '.djv'"
 
@@ -498,12 +494,12 @@ msgstr "Слишком много открытых файлов в систем�
 #: config.cc
 #, c-format
 msgid "Unable to convert page title to UTF-8: %s"
-msgstr ""
+msgstr "Невозможно конвертировать заголовок страницы в UTF-8: %s"
 
 #: string-format.cc
 #, c-format
 msgid "Unable to format field {%s}: %s"
-msgstr ""
+msgstr "Невозможно форматировать поле {%s}: %s"
 
 #: pdf-backend.hh
 msgid "Unable to load document"
@@ -518,7 +514,6 @@ msgid "Unable to parse hyperlinks options"
 msgstr "Невозможно разобрать параметры ссылок"
 
 #: config.cc
-#, fuzzy
 msgid "Unable to parse page identifier template specification"
 msgstr "Невозможно разобрать спецификацию шаблона идентификатора страницы"
 
@@ -564,15 +559,15 @@ msgstr "Использование:"
 
 #: sys-uuid.hh
 msgid "UuidCreate() failed"
-msgstr ""
+msgstr "Не удалось выполнить UuidCreate()"
 
 #: sys-uuid.hh
 msgid "UuidToString() failed"
-msgstr ""
+msgstr "Не удалось выполнить UuidToString()"
 
 #: sys-uuid.hh
 msgid "UuidToString(): unexpected string length"
-msgstr ""
+msgstr "UuidToString(): неожиданная длина строки"
 
 #: pdf2djvu.cc system.cc
 #, c-format
@@ -601,14 +596,12 @@ msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Предупреждение: метаданные[%s] являются недопустимой датой"
 
 #: xmp.cc
-#, fuzzy
 msgid "XMP metadata error"
-msgstr "Ошибка PDF"
+msgstr "ошибка метаданных XMP"
 
 #: xmp.cc
-#, fuzzy
 msgid "XMP metadata warning"
-msgstr "Предупреждение о синтаксической ошибке в PDF-файле"
+msgstr "предупреждение об ошибке метаданных XMP"
 
 #: pdf2djvu.cc
 msgid "adding non-raster data with `djvused`"
@@ -666,14 +659,12 @@ msgid "image size: %dx%d"
 msgstr "размер изображения: %dx%d"
 
 #: string-format.cc
-#, fuzzy
 msgid "integer overflow"
-msgstr "Целочисленное переполнение"
+msgstr "целочисленное переполнение"
 
 #: string-format.cc
-#, fuzzy
 msgid "no such variable"
-msgstr "Нет такого устройства"
+msgstr "нет такой переменной"
 
 #: pdf2djvu.cc
 #, c-format
@@ -693,9 +684,8 @@ msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
 msgstr "pdf2djvu скомпилирован без поддержки OpenMP; многопоточность отключена."
 
 #: xmp.cc
-#, fuzzy
 msgid "pdf2djvu was built without support for updating XMP."
-msgstr "pdf2djvu скомпилирован без поддержки OpenMP; многопоточность отключена."
+msgstr "pdf2djvu скомпилирован без поддержки обновления XMP."
 
 #: system.cc
 msgid "possibly memory allocation error"
@@ -755,11 +745,11 @@ msgstr "сохранение текстового слоя"
 
 #: string-format.cc
 msgid "type error: expected number, not string"
-msgstr ""
+msgstr "ошибка типа: ожидалось число, а не строка"
 
 #: string-format.cc
 msgid "type error: expected string, not number"
-msgstr ""
+msgstr "ошибка типа: ожидалась строка, а не число"
 
 #: pdf2djvu.cc
 msgid "unable to guess resolution"
@@ -767,4 +757,4 @@ msgstr "невозможно оценить разрешение"
 
 #: string-format.cc
 msgid "unknown maximum width"
-msgstr ""
+msgstr "неизвестная максимальная ширина"
