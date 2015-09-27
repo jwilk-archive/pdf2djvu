@@ -368,8 +368,11 @@ File::File(const Directory& directory, const std::string &name)
 
 size_t File::size()
 {
+  File::streampos orig_pos = this->tellg();
   this->seekg(0, std::ios::end);
-  return this->tellg();
+  size_t result = this->tellg();
+  this->seekg(orig_pos);
+  return result;
 }
 
 void File::reopen(bool truncate)
