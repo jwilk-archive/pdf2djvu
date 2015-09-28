@@ -185,7 +185,10 @@ class case(object):
 
     def _pdf2djvu(self, *args, **kwargs):
         args = self.get_pdf2djvu_command() + ('-q', self.get_pdf_path()) + args
-        return self.run(*args, **kwargs)
+        result = self.run(*args, **kwargs)
+        if os.getenv('pdf2djvu_crlf'):
+            result.stderr = result.stderr.replace('\r\n', '\n')
+        return result
 
     def pdf2djvu(self, *args, **kwargs):
         return self._pdf2djvu('-o', self.get_djvu_path(), *args, **kwargs)
