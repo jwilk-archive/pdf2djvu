@@ -134,7 +134,10 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
 
 # Checks for library functions:
 
-AC_CHECK_FUNCS([timegm])
+P_CHECK_FUNC(
+  [#include <time.h>],
+  [time_t], [timegm], [struct tm *],
+)
 
 # Turn on compile warnings:
 
