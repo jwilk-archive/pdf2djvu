@@ -186,7 +186,7 @@ class case(object):
     def _pdf2djvu(self, *args, **kwargs):
         args = self.get_pdf2djvu_command() + ('-q', self.get_pdf_path()) + args
         result = self.run(*args, **kwargs)
-        if os.getenv('pdf2djvu_crlf'):
+        if os.getenv('pdf2djvu_win32'):
             result.stderr = result.stderr.replace('\r\n', '\n')
         return result
 
@@ -251,9 +251,13 @@ class case(object):
         try:
             feature_enabled = self._feature_cache[feature]
         except KeyError:
-            r = self.pdf2djvu('--version')
-            r.assert_(stderr=re('^pdf2djvu '), rc=0)
-            self._feature_cache[feature] = feature_enabled = feature in r.stderr
+            if feature == 'POSIX':
+                feature_enabled = not os.getenv('pdf2djvu_win32')
+            else:
+                r = self.pdf2djvu('--version')
+                r.assert_(stderr=re('^pdf2djvu '), rc=0)
+                feature_enabled = feature in r.stderr
+            self._feature_cache[feature] = feature_enabled
         if not feature_enabled:
             raise SkipTest(feature + ' support missing')
 
