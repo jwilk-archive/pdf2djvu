@@ -302,7 +302,7 @@ def count_ppm_colors(b):
 
 xml_ns = dict(
     dc='http://purl.org/dc/elements/1.1/',
-    xmpMM='http://ns.adobe.com/xap/1.0/mm/'
+    xmpMM='http://ns.adobe.com/xap/1.0/mm/',
 )
 
 def xml_find_text(xml, tag):
