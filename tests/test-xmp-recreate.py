@@ -18,6 +18,8 @@ import xml.etree.cElementTree as etree
 from tools import (
     assert_equal,
     assert_is_none,
+    assert_not_equal,
+    assert_uuid_urn,
     case,
     xml_find_text,
 )
@@ -37,5 +39,10 @@ class test(case):
         xmp = etree.fromstring(xmp)
         dcformat = xml_find_text(xmp, 'dc:format')
         assert_equal(dcformat, 'image/vnd.djvu')
+        instance_id = xml_find_text(xmp, 'xmpMM:InstanceID')
+        document_id = xml_find_text(xmp, 'xmpMM:DocumentID')
+        assert_not_equal(instance_id, document_id)
+        assert_uuid_urn(instance_id)
+        assert_uuid_urn(document_id)
 
 # vim:ts=4 sts=4 sw=4 et

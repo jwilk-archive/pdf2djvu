@@ -297,6 +297,17 @@ def xml_find_text(xml, tag):
     [elem] = xml.findall('.//' + tag, xml_ns)
     return elem.text
 
+_uuid_regex = (
+    r'\Aurn:uuid:XXXXXXXX-XXXX-4XXX-[89ab]XXX-XXXXXXXXXXXX\Z'
+    .replace('X', '[0-9a-f]')
+)
+
+def assert_uuid_urn(uuid):
+    return assert_regex(
+        uuid,
+        _uuid_regex,
+    )
+
 __all__ = [
     # nose:
     'assert_equal',
@@ -315,7 +326,8 @@ __all__ = [
     'rainbow',
     'checkboard',
     'count_ppm_colors',
-    # XML:
+    # XMP:
+    'assert_uuid_urn',
     'xml_find_text',
     'xml_ns',
 ]
