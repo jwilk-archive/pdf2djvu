@@ -48,6 +48,7 @@ $(exe): sys-command-posix.o
 $(exe): sys-command-win32.o
 $(exe): sys-encoding.o
 $(exe): sys-time.o
+$(exe): sys-uuid.o
 $(exe): system.o
 $(exe): version.o
 $(exe): xmp.o

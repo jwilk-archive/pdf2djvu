@@ -100,6 +100,10 @@ sys-encoding.o: sys-encoding.cc
 sys-encoding.o: system.hh
 sys-time.o: autoconf.hh
 sys-time.o: sys-time.cc
+sys-uuid.o: autoconf.hh
+sys-uuid.o: sys-uuid.cc
+sys-uuid.o: sys-uuid.hh
+sys-uuid.o: system.hh
 system.o: array.hh
 system.o: autoconf.hh
 system.o: debug.hh
