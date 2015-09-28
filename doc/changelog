@@ -1,8 +1,9 @@
 pdf2djvu (0.9.2) UNRELEASED; urgency=low
 
   * Improve error handling.
+  * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 23:16:08 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 23:19:09 +0200
 
 pdf2djvu (0.9.1) unstable; urgency=low
 
