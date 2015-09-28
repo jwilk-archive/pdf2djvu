@@ -15,6 +15,8 @@
 #ifndef PDF2DJVU_SYS_UUID_H
 #define PDF2DJVU_SYS_UUID_H
 
+#include "autoconf.hh"
+
 #if WIN32
 
 #include <stdexcept>
@@ -53,6 +55,42 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
     }
     strcpy(out, s);
     RpcStringFree(&us);
+}
+
+#elif HAVE_DCE_UUID
+
+#include "system.hh"
+
+#include <cassert>
+#include <cerrno>
+
+#include <stdint.h>
+#include <uuid.h>
+
+static void throw_uuid_error(uint32_t rc)
+{
+    errno = (rc == uuid_s_no_memory) ? ENOMEM : EINVAL;
+    throw_posix_error("uuid_to_string()");
+}
+
+static void uuid_generate_random(uuid_t &uu)
+{
+    uint32_t rc;
+    uuid_create(&uu, &rc);
+    if (rc != uuid_s_ok)
+        throw_uuid_error(rc);
+}
+
+static void uuid_unparse_lower(uuid_t &uu, char *out)
+{
+    uint32_t rc;
+    char *s;
+    uuid_to_string(&uu, &s, &rc);
+    if (rc != uuid_s_ok)
+        throw_uuid_error(rc);
+    assert(strlen(s) == 36U);
+    strcpy(out, s);
+    free(s);
 }
 
 #else

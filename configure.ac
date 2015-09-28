@@ -99,6 +99,20 @@ then
     )
     if test ! "$have_uuid"
     then
+      P_CHECK_FUNC(
+        [
+          #include <stdint.h>
+          #include <uuid.h>
+        ],
+        [void], [uuid_create], [uuid_t *, uint32_t *],
+        [
+          AC_DEFINE([HAVE_DCE_UUID], 1, [Define if you have the DCE uuid_*() functions])
+          have_uuid=yes
+        ]
+      )
+    fi
+    if test ! "$have_uuid"
+    then
       PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes], [:])
     fi
     if test "$have_uuid"
