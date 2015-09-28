@@ -79,7 +79,7 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
     int rc;
     rc = Exiv2::XmpParser::decode(data, ibytes);
     if (rc != 0)
-        throw xmp::Error("cannot parse XMP metadata");
+        throw xmp::Error(_("Unable to parse XMP metadata"));
     std::string instance_id = gen_uuid();
     std::string document_id = gen_uuid();
     std::string original_document_id;

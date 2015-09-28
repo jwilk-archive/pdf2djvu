@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-28 15:41+0200\n"
+"POT-Creation-Date: 2015-09-28 23:14+0200\n"
 "PO-Revision-Date: 2015-09-22 23:28+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -504,6 +504,11 @@ msgstr "Feld {%s} kann nicht formatiert werden: %s"
 #: pdf-backend.hh
 msgid "Unable to load document"
 msgstr "Dokument kann nicht geladen werden"
+
+#: xmp.cc
+#, fuzzy
+msgid "Unable to parse XMP metadata"
+msgstr "Seitengröße konnte nicht ausgewertet werden"
 
 #: config.cc
 msgid "Unable to parse command-line options"
