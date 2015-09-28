@@ -13,11 +13,13 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import xml.etree.cElementTree as etree
+
 from tools import (
-    assert_regex,
+    assert_equal,
     assert_is_none,
-    assert_well_formed_xml,
     case,
+    xml_find_text,
 )
 
 class test(case):
@@ -32,7 +34,8 @@ class test(case):
         self.require_feature('Exiv2')
         self.pdf2djvu().assert_()
         xmp = self.extract_xmp()
-        assert_well_formed_xml(xmp)
-        assert_regex(xmp, '>image/vnd.djvu<')
+        xmp = etree.fromstring(xmp)
+        dcformat = xml_find_text(xmp, 'dc:format')
+        assert_equal(dcformat, 'image/vnd.djvu')
 
 # vim:ts=4 sts=4 sw=4 et

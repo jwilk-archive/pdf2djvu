@@ -25,7 +25,6 @@ import pipes
 import re
 import subprocess as ipc
 import sys
-import xml.etree.cElementTree as etree
 
 re.compile.M = re.M
 re.compile.DOTALL = re.DOTALL
@@ -91,12 +90,6 @@ def assert_regex(text, regex):
     if not regex.search(text):
         message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
         assert_true(False, msg=message)
-
-def assert_well_formed_xml(xml):
-    try:
-        etree.fromstring(xml)
-    except SyntaxError as ex:
-        raise AssertionError(ex)
 
 class ipc_result(object):
 
@@ -295,6 +288,15 @@ def count_ppm_colors(b):
         result[pixel] += 1
     return result
 
+xml_ns = dict(
+    dc='http://purl.org/dc/elements/1.1/',
+    xmpMM='http://ns.adobe.com/xap/1.0/mm/'
+)
+
+def xml_find_text(xml, tag):
+    [elem] = xml.findall('.//' + tag, xml_ns)
+    return elem.text
+
 __all__ = [
     # nose:
     'assert_equal',
@@ -306,8 +308,6 @@ __all__ = [
     'assert_is_not_none',
     'assert_multi_line_equal',
     'assert_regex',
-    # our own asserts:
-    'assert_well_formed_xml',
     # helper classes:
     'ipc_result',
     'case',
@@ -315,6 +315,9 @@ __all__ = [
     'rainbow',
     'checkboard',
     'count_ppm_colors',
+    # XML:
+    'xml_find_text',
+    'xml_ns',
 ]
 
 # vim:ts=4 sts=4 sw=4 et
