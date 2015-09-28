@@ -113,7 +113,13 @@ then
     fi
     if test ! "$have_uuid"
     then
-      PKG_CHECK_MODULES([UUID], [uuid], [have_uuid=yes], [:])
+      PKG_CHECK_MODULES(
+        [UUID], [uuid],
+        [
+          have_uuid=yes
+          AC_DEFINE([HAVE_LIBUUID], 1, [Define if you have the libuuid library installed])
+        ], [:]
+      )
     fi
     if test "$have_uuid"
     then

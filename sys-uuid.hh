@@ -31,7 +31,7 @@ void uuid_unparse_lower(uuid_t &uu, char *out);
 void uuid_generate_random(uuid_t &uu);
 void uuid_unparse_lower(uuid_t &uu, char *out);
 
-#else
+#elif HAVE_LIBUUID
 
 #include <uuid.h>
 
