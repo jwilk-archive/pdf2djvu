@@ -20,6 +20,7 @@ from tools import (
 
 class test(case):
     def test_rot13(self):
+        self.require_feature('POSIX')
         self.pdf2djvu('--filter-text', 'tr "a-zA-Z" "n-za-mN-ZA-M"').assert_()
         r = self.print_text()
         r.assert_(stdout=re('^Yberz vcfhz *\n'))
