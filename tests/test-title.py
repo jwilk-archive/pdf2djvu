@@ -43,6 +43,7 @@ class test(case):
         ))
 
     def test_utf8(self):
+        self.require_feature('POSIX')
         template = '№{page}'
         self.pdf2djvu('--page-title-template', template, encoding='UTF-8').assert_()
         r = self.ls()
@@ -53,6 +54,7 @@ class test(case):
         ))
 
     def test_bad_encoding(self):
+        self.require_feature('POSIX')
         template = '{page}\xBA'
         r = self.pdf2djvu('--page-title-template', template, encoding='UTF-8')
         r.assert_(stderr=re('^Unable to convert page title to UTF-8:'), rc=1)
