@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.1\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-17 20:22+0200\n"
+"POT-Creation-Date: 2015-09-28 15:41+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -562,18 +562,6 @@ msgstr "Невідомий параметр"
 #: config.cc
 msgid "Usage: "
 msgstr "Використання: "
-
-#: sys-uuid.hh
-msgid "UuidCreate() failed"
-msgstr ""
-
-#: sys-uuid.hh
-msgid "UuidToString() failed"
-msgstr ""
-
-#: sys-uuid.hh
-msgid "UuidToString(): unexpected string length"
-msgstr ""
 
 #: pdf2djvu.cc system.cc
 #, c-format

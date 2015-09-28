@@ -4,9 +4,10 @@ pdf2djvu (0.9.1) UNRELEASED; urgency=low
   * Document that libuuid might be a part of e2fsprogs on some systems.
   * Use DCE uuid_*() functions (instead of libuuid) if they are provided by
     libc.
+  * Improve error handling.
   * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 14:00:50 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 15:41:02 +0200
 
 pdf2djvu (0.9) unstable; urgency=low
 

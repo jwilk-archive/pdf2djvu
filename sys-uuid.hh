@@ -19,26 +19,36 @@
 
 #if WIN32
 
-#include <stdexcept>
+#include <cassert>
+#include <cerrno>
 
 #include <rpc.h>
 
-#include "i18n.hh"
-
-class UuidOperationFailure : public std::runtime_error
+static void throw_uuid_error(const char *context, RPC_STATUS rc)
 {
-public:
-    explicit UuidOperationFailure(const std::string &message)
-    : std::runtime_error(message)
-    { };
-};
+    switch (rc) {
+    case RPC_S_UUID_LOCAL_ONLY:
+        errno = EIO;
+        break;
+    case RPC_S_UUID_NO_ADDRESS:
+        errno = ENXIO;
+        break;
+    case RPC_S_OUT_OF_MEMORY:
+        errno = ENOMEM;
+        break;
+    default:
+        errno = EINVAL;
+        break;
+    }
+    throw_posix_error(context);
+}
 
 static void uuid_generate_random(uuid_t &uu)
 {
     RPC_STATUS rc;
     rc = UuidCreate(&uu);
     if (rc != RPC_S_OK)
-        throw UuidOperationFailure(_("UuidCreate() failed"));
+        throw_uuid_error("UuidCreate()", rc);
 }
 
 static void uuid_unparse_lower(uuid_t &uu, char *out)
@@ -47,12 +57,9 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
     RPC_STATUS rc;
     rc = UuidToString(&uu, &us);
     if (rc != RPC_S_OK)
-        throw UuidOperationFailure(_("UuidToString() failed"));
+        throw_uuid_error("UuidToString()", rc);
     const char *s = reinterpret_cast<const char *>(us);
-    if (strlen(s) != 36U) {
-        RpcStringFree(&us);
-        throw UuidOperationFailure(_("UuidToString(): unexpected string length"));
-    }
+    assert(strlen(s) == 36U);
     strcpy(out, s);
     RpcStringFree(&us);
 }
@@ -67,10 +74,10 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
 #include <stdint.h>
 #include <uuid.h>
 
-static void throw_uuid_error(uint32_t rc)
+static void throw_uuid_error(const char *context, uint32_t rc)
 {
     errno = (rc == uuid_s_no_memory) ? ENOMEM : EINVAL;
-    throw_posix_error("uuid_to_string()");
+    throw_posix_error(context);
 }
 
 static void uuid_generate_random(uuid_t &uu)
@@ -78,7 +85,7 @@ static void uuid_generate_random(uuid_t &uu)
     uint32_t rc;
     uuid_create(&uu, &rc);
     if (rc != uuid_s_ok)
-        throw_uuid_error(rc);
+        throw_uuid_error("uuid_create()", rc);
 }
 
 static void uuid_unparse_lower(uuid_t &uu, char *out)
@@ -87,7 +94,7 @@ static void uuid_unparse_lower(uuid_t &uu, char *out)
     char *s;
     uuid_to_string(&uu, &s, &rc);
     if (rc != uuid_s_ok)
-        throw_uuid_error(rc);
+        throw_uuid_error("uuid_to_string()", rc);
     assert(strlen(s) == 36U);
     strcpy(out, s);
     free(s);
