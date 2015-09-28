@@ -6,8 +6,11 @@ pdf2djvu (0.9.1) UNRELEASED; urgency=low
     libc.
   * Improve error handling.
   * Improve the test suite.
+    + Add work-around for tests failing on OpenBSD because of an error message
+      from GraphicsMagick (“Failed to close module …”).
+      https://bitbucket.org/jwilk/pdf2djvu/issues/108
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 15:41:02 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 16:31:38 +0200
 
 pdf2djvu (0.9) unstable; urgency=low
 
