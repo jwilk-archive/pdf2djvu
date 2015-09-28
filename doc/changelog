@@ -1,4 +1,4 @@
-pdf2djvu (0.9.1) UNRELEASED; urgency=low
+pdf2djvu (0.9.1) unstable; urgency=low
 
   * Fix detection of libraries needed for XMP support in the configure script.
   * Document that libuuid might be a part of e2fsprogs on some systems.
@@ -10,7 +10,7 @@ pdf2djvu (0.9.1) UNRELEASED; urgency=low
       from GraphicsMagick (“Failed to close module …”).
       https://bitbucket.org/jwilk/pdf2djvu/issues/108
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 16:31:38 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Sep 2015 22:00:48 +0200
 
 pdf2djvu (0.9) unstable; urgency=low
 
