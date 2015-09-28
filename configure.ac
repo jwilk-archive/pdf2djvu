@@ -91,7 +91,7 @@ then
         #endif
       ]])], [
         AC_MSG_RESULT([yes])
-        UUID_LIBS='-lrpcrt4'
+        winuuid_libs='-lrpcrt4'
         have_uuid=yes
       ], [
         AC_MSG_RESULT([no])
@@ -114,7 +114,7 @@ then
     if test ! "$have_uuid"
     then
       PKG_CHECK_MODULES(
-        [UUID], [uuid],
+        [LIBUUID], [uuid],
         [
           have_uuid=yes
           AC_DEFINE([HAVE_LIBUUID], 1, [Define if you have the libuuid library installed])
@@ -125,8 +125,8 @@ then
     then
       AC_DEFINE([HAVE_XMP], 1, [Define if you have the Exiv2 and UUID libraries installed])
       have_xmp=yes
-      AC_SUBST([XMP_CFLAGS], ["$EXIV2_CFLAGS $UUID_CFLAGS"])
-      AC_SUBST([XMP_LIBS], ["$EXIV2_LIBS $UUID_LIBS"])
+      AC_SUBST([XMP_CFLAGS], ["$EXIV2_CFLAGS $LIBUUID_CFLAGS"])
+      AC_SUBST([XMP_LIBS], ["$EXIV2_LIBS $LIBUUID_LIBS $winuuid_libs"])
     fi
   fi
 fi
@@ -200,7 +200,7 @@ then
   cat <<_ACEOF
 
 WARNING: Updating XMP metadata will be disabled.
-Please consider installing the Exiv2 and UUID libraries to enable this
+Please consider installing the Exiv2 and libuuid libraries to enable this
 functionality.
 _ACEOF
 fi
