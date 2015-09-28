@@ -17,10 +17,11 @@ pkgs_base='
 build-essential
 djvulibre-bin
 libdjvulibre-dev
+libexiv2-dev
 libgraphicsmagick++-dev
 libpoppler-dev
-libxslt1-dev
 pkg-config
+uuid-dev
 '
 pkgs_tests='
 python-nose
