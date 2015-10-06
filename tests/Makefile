@@ -21,7 +21,8 @@ export pdf2djvu = ../pdf2djvu$(EXEEXT)
 test_scripts = $(wildcard test-*.py)
 tests = $(test_scripts:.py=)
 
-pdf_files = $(tests:%=%.pdf)
+tex_files = $(wildcard test-*.tex) $(wildcard test-*.xetex)
+pdf_files = $(tex_files:%.tex=%.pdf)
 
 in_files = $(wildcard *.in)
 
