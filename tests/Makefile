@@ -22,7 +22,7 @@ test_scripts = $(wildcard test-*.py)
 tests = $(test_scripts:.py=)
 
 tex_files = $(wildcard test-*.tex) $(wildcard test-*.xetex)
-pdf_files = $(tex_files:%.tex=%.pdf)
+pdf_files = $(addsuffix .pdf,$(basename $(tex_files)))
 
 in_files = $(wildcard *.in)
 
