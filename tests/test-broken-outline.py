@@ -21,7 +21,7 @@ from tools import (
 class test(case):
 
     # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/112
-    # + fixed in 0.9.2
+    # + fixed in 0.9.2 [a64d38473b5e]
 
     def test(self):
         r = self.pdf2djvu()
