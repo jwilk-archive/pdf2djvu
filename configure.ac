@@ -1,6 +1,6 @@
 dnl | Copyright © 2008-2015 Jakub Wilk <jwilk@jwilk.net>
 dnl |
-dnl | This file is part of pdfdjvu.
+dnl | This file is part of pdf2djvu.
 dnl |
 dnl | pdf2djvu is free software; you can redistribute it and/or modify
 dnl | it under the terms of the GNU General Public License version 2 as
