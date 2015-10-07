@@ -671,7 +671,17 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
           throw NoPageForBookmark();
         if (link_action.get() == NULL || link_action->getKind() != actionGoTo)
           throw NoPageForBookmark();
-        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action.get()), catalog);
+        try
+        {
+          page = get_page_for_LinkGoTo(
+            dynamic_cast<pdf::link::GoTo*>(link_action.get()),
+            catalog
+          );
+        }
+        catch (NoLinkDestination &ex)
+        {
+          throw NoPageForBookmark();
+        }
       }
       {
         djvu::OutlineItem &djvu_outline_item = djvu_outline.add(
