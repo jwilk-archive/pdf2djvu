@@ -23,6 +23,12 @@ libpoppler-dev
 pkg-config
 uuid-dev
 '
+pkgs_autotools='
+autoconf
+automake
+gettext
+libtool
+'
 pkgs_tests='
 python-nose
 '
@@ -30,10 +36,10 @@ pkgs="$pkgs_base"
 
 usage()
 {
-    printf '%s [--tests]\n' "$0"
+    printf '%s [--autotools] [--tests]\n' "$0"
 }
 
-args=$(getopt -n "$0" -o 'h' --long 'help,tests' -- "$@")
+args=$(getopt -n "$0" -o 'h' --long 'help,autotools,tests' -- "$@")
 if [ $? -ne 0 ]
 then
     usage >&2
@@ -44,6 +50,7 @@ while true
 do
     case "$1" in
         -h|--help) usage; exit 0;;
+        --autotools) pkgs="$pkgs $pkgs_autotools"; shift;;
         --tests) pkgs="$pkgs $pkgs_tests"; shift;;
         --) shift; break;;
         *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
