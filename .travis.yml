@@ -41,7 +41,7 @@ addons:
     - python-docutils
     - python-imaging
     - python-nose
-    - texlive-binaries
+    - texlive-base
     - texlive-fonts-recommended
     - texlive-xetex
     - uuid-dev
