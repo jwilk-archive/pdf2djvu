@@ -32,30 +32,42 @@ libtool
 pkgs_tests='
 python-nose
 '
+pkgs_prepare_tests='
+python-imaging
+texlive-base
+texlive-xetex
+fonts-linuxlibertine
+'
 pkgs="$pkgs_base"
 
 usage()
 {
-    printf '%s [--autotools] [--tests]\n' "$0"
+    printf '%s [--vcs] [--tests]\n' "$0"
 }
 
-args=$(getopt -n "$0" -o 'h' --long 'help,autotools,tests' -- "$@")
+args=$(getopt -n "$0" -o 'h' --long 'help,vcs,tests' -- "$@")
 if [ $? -ne 0 ]
 then
     usage >&2
     exit 1
 fi
+opt_vcs=
+opt_tests=
 eval set -- "$args"
 while true
 do
     case "$1" in
         -h|--help) usage; exit 0;;
-        --autotools) pkgs="$pkgs $pkgs_autotools"; shift;;
-        --tests) pkgs="$pkgs $pkgs_tests"; shift;;
+        --vcs) opt_vcs=y; shift;;
+        --tests) opt_tests=y ; shift;;
         --) shift; break;;
         *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
     esac
 done
+
+[ "$opt_tests" ] && pkgs="$pkgs $pkgs_tests"
+[ "$opt_vcs" ] && pkgs="$pkgs $pkgs_autotools"
+[ "$opt_vcs" ] && [ "$opt_tests" ] && pkgs="$pkgs $pkgs_prepare_tests"
 
 set -e -x
 apt-get install $pkgs
