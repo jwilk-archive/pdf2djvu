@@ -13,8 +13,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
-import unicodedata
-
 from tools import (
     case,
     re,
@@ -24,8 +22,8 @@ class test(case):
     # + fixed in 0.4.9 [18b2ae04de2f]
     # + fixed in 0.4.11 [fa7d4addf18e]
 
-    text = u'bar\N{LATIN SMALL LETTER DZ}o'
-    text_nfkc = unicodedata.normalize('NFKC', text).encode('UTF-8')
+    text = u'¾'
+    text_nfkc = '3⁄4'
     text_no_nfkc = text.encode('UTF-8')
 
     def test_nfkc(self):
