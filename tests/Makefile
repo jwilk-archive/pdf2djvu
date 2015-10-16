@@ -21,7 +21,7 @@ export pdf2djvu = ../pdf2djvu$(EXEEXT)
 test_scripts = $(wildcard test-*.py)
 tests = $(test_scripts:.py=)
 
-tex_files = $(wildcard test-*.tex) $(wildcard test-*.xetex)
+tex_files = $(wildcard test-*.tex)
 pdf_files = $(addsuffix .pdf,$(basename $(tex_files)))
 
 in_files = $(wildcard *.in)
@@ -50,10 +50,6 @@ vcs-clean: clean
 %.pdf: %.tex
 	pdftex $(<)
 	rm -f $(<:.tex=.log)
-
-%.pdf: %.xetex
-	xetex --output-driver="xdvipdfmx -z0" $(<)
-	rm -f $(<:.xetex=.log)
 
 %: %.in
 	./$(<)
