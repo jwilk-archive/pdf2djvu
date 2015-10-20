@@ -15,6 +15,7 @@
 
 set -e -u
 
+srcdir=$(dirname "$0")/..
 pofiles=''
 translators=''
 for po in "$@"
@@ -28,7 +29,7 @@ do
         translators="$translators;$translator"
     fi
 done
-version=$(head -n1 doc/changelog | cut -d' ' -f2 | tr -d '()')
+version=$(head -n1 "$srcdir/doc/changelog" | cut -d' ' -f2 | tr -d '()')
 printf '%s' "$translators" \
 | tr ';' '\n' \
 | LC_ALL=C sort -u \
