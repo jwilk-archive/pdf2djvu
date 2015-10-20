@@ -1,12 +1,16 @@
 pdf2djvu (0.9.2) UNRELEASED; urgency=low
 
+  [ Jakub Wilk ]
   * Improve error handling.
     + Ignore document outline items with non-existent destinations.
       https://bitbucket.org/jwilk/pdf2djvu/issues/112
   * Improve the test suite.
   * Update the Polish translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 08 Oct 2015 00:44:18 +0200
+  [ Chris Leick ]
+  * Update the German translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 20 Oct 2015 23:04:33 +0200
 
 pdf2djvu (0.9.1) unstable; urgency=low
 
