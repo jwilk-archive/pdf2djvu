@@ -2,10 +2,12 @@
 version=${1:?"no version number provided"}
 windows_version="$(printf -- '%s' "$version" | sed -e 's/[.]/,/g')"
 set -e -u
+po_files=$(ls po/*.po po/*.pot 2>/dev/null || true)
+doc_po_files=$(ls doc/po/*.po doc/po/*.pot 2>/dev/null || true)
 set -x
 dch -m -v "$version" -u low -c doc/changelog
 sed -i -r -e "s/(AC_INIT[(]\[pdf2djvu\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
 sed -i -r -e "s/(VERSION) [0-9,]+/\1 $windows_version/" win32-version.rc
 sed -i -r -e "s/<(!ENTITY version) '[0-9.]+'>/<\1 '$version'>/" doc/*.xml
-sed -i -r -e 's/(Project-Id-Version: pdf2djvu) [0-9.]+/\1 '"$version"'/' po/*.po $(ls po/*.pot) doc/po/*.po $(ls doc/po/*.pot)
-sed -i -r -e '/#[.] type: Content of the version entity/,/^$/ { s/(msg(id|str)) ".*"/\1 "'"$version"'"/; }' doc/po/*.po $(ls doc/po/*.pot)
+sed -i -r -e 's/(Project-Id-Version: pdf2djvu) [0-9.]+/\1 '"$version"'/' $po_files $doc_po_files
+sed -i -r -e '/#[.] type: Content of the version entity/,/^$/ { s/(msg(id|str)) ".*"/\1 "'"$version"'"/; }' $doc_po_files
