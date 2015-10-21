@@ -25,7 +25,7 @@ color_msgid()
     | grep --color=auto ' "[^"].*'
 }
 
-set -e
+set -e -u
 rc=0
 for po in "$@"
 do
