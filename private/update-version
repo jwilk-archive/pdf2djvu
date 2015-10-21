@@ -1,7 +1,7 @@
 #!/bin/sh
 version=${1:?"no version number provided"}
 windows_version="$(printf -- '%s' "$version" | sed -e 's/[.]/,/g')"
-set -e
+set -e -u
 set -x
 dch -m -v "$version" -u low -c doc/changelog
 sed -i -r -e "s/(AC_INIT[(]\[pdf2djvu\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
