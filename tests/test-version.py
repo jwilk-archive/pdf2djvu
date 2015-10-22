@@ -32,16 +32,6 @@ class test(case):
             line = file.readline()
         self.changelog_version = line.split()[1].strip('()')
 
-    def test_source(self):
-        path = os.path.join(srcdir, 'configure.ac')
-        with open(path) as file:
-            for line in file:
-                match = re(r'^AC_INIT[(]\[pdf2djvu\], \[([0-9.]+)\]').match(line)
-                if match is not None:
-                    break
-        src_version = match.group(1)
-        assert_equal(src_version, self.changelog_version)
-
     def test_executable(self):
         r = self.pdf2djvu('--version')
         r.assert_(stderr=re('^pdf2djvu [0-9.]+$', re.M), rc=0)
