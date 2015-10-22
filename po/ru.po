@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.2\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2015-09-28 23:14+0200\n"
-"PO-Revision-Date: 2015-09-27 11:36+0300\n"
+"PO-Revision-Date: 2015-10-22 02:11+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -506,9 +506,8 @@ msgid "Unable to load document"
 msgstr "Невозможно загрузить документ"
 
 #: xmp.cc
-#, fuzzy
 msgid "Unable to parse XMP metadata"
-msgstr "Невозможно разобрать размер страницы"
+msgstr "Невозможно разобрать метаданные XMP"
 
 #: config.cc
 msgid "Unable to parse command-line options"
