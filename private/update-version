@@ -13,9 +13,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+set -e -u
 version=${1:?"no version number provided"}
 windows_version="$(printf -- '%s' "$version" | sed -e 's/[.]/,/g')"
-set -e -u
 po_files=$(ls po/*.po po/*.pot 2>/dev/null || true)
 doc_po_files=$(ls doc/po/*.po doc/po/*.pot 2>/dev/null || true)
 PS4='$ '
