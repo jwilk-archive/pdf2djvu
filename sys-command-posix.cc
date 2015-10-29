@@ -131,7 +131,10 @@ static void report_posix_error(int fd, const char *context)
     ssize_t n = write(fd, &errno_copy, sizeof errno_copy);
     if (n != sizeof errno_copy)
         return;
-    write(fd, context, strlen(context));
+    n = write(fd, context, strlen(context));
+    // There isn't much we can do here about write() failing,
+    // so let's silence the compiler warning.
+    (void) n;
 }
 
 const char * get_signal_name(int sig)
