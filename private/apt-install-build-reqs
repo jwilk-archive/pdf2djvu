@@ -69,11 +69,18 @@ done
 [ "$opt_vcs" ] && pkgs="$pkgs $pkgs_autotools"
 [ "$opt_vcs" ] && [ "$opt_tests" ] && pkgs="$pkgs $pkgs_prepare_tests"
 
-set -e -x
-apt-get install $pkgs
+PS4='# '
+set -e
+(
+    set -x
+    apt-get install $pkgs
+)
 if ! dpkg -L libpoppler-dev | grep -q -E '/GfxState[.]h$'
 then
+(
+    set -x
     apt-get install libpoppler-private-dev
+)
 fi
 
 # vim:ts=4 sts=4 sw=4 et
