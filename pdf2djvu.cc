@@ -550,6 +550,8 @@ public:
     double area = pdf::get_path_area(path);
     if (area / this->getBitmapHeight() / this->getBitmapWidth() >= 0.8)
       Renderer::fill(state);
+    else
+      this->skipped_elements = true;
   }
 
   void eoFill(pdf::gfx::State *state)

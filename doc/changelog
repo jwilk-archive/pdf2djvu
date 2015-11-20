@@ -1,8 +1,10 @@
 pdf2djvu (0.9.3) UNRELEASED; urgency=low
 
-  * 
+  * Fix rendering some vector elements that should go to the foreground layer.
+    Regression introduced in 0.7.1.
+    https://bitbucket.org/jwilk/pdf2djvu/issues/115
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 23 Oct 2015 14:15:19 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 20 Nov 2015 16:48:19 +0100
 
 pdf2djvu (0.9.2) unstable; urgency=low
 
