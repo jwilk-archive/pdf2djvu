@@ -49,6 +49,13 @@ def noseimport(vmaj, vmin, name=None):
     return wrapper
 
 @noseimport(2, 7)
+def assert_greater(x, y):
+    assert_true(
+        x > y,
+        msg='{0!r} not greater than {1!r}'.format(x, y)
+    )
+
+@noseimport(2, 7)
 def assert_in(x, c):
     assert_true(
         x in c,
