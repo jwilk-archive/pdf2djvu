@@ -298,7 +298,10 @@ def count_ppm_colors(b):
     result = collections.defaultdict(int)
     for pixel in itertools.izip(ipixels, ipixels, ipixels):
         result[pixel] += 1
-    return result
+    return dict(
+        (''.join(key), value)
+        for key, value in result.iteritems()
+    )
 
 xml_ns = dict(
     dc='http://purl.org/dc/elements/1.1/',
