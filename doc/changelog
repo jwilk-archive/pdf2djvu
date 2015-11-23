@@ -724,7 +724,7 @@ pdf2djvu (0.3.6) unstable; urgency=low
 
   * Fix a bug which caused (sometimes) foreground colors to be discarded.
   * Proper support for non-white background.
-  * Fix a file descriptior leak.
+  * Fix a file descriptor leak.
     Thanks to Victor Ivrii for the report.
   * Fix a regression with locating hyperlinks.
   * Fix hyperlinks extraction (Poppler 0.6 only).

@@ -840,7 +840,7 @@ protected:
   };
   void remember(const Component &component);
 public:
-  virtual void add(const Component &compontent) = 0;
+  virtual void add(const Component &component) = 0;
   virtual void commit() = 0;
   DjVm &operator <<(const Component &component)
   {
