@@ -216,7 +216,7 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz
+	$(wget) https://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz
 	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  dcache/djvulibre-3.5.27.tar.gz' | sha256sum -c
 	$(untar) dcache/djvulibre-*.tar.gz -C $(dir $@)
 	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
@@ -305,7 +305,7 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 
 src/expat/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://downloads.sourceforge.net/project/expat/expat/2.1.0/expat-2.1.0.tar.gz
+	$(wget) https://downloads.sourceforge.net/project/expat/expat/2.1.0/expat-2.1.0.tar.gz
 	echo '823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86  dcache/expat-2.1.0.tar.gz' | sha256sum -c
 	$(untar) dcache/expat-*.tar.gz -C $(dir $@)
 	touch $(@)
