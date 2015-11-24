@@ -418,7 +418,7 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 
 src/gettext/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz
+	$(wget) https://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz
 	echo '93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9  dcache/gettext-0.18.1.1.tar.gz' | sha256sum -c
 	$(untar) dcache/gettext-*.tar.gz --exclude='gettext-tools' -C $(dir $@)
 	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
