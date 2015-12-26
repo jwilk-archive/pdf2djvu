@@ -181,7 +181,7 @@ then
 
 WARNING: Parallel page rendering will be disabled.
 Please consider using a compiler with OpenMP support to enable this
-functionality.
+feature.
 _ACEOF
 fi
 
@@ -191,7 +191,7 @@ then
 
 INFO: Color quantization using GraphicsMagick will be disabled.
 Please consider installing the GraphicsMagick++ library to enable this
-functionality.
+feature.
 _ACEOF
 fi
 
@@ -201,7 +201,7 @@ then
 
 WARNING: Updating XMP metadata will be disabled.
 Please consider installing the Exiv2 and libuuid libraries to enable this
-functionality.
+feature.
 _ACEOF
 fi
 
