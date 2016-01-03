@@ -554,7 +554,7 @@ msgid "Template syntax"
 msgstr "Syntaxe de modèle"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-msgid "The template language is roughly modelled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
+msgid "The template language is roughly modeled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
 msgstr "Le mise en forme du modèle est plus ou moins calquée sur la <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>syntaxe de formatage de chaîne en Python</ulink>."
 
 #. type: Content of: <refentry><refsection><refsection><para>
@@ -666,7 +666,7 @@ msgid "For each page, do the following: <placeholder type=\"orderedlist\" id=\"0
 msgstr "Pour chaque page, procéder comme suit : <placeholder type=\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-msgid "Unless the <option>--monochrome</option> option is on, &p; uses the following naïve layer separation algorithm: <placeholder type=\"orderedlist\" id=\"0\"/>"
+msgid "Unless the <option>--monochrome</option> option is on, &p; uses the following naive layer separation algorithm: <placeholder type=\"orderedlist\" id=\"0\"/>"
 msgstr "À moins que l’option <option>--monochrome</option> soit activée, &p; utilise le simple algorithme de séparation de calques suivant : <placeholder type=\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><title>

@@ -556,7 +556,7 @@ msgid "Template syntax"
 msgstr "Schablonensyntax"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-msgid "The template language is roughly modelled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
+msgid "The template language is roughly modeled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
 msgstr "Die Schablonensprache ist ungefähr wie die <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Phyton-Zeichenkettenformatierungssyntax</ulink> aufgebaut."
 
 #. type: Content of: <refentry><refsection><refsection><para>
@@ -669,7 +669,7 @@ msgid "For each page, do the following: <placeholder type=\"orderedlist\" id=\"0
 msgstr "für jede Seite das Folgende tun: <placeholder type=\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-msgid "Unless the <option>--monochrome</option> option is on, &p; uses the following naïve layer separation algorithm: <placeholder type=\"orderedlist\" id=\"0\"/>"
+msgid "Unless the <option>--monochrome</option> option is on, &p; uses the following naive layer separation algorithm: <placeholder type=\"orderedlist\" id=\"0\"/>"
 msgstr "Außer wenn die Option <option>--monochrome</option> aktiviert ist, benutzt &p; den folgenden naiven Ebenen-Aufteilungsalgorithmus: <placeholder type=\"orderedlist\" id=\"0\"/>"
 
 #. type: Content of: <refentry><refsection><title>

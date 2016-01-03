@@ -1,8 +1,8 @@
 pdf2djvu (0.9.4) UNRELEASED; urgency=low
 
-  * 
+  * Standardize on American spelling in the manual page.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 21 Nov 2015 01:35:37 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 03 Jan 2016 11:59:14 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
@@ -315,7 +315,7 @@ pdf2djvu (0.7.12) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Fix resolution detection.
-  * Windows: honour console output encoding.
+  * Windows: honor console output encoding.
     https://bitbucket.org/jwilk/pdf2djvu/issue/64
   * Build with “-Werror=overloaded-virtual”.
 

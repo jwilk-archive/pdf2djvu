@@ -8,7 +8,7 @@ The following software is required to build *pdf2djvu*:
    Poppler must be compiled with the ``--enable-xpdf-headers``
    configuration option enabled.
    Alternatively, you may use the ``tools/install-poppler-h-files``
-   script to install the missing headers afterwards.
+   script to install the missing headers afterward.
 
 The following software is recommended:
 
