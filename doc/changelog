@@ -1,8 +1,9 @@
 pdf2djvu (0.9.4) UNRELEASED; urgency=low
 
   * Standardize on American spelling in the manual page.
+  * Document that bugs can be reported to the mailing list.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 03 Jan 2016 11:59:14 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 04 Jan 2016 11:47:29 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
