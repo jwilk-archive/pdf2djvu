@@ -64,6 +64,7 @@ manpage.pot: $(source)
 
 $(po_files): %.po: $(source)
 	$(po4a-update-po) -m $(<) -p $(@)
+	sed -i -e 's/^\([#][.]\) *\([^ ].*[^ ]\) *$$/\1 \2/' $(@)
 	touch $(@)
 
 %.xml: %.po
