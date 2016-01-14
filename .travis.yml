@@ -10,7 +10,7 @@ env:
 - POPPLER_VERSION=0.21.1
 - POPPLER_VERSION=0.23.0
 - POPPLER_VERSION=0.31.0
-- POPPLER_VERSION=0.39.0
+- POPPLER_VERSION=0.40.0
 matrix:
   exclude:
   # “-fno-check-new” is not supported by clang
@@ -50,7 +50,7 @@ cache:
   - $HOME/.ccache
 install:
 - export PATH="/usr/lib/ccache:$PATH"
-- if [ -z "${POPPLER_VERSION##0.3*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
+- if [ -z "${POPPLER_VERSION##0.[3-9]*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
 - (cd poppler-*/ && ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libopenjpeg --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
