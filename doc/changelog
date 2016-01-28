@@ -437,7 +437,7 @@ pdf2djvu (0.7.2) unstable; urgency=low
     https://bitbucket.org/jwilk/pdf2djvu/issue/45
   * Fix crash with GraphicMagick ≥ 1.3.8.
     https://bitbucket.org/jwilk/pdf2djvu/issue/47
-    http://sourceforge.net/mailarchive/message.php?msg_id=24439342
+    http://sourceforge.net/p/graphicsmagick/mailman/message/24439342/
   * Override number of threads set by GraphicsMagick.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 01 May 2010 23:52:23 +0200
