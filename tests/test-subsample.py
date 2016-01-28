@@ -28,7 +28,7 @@ class test(case):
         r.assert_(stdout=re('BG44.* 10x11$', re.M))
 
     def test_12(self):
-        # Bug: https://bugs.debian/458211
+        # Bug: https://bugs.debian.org/458211
         #
         # Prior to pdf2djvu 0.5.0, subsample ratio 12 was not allowed.
         # Now we require a fixed version of DjVuLibre.
