@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cerrno>
 #include <cstddef>
 #include <cstdlib>
 #include <iomanip>
@@ -1430,6 +1431,16 @@ static int xmain(int argc, char * const argv[])
     doc->display_page(outm.get(), m, dpi, dpi, crop, true);
     int width = outm->getBitmapWidth();
     int height = outm->getBitmapHeight();
+    if (width == 1 && height == 1 && page_width * dpi >= 2)
+    {
+      /* When the Splash backend runs out of memory,
+       * it produces a 1x1 bitmap without signalling an error in any way
+       * (other than printing “Out of memory” on stderr).
+       * https://bitbucket.org/jwilk/pdf2djvu/issue/107
+       */
+      errno = ENOMEM;
+      throw_posix_error("");
+    }
     n_pixels += width * height;
     debug(2) << string_printf(_("image size: %dx%d"), width, height) << std::endl;
     if (!config.no_render && outm->has_skipped_elements())

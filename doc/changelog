@@ -10,8 +10,11 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
     action type is encountered.
     Thanks to Janusz S. Bień for the bug report.
     https://groups.io/g/pdf2djvu/message/26
+  * Improve error handling in out-of-memory situations.
+    Thanks to Daniel Stender for the bug report.
+    https://bitbucket.org/jwilk/pdf2djvu/issue/107
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 30 Jan 2016 14:05:59 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 30 Jan 2016 19:22:16 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
