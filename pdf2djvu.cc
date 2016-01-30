@@ -473,6 +473,25 @@ public:
     case actionNamed:
       debug(1) << _("Warning: Unable to convert link with a named action") << std::endl;
       return;
+    case actionLaunch:
+      debug(1) << _("Warning: Unable to convert link with a launch action") << std::endl;
+      return;
+    case actionMovie:
+      debug(1) << _("Warning: Unable to convert link with a movie action") << std::endl;
+      return;
+    case actionRendition:
+      debug(1) << _("Warning: Unable to convert link with a rendition action") << std::endl;
+      return;
+    case actionSound:
+      debug(1) << _("Warning: Unable to convert link with a sound action") << std::endl;
+      return;
+    case actionJavaScript:
+      debug(1) << _("Warning: Unable to convert link with a JavaScript action") << std::endl;
+      return;
+    case actionOCGState:
+      // L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
+      debug(1) << _("Warning: Unable to convert link with a set-OCG-state action") << std::endl;
+      return;
     default:
       debug(1) << _("Warning: Unknown link action") << std::endl;
       return;

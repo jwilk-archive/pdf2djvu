@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2015-09-28 23:14+0200\n"
+"POT-Creation-Date: 2016-01-30 14:04+0100\n"
 "PO-Revision-Date: 2015-10-22 02:11+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
@@ -567,12 +567,43 @@ msgid "Warning: %s"
 msgstr "Предупреждение: %s"
 
 #: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a JavaScript action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+
+#: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a launch action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+
+#: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a movie action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+
+#: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Предупреждение: невозможно преобразовать ссылку на внешний документ"
+
+#: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a rendition action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+
+#. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
+#: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a set-OCG-state action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+
+#: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a sound action"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link without an action"

@@ -25,6 +25,7 @@ gettext-common-options = \
 
 xgettext = $(XGETTEXT) \
 	$(gettext-common-options) \
+	--from-code=UTF-8 \
 	--language=C++ \
 	--keyword=_ --keyword=N_ \
 	--package-name=pdf2djvu \

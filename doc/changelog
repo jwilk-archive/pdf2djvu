@@ -6,8 +6,12 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   * Fix build failure with GCC 6.
     Thanks to Martin Michlmayr for the bug report.
     https://bugs.debian.org/812007
+  * Improve warning message when a link with an unsupported
+    action type is encountered.
+    Thanks to Janusz S. Bień for the bug report.
+    https://groups.io/g/pdf2djvu/message/26
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 20 Jan 2016 13:11:02 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 30 Jan 2016 14:05:59 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
