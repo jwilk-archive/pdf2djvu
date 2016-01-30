@@ -488,10 +488,12 @@ public:
     case actionJavaScript:
       debug(1) << _("Warning: Unable to convert link with a JavaScript action") << std::endl;
       return;
+#if POPPLER_VERSION >= 1302
     case actionOCGState:
       // L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
       debug(1) << _("Warning: Unable to convert link with a set-OCG-state action") << std::endl;
       return;
+#endif
     default:
       debug(1) << _("Warning: Unknown link action") << std::endl;
       return;
