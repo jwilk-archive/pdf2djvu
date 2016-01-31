@@ -34,8 +34,8 @@ addons:
     - gettext
     - libdjvulibre-dev
     - libexiv2-dev
-    - libfontconfig-dev
-    - libgraphicsmagick++-dev
+    - libfontconfig1-dev
+    - libgraphicsmagick++1-dev
     - libxml2-utils
     - pkg-config
     - python-docutils
