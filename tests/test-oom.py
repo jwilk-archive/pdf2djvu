@@ -36,6 +36,9 @@ class test(case):
     # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/107
 
     def test(self):
+        # Before Poppler 0.24, the Splash backend would just segfault on OOM.
+        # http://cgit.freedesktop.org/poppler/poppler/commit/?id=e04287f2682e
+        self.require_poppler(0, 24)
         [lim_soft, lim_hard] = resource.getrlimit(resource.RLIMIT_AS)
         with vm_limit(1 << 30):  # 1 GiB virtual memory limit
             r = self.pdf2djvu()

@@ -145,6 +145,7 @@ class case(object):
 
     _pdf2djvu_command = os.getenv('pdf2djvu') or 'pdf2djvu'
     _feature_cache = {}
+    _poppler_version = None
 
     def get_pdf2djvu_command(self):
         if re(r'\A[[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
@@ -258,6 +259,17 @@ class case(object):
         xmp = xmp_line[5:-1]
         xmp = eval(xmp)
         return xmp
+
+    def require_poppler(self, *version):
+        if self._poppler_version is None:
+            r = self.pdf2djvu('--version')
+            r.assert_(stderr=re('^pdf2djvu '), rc=0)
+            print(repr(r.stderr))
+            match = re('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
+            self._poppler_version = tuple(int(x) for x in match.group(1).split('.'))
+        if self._poppler_version < version:
+            str_version = '.'.join(str(v) for v in self._poppler_version)
+            raise SkipTest('Poppler >= {ver} is required'.format(ver=str_version))
 
     def require_feature(self, feature):
         try:
