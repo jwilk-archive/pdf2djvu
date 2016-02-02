@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-02-02 12:08+0100\n"
-"PO-Revision-Date: 2015-09-28 23:18+0200\n"
+"PO-Revision-Date: 2016-02-02 12:15+0100\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -569,19 +569,16 @@ msgid "Warning: %s"
 msgstr "Ostrzeżenie: %s"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a JavaScript action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją JavaScript"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a launch action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją uruchamiającą"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a multimedia action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją multimedialną"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a named action"
@@ -593,9 +590,8 @@ msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a set-OCG-state action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją ustawienia stanu grupy treści opcjonalnych"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link without an action"
