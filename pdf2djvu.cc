@@ -70,7 +70,7 @@ public:
   { }
 };
 
-static int get_page_for_LinkGoTo(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
+static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
 {
   std::auto_ptr<pdf::link::Destination> dest;
   dest.reset(goto_link->getDest());
@@ -456,7 +456,7 @@ public:
       int page;
       try
       {
-        page = get_page_for_LinkGoTo(dynamic_cast<pdf::link::GoTo*>(link_action), this->catalog);
+        page = get_page_for_goto_link(dynamic_cast<pdf::link::GoTo*>(link_action), this->catalog);
       }
       catch (NoLinkDestination &ex)
       {
@@ -693,7 +693,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
           throw NoPageForBookmark();
         try
         {
-          page = get_page_for_LinkGoTo(
+          page = get_page_for_goto_link(
             dynamic_cast<pdf::link::GoTo*>(link_action.get()),
             catalog
           );
