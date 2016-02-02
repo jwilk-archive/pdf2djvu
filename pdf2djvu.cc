@@ -478,13 +478,9 @@ public:
       debug(1) << _("Warning: Unable to convert link with a launch action") << std::endl;
       return;
     case actionMovie:
-      debug(1) << _("Warning: Unable to convert link with a movie action") << std::endl;
-      return;
-    case actionRendition:
-      debug(1) << _("Warning: Unable to convert link with a rendition action") << std::endl;
-      return;
     case actionSound:
-      debug(1) << _("Warning: Unable to convert link with a sound action") << std::endl;
+    case actionRendition:
+      debug(1) << _("Warning: Unable to convert link with a multimedia action") << std::endl;
       return;
     case actionJavaScript:
       debug(1) << _("Warning: Unable to convert link with a JavaScript action") << std::endl;

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-01-30 14:04+0100\n"
+"POT-Creation-Date: 2016-02-02 12:08+0100\n"
 "PO-Revision-Date: 2015-10-20 22:15+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -578,7 +578,7 @@ msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werde
 
 #: pdf2djvu.cc
 #, fuzzy
-msgid "Warning: Unable to convert link with a movie action"
+msgid "Warning: Unable to convert link with a multimedia action"
 msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
 
 #: pdf2djvu.cc
@@ -589,20 +589,10 @@ msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werde
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Warnung: Verweis mit einem fernen Sprungbefehl kann nicht umgewandelt werden"
 
-#: pdf2djvu.cc
-#, fuzzy
-msgid "Warning: Unable to convert link with a rendition action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
-
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: pdf2djvu.cc
 #, fuzzy
 msgid "Warning: Unable to convert link with a set-OCG-state action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
-
-#: pdf2djvu.cc
-#, fuzzy
-msgid "Warning: Unable to convert link with a sound action"
 msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
 
 #: pdf2djvu.cc

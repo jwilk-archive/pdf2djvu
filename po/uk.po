@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-01-30 14:04+0100\n"
+"POT-Creation-Date: 2016-02-02 12:08+0100\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -585,7 +585,7 @@ msgstr "Попередження: неможливо перетворити по
 
 #: pdf2djvu.cc
 #, fuzzy
-msgid "Warning: Unable to convert link with a movie action"
+msgid "Warning: Unable to convert link with a multimedia action"
 msgstr "Попередження: неможливо перетворити посилання з дією"
 
 #: pdf2djvu.cc
@@ -596,20 +596,10 @@ msgstr "Попередження: неможливо перетворити по
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Попередження: неможливо перетворити посилання на зовнішній документ"
 
-#: pdf2djvu.cc
-#, fuzzy
-msgid "Warning: Unable to convert link with a rendition action"
-msgstr "Попередження: неможливо перетворити посилання з дією"
-
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: pdf2djvu.cc
 #, fuzzy
 msgid "Warning: Unable to convert link with a set-OCG-state action"
-msgstr "Попередження: неможливо перетворити посилання з дією"
-
-#: pdf2djvu.cc
-#, fuzzy
-msgid "Warning: Unable to convert link with a sound action"
 msgstr "Попередження: неможливо перетворити посилання з дією"
 
 #: pdf2djvu.cc
