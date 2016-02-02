@@ -62,6 +62,11 @@ static inline DebugStream &debug(int n)
   return debug(n, config.verbose);
 }
 
+static inline void warn(const std::string &message)
+{
+  debug(1) << string_printf(_("Warning: %s"), message.c_str()) << std::endl;
+}
+
 class NoLinkDestination : public std::runtime_error
 {
 public:
@@ -441,7 +446,7 @@ public:
     pdf::link::Action *link_action = link->getAction();
     if (link_action == NULL)
     {
-      debug(1) << _("Warning: Unable to convert link without an action") << std::endl;
+      warn(_("Unable to convert link without an action"));
       return;
     }
     std::string uri;
@@ -460,7 +465,7 @@ public:
       }
       catch (NoLinkDestination &ex)
       {
-        debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+        warn(ex.what());
         return;
       }
       std::ostringstream strstream;
@@ -469,30 +474,30 @@ public:
       break;
     }
     case actionGoToR:
-      debug(1) << _("Warning: Unable to convert link with a remote go-to action") << std::endl;
+      warn(_("Unable to convert link with a remote go-to action"));
       return;
     case actionNamed:
-      debug(1) << _("Warning: Unable to convert link with a named action") << std::endl;
+      warn(_("Unable to convert link with a named action"));
       return;
     case actionLaunch:
-      debug(1) << _("Warning: Unable to convert link with a launch action") << std::endl;
+      warn(_("Unable to convert link with a launch action"));
       return;
     case actionMovie:
     case actionSound:
     case actionRendition:
-      debug(1) << _("Warning: Unable to convert link with a multimedia action") << std::endl;
+      warn(_("Unable to convert link with a multimedia action"));
       return;
     case actionJavaScript:
-      debug(1) << _("Warning: Unable to convert link with a JavaScript action") << std::endl;
+      warn(_("Unable to convert link with a JavaScript action"));
       return;
 #if POPPLER_VERSION >= 1302
     case actionOCGState:
       // L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
-      debug(1) << _("Warning: Unable to convert link with a set-OCG-state action") << std::endl;
+      warn(_("Unable to convert link with a set-OCG-state action"));
       return;
 #endif
     default:
-      debug(1) << _("Warning: Unknown link action") << std::endl;
+      warn(_("Unknown link action"));
       return;
     }
     int x, y, w, h;
@@ -713,7 +718,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
     }
     catch (BookmarkError &ex)
     {
-      debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+      warn(ex.what());
     }
 
     pdf::dict_lookup(current, "Next", &next);
@@ -753,7 +758,7 @@ static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ost
   }
   catch (pdf::Timestamp::Invalid)
   {
-    debug(1) << string_printf(_("Warning: metadata[%s] is not a valid date"), key) << std::endl;
+    warn(string_printf(_("metadata[%s] is not a valid date"), key));
   }
 }
 
@@ -1288,7 +1293,7 @@ static int xmain(int argc, char * const argv[])
 #else
   if (config.n_jobs != 1)
   {
-    debug(1) << string_printf(_("Warning: %s"), _("pdf2djvu was built without OpenMP support; multi-threading is disabled.")) << std::endl;
+    warn(_("pdf2djvu was built without OpenMP support; multi-threading is disabled."));
     config.n_jobs = 1;
   }
 #endif
@@ -1669,7 +1674,7 @@ static int xmain(int argc, char * const argv[])
         }
         catch (xmp::Error &ex)
         {
-          debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
+          warn(ex.what());
         }
       debug(0)--;
       if (xmp_bytes.length())
