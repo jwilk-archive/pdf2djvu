@@ -1,4 +1,4 @@
-# Copyright © 2014, 2015 Américo Monteiro <a_monteiro@gmx.com>
+# Copyright © 2014-2016 Américo Monteiro <a_monteiro@gmx.com>
 #
 # This file is part of pdf2djvu.
 #
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-02-02 12:08+0100\n"
-"PO-Revision-Date: 2015-10-20 22:05+0100\n"
+"PO-Revision-Date: 2016-02-06 16:35+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "Language: pt\n"
@@ -576,19 +576,16 @@ msgid "Warning: %s"
 msgstr "Aviso: %s"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a JavaScript action"
-msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
+msgstr "Aviso: Incapaz de converter ligação com uma acção de JavaScript"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a launch action"
-msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
+msgstr "Aviso: Incapaz de converter ligação com uma acção de lançamento"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a multimedia action"
-msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
+msgstr "Aviso: Incapaz de converter ligação com uma acção multimedia"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a named action"
@@ -600,9 +597,8 @@ msgstr "Aviso: Incapaz de converter ligação com uma acção go-to remota"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a set-OCG-state action"
-msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
+msgstr "Aviso: Incapaz de converter ligação com uma acção \"definir-estado-OCG\""
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link without an action"
