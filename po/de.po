@@ -1,4 +1,4 @@
-# Copyright © 2011-2015 Chris Leick <c.leick@vollbio.de>
+# Copyright © 2011-2016 Chris Leick <c.leick@vollbio.de>
 #
 # This file is distributed under the same license as the pdf2djvu package.
 #
@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-02-02 12:08+0100\n"
-"PO-Revision-Date: 2015-10-20 22:15+0200\n"
+"PO-Revision-Date: 2016-02-06 15:41+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -567,19 +567,16 @@ msgid "Warning: %s"
 msgstr "Warnung: %s"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a JavaScript action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einer JavaScript-Aktion kann nicht umgewandelt werden"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a launch action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einer Start-Aktion kann nicht umgewandelt werden"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a multimedia action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einer Multimedia-Aktion kann nicht umgewandelt werden"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a named action"
@@ -591,9 +588,8 @@ msgstr "Warnung: Verweis mit einem fernen Sprungbefehl kann nicht umgewandelt we
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a set-OCG-state action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einer Aktion zum Setzen des OGC-Status kann nicht umgewandelt werden"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link without an action"
