@@ -1,4 +1,4 @@
-# Copyright © 2014-2015 Américo Monteiro <a_monteiro@gmx.com>
+# Copyright © 2014-2016 Américo Monteiro <a_monteiro@gmx.com>
 #
 # This file is distributed under the same license as the pdf2djvu package.
 #
@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-01-04 11:40+0100\n"
-"PO-Revision-Date: 2015-09-17 23:52+0100\n"
+"PO-Revision-Date: 2016-02-06 16:38+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "Language: pt\n"
@@ -674,10 +674,8 @@ msgid "Bug reports"
 msgstr "Relatórios de bugs"
 
 #. type: Content of: <refentry><refsection><para>
-#, fuzzy
-#| msgid "If you find a bug in &p;, please report it at <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>the issue tracker</ulink>."
 msgid "If you find a bug in &p;, please report it at <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>the issue tracker</ulink> or to <ulink url='https://groups.io/g/pdf2djvu'>the mailing list</ulink>."
-msgstr "Se você encontrar um bug em &p;, por favor reporte-o no <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>Acompanhamento de problemas</ulink>."
+msgstr "Se você encontrar um bug em &p;, por favor reporte-o no <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>Acompanhamento de problemas</ulink> ou para <ulink url='https://groups.io/g/pdf2djvu'>a lista de mail</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "See also"
