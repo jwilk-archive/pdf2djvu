@@ -1,4 +1,4 @@
-# Copyright © 2011, 2012, 2013, 2014, 2015 Kyrill Detinov
+# Copyright © 2011, 2012, 2013, 2014, 2015, 2016 Kyrill Detinov
 # This file is distributed under the same license as the pdf2djvu package.
 #
 msgid ""
@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.4\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-02-02 12:08+0100\n"
-"PO-Revision-Date: 2015-10-22 02:11+0300\n"
+"PO-Revision-Date: 2016-02-08 11:35+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -567,19 +567,16 @@ msgid "Warning: %s"
 msgstr "Предупреждение: %s"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a JavaScript action"
-msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+msgstr "Предупреждение: невозможно преобразовать ссылку с выполнением JavaScript"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a launch action"
-msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием запуска"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a multimedia action"
-msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+msgstr "Предупреждение: невозможно преобразовать ссылку с мультимедийным действием"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a named action"
@@ -591,9 +588,8 @@ msgstr "Предупреждение: невозможно преобразов�
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a set-OCG-state action"
-msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием OCG"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link without an action"
