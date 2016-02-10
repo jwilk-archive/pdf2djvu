@@ -958,7 +958,7 @@ public:
     {
       /* Using ``djvused`` to add shared annotations to a indirect multi-page
        * document could be unacceptably slow:
-       * http://sourceforge.net/p/djvu/bugs/100/
+       * https://sourceforge.net/p/djvu/bugs/100/
        *
        * We need to work around this bug.
        */
@@ -1198,7 +1198,7 @@ static void calculate_subsampled_size(int width, int height, int ratio, int &sub
    * This functions satisfies all these equations by decreasing ratio if
    * necessary.
    *
-   * See http://sourceforge.net/p/djvu/bugs/106/ for details.
+   * See https://sourceforge.net/p/djvu/bugs/106/ for details.
    */
   while (true)
   {

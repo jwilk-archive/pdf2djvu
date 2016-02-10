@@ -14,6 +14,7 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   * Improve error handling in out-of-memory situations.
     Thanks to Daniel Stender for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/107
+  * Use HTTPS for sourceforge.net URLs.
   * Improve the test suite.
 
   [ Chris Leick ]
@@ -25,7 +26,7 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 10 Feb 2016 20:12:30 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 11 Feb 2016 00:11:47 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
@@ -455,7 +456,7 @@ pdf2djvu (0.7.2) unstable; urgency=low
     https://bitbucket.org/jwilk/pdf2djvu/issue/45
   * Fix crash with GraphicMagick ≥ 1.3.8.
     https://bitbucket.org/jwilk/pdf2djvu/issue/47
-    http://sourceforge.net/p/graphicsmagick/mailman/message/24439342/
+    https://sourceforge.net/p/graphicsmagick/mailman/message/24439342/
   * Override number of threads set by GraphicsMagick.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 01 May 2010 23:52:23 +0200

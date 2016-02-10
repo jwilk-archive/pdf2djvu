@@ -21,7 +21,7 @@ from tools import (
 class test(case):
 
     def test_11(self):
-        # Bug: http://sourceforge.net/p/djvu/bugs/106/
+        # Bug: https://sourceforge.net/p/djvu/bugs/106/
         # + fixed in 0.4.11 [5e3937296514]
         self.pdf2djvu('--bg-subsample=11', '--dpi=72').assert_()
         r = self.djvudump()
