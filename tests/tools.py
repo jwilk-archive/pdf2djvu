@@ -26,6 +26,7 @@ import re
 import subprocess as ipc
 import sys
 
+re.compile.escape = re.escape
 re.compile.M = re.M
 re.compile.DOTALL = re.DOTALL
 re = re.compile

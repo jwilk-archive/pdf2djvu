@@ -20,58 +20,44 @@ from tools import (
 
 class test(case):
 
+    def t(self, page, url, border='(xor)'):
+        result = self.print_ant(page=page)
+        template = '(maparea "{url}" "" (rect NNN NNN NNN NNN) {border})'.format(
+            url=url,
+            border=border,
+        )
+        regex = re.escape(template).replace('NNN', '[0-9]+')
+        result.assert_(stdout=re(regex))
+
     def test(self):
         # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/3
         # + fixed in 0.4.10 [a244b65e0661]
         # + fixed in 0.4.12 [2e5ab20f8a07]
         self.pdf2djvu().assert_()
-        r = self.print_ant(page=1)
-        r.assert_(stdout=re(
-            r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)][)]$',
-        ))
-        r = self.print_ant(page=2)
-        r.assert_(stdout=re(
-            r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)][)]$',
-        ))
-        r = self.print_ant(page=3)
-        r.assert_(stdout=re(
-            r'^[(]maparea "http://www[.]example[.]org/" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)][)]$',
-        ))
+        self.t(1, '#p0002.djvu')
+        self.t(2, '#p0001.djvu', '(border #ff7f00)')
+        self.t(3, 'http://www.example.org/')
 
     def test_border_avis(self):
         def t(*args):
             self.pdf2djvu(*args).assert_()
-            r = self.print_ant(page=1)
-            r.assert_(stdout=re(
-                r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)] [(]border_avis[)][)]$',
-            ))
-            r = self.print_ant(page=2)
-            r.assert_(stdout=re(
-                r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)] [(]border_avis[)][)]$',
-            ))
-            r = self.print_ant(page=3)
-            r.assert_(stdout=re(
-                r'^[(]maparea "http://www[.]example[.]org/" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)] [(]border_avis[)][)]$',
-            ))
+            self.t(1, '#p0002.djvu', '(xor) (border_avis)')
+            self.t(2, '#p0001.djvu', '(border #ff7f00) (border_avis)')
+            self.t(3, 'http://www.example.org/', '(xor) (border_avis)')
         t('--hyperlinks', 'border-avis')
         t('--hyperlinks', 'border_avis')
 
     def test_border_color(self):
         self.pdf2djvu('--hyperlinks', '#3742ff').assert_()
-        r = self.print_ant(page=1)
-        r.assert_(stdout=re(
-            r'^[(]maparea "#p0002[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #3742ff[)][)]$',
-        ))
-        r = self.print_ant(page=2)
-        r.assert_(stdout=re(
-            r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #3742ff[)][)]$',
-        ))
+        self.t(1, '#p0002.djvu', '(border #3742ff)')
+        self.t(2, '#p0001.djvu', '(border #3742ff)')
+        self.t(3, 'http://www.example.org/', '(border #3742ff)')
 
     def test_none(self):
         def t(*args):
             self.pdf2djvu(*args).assert_()
-            for n in (1, 2):
-                r = self.print_ant(page=n)
+            for n in range(3):
+                r = self.print_ant(page=(n + 1))
                 r.assert_(stdout='')
         t('--hyperlinks', 'none')
         t('--no-hyperlinks')
