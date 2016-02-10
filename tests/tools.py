@@ -269,7 +269,7 @@ class case(object):
             match = re('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
             self._poppler_version = tuple(int(x) for x in match.group(1).split('.'))
         if self._poppler_version < version:
-            str_version = '.'.join(str(v) for v in self._poppler_version)
+            str_version = '.'.join(str(v) for v in version)
             raise SkipTest('Poppler >= {ver} is required'.format(ver=str_version))
 
     def require_feature(self, feature):
