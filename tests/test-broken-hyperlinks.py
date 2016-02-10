@@ -32,6 +32,7 @@ class test(case):
         r.assert_(**kwargs)
 
     def test_no_action(self):
+        self.require_poppler(0, 17)
         self.t(1, 'Unable to convert link without an action')
 
     def test_lookup_error(self):
