@@ -193,7 +193,8 @@ class case(object):
         return ipc_result(stdout, stderr, child.returncode)
 
     def _pdf2djvu(self, *args, **kwargs):
-        args = self.get_pdf2djvu_command() + ('-q', self.get_pdf_path()) + args
+        quiet = ('-q',) if kwargs.pop('quiet', True) else ()
+        args = self.get_pdf2djvu_command() + quiet + (self.get_pdf_path(),) + args
         result = self.run(*args, **kwargs)
         if os.getenv('pdf2djvu_win32'):
             result.stderr = result.stderr.replace('\r\n', '\n')

@@ -1,0 +1,109 @@
+% Copyright © 2016 Jakub Wilk <jwilk@jwilk.net>
+%
+% This file is part of pdf2djvu.
+%
+% pdf2djvu is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 2 as
+% published by the Free Software Foundation.
+%
+% pdf2djvu is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+% General Public License for more details.
+
+\input common
+
+\pdfpagewidth 101pt
+\pdfpageheight 13pt
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link}
+missing action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/GoTo/D(D1)>>}
+non-existent dest
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/GoToR/F(example.pdf)/D(D1)>>}
+remote go-to action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/Named/N/Find>>}
+named action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/Launch/F(example.pdf)>>}
+launch action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/Movie/T()>>}
+movie action
+\pdfendlink
+
+\eject
+
+\immediate\pdfobj
+stream
+attr {/Type/Sound /R 22050}
+{}
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/Sound/Sound \the\pdflastobj\space 0 R>>}
+sound action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/Rendition/JS()>>}
+renditon action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/JavaScript/JS()>>}
+JavaScript action
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/SetOCGState/State[]>>}
+set-OCG-state
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user {/Subtype/Link /A<</S/FIXME>>}
+unknown action
+\pdfendlink
+
+\end
