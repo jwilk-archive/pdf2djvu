@@ -1,4 +1,4 @@
-% Copyright © 2009 Jakub Wilk <jwilk@jwilk.net>
+% Copyright © 2009-2016 Jakub Wilk <jwilk@jwilk.net>
 %
 % This file is part of pdf2djvu.
 %
@@ -33,6 +33,14 @@ Lorem
 attr{/Border[0 0 1]/H/I/C[1 0.5 0]}
 goto name {P1}
 {ipsum}
+\pdfendlink
+
+\eject
+
+\leavevmode
+\pdfstartlink
+user{/Subtype/Link/A<</S/URI/URI(http://www.example.org/)>>}
+dolor
 \pdfendlink
 
 \end

@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2009-2016 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is part of pdf2djvu.
 #
@@ -33,6 +33,10 @@ class test(case):
         r.assert_(stdout=re(
             r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)][)]$',
         ))
+        r = self.print_ant(page=3)
+        r.assert_(stdout=re(
+            r'^[(]maparea "http://www[.]example[.]org/" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)][)]$',
+        ))
 
     def test_border_avis(self):
         def t(*args):
@@ -44,6 +48,10 @@ class test(case):
             r = self.print_ant(page=2)
             r.assert_(stdout=re(
                 r'^[(]maparea "#p0001[.]djvu" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]border #ff7f00[)] [(]border_avis[)][)]$',
+            ))
+            r = self.print_ant(page=3)
+            r.assert_(stdout=re(
+                r'^[(]maparea "http://www[.]example[.]org/" "" [(]rect [0-9]+ [0-9]+ [0-9]+ [0-9]+[)] [(]xor[)] [(]border_avis[)][)]$',
             ))
         t('--hyperlinks', 'border-avis')
         t('--hyperlinks', 'border_avis')
