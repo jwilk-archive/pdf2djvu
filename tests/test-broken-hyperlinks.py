@@ -20,17 +20,24 @@ from tools import (
 
 class test(case):
 
-    def t(self, page, message):
+    def t(self, page, message, empty_stdout=True):
         r = self.pdf2djvu('-p', str(page), quiet=False)
-        r.assert_(
+        kwargs = dict(
             stderr=re('- Warning: {warn}\n'.format(warn=re.escape(message)))
         )
+        if not empty_stdout:
+            kwargs.update(
+                stdout=re('')
+            )
+        r.assert_(**kwargs)
 
     def test_no_action(self):
         self.t(1, 'Unable to convert link without an action')
 
     def test_lookup_error(self):
-        self.t(2, 'Cannot find link destination')
+        self.t(2, 'Cannot find link destination',
+            empty_stdout=False  # https://bugs.freedesktop.org/show_bug.cgi?id=81513
+        )
 
     def test_remote_goto_action(self):
         self.t(3, 'Unable to convert link with a remote go-to action')
