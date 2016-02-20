@@ -64,6 +64,18 @@ clean:
 distclean: clean
 	rm -f autoconf.hh autoconf.mk config.status config.log
 
+.PHONY: vcs-clean
+vcs-clean:
+	$(MAKE) -C tests/ vcs-clean
+	$(MAKE) -C po clean
+	$(MAKE) -C doc clean
+	$(MAKE) -C doc/po clean
+	rm -rf autoconf.hh autoconf.hh.in config.log config.status configure
+	rm -rf autom4te.cache
+	rm -rf aclocal.m4 m4
+	rm -f tools/config.* tools/install-sh
+	$(MAKE) distclean
+
 .PHONY: test
 test: $(exe)
 	$(MAKE) -C tests/
