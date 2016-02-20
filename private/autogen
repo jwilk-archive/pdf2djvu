@@ -3,10 +3,15 @@ set -e -u
 stat configure.ac > /dev/null
 PS4='$ '
 set -x
+for subdir in config build-aux
+do
+    build_aux="/usr/share/libtool/$subdir"
+    [ -d "$build_aux" ] && break
+done
 for file in install-sh config.sub config.guess
 do
     rm -f tools/$file
-    cp /usr/share/libtool/config/$file tools/
+    cp "$build_aux/$file" tools/
 done
 rm -f tools/config.rpath
 cp /usr/share/gettext/config.rpath tools/
