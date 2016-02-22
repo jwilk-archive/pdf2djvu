@@ -29,9 +29,9 @@ To run the tests, the following software is needed:
 .. _DjVuLibre:
    http://djvu.sourceforge.net/
 .. _poppler:
-   http://poppler.freedesktop.org/
+   https://poppler.freedesktop.org/
 .. _pkg-config:
-   https://wiki.freedesktop.org/www/Software/pkg-config/
+   https://www.freedesktop.org/wiki/Software/pkg-config/
 .. _gettext:
    https://www.gnu.org/software/gettext/
 .. _Exiv2:

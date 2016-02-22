@@ -175,7 +175,7 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://poppler.freedesktop.org/poppler-0.18.4.tar.gz
+	$(wget) https://poppler.freedesktop.org/poppler-0.18.4.tar.gz
 	echo '33421148cdc8e043da291dece2cce1cea6220d49a50c00c56d56d6435501d42e  dcache/poppler-0.18.4.tar.gz' | sha256sum -c
 	$(untar) dcache/poppler-*.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
@@ -385,7 +385,7 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2
+	$(wget) https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2
 	echo 'dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99  dcache/fontconfig-2.11.1.tar.bz2' | sha256sum -c
 	$(untar) dcache/fontconfig-2.11.1.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && autoreconf -vfi

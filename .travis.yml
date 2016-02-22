@@ -51,7 +51,7 @@ cache:
 install:
 - export PATH="/usr/lib/ccache:$PATH"
 - if [ -z "${POPPLER_VERSION##0.[3-9]*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
-- wget http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
+- wget https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
 - (cd poppler-*/ && ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libopenjpeg --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
 - make -C poppler-*/

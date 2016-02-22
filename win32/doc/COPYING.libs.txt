@@ -19,7 +19,7 @@ libpoppler-\*.dll
 =================
 
 | Copyright © 1996-2004 Glyph & Cog, LLC
-| Copyright © 2005-2011 `The Poppler Developers <http://poppler.freedesktop.org>`_
+| Copyright © 2005-2011 `The Poppler Developers <https://poppler.freedesktop.org>`_
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software

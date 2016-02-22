@@ -33,7 +33,7 @@ pdf::DocumentMap::DocumentMap(const std::vector<const char *> &paths)
 #if POPPLER_VERSION < 1903
                     // Prior to 0.19.3, Poppler incorrectly adds trailing
                     // NULL character to Unicode labels:
-                    // http://cgit.freedesktop.org/poppler/poppler/commit/?id=cef6ac0ebbf8
+                    // https://cgit.freedesktop.org/poppler/poppler/commit/?id=cef6ac0ebbf8
                     // Let's strip it.
                     if (str.length() > 0 && str.end()[-1] == '\0')
                         str.erase(str.end() - 1);

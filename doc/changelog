@@ -14,7 +14,7 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   * Improve error handling in out-of-memory situations.
     Thanks to Daniel Stender for the bug report.
     https://bitbucket.org/jwilk/pdf2djvu/issue/107
-  * Use HTTPS for sourceforge.net URLs.
+  * Use HTTPS for sourceforge.net and freedesktop.org URLs.
   * Improve the test suite.
 
   [ Chris Leick ]
@@ -26,7 +26,7 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 11 Feb 2016 00:11:47 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 22 Feb 2016 17:26:46 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
