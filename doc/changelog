@@ -26,7 +26,10 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 22 Feb 2016 17:26:46 +0100
+  [ Jean-Paul Guillonneau ]
+  * Update the French translation of the manual page.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 24 Feb 2016 00:46:49 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
