@@ -47,6 +47,8 @@ export CPPFLAGS = -D__USE_MINGW_ANSI_STDIO
 
 export WINEDEBUG ?= fixme+all,err+all
 export V = 1
+export WINE = wine32
+export WINESERVER = /usr/lib/wine/wineserver32
 
 .PHONY: all
 all:
@@ -531,6 +533,6 @@ src/mingwrt/install-stamp:
 .PHONY: test
 test: install
 	env -u FONTCONFIG_FILE -u FONTCONFIG_PATH XDG_CONFIG_HOME=/nonexistent \
-	$(MAKE) -C ../tests/ pdf2djvu='wine32 ../win32/dist/pdf2djvu.exe' pdf2djvu_win32=1
+	$(MAKE) -C ../tests/ pdf2djvu='$(WINE) ../win32/dist/pdf2djvu.exe' pdf2djvu_win32=1
 
 # vim:ts=4 sts=4 sw=4 noet
