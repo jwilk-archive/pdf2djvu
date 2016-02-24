@@ -1,4 +1,4 @@
-pdf2djvu (0.9.4) UNRELEASED; urgency=low
+pdf2djvu (0.9.4) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Standardize on American spelling in the manual page.
@@ -29,7 +29,7 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   [ Jean-Paul Guillonneau ]
   * Update the French translation of the manual page.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 24 Feb 2016 00:46:49 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 24 Feb 2016 18:34:05 +0100
 
 pdf2djvu (0.9.3) unstable; urgency=low
 
