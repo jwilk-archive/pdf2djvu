@@ -34,6 +34,7 @@ def vm_limit(limit):
 
 class test(case):
     # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/107
+    # + fixed in 0.9.4 [87708193290f]
 
     def test(self):
         # Before Poppler 0.24, the Splash backend would just segfault on OOM.
