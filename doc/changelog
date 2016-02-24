@@ -3,7 +3,6 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
   [ Jakub Wilk ]
   * Standardize on American spelling in the manual page.
   * Document that bugs can be reported to the mailing list.
-  * Update the Polish translation.
   * Fix build failure with GCC 6.
     Thanks to Martin Michlmayr for the bug report.
     https://bugs.debian.org/812007
@@ -16,6 +15,7 @@ pdf2djvu (0.9.4) UNRELEASED; urgency=low
     https://bitbucket.org/jwilk/pdf2djvu/issue/107
   * Use HTTPS for sourceforge.net and freedesktop.org URLs.
   * Improve the test suite.
+  * Update the Polish translation.
 
   [ Chris Leick ]
   * Update the German translation.
