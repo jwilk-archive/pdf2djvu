@@ -429,7 +429,6 @@ src/gettext/source-stamp:
 
 src/gettext/config.status: src/gettext/source-stamp
 src/gettext/config.status: src/winiconv/install-stamp
-	cp lib/libiconv.dll $(dir $@)/gettext-runtime/
 	cd $(dir $@)/gettext-runtime/ && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
@@ -453,23 +452,17 @@ src/gettext/install-stamp: src/gettext/build-stamp
 
 src/winiconv/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) ftp://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/win-iconv-dev_tml-20100912_win32.zip
-	echo 'a5a8f1f6578ce6fcce88bd0fe3b4e7866d4fc158ee6d5dec164f10b443c82f6e  dcache/win-iconv-dev_tml-20100912_win32.zip' | sha256sum -c
-	unzip dcache/win-iconv-dev_tml-20100912_win32.zip 'src/tml/win_iconv/*'
-	mv src/tml/win_iconv/* $(dir $@)
-	rm -r src/tml/
-	sed -i -e '/iconv(/ s/const//' $(dir $@)/iconv.h
+	$(wget) https://github.com/win-iconv/win-iconv/archive/v0.0.8.tar.gz -O win-iconv-0.0.8.tar.gz
+	echo '23adea990a8303c6e69e32a64a30171efcb1b73824a1c2da1bbf576b0ae7c520  dcache/win-iconv-0.0.8.tar.gz' | sha256sum -c
+	$(untar) dcache/win-iconv-0.0.8.tar.gz -C $(dir $@)
 	touch $(@)
 
 src/winiconv/build-stamp: src/winiconv/source-stamp
-	$(CC) $(CFLAGS) -shared $(dir $@)/win_iconv.c -o $(dir $@)/libiconv.dll
+	$(MAKE) -C $(dir $@)
 	touch $(@)
 
 src/winiconv/install-stamp: src/winiconv/build-stamp
-	mkdir -p include/ bin/ lib/ dist/
-	cp $(dir $@)/iconv.h include/
-	cp $(dir $@)/libiconv.dll bin/
-	cp $(dir $@)/libiconv.dll lib/
+	$(MAKE) -C $(dir $@) install prefix=$(usr)
 	$(call ship_dll,libiconv)
 	touch $(@)
 
