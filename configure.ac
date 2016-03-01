@@ -1,4 +1,4 @@
-dnl | Copyright © 2008-2015 Jakub Wilk <jwilk@jwilk.net>
+dnl | Copyright © 2008-2016 Jakub Wilk <jwilk@jwilk.net>
 dnl |
 dnl | This file is part of pdf2djvu.
 dnl |
@@ -45,7 +45,7 @@ do
 done
 AC_MSG_RESULT([ok])
 
-PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.11.1])
+PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.17.0])
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of poppler])
 poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g')

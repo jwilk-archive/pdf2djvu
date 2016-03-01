@@ -3,7 +3,6 @@ compiler:
 - gcc
 - clang
 env:
-- POPPLER_VERSION=0.11.1
 - POPPLER_VERSION=0.17.0
 - POPPLER_VERSION=0.19.0
 - POPPLER_VERSION=0.21.0

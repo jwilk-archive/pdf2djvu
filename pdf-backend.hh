@@ -1,4 +1,4 @@
-/* Copyright © 2007-2015 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2007-2016 Jakub Wilk <jwilk@jwilk.net>
  * Copyright © 2009 Mateusz Turcza
  *
  * This file is part of pdf2djvu.
@@ -104,11 +104,7 @@ namespace pdf
 
   namespace link
   {
-#if POPPLER_VERSION < 1700
-    typedef ::Link Link;
-#else
     typedef ::AnnotLink Link;
-#endif
     typedef ::LinkAction Action;
     typedef ::LinkDest Destination;
     typedef ::LinkGoTo GoTo;

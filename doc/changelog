@@ -1,8 +1,8 @@
 pdf2djvu (0.9.5) UNRELEASED; urgency=low
 
-  * 
+  * Drop support for Poppler < 0.17.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 24 Feb 2016 20:37:51 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 01 Mar 2016 23:03:34 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
