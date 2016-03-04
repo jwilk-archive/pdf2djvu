@@ -163,6 +163,7 @@ P_CHECK_FUNC(
 
 P_MAYBE_ADD_CXXFLAGS(
   [-Wall],
+  [-Wempty-body],
   [-Werror=overloaded-virtual],
   [-Werror=narrowing],
 )
