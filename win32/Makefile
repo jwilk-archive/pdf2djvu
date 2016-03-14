@@ -429,6 +429,7 @@ src/gettext/source-stamp:
 
 src/gettext/config.status: src/gettext/source-stamp
 src/gettext/config.status: src/winiconv/install-stamp
+	cp bin/iconv.dll $(dir $@)/gettext-runtime/
 	cd $(dir $@)/gettext-runtime/ && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
@@ -463,7 +464,7 @@ src/winiconv/build-stamp: src/winiconv/source-stamp
 
 src/winiconv/install-stamp: src/winiconv/build-stamp
 	$(MAKE) -C $(dir $@) install prefix=$(usr)
-	$(call ship_dll,libiconv)
+	$(call ship_dll,iconv)
 	touch $(@)
 
 # libjpeg
