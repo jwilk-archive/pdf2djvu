@@ -342,7 +342,8 @@ src/exiv2/config.status: src/exiv2/source-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
 		--without-zlib \
-		--disable-lensdata
+		--disable-lensdata \
+		--disable-nls
 
 src/exiv2/build-stamp: src/exiv2/config.status
 	$(MAKE) -C $(dir $@)
