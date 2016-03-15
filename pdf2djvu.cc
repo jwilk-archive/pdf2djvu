@@ -1258,8 +1258,12 @@ static int xmain(int argc, char * const argv[])
   std::vector<int> page_numbers;
   std::auto_ptr<const Directory> output_dir;
   std::auto_ptr<File> output_file;
-  std::auto_ptr<DjVm> djvm;
+  /* `page_files` has to be declared before `djvm`;
+   * otherwise temporary files could be removed in the wrong oder:
+   * https://bitbucket.org/jwilk/pdf2djvu/issues/114
+   */
   std::auto_ptr<ComponentList> page_files;
+  std::auto_ptr<DjVm> djvm;
   std::auto_ptr<Quantizer> quantizer;
   djvu::Outline djvu_outline;
   if (config.monochrome)
