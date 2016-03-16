@@ -32,15 +32,37 @@ namespace encoding {
 
 #if WIN32
 
-// The native encoding (so called ANSI character set) can differ from the
-// terminal encoding (typically: so called OEM charset).
 template <>
 std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &converter)
 {
     const std::string &string = converter.string;
-    size_t wide_length, new_length, length = converter.string.length();
+    unsigned int handle_id = 0;
+    HANDLE handle = NULL;
+    if (&stream == &std::cout)
+        handle_id = STD_OUTPUT_HANDLE;
+    else if (&stream == &std::cerr || &stream == &std::clog)
+        handle_id = STD_ERROR_HANDLE;
+    if (handle_id) {
+        handle = GetStdHandle(handle_id);
+        if (handle == INVALID_HANDLE_VALUE)
+            throw_win32_error("GetStdHandle()");
+    }
+    if (handle != NULL) {
+        unsigned long mode;
+        bool ok = GetConsoleMode(handle, &mode);
+        if (!ok)
+            handle = NULL;
+    }
+    if (handle == NULL) {
+        stream << string;
+        return stream;
+    }
+    size_t wide_length;
+    unsigned long written_length;
+    size_t length = converter.string.length();
     if (length == 0)
         return stream;
+    stream.flush();
     Array<char> buffer(length * 2);
     Array<wchar_t> wide_buffer(length);
     wide_length = MultiByteToWideChar(
@@ -49,16 +71,10 @@ std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &c
         wide_buffer, length
     );
     if (wide_length == 0)
-        throw_win32_error("MultiByteToWideChar");
-    new_length = WideCharToMultiByte(
-        GetConsoleOutputCP(), 0,
-        wide_buffer, wide_length,
-        buffer, length * 2,
-        NULL, NULL
-    );
-    if (new_length == 0)
-        throw_win32_error("WideCharToMultiByte");
-    stream.write(buffer, new_length);
+        throw_win32_error("MultiByteToWideChar()");
+    bool ok = WriteConsoleW(handle, wide_buffer, wide_length, &written_length, NULL);
+    if (!ok)
+        throw_win32_error("WriteConsoleW()");
     return stream;
 }
 
