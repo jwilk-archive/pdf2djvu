@@ -1413,8 +1413,6 @@ static int xmain(int argc, char * const argv[])
     #pragma omp critical
     {
       debug(1) << string_printf(_("page #%d -> #%d"), n, page_map.get(n));
-      if (config.n_jobs != 1)
-        debug(2) << ":";
       debug(1) << std::endl;
     }
 #if _OPENMP
