@@ -565,7 +565,7 @@ bool isatty(const std::ostream &ostream)
 {
   if (&ostream == &std::cout)
     return isatty(STDOUT_FILENO);
-  else if (&ostream == &std::cerr)
+  else if (&ostream == &std::cerr || &ostream == &std::clog)
     return isatty(STDERR_FILENO);
   else
   {
