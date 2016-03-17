@@ -43,7 +43,6 @@ export LDFLAGS = -L$(usr)/lib
 
 export CFLAGS = -Os
 export CXXFLAGS = -Os
-export CPPFLAGS = -D__USE_MINGW_ANSI_STDIO
 
 export WINEDEBUG ?= fixme+all,err+all
 export V = 1
