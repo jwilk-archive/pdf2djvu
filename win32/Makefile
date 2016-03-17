@@ -44,8 +44,9 @@ export LDFLAGS = -L$(usr)/lib
 export CFLAGS = -Os
 export CXXFLAGS = -Os
 
-export WINEDEBUG ?= fixme+all,err+all
 export V = 1
+
+export WINEDEBUG ?= err+all
 export WINE = wine32
 export WINESERVER = /usr/lib/wine/wineserver32
 
