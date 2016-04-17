@@ -217,7 +217,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         throw_posix_error("fork()");
     if (pid == 0) {
         // The child:
-        // At this point, only async-singal-safe functions can be used.
+        // At this point, only async-signal-safe functions can be used.
         // See the signal(7) manpage for the full list.
         rc = dup2(stdin_pipe[0], STDIN_FILENO);
         if (rc < 0) {
