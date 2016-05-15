@@ -7,8 +7,10 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Fix incorrect progress output in parallel mode.
   * Windows: fix console output encoding.
     https://bitbucket.org/jwilk/pdf2djvu/issues/64
+  * Improve documentation:
+    + Update nose homepage URL.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 17 Mar 2016 12:02:22 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 15 May 2016 21:18:44 +0200
 
 pdf2djvu (0.9.4) unstable; urgency=low
 

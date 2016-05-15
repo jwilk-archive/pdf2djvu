@@ -41,6 +41,6 @@ To run the tests, the following software is needed:
 .. _OpenMP:
    http://openmp.org/
 .. _nose:
-   https://nose.readthedocs.org/
+   https://nose.readthedocs.io/
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et tw=72
