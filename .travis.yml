@@ -9,7 +9,7 @@ env:
 - POPPLER_VERSION=0.21.1
 - POPPLER_VERSION=0.23.0
 - POPPLER_VERSION=0.31.0
-- POPPLER_VERSION=0.43.0
+- POPPLER_VERSION=0.44.0
 matrix:
   exclude:
   # “-fno-check-new” is not supported by clang
