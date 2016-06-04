@@ -26,7 +26,7 @@ tests/*.jpeg
 tests/*.log
 tests/*.pdf
 tests/*.png
-tests/*.pyc
+tests/*.py[co]
 tests/*.stamp
 tools/config.*
 tools/install-sh
