@@ -457,7 +457,7 @@ pdf2djvu (0.7.4) unstable; urgency=low
 
 pdf2djvu (0.7.3) unstable; urgency=low
 
-  * Add a few const annotation to fix build failure with Poppler ≥ 0.13.
+  * Add a few const annotations to fix build failure with Poppler ≥ 0.13.
     Thanks to Rakesh Pandit for the bug report and the patch.
     https://bitbucket.org/jwilk/pdf2djvu/issue/48
   * Fix handling of the --indirect option.
