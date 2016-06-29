@@ -954,7 +954,7 @@ public:
   {
     size_t size = this->components.size();
     {
-      /* Using ``djvused`` to add shared annotations to a indirect multi-page
+      /* Using ``djvused`` to add shared annotations to an indirect multi-page
        * document could be unacceptably slow:
        * https://sourceforge.net/p/djvu/bugs/100/
        *
