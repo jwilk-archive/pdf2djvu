@@ -296,7 +296,7 @@ class case(object):
         if self._poppler_version is None:
             r = self.pdf2djvu('--version')
             r.assert_(stderr=re('^pdf2djvu '), rc=0)
-            print(repr(r.stderr))
+            print(r.stderr)
             match = re('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
             self._poppler_version = tuple(int(x) for x in match.group(1).split('.'))
         if self._poppler_version < version:
