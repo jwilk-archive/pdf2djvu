@@ -15,8 +15,8 @@
 
 from __future__ import print_function
 
-import collections
 import codecs
+import collections
 import inspect
 import itertools
 import locale
