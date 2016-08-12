@@ -9,6 +9,12 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
     https://bitbucket.org/jwilk/pdf2djvu/issues/64
   * Improve documentation:
     + Update nose homepage URL.
+    + Fix typos.
+  * Improve the test suite:
+    + Fix test failure on GNU/Hurd, which doesn't correctly propagate virtual
+      memory limits to subprocesses.
+      http://savannah.gnu.org/bugs/?43320
+  * Build with “-Wempty-body”.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 15 May 2016 21:18:44 +0200
 
