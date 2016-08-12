@@ -15,8 +15,11 @@
 
 import contextlib
 import resource
+import string
+import sys
 
 from tools import (
+    SkipTest,
     case,
     re,
 )
@@ -28,6 +31,14 @@ def vm_limit(limit):
         limit = lim_hard
     resource.setrlimit(resource.RLIMIT_AS, (limit, lim_hard))
     try:
+        r = case().run(sys.executable, '-c', 'import resource\nfor n in resource.getrlimit(resource.RLIMIT_AS):\n print(n)')
+        r.assert_(stdout=re(''))
+        (cld_soft_lim, cld_hard_lim) = map(int, r.stdout.splitlines())
+        if cld_soft_lim != limit or cld_hard_lim != lim_hard:
+            message = 'virtual memory limit did not propagate to subprocess'
+            if sys.platform.rstrip(string.digits) == 'gnu':
+                raise SkipTest(message + ': http://savannah.gnu.org/bugs/?43320')
+            raise RuntimeError(message)
         yield
     finally:
         resource.setrlimit(resource.RLIMIT_AS, (lim_soft, lim_hard))
