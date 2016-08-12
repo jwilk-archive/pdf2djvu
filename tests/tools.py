@@ -23,6 +23,7 @@ import locale
 import os
 import pipes
 import re
+import signal
 import subprocess as ipc
 import sys
 
@@ -99,6 +100,35 @@ def assert_regex(text, regex):
         message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
         assert_true(False, msg=message)
 
+def _get_signal_names():
+    signame_pattern = re('^SIG[A-Z0-9]*$')
+    data = dict(
+        (name, getattr(signal, name))
+        for name in dir(signal)
+        if signame_pattern.match(name)
+    )
+    try:
+        if data['SIGABRT'] == data['SIGIOT']:
+            del data['SIGIOT']
+    except KeyError:
+        pass
+    try:
+        if data['SIGCHLD'] == data['SIGCLD']:
+            del data['SIGCLD']
+    except KeyError:
+        pass
+    return dict((no, name) for name, no in data.iteritems())
+
+class _ipc_rc(int):
+
+    _signal_names = _get_signal_names()
+
+    def __repr__(self):
+        try:
+            return '-' + self._signal_names[-self]
+        except KeyError:
+            return str(self)
+
 class ipc_result(object):
 
     def __init__(self, stdout, stderr, rc):
@@ -114,7 +144,7 @@ class ipc_result(object):
         else:
             assert_multi_line_equal(self.stderr, stderr)
         if rc is not None:
-            assert_equal(self.rc, rc)
+            assert_equal(_ipc_rc(self.rc), _ipc_rc(rc))
         if stdout is None:
             pass
         elif isinstance(stdout, re.type):
