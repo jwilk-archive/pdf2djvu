@@ -35,6 +35,7 @@ python-nose
 pkgs_prepare_tests='
 python-imaging
 texlive-base
+texlive-fonts-recommended
 texlive-xetex
 fonts-linuxlibertine
 '
