@@ -18,7 +18,7 @@ paths.hh
 pdf2djvu
 po/*.mo
 po/*.pot
-secret/*
+secret
 tests/*.djvu
 tests/*.jpeg
 tests/*.log
