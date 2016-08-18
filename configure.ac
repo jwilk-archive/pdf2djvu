@@ -166,6 +166,7 @@ P_MAYBE_ADD_CXXFLAGS(
   [-Wempty-body],
   [-Werror=overloaded-virtual],
   [-Werror=narrowing],
+  [-Werror=misleading-indentation],
 )
 
 # Output files:
