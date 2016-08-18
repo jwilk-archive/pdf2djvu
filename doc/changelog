@@ -15,8 +15,9 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
       memory limits to subprocesses.
       http://savannah.gnu.org/bugs/?43320
   * Build with “-Wempty-body”.
+  * Build with “-Werror=misleading-indentation”.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 15 May 2016 21:18:44 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Aug 2016 15:25:40 +0200
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
