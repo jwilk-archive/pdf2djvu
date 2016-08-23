@@ -20,7 +20,7 @@ from tools import (
 )
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/98
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/98
     # + fixed in 0.8 [e98f3c4cfa2e]
 
     def test_overwrite(self):

@@ -300,7 +300,7 @@
                     </citerefentry>
                     manual page for details.
                     This option can be used only if the <option>--monochrome</option> option is also enabled.
-                    <!-- https://bitbucket.org/jwilk/pdf2djvu/issue/86 -->
+                    <!-- https://bitbucket.org/jwilk/pdf2djvu/issues/86 -->
                 </para>
             </listitem>
         </varlistentry>

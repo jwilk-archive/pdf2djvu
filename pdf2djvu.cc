@@ -1432,7 +1432,7 @@ static int xmain(int argc, char * const argv[])
       /* When the Splash backend runs out of memory,
        * it produces a 1x1 bitmap without signalling an error in any way
        * (other than printing “Out of memory” on stderr).
-       * https://bitbucket.org/jwilk/pdf2djvu/issue/107
+       * https://bitbucket.org/jwilk/pdf2djvu/issues/107
        */
       errno = ENOMEM;
       throw_posix_error("");

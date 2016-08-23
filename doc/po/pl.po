@@ -276,7 +276,7 @@ msgstr "Rastruj strony jako dwukolorowe bitmapy. W takim wypadku opcje <option>-
 msgid "<option>--loss-level=<replaceable>n</replaceable></option>"
 msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
 
-#. https://bitbucket.org/jwilk/pdf2djvu/issue/86
+#. https://bitbucket.org/jwilk/pdf2djvu/issues/86
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option can be used only if the <option>--monochrome</option> option is also enabled."
 msgstr "Określa agresywność kompresji stratnej. Domyślną wartością jest 0 (kompresja bezstratna). Dopuszczalne wartości to liczby całkowite od 0 do 200 włącznie. Opcja ta jest podobna do opcji <option>-losslevel</option> programu <command>cjb2</command>; szczegóły znajdują się w podręczniku <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> .  Opcja ta może być używana tylko razem z opcją <option>--monochrome</option>."

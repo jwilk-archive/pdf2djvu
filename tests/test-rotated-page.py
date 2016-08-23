@@ -18,7 +18,7 @@ from tools import (
 )
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/4
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/4
     # + fixed in 0.4.10 [b58852fbb5ec]
 
     def test(self):

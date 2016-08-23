@@ -24,7 +24,7 @@ from tools import (
 )
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/12
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/12
     # + fixed in 0.6.0 [490a08283fb4]
 
     def test_verbatim(self):

@@ -20,7 +20,7 @@ from tools import (
 
 class test(case):
 
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issue/109
+    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/109
     # + fixed in 0.9 [dc1734ad4946]
 
     def test(self):
