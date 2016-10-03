@@ -65,6 +65,17 @@ static void print_int(std::ostream &stream, size_t value)
         stream << static_cast<char>((value >> (8 * i)) & 0xff);
 }
 
+template <int nbits>
+static void print_int_le(std::ostream &stream, size_t value)
+{
+    assert(nbits % 8 == 0);
+    assert(nbits <= std::numeric_limits<size_t>::digits);
+    if (value >= ((size_t) 1) << nbits)
+        throw djvu::OutlineError();
+    for (int i = 0; i < (nbits / 8); i++)
+        stream << static_cast<char>((value >> (8 * i)) & 0xff);
+}
+
 std::ostream& djvu::operator<<(std::ostream &stream, const djvu::Outline &outline)
 {
     print_int<16>(stream, outline.size());
@@ -80,8 +91,14 @@ djvu::Outline::operator bool() const
 
 std::ostream& djvu::operator<<(std::ostream &stream, const djvu::OutlineItem &item)
 {
-    print_int<8>(stream, item.children.size());
-    print_int<24>(stream, item.description.size());
+    // DjVu Reference (§8.3.3) says that each bookmark starts with:
+    // • BYTE nChildren — number of immediate child bookmark records
+    // • INT24 nDesc — size of description text
+    // What's actually implemented in DjVuLibre is:
+    // • INT16 (little-endian) nChildren
+    // • INT16 (big-endian) nDesc
+    print_int_le<16>(stream, item.children.size());
+    print_int<16>(stream, item.description.size());
     stream << item.description;
     print_int<24>(stream, item.url.size());
     stream << item.url;

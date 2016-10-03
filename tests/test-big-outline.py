@@ -18,7 +18,7 @@ from tools import (
     re,
 )
 
-b = 255
+b = 999
 item_template = '''
   ("ipsum {0}"
    "#p0001.djvu" )

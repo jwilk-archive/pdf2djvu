@@ -16,16 +16,16 @@
 \pdfpagewidth 1pt
 \pdfpageheight 1pt
 
-\newcount\b
-\b=999
-\pdfoutline goto page 1 {/Fit} count \b {Lorem}
-\newcount\i
-\i=1
+\edef\text{ipsum}
+\edef\sp{ }
+\edef\tlen{5}
 \loop
-    \pdfoutline goto page 1 {/Fit} {ipsum \the\i}
-\advance \i by 1
-\unless\ifnum \i>\b
+\edef\text{\text\sp\text}
+\edef\tlen{\the\numexpr \tlen * 2 + 1}
+\ifnum\tlen<65530
 \repeat
+
+\pdfoutline goto page 1 {/Fit} {Lorem \text}
 
 \null
 
