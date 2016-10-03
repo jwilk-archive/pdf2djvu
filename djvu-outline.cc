@@ -59,7 +59,7 @@ static void print_int(std::ostream &stream, size_t value)
 {
     assert(nbits % 8 == 0);
     assert(nbits <= std::numeric_limits<size_t>::digits);
-    if (value >= (1 << nbits))
+    if (value >= ((size_t) 1) << nbits)
         throw djvu::OutlineError();
     for (int i = (nbits / 8) - 1; i >= 0; i--)
         stream << static_cast<char>((value >> (8 * i)) & 0xff);
