@@ -1,6 +1,5 @@
 pdf2djvu (0.9.5) UNRELEASED; urgency=low
 
-  * Drop support for Poppler < 0.17.
   * Improve error handling:
     + Fix temporary files removal order.
       https://bitbucket.org/jwilk/pdf2djvu/issues/114
@@ -20,6 +19,7 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
     + Fix test failure on GNU/Hurd, which doesn't correctly propagate virtual
       memory limits to subprocesses.
       http://savannah.gnu.org/bugs/?43320
+  * Drop support for Poppler < 0.17.
   * Build with “-Wempty-body”.
   * Build with “-Werror=misleading-indentation”.
 
