@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-01-04 11:40+0100\n"
+"POT-Creation-Date: 2016-10-03 15:54+0200\n"
 "PO-Revision-Date: 2012-05-31 11:57+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -167,9 +167,9 @@ msgstr "<option>--no-page-titles</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 #, fuzzy
-#| msgid "Equivalent to <quote><literal>--page-id-template=<replaceable>prefix</replaceable>{page:04*}.djvu</literal></quote>."
-msgid "Don't set page titles.  Equivalent to <quote><literal>--page-title-template=</literal></quote>."
-msgstr "Еквівалентно <quote><literal>--page-id-template=<replaceable>префікс</replaceable>{page:04*}.djvu</literal></quote>."
+#| msgid "Don't extract the text."
+msgid "Don't set page titles."
+msgstr "Не витягувати текст."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Resolution, page size"

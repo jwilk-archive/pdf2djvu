@@ -8,6 +8,9 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Windows: fix console output encoding.
     https://bitbucket.org/jwilk/pdf2djvu/issues/64
   * Improve documentation:
+    + Don't mention “--page-title-template=” as a way of disabling page
+      titles. This works only if “--no-page-titles” works; there's no reason
+      to prefer the former.
     + Update nose homepage URL.
     + Fix typos.
   * Improve the test suite:
@@ -17,7 +20,7 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Build with “-Wempty-body”.
   * Build with “-Werror=misleading-indentation”.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Aug 2016 15:25:40 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 03 Oct 2016 15:46:16 +0200
 
 pdf2djvu (0.9.4) unstable; urgency=low
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
 "Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-01-04 11:40+0100\n"
+"POT-Creation-Date: 2016-10-03 15:53+0200\n"
 "PO-Revision-Date: 2016-02-16 09:50+0100\n"
 "Last-Translator: Jean-Paul Guillonneau <guillonneau.jeanpaul@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -165,8 +165,9 @@ msgid "<option>--no-page-titles</option>"
 msgstr "<option>--no-page-titles</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Don't set page titles.  Equivalent to <quote><literal>--page-title-template=</literal></quote>."
-msgstr "Ne pas définir le titre des pages. Équivalent à <quote><literal>--page-title-template=</literal></quote>."
+#, fuzzy
+msgid "Don't set page titles."
+msgstr "Ne pas définir le titre des pages."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Resolution, page size"

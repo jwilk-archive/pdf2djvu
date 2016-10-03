@@ -164,7 +164,6 @@
             <listitem>
                 <para>
                     Don't set page titles.
-                    Equivalent to <quote><literal>--page-title-template=</literal></quote>.
                 </para>
             </listitem>
         </varlistentry>
