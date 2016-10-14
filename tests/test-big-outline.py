@@ -15,7 +15,6 @@
 
 from tools import (
     case,
-    re,
 )
 
 b = 999
