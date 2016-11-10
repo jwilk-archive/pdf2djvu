@@ -19,11 +19,30 @@ AC_LANG([C++])
 
 # Checks for programs:
 
-AC_PROG_CXX
+AC_PROG_EGREP
 AC_PROG_INSTALL
 AC_PREPROC_IFELSE(
   [AC_LANG_SOURCE([[#include <winver.h>]])],
   [AC_CHECK_TOOL([WINDRES], [windres])]
+)
+
+# Checks for the compiler:
+
+AC_PROG_CXX
+
+AC_SYS_LARGEFILE
+
+AC_OPENMP
+
+AC_MSG_CHECKING([for MinGW ANSI stdio])
+AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
+  [
+    AC_MSG_RESULT([yes])
+    AC_DEFINE_UNQUOTED([USE_MINGW_ANSI_STDIO], 1, [Define to use MinGW ANSI stdio])
+  ],
+  [
+    AC_MSG_RESULT([no])
+  ]
 )
 
 # Checks for libraries:
@@ -134,23 +153,6 @@ fi
 AM_GNU_GETTEXT([external], [need-ngettext])
 AM_GNU_GETTEXT_VERSION(0.17)
 AM_ICONV
-
-# Checks for typedefs, structures, and compiler characteristics:
-
-AC_SYS_LARGEFILE
-
-AC_OPENMP
-
-AC_MSG_CHECKING([for MinGW ANSI stdio])
-AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
-  [
-    AC_MSG_RESULT([yes])
-    AC_DEFINE_UNQUOTED([USE_MINGW_ANSI_STDIO], 1, [Define to use MinGW ANSI stdio])
-  ],
-  [
-    AC_MSG_RESULT([no])
-  ]
-)
 
 # Checks for library functions:
 
