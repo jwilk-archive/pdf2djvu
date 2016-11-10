@@ -246,6 +246,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             report_posix_error(error_pipe[1], "close()");
             abort();
         }
+        assert(c_argv[0] != NULL);
         execvp(c_argv[0],
             const_cast<char * const *>(
                 static_cast<const char **>(c_argv)
