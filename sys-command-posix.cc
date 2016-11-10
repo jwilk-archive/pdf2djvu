@@ -209,6 +209,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     for (size_t i = 0; i < argc; i++)
         c_argv[i] = argv[i].c_str();
     c_argv[argc] = NULL;
+    assert(c_argv[0] != NULL);
     mkfifo(stdout_pipe);
     mkfifo(stdin_pipe, O_NONBLOCK);
     mkfifo(error_pipe);
@@ -246,7 +247,6 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             report_posix_error(error_pipe[1], "close()");
             abort();
         }
-        assert(c_argv[0] != NULL);
         execvp(c_argv[0],
             const_cast<char * const *>(
                 static_cast<const char **>(c_argv)
