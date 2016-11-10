@@ -1165,9 +1165,9 @@ static int calculate_dpi(pdf::Document &doc, int n, bool crop)
       int_dpi = djvu::max_dpi;
     else
       int_dpi = static_cast<int>(dpi);
-      debug(2)
-        << string_printf(_("estimated resolution: %d dpi"), int_dpi)
-        << std::endl;
+    debug(2)
+      << string_printf(_("estimated resolution: %d dpi"), int_dpi)
+      << std::endl;
     return int_dpi;
   }
   else
