@@ -24,7 +24,7 @@ pdf::DocumentMap::DocumentMap(const std::vector<const char *> &paths)
             ifs.close();
         }
         {
-            std::auto_ptr<pdf::Document> doc(new pdf::Document(*it));
+            std::unique_ptr<pdf::Document> doc(new pdf::Document(*it));
             pdf::Catalog *catalog = doc->getCatalog();
             for (int i = 0; i < doc->getNumPages(); i++) {
                 pdf::String s;

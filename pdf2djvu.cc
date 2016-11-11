@@ -72,7 +72,7 @@ public:
 
 static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
 {
-  std::auto_ptr<pdf::link::Destination> dest;
+  std::unique_ptr<pdf::link::Destination> dest;
   dest.reset(goto_link->getDest());
   if (dest.get() == nullptr)
     dest.reset(catalog->findDest(goto_link->getNamedDest()));
@@ -284,7 +284,7 @@ typedef pdf::Renderer MainRenderer;
 class MutedRenderer: public pdf::Renderer
 {
 protected:
-  std::auto_ptr<std::ostringstream> text_comments;
+  std::unique_ptr<std::ostringstream> text_comments;
   std::vector<sexpr::Ref> annotations;
   const ComponentList &page_files;
   bool skipped_elements;
@@ -415,7 +415,7 @@ public:
       if (px + pw < 0 || py + ph < 0 || px >= bitmap_width || py >= bitmap_height)
         return;
     }
-    std::auto_ptr<pdf::NFKC> nfkc;
+    std::unique_ptr<pdf::NFKC> nfkc;
     if (config.text_nfkc)
       nfkc.reset(new pdf::FullNFKC(unistr, length));
     else
@@ -681,7 +681,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
       int page;
       {
         pdf::OwnedObject destination;
-        std::auto_ptr<pdf::link::Action> link_action;
+        std::unique_ptr<pdf::link::Action> link_action;
         if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
           link_action.reset(pdf::link::Action::parseDest(&destination));
         else if (!pdf::dict_lookup(current, "A", &destination)->isNull())
@@ -768,8 +768,8 @@ private:
   TemporaryComponentList(const TemporaryComponentList&); // not defined
   TemporaryComponentList& operator=(const TemporaryComponentList&); // not defined
 protected:
-  std::auto_ptr<const TemporaryDirectory> directory;
-  std::auto_ptr<TemporaryFile> shared_ant_file;
+  std::unique_ptr<const TemporaryDirectory> directory;
+  std::unique_ptr<TemporaryFile> shared_ant_file;
 
   virtual File *create_file(const std::string &page_id)
   {
@@ -878,8 +878,8 @@ protected:
   size_t size;
   File &output_file;
   DjVuCommand converter;
-  std::auto_ptr<IndirectDjVm> indirect_djvm;
-  std::auto_ptr<TemporaryFile> index_file;
+  std::unique_ptr<IndirectDjVm> indirect_djvm;
+  std::unique_ptr<TemporaryFile> index_file;
 public:
   explicit BundledDjVm(File &output_file)
   : size(0),
@@ -900,7 +900,7 @@ protected:
   File &index_file;
   std::vector<Component> components;
   bool needs_shared_ant;
-  std::auto_ptr<std::ostringstream> outline_stream;
+  std::unique_ptr<std::ostringstream> outline_stream;
   class UnexpectedDjvuSedOutput : public std::runtime_error
   {
   public:
@@ -1242,15 +1242,15 @@ static int xmain(int argc, char * const argv[])
   int n_pages = document_map.get_n_pages();
   PageMap page_map;
   std::vector<int> page_numbers;
-  std::auto_ptr<const Directory> output_dir;
-  std::auto_ptr<File> output_file;
+  std::unique_ptr<const Directory> output_dir;
+  std::unique_ptr<File> output_file;
   /* `page_files` has to be declared before `djvm`;
    * otherwise temporary files could be removed in the wrong oder:
    * https://github.com/jwilk/pdf2djvu/issues/114
    */
-  std::auto_ptr<ComponentList> page_files;
-  std::auto_ptr<DjVm> djvm;
-  std::auto_ptr<Quantizer> quantizer;
+  std::unique_ptr<ComponentList> page_files;
+  std::unique_ptr<DjVm> djvm;
+  std::unique_ptr<Quantizer> quantizer;
   djvu::Outline djvu_outline;
   if (config.monochrome)
     quantizer.reset(new DummyQuantizer(config));
@@ -1368,9 +1368,9 @@ static int xmain(int argc, char * const argv[])
   if (page_numbers.size() == 0)
     throw Config::NoPagesSelected();
 
-  std::auto_ptr<MainRenderer> out1;
-  std::auto_ptr<MutedRenderer> outm, outs;
-  std::auto_ptr<pdf::Document> doc;
+  std::unique_ptr<MainRenderer> out1;
+  std::unique_ptr<MutedRenderer> outm, outs;
+  std::unique_ptr<pdf::Document> doc;
   const char *doc_filename = nullptr;
 
   bool crop = !config.use_media_box;

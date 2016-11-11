@@ -83,8 +83,8 @@ public:
   char *bg_slices;
   std::vector< std::pair<int, int> > pages;
   std::vector<const char*> filenames;
-  std::auto_ptr<string_format::Template> page_id_template;
-  std::auto_ptr<string_format::Template> page_title_template;
+  std::unique_ptr<string_format::Template> page_id_template;
+  std::unique_ptr<string_format::Template> page_title_template;
   std::string text_filter_command_line;
   int n_jobs;
 

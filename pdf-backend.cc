@@ -248,7 +248,7 @@ void pdf::Document::get_page_size(int n, bool crop, double &width, double &heigh
 
 const std::string pdf::Document::get_xmp()
 {
-  std::auto_ptr<pdf::String> mstring;
+  std::unique_ptr<pdf::String> mstring;
   mstring.reset(this->readMetadata());
   if (mstring.get() == nullptr)
     return "";
