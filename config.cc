@@ -147,7 +147,7 @@ static std::pair<int, int>parse_page_size(const std::string &s)
   int x, y;
   char c;
   stream >> x >> c >> y;
-  if (x > 0 &&  y > 0 && c == 'x' && stream.eof() && !stream.fail())
+  if (x > 0 && y > 0 && c == 'x' && stream.eof() && !stream.fail())
     return std::make_pair(x, y);
   else
     throw Config::Error(_("Unable to parse page size"));
