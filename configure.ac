@@ -30,6 +30,8 @@ AC_PREPROC_IFELSE(
 
 AC_PROG_CXX
 
+P_CXX11
+
 AC_SYS_LARGEFILE
 
 AC_OPENMP
@@ -165,7 +167,6 @@ P_CHECK_FUNC(
 # Turn on compile warnings:
 
 P_MAYBE_ADD_CXXFLAGS(
-  [-std=gnu++98],
   [-Wall],
   [-Wempty-body],
   [-Werror=overloaded-virtual],

@@ -1,4 +1,4 @@
-dnl | Copyright © 2015 Jakub Wilk <jwilk@jwilk.net>
+dnl | Copyright © 2015-2016 Jakub Wilk <jwilk@jwilk.net>
 dnl |
 dnl | This file is part of pdf2djvu.
 dnl |
@@ -94,5 +94,60 @@ AC_DEFUN(
         fi
     ]
 )
+
+# AX_CXX_COMPILE_STDCXX_11 is too thorough. It would reject GCC 4.6, even
+# though this compiler implements enough C++11 bits for our purposes.
+
+m4_define([_P_CXX11_CODE], [
+    void* test()
+    {
+        auto t = nullptr;
+        return t;
+    }
+])
+
+# P_CXX11()
+
+AC_DEFUN(
+    [P_CXX11],
+    [
+        have_cxx11=no
+        AC_MSG_CHECKING([whether $CXX supports C++11])
+        AC_COMPILE_IFELSE(
+            [AC_LANG_PROGRAM([_P_CXX11_CODE])],
+            [
+                AC_MSG_RESULT([yes])
+                have_cxx11=yes
+            ],
+            [
+                AC_MSG_RESULT([no])
+                for cxx_std in 'gnu++11' 'gnu++0x'
+                do
+                    cxx_opt="-std=$cxx_std"
+                    AC_MSG_CHECKING([whether $CXX $cxx_opt supports C++11])
+                    p_CXXFLAGS="$CXXFLAGS"
+                    CXXFLAGS="$CXXFLAGS $cxx_opt"
+                    AC_COMPILE_IFELSE(
+                        [AC_LANG_PROGRAM([_P_CXX11_CODE])],
+                        [
+                            AC_MSG_RESULT([yes])
+                            have_cxx11=yes
+                        ],
+                        [
+                            AC_MSG_RESULT([no])
+                            CXXFLAGS="$p_CXXFLAGS"
+                        ]
+                    )
+                    test $have_cxx11 = yes && break
+                done
+            ]
+        )
+        if test $have_cxx11 = no
+        then
+            AC_MSG_ERROR([the compiler does not support C++11])
+        fi
+    ]
+)
+
 
 dnl vim:ts=4 sts=4 sw=4 et ft=config
