@@ -21,7 +21,7 @@ cxxflags=$(
 PS4='$ '
 (
     set -x
-    clang-tidy "$@" -- $cxxflags
+    clang-tidy "$@" -- -std=gnu++11 $cxxflags
 )
 
 # vim:ts=4 sts=4 sw=4 et
