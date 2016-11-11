@@ -129,7 +129,7 @@ pdf::Environment::Environment()
 #if POPPLER_VERSION < 1900
   setErrorFunction(poppler_error_handler);
 #else
-  setErrorCallback(poppler_error_handler, NULL);
+  setErrorCallback(poppler_error_handler, nullptr);
 #endif
 }
 
@@ -150,7 +150,7 @@ void pdf::Environment::set_antialias(bool value)
  */
 
 pdf::Document::Document(const std::string &file_name)
-: ::PDFDoc(new pdf::String(file_name.c_str()), NULL, NULL)
+: ::PDFDoc(new pdf::String(file_name.c_str()), nullptr, nullptr)
 {
   if (!this->isOk())
     throw LoadError();
@@ -193,7 +193,7 @@ static pdf::Bool annotations_callback(pdf::ant::Annotation *annotation, void *us
   if (annotation->getType() != pdf::ant::Annotation::typeLink)
     return true;
   pdf::ant::Color *color = annotation->getColor();
-  if (color == NULL)
+  if (color == nullptr)
   {
     border_colors.push_back("");
     return true;
@@ -224,9 +224,9 @@ void pdf::Document::display_page(pdf::Renderer *renderer, int npage, double hdpi
 {
   renderer->link_border_colors.clear();
   this->displayPage(renderer, npage, hdpi, vdpi, 0, !crop, crop, !do_links,
-    NULL, NULL,
-    do_links ? annotations_callback : NULL,
-    do_links ? &renderer->link_border_colors : NULL
+    nullptr, nullptr,
+    do_links ? annotations_callback : nullptr,
+    do_links ? &renderer->link_border_colors : nullptr
   );
   std::reverse(renderer->link_border_colors.begin(), renderer->link_border_colors.end());
   this->processLinks(renderer, npage);
@@ -250,7 +250,7 @@ const std::string pdf::Document::get_xmp()
 {
   std::auto_ptr<pdf::String> mstring;
   mstring.reset(this->readMetadata());
-  if (mstring.get() == NULL)
+  if (mstring.get() == nullptr)
     return "";
   const char *cstring = mstring->getCString();
   if (strncmp(cstring, "<?xpacket begin=", 16) != 0)
@@ -296,11 +296,11 @@ pdf::Timestamp pdf::Timestamp::now()
   result.tz_sign = '+';
   result.tz_hour = 0;
   result.tz_minute = 0;
-  time_t unix_now = time(NULL);
+  time_t unix_now = time(nullptr);
   if (unix_now == static_cast<time_t>(-1))
     throw_posix_error("time()");
   struct tm *local_tm = localtime(&unix_now);
-  if (local_tm == NULL)
+  if (local_tm == nullptr)
     throw_posix_error("localtime()");
   time_t unix_now_l = timegm(local_tm);
   if (unix_now_l == static_cast<time_t>(-1))
@@ -509,7 +509,7 @@ void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)
 bool pdf::get_glyph(splash::Splash *splash, splash::Font *font,
   double x, double y, int code, splash::GlyphBitmap *bitmap)
 {
-  if (font == NULL)
+  if (font == nullptr)
     return false;
   splash::ClipResult clip_result;
   if (!font->getGlyph(code, 0, 0, bitmap, static_cast<int>(x), static_cast<int>(y), splash->getClip(), &clip_result))

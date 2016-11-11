@@ -43,7 +43,7 @@ namespace sexpr
 
 #else
 
-static std::ostream *puts_stream = NULL;
+static std::ostream *puts_stream = nullptr;
 
 static int my_puts(const char *s)
 {

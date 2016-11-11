@@ -57,7 +57,7 @@ Config::Config()
   this->no_render = false;
   this->monochrome = false;
   this->loss_level = 0;
-  this->bg_slices = NULL;
+  this->bg_slices = nullptr;
   this->page_id_template.reset(default_page_id_template("p"));
   this->page_title_template.reset(new string_format::Template("{label}"));
   this->n_jobs = 1;
@@ -277,46 +277,46 @@ void Config::read_config(int argc, char * const argv[])
   };
   static struct option options [] =
   {
-    { "anti-alias", 0, 0, OPT_ANTIALIAS },
-    { "antialias", 0, 0, OPT_ANTIALIAS }, /* deprecated alias */
-    { "bg-slices", 1, 0, OPT_BG_SLICES },
-    { "bg-subsample", 1, 0, OPT_BG_SUBSAMPLE },
-    { "crop-text", 0, 0, OPT_TEXT_CROP },
-    { "dpi", 1, 0, OPT_DPI },
-    { "fg-colors", 1, 0, OPT_FG_COLORS },
-    { "filter-text", 1, 0, OPT_TEXT_FILTER },
-    { "guess-dpi", 0, 0, OPT_GUESS_DPI },
-    { "help", 0, 0, OPT_HELP },
-    { "hyperlinks", 1, 0, OPT_HYPERLINKS },
-    { "indirect", 1, 0, OPT_INDIRECT },
-    { "jobs", 1, 0, OPT_JOBS },
-    { "lines", 0, 0, OPT_TEXT_LINES },
-    { "loss-level", 1, 0, OPT_LOSS_ANY },
-    { "losslevel", 1, 0, OPT_LOSS_ANY }, /* deprecated alias */
-    { "lossy", 0, 0, OPT_LOSS_100 },
-    { "media-box", 0, 0, OPT_MEDIA_BOX },
-    { "monochrome", 0, 0, OPT_MONOCHROME },
-    { "no-hyperlinks", 0, 0, OPT_NO_HLINKS },
-    { "no-metadata", 0, 0, OPT_NO_METADATA },
-    { "no-nfkc", 0, 0, OPT_TEXT_NO_NFKC },
-    { "no-outline", 0, 0, OPT_NO_OUTLINE },
-    { "no-page-titles", 0, 0, OPT_NO_PAGE_TITLES },
-    { "no-render", 0, 0, OPT_NO_RENDER },
-    { "no-text", 0, 0, OPT_TEXT_NONE },
-    { "output", 1, 0, OPT_OUTPUT },
-    { "page-id-prefix", 1, 0, OPT_PAGE_ID_PREFIX },
-    { "page-id-template", 1, 0, OPT_PAGE_ID_TEMPLATE },
-    { "page-size", 1, 0, OPT_PAGE_SIZE },
-    { "page-title-template", 1, 0, OPT_PAGE_TITLE_TEMPLATE },
-    { "pageid-prefix", 1, 0, OPT_PAGE_ID_PREFIX }, /* deprecated alias */
-    { "pageid-template", 1, 0, OPT_PAGE_ID_TEMPLATE }, /* deprecated alias */
-    { "pages", 1, 0, OPT_PAGES },
-    { "quiet", 0, 0, OPT_QUIET },
-    { "verbatim-metadata", 0, 0, OPT_VERBATIM_METADATA },
-    { "verbose", 0, 0, OPT_VERBOSE },
-    { "version", 0, 0, OPT_VERSION },
-    { "words", 0, 0, OPT_TEXT_WORDS },
-    { NULL, 0, 0, '\0' }
+    { "anti-alias", 0, nullptr, OPT_ANTIALIAS },
+    { "antialias", 0, nullptr, OPT_ANTIALIAS }, /* deprecated alias */
+    { "bg-slices", 1, nullptr, OPT_BG_SLICES },
+    { "bg-subsample", 1, nullptr, OPT_BG_SUBSAMPLE },
+    { "crop-text", 0, nullptr, OPT_TEXT_CROP },
+    { "dpi", 1, nullptr, OPT_DPI },
+    { "fg-colors", 1, nullptr, OPT_FG_COLORS },
+    { "filter-text", 1, nullptr, OPT_TEXT_FILTER },
+    { "guess-dpi", 0, nullptr, OPT_GUESS_DPI },
+    { "help", 0, nullptr, OPT_HELP },
+    { "hyperlinks", 1, nullptr, OPT_HYPERLINKS },
+    { "indirect", 1, nullptr, OPT_INDIRECT },
+    { "jobs", 1, nullptr, OPT_JOBS },
+    { "lines", 0, nullptr, OPT_TEXT_LINES },
+    { "loss-level", 1, nullptr, OPT_LOSS_ANY },
+    { "losslevel", 1, nullptr, OPT_LOSS_ANY }, /* deprecated alias */
+    { "lossy", 0, nullptr, OPT_LOSS_100 },
+    { "media-box", 0, nullptr, OPT_MEDIA_BOX },
+    { "monochrome", 0, nullptr, OPT_MONOCHROME },
+    { "no-hyperlinks", 0, nullptr, OPT_NO_HLINKS },
+    { "no-metadata", 0, nullptr, OPT_NO_METADATA },
+    { "no-nfkc", 0, nullptr, OPT_TEXT_NO_NFKC },
+    { "no-outline", 0, nullptr, OPT_NO_OUTLINE },
+    { "no-page-titles", 0, nullptr, OPT_NO_PAGE_TITLES },
+    { "no-render", 0, nullptr, OPT_NO_RENDER },
+    { "no-text", 0, nullptr, OPT_TEXT_NONE },
+    { "output", 1, nullptr, OPT_OUTPUT },
+    { "page-id-prefix", 1, nullptr, OPT_PAGE_ID_PREFIX },
+    { "page-id-template", 1, nullptr, OPT_PAGE_ID_TEMPLATE },
+    { "page-size", 1, nullptr, OPT_PAGE_SIZE },
+    { "page-title-template", 1, nullptr, OPT_PAGE_TITLE_TEMPLATE },
+    { "pageid-prefix", 1, nullptr, OPT_PAGE_ID_PREFIX }, /* deprecated alias */
+    { "pageid-template", 1, nullptr, OPT_PAGE_ID_TEMPLATE }, /* deprecated alias */
+    { "pages", 1, nullptr, OPT_PAGES },
+    { "quiet", 0, nullptr, OPT_QUIET },
+    { "verbatim-metadata", 0, nullptr, OPT_VERBATIM_METADATA },
+    { "verbose", 0, nullptr, OPT_VERBOSE },
+    { "version", 0, nullptr, OPT_VERSION },
+    { "words", 0, nullptr, OPT_TEXT_WORDS },
+    { nullptr, 0, nullptr, '\0' }
   };
   int optindex, c;
   while (true)

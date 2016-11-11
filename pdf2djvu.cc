@@ -74,11 +74,11 @@ static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *cata
 {
   std::auto_ptr<pdf::link::Destination> dest;
   dest.reset(goto_link->getDest());
-  if (dest.get() == NULL)
+  if (dest.get() == nullptr)
     dest.reset(catalog->findDest(goto_link->getNamedDest()));
   else
     dest.reset(dest.release()->copy());
-  if (dest.get() != NULL)
+  if (dest.get() != nullptr)
   {
     int page;
     if (dest->isPageRef())
@@ -223,12 +223,12 @@ protected:
     for (std::vector<Component*>::iterator it = this->components.begin(); it != this->components.end(); it++)
     {
       delete *it;
-      *it = NULL;
+      *it = nullptr;
     }
     for (std::vector<File*>::iterator it = this->files.begin(); it != this->files.end(); it++)
     {
       delete *it;
-      *it = NULL;
+      *it = nullptr;
     }
   }
 
@@ -259,7 +259,7 @@ public:
   virtual Component &operator[](int n)
   {
     std::vector<Component*>::reference tmpfile_ptr = this->components.at(n - 1);
-    if (tmpfile_ptr == NULL)
+    if (tmpfile_ptr == nullptr)
     {
       this->files[n - 1] = this->create_file(this->get_file_name(n));
       tmpfile_ptr = new Component(*this->files[n - 1]);
@@ -440,7 +440,7 @@ public:
       return;
     double x1, y1, x2, y2;
     pdf::link::Action *link_action = link->getAction();
-    if (link_action == NULL)
+    if (link_action == nullptr)
     {
       debug(1) << _("Warning: Unable to convert link without an action") << std::endl;
       return;
@@ -688,7 +688,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
           link_action.reset(pdf::link::Action::parseAction(&destination));
         else
           throw NoPageForBookmark();
-        if (link_action.get() == NULL || link_action->getKind() != actionGoTo)
+        if (link_action.get() == nullptr || link_action->getKind() != actionGoTo)
           throw NoPageForBookmark();
         try
         {
@@ -929,7 +929,7 @@ public:
   {
     if (!outline)
     {
-      this->outline_stream.reset(NULL);
+      this->outline_stream.reset(nullptr);
       return;
     }
     this->outline_stream.reset(new std::ostringstream);
@@ -1005,7 +1005,7 @@ public:
 
 void BundledDjVm::add(const Component &component)
 {
-  if (this->index_file.get() == NULL)
+  if (this->index_file.get() == nullptr)
   {
     std::ostringstream stream;
     stream << component << ".djvu-index";
@@ -1040,7 +1040,7 @@ void BundledDjVm::commit()
     << *this->index_file
     << this->output_file;
   this->converter(); // djvmcvt -b <output-djvu-file> <index-djvu-file>
-  this->index_file.reset(NULL);
+  this->index_file.reset(nullptr);
 }
 
 void IndirectDjVm::create_bare(const std::vector<Component> &components)
@@ -1371,7 +1371,7 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<MainRenderer> out1;
   std::auto_ptr<MutedRenderer> outm, outs;
   std::auto_ptr<pdf::Document> doc;
-  const char *doc_filename = NULL;
+  const char *doc_filename = nullptr;
 
   bool crop = !config.use_media_box;
   debug(0)++;
@@ -1403,11 +1403,11 @@ static int xmain(int argc, char * const argv[])
         outs->start_doc(doc.get());
       }
     }
-    assert(doc.get() != NULL);
-    assert(out1.get() != NULL);
-    assert(outm.get() != NULL);
+    assert(doc.get() != nullptr);
+    assert(out1.get() != nullptr);
+    assert(outm.get() != nullptr);
     if (!config.monochrome)
-      assert(outs.get() != NULL);
+      assert(outs.get() != nullptr);
     Component &component = (*page_files)[n];
     #pragma omp critical
     {

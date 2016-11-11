@@ -41,7 +41,7 @@ std::string string_vprintf(const char *message, va_list args)
 {
     va_list args_copy;
     va_copy(args_copy, args);
-    int length = vsnprintf(NULL, 0, message, args_copy);
+    int length = vsnprintf(nullptr, 0, message, args_copy);
     va_end(args_copy);
     if (length < 0)
         throw_posix_error("vsnprintf()");

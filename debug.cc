@@ -20,7 +20,7 @@ class DevNull : public std::ostream
 {
 public:
   DevNull()
-  : std::ostream(0)
+  : std::ostream(nullptr)
   { }
 };
 

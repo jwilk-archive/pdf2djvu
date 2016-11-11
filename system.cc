@@ -221,12 +221,12 @@ std::string Win32Error::error_message(const std::string &context)
   unsigned long error_code = GetLastError();
   unsigned long nbytes = FormatMessage(
     FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-    NULL,
+    nullptr,
     error_code,
     MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
     (char*) &buffer,
     0,
-    NULL
+    nullptr
   );
   if (nbytes == 0)
     message.append(_("possibly memory allocation error"));
@@ -251,7 +251,7 @@ void throw_win32_error(const std::string &context)
  */
 
 Directory::Directory(const std::string &name)
-: name(name), posix_dir(NULL)
+: name(name), posix_dir(nullptr)
 {
   this->open(name.c_str());
 }
@@ -264,13 +264,13 @@ Directory::~Directory() throw ()
 void Directory::open(const char* path)
 {
   this->posix_dir = opendir(path);
-  if (this->posix_dir == NULL)
+  if (this->posix_dir == nullptr)
     throw_posix_error(path);
 }
 
 void Directory::close(void)
 {
-  if (this->posix_dir == NULL)
+  if (this->posix_dir == nullptr)
     return;
   if (closedir(static_cast<DIR*>(this->posix_dir)) != 0)
     throw_posix_error(this->name);
@@ -288,7 +288,7 @@ protected:
   static const char *temporary_directory()
   {
     const char *result = getenv("TMPDIR");
-    if (result == NULL)
+    if (result == nullptr)
       result = P_tmpdir;
     return result;
   }
@@ -309,7 +309,7 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
 {
 #if !WIN32
   TemporaryPathTemplate path_buffer;
-  if (mkdtemp(path_buffer) == NULL)
+  if (mkdtemp(path_buffer) == nullptr)
     throw_posix_error(static_cast<char*>(path_buffer));
 #else
   char base_path_buffer[PATH_MAX];
@@ -464,7 +464,7 @@ Cwd::Cwd(const std::string &path)
   while (1)
   {
     Array<char> buffer(size);
-    rc = getcwd(buffer, size) == NULL;
+    rc = getcwd(buffer, size) == nullptr;
     if (rc != 0)
     {
       if (errno == ERANGE && size < SIZE_MAX / 2)
@@ -506,7 +506,7 @@ Cwd::~Cwd()
 ProgramDir::ProgramDir()
 {
   char buffer[PATH_MAX];
-  size_t n = GetModuleFileName(NULL, buffer, sizeof buffer);
+  size_t n = GetModuleFileName(nullptr, buffer, sizeof buffer);
   if (n == 0)
     throw_win32_error("GetModuleFileName");
   if (n >= sizeof buffer)
@@ -623,7 +623,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     CP_ACP, 0,
     wpath, l,
     apath, length * 2,
-    NULL, NULL
+    nullptr, nullptr
   );
   if (l > 0)
   {
@@ -637,7 +637,7 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
     CP_ACP, 0,
     wpath + r, wlength - r,
     apath, length * 2,
-    NULL, NULL
+    nullptr, nullptr
   );
   if (alength == 0 && r < wlength)
     throw_win32_error("WideCharToMultiByte");
@@ -687,14 +687,14 @@ bool is_same_file(const std::string &path1, const std::string &path2)
   BY_HANDLE_FILE_INFORMATION info1, info2;
   HANDLE handle;
   int ok;
-  handle = CreateFile(path1.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+  handle = CreateFile(path1.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
   if (handle == INVALID_HANDLE_VALUE)
     return false;
   ok = GetFileInformationByHandle(handle, &info1);
   CloseHandle(handle);
   if (!ok)
     return false;
-  handle = CreateFile(path2.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+  handle = CreateFile(path2.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
   if (handle == INVALID_HANDLE_VALUE)
     return false;
   ok = GetFileInformationByHandle(handle, &info2);
@@ -729,15 +729,15 @@ void prevent_pop_out(void)
   typedef DWORD (WINAPI *get_console_process_list_fn)(LPDWORD, DWORD);
   get_console_process_list_fn get_console_process_list;
   HMODULE dll = GetModuleHandle("kernel32");
-  if (dll == NULL)
+  if (dll == nullptr)
     return;
   get_console_process_list = (get_console_process_list_fn) GetProcAddress(dll, "GetConsoleProcessList");
-  if (get_console_process_list != NULL)
+  if (get_console_process_list != nullptr)
   {
     unsigned long pid, rc;
     rc = get_console_process_list(&pid, 1);
     if (rc == 1)
-      MessageBox(NULL, _("pdf2djvu is intended to be run from the command prompt."), PACKAGE_NAME, MB_OK | MB_ICONINFORMATION);
+      MessageBox(nullptr, _("pdf2djvu is intended to be run from the command prompt."), PACKAGE_NAME, MB_OK | MB_ICONINFORMATION);
   }
 #endif
 }

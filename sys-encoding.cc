@@ -37,7 +37,7 @@ std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &c
 {
     const std::string &string = converter.string;
     unsigned int handle_id = 0;
-    HANDLE handle = NULL;
+    HANDLE handle = nullptr;
     if (&stream == &std::cout)
         handle_id = STD_OUTPUT_HANDLE;
     else if (&stream == &std::cerr || &stream == &std::clog)
@@ -47,13 +47,13 @@ std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &c
         if (handle == INVALID_HANDLE_VALUE)
             throw_win32_error("GetStdHandle()");
     }
-    if (handle != NULL) {
+    if (handle != nullptr) {
         unsigned long mode;
         bool ok = GetConsoleMode(handle, &mode);
         if (!ok)
-            handle = NULL;
+            handle = nullptr;
     }
-    if (handle == NULL) {
+    if (handle == nullptr) {
         stream << string;
         return stream;
     }
@@ -72,7 +72,7 @@ std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &c
     );
     if (wide_length == 0)
         throw_win32_error("MultiByteToWideChar()");
-    bool ok = WriteConsoleW(handle, wide_buffer, wide_length, &written_length, NULL);
+    bool ok = WriteConsoleW(handle, wide_buffer, wide_length, &written_length, nullptr);
     if (!ok)
         throw_win32_error("WriteConsoleW()");
     return stream;

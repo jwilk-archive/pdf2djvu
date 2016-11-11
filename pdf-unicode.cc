@@ -122,10 +122,10 @@ std::string pdf::string_as_utf8(pdf::Object &object)
  */
 
 pdf::FullNFKC::FullNFKC(Unicode *unistr, int length)
-: data(NULL), length_(0)
+: data(nullptr), length_(0)
 {
     assert(length >= 0);
-    this->data = unicodeNormalizeNFKC(unistr, length, &this->length_, NULL);
+    this->data = unicodeNormalizeNFKC(unistr, length, &this->length_, nullptr);
 }
 
 pdf::FullNFKC::~FullNFKC() throw ()
@@ -155,7 +155,7 @@ pdf::MinimalNFKC::MinimalNFKC(Unicode *unistr, int length)
     for (int i = 0; i < length; i++) {
         if (unistr[i] >= apf_min && unistr[i] <= apf_max) {
             int clen;
-            Unicode *cstr = unicodeNormalizeNFKC(unistr + i, 1, &clen, NULL);
+            Unicode *cstr = unicodeNormalizeNFKC(unistr + i, 1, &clen, nullptr);
             stream.write(cstr, clen);
             gfree(cstr);
         } else {

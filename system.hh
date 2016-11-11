@@ -89,11 +89,11 @@ public:
   Command &operator <<(int i);
   void operator()(std::ostream &stdout_, bool quiet=false)
   {
-    this->call(NULL, &stdout_, !quiet);
+    this->call(nullptr, &stdout_, !quiet);
   }
   void operator()(bool quiet=false)
   {
-    this->call(NULL, NULL, !quiet);
+    this->call(nullptr, nullptr, !quiet);
   }
   static std::string filter(const std::string &command_line, const std::string string);
 };
@@ -106,7 +106,7 @@ protected:
   void open(const char *name);
   void close();
   Directory()
-  : name(""), posix_dir(NULL)
+  : name(""), posix_dir(nullptr)
   { }
 public:
   explicit Directory(const std::string &name);

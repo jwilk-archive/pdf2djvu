@@ -176,7 +176,7 @@ const char * get_signal_name(int sig)
     s(SIGXFSZ);
 #undef s
     default:
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -208,8 +208,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     Array<const char *> c_argv(argc + 1);
     for (size_t i = 0; i < argc; i++)
         c_argv[i] = argv[i].c_str();
-    c_argv[argc] = NULL;
-    assert(c_argv[0] != NULL);
+    c_argv[argc] = nullptr;
+    assert(c_argv[0] != nullptr);
     mkfifo(stdout_pipe);
     mkfifo(stdin_pipe, O_NONBLOCK);
     mkfifo(error_pipe);

@@ -123,7 +123,7 @@ std::string Command::repr()
 
 void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
 {
-    assert(stdin_ == NULL); // stdin support not implemented yet
+    assert(stdin_ == nullptr); // stdin support not implemented yet
     int status = 0;
     unsigned long rc;
     PROCESS_INFORMATION process_info;
@@ -131,7 +131,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     SECURITY_ATTRIBUTES security_attributes;
     memset(&process_info, 0, sizeof process_info);
     security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
-    security_attributes.lpSecurityDescriptor = NULL;
+    security_attributes.lpSecurityDescriptor = nullptr;
     security_attributes.bInheritHandle = true;
     if (CreatePipe(&read_end, &write_end, &security_attributes, 0) == 0)
         throw_win32_error("CreatePipe");
@@ -157,7 +157,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     } else {
         error_handle = CreateFile("nul",
             GENERIC_WRITE, FILE_SHARE_WRITE,
-            &security_attributes, OPEN_EXISTING, 0, NULL);
+            &security_attributes, OPEN_EXISTING, 0, nullptr);
         // Errors can be safely ignored:
         // - For the Windows NT family, INVALID_HANDLE_VALUE does actually the right thing.
         // - For Windows 9x, spurious debug messages could be generated, tough luck!
@@ -171,13 +171,13 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         startup_info.hStdError = error_handle;
         startup_info.dwFlags = STARTF_USESTDHANDLES;
         char *c_command_line = strdup(command_line.c_str());
-        if (c_command_line == NULL)
+        if (c_command_line == nullptr)
             throw_posix_error("strdup");
         rc = CreateProcess(
-            NULL, c_command_line,
-            NULL, NULL,
+            nullptr, c_command_line,
+            nullptr, nullptr,
             true, 0,
-            NULL, NULL,
+            nullptr, nullptr,
             &startup_info,
             &process_info
         );
@@ -195,12 +195,12 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         while (true) {
             char buffer[BUFSIZ];
             unsigned long nbytes;
-            bool success = ReadFile(read_end, buffer, sizeof buffer, &nbytes, NULL);
+            bool success = ReadFile(read_end, buffer, sizeof buffer, &nbytes, nullptr);
             if (!success) {
                 status = -(GetLastError() != ERROR_BROKEN_PIPE);
                 break;
             }
-            if (stdout_ != NULL)
+            if (stdout_ != nullptr)
                 stdout_->write(buffer, nbytes);
         }
         CloseHandle(read_end); // ignore errors
@@ -245,7 +245,7 @@ unsigned long WINAPI filter_writer(void *data_)
 {
     bool success;
     FilterWriterData *data = reinterpret_cast<FilterWriterData*>(data_);
-    success = WriteFile(data->handle, data->string.c_str(), data->string.length(), NULL, NULL);
+    success = WriteFile(data->handle, data->string.c_str(), data->string.length(), nullptr, nullptr);
     if (!success)
         throw_win32_error("WriteFile");
     success = CloseHandle(data->handle);
@@ -263,7 +263,7 @@ std::string Command::filter(const std::string &command_line, const std::string s
     SECURITY_ATTRIBUTES security_attributes;
     memset(&process_info, 0, sizeof process_info);
     security_attributes.nLength = sizeof (SECURITY_ATTRIBUTES);
-    security_attributes.lpSecurityDescriptor = NULL;
+    security_attributes.lpSecurityDescriptor = nullptr;
     security_attributes.bInheritHandle = true;
     if (CreatePipe(&stdin_read, &stdin_write, &security_attributes, 0) == 0)
         throw_win32_error("CreatePipe");
@@ -299,13 +299,13 @@ std::string Command::filter(const std::string &command_line, const std::string s
         startup_info.hStdError = error_handle;
         startup_info.dwFlags = STARTF_USESTDHANDLES;
         char *c_command_line = strdup(command_line.c_str());
-        if (c_command_line == NULL)
+        if (c_command_line == nullptr)
             throw_posix_error("strdup");
         rc = CreateProcess(
-            NULL, c_command_line,
-            NULL, NULL,
+            nullptr, c_command_line,
+            nullptr, nullptr,
             true, 0,
-            NULL, NULL,
+            nullptr, nullptr,
             &startup_info,
             &process_info
         );
@@ -323,13 +323,13 @@ std::string Command::filter(const std::string &command_line, const std::string s
         CloseHandle(stdin_read); // ignore errors
         CloseHandle(stdout_write); // ignore errors
         FilterWriterData writer_data(stdin_write, string);
-        HANDLE thread_handle = CreateThread(NULL, 0, filter_writer, &writer_data, 0, NULL);
-        if (thread_handle == NULL)
+        HANDLE thread_handle = CreateThread(nullptr, 0, filter_writer, &writer_data, 0, nullptr);
+        if (thread_handle == nullptr)
             throw_win32_error("CreateThread");
         while (true) {
             char buffer[BUFSIZ];
             unsigned long nbytes;
-            bool success = ReadFile(stdout_read, buffer, sizeof buffer, &nbytes, NULL);
+            bool success = ReadFile(stdout_read, buffer, sizeof buffer, &nbytes, nullptr);
             if (!success) {
                 status = -(GetLastError() != ERROR_BROKEN_PIPE);
                 break;

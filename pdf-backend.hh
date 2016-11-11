@@ -144,7 +144,7 @@ namespace pdf
 #else
     void processLink(pdf::link::Link *link)
     {
-      this->drawLink(link, NULL);
+      this->drawLink(link, nullptr);
     }
 #endif
     virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
