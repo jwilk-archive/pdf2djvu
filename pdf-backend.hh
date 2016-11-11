@@ -389,10 +389,10 @@ namespace pdf
     T &extra
   ) const
   {
-    for (std::vector<string_field>::const_iterator it = this->string_fields.begin(); it != this->string_fields.end(); it++)
-      string_callback(it->first, *it->second, extra);
-    for (std::vector<date_field>::const_iterator it = this->date_fields.begin(); it != this->date_fields.end(); it++)
-      date_callback(it->first, *it->second, extra);
+    for (const auto &field : this->string_fields)
+      string_callback(field.first, *field.second, extra);
+    for (const auto &field : this->date_fields)
+      date_callback(field.first, *field.second, extra);
   }
 
 

@@ -75,26 +75,26 @@ static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
   std::vector<std::string> split;
   std::replace(s.begin(), s.end(), '_', '-');
   string::split(s, ',', split);
-  for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); it++)
+  for (const std::string &s : split)
   {
-    if (*it == "border-avis")
+    if (s == "border-avis")
     {
       options.border_always_visible = true;
       continue;
     }
-    else if (*it == "no" || *it == "none")
+    else if (s == "no" || s == "none")
     {
       options.extract = false;
       continue;
     }
     else if
     (
-      it->length() == 7 &&
-      (*it)[0] == '#' &&
-      it->find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
+      s.length() == 7 &&
+      s[0] == '#' &&
+      s.find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
     )
     {
-      options.border_color = *it;
+      options.border_color = s;
       continue;
     }
     throw Config::Error(_("Unable to parse hyperlinks options"));
@@ -110,20 +110,20 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
 {
   int state = 0;
   int value[2] = { 0, 0 };
-  for (std::string::const_iterator it = s.begin(); it != s.end(); it++)
+  for (char c : s)
   {
-    if (('0' <= *it) && (*it <= '9'))
+    if ('0' <= c && c <= '9')
     {
-      value[state] = value[state] * 10 + (int)(*it - '0');
+      value[state] = value[state] * 10 + (int)(c - '0');
       if (state == 0)
         value[1] = value[0];
     }
-    else if (state == 0 && *it == '-')
+    else if (state == 0 && c == '-')
     {
       state = 1;
       value[1] = 0;
     }
-    else if (*it == ',')
+    else if (c == ',')
     {
       if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
         bad_pages();
@@ -208,19 +208,19 @@ static void validate_page_id_template(string_format::Template &page_id_template)
   size_t length = page_id.length();
   bool dot_allowed = false;
   bool pm_allowed = false;
-  for (std::string::const_iterator it = page_id.begin(); it != page_id.end(); it++)
+  for (char c : page_id)
   {
-    if (!pm_allowed && (*it == '+' || *it == '-'))
+    if (!pm_allowed && (c == '+' || c == '-'))
     {
       throw Config::Error(_("Page identifier cannot start with a '+' or a '-' character"));
     }
-    if (*it == '.')
+    if (c == '.')
     {
       if (!dot_allowed)
         throw Config::Error(_("Page identifier cannot start with a '.' character or contain two consecutive '.' characters"));
       dot_allowed = false;
     }
-    else if ((*it >= 'a' && *it <= 'z') || (*it >= '0' && *it <= '9') || *it == '_' || *it == '-' || *it == '+')
+    else if (('a' <= c && c <= 'z') || ('0' <= c && c <= '9') || c == '_' || c == '-' || c == '+')
       dot_allowed = true;
     else
       throw Config::Error(_("Page identifier must consist only of letters, digits, '_', '+', '-' and '.' characters"));

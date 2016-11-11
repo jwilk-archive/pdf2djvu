@@ -220,15 +220,15 @@ protected:
 
   void clean_files()
   {
-    for (std::vector<Component*>::iterator it = this->components.begin(); it != this->components.end(); it++)
+    for (auto &component : this->components)
     {
-      delete *it;
-      *it = nullptr;
+      delete component;
+      component = nullptr;
     }
-    for (std::vector<File*>::iterator it = this->files.begin(); it != this->files.end(); it++)
+    for (auto &file : this->files)
     {
-      delete *it;
-      *it = nullptr;
+      delete file;
+      file = nullptr;
     }
   }
 
@@ -597,15 +597,15 @@ public:
     std::string texts = this->text_comments->str();
     if (config.text_filter_command_line.length() > 0)
       texts = Command::filter(config.text_filter_command_line, texts);
-    for (std::string::iterator it = texts.begin(); it != texts.end(); it++)
-      switch (*it)
+    for (char &c : texts)
+      switch (c)
       {
       case '\x01':
-        *it = '#'; break;
+        c = '#'; break;
       case '\x02':
-        *it = 'T'; break;
+        c = 'T'; break;
       case '\x03':
-        *it = 'x'; break;
+        c = 'x'; break;
       }
     return texts;
   }
@@ -1062,14 +1062,14 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
       bzz_file.write("\0\0", 3);
     if (shared_ant)
       bzz_file << '\3';
-    for (std::vector<Component>::const_iterator it = components.begin(); it != components.end(); it++)
-      bzz_file << (it->get_title().length() == 0 ? '\001' : '\101');
+    for (const Component &component : components)
+      bzz_file << (component.get_title().length() == 0 ? '\001' : '\101');
     if (shared_ant)
       bzz_file << djvu::shared_ant_file_name << '\0';
-    for (std::vector<Component>::const_iterator it = components.begin(); it != components.end(); it++)
+    for (const Component &component : components)
     {
-      bzz_file << it->get_basename() << '\0';
-      const std::string &title = it->get_title();
+      bzz_file << component.get_basename() << '\0';
+      const std::string &title = component.get_title();
       if (title.length() == 0)
         continue;
       bzz_file << title << '\0';
@@ -1331,10 +1331,8 @@ static int xmain(int argc, char * const argv[])
   }
   if (config.pages.size() == 0)
     config.pages.push_back(std::make_pair(1, n_pages));
-  for (
-    std::vector< std::pair<int, int> >::iterator page_range = config.pages.begin();
-    page_range != config.pages.end(); page_range++)
-  for (int n = page_range->first; n <= n_pages && n <= page_range->second; n++)
+  for (const std::pair<int, int> &page : config.pages)
+  for (int n = page.first; n <= n_pages && n <= page.second; n++)
   {
     static int i = 1;
     if (page_map.get(n, 0))
@@ -1345,11 +1343,11 @@ static int xmain(int argc, char * const argv[])
   }
   {
     std::map<std::string, size_t> known_titles;
-    for (std::vector<int>::const_iterator np = page_numbers.begin(); np != page_numbers.end(); np++)
+    for (int np : page_numbers)
     {
-      Component &component = (*page_files)[*np];
+      Component &component = (*page_files)[np];
       const std::string &title = component.set_title(
-         page_files->get_title(*np, document_map.get(*np).label)
+         page_files->get_title(np, document_map.get(np).label)
       );
       if (title.length() > 0)
       {
@@ -1571,9 +1569,8 @@ static int xmain(int argc, char * const argv[])
           ppm_file << "P6 " << bg_width << " " << bg_height << " 255" << std::endl;
           for (int y = 0; y < bg_height; y++)
           for (int x = 0; x < bg_width; x++)
-          for (int i = 0; i < 3; i++)
+          for (char c : background_color)
           {
-            char c = background_color[i];
             ppm_file.write(&c, 1);
           }
           ppm_file.close();
@@ -1613,8 +1610,8 @@ static int xmain(int argc, char * const argv[])
       debug(3) << _("extracting annotations") << std::endl;
       const std::vector<sexpr::Ref> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;
-      for (std::vector<sexpr::Ref>::const_iterator it = annotations.begin(); it != annotations.end(); it++)
-        sed_file << *it << std::endl;
+      for (const sexpr::Ref &annotation : annotations)
+        sed_file << annotation << std::endl;
       sed_file << "." << std::endl;
       outm->clear_annotations();
     }

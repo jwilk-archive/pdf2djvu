@@ -377,10 +377,10 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   for (int y = 0; y < height; y++)
   {
     const std::vector<Run> line_runs = runs[y];
-    for (std::vector<Run>::const_iterator run = line_runs.begin(); run != line_runs.end(); run++)
+    for (const Run &run : line_runs)
     {
-      uint32_t color_index = color_map[run->get_color()];
-      write_uint32(stream, ((uint32_t)color_index << 20) + run->get_length());
+      uint32_t color_index = color_map[run.get_color()];
+      write_uint32(stream, ((uint32_t)color_index << 20) + run.get_length());
     }
   }
 }

@@ -320,16 +320,14 @@ string_format::Template::Template(const std::string &source)
 
 string_format::Template::~Template() throw ()
 {
-  typedef std::vector<Chunk*>::iterator iterator;
-  for (iterator it = this->chunks.begin(); it != this->chunks.end(); it++)
-    delete *it;
+  for (auto &chunk : this->chunks)
+    delete chunk;
 }
 
 void string_format::Template::format(const Bindings &bindings, std::ostream &stream) const
 {
-  typedef std::vector<Chunk*>::const_iterator iterator;
-  for (iterator it = this->chunks.begin(); it != this->chunks.end(); it++)
-    (**it).format(bindings, stream);
+  for (const Chunk* chunk : this->chunks)
+    (*chunk).format(bindings, stream);
 }
 
 std::string string_format::Template::format(const Bindings &bindings) const

@@ -41,16 +41,16 @@ djvu::OutlineItem& djvu::Outline::add(std::string description, std::string url)
 size_t djvu::OutlineItem::size() const
 {
     size_t size = 1;
-    for (std::vector<djvu::OutlineItem>::const_iterator it = this->children.begin(); it != this->children.end(); it++)
-        size += it->size();
+    for (const djvu::OutlineItem &child : this->children)
+        size += child.size();
     return size;
 }
 
 size_t djvu::Outline::size() const
 {
     size_t size = 0;
-    for (std::vector<djvu::OutlineItem>::const_iterator it = this->items.begin(); it != this->items.end(); it++)
-        size += it->size();
+    for (const djvu::OutlineItem &item : this->items)
+        size += item.size();
     return size;
 }
 
@@ -79,8 +79,8 @@ static void print_int_le(std::ostream &stream, size_t value)
 std::ostream& djvu::operator<<(std::ostream &stream, const djvu::Outline &outline)
 {
     print_int<16>(stream, outline.size());
-    for (std::vector<djvu::OutlineItem>::const_iterator it = outline.items.begin(); it != outline.items.end(); it++)
-        stream << *it;
+    for (const djvu::OutlineItem &item : outline.items)
+        stream << item;
     return stream;
 }
 
@@ -102,8 +102,8 @@ std::ostream& djvu::operator<<(std::ostream &stream, const djvu::OutlineItem &it
     stream << item.description;
     print_int<24>(stream, item.url.size());
     stream << item.url;
-    for (std::vector<djvu::OutlineItem>::const_iterator it = item.children.begin(); it != item.children.end(); it++)
-        stream << *it;
+    for (const djvu::OutlineItem &child : item.children)
+        stream << child;
     return stream;
 }
 

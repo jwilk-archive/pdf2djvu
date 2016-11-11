@@ -29,8 +29,8 @@ Command::Command(const std::string& command) : command(command)
 {
     // Convert path separators:
     std::ostringstream stream;
-    for (std::string::const_iterator it = command.begin(); it != command.end(); it++) {
-        if (*it == '/')
+    for (char c : command) {
+        if (c == '/')
             stream << '\\';
         else
             stream << *it;
@@ -83,15 +83,15 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
     //    double quotation mark as described in rule 3.
     //
     // See <https://msdn.microsoft.com/en-us/library/ms880421.aspx>.
-    for (std::vector<std::string>::const_iterator parg = argv.begin(); parg != argv.end(); parg++) {
+    for (const std::string &arg : argv) {
         int backslashed = 0;
-        bool need_quote = parg->find_first_of(" \t") != std::string::npos;
+        bool need_quote = arg.find_first_of(" \t") != std::string::npos;
         if (need_quote)
             buffer << '"';
-        for (std::string::const_iterator pch = parg->begin(); pch != parg->end(); pch++) {
-            if (*pch == '\\')
+        for (char c : arg) {
+            if (c == '\\')
                 backslashed++;
-            else if (*pch == '"') {
+            else if (c == '"') {
                 for (int i = 0; i < backslashed; i++)
                     buffer << "\\\\";
                 backslashed = 0;
@@ -100,7 +100,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
                 for (int i = 0; i < backslashed; i++)
                     buffer << '\\';
                 backslashed = 0;
-                buffer << *pch;
+                buffer << c;
             }
         }
         for (int i = 0; i < backslashed; i++)

@@ -406,18 +406,18 @@ pdf::Metadata::Metadata(pdf::Document &document)
   if (!info.isDict())
     return;
   pdf::Dict *info_dict = info.getDict();
-  for (std::vector<string_field>::iterator it = this->string_fields.begin(); it != this->string_fields.end(); it++)
+  for (auto &field : this->string_fields)
   {
     pdf::OwnedObject object;
-    if (!pdf::dict_lookup(info_dict, it->first, &object)->isString())
+    if (!pdf::dict_lookup(info_dict, field.first, &object)->isString())
       continue;
-    *it->second = pdf::string_as_utf8(object);
+    *(field.second) = pdf::string_as_utf8(object);
   }
-  for (std::vector<date_field>::iterator it = this->date_fields.begin(); it != this->date_fields.end(); it++)
+  for (auto &field : this->date_fields)
   {
     pdf::OwnedObject object;
     char tzs = 0; int tzh = 0, tzm = 0;
-    if (!pdf::dict_lookup(info_dict, it->first, &object)->isString())
+    if (!pdf::dict_lookup(info_dict, field.first, &object)->isString())
       continue;
     char *input = object.getString()->getCString();
     if (input[0] == 'D' && input[1] == ':')
@@ -458,7 +458,7 @@ pdf::Metadata::Metadata(pdf::Document &document)
     }
     if (*input)
       tzh = -1;
-    *it->second = Timestamp(year, month, day, hour, minute, second, tzs, tzh, tzm);
+    *(field.second) = Timestamp(year, month, day, hour, minute, second, tzs, tzh, tzm);
   }
 }
 

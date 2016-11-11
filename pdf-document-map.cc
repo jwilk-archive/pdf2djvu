@@ -14,17 +14,17 @@ pdf::DocumentMap::DocumentMap(const std::vector<const char *> &paths)
 {
     int global_index = 0;
     this->byte_size = 0;
-    for (std::vector<const char*>::const_iterator it = paths.begin(); it != paths.end(); it++)
+    for (const char *path : paths)
     {
         this->indices.push_back(global_index);
         {
-            std::ifstream ifs(*it, std::ifstream::in | std::ifstream::binary);
+            std::ifstream ifs(path, std::ifstream::in | std::ifstream::binary);
             ifs.seekg(0, std::ios::end);
             this->byte_size += ifs.tellg();
             ifs.close();
         }
         {
-            std::unique_ptr<pdf::Document> doc(new pdf::Document(*it));
+            std::unique_ptr<pdf::Document> doc(new pdf::Document(path));
             pdf::Catalog *catalog = doc->getCatalog();
             for (int i = 0; i < doc->getNumPages(); i++) {
                 pdf::String s;
