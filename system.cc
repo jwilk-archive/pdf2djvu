@@ -268,7 +268,7 @@ void Directory::open(const char* path)
     throw_posix_error(path);
 }
 
-void Directory::close(void)
+void Directory::close()
 {
   if (this->posix_dir == nullptr)
     return;
@@ -720,7 +720,7 @@ bool is_same_file(const std::string &path1, const std::string &path2)
 #endif
 }
 
-void prevent_pop_out(void)
+void prevent_pop_out()
 {
 #if WIN32
   /* GetConsoleProcessList() function is not available for some systems (e.g.,

@@ -47,11 +47,11 @@ namespace pdf
         std::vector<int> indices;
     public:
         DocumentMap(const std::vector<const char *> &paths);
-        intmax_t get_byte_size(void)
+        intmax_t get_byte_size()
         {
             return this->byte_size;
         }
-        int get_n_pages(void)
+        int get_n_pages()
         {
             return this->indices.back();
         }

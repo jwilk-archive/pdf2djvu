@@ -404,7 +404,7 @@ void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, in
 class GraphicsMagickInitializer
 {
 public:
-  GraphicsMagickInitializer(void)
+  GraphicsMagickInitializer()
   {
     Magick::InitializeMagick("");
   }
