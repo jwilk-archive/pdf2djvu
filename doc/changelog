@@ -22,8 +22,9 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Drop support for Poppler < 0.17.
   * Build with “-Wempty-body”.
   * Build with “-Werror=misleading-indentation”.
+  * Don't enable unknown warning options for clang.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 03 Oct 2016 22:01:07 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 12 Nov 2016 15:46:08 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
