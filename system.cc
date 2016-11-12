@@ -26,6 +26,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 
 #include <dirent.h>
 #include <libgen.h>
@@ -37,7 +38,6 @@
 #include <windows.h>
 #endif
 
-#include "array.hh"
 #include "debug.hh"
 #include "i18n.hh"
 #include "string-printf.hh"
@@ -277,14 +277,15 @@ void Directory::close()
 }
 
 
-/* class TemporaryPathTemplate : Array<char>
- * =========================================
+/* class TemporaryPathTemplate
+ * ===========================
  */
 
 
-class TemporaryPathTemplate : public Array<char>
+class TemporaryPathTemplate
 {
 protected:
+  std::vector<char> buffer;
   static const char *temporary_directory()
   {
     const char *result = getenv("TMPDIR");
@@ -294,9 +295,19 @@ protected:
   }
 public:
   TemporaryPathTemplate()
-  : Array<char>(strlen(this->temporary_directory()) + strlen(PACKAGE_NAME) + 9)
+  : buffer(strlen(this->temporary_directory()) + strlen(PACKAGE_NAME) + 9)
   {
-    sprintf(*this, "%s%c%s.XXXXXX", this->temporary_directory(), path_separator, PACKAGE_NAME);
+    sprintf(
+      this->buffer.data(),
+      "%s%c%s.XXXXXX",
+      this->temporary_directory(),
+      path_separator,
+      PACKAGE_NAME
+    );
+  }
+  operator char * ()
+  {
+    return this->buffer.data();
   }
 };
 
@@ -463,8 +474,8 @@ Cwd::Cwd(const std::string &path)
   size_t size = 32;
   while (1)
   {
-    Array<char> buffer(size);
-    rc = getcwd(buffer, size) == nullptr;
+    std::vector<char> buffer(size);
+    rc = getcwd(buffer.data(), size) == nullptr;
     if (rc != 0)
     {
       if (errno == ERANGE && size < SIZE_MAX / 2)
@@ -474,7 +485,7 @@ Cwd::Cwd(const std::string &path)
       }
       throw_posix_error("getcwd");
     }
-    this->previous_cwd = buffer;
+    this->previous_cwd = buffer.data();
     break;
   }
   rc = chdir(path.c_str());
@@ -594,12 +605,12 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
    * purposes.
    */
   size_t wlength, alength, length = path.length();
-  Array<wchar_t> wpath(length);
-  Array<char> apath(length);
+  std::vector<wchar_t> wpath(length);
+  std::vector<char> apath(length);
   wlength = MultiByteToWideChar(
     CP_ACP, 0,
     path.c_str(), length,
-    wpath, length
+    wpath.data(), length
   );
   if (wlength == 0)
     throw_win32_error("MultiByteToWideChar");
@@ -621,27 +632,27 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
   }
   alength = WideCharToMultiByte(
     CP_ACP, 0,
-    wpath, l,
-    apath, length * 2,
+    wpath.data(), l,
+    apath.data(), length * 2,
     nullptr, nullptr
   );
   if (l > 0)
   {
     if (alength == 0)
       throw_win32_error("WideCharToMultiByte");
-    directory_name = std::string(apath, alength);
+    directory_name = std::string(apath.data(), alength);
   }
   else
     directory_name = ".";
   alength = WideCharToMultiByte(
     CP_ACP, 0,
-    wpath + r, wlength - r,
-    apath, length * 2,
+    wpath.data() + r, wlength - r,
+    apath.data(), length * 2,
     nullptr, nullptr
   );
   if (alength == 0 && r < wlength)
     throw_win32_error("WideCharToMultiByte");
-  file_name = std::string(apath, alength);
+  file_name = std::string(apath.data(), alength);
 #else
   /* POSIX-compliant ``basename()`` and ``dirname()`` would split ``/foo/bar/``
    * into ``/foo`` and ``bar``, instead of desired ``/foo/bar`` and an empty
@@ -649,14 +660,14 @@ void split_path(const std::string &path, std::string &directory_name, std::strin
    * appended to the split path.
    */
   {
-    Array<char> buffer(path.length() + 2);
-    sprintf(buffer, "%s!", path.c_str());
-    directory_name = ::dirname(buffer);
+    std::vector<char> buffer(path.length() + 2);
+    sprintf(buffer.data(), "%s!", path.c_str());
+    directory_name = ::dirname(buffer.data());
   }
   {
-    Array<char> buffer(path.length() + 2);
-    sprintf(buffer, "%s!", path.c_str());
-    file_name = ::basename(buffer);
+    std::vector<char> buffer(path.length() + 2);
+    sprintf(buffer.data(), "%s!", path.c_str());
+    file_name = ::basename(buffer.data());
     size_t length = file_name.length();
     assert(length > 0);
     assert(file_name[length - 1] == '!');

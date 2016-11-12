@@ -38,7 +38,6 @@
 #include <omp.h>
 #endif
 
-#include "array.hh"
 #include "string-printf.hh"
 #include "i18n.hh"
 
@@ -205,7 +204,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     int stdin_pipe[2];
     int error_pipe[2];
     size_t argc = this->argv.size();
-    Array<const char *> c_argv(argc + 1);
+    std::vector<const char *> c_argv(argc + 1);
     for (size_t i = 0; i < argc; i++)
         c_argv[i] = argv[i].c_str();
     c_argv[argc] = nullptr;
@@ -248,9 +247,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
             abort();
         }
         execvp(c_argv[0],
-            const_cast<char * const *>(
-                static_cast<const char **>(c_argv)
-            )
+            const_cast<char * const *>(c_argv.data())
         );
         report_posix_error(error_pipe[1], "\xff");
         abort();

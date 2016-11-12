@@ -18,6 +18,7 @@
 #include <cstdio>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <errno.h>
 #include <iconv.h>
@@ -25,8 +26,6 @@
 #if WIN32
 #include <windows.h>
 #endif
-
-#include "array.hh"
 
 namespace encoding {
 
@@ -63,16 +62,16 @@ std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &c
     if (length == 0)
         return stream;
     stream.flush();
-    Array<char> buffer(length * 2);
-    Array<wchar_t> wide_buffer(length);
+    std::vector<char> buffer(length * 2);
+    std::vector<wchar_t> wide_buffer(length);
     wide_length = MultiByteToWideChar(
         CP_ACP, 0,
         string.c_str(), length,
-        wide_buffer, length
+        wide_buffer.data(), length
     );
     if (wide_length == 0)
         throw_win32_error("MultiByteToWideChar()");
-    bool ok = WriteConsoleW(handle, wide_buffer, wide_length, &written_length, nullptr);
+    bool ok = WriteConsoleW(handle, wide_buffer.data(), wide_length, &written_length, nullptr);
     if (!ok)
         throw_win32_error("WriteConsoleW()");
     return stream;

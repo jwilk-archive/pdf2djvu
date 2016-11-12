@@ -20,9 +20,9 @@
 #include <cstdarg>
 #include <cstdio>
 #include <string>
+#include <vector>
 
 #include "autoconf.hh"
-#include "array.hh"
 #include "system.hh"
 
 #if USE_MINGW_ANSI_STDIO
@@ -49,11 +49,11 @@ std::string string_vprintf(const char *message, va_list args)
         errno = ENOMEM;
         throw_posix_error("vsnprintf()");
     }
-    Array<char> buffer(length + 1);
-    length = vsprintf(buffer, message, args);
+    std::vector<char> buffer(length + 1);
+    length = vsprintf(buffer.data(), message, args);
     if (length < 0)
         throw_posix_error("vsprintf()");
-    return static_cast<char*>(buffer);
+    return buffer.data();
 }
 
 std::string string_printf(const char *message, ...)
