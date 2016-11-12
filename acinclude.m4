@@ -14,15 +14,39 @@ dnl | General Public License for more details.
 AC_DEFUN(
     [P_MAYBE_ADD_CXXFLAG],
     [
-        copy_CXXFLAGS="$CXXFLAGS"
+        p_CXXFLAGS="$CXXFLAGS"
+        if test -z "$p_werror_unknown_warning_option"
+        then
+            AC_MSG_CHECKING([whether $CXX accepts -Werror=unknown-warning-option])
+            CXXFLAGS="$p_CXXFLAGS -Werror=unknown-warning-option"
+            AC_COMPILE_IFELSE(
+                [AC_LANG_PROGRAM()],
+                [
+                    AC_MSG_RESULT([yes])
+                    p_werror_unknown_warning_option=yes
+                ],
+                [
+                    AC_MSG_RESULT([no])
+                    p_werror_unknown_warning_option=no
+                ]
+            )
+        fi
+        CXXFLAGS="$p_CXXFLAGS"
+        if test "$p_werror_unknown_warning_option" = yes
+        then
+            CXXFLAGS="$CXXFLAGS -Werror=unknown-warning-option"
+        fi
         CXXFLAGS="$CXXFLAGS $1"
         AC_MSG_CHECKING([whether $CXX accepts $1])
         AC_COMPILE_IFELSE(
             [AC_LANG_PROGRAM()],
-            [AC_MSG_RESULT([yes])],
+            [
+                AC_MSG_RESULT([yes])
+                CXXFLAGS="$p_CXXFLAGS $1"
+            ],
             [
                 AC_MSG_RESULT([no])
-                CXXFLAGS=$copy_CXXFLAGS
+                CXXFLAGS="$p_CXXFLAGS"
             ]
         )
     ]
