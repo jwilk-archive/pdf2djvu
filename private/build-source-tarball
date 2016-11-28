@@ -83,6 +83,7 @@ cd "$sourceroot"/*
 
 # Remove files that only useful in a VCS checkout:
 rm .hg*
+rm .git*
 rm .travis.yml
 rm private/build-source-tarball
 
