@@ -603,8 +603,9 @@ msgid "<varname>dpage</varname>"
 msgstr "<varname>dpage</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Page number in the DjVu document."
-msgstr "Кількість сторінок в документі DjVu."
+#, fuzzy
+msgid "page number in the DjVu document"
+msgstr "кількість сторінок в документі DjVu"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<varname>page</varname>"
@@ -615,8 +616,9 @@ msgid "<varname>spage</varname>"
 msgstr "<varname>spage</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Page number in the PDF document."
-msgstr "Кількість сторінок в документі PDF."
+#, fuzzy
+msgid "page number in the PDF document"
+msgstr "кількість сторінок в документі PDF"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><term>
 msgid "<varname>label</varname>"
