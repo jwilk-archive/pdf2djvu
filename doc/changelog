@@ -20,11 +20,12 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
       memory limits to subprocesses.
       http://savannah.gnu.org/bugs/?43320
   * Drop support for Poppler < 0.17.
+  * Build with “-std=gnu++98”.
   * Build with “-Wempty-body”.
   * Build with “-Werror=misleading-indentation”.
   * Don't enable unknown warning options for clang.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 12 Nov 2016 15:46:08 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Nov 2016 11:10:39 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
