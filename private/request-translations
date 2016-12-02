@@ -53,7 +53,7 @@ You can download current versions of the PO files here:
 EOF
 (
     IFS=';';
-    printf 'https://bitbucket.org/jwilk/pdf2djvu/raw/default/%s\n' ${pofiles#;}
+    printf 'https://github.com/jwilk/pdf2djvu/raw/master/%s\n' ${pofiles#;}
 )
 printf '\nThanks in advance!\n'
 
