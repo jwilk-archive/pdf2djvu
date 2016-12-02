@@ -24,7 +24,7 @@ from tools import (
 class test(case):
 
     def test(self):
-        # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/47
+        # Bug: https://github.com/jwilk/pdf2djvu/issues/47
         # + fixed in 0.7.2 [3d0f55ae5a65]
         def t(i, n):
             self.require_feature('GraphicsMagick')

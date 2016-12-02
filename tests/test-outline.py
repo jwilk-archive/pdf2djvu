@@ -50,7 +50,7 @@ class test(case):
     def test_iff_corruption(self):
         # Make sure that the NAVM chunk begins on an even byte.
         #
-        # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/110
+        # Bug: https://github.com/jwilk/pdf2djvu/issues/110
         # + introduced in 0.7.20
         # + fixed in 0.8.2 [2746cd507b03]
         #

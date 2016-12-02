@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
-"Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-10-03 15:53+0200\n"
 "PO-Revision-Date: 2015-05-25 16:43+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
@@ -276,7 +276,7 @@ msgstr "Rastruj strony jako dwukolorowe bitmapy. W takim wypadku opcje <option>-
 msgid "<option>--loss-level=<replaceable>n</replaceable></option>"
 msgstr "<option>--loss-level=<replaceable>n</replaceable></option>"
 
-#. https://bitbucket.org/jwilk/pdf2djvu/issues/86
+#. https://github.com/jwilk/pdf2djvu/issues/86
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "Specifies the aggressiveness of the lossy compression. The default is 0 (lossless).  Valid values are integers between 0 and 200, inclusive. This option is similar to the <option>-losslevel</option> option of <command>cjb2</command>; consult the <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page for details.  This option can be used only if the <option>--monochrome</option> option is also enabled."
 msgstr "Określa agresywność kompresji stratnej. Domyślną wartością jest 0 (kompresja bezstratna). Dopuszczalne wartości to liczby całkowite od 0 do 200 włącznie. Opcja ta jest podobna do opcji <option>-losslevel</option> programu <command>cjb2</command>; szczegóły znajdują się w podręczniku <citerefentry> <refentrytitle>cjb2</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> .  Opcja ta może być używana tylko razem z opcją <option>--monochrome</option>."
@@ -674,8 +674,8 @@ msgid "Bug reports"
 msgstr "Raporty o błędach"
 
 #. type: Content of: <refentry><refsection><para>
-msgid "If you find a bug in &p;, please report it at <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>the issue tracker</ulink> or to <ulink url='https://groups.io/g/pdf2djvu'>the mailing list</ulink>."
-msgstr "Błędy znalezione w &p; proszę zgłaszać w <ulink url='https://bitbucket.org/jwilk/pdf2djvu/issues'>systemie śledzenia problemów</ulink> lub na <ulink url='https://groups.io/g/pdf2djvu'>liście dyskusyjnej</ulink>."
+msgid "If you find a bug in &p;, please report it at <ulink url='https://github.com/jwilk/pdf2djvu/issues'>the issue tracker</ulink> or to <ulink url='https://groups.io/g/pdf2djvu'>the mailing list</ulink>."
+msgstr "Błędy znalezione w &p; proszę zgłaszać w <ulink url='https://github.com/jwilk/pdf2djvu/issues'>systemie śledzenia problemów</ulink> lub na <ulink url='https://groups.io/g/pdf2djvu'>liście dyskusyjnej</ulink>."
 
 #. type: Content of: <refentry><refsection><title>
 msgid "See also"

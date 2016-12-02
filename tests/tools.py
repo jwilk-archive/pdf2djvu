@@ -229,7 +229,7 @@ class case(object):
         if os.getenv('pdf2djvu_win32'):
             result.stderr = result.stderr.replace('\r\n', '\n')
         if sys.platform.startswith('openbsd'):
-            # FIXME: https://bitbucket.org/jwilk/pdf2djvu/issues/108
+            # FIXME: https://github.com/jwilk/pdf2djvu/issues/108
             result.stderr = re(
                 r'Magick: Failed to close module [(]"\w*: Invalid handle\"[)].\n'
             ).sub('', result.stderr)

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
-"Report-Msgid-Bugs-To: https://bitbucket.org/jwilk/pdf2djvu/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-02-02 12:08+0100\n"
 "PO-Revision-Date: 2016-02-06 15:41+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"

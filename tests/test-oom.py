@@ -44,7 +44,7 @@ def vm_limit(limit):
         resource.setrlimit(resource.RLIMIT_AS, (lim_soft, lim_hard))
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/107
+    # Bug: https://github.com/jwilk/pdf2djvu/issues/107
     # + fixed in 0.9.4 [87708193290f]
 
     def test(self):

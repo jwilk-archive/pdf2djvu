@@ -20,10 +20,10 @@ from tools import (
 )
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/23
+    # Bug: https://github.com/jwilk/pdf2djvu/issues/23
     # + fixed in 0.5.5 [ede3c622526a]
 
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/73
+    # Bug: https://github.com/jwilk/pdf2djvu/issues/73
     # + fixed in 0.8 [011677e4ea3e]
 
     def test_bundled(self):

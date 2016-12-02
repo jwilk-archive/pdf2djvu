@@ -21,7 +21,7 @@ from tools import (
 )
 
 class test(case):
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/90
+    # Bug: https://github.com/jwilk/pdf2djvu/issues/90
     # + fixed in 0.8
 
     text = u'\N{LATIN SMALL LIGATURE FL}uorogra\N{LATIN SMALL LIGATURE FI}a'

@@ -1260,7 +1260,7 @@ static int xmain(int argc, char * const argv[])
   std::auto_ptr<File> output_file;
   /* `page_files` has to be declared before `djvm`;
    * otherwise temporary files could be removed in the wrong oder:
-   * https://bitbucket.org/jwilk/pdf2djvu/issues/114
+   * https://github.com/jwilk/pdf2djvu/issues/114
    */
   std::auto_ptr<ComponentList> page_files;
   std::auto_ptr<DjVm> djvm;
@@ -1432,7 +1432,7 @@ static int xmain(int argc, char * const argv[])
       /* When the Splash backend runs out of memory,
        * it produces a 1x1 bitmap without signalling an error in any way
        * (other than printing “Out of memory” on stderr).
-       * https://bitbucket.org/jwilk/pdf2djvu/issues/107
+       * https://github.com/jwilk/pdf2djvu/issues/107
        */
       errno = ENOMEM;
       throw_posix_error("");
