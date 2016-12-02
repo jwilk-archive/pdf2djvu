@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2009-2016 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is part of pdf2djvu.
 #
@@ -15,7 +15,7 @@
 
 usage()
 {
-    printf '%s [--print-name] [--no-po-check] [revision]\n' "$0"
+    printf '%s [--print-name] [--no-po-check] [commit]\n' "$0"
 }
 
 args=$(getopt -n "$0" -o 'h' --long 'help,no-po-check,print-name' -- "$@")
@@ -47,22 +47,22 @@ fi
 
 set -e -u
 
-hgrepo="$(dirname "$0")/.."
-if ! [ -d "$hgrepo/.hg" ]
+gitrepo="$(dirname "$0")/.."
+if ! [ -d "$gitrepo/.git" ]
 then
-    printf '%s requires hg checkout\n' "$0" >&2
+    printf '%s requires git checkout\n' "$0" >&2
     exit 1
 fi
 pwd="$PWD"
-revision=${1:-.}
+commit=${1:-HEAD}
 read name version release urgency <<EOF
-$(hg --cwd "$hgrepo" cat -r "$revision" doc/changelog | head -n1)
+$(git -C "$gitrepo" cat-file blob "$commit:doc/changelog" | head -n1)
 EOF
 version=${version#(}
 version=${version%)}
 if [ "$release" = 'UNRELEASED;' ]
 then
-    date=$(hg --cwd "$hgrepo" log -r "$revision" --template='{date|isodate}' | head -c 10 | tr -d -)
+    date=$(git -C "$gitrepo" log -1 --pretty='format:%cI' "$commit" | head -c 10 | tr -d -)
     version="${version}rc${date}"
 fi
 if [ -n "$opt_print_name" ]
@@ -70,7 +70,7 @@ then
     printf '%s\n' "$name-$version.tar.xz"
     exit 0
 fi
-printf 'Revision: %s\nVersion: %s\n' "$revision" "$version" >&2
+printf 'Commit: %s\nVersion: %s\n' "$commit" "$version" >&2
 
 set -x
 sourceroot=$(mktemp -d -t "$name-source-XXXXXX")
@@ -78,11 +78,10 @@ tar_opts='--owner root --group root --mode a+rX --format ustar'
 xz_opts='-4e'
 
 # Mercurial archive:
-hg --cwd "$hgrepo" archive -r "$revision" "$sourceroot/$name-$version"
+git -C "$gitrepo" archive "$commit" --prefix="$name-$version/" | tar -C "$sourceroot" -xf -
 cd "$sourceroot"/*
 
 # Remove files that only useful in a VCS checkout:
-rm .hg*
 rm .git*
 rm .travis.yml
 rm private/build-source-tarball
