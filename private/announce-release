@@ -32,13 +32,13 @@ The most important end-user visible changes are:
 Downloads:
 
   * source:
-    https://bitbucket.org/jwilk/pdf2djvu/downloads/pdf2djvu-$version.tar.xz
+    https://github.com/jwilk/pdf2djvu/releases/download/$version/pdf2djvu-$version.tar.xz
 
   * Windows distribution:
-    https://bitbucket.org/jwilk/pdf2djvu/downloads/pdf2djvu-win32-$version.zip
+    https://github.com/jwilk/pdf2djvu/releases/download/$version/pdf2djvu-win32-$version.zip
 
   * source for the Windows distribution:
-    https://bitbucket.org/jwilk/pdf2djvu/downloads/pdf2djvu-win32-source-$version.tar.xz
+    https://github.com/jwilk/pdf2djvu/releases/download/$version/pdf2djvu-win32-source-$version.tar.xz
 
 All files are cryptographically signed.
 Append ".asc" to the URL to get the OpenPGP signature.
