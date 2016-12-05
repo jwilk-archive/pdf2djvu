@@ -20,7 +20,7 @@ from tools import (
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/59
-    # + fixed in 0.7.10 [6c155e7cc346]
+    # + fixed in 0.7.10 [da7cd2524b329a80581b939037f4d42801f3755d]
 
     def test(self):
         self.pdf2djvu('--monochrome').assert_()

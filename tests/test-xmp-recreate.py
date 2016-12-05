@@ -25,7 +25,7 @@ from tools import (
 )
 
 class test(case):
-    # + fixed in 0.6.0 [d8c60ea6bc37]
+    # + fixed in 0.6.0 [79d56ebabd600e44f7aa97634d44d471249e74f2]
 
     def test_verbatim(self):
         self.pdf2djvu('--verbatim-metadata').assert_()

@@ -19,7 +19,7 @@ from tools import (
 )
 
 class test(case):
-    # + fixed in 0.3.3 [90111a528eb5]
+    # + fixed in 0.3.3 [0d4169e1bdffb34ebcef51f29abc744ade9c1556]
 
     def test(self):
         title = (

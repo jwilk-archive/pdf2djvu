@@ -20,7 +20,7 @@ from tools import (
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/50
-    # + fixed in 0.7.4 [86ae2eb190bd]
+    # + fixed in 0.7.4 [1c373918e0152d452c24936818591d32df0ff7fc]
 
     def test(self):
         self.pdf2djvu('--pages=2').assert_()

@@ -25,7 +25,7 @@ from tools import (
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/12
-    # + fixed in 0.6.0 [490a08283fb4]
+    # + fixed in 0.6.0 [1368c73c027d798bdbfe0ac61c26339206e747bc]
 
     def test_verbatim(self):
         self.pdf2djvu('--verbatim-metadata').assert_()

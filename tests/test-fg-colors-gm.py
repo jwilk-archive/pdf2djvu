@@ -25,7 +25,7 @@ class test(case):
 
     def test(self):
         # Bug: https://github.com/jwilk/pdf2djvu/issues/47
-        # + fixed in 0.7.2 [3d0f55ae5a65]
+        # + fixed in 0.7.2 [a10cfc8ac94e8f3b7e01e089056bf6a371d1a68d]
         def t(i, n):
             self.require_feature('GraphicsMagick')
             self.pdf2djvu(

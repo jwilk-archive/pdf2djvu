@@ -52,7 +52,7 @@ class test(case):
         #
         # Bug: https://github.com/jwilk/pdf2djvu/issues/110
         # + introduced in 0.7.20
-        # + fixed in 0.8.2 [2746cd507b03]
+        # + fixed in 0.8.2 [cef7b917bf1cde70884d444a4187fcebeec10ba8]
         #
         # This particular choice of options seems to trigger odd-sized DIRM chunk:
         self.pdf2djvu('-p1', '--no-metadata', '--page-title-template', 'xx').assert_()

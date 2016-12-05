@@ -19,7 +19,7 @@ from tools import (
 
 class test(case):
     # Bug: https://bugs.debian.org/508391
-    # + fixed in 0.4.12 [f5d4727b2490]
+    # + fixed in 0.4.12 [608c126d78edff453158de122edeb69645f9b027]
 
     def test(self):
         self.pdf2djvu().assert_()

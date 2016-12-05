@@ -22,7 +22,7 @@ class test(case):
 
     def test_11(self):
         # Bug: https://sourceforge.net/p/djvu/bugs/106/
-        # + fixed in 0.4.11 [5e3937296514]
+        # + fixed in 0.4.11 [25f63fdcee01a93df16fcd56ebd7587165f4ee52]
         self.pdf2djvu('--bg-subsample=11', '--dpi=72').assert_()
         r = self.djvudump()
         r.assert_(stdout=re('BG44.* 10x11$', re.M))

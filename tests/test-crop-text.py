@@ -20,7 +20,7 @@ from tools import (
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/20
-    # + fixed in 0.5.4 [c06a41afdc46]
+    # + fixed in 0.5.4 [46b70e11778f984c2db302a1c8a18bc0996a387c]
 
     def test_no_crop(self):
         self.pdf2djvu().assert_()

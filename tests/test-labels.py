@@ -21,7 +21,7 @@ from tools import (
 class test(case):
 
     # Bug: https://github.com/jwilk/pdf2djvu/issues/109
-    # + fixed in 0.9 [dc1734ad4946]
+    # + fixed in 0.9 [39920569549418038f1ffcefe65e3ddf78adacd2]
 
     def test(self):
         def t(*args):

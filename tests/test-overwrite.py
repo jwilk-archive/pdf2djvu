@@ -21,7 +21,7 @@ from tools import (
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/98
-    # + fixed in 0.8 [e98f3c4cfa2e]
+    # + fixed in 0.8 [ec2d2e6f7101f7693dac8d102c0dce1fa879f346]
 
     def test_overwrite(self):
         pdf_path = self.get_pdf_path()

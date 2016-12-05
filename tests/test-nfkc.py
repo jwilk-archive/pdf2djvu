@@ -19,8 +19,8 @@ from tools import (
 )
 
 class test(case):
-    # + fixed in 0.4.9 [18b2ae04de2f]
-    # + fixed in 0.4.11 [fa7d4addf18e]
+    # + fixed in 0.4.9 [8af81b21de1d8c43bb7585b5318938cde52e30a2]
+    # + fixed in 0.4.11 [670a11dc9680cb4dac088d269f08f16f8ec0da7c]
 
     text = u'¾'
     text_nfkc = '3⁄4'

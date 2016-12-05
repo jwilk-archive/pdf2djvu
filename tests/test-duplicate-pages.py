@@ -21,10 +21,10 @@ from tools import (
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/23
-    # + fixed in 0.5.5 [ede3c622526a]
+    # + fixed in 0.5.5 [ad11da594a254f203f603fd4105fb05c8b508c64]
 
     # Bug: https://github.com/jwilk/pdf2djvu/issues/73
-    # + fixed in 0.8 [011677e4ea3e]
+    # + fixed in 0.8 [5d5fa0e235497aa7e82ea2ba5fcfd3351ae53562]
 
     def test_bundled(self):
         r = self.pdf2djvu('--pages=1,1')

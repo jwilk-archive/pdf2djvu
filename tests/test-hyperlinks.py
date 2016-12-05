@@ -31,8 +31,8 @@ class test(case):
 
     def test(self):
         # Bug: https://github.com/jwilk/pdf2djvu/issues/3
-        # + fixed in 0.4.10 [a244b65e0661]
-        # + fixed in 0.4.12 [2e5ab20f8a07]
+        # + fixed in 0.4.10 [47cde6c195ac057c0061a5fa192c69c3373c14ec]
+        # + fixed in 0.4.12 [5e691b2b67b3f50275b12d2d262d38646dacda64]
         self.pdf2djvu().assert_()
         self.t(1, '#p0002.djvu')
         self.t(2, '#p0001.djvu', '(border #ff7f00)')

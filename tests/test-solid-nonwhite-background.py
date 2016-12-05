@@ -19,7 +19,7 @@ from tools import (
 )
 
 class test(case):
-    # + fixed in 0.3.6 [9a9650e7f06f]
+    # + fixed in 0.3.6 [79779eea4fccc83d126ba27408de16a1c5f35d11]
 
     def test(self):
         self.pdf2djvu().assert_()

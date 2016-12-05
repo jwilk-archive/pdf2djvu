@@ -18,7 +18,7 @@ from tools import (
 )
 
 class test(case):
-    # + fixed in 0.7.10 [d1b09854a9bc]
+    # + fixed in 0.7.10 [b888a6035c600bb12855685389c488b35e4c868e]
 
     def test(self):
         self.pdf2djvu('--no-metadata', '--dpi=72').assert_()
