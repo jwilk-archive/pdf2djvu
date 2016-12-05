@@ -165,7 +165,7 @@ public:
     return this->title;
   }
 
-  void set_title(const std::string &title)
+  const std::string & set_title(const std::string &title)
   {
     this->title = title;
     // TODO: issue a warning if the title contains null bytes
@@ -174,6 +174,7 @@ public:
       "\xEF\xBF\xBD"  // U+FFFD REPLACEMENT CHARACTER
     );
     this->title_set = true;
+    return this->title;
   }
 
   const std::string & get_basename() const
@@ -839,19 +840,11 @@ class DjVm
 {
 protected:
   std::set<std::string> known_ids;
-  std::set<std::string> known_titles;
   class DuplicateId : public std::runtime_error
   {
   public:
     DuplicateId(const std::string &id)
     : std::runtime_error(string_printf(_("Duplicate page identifier: %s"), id.c_str()))
-    { }
-  };
-  class DuplicateTitle : public std::runtime_error
-  {
-  public:
-    DuplicateTitle(const std::string &id)
-    : std::runtime_error(string_printf(_("Duplicate page title: %s"), id.c_str()))
     { }
   };
   void remember(const Component &component);
@@ -875,13 +868,6 @@ void DjVm::remember(const Component &component)
   if (this->known_ids.count(id) > 0)
     throw DuplicateId(id);
   this->known_ids.insert(id);
-  const std::string &title = component.get_title();
-  if (title.length() > 0)
-  {
-    if (this->known_titles.count(title) > 0)
-      throw DuplicateTitle(title);
-    this->known_titles.insert(title);
-  }
 }
 
 class IndirectDjVm;
@@ -1357,13 +1343,26 @@ static int xmain(int argc, char * const argv[])
     page_numbers.push_back(n);
     i++;
   }
-  for (std::vector<int>::const_iterator np = page_numbers.begin(); np != page_numbers.end(); np++)
   {
-    Component &component = (*page_files)[*np];
-    component.set_title(
-       page_files->get_title(*np, document_map.get(*np).label)
-    );
-    *djvm << component;
+    std::map<std::string, size_t> known_titles;
+    for (std::vector<int>::const_iterator np = page_numbers.begin(); np != page_numbers.end(); np++)
+    {
+      Component &component = (*page_files)[*np];
+      const std::string &title = component.set_title(
+         page_files->get_title(*np, document_map.get(*np).label)
+      );
+      if (title.length() > 0)
+      {
+        size_t n = ++known_titles[title];
+        if (n >= 2)
+        {
+          if (n == 2)
+            debug(1) << string_printf(_("Warning: Ignoring duplicate page title: %s"), title.c_str()) << std::endl;
+          component.set_title("");
+        }
+      }
+      *djvm << component;
+    }
   }
 
   if (page_numbers.size() == 0)
