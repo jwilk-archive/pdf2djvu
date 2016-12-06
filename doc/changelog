@@ -3,6 +3,9 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Improve error handling:
     + Fix temporary files removal order.
       https://github.com/jwilk/pdf2djvu/issues/114
+    + Ignore duplicate page titles (with warning).
+      Thanks to Juan Francisco Cantero Hurtado for the bug report.
+      https://github.com/jwilk/pdf2djvu/issues/113
   * Fix creating bookmarks with more than 255 children.
     Regression introduced in 0.7.20.
   * Fix incorrect progress output in parallel mode.
@@ -25,7 +28,7 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Build with “-Werror=misleading-indentation”.
   * Don't enable unknown warning options for clang.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 28 Nov 2016 11:10:39 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 07 Dec 2016 00:48:58 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
