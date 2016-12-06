@@ -86,6 +86,9 @@ rm .git*
 rm .travis.yml
 rm private/build-source-tarball
 
+# Move documentation to doc/:
+mv COPYING doc/
+
 # Autoconf & company:
 private/autogen
 rm -r *.cache
