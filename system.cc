@@ -456,7 +456,7 @@ ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
 : File()
 {
   std::ostringstream stream;
-  stream << directory << "/" << name;
+  stream << directory << path_separator << name;
   this->name = stream.str();
   this->open(NULL, false);
 }
