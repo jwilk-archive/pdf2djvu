@@ -1051,7 +1051,7 @@ void IndirectDjVm::create_bare(const std::vector<Component> &components)
 void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
 {
   size_t size = components.size();
-  this->index_file.reopen(true); // (re)open and truncate
+  this->index_file.reopen(File::trunc); // (re)open and truncate
   this->index_file.write("AT&TFORM\0\0\0\0DJVMDIRM\0\0\0\0\1", 25);
   bool shared_ant = !bare && this->needs_shared_ant;
   for (int i = 1; i >= 0; i--)

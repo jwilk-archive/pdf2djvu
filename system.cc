@@ -337,25 +337,26 @@ TemporaryDirectory::~TemporaryDirectory() throw ()
  * =========================
  */
 
-void File::open(const char* path, bool truncate)
+File::openmode File::get_default_open_mode()
 {
-  std::fstream::openmode mode = std::fstream::in | std::fstream::out | std::fstream::binary;
-  if (truncate)
-    mode |= std::fstream::trunc;
+  return std::fstream::trunc;
+}
+
+void File::open(const std::string &path, File::openmode mode)
+{
+  mode |=
+    std::fstream::in |
+    std::fstream::out |
+    std::fstream::binary;
   this->exceptions(std::ifstream::failbit | std::ifstream::badbit);
-  if (path == NULL)
-    this->std::fstream::open(this->name.c_str(), mode);
-  else
-  {
-    this->name = path;
-    this->std::fstream::open(path, mode);
-  }
+  this->name = path;
+  this->std::fstream::open(path.c_str(), mode);
   this->exceptions(std::ifstream::badbit);
 }
 
-File::File(const std::string &name)
+File::File(const std::string &path)
 {
-  this->open(name.c_str());
+  this->open(path, this->get_default_open_mode());
 }
 
 File::File(const Directory& directory, const std::string &name)
@@ -363,7 +364,7 @@ File::File(const Directory& directory, const std::string &name)
   std::ostringstream stream;
   this->base_name = name;
   stream << directory << path_separator << name;
-  this->open(stream.str().c_str());
+  this->open(stream.str(), this->get_default_open_mode());
 }
 
 File::streamoff File::size()
@@ -375,11 +376,11 @@ File::streamoff File::size()
   return result;
 }
 
-void File::reopen(bool truncate)
+void File::reopen(std::fstream::openmode mode)
 {
   if (this->is_open())
     this->close();
-  this->open(NULL, truncate);
+  this->open(this->name, mode);
 }
 
 const std::string& File::get_basename() const
@@ -424,7 +425,7 @@ void TemporaryFile::construct()
   if (GetTempFileName(base_path_buffer, PACKAGE_NAME, 0, path_buffer) == 0)
     throw_win32_error("GetTempFileName");
 #endif
-  this->open(path_buffer);
+  this->open(std::string(path_buffer), File::trunc);
 }
 
 TemporaryFile::TemporaryFile()
@@ -445,20 +446,9 @@ TemporaryFile::~TemporaryFile() throw ()
  * =========================
  */
 
-ExistingFile::ExistingFile(const std::string &name)
-: File()
+File::openmode ExistingFile::get_default_open_mode()
 {
-  this->name = name;
-  this->open(NULL, false);
-}
-
-ExistingFile::ExistingFile(const Directory& directory, const std::string &name)
-: File()
-{
-  std::ostringstream stream;
-  stream << directory << path_separator << name;
-  this->name = stream.str();
-  this->open(NULL, false);
+  return File::openmode();
 }
 
 #if WIN32

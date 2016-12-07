@@ -132,16 +132,17 @@ private:
 protected:
   std::string name;
   std::string base_name;
-  void open(const char* path, bool truncate = true);
+  virtual File::openmode get_default_open_mode();
+  void open(const std::string &path, File::openmode mode);
   File()
   { }
 public:
-  explicit File(const std::string &name);
+  explicit File(const std::string &path);
   File(const Directory& directory, const std::string &name);
   virtual ~File() throw ()
   { }
   File::streamoff size();
-  void reopen(bool truncate = false);
+  void reopen(std::fstream::openmode mode = std::fstream::openmode());
   const std::string& get_basename() const;
   operator const std::string& () const;
   friend std::ostream &operator<<(std::ostream &, const File &);
@@ -170,11 +171,17 @@ class ExistingFile : public File
 private:
   ExistingFile(const ExistingFile &); // not defined
   ExistingFile& operator=(const ExistingFile &); // not defined
+protected:
+  virtual File::openmode get_default_open_mode();
 public:
-  explicit ExistingFile(const std::string &name);
+  explicit ExistingFile(const std::string &path)
+  : File(path)
+  { }
+  ExistingFile(const Directory& directory, const std::string &name)
+  : File(directory, name)
+  { }
   virtual ~ExistingFile() throw ()
   { }
-  ExistingFile(const Directory& directory, const std::string &name);
 };
 
 #if WIN32
