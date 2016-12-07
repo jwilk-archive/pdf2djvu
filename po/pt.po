@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-02-02 12:08+0100\n"
+"POT-Creation-Date: 2016-12-08 00:14+0100\n"
 "PO-Revision-Date: 2016-02-06 16:35+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -161,11 +161,6 @@ msgstr "Erro do domínio"
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Duplicar identificador de pagina: %s"
-
-#: pdf2djvu.cc
-#, c-format
-msgid "Duplicate page title: %s"
-msgstr "Duplicar título de página: %s"
 
 #: pdf2djvu.cc
 #, c-format
@@ -574,6 +569,11 @@ msgstr "Utilização: "
 #, c-format
 msgid "Warning: %s"
 msgstr "Aviso: %s"
+
+#: pdf2djvu.cc
+#, fuzzy, c-format
+msgid "Warning: Ignoring duplicate page title: %s"
+msgstr "Duplicar título de página: %s"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a JavaScript action"

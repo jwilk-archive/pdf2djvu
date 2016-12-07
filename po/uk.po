@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-02-02 12:08+0100\n"
+"POT-Creation-Date: 2016-12-08 00:14+0100\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -153,11 +153,6 @@ msgstr "Помилка області визначення"
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Повторний ідентифікатор сторінки: %s"
-
-#: pdf2djvu.cc
-#, c-format
-msgid "Duplicate page title: %s"
-msgstr "Повторний заголовок сторінки: %s"
 
 #: pdf2djvu.cc
 #, fuzzy, c-format
@@ -572,6 +567,11 @@ msgstr "Використання: "
 #, c-format
 msgid "Warning: %s"
 msgstr "Попередження: %s"
+
+#: pdf2djvu.cc
+#, fuzzy, c-format
+msgid "Warning: Ignoring duplicate page title: %s"
+msgstr "Повторний заголовок сторінки: %s"
 
 #: pdf2djvu.cc
 #, fuzzy
