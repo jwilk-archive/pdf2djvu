@@ -39,7 +39,7 @@ To run the tests, the following software is needed:
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
 .. _OpenMP:
-   http://openmp.org/
+   http://www.openmp.org/
 .. _nose:
    https://nose.readthedocs.io/
 
