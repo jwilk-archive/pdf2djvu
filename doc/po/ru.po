@@ -165,7 +165,6 @@ msgid "<option>--no-page-titles</option>"
 msgstr "<option>--no-page-titles</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
 msgid "Don't set page titles."
 msgstr "Не устанавливать заголовки страницы."
 
