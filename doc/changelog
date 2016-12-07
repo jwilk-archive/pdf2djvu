@@ -17,6 +17,7 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
       to prefer the former.
       Thanks to Roland Winkler for the bug report.
     + Update nose homepage URL.
+    + Update OpenMP URLs.
     + Fix typos.
   * Improve the test suite:
     + Fix test failure on GNU/Hurd, which doesn't correctly propagate virtual
@@ -28,7 +29,7 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Build with “-Werror=misleading-indentation”.
   * Don't enable unknown warning options for clang.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 07 Dec 2016 00:48:58 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 07 Dec 2016 23:43:01 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
