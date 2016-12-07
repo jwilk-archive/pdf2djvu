@@ -46,7 +46,7 @@ export CXXFLAGS = -Os
 
 export V = 1
 
-export WINEDEBUG ?= err+all
+export WINEDEBUG ?= err+all,fixme-all
 export WINE = wine
 export WINESERVER = /usr/lib/wine/wineserver32
 
