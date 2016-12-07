@@ -15,7 +15,7 @@ usr = $(CURDIR)
 host = i686-w64-mingw32
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
-ifeq "$(wildcard ../.hg)" ""
+ifeq "$(wildcard ../.git)" ""
 version := $(shell head -n1 ../doc/changelog | cut -d ' ' -f2 | tr -d '()')
 orig_src_tarball = pdf2djvu-$(version).tar.xz
 else
