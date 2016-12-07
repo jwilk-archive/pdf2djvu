@@ -20,7 +20,7 @@ from tools import (
 
 class test(case):
 
-    # Bug: https://bitbucket.org/jwilk/pdf2djvu/issues/113
+    # Bug: https://github.com/jwilk/pdf2djvu/issues/113
     # + fixed in 0.9.5 [1b262b90854cd3d5359cd7fdf6b72642b54c8f60]
     def test(self):
         r = self.pdf2djvu('--page-title-template', '{label}', quiet=False)
