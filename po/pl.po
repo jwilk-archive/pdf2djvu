@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.5\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-12-08 00:14+0100\n"
-"PO-Revision-Date: 2016-02-02 12:15+0100\n"
+"PO-Revision-Date: 2016-12-08 00:17+0100\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -564,9 +564,9 @@ msgid "Warning: %s"
 msgstr "Ostrzeżenie: %s"
 
 #: pdf2djvu.cc
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: Ignoring duplicate page title: %s"
-msgstr "Powtórzony tytuł strony: %s"
+msgstr "Ostrzeżenie: Powtórzony tytuł strony został zignorowany: %s"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a JavaScript action"
