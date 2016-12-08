@@ -353,8 +353,8 @@ src/exiv2/install-stamp: src/exiv2/build-stamp
 
 src/freetype/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2 8469fb8124764f85029cc8247c31e132a2c5e51084ddce2a44ea32ee4ae8347e
-	$(untar) dcache/freetype-2.6.tar.bz2 -C $(dir $@)
+	tools/wget http://download.savannah.gnu.org/releases/freetype/freetype-2.6.5.tar.bz2 e20a6e1400798fd5e3d831dd821b61c35b1f9a6465d6b18a53a9df4cf441acf0
+	$(untar) dcache/freetype-2.6.5.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && ./autogen.sh
 	rm -rf $(dir $@)/builds/unix/*.cache/
 	touch $(@)
