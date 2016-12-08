@@ -4,7 +4,7 @@ Last-Update: 2015-08-13
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -191,16 +191,11 @@
+@@ -179,16 +179,11 @@
      return retval;
  
    if (!GetModuleFileName (hmodule, (CHAR *) retval, sizeof(retval) - 20))

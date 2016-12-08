@@ -4,12 +4,12 @@ Last-Update: 2015-08-13
 
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -29,7 +29,7 @@
- utils_subdir = utils
+@@ -31,7 +31,7 @@
+ cpp_pc_file = poppler-cpp.pc
  endif
  
--SUBDIRS = goo fofi $(splash_subdir) poppler $(utils_subdir) $(glib_subdir) test $(qt4_subdir) $(cpp_subdir)
-+SUBDIRS = goo fofi $(splash_subdir) poppler $(utils_subdir) $(glib_subdir) $(qt4_subdir) $(cpp_subdir)
+-SUBDIRS = goo fofi $(splash_subdir) poppler utils $(glib_subdir) test $(qt4_subdir) $(qt5_subdir) $(cpp_subdir)
++SUBDIRS = goo fofi $(splash_subdir) poppler utils $(glib_subdir) $(qt4_subdir) $(qt5_subdir) $(cpp_subdir)
  
  EXTRA_DIST =					\
  	README-XPDF				\
