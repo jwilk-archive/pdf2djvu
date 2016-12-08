@@ -1,0 +1,61 @@
+#!/bin/sh
+
+# Copyright © 2015-2016 Jakub Wilk <jwilk@jwilk.net>
+#
+# This file is part of pdf2djvu.
+#
+# pdf2djvu is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation.
+#
+# pdf2djvu is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+
+usage()
+{
+    printf '%s [-n NAME] URL SHA256SUM\n' "$0"
+}
+
+set -e -u
+
+args=$(getopt -n "$0" -o 'hn:' --long 'help' -- "$@") || {
+    usage >&2
+    exit 1
+}
+name=
+eval set -- "$args"
+while true
+do
+    case "$1" in
+        -h|--help) usage; exit 0;;
+        -n) name="$2"; shift 2;;
+        --) shift; break;;
+        *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
+    esac
+done
+if [ $# -ne 2 ]
+then
+    usage >&2
+    exit 1
+fi
+url="$1"
+sha256sum="$2"
+[ -n "$name" ] || name=${url##*/}
+
+set -e
+
+here=$(basename "$0")
+cd "$here/../dcache"
+
+if [ -e "$name" ] && echo "$sha256sum  $name" | sha256sum --strict -c
+then
+    exit 0
+fi
+
+wget -c "$url" -O "$name"
+
+echo "$sha256sum  $name" | sha256sum --strict -c
+
+# vim:ts=4 sts=4 sw=4 et

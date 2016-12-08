@@ -26,7 +26,6 @@ endif
 djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
 WGET = wget
-wget = cd dcache && $(WGET) -c
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
@@ -177,8 +176,7 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) https://poppler.freedesktop.org/poppler-0.18.4.tar.gz
-	echo '33421148cdc8e043da291dece2cce1cea6220d49a50c00c56d56d6435501d42e  dcache/poppler-0.18.4.tar.gz' | sha256sum -c
+	tools/wget https://poppler.freedesktop.org/poppler-0.18.4.tar.gz 33421148cdc8e043da291dece2cce1cea6220d49a50c00c56d56d6435501d42e
 	$(untar) dcache/poppler-*.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	cd $(dir $@) && autoreconf -vfi
@@ -218,8 +216,7 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) https://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz
-	echo 'e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f  dcache/djvulibre-3.5.27.tar.gz' | sha256sum -c
+	tools/wget https://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f
 	$(untar) dcache/djvulibre-*.tar.gz -C $(dir $@)
 	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
@@ -253,8 +250,7 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.21.tar.xz
-	echo '9045304d991776b6a37e1b45b9b6ef152593ada0d49bc744263565617cbf3c1f  dcache/GraphicsMagick-1.3.21.tar.xz' | sha256sum -c
+	tools/wget ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.21.tar.xz 9045304d991776b6a37e1b45b9b6ef152593ada0d49bc744263565617cbf3c1f
 	$(untar) dcache/GraphicsMagick-1.3.21.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
@@ -307,8 +303,7 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 
 src/expat/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) https://downloads.sourceforge.net/project/expat/expat/2.1.0/expat-2.1.0.tar.gz
-	echo '823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86  dcache/expat-2.1.0.tar.gz' | sha256sum -c
+	tools/wget https://downloads.sourceforge.net/project/expat/expat/2.1.0/expat-2.1.0.tar.gz 823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86
 	$(untar) dcache/expat-*.tar.gz -C $(dir $@)
 	touch $(@)
 
@@ -331,8 +326,7 @@ src/expat/install-stamp: src/expat/build-stamp
 
 src/exiv2/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://www.exiv2.org/exiv2-0.25.tar.gz
-	echo 'c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4  dcache/exiv2-0.25.tar.gz' | sha256sum -c
+	tools/wget http://www.exiv2.org/exiv2-0.25.tar.gz c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4
 	$(untar) dcache/exiv2-*.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/exiv2 quilt push -a
 	touch $(@)
@@ -359,8 +353,7 @@ src/exiv2/install-stamp: src/exiv2/build-stamp
 
 src/freetype/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2
-	echo '8469fb8124764f85029cc8247c31e132a2c5e51084ddce2a44ea32ee4ae8347e  dcache/freetype-2.6.tar.bz2' | sha256sum -c
+	tools/wget http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2 8469fb8124764f85029cc8247c31e132a2c5e51084ddce2a44ea32ee4ae8347e
 	$(untar) dcache/freetype-2.6.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && ./autogen.sh
 	rm -rf $(dir $@)/builds/unix/*.cache/
@@ -388,8 +381,7 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2
-	echo 'dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99  dcache/fontconfig-2.11.1.tar.bz2' | sha256sum -c
+	tools/wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2 dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99
 	$(untar) dcache/fontconfig-2.11.1.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
@@ -421,8 +413,7 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 
 src/gettext/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) https://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz
-	echo '93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9  dcache/gettext-0.18.1.1.tar.gz' | sha256sum -c
+	tools/wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz 93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9
 	$(untar) dcache/gettext-*.tar.gz --exclude='gettext-tools' -C $(dir $@)
 	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
 	sed -r -i -e 's/(-DENABLE_RELOCATABLE)=1/\1=0/' $(dir $@)/gettext-runtime/intl/Makefile.in
@@ -454,8 +445,7 @@ src/gettext/install-stamp: src/gettext/build-stamp
 
 src/winiconv/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) https://github.com/win-iconv/win-iconv/archive/v0.0.8.tar.gz -O win-iconv-0.0.8.tar.gz
-	echo '23adea990a8303c6e69e32a64a30171efcb1b73824a1c2da1bbf576b0ae7c520  dcache/win-iconv-0.0.8.tar.gz' | sha256sum -c
+	tools/wget https://github.com/win-iconv/win-iconv/archive/v0.0.8.tar.gz -n win-iconv-0.0.8.tar.gz 23adea990a8303c6e69e32a64a30171efcb1b73824a1c2da1bbf576b0ae7c520
 	$(untar) dcache/win-iconv-0.0.8.tar.gz -C $(dir $@)
 	touch $(@)
 
@@ -472,8 +462,7 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 
 src/libjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	$(wget) http://jpegclub.org/support/files/jpegsrc.v6b2.tar.gz
-	echo '6d2be0db82dda2e50c908b72aa22ed8cf42cc5aa5ae5f2b081498be6ef16eabc  dcache/jpegsrc.v6b2.tar.gz' | sha256sum -c
+	tools/wget http://jpegclub.org/support/files/jpegsrc.v6b2.tar.gz 6d2be0db82dda2e50c908b72aa22ed8cf42cc5aa5ae5f2b081498be6ef16eabc
 	$(untar) dcache/jpegsrc.v6b2.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/libjpeg quilt push -a
 	cd $(dir $@) && ACLOCAL=aclocal-1.11 AUTOMAKE=automake-1.11 autoreconf -vfi
