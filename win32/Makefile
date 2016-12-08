@@ -413,10 +413,10 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 
 src/gettext/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz 93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9
-	$(untar) dcache/gettext-*.tar.gz --exclude='gettext-tools' -C $(dir $@)
-	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.h.in
-	sed -r -i -e 's/(-DENABLE_RELOCATABLE)=1/\1=0/' $(dir $@)/gettext-runtime/intl/Makefile.in
+	tools/wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.19.8.1.tar.xz 105556dbc5c3fbbc2aa0edb46d22d055748b6f5c7cd7a8d99f8e7eb84e938be4
+	$(untar) dcache/gettext-0.19.8.1.tar.xz --exclude='gettext-tools' -C $(dir $@)
+	sed -r -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.in.h
+	sed -r -i -e 's/-D(ENABLE_RELOCATABLE)=1/-U\1/' $(dir $@)/gettext-runtime/intl/Makefile.in
 	touch $(@)
 
 src/gettext/config.status: src/gettext/source-stamp
