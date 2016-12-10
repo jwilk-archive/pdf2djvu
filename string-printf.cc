@@ -26,6 +26,7 @@
 #include "system.hh"
 
 #if USE_MINGW_ANSI_STDIO
+// https://sourceforge.net/p/mingw-w64/wiki2/gnu%20printf/
 #define vsnprintf __mingw_vsnprintf
 #endif
 

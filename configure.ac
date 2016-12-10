@@ -37,6 +37,7 @@ AC_OPENMP
 AC_MSG_CHECKING([for MinGW ANSI stdio])
 AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
   [
+    # https://sourceforge.net/p/mingw-w64/wiki2/gnu%20printf/
     AC_MSG_RESULT([yes])
     AC_DEFINE_UNQUOTED([USE_MINGW_ANSI_STDIO], 1, [Define to use MinGW ANSI stdio])
   ],
