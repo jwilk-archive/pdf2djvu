@@ -12,6 +12,14 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   * Fix incorrect progress output in parallel mode.
   * Windows: fix console output encoding.
     https://github.com/jwilk/pdf2djvu/issues/64
+  * Upgrade libraries bundled with the Windows package:
+    - Poppler 0.49;
+    - DjvuLibre 3.5.27;
+    - GraphicsMagick 1.3.25;
+    - Expat 2.2.0;
+    - FreeType 2.6.5;
+    - fontconfig 2.12.1;
+    - gettext 0.19.8.1.
   * Improve documentation:
     + Don't mention “--page-title-template=” as a way of disabling page
       titles. This works only if “--no-page-titles” works; there's no reason
@@ -34,7 +42,10 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   [ Américo Monteiro ]
   * Update the Portuguese translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 08 Dec 2016 15:11:58 +0100
+  [ Chris Leick ]
+  * Update the German translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 10 Dec 2016 20:40:44 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
