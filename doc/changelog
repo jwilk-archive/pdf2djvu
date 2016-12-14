@@ -1,4 +1,4 @@
-pdf2djvu (0.9.5) UNRELEASED; urgency=low
+pdf2djvu (0.9.5) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Improve error handling:
@@ -48,7 +48,7 @@ pdf2djvu (0.9.5) UNRELEASED; urgency=low
   [ Kyrill Detinov ]
   * Update the Russian translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 13 Dec 2016 17:20:54 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 14 Dec 2016 23:39:19 +0100
 
 pdf2djvu (0.9.4) unstable; urgency=low
 
