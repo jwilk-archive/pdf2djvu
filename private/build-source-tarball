@@ -55,6 +55,7 @@ then
 fi
 pwd="$PWD"
 commit=${1:-HEAD}
+commit=$(git describe "$commit")
 read name version release urgency <<EOF
 $(git -C "$gitrepo" cat-file blob "$commit:doc/changelog" | head -n1)
 EOF
