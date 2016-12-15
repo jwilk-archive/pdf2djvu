@@ -1,8 +1,8 @@
 pdf2djvu (0.9.6) UNRELEASED; urgency=low
 
-  * 
+  * Port the code to C++11.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 15 Dec 2016 11:22:03 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 15 Dec 2016 11:33:05 +0100
 
 pdf2djvu (0.9.5) unstable; urgency=low
 
