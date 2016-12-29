@@ -63,7 +63,7 @@ version=${version#(}
 version=${version%)}
 if [ "$release" = 'UNRELEASED;' ]
 then
-    date=$(git -C "$gitrepo" log -1 --pretty='format:%cI' "$commit" | head -c 10 | tr -d -)
+    date=$(git -C "$gitrepo" rev-list -1 --format=%cI "$commit" | grep -o '^....-..-..' | tr -d -)
     version="${version}rc${date}"
 fi
 if [ -n "$opt_print_name" ]
