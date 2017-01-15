@@ -383,6 +383,8 @@ __all__ = [
     'assert_is_not_none',
     'assert_multi_line_equal',
     'assert_regex',
+    # regexp support:
+    're',
     # helper classes:
     'ipc_result',
     'case',
