@@ -1245,7 +1245,7 @@ static int xmain(int argc, char * const argv[])
   std::unique_ptr<const Directory> output_dir;
   std::unique_ptr<File> output_file;
   /* `page_files` has to be declared before `djvm`;
-   * otherwise temporary files could be removed in the wrong oder:
+   * otherwise temporary files could be removed in the wrong order:
    * https://github.com/jwilk/pdf2djvu/issues/114
    */
   std::unique_ptr<ComponentList> page_files;
