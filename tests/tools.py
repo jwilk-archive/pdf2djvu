@@ -27,21 +27,19 @@ import signal
 import subprocess as ipc
 import sys
 
-re.compile.escape = re.escape
-re.compile.M = re.M
-re.compile.DOTALL = re.DOTALL
-re = re.compile
-re.type = type(re(''))
-
 import nose
-
 from nose import SkipTest
-
 from nose.tools import (
     assert_equal,
     assert_not_equal,
     assert_true,
 )
+
+re.compile.escape = re.escape
+re.compile.M = re.M
+re.compile.DOTALL = re.DOTALL
+re = re.compile
+re.type = type(re(''))
 
 def noseimport(vmaj, vmin, name=None):
     def wrapper(f):
