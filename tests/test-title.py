@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -24,7 +25,7 @@ class test(case):
         def t(*args):
             self.pdf2djvu(*args).assert_()
             r = self.ls()
-            r.assert_(stdout=re(
+            r.assert_(stdout=re.compile(
                 r'\n'
                 r'\s*1\s+P\s+\d+\s+[\w.]+\n'
                 r'\s*2\s+P\s+\d+\s+[\w.]+\n'
@@ -36,7 +37,7 @@ class test(case):
         template = '#{page}'
         self.pdf2djvu('--page-title-template', template).assert_()
         r = self.ls()
-        r.assert_(stdout=re(
+        r.assert_(stdout=re.compile(
             r'\n'
             r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=#1\n'
             r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=#2\n'
@@ -47,7 +48,7 @@ class test(case):
         template = '№{page}'
         self.pdf2djvu('--page-title-template', template, encoding='UTF-8').assert_()
         r = self.ls()
-        r.assert_(stdout=re(
+        r.assert_(stdout=re.compile(
             r'\n'
             r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=№1\n'
             r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=№2\n'
@@ -57,13 +58,13 @@ class test(case):
         self.require_feature('POSIX')
         template = '{page}\xBA'
         r = self.pdf2djvu('--page-title-template', template, encoding='UTF-8')
-        r.assert_(stderr=re('^Unable to convert page title to UTF-8:'), rc=1)
+        r.assert_(stderr=re.compile('^Unable to convert page title to UTF-8:'), rc=1)
 
     def test_iso8859_1(self):
         template = '{page}\xBA'
         self.pdf2djvu('--page-title-template', template, encoding='ISO8859-1').assert_()
         r = self.ls()
-        r.assert_(stdout=re(
+        r.assert_(stdout=re.compile(
             r'\n'
             r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=1º\n'
             r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=2º\n'

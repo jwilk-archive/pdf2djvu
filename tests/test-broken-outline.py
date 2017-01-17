@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -26,8 +27,8 @@ class test(case):
     def test(self):
         r = self.pdf2djvu()
         r.assert_(
-            stderr=re(''),
-            stdout=re(''),  # https://bugs.freedesktop.org/show_bug.cgi?id=81513
+            stderr=re.compile(''),
+            stdout=re.compile(''),  # https://bugs.freedesktop.org/show_bug.cgi?id=81513
         )
 
 # vim:ts=4 sts=4 sw=4 et

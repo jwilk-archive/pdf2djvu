@@ -13,10 +13,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     SkipTest,
     case,
-    re,
 )
 
 class test(case):
@@ -26,7 +27,7 @@ class test(case):
         self.pdf2djvu('--dpi=72').assert_()
         r = self.djvudump()
         try:
-            r.assert_(stdout=re(r'\A(\s+(?!FG)\S+.*\n)+\Z'))
+            r.assert_(stdout=re.compile(r'\A(\s+(?!FG)\S+.*\n)+\Z'))
         except AssertionError:
             raise SkipTest('https://bugs.freedesktop.org/show_bug.cgi?id=68360')
 

@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -27,7 +28,7 @@ class test(case):
             border=border,
         )
         regex = re.escape(template).replace('NNN', '[0-9]+')
-        result.assert_(stdout=re(regex))
+        result.assert_(stdout=re.compile(regex))
 
     def test(self):
         # Bug: https://github.com/jwilk/pdf2djvu/issues/3
@@ -64,6 +65,6 @@ class test(case):
 
     def test_bad_argument(self):
         r = self.pdf2djvu('--hyperlinks', 'off')
-        r.assert_(stderr=re('^Unable to parse hyperlinks options\n'), rc=1)
+        r.assert_(stderr=re.compile('^Unable to parse hyperlinks options\n'), rc=1)
 
 # vim:ts=4 sts=4 sw=4 et

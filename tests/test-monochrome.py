@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -25,6 +26,6 @@ class test(case):
     def test(self):
         self.pdf2djvu('--monochrome').assert_()
         r = self.djvudump()
-        r.assert_(stdout=re(r'Sjbz \[[0-9]{4,}\]'))
+        r.assert_(stdout=re.compile(r'Sjbz \[[0-9]{4,}\]'))
 
 # vim:ts=4 sts=4 sw=4 et

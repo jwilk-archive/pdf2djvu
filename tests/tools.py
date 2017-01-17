@@ -35,11 +35,7 @@ from nose.tools import (
     assert_true,
 )
 
-re.compile.escape = re.escape
-re.compile.M = re.M
-re.compile.DOTALL = re.DOTALL
-re = re.compile
-re.type = type(re(''))
+re_type = type(re.compile(''))
 
 def noseimport(vmaj, vmin, name=None):
     def wrapper(f):
@@ -93,13 +89,13 @@ if sys.version_info >= (2, 7):
 @noseimport(2, 7, 'assert_regexp_matches')
 def assert_regex(text, regex):
     if isinstance(regex, basestring):
-        regex = re(regex)
+        regex = re.compile(regex)
     if not regex.search(text):
         message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
         assert_true(False, msg=message)
 
 def _get_signal_names():
-    signame_pattern = re('^SIG[A-Z0-9]*$')
+    signame_pattern = re.compile('^SIG[A-Z0-9]*$')
     data = dict(
         (name, getattr(signal, name))
         for name in dir(signal)
@@ -137,7 +133,7 @@ class ipc_result(object):
     def assert_(self, stdout='', stderr='', rc=0):
         if stderr is None:
             pass
-        elif isinstance(stderr, re.type):
+        elif isinstance(stderr, re_type):
             assert_regex(self.stderr, stderr)
         else:
             assert_multi_line_equal(self.stderr, stderr)
@@ -145,7 +141,7 @@ class ipc_result(object):
             assert_equal(_ipc_rc(self.rc), _ipc_rc(rc))
         if stdout is None:
             pass
-        elif isinstance(stdout, re.type):
+        elif isinstance(stdout, re_type):
             assert_regex(self.stdout, stdout)
         else:
             assert_multi_line_equal(self.stdout, stdout)
@@ -177,7 +173,7 @@ class case(object):
     _poppler_version = None
 
     def get_pdf2djvu_command(self):
-        if re(r'\A[[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
+        if re.compile(r'\A[[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
             return (self._pdf2djvu_command,)
         return ('sh', '-c', self._pdf2djvu_command + ' "$@"', 'sh')
 
@@ -228,7 +224,7 @@ class case(object):
             result.stderr = result.stderr.replace('\r\n', '\n')
         if sys.platform.startswith('openbsd'):
             # FIXME: https://github.com/jwilk/pdf2djvu/issues/108
-            result.stderr = re(
+            result.stderr = re.compile(
                 r'Magick: Failed to close module [(]"\w*: Invalid handle\"[)].\n'
             ).sub('', result.stderr)
         return result
@@ -293,9 +289,9 @@ class case(object):
     def require_poppler(self, *version):
         if self._poppler_version is None:
             r = self.pdf2djvu('--version')
-            r.assert_(stderr=re('^pdf2djvu '), rc=0)
+            r.assert_(stderr=re.compile('^pdf2djvu '), rc=0)
             print(r.stderr)
-            match = re('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
+            match = re.compile('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
             self._poppler_version = tuple(int(x) for x in match.group(1).split('.'))
         if self._poppler_version < version:
             str_version = '.'.join(str(v) for v in version)
@@ -309,7 +305,7 @@ class case(object):
                 feature_enabled = not os.getenv('pdf2djvu_win32')
             else:
                 r = self.pdf2djvu('--version')
-                r.assert_(stderr=re('^pdf2djvu '), rc=0)
+                r.assert_(stderr=re.compile('^pdf2djvu '), rc=0)
                 feature_enabled = feature in r.stderr
             self._feature_cache[feature] = feature_enabled
         if not feature_enabled:
@@ -338,7 +334,7 @@ def checkboard(width, height):
             pixels[x, y] = color
     return image
 
-_ppm_re = re(r'P6\s+\d+\s+\d+\s+255\s(.*)\Z', re.DOTALL)
+_ppm_re = re.compile(r'P6\s+\d+\s+\d+\s+255\s(.*)\Z', re.DOTALL)
 def count_ppm_colors(b):
     match = _ppm_re.match(b)
     assert_is_not_none(match)
@@ -383,8 +379,6 @@ __all__ = [
     'assert_is_not_none',
     'assert_multi_line_equal',
     'assert_regex',
-    # regexp support:
-    're',
     # helper classes:
     'ipc_result',
     'case',

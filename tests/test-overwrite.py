@@ -13,10 +13,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     assert_equal,
     case,
-    re,
 )
 
 class test(case):
@@ -33,7 +34,7 @@ class test(case):
             '-o', self.get_pdf_path()
         ))
         r = self.run(*cmdline)
-        r.assert_(stderr=re('Input file is the same as output file:'), rc=1)
+        r.assert_(stderr=re.compile('Input file is the same as output file:'), rc=1)
         with open(pdf_path, 'rb') as pdf_file:
             pdf_after = pdf_file.read()
         assert_equal(pdf_before, pdf_after)

@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -25,7 +26,7 @@ class test(case):
         # + fixed in 0.4.11 [25f63fdcee01a93df16fcd56ebd7587165f4ee52]
         self.pdf2djvu('--bg-subsample=11', '--dpi=72').assert_()
         r = self.djvudump()
-        r.assert_(stdout=re('BG44.* 10x11$', re.M))
+        r.assert_(stdout=re.compile('BG44.* 10x11$', re.M))
 
     def test_12(self):
         # Bug: https://bugs.debian.org/458211
@@ -34,6 +35,6 @@ class test(case):
         # Now we require a fixed version of DjVuLibre.
         self.pdf2djvu('--bg-subsample=12', '--dpi=72').assert_()
         r = self.djvudump()
-        r.assert_(stdout=re('BG44.* 9x9$', re.M))
+        r.assert_(stdout=re.compile('BG44.* 9x9$', re.M))
 
 # vim:ts=4 sts=4 sw=4 et

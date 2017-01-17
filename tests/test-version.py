@@ -14,11 +14,11 @@
 # General Public License for more details.
 
 import os
+import re
 
 from tools import (
     assert_equal,
     case,
-    re,
 )
 
 here = os.path.dirname(__file__)
@@ -34,7 +34,7 @@ class test(case):
 
     def test_executable(self):
         r = self.pdf2djvu('--version')
-        r.assert_(stderr=re('^pdf2djvu [0-9.]+$', re.M), rc=0)
+        r.assert_(stderr=re.compile('^pdf2djvu [0-9.]+$', re.M), rc=0)
         exec_version = r.stderr.splitlines()[0]
         _, exec_version = exec_version.split()
         assert_equal(exec_version, self.changelog_version)

@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -27,7 +28,7 @@ class test(case):
         def t(*args):
             self.pdf2djvu(*args).assert_()
             r = self.ls()
-            r.assert_(stdout=re(
+            r.assert_(stdout=re.compile(
                 r'\n'
                 r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=one\n'
                 r'\s*2\s+P\s+\d+\s+[\w.]+\s+T=Αʹ\n'

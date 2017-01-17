@@ -15,13 +15,14 @@
 
 from tools import (
     case,
-    re,
 )
+
+import re
 
 class test(case):
     def test(self):
         self.pdf2djvu('--guess-dpi').assert_()
         r = self.djvudump()
-        r.assert_(stdout=re('INFO .* DjVu 100x200,'))
+        r.assert_(stdout=re.compile('INFO .* DjVu 100x200,'))
 
 # vim:ts=4 sts=4 sw=4 et

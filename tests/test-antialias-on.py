@@ -13,15 +13,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
     def test(self):
         self.pdf2djvu('--anti-alias').assert_()
         r = self.djvudump()
-        r.assert_(stdout=re(r'(?m)^\s+BG'))
+        r.assert_(stdout=re.compile(r'(?m)^\s+BG'))
 
 # vim:ts=4 sts=4 sw=4 et

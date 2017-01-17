@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -28,6 +29,6 @@ class test(case):
         )
         self.pdf2djvu('--dpi=72').assert_()
         r = self.print_meta()
-        r.assert_(stdout=re('Title\t"{s}"'.format(s=title.replace('\\', '\\\\'))))
+        r.assert_(stdout=re.compile('Title\t"{s}"'.format(s=title.replace('\\', '\\\\'))))
 
 # vim:ts=4 sts=4 sw=4 et

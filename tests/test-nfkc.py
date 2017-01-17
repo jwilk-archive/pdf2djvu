@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -29,11 +30,11 @@ class test(case):
     def test_nfkc(self):
         self.pdf2djvu().assert_()
         r = self.print_text()
-        r.assert_(stdout=re('^{s} *$'.format(s=self.text_nfkc), re.M))
+        r.assert_(stdout=re.compile('^{s} *$'.format(s=self.text_nfkc), re.M))
 
     def test_no_nfkc(self):
         self.pdf2djvu('--no-nfkc').assert_()
         r = self.print_text()
-        r.assert_(stdout=re('^{s} *$'.format(s=self.text_no_nfkc), re.M))
+        r.assert_(stdout=re.compile('^{s} *$'.format(s=self.text_no_nfkc), re.M))
 
 # vim:ts=4 sts=4 sw=4 et

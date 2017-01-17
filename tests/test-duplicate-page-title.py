@@ -15,8 +15,9 @@
 
 from tools import (
     case,
-    re,
 )
+
+import re
 
 class test(case):
 
@@ -24,9 +25,9 @@ class test(case):
     # + fixed in 0.9.5 [1b262b90854cd3d5359cd7fdf6b72642b54c8f60]
     def test(self):
         r = self.pdf2djvu('--page-title-template', '{label}', quiet=False)
-        r.assert_(stderr=re('Warning: Ignoring duplicate page title: x\n'))
+        r.assert_(stderr=re.compile('Warning: Ignoring duplicate page title: x\n'))
         r = self.ls()
-        r.assert_(stdout=re(
+        r.assert_(stdout=re.compile(
             r'\n'
             r'\s*1\s+P\s+\d+\s+[\w.]+\s+T=x\n'
             r'\s*2\s+P\s+\d+\s+[\w.]+\n'

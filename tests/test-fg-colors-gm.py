@@ -13,12 +13,13 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     assert_equal,
     assert_in,
     case,
     count_ppm_colors,
-    re,
 )
 
 class test(case):
@@ -53,7 +54,7 @@ class test(case):
             self.require_feature('GraphicsMagick')
             r = self.pdf2djvu('--fg-colors={0}'.format(i))
             r.assert_(
-                stderr=re('^The specified number of foreground colors is outside the allowed range: 1 .. 4080\n'),
+                stderr=re.compile('^The specified number of foreground colors is outside the allowed range: 1 .. 4080\n'),
                 rc=1,
             )
         t('-1')
@@ -65,7 +66,7 @@ class test(case):
             self.require_feature('GraphicsMagick')
             r = self.pdf2djvu('--fg-colors={0}'.format(i))
             r.assert_(
-                stderr=re('^"{0}" is not a valid number\n'.format(i)),
+                stderr=re.compile('^"{0}" is not a valid number\n'.format(i)),
                 rc=1,
             )
         t('')

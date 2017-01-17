@@ -16,8 +16,9 @@
 from tools import (
     assert_not_equal,
     case,
-    re,
 )
+
+import re
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/23
@@ -28,12 +29,12 @@ class test(case):
 
     def test_bundled(self):
         r = self.pdf2djvu('--pages=1,1')
-        r.assert_(stderr=re('^Duplicate page:', re.M), rc=None)
+        r.assert_(stderr=re.compile('^Duplicate page:', re.M), rc=None)
         assert_not_equal(r.rc, 0)
 
     def test_indirect(self):
         r = self.pdf2djvu_indirect('--pages=1,1')
-        r.assert_(stderr=re('^Duplicate page:', re.M), rc=None)
+        r.assert_(stderr=re.compile('^Duplicate page:', re.M), rc=None)
         assert_not_equal(r.rc, 0)
 
 # vim:ts=4 sts=4 sw=4 et

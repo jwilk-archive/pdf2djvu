@@ -13,9 +13,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
-    re,
 )
 
 class test(case):
@@ -23,11 +24,11 @@ class test(case):
     def t(self, page, message, empty_stdout=True):
         r = self.pdf2djvu('-p', str(page), quiet=False)
         kwargs = dict(
-            stderr=re('- Warning: {warn}\n'.format(warn=re.escape(message)))
+            stderr=re.compile('- Warning: {warn}\n'.format(warn=re.escape(message)))
         )
         if not empty_stdout:
             kwargs.update(
-                stdout=re('')
+                stdout=re.compile('')
             )
         r.assert_(**kwargs)
 

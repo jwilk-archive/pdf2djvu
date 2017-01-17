@@ -14,6 +14,7 @@
 # General Public License for more details.
 
 import contextlib
+import re
 import resource
 import string
 import sys
@@ -21,7 +22,6 @@ import sys
 from tools import (
     SkipTest,
     case,
-    re,
 )
 
 @contextlib.contextmanager
@@ -32,7 +32,7 @@ def vm_limit(limit):
     resource.setrlimit(resource.RLIMIT_AS, (limit, lim_hard))
     try:
         r = case().run(sys.executable, '-c', 'import resource\nfor n in resource.getrlimit(resource.RLIMIT_AS):\n print(n)')
-        r.assert_(stdout=re(''))
+        r.assert_(stdout=re.compile(''))
         (cld_soft_lim, cld_hard_lim) = map(int, r.stdout.splitlines())
         if cld_soft_lim != limit or cld_hard_lim != lim_hard:
             message = 'virtual memory limit did not propagate to subprocess'
@@ -53,6 +53,6 @@ class test(case):
         self.require_poppler(0, 24)
         with vm_limit(1 << 30):  # 1 GiB virtual memory limit
             r = self.pdf2djvu()
-        r.assert_(stderr=re('Out of memory\n'), rc=1)
+        r.assert_(stderr=re.compile('Out of memory\n'), rc=1)
 
 # vim:ts=4 sts=4 sw=4 et
