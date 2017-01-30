@@ -66,7 +66,7 @@ script:
 - export LD_LIBRARY_PATH="$HOME/opt/poppler/lib/"
 - ./pdf2djvu --version
 - make test
-- grep -r -l ft=rst doc/ | xargs -t -n1 -I{} rst2xml --strict {} /dev/null
+- private/check-rst
 - xmllint --noout --valid doc/*.xml
 
 # vim:ts=2 sts=2 sw=2 et
