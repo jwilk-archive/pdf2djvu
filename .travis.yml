@@ -44,11 +44,10 @@ addons:
     - texlive-fonts-recommended
     - texlive-xetex
     - uuid-dev
-cache:
-  directories:
-  - $HOME/.ccache
+cache: ccache
+before_install:
+- 'echo "$PATH" | tr : "\n" | grep -w ccache'
 install:
-- export PATH="/usr/lib/ccache:$PATH"
 - if [ -z "${POPPLER_VERSION##0.[3-9]*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
