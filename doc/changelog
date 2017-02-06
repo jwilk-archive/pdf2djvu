@@ -287,7 +287,7 @@ pdf2djvu (0.7.20) unstable; urgency=low
       https://github.com/jwilk/pdf2djvu/issues/101
   * Update the homepage URL and the bug tracker URLs, in documentation and
     code.
-    https://google-opensource.blogspot.com/2015/03/farewell-to-google-code.html
+    https://opensource.googleblog.com/2015/03/farewell-to-google-code.html
 
   [ Américo Monteiro ]
   * Update the Portuguese translation.
