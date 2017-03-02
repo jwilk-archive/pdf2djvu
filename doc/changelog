@@ -702,7 +702,7 @@ pdf2djvu (0.4.10) unstable; urgency=low
     https://github.com/jwilk/pdf2djvu/issues/4
   * Extract hyperlinks border colors (Poppler ≥ 0.7 only).
     https://github.com/jwilk/pdf2djvu/issues/3
-  * Make page references in the form "#<page-id>", instead of "#<page-no>".
+  * Make page references in the form “#<page-id>”, instead of “#<page-no>”.
   * Fix a regression which disabled the --fg-colors option.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 02 May 2008 18:36:02 +0200
@@ -801,7 +801,7 @@ pdf2djvu (0.4.0) unstable; urgency=low
     Thanks to Victor Ivrii and Christian Ohm for bug reports.
   * Do process I/O with PStreams, rather than with system(3) calls.
   * More verbose error messages while option processing.
-  * Include ")" and "\" in the text layer.
+  * Include “)” and “\” in the text layer.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 12 Dec 2007 20:40:02 +0100
 
