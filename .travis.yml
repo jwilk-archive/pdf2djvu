@@ -23,6 +23,8 @@ matrix:
     env: POPPLER_VERSION=0.21.1
   - compiler: clang
     env: POPPLER_VERSION=0.23.0
+dist: trusty
+sudo: false
 addons:
   apt:
     packages:
