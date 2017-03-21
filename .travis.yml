@@ -48,6 +48,7 @@ addons:
     - uuid-dev
 cache: ccache
 before_install:
+- export PATH=$(echo "$PATH" | tr ':' '\n' | sed -e '/\/opt\/python/d' | tr '\n' ':' | sed 's/::/:/g')
 - 'echo "$PATH" | tr : "\n" | grep -w ccache'
 install:
 - if [ -z "${POPPLER_VERSION##0.[3-9]*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
