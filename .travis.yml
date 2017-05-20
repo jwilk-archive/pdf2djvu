@@ -31,6 +31,7 @@ addons:
     - autoconf
     - automake
     - djvulibre-bin
+    - docbook-xml
     - fonts-linuxlibertine
     - gettext
     - libdjvulibre-dev
@@ -69,6 +70,6 @@ script:
 - ./pdf2djvu --version
 - make test
 - private/check-rst
-- xmllint --noout --valid doc/*.xml
+- xmllint --nonet --noout --valid doc/*.xml
 
 # vim:ts=2 sts=2 sw=2 et
