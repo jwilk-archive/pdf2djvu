@@ -38,6 +38,7 @@ addons:
     - libexiv2-dev
     - libfontconfig1-dev
     - libgraphicsmagick++1-dev
+    - libopenjpeg-dev
     - libxml2-utils
     - pkg-config
     - python-docutils
@@ -55,7 +56,7 @@ install:
 - if [ -z "${POPPLER_VERSION##0.[3-9]*}" ] || [ -z "${POPPLER_VERSION##0.2[3-9]*}" ]; then POPPLER_COMPRESSION=xz; else POPPLER_COMPRESSION=gz; fi
 - wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
-- (cd poppler-*/ && ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libopenjpeg --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
+- (cd poppler-*/ && ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
 - make -C poppler-*/
 - make -C poppler-*/ install
 before_script:
