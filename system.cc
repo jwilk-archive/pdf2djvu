@@ -571,7 +571,7 @@ bool isatty(const std::ostream &ostream)
   else
   {
     /* Not implemented for streams other that ``std::cout``.
-     * See http://www.ginac.de/~kreckel/fileno/ for a more general
+     * See https://www.ginac.de/~kreckel/fileno/ for a more general
      * (although unportable, GCC-specific) solution.
      */
     throw std::invalid_argument("isatty(const std::ostream &)");
