@@ -33,7 +33,7 @@ Command::Command(const std::string& command) : command(command)
         if (c == '/')
             stream << '\\';
         else
-            stream << *it;
+            stream << c;
     }
     this->command = stream.str();
     this->argv.push_back(this->command);
