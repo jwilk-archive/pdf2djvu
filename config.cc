@@ -454,7 +454,7 @@ void Config::read_config(int argc, char * const argv[])
       {
         this->page_id_template.reset(new string_format::Template(optarg));
       }
-      catch (string_format::ParseError)
+      catch (const string_format::ParseError &)
       {
         throw Config::Error(_("Unable to parse page identifier template specification"));
       }
@@ -469,14 +469,14 @@ void Config::read_config(int argc, char * const argv[])
           new string_format::Template(sstream.str())
         );
       }
-      catch (encoding::Error &exc)
+      catch (const encoding::Error &exc)
       {
         throw Config::Error(string_printf(
           _("Unable to convert page title to UTF-8: %s"),
           exc.what())
         );
       }
-      catch (string_format::ParseError)
+      catch (const string_format::ParseError &)
       {
         throw Config::Error(
           _("Unable to parse page title template specification")

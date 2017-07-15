@@ -459,7 +459,7 @@ public:
       {
         page = get_page_for_goto_link(dynamic_cast<pdf::link::GoTo*>(link_action), this->catalog);
       }
-      catch (NoLinkDestination &ex)
+      catch (const NoLinkDestination &ex)
       {
         debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
         return;
@@ -697,7 +697,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
             catalog
           );
         }
-        catch (NoLinkDestination &ex)
+        catch (const NoLinkDestination &ex)
         {
           throw NoPageForBookmark();
         }
@@ -710,7 +710,7 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
         pdf_outline_to_djvu_outline(&current, catalog, djvu_outline_item, page_files, depth + 1);
       }
     }
-    catch (BookmarkError &ex)
+    catch (const BookmarkError &ex)
     {
       debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
     }
@@ -750,7 +750,7 @@ static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ost
     sexpr::Ref sexpr = sexpr::string(value.format(' '));
     stream << key << "\t" << sexpr << std::endl;
   }
-  catch (pdf::Timestamp::Invalid)
+  catch (const pdf::Timestamp::Invalid &)
   {
     debug(1) << string_printf(_("Warning: metadata[%s] is not a valid date"), key) << std::endl;
   }
@@ -1134,7 +1134,7 @@ static int calculate_dpi(pdf::Document &doc, int n, bool crop)
         << std::endl;
       return calculate_dpi(guess);
     }
-    catch (pdf::dpi::NoGuess)
+    catch (const pdf::dpi::NoGuess &)
     {
       debug(2) << _("unable to guess resolution") << std::endl;
     }
@@ -1203,7 +1203,7 @@ static int xmain(int argc, char * const argv[])
   {
     config.read_config(argc, argv);
   }
-  catch (const Config::NeedVersion)
+  catch (const Config::NeedVersion &)
   {
     error_log << get_multiline_version();
     exit(0);
@@ -1298,18 +1298,18 @@ static int xmain(int argc, char * const argv[])
       /* For compatibility reasons, check if it's a directory: */
       output_dir.reset(new Directory(config.output));
     }
-    catch (OSError &no_such_directory_exception)
+    catch (const OSError &no_such_directory_exception)
     {
       bool config_output_not_a_dir = false;
       try
       {
         throw;
       }
-      catch (NoSuchFileOrDirectory &)
+      catch (const NoSuchFileOrDirectory &)
       {
         config_output_not_a_dir = true;
       }
-      catch (NotADirectory &)
+      catch (const NotADirectory &)
       {
         config_output_not_a_dir = true;
       }
@@ -1638,12 +1638,12 @@ static int xmain(int argc, char * const argv[])
   /* These exception handlers duplicate the ones in main(), for the sake of OMP.
    * They should be kept in sync.
    */
-  catch (std::ios_base::failure &ex)
+  catch (const std::ios_base::failure &ex)
   {
     error_log << string_printf(_("Input/output error (%s)"), ex.what()) << std::endl;
     exit(2);
   }
-  catch (std::runtime_error &ex)
+  catch (const std::runtime_error &ex)
   {
     error_log << ex << std::endl;
     exit(1);
@@ -1663,7 +1663,7 @@ static int xmain(int argc, char * const argv[])
         {
           xmp_bytes = xmp::transform(xmp_bytes, metadata);
         }
-        catch (xmp::Error &ex)
+        catch (const xmp::Error &ex)
         {
           debug(1) << string_printf(_("Warning: %s"), ex.what()) << std::endl;
         }
@@ -1706,7 +1706,7 @@ static int xmain(int argc, char * const argv[])
         ExistingFile shared_ant(*output_dir, djvu::shared_ant_file_name);
         djvu_size += shared_ant.size();
       }
-      catch (std::ios_base::failure &ex)
+      catch (const std::ios_base::failure &ex)
       {
         /* Let's assume that there are no shared annotations. */
       }
@@ -1740,12 +1740,12 @@ try
   xmain(argc, argv);
 }
 /* Please keep the exception handlers in sync with the ones in xmain(). */
-catch (std::ios_base::failure &ex)
+catch (const std::ios_base::failure &ex)
 {
   error_log << string_printf(_("Input/output error (%s)"), ex.what()) << std::endl;
   exit(2);
 }
-catch (std::runtime_error &ex)
+catch (const std::runtime_error &ex)
 {
   error_log << ex << std::endl;
   exit(1);

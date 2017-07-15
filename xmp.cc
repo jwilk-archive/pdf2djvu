@@ -94,13 +94,13 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
     try {
         std::string date = metadata.creation_date.format('T');
         maybe_set(data, "Xmp.xmp.CreateDate", date);
-    } catch (pdf::Timestamp::Invalid) {
+    } catch (const pdf::Timestamp::Invalid &) {
         /* Ignore the error. User should be warned elsewhere anyway. */
     }
     try {
         std::string date = metadata.mod_date.format('T');
         maybe_set(data, "Xmp.xmp.ModifyDate", date);
-    } catch (pdf::Timestamp::Invalid) {
+    } catch (const pdf::Timestamp::Invalid &) {
         /* Ignore the error. User should be warned elsewhere anyway. */
     }
     std::string now_date = pdf::Timestamp::now().format('T');
