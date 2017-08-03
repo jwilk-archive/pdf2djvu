@@ -1,8 +1,9 @@
 pdf2djvu (0.9.6) UNRELEASED; urgency=low
 
   * Port the code to C++11.
+    Incidentally, this fixes build failure with Poppler ≥ 0.57.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 15 Dec 2016 11:33:05 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 04 Aug 2017 00:29:30 +0200
 
 pdf2djvu (0.9.5) unstable; urgency=low
 
