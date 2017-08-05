@@ -254,8 +254,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.25.tar.xz d64bfa52d2e0730eff9ce3ed51d4fc78dbb68e2adaa317b2bb3c56e6ee61ac9f
-	$(untar) dcache/GraphicsMagick-1.3.25.tar.xz -C $(dir $@)
+	tools/wget ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.26.tar.xz fba015f3d5e5d5f17e57db663f1aa9d338e7b62f1d415b85d13ee366927e5f88
+	$(untar) dcache/GraphicsMagick-1.3.26.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
