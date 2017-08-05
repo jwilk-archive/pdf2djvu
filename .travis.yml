@@ -44,6 +44,7 @@ addons:
     - python-docutils
     - python-imaging
     - python-nose
+    - python3-pip
     - texlive-base
     - texlive-fonts-recommended
     - texlive-xetex
@@ -59,13 +60,14 @@ install:
 - (cd poppler-*/ && ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x)
 - make -C poppler-*/
 - make -C poppler-*/ install
+- python3 -m pip install --user img2pdf
 before_script:
 - private/autogen
 script:
 - export PKG_CONFIG_PATH="$HOME/opt/poppler/lib/pkgconfig/"
 - export CPATH="$HOME/opt/poppler/include/"
 - ./configure
-- make -C tests prepare
+- PATH="$PATH:$HOME/.local/bin" make -C tests prepare
 - make
 - export LD_LIBRARY_PATH="$HOME/opt/poppler/lib/"
 - ./pdf2djvu --version
