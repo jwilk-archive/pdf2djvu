@@ -51,6 +51,9 @@ vcs-clean: clean
 	pdftex $(<)
 	rm -f $(<:.tex=.log)
 
+%.pdf: %.pdf.in
+	./$(<)
+
 %: %.in
 	./$(<)
 
