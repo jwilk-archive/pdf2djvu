@@ -387,8 +387,8 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.1.tar.bz2 b449a3e10c47e1d1c7a6ec6e2016cca73d3bd68fbbd4f0ae5cc6b573f7d6c7f3
-	$(untar) dcache/fontconfig-2.12.1.tar.bz2 -C $(dir $@)
+	tools/wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.4.tar.bz2 668293fcc4b3c59765cdee5cee05941091c0879edcc24dfec5455ef83912e45c
+	$(untar) dcache/fontconfig-2.12.4.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	sed -i -e 's/"append"/"prepend"/g' $(dir $@)/conf.d/*-urw-aliases.conf
