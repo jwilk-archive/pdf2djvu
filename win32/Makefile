@@ -178,8 +178,8 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-0.49.0.tar.xz 14485f0e1e43dcddf49cfc02c2ccb92910ba3e0e91e06f4bd2642ec00cb3a79f
-	$(untar) dcache/poppler-0.49.0.tar.xz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-0.57.0.tar.xz 0ea37de71b7db78212ebc79df59f99b66409a29c2eac4d882dae9f2397fe44d8
+	$(untar) dcache/poppler-0.57.0.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
