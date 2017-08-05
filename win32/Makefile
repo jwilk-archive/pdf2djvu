@@ -29,6 +29,10 @@ WGET = wget
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
+cmake_options = \
+	-DCMAKE_SYSTEM_NAME=Windows \
+	-DCMAKE_INSTALL_PREFIX=$(usr) \
+
 export CC = $(host)-gcc
 export CXX = $(host)-g++
 export AS = $(host)-as
@@ -500,10 +504,7 @@ src/openjpeg/source-stamp:
 
 src/openjpeg/Makefile: src/openjpeg/source-stamp
 	mkdir -p $(dir $@)
-	cd $(dir $@) && cmake \
-		-DCMAKE_INSTALL_PREFIX=$(usr) \
-		-DCMAKE_SYSTEM_NAME=Windows \
-		.
+	cd $(dir $@) && cmake $(cmake_options) .
 
 src/openjpeg/build-stamp: src/openjpeg/Makefile
 	$(MAKE) -C $(dir $@)
