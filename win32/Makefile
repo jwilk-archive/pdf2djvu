@@ -364,6 +364,7 @@ src/freetype/config.status: src/freetype/source-stamp
 		./configure --host=$(host) --prefix=$(usr) \
 		--without-png \
 		--without-zlib \
+		--without-harfbuzz \
 		--disable-static
 	touch $(@)
 
