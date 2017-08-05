@@ -201,6 +201,7 @@ src/poppler/config.status: src/libjpeg/install-stamp
 		--disable-poppler-qt4 \
 		--disable-utils \
 		--disable-libpng \
+		--disable-libopenjpeg \
 		--disable-compile-warnings
 
 src/poppler/build-stamp: src/poppler/config.status
