@@ -186,6 +186,7 @@ src/poppler/source-stamp:
 src/poppler/config.status: src/poppler/source-stamp
 src/poppler/config.status: src/fontconfig/install-stamp
 src/poppler/config.status: src/libjpeg/install-stamp
+src/poppler/config.status: src/openjpeg/install-stamp
 	cd $(dir $@) && \
 		CPPFLAGS='-DWIN32_LEAN_AND_MEAN -DXMD_H' \
 		./configure --host=$(host) --prefix=$(usr) \
@@ -201,7 +202,7 @@ src/poppler/config.status: src/libjpeg/install-stamp
 		--disable-poppler-qt4 \
 		--disable-utils \
 		--disable-libpng \
-		--disable-libopenjpeg \
+		--enable-libopenjpeg=openjpeg2 \
 		--disable-compile-warnings
 
 src/poppler/build-stamp: src/poppler/config.status
@@ -484,6 +485,31 @@ src/libjpeg/install-stamp: src/libjpeg/build-stamp
 	mkdir -p dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libjpeg)
+	touch $(@)
+
+# OpenJPEG
+
+src/openjpeg/source-stamp:
+	mkdir -p $(dir $@)
+	tools/wget https://github.com/uclouvain/openjpeg/archive/v2.1.2.tar.gz -n openjpeg-2.1.2.tar.gz 4ce77b6ef538ef090d9bde1d5eeff8b3069ab56c4906f083475517c2c023dfa7
+	$(untar) dcache/openjpeg-2.1.2.tar.gz -C $(dir $@)
+	touch $(@)
+
+src/openjpeg/Makefile: src/openjpeg/source-stamp
+	mkdir -p $(dir $@)
+	cd $(dir $@) && cmake \
+		-DCMAKE_INSTALL_PREFIX=$(usr) \
+		-DCMAKE_SYSTEM_NAME=Windows \
+		.
+
+src/openjpeg/build-stamp: src/openjpeg/Makefile
+	$(MAKE) -C $(dir $@)
+	touch $(@)
+
+src/openjpeg/install-stamp: src/openjpeg/build-stamp
+	mkdir -p dist/
+	$(MAKE) -C $(dir $@) install
+	$(call ship_dll,libopenjp2)
 	touch $(@)
 
 # URW fonts
