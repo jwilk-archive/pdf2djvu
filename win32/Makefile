@@ -44,6 +44,7 @@ export CFLAGS = -Os
 export CXXFLAGS = -Os
 
 export V = 1
+export VERBOSE = 1
 
 export WINEDEBUG ?= err+all,fixme-all
 export WINE = wine
