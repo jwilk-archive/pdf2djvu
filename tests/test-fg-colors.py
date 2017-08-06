@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2010-2015 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2010-2016 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is part of pdf2djvu.
 #
