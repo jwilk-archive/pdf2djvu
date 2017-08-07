@@ -508,6 +508,8 @@ src/openjpeg/source-stamp:
 src/openjpeg/Makefile: src/openjpeg/source-stamp
 	mkdir -p $(dir $@)
 	cd $(dir $@) && cmake $(cmake_options) .
+	find $(dir $@) -name build.make -print0 \
+	| xargs -0 sed -i -e 's, \(/[^ ]\+/\($(CC)\|$(CXX)\)\) , $(CURDIR)/tools/enforce-relative-paths \1 ,'
 
 src/openjpeg/build-stamp: src/openjpeg/Makefile
 	$(MAKE) -C $(dir $@)
