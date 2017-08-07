@@ -54,7 +54,7 @@ then
     exit 0
 fi
 
-wget -c "$url" -O "$name"
+${WGET:-wget} -c "$url" -O "$name"
 
 echo "$sha256sum  $name" | sha256sum --strict -c
 
