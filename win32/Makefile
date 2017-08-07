@@ -56,7 +56,7 @@ all:
 	@echo '  make source-dist'
 	@echo '  make binary-dist'
 	@echo
-	@echo Note: This makefile downloads thrird-party libraries from the Internet.
+	@echo Note: This makefile downloads third-party libraries from the Internet.
 
 .PHONY: clean
 
