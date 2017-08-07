@@ -11,8 +11,9 @@ pdf2djvu (0.9.6) UNRELEASED; urgency=low
     - FreeType 2.8;
     - fontconfig 2.12.4.
   * Windows: build Poppler against OpenJPEG 2.1.2.
+  * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 06 Aug 2017 12:13:29 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Aug 2017 14:49:24 +0200
 
 pdf2djvu (0.9.5) unstable; urgency=low
 
