@@ -32,6 +32,9 @@ ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.d
 cmake_options = \
 	-DCMAKE_SYSTEM_NAME=Windows \
 	-DCMAKE_INSTALL_PREFIX=$(usr) \
+	-DCMAKE_FIND_ROOT_PATH=$(usr) \
+	-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+	-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
 
 export CC = $(host)-gcc
 export CXX = $(host)-g++
