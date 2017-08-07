@@ -1,4 +1,4 @@
-pdf2djvu (0.9.6) UNRELEASED; urgency=low
+pdf2djvu (0.9.6) unstable; urgency=low
 
   * Port the code to C++11.
     Incidentally, this fixes build failure with Poppler ≥ 0.57.
@@ -13,7 +13,7 @@ pdf2djvu (0.9.6) UNRELEASED; urgency=low
   * Windows: build Poppler against OpenJPEG 2.1.2.
   * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Aug 2017 14:49:24 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Aug 2017 14:52:02 +0200
 
 pdf2djvu (0.9.5) unstable; urgency=low
 
