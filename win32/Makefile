@@ -345,6 +345,7 @@ src/exiv2/source-stamp:
 	touch $(@)
 
 src/exiv2/config.status: src/exiv2/source-stamp
+src/exiv2/config.status: src/expat/install-stamp
 	cd $(dir $@) && \
 		./configure --host=$(host) --prefix=$(usr) \
 		--disable-static \
