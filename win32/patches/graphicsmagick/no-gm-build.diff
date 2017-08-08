@@ -4,7 +4,7 @@ Last-Update: 2015-08-21
 
 --- a/magick/command.c
 +++ b/magick/command.c
-@@ -17060,6 +17060,7 @@
+@@ -17077,6 +17077,7 @@
  #endif /* defined(HasZLIB) */
    PrintFeature("ZLIB", supported);
  
@@ -12,7 +12,7 @@ Last-Update: 2015-08-21
  #if defined(GM_BUILD_HOST)
    (void) fprintf(stdout,"\nHost type: %.1024s\n", GM_BUILD_HOST);
  #endif /* defined(GM_BUILD_HOST) */
-@@ -17097,6 +17098,7 @@
+@@ -17114,6 +17115,7 @@
  #if defined(GM_BUILD_LIBS)
    (void) fprintf(stdout,"  LIBS     = %.1024s\n", GM_BUILD_LIBS);
  #endif /* defined(GM_BUILD_LIBS) */
