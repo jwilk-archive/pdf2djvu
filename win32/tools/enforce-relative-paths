@@ -16,10 +16,23 @@
 use strict;
 use warnings;
 
-use Cwd qw(getcwd);
+use Cwd qw(getcwd realpath);
+use File::Spec qw();
+use FindBin qw();
 
-my $cwd = getcwd() or die;
-my @argv = map { my $x = $_; $x =~ s{\Q$cwd/}{./}; $x; } @ARGV;
+my $here = $FindBin::Bin;
+my $root = realpath("$here/../src");
+
+sub relativize
+{
+    my ($path) = @_;
+    if ($path =~ m{\A\Q$root\E/}) {
+        $path = File::Spec->abs2rel($path)
+    }
+    return $path;
+}
+
+my @argv = map { relativize($_); } @ARGV;
 exec { $argv[0] } @argv or die;
 
 # vim:ts=4 sts=4 sw=4 et
