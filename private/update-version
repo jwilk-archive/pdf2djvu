@@ -21,8 +21,8 @@ doc_po_files=$(ls doc/po/*.po doc/po/*.pot 2>/dev/null || true)
 PS4='$ '
 set -x
 dch -m -v "$version" -u low -c doc/changelog
-sed -i -E -e "s/(AC_INIT[(]\[pdf2djvu\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
+sed -i -E -e "s/(AC_INIT[(]\[\S+\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
 sed -i -E -e "s/(VERSION) [0-9,]+/\1 $windows_version/" win32-version.rc
 sed -i -E -e "s/<(!ENTITY version) '[0-9.]+'>/<\1 '$version'>/" doc/*.xml
-sed -i -E -e 's/(Project-Id-Version: pdf2djvu) [0-9.]+/\1 '"$version"'/' $po_files $doc_po_files
+sed -i -E -e 's/(Project-Id-Version: \S+) [0-9.]+/\1 '"$version"'/' $po_files $doc_po_files
 sed -i -E -e '/#[.] type: Content of the version entity/,/^$/ { s/(msg(id|str)) ".*"/\1 "'"$version"'"/; }' $doc_po_files
