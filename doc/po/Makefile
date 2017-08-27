@@ -60,11 +60,11 @@ xml: $(xml_files)
 
 manpage.pot: $(source)
 	$(po4a-gettextize) -m $(<) -p $(@)
-	sed -i -e 's/^\([#][.]\) *\([^ ].*[^ ]\) *$$/\1 \2/' $(@)
+	perl -pi -e 's/^([#][.])\s*(\S.*\S)\s*$$/$$1 $$2\n/' $(@)
 
 $(po_files): %.po: $(source)
 	$(po4a-update-po) -m $(<) -p $(@)
-	sed -i -e 's/^\([#][.]\) *\([^ ].*[^ ]\) *$$/\1 \2/' $(@)
+	perl -pi -e 's/^([#][.])\s*(\S.*\S)\s*$$/$$1 $$2\n/' $(@)
 	touch $(@)
 
 %.xml: %.po
