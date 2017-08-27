@@ -12,6 +12,7 @@ config.sub
 configure
 doc/*.1
 doc/po/*.1
+doc/po/*.pot
 doc/po/*.xml
 m4/*.m4
 paths.hh
