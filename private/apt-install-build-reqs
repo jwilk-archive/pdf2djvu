@@ -33,11 +33,11 @@ pkgs_tests='
 python-nose
 '
 pkgs_prepare_tests='
+fonts-linuxlibertine
 python-imaging
 texlive-base
 texlive-fonts-recommended
 texlive-xetex
-fonts-linuxlibertine
 '
 pkgs="$pkgs_base"
 
