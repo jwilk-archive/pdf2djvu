@@ -716,10 +716,13 @@ void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
     }
 
     pdf::dict_lookup(current, "Next", &next);
+#if POPPLER_VERSION < 5800
     current.free();
     current = next;
+#else
+    current = std::move(next);
+#endif
   }
-  current.free();
 }
 
 static void pdf_outline_to_djvu_outline(pdf::Document &doc, djvu::Outline &djvu_outline,

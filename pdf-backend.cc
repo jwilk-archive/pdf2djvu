@@ -402,7 +402,7 @@ pdf::Metadata::Metadata(pdf::Document &document)
   date_fields.push_back(std::make_pair("ModDate", &this->mod_date));
 
   pdf::OwnedObject info;
-  document.getDocInfo(&info);
+  document.get_doc_info(info);
   if (!info.isDict())
     return;
   pdf::Dict *info_dict = info.getDict();
@@ -591,17 +591,27 @@ double pdf::get_path_area(splash::Path &path)
 
 pdf::Object *pdf::dict_lookup(pdf::Object &dict, const char *key, pdf::Object *object)
 {
+#if POPPLER_VERSION < 5800
   return dict.dictLookup(const_cast<char*>(key), object);
+#else
+  *object = dict.dictLookup(const_cast<char*>(key));
+  return object;
+#endif
 }
 
 pdf::Object *pdf::dict_lookup(pdf::Object *dict, const char *key, pdf::Object *object)
 {
-  return dict->dictLookup(const_cast<char*>(key), object);
+  return pdf::dict_lookup(*dict, key, object);
 }
 
 pdf::Object *pdf::dict_lookup(pdf::Dict *dict, const char *key, pdf::Object *object)
 {
+#if POPPLER_VERSION < 5800
   return dict->lookup(const_cast<char*>(key), object);
+#else
+  *object = dict->lookup(const_cast<char*>(key));
+  return object;
+#endif
 }
 
 

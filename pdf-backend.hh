@@ -274,6 +274,7 @@ namespace pdf
  * ====================================
  */
 
+#if POPPLER_VERSION < 5800
   class OwnedObject : public Object
   {
   public:
@@ -282,6 +283,9 @@ namespace pdf
       this->free();
     }
   };
+#else
+  typedef ::Object OwnedObject;
+#endif
 
 
 /* class pdf::Environment
@@ -315,6 +319,14 @@ namespace pdf
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
     void get_page_size(int n, bool crop, double &width, double &height);
     const std::string get_xmp();
+    void get_doc_info(pdf::OwnedObject &info)
+    {
+#if POPPLER_VERSION < 5800
+      this->getDocInfo(&info);
+#else
+      info = this->getDocInfo();
+#endif
+    }
     class LoadError : public std::runtime_error
     {
     public:
