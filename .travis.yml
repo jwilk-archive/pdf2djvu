@@ -11,6 +11,7 @@ env:
 - POPPLER_VERSION=0.31.0
 - POPPLER_VERSION=0.57.0
 - POPPLER_VERSION=0.58.0
+- POPPLER_VERSION=0.59.0
 matrix:
   exclude:
   # “-fno-check-new” is not supported by clang
@@ -28,6 +29,8 @@ matrix:
   #   StructElement.cc:264:32: error: default initialization of an object of const type 'const AttributeDefaults' without a user-provided default constructor
   - compiler: clang
     env: POPPLER_VERSION=0.58.0
+  - compiler: clang
+    env: POPPLER_VERSION=0.59.0
 dist: trusty
 sudo: false
 addons:
