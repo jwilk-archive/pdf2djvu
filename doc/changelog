@@ -3,8 +3,12 @@ pdf2djvu (0.9.7) UNRELEASED; urgency=low
   * Fix build failure with Poppler ≥ 0.58.
   * Improve the build system:
     + Fix non-portable sed(1) calls in the manpage translations makefile.
+    + Use relative paths when building OpenJPEG for Windows (so that absolute
+      paths are not included in the binary).
+  * Upgrade libraries bundled with the Windows package:
+    - Poppler 0.59.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 02 Sep 2017 23:27:21 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 04 Sep 2017 21:12:39 +0200
 
 pdf2djvu (0.9.6) unstable; urgency=low
 
