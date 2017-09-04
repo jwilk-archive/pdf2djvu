@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright © 2016 Jakub Wilk <jwilk@jwilk.net>
 #
@@ -17,7 +17,35 @@ set -e -u
 
 export LC_ALL=C
 
+usage()
+{
+    printf '%s [--no-changes]\n' "$0"
+}
+
+args=$(getopt -n "$0" -o 'h' --long 'help,no-changes' -- "$@") || {
+    usage >&2
+    exit 1
+}
+opt_changes=y
+eval set -- "$args"
+while true
+do
+    case "$1" in
+        -h|--help) usage; exit 0;;
+        --no-changes) opt_changes=; shift;;
+        --) shift; break;;
+        *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
+    esac
+done
+
 version=$(grep -m1 '^[^ ].*) [a-z]' doc/changelog | cut -d' ' -f2 | tr -d '()')
+
+if [ -n "$opt_changes" ]
+then
+    changes=$'The most important end-user visible changes are:\n\n...'
+else
+    changes='There are no end-user visible changes at this time.'
+fi
 
 cat <<EOF
 Subject: ANN: pdf2djvu $version
@@ -25,9 +53,7 @@ To: pdf2djvu@groups.io
 
 I am pleased to announce that pdf2djvu $version has been just released.
 
-The most important end-user visible changes are:
-
-...
+$changes
 
 Downloads:
 
