@@ -149,5 +149,4 @@ AC_DEFUN(
     ]
 )
 
-
 dnl vim:ts=4 sts=4 sw=4 et ft=config
