@@ -330,7 +330,7 @@ def checkboard(width, height):
     pixels = image.load()
     for x in xrange(width):
         for y in xrange(height):
-            color = 0xff * ((x ^ y) & 1)
+            color = 0xFF * ((x ^ y) & 1)
             pixels[x, y] = color
     return image
 

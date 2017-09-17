@@ -249,7 +249,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         execvp(c_argv[0],
             const_cast<char * const *>(c_argv.data())
         );
-        report_posix_error(error_pipe[1], "\xff");
+        report_posix_error(error_pipe[1], "\xFF");
         abort();
     }
     // The parent:
@@ -326,7 +326,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         fd_close(error_pipe[0]);
         child_error_reason[nbytes] = '\0';
         errno = child_errno;
-        if (child_error_reason[0] != '\xff')
+        if (child_error_reason[0] != '\xFF')
             throw_posix_error(child_error_reason);
         std::string child_error = POSIXError::error_message("");
         std::string message = string_printf(

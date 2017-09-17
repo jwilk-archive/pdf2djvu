@@ -163,7 +163,7 @@ static std::string html_color(const double rgb[])
   for (int i = 0; i < 3; i++)
     stream
       << std::setw(2) << std::setfill('0') << std::hex
-      << static_cast<int>(rgb[i] * 0xff);
+      << static_cast<int>(rgb[i] * 0xFF);
   return stream.str();
 }
 
@@ -629,7 +629,7 @@ namespace pdf
       for (int y = 0; y < pixmap.height; y++)
       {
         for (size_t x = 0; x < pixmap.byte_width; x++)
-          stream.put(static_cast<char>(row_ptr[x] ^ 0xff));
+          stream.put(static_cast<char>(row_ptr[x] ^ 0xFF));
         row_ptr += pixmap.row_size;
       }
     }

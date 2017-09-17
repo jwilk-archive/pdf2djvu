@@ -78,20 +78,20 @@ template <typename T>
 void rle::R4::output_run(T length_)
 {
   unsigned int length = length_;
-  static const unsigned int max_length = 0x3fff;
+  static const unsigned int max_length = 0x3FFF;
   assert(length_ >= 0);
   assert(static_cast<T>(length) == length_);
   assert(length <= this->width);
   while (length > max_length)
   {
-    this->stream.write("\xff\xff", 3);
+    this->stream.write("\xFF\xFF", 3);
     length -= max_length;
   }
   if (length >= 192)
   {
     this->stream
-      << static_cast<char>(0xc0 + (length >> 8))
-      << static_cast<char>(length & 0xff);
+      << static_cast<char>(0xC0 + (length >> 8))
+      << static_cast<char>(length & 0xFF);
   }
   else
     this->stream << static_cast<char>(length);

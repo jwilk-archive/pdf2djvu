@@ -32,6 +32,6 @@ class test(case):
         r = self.decode(mode='foreground')
         r.assert_(stdout=None)
         colors = count_ppm_colors(r.stdout)
-        assert_greater(colors.get('\xff\0\0', 0), 5000)
+        assert_greater(colors.get('\xFF\0\0', 0), 5000)
 
 # vim:ts=4 sts=4 sw=4 et

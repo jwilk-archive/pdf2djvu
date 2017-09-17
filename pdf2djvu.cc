@@ -1058,7 +1058,7 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
   this->index_file.write("AT&TFORM\0\0\0\0DJVMDIRM\0\0\0\0\1", 25);
   bool shared_ant = !bare && this->needs_shared_ant;
   for (int i = 1; i >= 0; i--)
-    index_file << static_cast<char>(((size + shared_ant) >> (8 * i)) & 0xff);
+    index_file << static_cast<char>(((size + shared_ant) >> (8 * i)) & 0xFF);
   {
     TemporaryFile bzz_file;
     for (size_t i = 0; i < size + shared_ant; i++)
@@ -1085,7 +1085,7 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
   File::streamoff dirm_off = this->index_file.size();
   this->index_file.seekp(20, std::ios::beg);
   for (int i = 3; i >= 0; i--)
-    this->index_file << static_cast<char>(((dirm_off - 24) >> (8 * i)) & 0xff);
+    this->index_file << static_cast<char>(((dirm_off - 24) >> (8 * i)) & 0xFF);
   dirm_off += dirm_off & 1;
   if (!bare && this->outline_stream.get())
   {
@@ -1100,12 +1100,12 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     File::streamoff outline_off = index_file.size();
     this->index_file.seekp(dirm_off + 4, std::ios::beg);
     for (int i = 3; i >= 0; i--)
-      this->index_file << static_cast<char>(((outline_off - dirm_off - 8) >> (8 * i)) & 0xff);
+      this->index_file << static_cast<char>(((outline_off - dirm_off - 8) >> (8 * i)) & 0xFF);
   }
   File::streamoff off = this->index_file.size();
   this->index_file.seekp(8, std::ios::beg);
   for (int i = 3; i >= 0; i--)
-    this->index_file << static_cast<char>(((off - 12) >> (8 * i)) & 0xff);
+    this->index_file << static_cast<char>(((off - 12) >> (8 * i)) & 0xFF);
   this->index_file.close();
 }
 
@@ -1238,7 +1238,7 @@ static int xmain(int argc, char * const argv[])
   intmax_t pdf_byte_size = document_map.get_byte_size();
 
   pdf::splash::Color paper_color;
-  pdf::set_color(paper_color, 0xff, 0xff, 0xff);
+  pdf::set_color(paper_color, 0xFF, 0xFF, 0xFF);
 
   intmax_t n_pixels = 0;
   intmax_t djvu_pages_size = 0;
@@ -1485,7 +1485,7 @@ static int xmain(int argc, char * const argv[])
     else
     {
       /* Background is solid. */
-      nonwhite_background_color = (background_color[0] & background_color[1] & background_color[2] & 0xff) != 0xff;
+      nonwhite_background_color = (background_color[0] & background_color[1] & background_color[2] & 0xFF) != 0xFF;
       if (nonwhite_background_color)
       { /* Create a dummy background, just to assure existence of FGbz chunks.
          * The background chunk will be replaced later: */
@@ -1495,7 +1495,7 @@ static int xmain(int argc, char * const argv[])
         sep_file << "P6 " << sub_width << " " << sub_height << " 255" << std::endl;
         for (int x = 0; x < sub_width; x++)
         for (int y = 0; y < sub_height; y++)
-          sep_file.write("\xff\xff\xff", 3);
+          sep_file.write("\xFF\xFF\xFF", 3);
       }
     }
     if (config.text)

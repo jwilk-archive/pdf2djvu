@@ -119,7 +119,7 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)
   {
-    int new_color, color = 0xfff;
+    int new_color, color = 0xFFF;
     int length = 0;
     for (int x = 0; x < width; x++)
     {
@@ -139,7 +139,7 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
         new_color = ((p_fg[2] + 1) / 43) + 6 * (((p_fg[1] + 1) / 43) + 6 * ((p_fg[0] + 1) / 43));
       }
       else
-        new_color = 0xfff;
+        new_color = 0xFFF;
       if (color == new_color)
         length++;
       else
@@ -181,7 +181,7 @@ public:
   int operator [](int i) const
   {
     return
-      (((this->value >> (6 * i)) << 2) & 0xff) |
+      (((this->value >> (6 * i)) << 2) & 0xFF) |
       ((this->value >> (6 * i + 4)) & 3);
   }
 
@@ -330,7 +330,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   /* Output the palette: */
   if (color_counter == 0)
   {
-    stream << 1 << std::endl << "\xff\xff\xff";
+    stream << 1 << std::endl << "\xFF\xFF\xFF";
   }
   else
   {
@@ -350,7 +350,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   /* Map colors into color indices: */
   std::map<int, uint32_t> color_map;
   uint32_t last_color_index = 0;
-  color_map[-1] = 0xfff;
+  color_map[-1] = 0xFFF;
   if (divisor == 4)
     for (size_t color = 0; color < original_colors.size(); color++)
     {
@@ -390,7 +390,7 @@ static void dummy_quantizer(int width, int height, int *background_color, std::o
   rle::R4 r4(stream, width, height);
   for (int y = 0; y < height; y++)
     r4.output_run(width);
-  background_color[0] = background_color[1] = background_color[2] = 0xff;
+  background_color[0] = background_color[1] = background_color[2] = 0xFF;
 }
 
 void DummyQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
@@ -499,7 +499,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
   }
   for (int y = 0; y < height; y++)
   {
-    int new_color, color = 0xfff;
+    int new_color, color = 0xFFF;
     Magick::PixelPacket *ipixel = image.getPixels(0, y, width, 1);
     Magick::IndexPacket *ppixel = image.getIndexes();
     int length = 0;
@@ -508,7 +508,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       if (ipixel->opacity != TransparentOpacity)
         new_color = *ppixel;
       else
-        new_color = 0xfff;
+        new_color = 0xFFF;
       if (color == new_color)
         length++;
       else
