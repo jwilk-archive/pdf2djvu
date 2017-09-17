@@ -74,7 +74,8 @@ before_script:
 script:
 - export PKG_CONFIG_PATH="$HOME/opt/poppler/lib/pkgconfig/"
 - export CPATH="$HOME/opt/poppler/include/"
-- ./configure
+- if [ "$CXX" == clang++ ]; then configure_options='--disable-openmp'; fi
+- ./configure $configure_options
 - PATH="$PATH:$HOME/.local/bin" make -C tests prepare
 - make
 - export LD_LIBRARY_PATH="$HOME/opt/poppler/lib/"
