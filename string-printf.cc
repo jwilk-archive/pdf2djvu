@@ -30,13 +30,6 @@
 #define vsnprintf __mingw_vsnprintf
 #endif
 
-#if defined(va_copy)
-#elif defined(__va_copy)
-#define va_copy __va_copy
-#else
-#define va_copy(dest, src) memcpy((dest), (src), sizeof (va_list))
-#endif
-
 std::string string_vprintf(const char *message, va_list args)
 {
     va_list args_copy;
