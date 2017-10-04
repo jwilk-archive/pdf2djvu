@@ -25,12 +25,6 @@ matrix:
     env: POPPLER_VERSION=0.21.1
   - compiler: clang
     env: POPPLER_VERSION=0.23.0
-  # Poppler 0.58 doesn't build with clang << 3.9:
-  #   StructElement.cc:264:32: error: default initialization of an object of const type 'const AttributeDefaults' without a user-provided default constructor
-  - compiler: clang
-    env: POPPLER_VERSION=0.58.0
-  - compiler: clang
-    env: POPPLER_VERSION=0.59.0
 dist: trusty
 sudo: false
 addons:
