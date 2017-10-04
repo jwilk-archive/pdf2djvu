@@ -107,7 +107,6 @@ public:
     {
       return false;
     }
-    virtual ~Error() throw () { /* just to silence compilers */ }
   };
 
   class NoPagesSelected : public Error
