@@ -33,13 +33,13 @@ namespace string_format
   public:
     Value(unsigned int n=0)
     : is_int(true), v_uint(n)
-    { };
+    { }
     Value(const std::string &s)
     : is_int(false), v_string(s)
-    { };
+    { }
     Value(const char *s)
     : is_int(false), v_string(s)
-    { };
+    { }
     unsigned int as_int(int offset=0);
     const std::string &as_string();
   };

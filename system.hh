@@ -27,7 +27,7 @@ class OSError : public std::runtime_error
 protected:
   explicit OSError(const std::string &message)
   : std::runtime_error(message)
-  { };
+  { }
 };
 
 class POSIXError : public OSError
@@ -36,7 +36,7 @@ public:
   static std::string error_message(const std::string &context);
   explicit POSIXError(const std::string &context)
   : OSError(error_message(context))
-  { };
+  { }
 };
 
 #if defined(__GNUC__)
@@ -55,7 +55,7 @@ class NoSuchFileOrDirectory : public POSIXError
 public:
   NoSuchFileOrDirectory(const std::string &context)
   : POSIXError(context)
-  { };
+  { }
 };
 
 class NotADirectory : public POSIXError
@@ -63,7 +63,7 @@ class NotADirectory : public POSIXError
 public:
   NotADirectory(const std::string &context)
   : POSIXError(context)
-  { };
+  { }
 };
 
 class File;
@@ -217,7 +217,7 @@ namespace encoding
   public:
     Error()
     : POSIXError("")
-    { };
+    { }
   };
 
   enum encoding

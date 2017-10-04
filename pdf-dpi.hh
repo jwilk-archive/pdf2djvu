@@ -30,7 +30,7 @@ namespace pdf
     public:
       explicit Guess(double min, double max)
       : min_(min), max_(max)
-      { };
+      { }
       double min() const { return this->min_; }
       double max() const { return this->max_; }
     };

@@ -44,7 +44,7 @@ namespace pdf
         virtual int length() const = 0;
         virtual operator const Unicode*() const = 0;
         virtual ~NFKC()
-        { };
+        { }
     };
 
 

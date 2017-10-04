@@ -39,7 +39,7 @@ public:
     std::string border_color;
     Hyperlinks()
     : extract(true), border_always_visible(false)
-    { };
+    { }
   };
 
   enum
@@ -98,7 +98,7 @@ public:
   public:
     explicit Error(const std::string &message)
     : std::runtime_error(message)
-    { };
+    { }
     virtual bool is_quiet() const
     {
       return false;
@@ -123,7 +123,7 @@ public:
   public:
     NeedHelp()
     : Error("")
-    { };
+    { }
     virtual bool is_quiet() const
     {
       return true;
@@ -135,7 +135,7 @@ public:
   public:
     InvalidOption()
     : Error("")
-    { };
+    { }
     virtual bool is_quiet() const
     {
       return true;

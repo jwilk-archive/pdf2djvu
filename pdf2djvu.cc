@@ -912,7 +912,7 @@ protected:
   public:
     UnexpectedDjvuSedOutput()
     : std::runtime_error(_("Unexpected output from djvused"))
-    { };
+    { }
   };
   void create_bare(const std::vector<Component> &components);
   void create(const std::vector<Component> &components, bool bare=false);
