@@ -145,14 +145,14 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
       else
       {
         if (length > 0)
-          write_uint32(stream, ((uint32_t)color << 20) + length);
+          write_uint32(stream, (static_cast<uint32_t>(color) << 20) + length);
         color = new_color;
         length = 1;
       }
       p_fg++, p_bg++;
     }
     p_fg.next_row(), p_bg.next_row();
-    write_uint32(stream, ((uint32_t)color << 20) + length);
+    write_uint32(stream, (static_cast<uint32_t>(color) << 20) + length);
   }
 }
 
@@ -380,7 +380,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
     for (const Run &run : line_runs)
     {
       uint32_t color_index = color_map[run.get_color()];
-      write_uint32(stream, ((uint32_t)color_index << 20) + run.get_length());
+      write_uint32(stream, (static_cast<uint32_t>(color_index) << 20) + run.get_length());
     }
   }
 }
@@ -514,13 +514,13 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       else
       {
         if (length > 0)
-          write_uint32(stream, ((uint32_t)color << 20) + length);
+          write_uint32(stream, (static_cast<uint32_t>(color) << 20) + length);
         color = new_color;
         length = 1;
       }
       ipixel++, ppixel++;
     }
-    write_uint32(stream, ((uint32_t)color << 20) + length);
+    write_uint32(stream, (static_cast<uint32_t>(color) << 20) + length);
   }
 }
 

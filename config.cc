@@ -114,7 +114,7 @@ static void parse_pages(const std::string &s, std::vector< std::pair<int, int> >
   {
     if ('0' <= c && c <= '9')
     {
-      value[state] = value[state] * 10 + (int)(c - '0');
+      value[state] = value[state] * 10 + static_cast<int>(c - '0');
       if (state == 0)
         value[1] = value[0];
     }
