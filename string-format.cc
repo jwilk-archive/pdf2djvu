@@ -219,7 +219,7 @@ try
     {
       max_value = bindings.get("max_" + this->variable).as_int(this->offset);
     }
-    catch (const string_format::ValueError &exc)
+    catch (const string_format::ValueError &)
     {
       throw FormatError(this->variable, _("unknown maximum width"));
     }

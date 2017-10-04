@@ -697,7 +697,7 @@ static void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog
             catalog
           );
         }
-        catch (const NoLinkDestination &ex)
+        catch (const NoLinkDestination &)
         {
           throw NoPageForBookmark();
         }
@@ -1709,7 +1709,7 @@ static int xmain(int argc, char * const argv[])
         ExistingFile shared_ant(*output_dir, djvu::shared_ant_file_name);
         djvu_size += shared_ant.size();
       }
-      catch (const std::ios_base::failure &ex)
+      catch (const std::ios_base::failure &)
       {
         /* Let's assume that there are no shared annotations. */
       }
