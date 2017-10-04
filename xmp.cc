@@ -63,7 +63,7 @@ static void error_handler(int level, const char *message)
       string_printf(_("%s: %s"), category, message);
 }
 
-std::string gen_uuid()
+static std::string gen_uuid()
 {
     char uuid_s[36 + 1];
     uuid_t uuid;

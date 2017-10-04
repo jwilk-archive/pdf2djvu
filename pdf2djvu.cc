@@ -55,7 +55,7 @@
 #include "version.hh"
 #include "xmp.hh"
 
-Config config;
+static Config config;
 
 static inline DebugStream &debug(int n)
 {
@@ -655,7 +655,7 @@ public:
 
 static const int pdf_outline_max_depth = 0x100;
 
-void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
+static void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog,
   djvu::OutlineBase &djvu_outline, const ComponentList &page_files,
   int depth)
 {

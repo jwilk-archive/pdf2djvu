@@ -136,7 +136,7 @@ static void report_posix_error(int fd, const char *context)
     (void) n;
 }
 
-const char * get_signal_name(int sig)
+static const char * get_signal_name(int sig)
 {
     switch (sig) {
 #define s(n) case n: return "" # n "";
