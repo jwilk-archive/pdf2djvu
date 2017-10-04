@@ -93,9 +93,11 @@ void MaskQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int
       }
       else
         r4 << 0;
-      p_fg++, p_bg++;
+      p_fg++;
+      p_bg++;
     }
-    p_fg.next_row(), p_bg.next_row();
+    p_fg.next_row();
+    p_bg.next_row();
   }
 
 }
@@ -149,9 +151,11 @@ void WebSafeQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
         color = new_color;
         length = 1;
       }
-      p_fg++, p_bg++;
+      p_fg++;
+      p_bg++;
     }
-    p_fg.next_row(), p_bg.next_row();
+    p_fg.next_row();
+    p_bg.next_row();
     write_uint32(stream, (static_cast<uint32_t>(color) << 20) + length);
   }
 }
@@ -297,9 +301,11 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
         run = Run(new_color);
         run++;
       }
-      p_fg++, p_bg++;
+      p_fg++;
+      p_bg++;
     }
-    p_fg.next_row(), p_bg.next_row();
+    p_fg.next_row();
+    p_bg.next_row();
     if (run.get_length() > 0)
       runs[y].push_back(run);
   }
@@ -474,9 +480,13 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
       }
       else
         *ipixel = Magick::Color(0, 0, 0, TransparentOpacity);
-      p_fg++, p_bg++, ipixel++;
+      p_fg++;
+      p_bg++;
+      ipixel++;
     }
-    p_fg.next_row(), p_bg.next_row(), image.syncPixels();
+    p_fg.next_row();
+    p_bg.next_row();
+    image.syncPixels();
   }
   image.quantizeColorSpace(Magick::TransparentColorspace);
   image.quantizeColors(this->config.fg_colors);
@@ -518,7 +528,8 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
         color = new_color;
         length = 1;
       }
-      ipixel++, ppixel++;
+      ipixel++;
+      ppixel++;
     }
     write_uint32(stream, (static_cast<uint32_t>(color) << 20) + length);
   }

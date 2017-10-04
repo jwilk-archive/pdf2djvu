@@ -292,7 +292,10 @@ protected:
   void add_text_comment(int ox, int oy, int dx, int dy, int x, int y, int w, int h, const Unicode *unistr, int len)
   {
     while (len > 0 && *unistr == ' ')
-      unistr++, len--;
+    {
+      unistr++;
+      len--;
+    }
     if (len == 0)
       return;
     *(this->text_comments)
