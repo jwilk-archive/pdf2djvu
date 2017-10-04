@@ -170,7 +170,6 @@ string_format::VariableChunk::VariableChunk(const std::string &description)
       break;
     case END:
       throw string_format::ParseError();
-      break;
     }
     it++;
   }
