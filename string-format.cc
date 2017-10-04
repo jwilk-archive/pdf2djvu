@@ -35,7 +35,7 @@ namespace string_format
     StaticChunk(const std::string &value)
     : value(value)
     { }
-    virtual ~StaticChunk() throw ()
+    virtual ~StaticChunk()
     { }
     virtual void format(const Bindings &bindings, std::ostream &stream) const
     {
@@ -53,7 +53,7 @@ namespace string_format
     bool pad_0;
   public:
     explicit VariableChunk(const std::string &);
-    virtual ~VariableChunk() throw ()
+    virtual ~VariableChunk()
     { }
     virtual void format(const Bindings &, std::ostream &) const;
   };
@@ -317,7 +317,7 @@ string_format::Template::Template(const std::string &source)
   }
 }
 
-string_format::Template::~Template() throw ()
+string_format::Template::~Template()
 {
   for (auto &chunk : this->chunks)
     delete chunk;

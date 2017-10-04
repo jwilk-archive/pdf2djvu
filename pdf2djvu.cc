@@ -273,7 +273,7 @@ public:
     return config.page_id_template->format(bindings);
   }
 
-  virtual ~ComponentList() throw ()
+  virtual ~ComponentList()
   {
     this->clean_files();
   }
@@ -791,7 +791,7 @@ public:
     shared_ant_file->close();
   }
 
-  virtual ~TemporaryComponentList() throw ()
+  virtual ~TemporaryComponentList()
   {
     this->clean_files();
   }
@@ -864,7 +864,7 @@ public:
   }
   virtual void set_outline(const djvu::Outline &outline) = 0;
   virtual void set_metadata(File &metadata_sed_file) = 0;
-  virtual ~DjVm() throw () { /* just to silence compilers */ }
+  virtual ~DjVm() { /* just to silence compilers */ }
 };
 
 void DjVm::remember(const Component &component)
@@ -892,7 +892,7 @@ public:
     output_file(output_file),
     converter("djvmcvt")
   { }
-  ~BundledDjVm() throw ()
+  ~BundledDjVm()
   { }
   virtual void add(const Component &component);
   virtual void set_outline(const djvu::Outline &outline);
@@ -922,7 +922,7 @@ public:
     needs_shared_ant(false)
   { }
 
-  virtual ~IndirectDjVm() throw ()
+  virtual ~IndirectDjVm()
   { }
 
   virtual void add(const Component &component)

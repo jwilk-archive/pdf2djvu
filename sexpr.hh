@@ -55,7 +55,7 @@ namespace sexpr
   {
   public:
     GCLock() { minilisp_acquire_gc_lock(nullptr); }
-    ~GCLock() throw () { minilisp_release_gc_lock(nullptr); }
+    ~GCLock() { minilisp_release_gc_lock(nullptr); }
   };
 }
 

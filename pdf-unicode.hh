@@ -59,7 +59,7 @@ namespace pdf
         int length_;
     public:
         explicit FullNFKC(Unicode *, int length);
-        ~FullNFKC() throw ();
+        ~FullNFKC();
         int length() const
         {
             return this->length_;

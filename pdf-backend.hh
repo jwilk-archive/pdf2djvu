@@ -256,7 +256,7 @@ namespace pdf
       }
     }
 
-    ~Pixmap() throw ()
+    ~Pixmap()
     {
       delete bmp;
     }
@@ -278,7 +278,7 @@ namespace pdf
   class OwnedObject : public Object
   {
   public:
-    ~OwnedObject() throw ()
+    ~OwnedObject()
     {
       this->free();
     }

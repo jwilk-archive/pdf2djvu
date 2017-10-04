@@ -256,7 +256,7 @@ Directory::Directory(const std::string &name)
   this->open(name.c_str());
 }
 
-Directory::~Directory() throw ()
+Directory::~Directory()
 {
   this->close();
 }
@@ -337,7 +337,7 @@ TemporaryDirectory::TemporaryDirectory() : Directory()
   this->name += path_buffer;
 }
 
-TemporaryDirectory::~TemporaryDirectory() throw ()
+TemporaryDirectory::~TemporaryDirectory()
 {
   if (rmdir(this->name.c_str()) == -1)
     warn_posix_error(this->name);
@@ -444,7 +444,7 @@ TemporaryFile::TemporaryFile()
   this->construct();
 }
 
-TemporaryFile::~TemporaryFile() throw ()
+TemporaryFile::~TemporaryFile()
 {
   if (this->is_open())
     this->close();

@@ -128,7 +128,7 @@ pdf::FullNFKC::FullNFKC(Unicode *unistr, int length)
     this->data = unicodeNormalizeNFKC(unistr, length, &this->length_, nullptr);
 }
 
-pdf::FullNFKC::~FullNFKC() throw ()
+pdf::FullNFKC::~FullNFKC()
 {
     gfree(this->data);
 }

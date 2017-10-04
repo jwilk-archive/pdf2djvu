@@ -110,7 +110,7 @@ protected:
   { }
 public:
   explicit Directory(const std::string &name);
-  virtual ~Directory() throw ();
+  virtual ~Directory();
   friend std::ostream &operator<<(std::ostream &, const Directory &);
 };
 
@@ -121,7 +121,7 @@ private:
   TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
 public:
   TemporaryDirectory();
-  virtual ~TemporaryDirectory() throw ();
+  virtual ~TemporaryDirectory();
 };
 
 class File : public std::fstream
@@ -139,7 +139,7 @@ protected:
 public:
   explicit File(const std::string &path);
   File(const Directory& directory, const std::string &name);
-  virtual ~File() throw ()
+  virtual ~File()
   { }
   File::streamoff size();
   void reopen(std::fstream::openmode mode = std::fstream::openmode());
@@ -163,7 +163,7 @@ public:
   : File(name)
   { }
   TemporaryFile();
-  virtual ~TemporaryFile() throw ();
+  virtual ~TemporaryFile();
 };
 
 class ExistingFile : public File
@@ -180,7 +180,7 @@ public:
   ExistingFile(const Directory& directory, const std::string &name)
   : File(directory, name)
   { }
-  virtual ~ExistingFile() throw ()
+  virtual ~ExistingFile()
   { }
 };
 

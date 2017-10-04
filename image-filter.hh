@@ -31,7 +31,7 @@ public:
   virtual void operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, int width, int height,
     int *background_color, bool &has_foreground, bool &has_background, std::ostream &stream) = 0;
   explicit Quantizer(const Config &config) : config(config) { }
-  virtual ~Quantizer() throw ()
+  virtual ~Quantizer()
   { }
 };
 

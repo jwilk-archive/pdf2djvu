@@ -55,7 +55,7 @@ namespace string_format
   public:
     virtual void format(const Bindings &bindings, std::ostream &stream) const
     = 0;
-    virtual ~Chunk() throw ()
+    virtual ~Chunk()
     { }
   };
 
@@ -68,7 +68,7 @@ namespace string_format
     std::vector<Chunk*> chunks;
   public:
     explicit Template(const std::string &);
-    ~Template() throw ();
+    ~Template();
     void format(const Bindings &, std::ostream &) const;
     std::string format(const Bindings &) const;
   };
