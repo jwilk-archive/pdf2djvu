@@ -74,14 +74,14 @@ AC_DEFUN(
 AC_DEFUN(
     [P_CHECK_FUNC],
     [
-        AC_CACHE_CHECK([for $3], [_cv_p_have_$3], [
+        AC_CACHE_CHECK([for $3], [pdf2djvu_cv_have_$3], [
             AC_COMPILE_IFELSE(
                 [AC_LANG_PROGRAM([[$1]], [[$2 (*f)($4) = $3;]])],
-                [_cv_p_have_$3=yes],
-                [_cv_p_have_$3=no],
+                [pdf2djvu_cv_have_$3=yes],
+                [pdf2djvu_cv_have_$3=no],
             )
         ])
-        if test $_cv_p_have_$3 = yes
+        if test $pdf2djvu_cv_have_$3 = yes
         then
             m4_default([$5], [
                 AC_DEFINE(
