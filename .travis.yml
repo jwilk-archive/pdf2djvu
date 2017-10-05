@@ -11,7 +11,7 @@ env:
 - POPPLER_VERSION=0.31.0
 - POPPLER_VERSION=0.57.0
 - POPPLER_VERSION=0.58.0
-- POPPLER_VERSION=0.60.0
+- POPPLER_VERSION=0.60.1
 matrix:
   exclude:
   # “-fno-check-new” is not supported by clang
@@ -60,7 +60,6 @@ install:
 - wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.${POPPLER_COMPRESSION}
 - tar -xvvf poppler-*.tar.*
 - pushd poppler-*
-- sed -i -e $'1 i\\\ninclude(CheckCXXSourceCompiles)' cmake/modules/FindLIBOPENJPEG.cmake
 - |
   if [ -z "${POPPLER_VERSION##0.[6-9]*}" ]; then
     cmake . -DCMAKE_INSTALL_PREFIX="$HOME/opt/poppler" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF
