@@ -15,40 +15,37 @@ AC_DEFUN(
     [P_MAYBE_ADD_CXXFLAG],
     [
         p_CXXFLAGS="$CXXFLAGS"
-        if test -z "$p_werror_unknown_warning_option"
+        if test -z "$p_cflags_Werror_unknown_warning_option"
         then
-            AC_MSG_CHECKING([whether $CXX accepts -Werror=unknown-warning-option])
             CXXFLAGS="$p_CXXFLAGS -Werror=unknown-warning-option"
-            AC_COMPILE_IFELSE(
-                [AC_LANG_PROGRAM()],
-                [
-                    AC_MSG_RESULT([yes])
-                    p_werror_unknown_warning_option=yes
-                ],
-                [
-                    AC_MSG_RESULT([no])
-                    p_werror_unknown_warning_option=no
-                ]
-            )
+            AC_CACHE_CHECK([whether $CXX accepts -Werror=unknown-warning-option], [pdf2djvu_cv_cflags_Werror_unknown_warning_option], [
+                AC_COMPILE_IFELSE(
+                    [AC_LANG_PROGRAM()],
+                    [pdf2djvu_cv_cflags_Werror_unknown_warning_option=yes],
+                    [pdf2djvu_cv_cflags_Werror_unknown_warning_option=no],
+                )
+            ])
         fi
         CXXFLAGS="$p_CXXFLAGS"
-        if test "$p_werror_unknown_warning_option" = yes
+        p_cflags_Werror_unknown_warning_option="$pdf2djvu_cv_cflags_Werror_unknown_warning_option"
+        if test "$p_cflags_Werror_unknown_warning_option" = yes
         then
             CXXFLAGS="$CXXFLAGS -Werror=unknown-warning-option"
         fi
         CXXFLAGS="$CXXFLAGS $1"
-        AC_MSG_CHECKING([whether $CXX accepts $1])
-        AC_COMPILE_IFELSE(
-            [AC_LANG_PROGRAM()],
-            [
-                AC_MSG_RESULT([yes])
-                CXXFLAGS="$p_CXXFLAGS $1"
-            ],
-            [
-                AC_MSG_RESULT([no])
-                CXXFLAGS="$p_CXXFLAGS"
-            ]
-        )
+        AC_CACHE_CHECK([whether $CXX accepts $1], [AS_TR_SH([pdf2djvu_cv_cflags$1])], [
+            AC_COMPILE_IFELSE(
+                [AC_LANG_PROGRAM()],
+                [AS_TR_SH([pdf2djvu_cv_cflags$1])=yes],
+                [AS_TR_SH([pdf2djvu_cv_cflags$1])=no]
+            )
+        ])
+        if test "$AS_TR_SH([pdf2djvu_cv_cflags$1])" = yes
+        then
+            CXXFLAGS="$p_CXXFLAGS $1"
+        else
+            CXXFLAGS="$p_CXXFLAGS"
+        fi
     ]
 )
 
@@ -59,7 +56,7 @@ AC_DEFUN(
             [p_flag], [$@],
             [m4_ifval(
                 p_flag,
-                [P_MAYBE_ADD_CXXFLAG([p_flag])],
+                [P_MAYBE_ADD_CXXFLAG(p_flag)],
                 []
             )]
         )
