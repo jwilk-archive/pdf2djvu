@@ -103,47 +103,43 @@ m4_define([_P_CXX11_CODE], [
     }
 ])
 
+AC_DEFUN([_P_CXX11], [
+    if test $p_have_cxx11 = no
+    then
+        p_cxx="$CXX"
+        p_CXXFLAGS="$CXXFLAGS"
+        m4_ifval([$1], [
+            p_cxx_opt="-std=$1"
+            p_cxx="$CXX $p_cxx_opt"
+            CXXFLAGS="$CXXFLAGS $p_cxx_opt"
+        ])
+        AC_CACHE_CHECK([whether $p_cxx supports C++11], [AS_TR_SH([pdf2djvu_cv_cxx11_$1])], [
+            AC_COMPILE_IFELSE(
+                [AC_LANG_PROGRAM([_P_CXX11_CODE])],
+                [AS_TR_SH([pdf2djvu_cv_cxx11_$1])=yes],
+                [AS_TR_SH([pdf2djvu_cv_cxx11_$1])=no]
+            )
+        ])
+        if test $AS_TR_SH([pdf2djvu_cv_cxx11_$1]) = yes
+        then
+            p_have_cxx11=yes
+        else
+            CXXFLAGS="$p_CXXFLAGS"
+        fi
+    fi
+])
+
 # P_CXX11()
 
-AC_DEFUN(
-    [P_CXX11],
-    [
-        have_cxx11=no
-        AC_MSG_CHECKING([whether $CXX supports C++11])
-        AC_COMPILE_IFELSE(
-            [AC_LANG_PROGRAM([_P_CXX11_CODE])],
-            [
-                AC_MSG_RESULT([yes])
-                have_cxx11=yes
-            ],
-            [
-                AC_MSG_RESULT([no])
-                for cxx_std in 'gnu++11' 'gnu++0x'
-                do
-                    cxx_opt="-std=$cxx_std"
-                    AC_MSG_CHECKING([whether $CXX $cxx_opt supports C++11])
-                    p_CXXFLAGS="$CXXFLAGS"
-                    CXXFLAGS="$CXXFLAGS $cxx_opt"
-                    AC_COMPILE_IFELSE(
-                        [AC_LANG_PROGRAM([_P_CXX11_CODE])],
-                        [
-                            AC_MSG_RESULT([yes])
-                            have_cxx11=yes
-                        ],
-                        [
-                            AC_MSG_RESULT([no])
-                            CXXFLAGS="$p_CXXFLAGS"
-                        ]
-                    )
-                    test $have_cxx11 = yes && break
-                done
-            ]
-        )
-        if test $have_cxx11 = no
-        then
-            AC_MSG_ERROR([the compiler does not support C++11])
-        fi
-    ]
-)
+AC_DEFUN([P_CXX11], [
+    p_have_cxx11=no
+    _P_CXX11()
+    _P_CXX11([gnu++11])
+    _P_CXX11([gnu++0x])
+    if test $p_have_cxx11 = no
+    then
+        AC_MSG_ERROR([the compiler does not support C++11])
+    fi
+])
 
 dnl vim:ts=4 sts=4 sw=4 et ft=config
