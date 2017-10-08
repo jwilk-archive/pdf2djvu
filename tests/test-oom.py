@@ -53,6 +53,9 @@ class test(case):
         self.require_poppler(0, 24)
         with vm_limit(1 << 30):  # 1 GiB virtual memory limit
             r = self.pdf2djvu()
-        r.assert_(stderr=re.compile('Out of memory\n'), rc=1)
+        r.assert_(stderr=re.compile(
+            'Out of memory\n'
+            '|AddressSanitizer failed to allocate '
+        ), rc=1)
 
 # vim:ts=4 sts=4 sw=4 et
