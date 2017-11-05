@@ -69,10 +69,10 @@ AC_MSG_RESULT([ok])
 
 PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.17.0])
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
-AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of poppler])
+AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of Poppler])
 poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g')
 poppler_version=$(printf '%02d' $poppler_version | sed -e 's/^0*//g')
-AC_DEFINE_UNQUOTED([POPPLER_VERSION], [$poppler_version], [Define to the version of poppler, as integer])
+AC_DEFINE_UNQUOTED([POPPLER_VERSION], [$poppler_version], [Define to the version of Poppler, as integer])
 AC_MSG_CHECKING([for Poppler xpdf headers])
 original_cppflags="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
