@@ -37,7 +37,7 @@ def vm_limit(limit):
         if cld_soft_lim != limit or cld_hard_lim != lim_hard:
             message = 'virtual memory limit did not propagate to subprocess'
             if sys.platform.rstrip(string.digits) == 'gnu':
-                raise SkipTest(message + ': http://savannah.gnu.org/bugs/?43320')
+                raise SkipTest(message + ': https://savannah.gnu.org/bugs/?43320')
             raise RuntimeError(message)
         yield
     finally:

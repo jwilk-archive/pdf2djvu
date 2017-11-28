@@ -66,7 +66,7 @@ pdf2djvu (0.9.5) unstable; urgency=low
   * Improve the test suite:
     + Fix test failure on GNU/Hurd, which doesn't correctly propagate virtual
       memory limits to subprocesses.
-      http://savannah.gnu.org/bugs/?43320
+      https://savannah.gnu.org/bugs/?43320
   * Drop support for Poppler < 0.17.
   * Build with “-std=gnu++98”.
   * Build with “-Wempty-body”.
