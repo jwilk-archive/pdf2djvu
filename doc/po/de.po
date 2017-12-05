@@ -412,8 +412,8 @@ msgstr "<option>--no-nfkc</option>"
 
 # https://de.wikipedia.org/wiki/Unicodeblock_Alphabetische_Präsentationsformen
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Do not apply <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text, except for characters from the <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), which are normalized unconditionally."
-msgstr "Wenden Sie <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> nicht an, um den Text in Normalform zu bringen, außer für Zeichen des <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Unicodeblock Alphabetische Präsentationsformen</ulink> (U+FB00–U+FB4F), die bedingungslos normalisiert werden."
+msgid "Do not apply <ulink url='https://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text, except for characters from the <ulink url='https://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), which are normalized unconditionally."
+msgstr "Wenden Sie <ulink url='https://unicode.org/reports/tr15/'>NFKC</ulink> nicht an, um den Text in Normalform zu bringen, außer für Zeichen des <ulink url='https://unicode.org/charts/PDF/UFB00.pdf'>Unicodeblock Alphabetische Präsentationsformen</ulink> (U+FB00–U+FB4F), die bedingungslos normalisiert werden."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "The default is to apply NFKC normalization on all characters."

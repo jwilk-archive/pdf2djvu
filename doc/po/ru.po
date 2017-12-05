@@ -410,8 +410,8 @@ msgid "<option>--no-nfkc</option>"
 msgstr "<option>--no-nfkc</option>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-msgid "Do not apply <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text, except for characters from the <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), which are normalized unconditionally."
-msgstr "Не применять <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> нормализацию к тексту за исключением символов из <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), которые нормализованы безоговорочно."
+msgid "Do not apply <ulink url='https://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text, except for characters from the <ulink url='https://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), which are normalized unconditionally."
+msgstr "Не применять <ulink url='https://unicode.org/reports/tr15/'>NFKC</ulink> нормализацию к тексту за исключением символов из <ulink url='https://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink> (U+FB00–U+FB4F), которые нормализованы безоговорочно."
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
 msgid "The default is to apply NFKC normalization on all characters."

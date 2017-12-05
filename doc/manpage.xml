@@ -439,9 +439,9 @@
             <term><option>--no-nfkc</option></term>
             <listitem>
                 <para>
-                    Do not apply <ulink url='http://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text,
+                    Do not apply <ulink url='https://unicode.org/reports/tr15/'>NFKC</ulink> normalization on the text,
                     except for characters from the
-                    <ulink url='http://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink>
+                    <ulink url='https://unicode.org/charts/PDF/UFB00.pdf'>Alphabetic Presentation Forms block</ulink>
                     (U+FB00–U+FB4F), which are normalized unconditionally.
                 </para>
                 <para>

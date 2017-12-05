@@ -49,7 +49,7 @@ void pdf::write_as_utf8(std::ostream &stream, Unicode unicode_char)
 std::string pdf::string_as_utf8(pdf::String *string)
 {
     /* See
-     * http://unicode.org/faq/utf_bom.html
+     * https://unicode.org/faq/utf_bom.html
      * for description of both UTF-16 and UTF-8.
      */
     const static uint32_t replacement_character = 0xFFFD;
