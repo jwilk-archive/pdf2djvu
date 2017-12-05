@@ -67,7 +67,7 @@ do
 done
 AC_MSG_RESULT([ok])
 
-PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.17.0])
+PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.24.0])
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of Poppler])
 poppler_version=$(printf '%s' "$poppler_version" | sed -e 's/\(^[[0-9]]\+[[.]][[0-9]]\+$\)/\1.0/; s/[[.]]/ /g')

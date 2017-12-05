@@ -48,28 +48,6 @@
  * ======================
  */
 
-#if POPPLER_VERSION < 1900
-static void poppler_error_handler(pdf::Offset pos, char *message, va_list args)
-{
-  std::string format;
-  std::string expanded_message = string_vprintf(message, args);
-  const char *c_message = expanded_message.c_str();
-  const char *category = _("PDF error");
-  if (pos >= 0)
-  {
-    error_log <<
-      /* L10N: "<error-category> (<position>): <error-message>" */
-      string_printf(_("%s (%jd): %s"), category, static_cast<intmax_t>(pos), c_message);
-  }
-  else
-  {
-    error_log <<
-      /* L10N: "<error-category>: <error-message>" */
-      string_printf(_("%s: %s"), category, c_message);
-  }
-  error_log << std::endl;
-}
-#else
 static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, char *message)
 {
   std::string format;
@@ -115,7 +93,6 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
   }
   error_log << std::endl;
 }
-#endif
 
 pdf::Environment::Environment()
 {
@@ -126,11 +103,7 @@ pdf::Environment::Environment()
   Cwd cwd(program_dir);
 #endif
   globalParams = new GlobalParams();
-#if POPPLER_VERSION < 1900
-  setErrorFunction(poppler_error_handler);
-#else
   setErrorCallback(poppler_error_handler, nullptr);
-#endif
 }
 
 void pdf::Environment::set_antialias(bool value)

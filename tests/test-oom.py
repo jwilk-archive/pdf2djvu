@@ -48,9 +48,6 @@ class test(case):
     # + fixed in 0.9.4 [fb1dcf60c77dfc39de80d60288449caf767d8b54]
 
     def test(self):
-        # Before Poppler 0.24, the Splash backend would just segfault on OOM.
-        # https://cgit.freedesktop.org/poppler/poppler/commit/?id=e04287f2682e
-        self.require_poppler(0, 24)
         with vm_limit(1 << 30):  # 1 GiB virtual memory limit
             r = self.pdf2djvu()
         r.assert_(stderr=re.compile(

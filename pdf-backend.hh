@@ -82,11 +82,7 @@ namespace pdf
   typedef ::Catalog Catalog;
   typedef ::GooString String;
   typedef ::GBool Bool;
-#if POPPLER_VERSION < 2300
-  typedef int Offset;
-#else
   typedef ::Goffset Offset;
-#endif
 
 /* type definitions — annotations
  * ==============================
@@ -136,28 +132,17 @@ namespace pdf
   public:
     Renderer(pdf::splash::Color &paper_color, bool monochrome = false);
 
-#if POPPLER_VERSION < 1900
-    void processLink(pdf::link::Link *link, pdf::Catalog *catalog)
-    {
-      this->drawLink(link, catalog);
-    }
-#else
     void processLink(pdf::link::Link *link)
     {
       this->drawLink(link, nullptr);
     }
-#endif
     virtual void drawLink(pdf::link::Link *link, pdf::Catalog *catalog);
     virtual void draw_link(pdf::link::Link *link, const std::string &border_color)
     { }
     std::vector<std::string> link_border_colors;
     void start_doc(::PDFDoc *doc)
     {
-#if POPPLER_VERSION < 1900
-      this->startDoc(doc->getXRef());
-#else
       this->startDoc(doc);
-#endif
       this->catalog = doc->getCatalog();
     }
   protected:

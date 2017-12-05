@@ -44,14 +44,6 @@ pdf::DocumentMap::DocumentMap(const std::vector<const char *> &paths)
                 pdf::String s;
                 if (catalog->indexToLabel(i, &s)) {
                     std::string str = pdf::string_as_utf8(&s);
-#if POPPLER_VERSION < 1903
-                    // Prior to 0.19.3, Poppler incorrectly adds trailing
-                    // NULL character to Unicode labels:
-                    // https://cgit.freedesktop.org/poppler/poppler/commit/?id=cef6ac0ebbf8
-                    // Let's strip it.
-                    if (str.length() > 0 && str.end()[-1] == '\0')
-                        str.erase(str.end() - 1);
-#endif
                     this->labels.push_back(str);
                 }
                 else

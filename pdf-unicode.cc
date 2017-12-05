@@ -27,12 +27,10 @@
 #include <PDFDocEncoding.h>
 #if POPPLER_VERSION >= 6200
 #include <UnicodeMapFuncs.h>
-#elif (POPPLER_VERSION < 2100) || (POPPLER_VERSION >= 2101)
+#else
 #include <UTF8.h>
 #endif
-#if POPPLER_VERSION >= 2100
 #include <UTF.h>
-#endif
 #include <UnicodeTypeTable.h>
 
 #include <goo/gmem.h>
@@ -139,35 +137,9 @@ pdf::FullNFKC::~FullNFKC()
  * ======================
  */
 
-#if POPPLER_VERSION < 1900
-const Unicode apf_min = 0xFB00;
-const Unicode apf_max = 0xFB4F;
-#endif
-
 pdf::MinimalNFKC::MinimalNFKC(Unicode *unistr, int length)
 {
-    /* Poppler 0.19.0 (and later versions) performs NFKC normalization of
-     * characters from the Alphabetic Presentation Forms block
-     * (U+FB00–U+FB4F):
-     * https://bugs.freedesktop.org/show_bug.cgi?id=7002
-     * For older versions, we do the same normalization ourselves.
-     */
-#if POPPLER_VERSION < 1900
-    std::basic_ostringstream<Unicode> stream;
-    for (int i = 0; i < length; i++) {
-        if (unistr[i] >= apf_min && unistr[i] <= apf_max) {
-            int clen;
-            Unicode *cstr = unicodeNormalizeNFKC(unistr + i, 1, &clen, nullptr);
-            stream.write(cstr, clen);
-            gfree(cstr);
-        } else {
-            stream.write(unistr + i, 1);
-        }
-    }
-    this->string += stream.str();
-#else
     this->string.append(unistr, length);
-#endif
 }
 
 int pdf::MinimalNFKC::length() const
