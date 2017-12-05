@@ -25,7 +25,9 @@
 
 #include <CharTypes.h>
 #include <PDFDocEncoding.h>
-#if (POPPLER_VERSION < 2100) || (POPPLER_VERSION >= 2101)
+#if POPPLER_VERSION >= 6200
+#include <UnicodeMapFuncs.h>
+#elif (POPPLER_VERSION < 2100) || (POPPLER_VERSION >= 2101)
 #include <UTF8.h>
 #endif
 #if POPPLER_VERSION >= 2100
