@@ -1,8 +1,9 @@
 pdf2djvu (0.9.8) UNRELEASED; urgency=low
 
-  * 
+  * Fix build failure with Poppler ≥ 0.62.
+  * Use HTTPS for savannah.gnu.org and unicode.org URLs.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 04 Sep 2017 22:19:11 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 05 Dec 2017 16:48:01 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
