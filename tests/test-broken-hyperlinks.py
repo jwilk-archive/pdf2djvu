@@ -33,7 +33,6 @@ class test(case):
         r.assert_(**kwargs)
 
     def test_no_action(self):
-        self.require_poppler(0, 17)
         self.t(1, 'Unable to convert link without an action')
 
     def test_lookup_error(self):
@@ -63,7 +62,6 @@ class test(case):
         self.t(9, 'Unable to convert link with a JavaScript action')
 
     def test_set_ocg_state_action(self):
-        self.require_poppler(0, 13, 2)
         self.t(10, 'Unable to convert link with a set-OCG-state action')
 
     def test_unknown_action(self):
