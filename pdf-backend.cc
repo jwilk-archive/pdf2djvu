@@ -485,8 +485,8 @@ pdf::Renderer::Renderer(pdf::splash::Color &paper_color, bool monochrome)
 : pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, false, paper_color)
 {
 #if POPPLER_VERSION >= 3100
-      this->setFontAntialias(pdf::Environment::antialias);
-      this->setVectorAntialias(pdf::Environment::antialias);
+  this->setFontAntialias(pdf::Environment::antialias);
+  this->setVectorAntialias(pdf::Environment::antialias);
 #endif
 }
 
