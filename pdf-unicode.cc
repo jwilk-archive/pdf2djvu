@@ -25,10 +25,10 @@
 
 #include <CharTypes.h>
 #include <PDFDocEncoding.h>
-#if POPPLER_VERSION >= 6200
-#include <UnicodeMapFuncs.h>
-#else
+#if POPPLER_VERSION < 6200
 #include <UTF8.h>
+#else
+#include <UnicodeMapFuncs.h>
 #endif
 #include <UTF.h>
 #include <UnicodeTypeTable.h>
