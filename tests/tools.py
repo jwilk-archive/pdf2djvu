@@ -159,7 +159,10 @@ def _get_locale_for_encoding(encoding):
                 locale.setlocale(locale.LC_ALL, new_locale)
             except locale.Error:
                 continue
-            return new_locale
+            locale_encoding = locale.getpreferredencoding(False)
+            locale_encoding = codecs.lookup(locale_encoding).name
+            if encoding == locale_encoding:
+                return new_locale
     finally:
         locale.setlocale(locale.LC_ALL, old_locale)
     raise SkipTest(
