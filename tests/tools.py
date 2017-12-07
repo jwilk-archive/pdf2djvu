@@ -35,6 +35,10 @@ from nose.tools import (
     assert_true,
 )
 
+b''  # Python >= 2.6 is required
+if sys.version_info >= (3, 0):
+    raise RuntimeError('Python 2.X is required')
+
 re_type = type(re.compile(''))
 
 def noseimport(vmaj, vmin, name=None):
