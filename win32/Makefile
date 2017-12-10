@@ -213,6 +213,7 @@ src/poppler/config.status: src/openjpeg/install-stamp
 		--disable-poppler-qt4 \
 		--disable-utils \
 		--disable-libpng \
+		--disable-libnss \
 		--enable-libopenjpeg=openjpeg2 \
 		--disable-compile-warnings
 
