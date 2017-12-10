@@ -187,37 +187,40 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-0.59.0.tar.xz a3d626b24cd14efa9864e12584b22c9c32f51c46417d7c10ca17651f297c9641
-	$(untar) dcache/poppler-0.59.0.tar.xz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-0.62.0.tar.xz 5b9a73dfd4d6f61d165ada1e4f0abd2d420494bf9d0b1c15d0db3f7b83a729c6
+	$(untar) dcache/poppler-0.62.0.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
-	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
 
-src/poppler/config.status: src/poppler/source-stamp
-src/poppler/config.status: src/fontconfig/install-stamp
-src/poppler/config.status: src/libjpeg/install-stamp
-src/poppler/config.status: src/openjpeg/install-stamp
+src/poppler/Makefile: src/poppler/source-stamp
+src/poppler/Makefile: src/fontconfig/install-stamp
+src/poppler/Makefile: src/libjpeg/install-stamp
+src/poppler/Makefile: src/openjpeg/install-stamp
 	cd $(dir $@) && \
-		CPPFLAGS='-DWIN32_LEAN_AND_MEAN -DXMD_H' \
-		./configure --host=$(host) --prefix=$(usr) \
-		--with-font-configuration=fontconfig \
-		--enable-xpdf-headers \
-		--disable-static \
-		--disable-cms \
-		--disable-abiword-output \
-		--disable-cairo-output \
-		--disable-poppler-cpp \
-		--disable-poppler-glib \
-		--disable-poppler-qt \
-		--disable-poppler-qt4 \
-		--disable-utils \
-		--disable-libpng \
-		--disable-libnss \
-		--enable-libopenjpeg=openjpeg2 \
-		--disable-compile-warnings
+		cmake $(cmake_options) . \
+		-DBUILD_CPP_TESTS=OFF \
+		-DBUILD_GTK_TESTS=OFF \
+		-DBUILD_QT5_TESTS=OFF \
+		-DENABLE_CMS=none \
+		-DENABLE_CPP=OFF \
+		-DENABLE_GLIB=OFF \
+		-DENABLE_GTK_DOC=OFF \
+		-DENABLE_LIBCURL=OFF \
+		-DENABLE_LIBOPENJPEG=openjpeg2 \
+		-DENABLE_QT5=OFF \
+		-DENABLE_SPLASH=ON \
+		-DENABLE_UTILS=OFF \
+		-DENABLE_XPDF_HEADERS=ON \
+		-DFONT_CONFIGURATION=fontconfig \
+		-DTESTDATADIR=/nonexistent \
+		-DWITH_NSS3=OFF \
+		-DWITH_PNG=OFF \
+		-DWITH_TIFF=OFF
+	find $(dir $@) -name build.make -print0 \
+	| xargs -0 sed -i -e 's,\([ 	]\)\(/[^ 	]\+/\($(CC)\|$(CXX)\)\) ,\1$(CURDIR)/tools/enforce-relative-paths \2 ,'
 
-src/poppler/build-stamp: src/poppler/config.status
+src/poppler/build-stamp: src/poppler/Makefile
 	$(MAKE) -C $(dir $@)
 	touch $(@)
 

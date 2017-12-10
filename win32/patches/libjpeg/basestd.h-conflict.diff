@@ -1,0 +1,29 @@
+Fix conflict between jmorecfg.h and MinGW32's basetsd.h.
+
+Fixes:
+
+    .../pdf2djvu/win32/include/jmorecfg.h:161:14: error: conflicting declaration ‘typedef long int INT32’
+    /usr/share/mingw-w64/include/basetsd.h:31:22: note: previous declaration as ‘typedef int INT32’
+
+Last-Update: 2017-12-10
+
+--- a/jmorecfg.h
++++ b/jmorecfg.h
+@@ -129,6 +129,8 @@
+  * typedefs live at a different point on the speed/space tradeoff curve.)
+  */
+ 
++#ifndef _BASETSD_H_
++
+ /* UINT8 must hold at least the values 0..255. */
+ 
+ #ifdef HAVE_UNSIGNED_CHAR
+@@ -161,6 +163,8 @@
+ typedef long INT32;
+ #endif
+ 
++#endif
++
+ /* Datatype used for image dimensions.  The JPEG standard only supports
+  * images up to 64K*64K due to 16-bit fields in SOF markers.  Therefore
+  * "unsigned int" is sufficient on all machines.  However, if you need to
