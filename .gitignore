@@ -35,5 +35,6 @@
 /win32/etc
 /win32/include
 /win32/lib
+/win32/patches/*/*~
 /win32/share
 /win32/src
