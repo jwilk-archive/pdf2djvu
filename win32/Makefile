@@ -507,13 +507,15 @@ src/libjpeg/install-stamp: src/libjpeg/build-stamp
 
 src/openjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://github.com/uclouvain/openjpeg/archive/v2.1.2.tar.gz -n openjpeg-2.1.2.tar.gz 4ce77b6ef538ef090d9bde1d5eeff8b3069ab56c4906f083475517c2c023dfa7
-	$(untar) dcache/openjpeg-2.1.2.tar.gz -C $(dir $@)
+	tools/wget https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz -n openjpeg-2.3.0.tar.gz 3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a
+	$(untar) dcache/openjpeg-2.3.0.tar.gz -C $(dir $@)
+	rm -rf $(dir $@)/thirdparty/*/
 	touch $(@)
 
 src/openjpeg/Makefile: src/openjpeg/source-stamp
 	mkdir -p $(dir $@)
-	cd $(dir $@) && cmake $(cmake_options) .
+	cd $(dir $@) && cmake $(cmake_options) . \
+		-DBUILD_THIRDPARTY=OFF
 	find $(dir $@) -name build.make -print0 \
 	| xargs -0 sed -i -e 's, \(/[^ ]\+/\($(CC)\|$(CXX)\)\) , $(CURDIR)/tools/enforce-relative-paths \1 ,'
 
