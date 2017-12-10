@@ -3,9 +3,14 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Fix build failure with Poppler ≥ 0.62.
   * Drop support for Poppler < 0.24.
   * Use HTTPS for savannah.gnu.org and unicode.org URLs.
+  * Improve documentation:
+    + Update poppler-data download URL.
+  * Improve the configure script.
+    + Enable caching for the C++11 compiler test.
+    + Enable caching for compiler warning flags tests.
   * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 07 Dec 2017 22:52:28 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 10 Dec 2017 16:23:21 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
