@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# encoding=UTF-8
-
 # Copyright © 2017 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is part of pdf2djvu.
