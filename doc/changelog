@@ -8,6 +8,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Improve the configure script.
     + Enable caching for the C++11 compiler test.
     + Enable caching for compiler warning flags tests.
+    + Fix non-portable sed(1) calls.
   * Improve the test suite.
   * Upgrade libraries bundled with the Windows package:
     - Poppler 0.62;
@@ -16,7 +17,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     - FreeType 2.8.1;
     - OpenJPEG 2.3.0.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 12 Dec 2017 19:43:54 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 19 Dec 2017 18:16:52 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
