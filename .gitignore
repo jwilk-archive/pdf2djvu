@@ -4,6 +4,7 @@
 /autoconf.hh.in
 /autoconf.mk
 /autom4te.cache
+/config.cache
 /config.guess
 /config.log
 /config.rpath
