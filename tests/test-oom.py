@@ -26,12 +26,20 @@ from tools import (
 
 @contextlib.contextmanager
 def vm_limit(limit):
-    [lim_soft, lim_hard] = resource.getrlimit(resource.RLIMIT_AS)
+    code = 'import resource\nfor n in resource.getrlimit(resource.RLIMIT_AS):\n print(n)'
+    try:
+        RLIMIT_AS = resource.RLIMIT_AS
+    except AttributeError:
+        # OpenBSD doesn't have RLIMIT_AS;
+        # RLIMIT_DATA is good enough.
+        RLIMIT_AS = resource.RLIMIT_DATA
+        code = re.sub(r'_AS\b', '_DATA', code)
+    [lim_soft, lim_hard] = resource.getrlimit(RLIMIT_AS)
     if lim_hard != resource.RLIM_INFINITY and lim_hard < limit:
         limit = lim_hard
-    resource.setrlimit(resource.RLIMIT_AS, (limit, lim_hard))
+    resource.setrlimit(RLIMIT_AS, (limit, lim_hard))
     try:
-        r = case().run(sys.executable, '-c', 'import resource\nfor n in resource.getrlimit(resource.RLIMIT_AS):\n print(n)')
+        r = case().run(sys.executable, '-c', code)
         r.assert_(stdout=re.compile(''))
         (cld_soft_lim, cld_hard_lim) = map(int, r.stdout.splitlines())
         if cld_soft_lim != limit or cld_hard_lim != lim_hard:
@@ -41,7 +49,7 @@ def vm_limit(limit):
             raise RuntimeError(message)
         yield
     finally:
-        resource.setrlimit(resource.RLIMIT_AS, (lim_soft, lim_hard))
+        resource.setrlimit(RLIMIT_AS, (lim_soft, lim_hard))
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/107
