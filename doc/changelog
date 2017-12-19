@@ -10,6 +10,8 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     + Enable caching for compiler warning flags tests.
     + Fix non-portable sed(1) calls.
   * Improve the test suite.
+    + Fix test failure on OpenBSD.
+      https://github.com/jwilk/pdf2djvu/issues/125
   * Upgrade libraries bundled with the Windows package:
     - Poppler 0.62;
     - GraphicsMagick 1.3.27;
@@ -17,7 +19,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     - FreeType 2.8.1;
     - OpenJPEG 2.3.0.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 19 Dec 2017 18:16:52 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 19 Dec 2017 19:52:04 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
