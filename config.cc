@@ -517,14 +517,10 @@ void Config::read_config(int argc, char * const argv[])
     }
 }
 
-void Config::usage(const Config::Error &error) const
+template <typename streamtp>
+static void print_usage(streamtp &stream)
 {
-  DebugStream &log = debug(0, this->verbose);
-  if (error.is_already_printed())
-    log << std::endl;
-  if (!error.is_quiet())
-    log << error << std::endl << std::endl;
-  log
+  stream
     << _("Usage: ") << std::endl
     << _("   pdf2djvu [-o <output-djvu-file>] [options] <pdf-file>") << std::endl
     << _("   pdf2djvu  -i <index-djvu-file>   [options] <pdf-file>") << std::endl
@@ -573,6 +569,21 @@ void Config::usage(const Config::Error &error) const
     << std::endl <<   " -h, --help"
     << std::endl <<   "     --version"
     << std::endl;
+}
+
+void Config::usage(const Config::Error &error) const
+{
+  DebugStream &log = debug(0, this->verbose);
+  if (error.is_already_printed())
+    log << std::endl;
+  if (!error.is_quiet())
+    log << error << std::endl << std::endl;
+  print_usage(log);
+}
+
+void Config::usage() const
+{
+  print_usage(std::cout);
 }
 
 // vim:ts=2 sts=2 sw=2 et

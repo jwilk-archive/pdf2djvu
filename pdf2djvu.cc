@@ -1216,7 +1216,7 @@ static int xmain(int argc, char * const argv[])
   }
   catch (const Config::NeedHelp &ex)
   {
-    config.usage(ex);
+    config.usage();
     exit(0);
   }
   catch (const Config::Error &ex)
