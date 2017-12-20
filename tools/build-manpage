@@ -36,7 +36,7 @@ done
 [ $# -eq 2 ] || { usage; exit 1; }
 src="$1"
 dst="$2"
-xsl=http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
+xsl="$here/manpage.xsl"
 xmllint='xmllint --valid --noout --nonet'
 xsltproc='xsltproc --nonet --param man.charmap.use.subset 0'
 [ -n "$opt_lang" ] && xsltproc="$xsltproc --param man.output.lang.in.name.enabled 1"
