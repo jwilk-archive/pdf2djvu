@@ -1211,7 +1211,7 @@ static int xmain(int argc, char * const argv[])
   }
   catch (const Config::NeedVersion &)
   {
-    error_log << get_multiline_version();
+    std::cout << get_multiline_version();
     exit(0);
   }
   catch (const Config::NeedHelp &ex)
