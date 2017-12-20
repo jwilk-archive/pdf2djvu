@@ -34,8 +34,8 @@ class test(case):
 
     def test_executable(self):
         r = self.pdf2djvu('--version')
-        r.assert_(stderr=re.compile('^pdf2djvu [0-9.]+$', re.M), rc=0)
-        exec_version = r.stderr.splitlines()[0]
+        r.assert_(stdout=re.compile('^pdf2djvu [0-9.]+$', re.M), rc=0)
+        exec_version = r.stdout.splitlines()[0]
         _, exec_version = exec_version.split()
         assert_equal(exec_version, self.changelog_version)
 

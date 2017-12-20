@@ -312,8 +312,8 @@ class case(object):
                 feature_enabled = not os.getenv('pdf2djvu_win32')
             else:
                 r = self.pdf2djvu('--version')
-                r.assert_(stderr=re.compile('^pdf2djvu '), rc=0)
-                feature_enabled = feature in r.stderr
+                r.assert_(stdout=re.compile('^pdf2djvu '), rc=0)
+                feature_enabled = feature in r.stdout
             self._feature_cache[feature] = feature_enabled
         if not feature_enabled:
             raise SkipTest(feature + ' support missing')
