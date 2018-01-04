@@ -45,11 +45,10 @@ install:
 - wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.xz
 - tar -xvvf poppler-*.tar.*
 - pushd poppler-*
-- |
-  if [ -z "${POPPLER_VERSION##0.[6-9]*}" ]; then
-    cmake . -DCMAKE_INSTALL_PREFIX="$HOME/opt/poppler" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained
+- if [[ $POPPLER_VERSION = 0.[6-9]* ]]; then
+    cmake . -DCMAKE_INSTALL_PREFIX="$HOME/opt/poppler" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained;
   else
-    ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x
+    ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x;
   fi
 - make
 - make install
