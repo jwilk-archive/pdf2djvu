@@ -1,3 +1,6 @@
+Overview
+========
+
 **pdf2djvu** creates DjVu_ files from PDF files.
 
 It's able to extract:
@@ -15,4 +18,52 @@ but a Windows distribution is available too.
 .. _XMP:
    https://www.adobe.com/products/xmp.html
 
-.. vim:ft=rst ts=3 sts=3 sw=3 et
+Prerequisites
+=============
+
+The following software is required to build pdf2djvu:
+
+* DjVuLibre_ (≥ 3.5.21), both the library and the command line tools;
+* Poppler_ (≥ 0.17), including xpdf headers [*]_;
+* pkg-config_.
+
+.. [*]
+   Poppler must be compiled with the ``--enable-xpdf-headers``
+   configuration option enabled.
+   Alternatively, you may use the ``tools/install-poppler-h-files``
+   script to install the missing headers afterward.
+
+The following software is recommended:
+
+* gettext_ for internationalization;
+* Exiv2_ and libuuid (part of util-linux or e2fsprogs)
+  for correctly dealing with XMP metadata;
+* GraphicsMagick_ for the ``--fg-colors=N`` option.
+
+For the ``-j``/``--jobs`` option, the compiler must support OpenMP_.
+
+To run the tests, the following software is needed:
+
+* Python (≥ 2.6);
+* nose_.
+
+.. ---------------------------------------------------------------------
+
+.. _DjVuLibre:
+   http://djvu.sourceforge.net/
+.. _poppler:
+   https://poppler.freedesktop.org/
+.. _pkg-config:
+   https://www.freedesktop.org/wiki/Software/pkg-config/
+.. _gettext:
+   https://www.gnu.org/software/gettext/
+.. _Exiv2:
+   http://www.exiv2.org/
+.. _GraphicsMagick:
+   http://www.graphicsmagick.org/
+.. _OpenMP:
+   http://www.openmp.org/
+.. _nose:
+   https://nose.readthedocs.io/
+
+.. vim:ft=rst ts=3 sts=3 sw=3 et tw=72
