@@ -5,6 +5,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Drop support for Poppler < 0.24.
   * Use HTTPS for savannah.gnu.org and unicode.org URLs.
   * Improve documentation:
+    + Add README.
     + Update poppler-data download URL.
     + Fix date formats in the manual pages:
       - use YYYY-MM-DD for English;
@@ -23,7 +24,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     - FreeType 2.8.1;
     - OpenJPEG 2.3.0.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 20 Dec 2017 21:20:11 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 15 Jan 2018 21:25:32 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
