@@ -90,6 +90,7 @@ rm private/build-source-tarball
 
 # Move documentation to doc/:
 mv COPYING doc/
+mv README doc/
 
 # Autoconf & company:
 private/autogen
