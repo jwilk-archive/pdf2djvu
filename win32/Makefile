@@ -76,7 +76,6 @@ xz_opts = -8e
 
 .PHONY: source-dist
 source-dist:
-	rm -rf src/*/
 	$(MAKE) $(shell grep '/source[-]stamp:' Makefile | cut -d: -f1)
 	rm -rf $(src_tarball_topdir)
 	mkdir $(src_tarball_topdir)
