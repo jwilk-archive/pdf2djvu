@@ -46,7 +46,7 @@ For the ``-j``/``--jobs`` option, the compiler must support OpenMP_.
 
 To run the tests, the following software is needed:
 
-* Python (≥ 2.6);
+* Python (2.6 or 2.7);
 * nose_.
 
 .. ---------------------------------------------------------------------
