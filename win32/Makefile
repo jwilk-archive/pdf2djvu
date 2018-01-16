@@ -531,10 +531,9 @@ src/openjpeg/install-stamp: src/openjpeg/build-stamp
 # URW fonts
 
 src/urw-fonts/source-stamp:
-	mkdir -p dcache/urw-fonts/ $(dir $@)
-	cd dcache/urw-fonts/ && $(WGET) -c -A '*.pfb' -r -nd -np http://svn.ghostscript.com/ghostscript/tags/urw-fonts-1.0.7pre44/
-	[ "$$(cat dcache/urw-fonts/*.pfb | sha256sum)" = '41eab7d27c2ba72e68d851d7574a66f9a618d9cca10feb14e137b53917f3f2b2  -' ]
-	cp dcache/urw-fonts/*.pfb $(dir $@)
+	mkdir -p $(dir $@)
+	tools/wget https://src.fedoraproject.org/repo/pkgs/urw-fonts/urw-fonts-1.0.7pre44.tar.bz2/51c6c2690593cd9bd92f197a6f2ff8bd/urw-fonts-1.0.7pre44.tar.bz2 df0ad8413f1e4bc0b6e5f964192879b0dc66d7be521f9666357ac30bad4c7a32
+	$(untar) dcache/urw-fonts-1.0.7pre44.tar.bz2 -C $(dir $@) --strip-components=0
 	touch $(@)
 
 src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
