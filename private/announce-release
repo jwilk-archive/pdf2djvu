@@ -47,6 +47,8 @@ else
     changes='There are no end-user visible changes at this time.'
 fi
 
+base_url=https://github.com/jwilk/pdf2djvu
+
 cat <<EOF
 Subject: ANN: pdf2djvu $version
 To: pdf2djvu@groups.io
@@ -58,13 +60,13 @@ $changes
 Downloads:
 
   * source:
-    https://github.com/jwilk/pdf2djvu/releases/download/$version/pdf2djvu-$version.tar.xz
+    $base_url/releases/download/$version/pdf2djvu-$version.tar.xz
 
   * Windows distribution:
-    https://github.com/jwilk/pdf2djvu/releases/download/$version/pdf2djvu-win32-$version.zip
+    $base_url/releases/download/$version/pdf2djvu-win32-$version.zip
 
   * source for the Windows distribution:
-    https://github.com/jwilk/pdf2djvu/releases/download/$version/pdf2djvu-win32-source-$version.tar.xz
+    $base_url/download/$version/pdf2djvu-win32-source-$version.tar.xz
 
 All files are cryptographically signed.
 Append ".asc" to the URL to get the OpenPGP signature.
