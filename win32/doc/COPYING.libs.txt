@@ -35,28 +35,30 @@ libfreetype\*.dll
 | Copyright © 1990-1998 The Open Group
 | Copyright © 1995-2002 Jean-loup Gailly
 | Copyright © 1995-2002 Mark Adler
-| Copyright © 1996-2016 Just van Rossum
-| Copyright © 1996-2016 Robert Wilhelm
-| Copyright © 1996-2016 Werner Lemberg
-| Copyright © 1996-2016 David Turner
+| Copyright © 1996-2018 Just van Rossum
+| Copyright © 1996-2018 Robert Wilhelm
+| Copyright © 1996-2018 Werner Lemberg
+| Copyright © 1996-2018 David Turner
 | Copyright © 2000 Computing Research Labs, New Mexico State University
 | Copyright © 2000-2012 Francesco Zappa Nardelli
-| Copyright © 2002-2015 Roberto Alameda
+| Copyright © 2002-2018 Roberto Alameda
 | Copyright © 2003 Huw D M Davies
-| Copyright © 2003-2015 Masatake YAMATO
-| Copyright © 2003-2015 Redhat K.K.
-| Copyright © 2004-2015 George Williams
-| Copyright © 2004-2012 Albert Chin-A-Young
-| Copyright © 2004-2016 suzuki toshiya
-| Copyright © 2005-2016 Detlef Würkner
+| Copyright © 2003-2018 Masatake YAMATO
+| Copyright © 2003-2018 Redhat K.K.
+| Copyright © 2004-2018 George Williams
+| Copyright © 2004-2018 Albert Chin-A-Young
+| Copyright © 2004-2018 suzuki toshiya
+| Copyright © 2005-2018 Detlef Würkner
 | Copyright © 2007 Dmitry Timoshkov
-| Copyright © 2007-2015 Rahul Bhalerao
-| Copyright © 2007-2012 Derek Clegg
-| Copyright © 2007-2012 Michael Toftdal
-| Copyright © 2009-2015 Mickey Gabel
-| Copyright © 2009-2015 Oran Agra
-| Copyright © 2010-2015 Joel Klinghed
+| Copyright © 2007-2018 Rahul Bhalerao
+| Copyright © 2007-2018 Derek Clegg
+| Copyright © 2007-2018 Michael Toftdal
+| Copyright © 2007-2014 Adobe Systems Incorporated.
+| Copyright © 2009-2018 Mickey Gabel
+| Copyright © 2009-2018 Oran Agra
+| Copyright © 2010-2018 Joel Klinghed
 | Copyright © 2012 Intel Corporation
+| Copyright © 2013-2018 Google, Inc.
 
 The FreeType 2 font engine is copyrighted work and cannot be used legally
 without a software license. In order to make this project usable to a vast
