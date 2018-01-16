@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"/>
     <xsl:param name="man.charmap.use.subset" select="0"/>
+    <xsl:param name="man.authors.section.enabled" select="0"/>
     <xsl:param name="local.l10n.xml" select="document('')"/>
     <l:i18n xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">
         <l:l10n language="en">
