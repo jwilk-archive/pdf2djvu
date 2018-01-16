@@ -51,7 +51,7 @@ libfreetype\*.dll
 | Copyright © 2005-2016 Detlef Würkner
 | Copyright © 2007 Dmitry Timoshkov
 | Copyright © 2007-2015 Rahul Bhalerao
-| Copyright © 2007-2012 Dereg Clegg
+| Copyright © 2007-2012 Derek Clegg
 | Copyright © 2007-2012 Michael Toftdal
 | Copyright © 2009-2015 Mickey Gabel
 | Copyright © 2009-2015 Oran Agra
