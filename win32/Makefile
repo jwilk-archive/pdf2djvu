@@ -530,6 +530,22 @@ src/openjpeg/install-stamp: src/openjpeg/build-stamp
 
 # URW fonts
 
+standard-fonts = # replacements for 14 standard Type 1 fonts:
+standard-fonts += d050000l.pfb # ZapfDingbats -> Dingbats
+standard-fonts += n019003l.pfb # Helvetica -> Nimbus Sans L Regular
+standard-fonts += n019004l.pfb # Helvetica−Bold -> Nimbus Sans L Bold
+standard-fonts += n019023l.pfb # Helvetica−Oblique -> Nimbus Sans L Regular Italic
+standard-fonts += n019024l.pfb # Helvetica−BoldOblique -> Nimbus Sans L Bold Italic
+standard-fonts += n021003l.pfb # Times−Roman -> Nimbus Roman No9 L Regular
+standard-fonts += n021004l.pfb # Times−Bold -> Nimbus Roman No9 L Medium
+standard-fonts += n021023l.pfb # Times−Italic -> Nimbus Roman No9 L Regular Italic
+standard-fonts += n021024l.pfb # Times−BoldItalic -> Nimbus Roman No9 L Medium Italic
+standard-fonts += n022003l.pfb # Courier -> Nimbus Mono L Regular
+standard-fonts += n022004l.pfb # Courier−Bold -> Nimbus Mono L Bold
+standard-fonts += n022023l.pfb # Courier−Oblique -> Nimbus Mono L Regular Oblique
+standard-fonts += n022024l.pfb # Courier−BoldOblique -> Nimbus Mono L Bold Oblique
+standard-fonts += s050000l.pfb # Symbol -> Standard Symbols L
+
 src/urw-fonts/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://src.fedoraproject.org/repo/pkgs/urw-fonts/urw-fonts-1.0.7pre44.tar.bz2/51c6c2690593cd9bd92f197a6f2ff8bd/urw-fonts-1.0.7pre44.tar.bz2 df0ad8413f1e4bc0b6e5f964192879b0dc66d7be521f9666357ac30bad4c7a32
@@ -541,7 +557,7 @@ src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	mkdir -p dist/fonts/ dist/doc/
-	cp $(dir $@)/*.pfb dist/fonts/
+	cp $(addprefix $(dir $@)/,$(standard-fonts)) dist/fonts/
 	rst2html doc/COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $(@)
 
