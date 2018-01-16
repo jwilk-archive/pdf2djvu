@@ -38,7 +38,7 @@ src="$1"
 dst="$2"
 xsl="$here/manpage.xsl"
 xmllint='xmllint --valid --noout --nonet'
-xsltproc='xsltproc --nonet --param man.charmap.use.subset 0'
+xsltproc='xsltproc --nonet'
 [ -n "$opt_lang" ] && xsltproc="$xsltproc --param man.output.lang.in.name.enabled 1"
 PS4='$ '
 set -x
