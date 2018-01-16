@@ -6,6 +6,9 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Use HTTPS for savannah.gnu.org and unicode.org URLs.
   * Improve documentation:
     + Add README.
+      https://github.com/jwilk/pdf2djvu/issues/124
+    + Document build-requirements for C++11 compiler and GNU make.
+    + Clarify that Python 3.X is not supported for running tests.
     + Update poppler-data download URL.
     + Fix date formats in the manual pages:
       - use YYYY-MM-DD for English;
@@ -24,7 +27,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     - FreeType 2.8.1;
     - OpenJPEG 2.3.0.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 15 Jan 2018 21:25:32 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 16 Jan 2018 13:17:58 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
