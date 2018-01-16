@@ -28,8 +28,9 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     - Expat 2.2.5;
     - FreeType 2.9;
     - OpenJPEG 2.3.0.
+  * Windows: ship only replacements for 14 standard Type 1 fonts.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 16 Jan 2018 20:08:35 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 16 Jan 2018 21:23:26 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
