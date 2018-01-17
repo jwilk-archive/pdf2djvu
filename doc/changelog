@@ -2,6 +2,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
 
   * Make --help and --version print to stdout, not stderr.
   * Fix build failure with Poppler ≥ 0.62.
+    https://github.com/jwilk/pdf2djvu/issues/126
   * Drop support for Poppler < 0.24.
   * Use HTTPS for savannah.gnu.org and unicode.org URLs.
   * Improve documentation:
@@ -23,6 +24,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Improve the test suite.
     + Fix test failure on OpenBSD.
       https://github.com/jwilk/pdf2djvu/issues/125
+    + Fix test failure on systems using musl libc.
   * Upgrade libraries bundled with the Windows package:
     - Poppler 0.62;
     - GraphicsMagick 1.3.27;
@@ -32,7 +34,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Windows: ship only replacements for 14 standard Type 1 fonts.
   * Windows: ship poppler data files.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 17 Jan 2018 18:46:47 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jan 2018 16:23:45 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
