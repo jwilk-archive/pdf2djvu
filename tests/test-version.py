@@ -15,9 +15,11 @@
 
 import os
 import re
+import xml.etree.cElementTree as etree
 
 from tools import (
     assert_equal,
+    assert_true,
     case,
 )
 
@@ -31,6 +33,15 @@ class test(case):
         with open(path) as file:
             line = file.readline()
         self.changelog_version = line.split()[1].strip('()')
+
+    def test_manpage(self):
+        path = os.path.join(srcdir, 'doc', 'manpage.xml')
+        for event, elem in etree.iterparse(path):
+            if elem.tag == 'refmiscinfo' and elem.get('class') == 'version':
+                assert_equal(elem.text, self.changelog_version)
+                break
+        else:
+            assert_true(False, msg="missing <refmiscinfo class='version'>")
 
     def test_executable(self):
         r = self.pdf2djvu('--version')
