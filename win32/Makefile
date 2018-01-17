@@ -120,6 +120,7 @@ clean-binary:
 install: src/pdf2djvu/install-stamp
 install: src/libs-install-stamp
 install: src/urw-fonts/install-stamp
+install: src/poppler-data/install-stamp
 
 # pdf2djvu
 
@@ -226,6 +227,26 @@ src/poppler/build-stamp: src/poppler/Makefile
 src/poppler/install-stamp: src/poppler/build-stamp
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libpoppler)
+	touch $(@)
+
+# poppler-data
+
+src/poppler-data/source-stamp:
+	mkdir -p $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz 1096a18161f263cccdc6d8a2eb5548c41ff8fcf9a3609243f1b6296abdf72872
+	$(untar) dcache/poppler-data-0.4.8.tar.gz -C $(dir $@)
+	touch $(@)
+
+src/poppler-data/build-stamp: src/poppler-data/source-stamp
+	$(MAKE) -C $(dir $@)
+	touch $(@)
+
+src/poppler-data/install-stamp: src/poppler-data/build-stamp
+	$(MAKE) -C $(dir $@) install prefix=$(usr)
+	mkdir -p dist/share/
+	cp -a share/poppler dist/share/
+	mkdir -p dist/doc/
+	rst2html doc/COPYING.poppler-data.txt > dist/doc/COPYING.poppler-data.html
 	touch $(@)
 
 # DjVuLibre
