@@ -30,8 +30,9 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
     - FreeType 2.9;
     - OpenJPEG 2.3.0.
   * Windows: ship only replacements for 14 standard Type 1 fonts.
+  * Windows: ship poppler data files.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 17 Jan 2018 16:16:20 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 17 Jan 2018 18:46:47 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
