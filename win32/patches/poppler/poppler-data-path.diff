@@ -1,15 +1,10 @@
 Adapt get_poppler_datadir() to pdf2djvu needs.
 
-Last-Update: 2015-08-13
+Last-Update: 2018-01-17
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -169,16 +169,11 @@
-     return retval;
- 
-   if (!GetModuleFileNameA (hmodule, (CHAR *) retval, sizeof(retval) - 20))
--    return POPPLER_DATADIR;
-+    strcpy(retval, ".\\.");
+@@ -173,11 +173,6 @@
  
    p = _mbsrchr ((unsigned char *) retval, '\\');
    *p = '\0';
@@ -18,8 +13,6 @@ Last-Update: 2015-08-13
 -    if (stricmp ((const char *) (p+1), "bin") == 0)
 -      *p = '\0';
 -  }
--  strcat (retval, "\\share\\poppler");
-+  strcat (retval, "\\poppler-data");
+   strcat (retval, "\\share\\poppler");
  
    beenhere = 1;
- 

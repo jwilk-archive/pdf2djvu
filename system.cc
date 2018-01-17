@@ -464,52 +464,6 @@ File::openmode ExistingFile::get_default_open_mode()
 
 #if WIN32
 
-/* class Cwd
- * =========
- */
-
-Cwd::Cwd(const std::string &path)
-{
-  int rc;
-  size_t size = 32;
-  while (1)
-  {
-    std::vector<char> buffer(size);
-    rc = getcwd(buffer.data(), size) == nullptr;
-    if (rc != 0)
-    {
-      if (errno == ERANGE && size < SIZE_MAX / 2)
-      {
-        size *= 2;
-        continue;
-      }
-      throw_posix_error("getcwd");
-    }
-    this->previous_cwd = buffer.data();
-    break;
-  }
-  rc = chdir(path.c_str());
-  if (rc != 0)
-    throw_posix_error("chdir");
-}
-
-Cwd::~Cwd()
-{
-  if (this->previous_cwd.length())
-  {
-    int rc = chdir(this->previous_cwd.c_str());
-    if (rc != 0)
-    {
-      warn_posix_error("chdir");
-      abort();
-    }
-  }
-}
-
-#endif
-
-#if WIN32
-
 /* class ProgramDir
  * ================
  */

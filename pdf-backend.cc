@@ -96,12 +96,6 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
 
 pdf::Environment::Environment()
 {
-#if WIN32
-  /* Change the current working directory to be able to read poppler data.
-   * This is not required (and potentially harmful) for Unix installations.
-   */
-  Cwd cwd(program_dir);
-#endif
   globalParams = new GlobalParams();
   setErrorCallback(poppler_error_handler, nullptr);
 }

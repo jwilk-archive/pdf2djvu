@@ -4,10 +4,4 @@ languages, the poppler-data_ package has to be installed.
 .. _poppler-data:
    https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz
 
-For the Windows port:
-
-- unpack the archive;
-- rename the extracted directory to ``poppler-data``;
-- put it into the same directory as the ``pdf2djvu.exe`` file.
-
 .. vim:ft=rst ts=3 sts=3 sw=3 et tw=72

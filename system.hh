@@ -186,18 +186,6 @@ public:
 
 #if WIN32
 
-class Cwd
-{
-protected:
-  std::string previous_cwd;
-private:
-  Cwd(const Cwd &); // not defined
-  Cwd& operator=(const Cwd &); // not defined
-public:
-  explicit Cwd(const std::string &path);
-  ~Cwd();
-};
-
 class ProgramDir
 : public std::string
 {
