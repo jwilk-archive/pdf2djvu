@@ -44,6 +44,9 @@ To run the tests, the following software is needed:
 * Python (2.6 or 2.7);
 * nose_.
 
+To correctly convert some PDF files (mostly in Chinese, Japanese or
+Korean), the poppler-data_ package must be installed.
+
 .. ---------------------------------------------------------------------
 
 .. _DjVuLibre:
@@ -62,5 +65,7 @@ To run the tests, the following software is needed:
    http://www.openmp.org/
 .. _nose:
    https://nose.readthedocs.io/
+.. _poppler-data:
+   https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et tw=72

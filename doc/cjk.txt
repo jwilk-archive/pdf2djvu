@@ -1,7 +1,0 @@
-To properly convert some PDF files in CJK (Chinese, Japanese, Korean)
-languages, the poppler-data_ package has to be installed.
-
-.. _poppler-data:
-   https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz
-
-.. vim:ft=rst ts=3 sts=3 sw=3 et tw=72
