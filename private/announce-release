@@ -68,7 +68,8 @@ Downloads:
   * source for the Windows distribution:
     $base_url/download/$version/pdf2djvu-win32-source-$version.tar.xz
 
-All files are cryptographically signed.
+All files are cryptographically signed with OpenPGP key
+CDB5A1243ACDB63009AD07212D4EB3A6015475F5.
 Append ".asc" to the URL to get the OpenPGP signature.
 
 Complete changelog:
