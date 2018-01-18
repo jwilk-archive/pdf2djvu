@@ -1,4 +1,4 @@
-pdf2djvu (0.9.8) UNRELEASED; urgency=low
+pdf2djvu (0.9.8) unstable; urgency=low
 
   * Make --help and --version print to stdout, not stderr.
   * Fix build failure with Poppler ≥ 0.62.
@@ -34,7 +34,7 @@ pdf2djvu (0.9.8) UNRELEASED; urgency=low
   * Windows: ship only replacements for 14 standard Type 1 fonts.
   * Windows: ship poppler data files.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jan 2018 16:23:45 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jan 2018 17:05:29 +0100
 
 pdf2djvu (0.9.7) unstable; urgency=low
 
