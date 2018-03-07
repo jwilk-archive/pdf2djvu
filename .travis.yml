@@ -54,8 +54,7 @@ install:
 - make install
 - popd
 - python3 -m pip install --user img2pdf
-- python -m pip install --user pydiatra
-- python -m pip install --user pyflakes
+- python -m pip install --user pydiatra pyflakes
 before_script:
 - private/autogen
 script:
