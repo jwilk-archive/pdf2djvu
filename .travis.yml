@@ -49,9 +49,9 @@ install:
 - if [[ $POPPLER_VERSION = git ]]; then git -C poppler-git revert -n 1aaf621f511ca4c235cb30a5ddbf050acd30fe91; fi  # https://bugs.freedesktop.org/show_bug.cgi?id=104502
 - pushd poppler-*
 - if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.[6-9]* ]]; then
-    cmake . -DCMAKE_INSTALL_PREFIX="$HOME/opt/poppler" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained;
+    cmake . -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained;
   else
-    ./configure --prefix="$HOME/opt/poppler" --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x;
+    ./configure --prefix ~/.local --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x;
   fi
 - make
 - make install
@@ -61,13 +61,13 @@ install:
 before_script:
 - private/autogen
 script:
-- export PKG_CONFIG_PATH="$HOME/opt/poppler/lib/pkgconfig/"
-- export CPATH="$HOME/opt/poppler/include/"
+- export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
+- export CPATH=~/.local/include/
 - if [ $CXX = clang++ ]; then configure_options='--disable-openmp'; fi
 - ./configure --prefix ~/.local $configure_options
 - PATH="$PATH:$HOME/.local/bin" make -C tests prepare
 - make
-- export LD_LIBRARY_PATH="$HOME/opt/poppler/lib/"
+- export LD_LIBRARY_PATH=~/.local/lib/
 - ./pdf2djvu --version
 - make test
 - make -C doc
