@@ -55,19 +55,19 @@ install:
   fi
 - make
 - make install
+- export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
+- export CPATH=~/.local/include/
+- export LD_LIBRARY_PATH=~/.local/lib/
 - popd
 - python3 -m pip install --user img2pdf
 - python -m pip install --user pydiatra pyflakes
 before_script:
 - private/autogen
 script:
-- export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
-- export CPATH=~/.local/include/
 - if [ $CXX = clang++ ]; then configure_options='--disable-openmp'; fi
 - ./configure --prefix ~/.local $configure_options
-- PATH="$PATH:$HOME/.local/bin" make -C tests prepare
+- make -C tests prepare
 - make
-- export LD_LIBRARY_PATH=~/.local/lib/
 - ./pdf2djvu --version
 - make test
 - make -C doc
