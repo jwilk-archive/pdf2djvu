@@ -37,6 +37,8 @@ namespace djvu
     {
     public:
         virtual OutlineItem& add(std::string description, std::string url) = 0;
+        virtual ~OutlineBase()
+        { };
     };
 
     class OutlineItem
