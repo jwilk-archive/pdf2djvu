@@ -1,8 +1,8 @@
 pdf2djvu (0.9.9) UNRELEASED; urgency=low
 
-  * 
+  * Fix undefined behavior in the outline handling code.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 18 Jan 2018 18:51:12 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 26 Mar 2018 13:06:55 +0200
 
 pdf2djvu (0.9.8) unstable; urgency=low
 
