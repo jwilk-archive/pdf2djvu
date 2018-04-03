@@ -48,9 +48,9 @@ install:
 - \[ $POPPLER_VERSION = git ] || tar -xvvf poppler-*.tar.*
 - if [[ $POPPLER_VERSION = git ]]; then git clone https://anongit.freedesktop.org/git/poppler/poppler.git poppler-git; fi
 - pushd poppler-*
-- if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.63.0 ]]; then
-    curl -sfS https://cgit.freedesktop.org/poppler/poppler/patch/?id=1aaf621f511ca4c235cb30a5ddbf050acd30fe91 -o patches &&
-    patch -R -p1 < patches &&
+- if [[ $POPPLER_VERSION = 0.63.0 ]]; then
+    curl -sfS https://cgit.freedesktop.org/poppler/poppler/patch/?id=e491e935ea355d48519cf0a14e4b060655850675 -o patches &&
+    patch -p1 < patches &&
     rm -f patches;
   fi # https://bugs.freedesktop.org/show_bug.cgi?id=105674
 - if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.[6-9]* ]]; then
