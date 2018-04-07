@@ -46,7 +46,7 @@ void pdf::write_as_utf8(std::ostream &stream, Unicode unicode_char)
     stream.write(buffer, seqlen);
 }
 
-std::string pdf::string_as_utf8(pdf::String *string)
+std::string pdf::string_as_utf8(const pdf::String *string)
 {
     /* See
      * https://unicode.org/faq/utf_bom.html
@@ -54,7 +54,11 @@ std::string pdf::string_as_utf8(pdf::String *string)
      */
     const static uint32_t replacement_character = 0xFFFD;
     const char *cstring = string->getCString();
+#if POPPLER_VERSION < 3500
+    size_t clength = const_cast<pdf::String *>(string)->getLength();
+#else
     size_t clength = string->getLength();
+#endif
     std::ostringstream stream;
     if (clength >= 2 && (cstring[0] & 0xFF) == 0xFE && (cstring[1] & 0xFF) == 0xFF) {
         /* UTF-16-BE Byte Order Mark */

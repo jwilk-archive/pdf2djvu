@@ -31,7 +31,7 @@ namespace pdf
 
     void write_as_utf8(std::ostream &stream, Unicode unicode_char);
 
-    std::string string_as_utf8(pdf::String *);
+    std::string string_as_utf8(const pdf::String *);
     std::string string_as_utf8(pdf::Object &);
 
 /* class pdf::NFKC

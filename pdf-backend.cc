@@ -340,7 +340,7 @@ std::string pdf::Timestamp::format(char separator) const
  * ===================
  */
 
-static int scan_date_digits(char * &input, int n)
+static int scan_date_digits(const char * &input, int n)
 {
   int value = 0;
   for (int i = 0; i < n; i++)
@@ -386,7 +386,7 @@ pdf::Metadata::Metadata(pdf::Document &document)
     char tzs = 0; int tzh = 0, tzm = 0;
     if (!pdf::dict_lookup(info_dict, field.first, &object)->isString())
       continue;
-    char *input = object.getString()->getCString();
+    const char *input = object.getString()->getCString();
     if (input[0] == 'D' && input[1] == ':')
       input += 2;
     int year = scan_date_digits(input, 4);

@@ -73,11 +73,12 @@ public:
 static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
 {
   std::unique_ptr<pdf::link::Destination> dest;
-  dest.reset(goto_link->getDest());
-  if (dest.get() == nullptr)
+  pdf::link::Destination *orig_dest = const_cast<pdf::link::Destination *>(goto_link->getDest());
+  // FIXME: get rid of const_cast once Poppler 0.64 is released
+  if (orig_dest == nullptr)
     dest.reset(catalog->findDest(goto_link->getNamedDest()));
   else
-    dest.reset(dest.release()->copy());
+    dest.reset(orig_dest->copy());
   if (dest.get() != nullptr)
   {
     int page;
