@@ -11,6 +11,7 @@
 /config.status
 /config.sub
 /configure
+/dist
 /doc/*.1
 /doc/po/*.1
 /doc/po/*.pot
