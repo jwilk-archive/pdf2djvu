@@ -47,7 +47,7 @@ fi
 
 set -e -u
 
-gitrepo="$(dirname "$0")/.."
+gitrepo="${0%/*}/.."
 if ! [ -d "$gitrepo/.git" ]
 then
     printf '%s requires git checkout\n' "$0" >&2
@@ -55,7 +55,7 @@ then
 fi
 pwd="$PWD"
 commit=${1:-HEAD}
-commit=$(git describe "$commit")
+commit=$(git -C "$gitrepo" describe "$commit")
 read name version release urgency <<EOF
 $(git -C "$gitrepo" cat-file blob "$commit:doc/changelog" | head -n1)
 EOF
