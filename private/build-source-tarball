@@ -47,23 +47,23 @@ fi
 
 set -e -u
 
-gitrepo="${0%/*}/.."
-if ! [ -d "$gitrepo/.git" ]
+cd "${0%/*}/.."
+if ! [ -d .git ]
 then
     printf '%s requires git checkout\n' "$0" >&2
     exit 1
 fi
 pwd="$PWD"
 commit=${1:-HEAD}
-commit=$(git -C "$gitrepo" describe "$commit")
+commit=$(git describe "$commit")
 read name version release urgency <<EOF
-$(git -C "$gitrepo" cat-file blob "$commit:doc/changelog" | head -n1)
+$(git cat-file blob "$commit:doc/changelog" | head -n1)
 EOF
 version=${version#(}
 version=${version%)}
 if [ "$release" = 'UNRELEASED;' ]
 then
-    date=$(git -C "$gitrepo" rev-list -1 --format=%cI "$commit" | grep -o '^....-..-..' | tr -d -)
+    date=$(git rev-list -1 --format=%cI "$commit" | grep -o '^....-..-..' | tr -d -)
     version="${version}rc${date}"
 fi
 if [ -n "$opt_print_name" ]
@@ -79,7 +79,7 @@ tar_opts='--owner root --group root --mode a+rX --format ustar --sort name'
 xz_opts='-4e'
 
 # Mercurial archive:
-git -C "$gitrepo" archive "$commit" --prefix="$name-$version/" | tar -C "$sourceroot" -xf -
+git archive "$commit" --prefix="$name-$version/" | tar -C "$sourceroot" -xf -
 cd "$sourceroot"/*
 
 # Remove files that only useful in a VCS checkout:
@@ -121,12 +121,13 @@ rm autoconf.mk
 
 # Tarball with raw source:
 cd ..
-tar $tar_opts -I "xz $xz_opts" -cf "$pwd/$name-$version.tar.xz" */
+mkdir -p "$pwd/dist"
+tar $tar_opts -I "xz $xz_opts" -cf "$pwd/dist/$name-$version.tar.xz" */
 
 # Cleanup:
 rm -r "$sourceroot"
 set +x
 cd "$pwd"
-ls -d "$name-$version.tar.xz"
+ls -d "dist/$name-$version.tar.xz"
 
 # vim:ts=4 sts=4 sw=4 et
