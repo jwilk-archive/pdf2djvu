@@ -27,6 +27,11 @@ color_msgid()
 
 set -e -u
 rc=0
+if [ $# -eq 0 ]
+then
+    printf 'Usage: %s <po-file>...\n' "$0" >&2
+    exit 1
+fi
 for po in "$@"
 do
     ok=yes
