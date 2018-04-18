@@ -1,7 +1,7 @@
 pdf2djvu (0.9.9) UNRELEASED; urgency=low
 
   * Fix undefined behavior in the outline handling code.
-  * Fix build failure with Poppler ≥ 0.63.
+  * Fix build failure with Poppler ≥ 0.64.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sat, 07 Apr 2018 18:58:33 +0200
 
