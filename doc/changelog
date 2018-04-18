@@ -1,9 +1,9 @@
-pdf2djvu (0.9.9) UNRELEASED; urgency=low
+pdf2djvu (0.9.9) unstable; urgency=low
 
   * Fix build failure with Poppler ≥ 0.64.
   * Fix undefined behavior in the outline handling code.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 18 Apr 2018 15:13:37 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 18 Apr 2018 15:21:47 +0200
 
 pdf2djvu (0.9.8) unstable; urgency=low
 
