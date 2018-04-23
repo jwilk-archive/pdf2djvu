@@ -48,17 +48,15 @@ before_install:
 - test -n "$last_poppler_release"
 - if [[ $POPPLER_VERSION != $last_poppler_release ]]; then if_lpr=:; fi
 - if [[ $POPPLER_VERSION = git ]]; then unless_git=:; else if_git=:; fi
+- if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.[6-9]* ]]; then if_autoconf=:; else if_cmake=:; fi
 - if [[ $CXX = clang* ]]; then configure_options='--disable-openmp'; fi
 install:
 - $unless_git wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.xz
 - $unless_git tar -xvvf poppler-*.tar.*
 - $if_git git clone https://anongit.freedesktop.org/git/poppler/poppler.git poppler-git
 - pushd poppler-*
-- if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.[6-9]* ]]; then
-    cmake . -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained;
-  else
-    ./configure --prefix ~/.local --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x;
-  fi
+- $if_cmake cmake . -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained
+- $if_autoconf ./configure --prefix ~/.local --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x
 - make
 - make install
 - export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
