@@ -577,7 +577,7 @@
         <title>Template syntax</title>
         <para>
             The template language is roughly modeled on the <ulink
-            url='https://docs.python.org/library/string.html#format-string-syntax'>Python
+            url='https://docs.python.org/2/library/string.html#format-string-syntax'>Python
             string formatting syntax</ulink>.
         </para>
         <para>

@@ -556,8 +556,8 @@ msgid "Template syntax"
 msgstr "Schablonensyntax"
 
 #. type: Content of: <refentry><refsection><refsection><para>
-msgid "The template language is roughly modeled on the <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
-msgstr "Die Schablonensprache ist ungefähr wie die <ulink url='https://docs.python.org/library/string.html#format-string-syntax'>Phyton-Zeichenkettenformatierungssyntax</ulink> aufgebaut."
+msgid "The template language is roughly modeled on the <ulink url='https://docs.python.org/2/library/string.html#format-string-syntax'>Python string formatting syntax</ulink>."
+msgstr "Die Schablonensprache ist ungefähr wie die <ulink url='https://docs.python.org/2/library/string.html#format-string-syntax'>Phyton-Zeichenkettenformatierungssyntax</ulink> aufgebaut."
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "A template is a piece of text which contains <firstterm>fields</firstterm>, surrounded by curly braces <literal>{</literal><literal>}</literal>.  Fields are replaced with appropriately formatted values when the template is evaluated.  Moreover, <literal>{{</literal> is replaced with a single <literal>{</literal> and <literal>}}</literal> is replaced with a single <literal>}</literal>."
