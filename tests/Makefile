@@ -37,11 +37,11 @@ all: $(generated_files)
 
 .PHONY: prepare
 prepare: $(generated_files)
-	rm -f *.pyc
+	rm -f *.py[co]
 
 .PHONY: clean
 clean:
-	rm -f *.djvu *.pyc
+	rm -f *.djvu *.py[co]
 
 .PHONY: vcs-clean
 vcs-clean: clean
