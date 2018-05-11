@@ -30,7 +30,6 @@ addons:
     - libopenjpeg-dev
     - libxml2-utils
     - pkg-config
-    - python-docutils
     - python-imaging
     - python-nose
     - python-pip
@@ -64,6 +63,7 @@ install:
 - export LD_LIBRARY_PATH=~/.local/lib/
 - popd
 - python3 -m pip install --user img2pdf
+- $if_lpr python -m pip install --user docutils
 - $if_lpr python -m pip install --user pydiatra pyflakes
 before_script:
 - private/autogen
