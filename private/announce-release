@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright © 2016-2018 Jakub Wilk <jwilk@jwilk.net>
 #
