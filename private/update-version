@@ -15,7 +15,7 @@
 
 set -e -u
 version=${1:?"no version number provided"}
-windows_version="$(printf -- '%s' "$version" | sed -e 's/[.]/,/g')"
+windows_version=$(IFS=.; printf '%d,%d,%d,%d' $version)
 po_files=$(ls po/*.po po/*.pot 2>/dev/null || true)
 doc_po_files=$(ls doc/po/*.po doc/po/*.pot 2>/dev/null || true)
 PS4='$ '
