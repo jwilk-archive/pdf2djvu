@@ -23,7 +23,8 @@ AC_PROG_EGREP
 AC_PROG_INSTALL
 AC_PREPROC_IFELSE(
   [AC_LANG_SOURCE([[#include <winver.h>]])],
-  [AC_CHECK_TOOL([WINDRES], [windres])]
+  [AC_CHECK_TOOL([WINDRES], [windres])],
+  [WINDRES=]
 )
 
 # Checks for the compiler:
