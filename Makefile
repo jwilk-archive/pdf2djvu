@@ -90,4 +90,6 @@ install: all
 	INSTALL='$(INSTALL)' tools/install-manpages $(DESTDIR)$(mandir) $(man_pages)
 	INSTALL='$(INSTALL)' tools/install-mo $(DESTDIR)$(localedir) $(mo_files)
 
+.error = GNU make is required
+
 # vim:ts=4 sts=4 sw=4 noet
