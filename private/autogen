@@ -3,10 +3,13 @@ set -e -u
 stat configure.ac > /dev/null
 PS4='$ '
 set -x
-for subdir in config build-aux
+for lt_dir in /usr/local/share/libtool /usr/share/libtool
 do
-    build_aux="/usr/share/libtool/$subdir"
-    [ -d "$build_aux" ] && break
+    for subdir in config build-aux
+    do
+        build_aux="$lt_dir/$subdir"
+        [ -d "$build_aux" ] && break 2
+    done
 done
 for file in install-sh config.sub config.guess
 do
@@ -14,7 +17,11 @@ do
     cp "$build_aux/$file" tools/
 done
 rm -f tools/config.rpath
-cp /usr/share/gettext/config.rpath tools/
+for gettext_dir in /usr/local/share/gettext /usr/share/gettext
+do
+    [ -d "$gettext_dir" ] && break
+done
+cp "$gettext_dir/config.rpath" tools/
 mkdir -p m4
 ${ACLOCAL:-aclocal} -I m4 --install
 ${AUTOCONF:-autoconf}
