@@ -62,7 +62,7 @@ Korean), the poppler-data_ package must be installed.
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
 .. _OpenMP:
-   http://www.openmp.org/
+   https://www.openmp.org/
 .. _nose:
    https://nose.readthedocs.io/
 .. _poppler-data:

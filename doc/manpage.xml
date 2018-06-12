@@ -550,7 +550,7 @@
             <listitem>
             <para>
                 Details of runtime behavior with respect to parallelism can be controlled by several environment variables.
-                Please refer to the <ulink url='http://www.openmp.org/specifications/'>OpenMP API
+                Please refer to the <ulink url='https://www.openmp.org/specifications/'>OpenMP API
                 specification</ulink> for details.
             </para>
             </listitem>

@@ -530,8 +530,8 @@ msgid "<varname>OMP_<replaceable>*</replaceable></varname>"
 msgstr "<varname>OMP_<replaceable>*</replaceable></varname>"
 
 #. type: Content of: <refentry><refsection><para><variablelist><varlistentry><listitem><para>
-msgid "Details of runtime behavior with respect to parallelism can be controlled by several environment variables.  Please refer to the <ulink url='http://www.openmp.org/specifications/'>OpenMP API specification</ulink> for details."
-msgstr "Les détails du comportement d’exécution concernant le parallélisme peuvent être contrôlés par plusieurs variables d’environnement. Se référer à la <ulink url='http://www.openmp.org/specifications/'>spécification de l’interface de programmation (API) OpenMP</ulink> pour plus de détails."
+msgid "Details of runtime behavior with respect to parallelism can be controlled by several environment variables.  Please refer to the <ulink url='https://www.openmp.org/specifications/'>OpenMP API specification</ulink> for details."
+msgstr "Les détails du comportement d’exécution concernant le parallélisme peuvent être contrôlés par plusieurs variables d’environnement. Se référer à la <ulink url='https://www.openmp.org/specifications/'>spécification de l’interface de programmation (API) OpenMP</ulink> pour plus de détails."
 
 #. type: Content of: <refentry><refsection><para><variablelist><varlistentry><term>
 msgid "<varname>TMPDIR</varname>"
