@@ -68,6 +68,7 @@ install:
 before_script:
 - private/autogen
 script:
+- dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
 - ./configure --prefix ~/.local $configure_options
 - make -C tests prepare
 - make
