@@ -51,6 +51,11 @@ AC_EGREP_HEADER([__mingw_vsnprintf], [stdio.h],
 
 # Checks for libraries:
 
+m4_pattern_forbid(
+    [^PKG_CHECK_MODULES],
+    [undefined macro PKG_CHECK_MODULES; install pkg-config and run private/autogen]
+)
+
 PKG_CHECK_MODULES([DJVULIBRE], [ddjvuapi >= 3.5.21])
 djvulibre_bin_path=$($PKG_CONFIG --variable exec_prefix ddjvuapi)/bin
 AC_SUBST([djvulibre_bindir], ["$djvulibre_bin_path"])
