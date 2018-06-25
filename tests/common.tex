@@ -16,6 +16,11 @@
 \pdfcompresslevel=0
 \pdfobjcompresslevel=0
 \fi
+\ifx\pdftrailerid\undefined
+\else
+\pdftrailerid{}
+\pdfsuppressptexinfo15
+\fi
 
 \hoffset -1in
 \voffset -1in
