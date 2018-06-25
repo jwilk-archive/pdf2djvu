@@ -39,7 +39,6 @@ img2pdf
 python-imaging
 texlive-base
 texlive-fonts-recommended
-texlive-xetex
 '
 pkgs="$pkgs_base"
 
