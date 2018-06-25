@@ -11,11 +11,8 @@
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 % General Public License for more details.
 
-\ifx\pdfcompresslevel\undefined
-\else
 \pdfcompresslevel=0
 \pdfobjcompresslevel=0
-\fi
 \ifx\pdftrailerid\undefined
 \else
 \pdftrailerid{}
@@ -40,11 +37,8 @@
     \shipout\box0
 }
 
-\ifx\pdfmapline\undefined
-\else
 \pdfmapline{ptmr8r Times-Roman <8r.enc}
 \font\times=ptmr8r at 12pt
 \times
-\fi
 
 % vim:ts=4 sts=4 sw=4 et
