@@ -11,6 +11,11 @@
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 % General Public License for more details.
 
+\ifx\pdfvariable\undefined
+\else
+\input luatex85.sty
+\pdfvariable suppressoptionalinfo527
+\fi
 \pdfcompresslevel=0
 \pdfobjcompresslevel=0
 \ifx\pdftrailerid\undefined

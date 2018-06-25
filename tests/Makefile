@@ -48,7 +48,7 @@ vcs-clean: clean
 	rm -f $(generated_files)
 
 %.pdf: %.tex
-	pdftex $(<)
+	luatex $(<)
 	rm -f $(<:.tex=.log)
 
 %.pdf: %.pdf.in

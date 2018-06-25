@@ -39,6 +39,7 @@ img2pdf
 python-imaging
 texlive-base
 texlive-fonts-recommended
+texlive-luatex
 '
 pkgs="$pkgs_base"
 
