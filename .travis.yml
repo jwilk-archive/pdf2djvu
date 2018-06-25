@@ -34,7 +34,6 @@ addons:
     - pkg-config
     - python-imaging
     - python-pip
-    - python3-pip
     - texlive-base
     - texlive-fonts-recommended
     - texlive-xetex
@@ -63,7 +62,6 @@ install:
 - export CPATH=~/.local/include/
 - export LD_LIBRARY_PATH=~/.local/lib/
 - popd
-- python3 -m pip install --user img2pdf
 - python -m pip install --user nose
 - $if_lpr python -m pip install --user docutils
 - $if_lpr python -m pip install --user pydiatra pyflakes
