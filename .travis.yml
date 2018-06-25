@@ -36,7 +36,6 @@ addons:
     - python-pip
     - texlive-base
     - texlive-fonts-recommended
-    - texlive-xetex
     - uuid-dev
     - xsltproc
 cache: ccache
