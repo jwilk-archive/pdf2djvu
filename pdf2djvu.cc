@@ -55,6 +55,10 @@
 #include "version.hh"
 #include "xmp.hh"
 
+#ifdef USE_HEAP_PROFILING
+#include <gperftools/heap-profiler.h>
+#endif
+
 static Config config;
 
 static inline DebugStream &debug(int n)
@@ -1380,12 +1384,22 @@ static int xmain(int argc, char * const argv[])
   const char *doc_filename = nullptr;
 
   bool crop = !config.use_media_box;
+
+#ifdef USE_HEAP_PROFILING
+  HeapProfilerStart(config.output.c_str());
+#endif
   debug(0)++;
   #pragma omp parallel for private(out1, outm, outs, doc) firstprivate(doc_filename) reduction(+: djvu_pages_size) schedule(runtime)
   for (size_t i = 0; i < page_numbers.size(); i++)
   try
   {
     int n = page_numbers[i];
+#if USE_HEAP_PROFILING
+    {
+      std::string reason = string_printf("before page #%d", n);
+      HeapProfilerDump(reason.c_str());
+    }
+#endif
     pdf::PageInfo pi = document_map.get(n);
     const char * new_filename = pi.path;
     int m = pi.local_pageno;
@@ -1657,6 +1671,9 @@ static int xmain(int argc, char * const argv[])
     error_log << ex << std::endl;
     exit(1);
   }
+#ifdef USE_HEAP_PROFILING
+  HeapProfilerDump("after last page");
+#endif
   /* Only first PDF document metadata/outline is taken into account. */
   doc.reset(new pdf::Document(config.filenames[0]));
   if (config.extract_metadata)
@@ -1738,6 +1755,10 @@ static int xmain(int argc, char * const argv[])
   }
   if (config.output_stdout)
     copy_stream(*output_file, std::cout, true);
+#if USE_HEAP_PROFILING
+  HeapProfilerDump("before exit");
+  HeapProfilerStop();
+#endif
   return 0;
 }
 

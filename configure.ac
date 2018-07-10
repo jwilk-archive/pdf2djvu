@@ -158,6 +158,13 @@ then
   fi
 fi
 
+AC_ARG_ENABLE([heap-profiling], [AS_HELP_STRING([--enable-heap-profiling], [enable heap profiling (using gperftools)])])
+if test "$enable_heap_profiling" = 'yes'
+then
+  AC_SUBST([TCMALLOC_LIBS], ['-ltcmalloc'])
+  AC_DEFINE([USE_HEAP_PROFILING], 1, [Define to enable heap profiling (using gperftools)])
+fi
+
 AM_GNU_GETTEXT([external], [need-ngettext])
 AM_GNU_GETTEXT_VERSION(0.17)
 AM_ICONV
