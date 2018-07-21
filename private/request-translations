@@ -34,7 +34,7 @@ do
         translators="$translators;$translator"
     fi
 done
-version=$(head -n1 "$srcdir/doc/changelog" | cut -d' ' -f2 | tr -d '()')
+version=$(IFS='()' read _ v _ < "$srcdir/doc/changelog" && echo $v)
 printf '%s' "$translators" \
 | tr ';' '\n' \
 | LC_ALL=C sort -u \
