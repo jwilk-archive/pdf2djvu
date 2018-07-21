@@ -16,7 +16,7 @@ host = i686-w64-mingw32
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
 ifeq "$(wildcard ../.git)" ""
-version := $(shell head -n1 ../doc/changelog | cut -d ' ' -f2 | tr -d '()')
+version := $(shell IFS='()' read _ v _ < ../doc/changelog && echo $$v)
 orig_src_tarball = pdf2djvu-$(version).tar.xz
 else
 orig_src_tarball := $(shell ../private/build-source-tarball --print-name)
