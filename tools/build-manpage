@@ -17,7 +17,7 @@ set -e -u
 
 usage()
 {
-    printf '%s [-l] <src> <dst>\n' "$0"
+    printf 'Usage: %s [-l] <src> <dst>\n' "$0"
 }
 
 here=$(dirname "$0")
