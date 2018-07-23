@@ -10,4 +10,6 @@ pdf2djvu.1: manpage.xml
 clean:
 	rm -f *.1
 
+.error = GNU make is required
+
 # vim:ts=4 sts=4 sw=4 noet

@@ -60,4 +60,6 @@ vcs-clean: clean
 ../pdf2djvu$(EXEEXT):
 	$(MAKE) -C ../
 
+.error = GNU make is required
+
 # vim:ts=4 sts=4 sw=4 noet

@@ -78,4 +78,6 @@ check: $(po_files)
 clean:
 	rm -f *.1 *.xml *.pot
 
+.error = GNU make is required
+
 # vim:ts=4 sts=4 sw=4 noet
