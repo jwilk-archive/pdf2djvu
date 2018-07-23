@@ -53,7 +53,7 @@ man_files = $(addsuffix .1,$(addprefix pdf2djvu.,$(langs)))
 all: $(man_files)
 
 pdf2djvu.%.1: %.xml
-	! [ -s $(<) ] || $(srcdir)/tools/build-manpage --lang $(<) $(@)
+	! [ -s $(<) ] || $(srcdir)/tools/build-manpage -l $(<) $(@)
 
 .PHONY: xml
 xml: $(xml_files)

@@ -17,22 +17,20 @@ set -e -u
 
 usage()
 {
-    printf '%s [--lang] <src> <dst>\n' "$0"
+    printf '%s [-l] <src> <dst>\n' "$0"
 }
 
 here=$(dirname "$0")
-args=$(getopt -n "$0" -o 'h' --long 'help,lang' -- "$@")
-eval set -- "$args"
 opt_lang=
-while true
+while getopts 'hl' opt
 do
-    case "$1" in
-        -h|--help) usage; exit 0;;
-        --lang) opt_lang=y; shift;;
-        --) shift; break;;
-        *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
+    case "$opt" in
+        l) opt_lang=y;;
+        h) usage; exit 0;;
+        *) usage >&2; exit 1;;
     esac
 done
+shift $((OPTIND - 1))
 [ $# -eq 2 ] || { usage; exit 1; }
 src="$1"
 dst="$2"
