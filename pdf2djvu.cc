@@ -441,7 +441,6 @@ public:
 
   void draw_link(pdf::link::Link *link, const std::string &border_color)
   {
-    sexpr::GCLock gc_lock;
     if (!config.hyperlinks.extract)
       return;
     double x1, y1, x2, y2;
@@ -767,7 +766,6 @@ static void add_meta_date(const char *key, const pdf::Timestamp &value, std::ost
 
 static void pdf_metadata_to_djvu_metadata(pdf::Metadata &metadata, std::ostream &stream)
 {
-  sexpr::GCLock gc_lock;
   metadata.iterate<std::ostream>(add_meta_string, add_meta_date, stream);
 }
 
@@ -1679,7 +1677,6 @@ static int xmain(int argc, char * const argv[])
       debug(0)--;
       if (xmp_bytes.length())
       {
-        sexpr::GCLock gc_lock;
         static sexpr::Ref xmp_symbol = sexpr::symbol("xmp");
         sexpr::Ref xmp = sexpr::nil;
         xmp = sexpr::cons(sexpr::string(xmp_bytes), xmp);

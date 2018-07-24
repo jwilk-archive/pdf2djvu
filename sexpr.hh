@@ -46,17 +46,6 @@ namespace sexpr
   static inline Expr integer(int n) { return miniexp_number(n); }
   static const Expr nil = miniexp_nil;
   static const Ref &empty_string = string("");
-
-  class GCLock
-  /* Having a live `sexpr::GCLock` object disables garbage-collecting of S-expressions.
-   * The purpose is to work around a nasty bug in old DjVuLibre releases:
-   * https://sourceforge.net/p/djvu/bugs/96/
-   */
-  {
-  public:
-    GCLock() { minilisp_acquire_gc_lock(nullptr); }
-    ~GCLock() { minilisp_release_gc_lock(nullptr); }
-  };
 }
 
 #endif
