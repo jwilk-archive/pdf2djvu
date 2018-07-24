@@ -1,7 +1,5 @@
 language: cpp
-compiler:
-- gcc
-- clang
+compiler: gcc
 env:
 - POPPLER_VERSION=0.24.0
 - POPPLER_VERSION=0.31.0
@@ -11,7 +9,10 @@ env:
 - POPPLER_VERSION=0.62.0
 - POPPLER_VERSION=0.64.0
 - POPPLER_VERSION=0.67.0
-- POPPLER_VERSION=git
+matrix:
+  include:
+  - env: POPPLER_VERSION=git
+    compiler: clang
 dist: trusty
 sudo: false
 addons:
