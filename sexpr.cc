@@ -43,8 +43,6 @@ namespace sexpr
 
 #include <omp.h>
 
-#warning Working around lack of thread-safety in DjVuLibre miniexp API
-
 class OmpLock
 {
 private:
