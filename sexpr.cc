@@ -19,8 +19,6 @@
 #include <libdjvu/ddjvuapi.h>
 #include <libdjvu/miniexp.h>
 
-#if DDJVUAPI_VERSION >= 21
-
 static int my_puts(miniexp_io_t* io, const char *s)
 {
     std::ostream *puts_stream = reinterpret_cast<std::ostream*>(io->data[0]);
@@ -40,31 +38,6 @@ namespace sexpr
         return stream;
     }
 }
-
-#else
-
-static std::ostream *puts_stream = nullptr;
-
-static int my_puts(const char *s)
-{
-    *puts_stream << s;
-    return puts_stream->good() ? 0 : EOF;
-}
-
-namespace sexpr
-{
-    std::ostream &operator<<(std::ostream &stream, const sexpr::Ref &expr)
-    {
-        int (*old_minilisp_puts)(const char *s) = minilisp_puts;
-        minilisp_puts = my_puts;
-        puts_stream = &stream;
-        miniexp_prin(expr);
-        minilisp_puts = old_minilisp_puts;
-        return stream;
-    }
-}
-
-#endif
 
 #if _OPENMP && DDJVUAPI_VERSION < 23
 

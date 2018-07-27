@@ -56,7 +56,7 @@ m4_pattern_forbid(
     [undefined macro PKG_CHECK_MODULES; install pkg-config and run private/autogen]
 )
 
-PKG_CHECK_MODULES([DJVULIBRE], [ddjvuapi >= 3.5.21])
+PKG_CHECK_MODULES([DJVULIBRE], [ddjvuapi >= 3.5.25])
 djvulibre_bin_path=$($PKG_CONFIG --variable exec_prefix ddjvuapi)/bin
 AC_SUBST([djvulibre_bindir], ["$djvulibre_bin_path"])
 djvulibre_version=$($PKG_CONFIG --modversion ddjvuapi)
