@@ -19,6 +19,13 @@ all: pdf2djvu.1
 pdf2djvu.1: manpage.xml
 	$(srcdir)/tools/build-manpage $(<) $(@)
 
+.PHONY: check
+check: check-docbook
+
+.PHONY: check-docbook
+check-docbook: manpage.xml
+	 xmllint --nonet --noout --valid $(<)
+
 .PHONY: clean
 clean:
 	rm -f *.1
