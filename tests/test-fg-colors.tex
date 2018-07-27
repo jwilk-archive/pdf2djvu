@@ -28,12 +28,12 @@
         \pdfliteral{.\the\r}\pdfliteral{.\the\g}\pdfliteral{.\the\b}\pdfliteral{rg} X
     \advance \g by 5
     \advance \b by 3
-    \unless\ifnum \g>99
+    \ifnum \g < 100
     \repeat
     \endgraf
 }
 \advance \r by 5
-\unless\ifnum \r>99
+\ifnum \r < 100
 \repeat
 
 \end
