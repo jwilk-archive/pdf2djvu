@@ -443,6 +443,7 @@ public:
   {
     if (!config.hyperlinks.extract)
       return;
+    sexpr::Guard guard;
     double x1, y1, x2, y2;
     pdf::link::Action *link_action = link->getAction();
     if (link_action == nullptr)
@@ -1614,6 +1615,7 @@ static int xmain(int argc, char * const argv[])
       }
     }
     { /* Extract annotations (hyperlinks); save it into the sed file: */
+      sexpr::Guard guard;
       debug(3) << _("extracting annotations") << std::endl;
       const std::vector<sexpr::Ref> &annotations = outm->get_annotations();
       sed_file << "select 1" << std::endl << "set-ant" << std::endl;

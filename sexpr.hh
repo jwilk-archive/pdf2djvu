@@ -46,6 +46,14 @@ namespace sexpr
   static inline Expr integer(int n) { return miniexp_number(n); }
   static const Expr nil = miniexp_nil;
   static const Ref &empty_string = string("");
+
+  class Guard
+  {
+  public:
+      Guard();
+      ~Guard();
+  };
+
 }
 
 #endif

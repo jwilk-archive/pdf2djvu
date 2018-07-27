@@ -66,4 +66,52 @@ namespace sexpr
 
 #endif
 
+#if _OPENMP && DDJVUAPI_VERSION < 23
+
+#include <omp.h>
+
+#warning Working around lack of thread-safety in DjVuLibre miniexp API
+
+class OmpLock
+{
+private:
+    omp_lock_t m_lock;
+public:
+    OmpLock()
+    {
+        omp_init_lock(&this->m_lock);
+    }
+    void lock()
+    {
+        omp_set_lock(&this->m_lock);
+    }
+    void unlock()
+    {
+        omp_unset_lock(&this->m_lock);
+    }
+    ~OmpLock()
+    {
+        omp_destroy_lock(&this->m_lock);
+    }
+};
+
+static OmpLock omp_lock;
+
+sexpr::Guard::Guard()
+{
+    omp_lock.lock();
+}
+
+sexpr::Guard::~Guard()
+{
+    omp_lock.unlock();
+}
+
+#else
+
+sexpr::Guard::Guard() { }
+sexpr::Guard::~Guard() { }
+
+#endif
+
 // vim:ts=4 sts=4 sw=4 et
