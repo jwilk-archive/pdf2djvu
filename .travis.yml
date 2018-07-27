@@ -85,6 +85,6 @@ script:
 - cd /
 - pdf2djvu --version
 - export MANPATH=~/.local/share/man MANWIDTH=80
-- $if_lpr grep -A 10 -w PDF2DJVU <<<"$(man 1 pdf2djvu)"
+- $if_lpr grep -A 10 -w PDF2DJVU <<<"$($if_lpr man 1 pdf2djvu)"
 
 # vim:ts=2 sts=2 sw=2 et
