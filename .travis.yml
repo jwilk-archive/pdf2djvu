@@ -77,10 +77,10 @@ script:
 - $if_lpr perl -pi -e 's/^#ifdef SIGPOLL$/#if 1/' sys-command-posix.cc  # "ifdef SIGPOLL" confuses cppcheck
 - $if_lpr cppcheck --error-exitcode=1 *.cc
 - $if_lpr private/check-rst
-- $if_lpr xmllint --nonet --noout --valid doc/*.xml
 - $if_lpr python -m pydiatra tests/
 - $if_lpr python -m pyflakes tests/
 - $if_lpr make -C doc
+- $if_lpr make -C doc check
 - make install
 - cd /
 - pdf2djvu --version
