@@ -17,7 +17,7 @@ from tools import (
     case,
 )
 
-b = 999
+b = 1000
 item_template = '''
   ("ipsum {0}"
    "#p0001.djvu" )
@@ -27,7 +27,7 @@ expected_outline_sexpr = ('''\
  ("Lorem"
   "#p0001.djvu"
 '''
-+ '\n'.join(item_template.format(i) for i in range(1, b + 1))
++ '\n'.join(item_template.format(i) for i in range(0, b))
 + ' ) )\n'
 )
 

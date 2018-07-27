@@ -17,14 +17,14 @@
 \pdfpageheight 1pt
 
 \newcount\b
-\b=999
+\b=1000
 \pdfoutline goto page 1 {/Fit} count \b {Lorem}
 \newcount\i
-\i=1
+\i=0
 \loop
     \pdfoutline goto page 1 {/Fit} {ipsum \the\i}
 \advance \i by 1
-\unless\ifnum \i>\b
+\ifnum \i < \b
 \repeat
 
 \null
