@@ -1,8 +1,20 @@
 pdf2djvu (0.9.10) UNRELEASED; urgency=low
 
-  * 
+  * Drop support for DjVuLibre < 3.5.25.
+  * Implement work-around for lack of thread-safety in the miniexp API in
+    DjVuLibre < 3.5.26.
+  * Improve documentation:
+    + Use HTTPS for www.openmp.org URLs.
+    + Point to Python 2 documentation in the manual page.
+    + Update the credits file to make it clear that the project is no longer
+      being funded.
+  * Improve the build system:
+    + Add checks against BSD make. (Only GNU make is supported.)
+    + Fix portability of the manpage building script.
+    + Ignore the WINDRES variable on non-Windows systems.
+  * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 18 Apr 2018 15:34:30 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 27 Jul 2018 16:39:21 +0200
 
 pdf2djvu (0.9.9) unstable; urgency=low
 
