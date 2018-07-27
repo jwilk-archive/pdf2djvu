@@ -3,6 +3,7 @@ pdf2djvu (0.9.10) UNRELEASED; urgency=low
   * Drop support for DjVuLibre < 3.5.25.
   * Implement work-around for lack of thread-safety in the miniexp API in
     DjVuLibre < 3.5.26.
+    https://github.com/jwilk/pdf2djvu/issues/131
   * Improve documentation:
     + Use HTTPS for www.openmp.org URLs.
     + Point to Python 2 documentation in the manual page.
