@@ -1,4 +1,4 @@
-pdf2djvu (0.9.10) UNRELEASED; urgency=low
+pdf2djvu (0.9.10) unstable; urgency=low
 
   * Implement work-around for lack of thread-safety in the miniexp API in
     DjVuLibre < 3.5.26.
@@ -15,7 +15,7 @@ pdf2djvu (0.9.10) UNRELEASED; urgency=low
     + Ignore the WINDRES variable on non-Windows systems.
   * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 27 Jul 2018 16:39:21 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 27 Jul 2018 18:18:29 +0200
 
 pdf2djvu (0.9.9) unstable; urgency=low
 
