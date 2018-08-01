@@ -894,7 +894,7 @@ pdf2djvu (0.4.0) unstable; urgency=low
 
 pdf2djvu (0.3.6) unstable; urgency=low
 
-  * Fix a bug which caused (sometimes) foreground colors to be discarded.
+  * Fix a bug which (sometimes) caused foreground colors to be discarded.
   * Proper support for non-white background.
   * Fix a file descriptor leak.
     Thanks to Victor Ivrii for the report.
@@ -943,7 +943,7 @@ pdf2djvu (0.3.2) unstable; urgency=low
 
 pdf2djvu (0.3.1) unstable; urgency=low
 
-  * Legible file identifiers.
+  * Use legible file identifiers.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 09 Nov 2007 21:59:50 +0100
 
