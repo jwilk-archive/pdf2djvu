@@ -1,3 +1,9 @@
+pdf2djvu (0.9.11) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 22 Aug 2018 10:11:08 +0200
+
 pdf2djvu (0.9.10) unstable; urgency=low
 
   * Implement work-around for lack of thread-safety in the miniexp API in
