@@ -310,6 +310,8 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
         throw_posix_error("waitpid()");
     int child_errno = 0;
     ssize_t nbytes = read(error_pipe[0], &child_errno, sizeof child_errno);
+    if (nbytes < 0)
+        throw_posix_error("read()");
     if (nbytes > 0 && static_cast<size_t>(nbytes) < sizeof child_errno) {
         errno = EIO;
         throw_posix_error("read()");
