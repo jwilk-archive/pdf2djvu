@@ -120,11 +120,11 @@ AC_DEFUN([_P_CXX11], [
                 [AS_TR_SH([pdf2djvu_cv_cxx11_$1])=no]
             )
         ])
+        CXXFLAGS="$p_CXXFLAGS"
         if test $AS_TR_SH([pdf2djvu_cv_cxx11_$1]) = yes
         then
             p_have_cxx11=yes
-        else
-            CXXFLAGS="$p_CXXFLAGS"
+            CPPFLAGS="$CPPFLAGS $p_cxx_opt"
         fi
     fi
 ])
