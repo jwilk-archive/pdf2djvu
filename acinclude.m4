@@ -1,4 +1,4 @@
-dnl | Copyright © 2015-2017 Jakub Wilk <jwilk@jwilk.net>
+dnl | Copyright © 2015-2018 Jakub Wilk <jwilk@jwilk.net>
 dnl |
 dnl | This file is part of pdf2djvu.
 dnl |
