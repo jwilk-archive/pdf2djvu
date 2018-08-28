@@ -1,8 +1,12 @@
 pdf2djvu (0.9.11) UNRELEASED; urgency=low
 
-  * 
+  * Improve the build system:
+    + Fix Poppler (>> 0.68) headers detection with old compilers that require
+      the -std option to enable C++11 mode.
+    + Honor the CPPFLAGS environment variable only at configure time, not when
+      running make. (This was already the case for other *FLAGS variables.)
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 22 Aug 2018 10:11:08 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 28 Aug 2018 17:24:32 +0200
 
 pdf2djvu (0.9.10) unstable; urgency=low
 
