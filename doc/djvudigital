@@ -42,7 +42,7 @@ Superiorities of pdf2djvu
    http://djvu.sourceforge.net/
 
 .. _sophisticated layer separation algorithm:
-   http://leon.bottou.org/papers/bottou-2001
+   https://leon.bottou.org/papers/bottou-2001
 
 .. _Ghostscript driver:
    http://djvu.sourceforge.net/gsdjvu.html
