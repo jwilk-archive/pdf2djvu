@@ -501,7 +501,7 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 
 src/libjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget http://jpegclub.org/support/files/jpegsrc.v6b2.tar.gz 6d2be0db82dda2e50c908b72aa22ed8cf42cc5aa5ae5f2b081498be6ef16eabc
+	tools/wget https://jpegclub.org/support/files/jpegsrc.v6b2.tar.gz 6d2be0db82dda2e50c908b72aa22ed8cf42cc5aa5ae5f2b081498be6ef16eabc
 	$(untar) dcache/jpegsrc.v6b2.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/libjpeg quilt push -a
 	cd $(dir $@) && ACLOCAL=aclocal-1.11 AUTOMAKE=automake-1.11 autoreconf -vfi
