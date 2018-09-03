@@ -56,7 +56,7 @@ install:
 - tar -xvvf exiv2-*.tar.gz
 - pushd exiv2-*/
 - find . -name 'exiv2.hpp' | xargs sed -i -e '/"pngimage[.]hpp"/d'  # http://dev.exiv2.org/issues/1103
-- ./configure --prefix ~/.local --disable-static --without-zlib --disable-lensdata --disable-nls
+- ./configure --prefix ~/.local --disable-static --without-zlib --disable-lensdata --disable-nls || cat config.log /fail
 - make
 - make install
 - popd
@@ -65,7 +65,7 @@ install:
 - $if_git git clone https://anongit.freedesktop.org/git/poppler/poppler.git poppler-git
 - pushd poppler-*
 - $if_cmake cmake . -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DENABLE_XPDF_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_LIBOPENJPEG=unmaintained
-- $if_autoconf ./configure --prefix ~/.local --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x
+- $if_autoconf ./configure --prefix ~/.local --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x || cat config.log /fail
 - make
 - make install
 - popd
