@@ -3,17 +3,17 @@ sudo: false
 language: cpp
 compiler: gcc
 env:
-- POPPLER_VERSION=0.24.0
-- POPPLER_VERSION=0.31.0
-- POPPLER_VERSION=0.35.0
-- POPPLER_VERSION=0.57.0
-- POPPLER_VERSION=0.58.0
-- POPPLER_VERSION=0.62.0
-- POPPLER_VERSION=0.64.0
-- POPPLER_VERSION=0.68.0
+- POPPLER_VERSION=0.24.0 EXIV2_VERSION=0.23
+- POPPLER_VERSION=0.31.0 EXIV2_VERSION=0.24
+- POPPLER_VERSION=0.35.0 EXIV2_VERSION=0.25
+- POPPLER_VERSION=0.57.0 EXIV2_VERSION=0.25
+- POPPLER_VERSION=0.58.0 EXIV2_VERSION=0.25
+- POPPLER_VERSION=0.62.0 EXIV2_VERSION=0.25
+- POPPLER_VERSION=0.64.0 EXIV2_VERSION=0.25
+- POPPLER_VERSION=0.68.0 EXIV2_VERSION=0.25
 matrix:
   include:
-  - env: POPPLER_VERSION=git
+  - env: POPPLER_VERSION=git EXIV2_VERSION=0.25
     compiler: clang
 addons:
   apt:
@@ -28,7 +28,6 @@ addons:
     - gettext
     - libc++-dev
     - libdjvulibre-dev
-    - libexiv2-dev
     - libfontconfig1-dev
     - libgraphicsmagick++1-dev
     - libopenjpeg-dev
@@ -53,6 +52,14 @@ before_install:
 - export CPATH=~/.local/include/
 - export LD_LIBRARY_PATH=~/.local/lib/
 install:
+- wget http://www.exiv2.org/exiv2-${EXIV2_VERSION}.tar.gz
+- tar -xvvf exiv2-*.tar.gz
+- pushd exiv2-*/
+- find . -name 'exiv2.hpp' | xargs sed -i -e '/"pngimage[.]hpp"/d'  # http://dev.exiv2.org/issues/1103
+- ./configure --prefix ~/.local --disable-static --without-zlib --disable-lensdata --disable-nls
+- make
+- make install
+- popd
 - $unless_git wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.xz
 - $unless_git tar -xvvf poppler-*.tar.*
 - $if_git git clone https://anongit.freedesktop.org/git/poppler/poppler.git poppler-git
