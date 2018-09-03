@@ -1,3 +1,5 @@
+dist: trusty
+sudo: false
 language: cpp
 compiler: gcc
 env:
@@ -13,8 +15,6 @@ matrix:
   include:
   - env: POPPLER_VERSION=git
     compiler: clang
-dist: trusty
-sudo: false
 addons:
   apt:
     packages:
