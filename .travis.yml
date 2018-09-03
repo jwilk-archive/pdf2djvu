@@ -41,7 +41,6 @@ addons:
     - xsltproc
 cache: ccache
 before_install:
-- export PATH=$(echo "$PATH" | tr ':' '\n' | sed -e '/\/opt\/python/d' | tr '\n' ':' | sed 's/::/:/g')
 - echo "$PATH" | tr ":" "\n" | grep -w ccache
 - last_poppler_release=$(grep -- '^- POPPLER_VERSION=[0-9]' .travis.yml | tail -n1 | cut -d= -f2)
 - test -n "$last_poppler_release"
