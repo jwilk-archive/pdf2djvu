@@ -48,6 +48,9 @@ before_install:
 - if [[ $POPPLER_VERSION = git ]]; then unless_git=:; else if_git=:; fi
 - if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.[6-9]* ]]; then if_autoconf=:; else if_cmake=:; fi
 - if [[ $CXX = clang* ]]; then configure_options='--disable-openmp'; fi
+- export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
+- export CPATH=~/.local/include/
+- export LD_LIBRARY_PATH=~/.local/lib/
 install:
 - $unless_git wget --no-check-certificate https://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.xz
 - $unless_git tar -xvvf poppler-*.tar.*
@@ -57,9 +60,6 @@ install:
 - $if_autoconf ./configure --prefix ~/.local --disable-static --enable-xpdf-headers --enable-splash-output --disable-libtiff --disable-zlib --disable-libcurl --disable-libjpeg --disable-libpng --disable-cairo-output --disable-poppler-glib --disable-poppler-qt4 --disable-poppler-cpp --disable-gtk-test --disable-utils --without-x
 - make
 - make install
-- export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
-- export CPATH=~/.local/include/
-- export LD_LIBRARY_PATH=~/.local/lib/
 - popd
 - python -m pip install --user nose
 - $if_lpr python -m pip install --user docutils
