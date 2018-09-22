@@ -2,17 +2,16 @@ dist: trusty
 sudo: false
 language: cpp
 compiler: gcc
-env:
-- POPPLER_VERSION=0.24.0 EXIV2_VERSION=0.23
-- POPPLER_VERSION=0.31.0 EXIV2_VERSION=0.24
-- POPPLER_VERSION=0.35.0 EXIV2_VERSION=0.25
-- POPPLER_VERSION=0.57.0 EXIV2_VERSION=0.25
-- POPPLER_VERSION=0.58.0 EXIV2_VERSION=0.25
-- POPPLER_VERSION=0.62.0 EXIV2_VERSION=0.25
-- POPPLER_VERSION=0.64.0 EXIV2_VERSION=0.25
-- POPPLER_VERSION=0.68.0 EXIV2_VERSION=0.25
 matrix:
   include:
+  - env: POPPLER_VERSION=0.24.0 EXIV2_VERSION=0.23
+  - env: POPPLER_VERSION=0.31.0 EXIV2_VERSION=0.24
+  - env: POPPLER_VERSION=0.35.0 EXIV2_VERSION=0.25
+  - env: POPPLER_VERSION=0.57.0 EXIV2_VERSION=0.25
+  - env: POPPLER_VERSION=0.58.0 EXIV2_VERSION=0.25
+  - env: POPPLER_VERSION=0.62.0 EXIV2_VERSION=0.25
+  - env: POPPLER_VERSION=0.64.0 EXIV2_VERSION=0.25
+  - env: POPPLER_VERSION=0.68.0 EXIV2_VERSION=0.25
   - env: POPPLER_VERSION=git EXIV2_VERSION=0.25
     compiler: clang
 addons:
@@ -42,7 +41,7 @@ addons:
 cache: ccache
 before_install:
 - echo "$PATH" | tr ":" "\n" | grep -w ccache
-- last_poppler_release=$(grep -- '^- POPPLER_VERSION=[0-9]' .travis.yml | tail -n1 | cut -d= -f2)
+- last_poppler_release=$(grep -Eo -- '^  - env[:] POPPLER_VERSION=[0-9.]+' .travis.yml | tail -n1 | cut -d= -f2)
 - test -n "$last_poppler_release"
 - if [[ $POPPLER_VERSION != $last_poppler_release ]]; then if_lpr=:; fi
 - if [[ $POPPLER_VERSION = git ]]; then unless_git=:; else if_git=:; fi
