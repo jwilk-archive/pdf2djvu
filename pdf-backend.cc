@@ -48,7 +48,8 @@
  * ======================
  */
 
-static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, char *message)
+// for POPPLER_VERISON >= 7000
+static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, const char *message)
 {
   std::string format;
   const char *category_name = _("PDF error");
@@ -92,6 +93,12 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
       string_printf(_("%s: %s"), category_name, message);
   }
   error_log << std::endl;
+}
+
+// for POPPLER_VERISON < 7000
+static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, char *message)
+{
+  poppler_error_handler(data, category, pos, const_cast<const char *>(message));
 }
 
 pdf::Environment::Environment()
@@ -215,7 +222,7 @@ void pdf::Document::get_page_size(int n, bool crop, double &width, double &heigh
 
 const std::string pdf::Document::get_xmp()
 {
-  std::unique_ptr<pdf::String> mstring;
+  std::unique_ptr<const pdf::String> mstring;
   mstring.reset(this->readMetadata());
   if (mstring.get() == nullptr)
     return "";
