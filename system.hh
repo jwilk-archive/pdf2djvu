@@ -117,8 +117,8 @@ public:
 class TemporaryDirectory : public Directory
 {
 private:
-  TemporaryDirectory(const TemporaryDirectory&); // not defined
-  TemporaryDirectory& operator=(const TemporaryDirectory&); // not defined
+  TemporaryDirectory(const TemporaryDirectory&) = delete;
+  TemporaryDirectory& operator=(const TemporaryDirectory&) = delete;
 public:
   TemporaryDirectory();
   virtual ~TemporaryDirectory();
@@ -127,8 +127,8 @@ public:
 class File : public std::fstream
 {
 private:
-  File(const File&); // not defined
-  File& operator=(const File&); // not defined
+  File(const File&) = delete;
+  File& operator=(const File&) = delete;
 protected:
   std::string name;
   std::string base_name;
@@ -151,8 +151,8 @@ public:
 class TemporaryFile : public File
 {
 private:
-  TemporaryFile(const TemporaryFile &); // not defined
-  TemporaryFile& operator=(const TemporaryFile &); // not defined
+  TemporaryFile(const TemporaryFile &) = delete;
+  TemporaryFile& operator=(const TemporaryFile &) = delete;
 protected:
   void construct();
 public:
@@ -169,8 +169,8 @@ public:
 class ExistingFile : public File
 {
 private:
-  ExistingFile(const ExistingFile &); // not defined
-  ExistingFile& operator=(const ExistingFile &); // not defined
+  ExistingFile(const ExistingFile &) = delete;
+  ExistingFile& operator=(const ExistingFile &) = delete;
 protected:
   virtual File::openmode get_default_open_mode();
 public:

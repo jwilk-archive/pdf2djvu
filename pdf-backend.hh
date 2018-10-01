@@ -193,8 +193,8 @@ namespace pdf
   class Pixmap
   {
   private:
-    Pixmap(const Pixmap&); // not defined
-    Pixmap& operator=(const Pixmap&); // not defined
+    Pixmap(const Pixmap&) = delete;
+    Pixmap& operator=(const Pixmap&) = delete;
   protected:
     const uint8_t *raw_data;
     pdf::splash::Bitmap *bmp;

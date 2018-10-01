@@ -773,8 +773,8 @@ static void pdf_metadata_to_djvu_metadata(pdf::Metadata &metadata, std::ostream 
 class TemporaryComponentList : public ComponentList
 {
 private:
-  TemporaryComponentList(const TemporaryComponentList&); // not defined
-  TemporaryComponentList& operator=(const TemporaryComponentList&); // not defined
+  TemporaryComponentList(const TemporaryComponentList&) = delete;
+  TemporaryComponentList& operator=(const TemporaryComponentList&) = delete;
 protected:
   std::unique_ptr<const TemporaryDirectory> directory;
   std::unique_ptr<TemporaryFile> shared_ant_file;
@@ -802,8 +802,8 @@ public:
 class IndirectComponentList : public ComponentList
 {
 private:
-  IndirectComponentList(const IndirectComponentList&); // not defined
-  IndirectComponentList& operator=(const IndirectComponentList&); // not defined
+  IndirectComponentList(const IndirectComponentList&) = delete;
+  IndirectComponentList& operator=(const IndirectComponentList&) = delete;
 protected:
   const Directory &directory;
   virtual File *create_file(const std::string &page_id)

@@ -62,8 +62,8 @@ namespace string_format
   class Template
   {
   private:
-    Template(const Template &); // not defined
-    Template & operator=(const Template &); // not defined
+    Template(const Template &) = delete;
+    Template & operator=(const Template &) = delete;
   protected:
     std::vector<Chunk*> chunks;
   public:
