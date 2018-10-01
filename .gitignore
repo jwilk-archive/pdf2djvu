@@ -29,6 +29,7 @@
 /tests/*.png
 /tests/*.py[co]
 /tests/*.stamp
+/tests/__pycache__
 /tools/config.*
 /tools/install-sh
 /win32/bin
