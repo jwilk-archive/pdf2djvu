@@ -14,6 +14,8 @@
 srcdir = ..
 include $(srcdir)/autoconf.mk
 
+PYTHON = python
+
 export LC_ALL = C
 
 export pdf2djvu = ../pdf2djvu$(EXEEXT)
@@ -33,7 +35,7 @@ ifeq "$(origin pdf2djvu)" "file"
 all: $(pdf2djvu)
 endif
 all: $(generated_files)
-	nosetests -v
+	$(PYTHON) -c 'import nose; nose.main()' -v
 
 .PHONY: prepare
 prepare: $(generated_files)
