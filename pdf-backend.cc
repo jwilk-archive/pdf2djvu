@@ -48,7 +48,6 @@
  * ======================
  */
 
-// for POPPLER_VERISON >= 7000
 static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, const char *message)
 {
   std::string format;
@@ -95,11 +94,12 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
   error_log << std::endl;
 }
 
-// for POPPLER_VERISON < 7000
+#if POPPLER_VERSION < 7000
 static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, char *message)
 {
   poppler_error_handler(data, category, pos, const_cast<const char *>(message));
 }
+#endif
 
 pdf::Environment::Environment()
 {
