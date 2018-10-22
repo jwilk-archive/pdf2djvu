@@ -1,12 +1,15 @@
 pdf2djvu (0.9.11) UNRELEASED; urgency=low
 
+  * Fix build failure with Poppler ≥ 0.70.
+  * Improve error handling.
   * Improve the build system:
     + Fix Poppler (≥ 0.69) headers detection with old compilers that require
       the -std option to enable C++11 mode.
     + Honor the CPPFLAGS environment variable only at configure time, not when
       running make. (This was already the case for other *FLAGS variables.)
+  * Make it easy to use custom Python interpreter for the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 22 Sep 2018 16:16:57 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 22 Oct 2018 08:33:53 +0200
 
 pdf2djvu (0.9.10) unstable; urgency=low
 
