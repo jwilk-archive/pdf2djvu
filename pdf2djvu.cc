@@ -320,20 +320,20 @@ protected:
   }
 
 public:
-  pdf::Bool needNonText()
+  bool needNonText()
   {
     return !config.no_render;
   }
 
   void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
+    bool invert, bool interpolate, bool inline_image)
   {
     this->skipped_elements = true;
     return;
   }
 
   void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate, int *mask_colors, pdf::Bool inline_image)
+    pdf::gfx::ImageColorMap *color_map, bool interpolate, int *mask_colors, bool inline_image)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
     {
@@ -345,8 +345,8 @@ public:
   }
 
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
-    pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert, pdf::Bool mask_interpolate)
+    pdf::gfx::ImageColorMap *color_map, bool interpolate,
+    pdf::Stream *mask_stream, int mask_width, int mask_height, bool mask_invert, bool mask_interpolate)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
     {
@@ -359,9 +359,9 @@ public:
   }
 
   void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
-    int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
+    int width, int height, pdf::gfx::ImageColorMap *color_map, bool interpolate,
     pdf::Stream *mask_stream, int mask_width, int mask_height,
-    pdf::gfx::ImageColorMap *mask_color_map, pdf::Bool mask_interpolate)
+    pdf::gfx::ImageColorMap *mask_color_map, bool mask_interpolate)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
     {
@@ -373,7 +373,7 @@ public:
       mask_stream, mask_width, mask_height, mask_color_map, mask_interpolate);
   }
 
-  pdf::Bool interpretType3Chars() { return false; }
+  bool interpretType3Chars() { return false; }
 
   void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
     CharCode code, int n_bytes, Unicode *unistr, int length)
@@ -551,7 +551,7 @@ public:
     annotations.push_back(expr);
   }
 
-  pdf::Bool useDrawChar()
+  bool useDrawChar()
   {
     return true;
   }

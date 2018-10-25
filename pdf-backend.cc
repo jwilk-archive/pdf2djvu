@@ -160,7 +160,7 @@ static void cmyk_to_rgb(const double cmyk[], double rgb[])
   rgb[2] = pdf::gfx::color_component_as_double(rgb_cc.b);
 }
 
-static pdf::Bool annotations_callback(pdf::ant::Annotation *annotation, void *user_data)
+static bool annotations_callback(pdf::ant::Annotation *annotation, void *user_data)
 {
   std::vector<std::string> &border_colors = *reinterpret_cast<std::vector<std::string>*>(user_data);
   std::string border_color;

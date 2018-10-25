@@ -28,43 +28,43 @@ protected:
   void process_image(pdf::gfx::State *state, int width, int height);
 
   virtual void drawImageMask(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::Bool invert, pdf::Bool interpolate, pdf::Bool inline_image)
+    bool invert, bool interpolate, bool inline_image)
   {
     this->process_image(state, width, height);
   }
 
   virtual void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate, int *mask_colors, pdf::Bool inline_image)
+    pdf::gfx::ImageColorMap *color_map, bool interpolate, int *mask_colors, bool inline_image)
   {
     this->process_image(state, width, height);
   }
 
   virtual void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
-    pdf::Stream *mask_stream, int mask_width, int mask_height, pdf::Bool mask_invert, pdf::Bool mask_interpolate)
+    pdf::gfx::ImageColorMap *color_map, bool interpolate,
+    pdf::Stream *mask_stream, int mask_width, int mask_height, bool mask_invert, bool mask_interpolate)
   {
     this->process_image(state, width, height);
     this->process_image(state, mask_width, mask_height);
   }
 
   virtual void drawSoftMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream,
-    int width, int height, pdf::gfx::ImageColorMap *color_map, pdf::Bool interpolate,
+    int width, int height, pdf::gfx::ImageColorMap *color_map, bool interpolate,
     pdf::Stream *mask_stream, int mask_width, int mask_height,
-    pdf::gfx::ImageColorMap *mask_color_map, pdf::Bool mask_interpolate)
+    pdf::gfx::ImageColorMap *mask_color_map, bool mask_interpolate)
   {
     this->process_image(state, width, height);
     this->process_image(state, mask_width, mask_height);
   }
 
-  virtual pdf::Bool interpretType3Chars()
+  virtual bool interpretType3Chars()
   {
     return false;
   }
-  virtual pdf::Bool upsideDown()
+  virtual bool upsideDown()
   {
     return false;
   }
-  virtual pdf::Bool useDrawChar()
+  virtual bool useDrawChar()
   {
     return false;
   }

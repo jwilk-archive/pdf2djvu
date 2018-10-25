@@ -81,7 +81,6 @@ namespace pdf
   typedef ::Dict Dict;
   typedef ::Catalog Catalog;
   typedef ::GooString String;
-  typedef ::GBool Bool;
   typedef ::Goffset Offset;
 
 /* type definitions — annotations
