@@ -544,7 +544,7 @@ double pdf::get_path_area(splash::Path &path)
   double area = 0.0;
   int path_len = path.getLength();
   double x0, y0;
-  Guchar ch;
+  unsigned char ch;
   path.getPoint(0, &x0, &y0, &ch);
   for (int i = 0; i < path_len - 1; i++)
   {
