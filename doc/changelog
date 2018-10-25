@@ -1,4 +1,4 @@
-pdf2djvu (0.9.11) UNRELEASED; urgency=low
+pdf2djvu (0.9.11) unstable; urgency=low
 
   * Fix build failure with Poppler ≥ 0.70.
   * Improve error handling.
@@ -15,7 +15,7 @@ pdf2djvu (0.9.11) UNRELEASED; urgency=low
   * Improve documentation:
     + Use HTTPS for leon.bottou.org URL.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 25 Oct 2018 23:02:10 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 25 Oct 2018 23:07:15 +0200
 
 pdf2djvu (0.9.10) unstable; urgency=low
 
