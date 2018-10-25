@@ -75,7 +75,7 @@ printf 'Commit: %s\nVersion: %s\n' "$commit" "$version" >&2
 
 set -x
 sourceroot=$(mktemp -d -t "$name-source-XXXXXX")
-tar_opts='--owner root --group root --mode a+rX --format ustar --sort name'
+tar_opts='--owner root --group root --mode u=rwX,go=rX --format ustar --sort name'
 xz_opts='-4e'
 
 # Mercurial archive:
