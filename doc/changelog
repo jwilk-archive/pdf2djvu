@@ -12,8 +12,10 @@ pdf2djvu (0.9.11) UNRELEASED; urgency=low
       (make test PYTHON=/path/to/python)
     + Make it easy to test against installed version of pdf2djvu.
       (make test-installed)
+  * Improve documentation:
+    + Use HTTPS for leon.bottou.org URL.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 25 Oct 2018 21:41:58 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 25 Oct 2018 23:02:10 +0200
 
 pdf2djvu (0.9.10) unstable; urgency=low
 
