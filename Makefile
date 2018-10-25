@@ -80,6 +80,10 @@ vcs-clean:
 test: $(exe)
 	$(MAKE) -C tests/
 
+.PHONY: test-installed
+test-installed: $(or $(shell command -v pdf2djvu;),$(bindir)/pdf2djvu)
+	$(MAKE) -C tests/ pdf2djvu=$(exe)
+
 man_pages = $(wildcard doc/*.1 doc/po/*.1)
 mo_files = $(wildcard po/*.mo)
 
