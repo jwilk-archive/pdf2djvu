@@ -226,7 +226,7 @@ const std::string pdf::Document::get_xmp()
   mstring.reset(this->readMetadata());
   if (mstring.get() == nullptr)
     return "";
-  const char *cstring = pdf::get_c_string(*mstring);
+  const char *cstring = pdf::get_c_string(mstring.get());
   if (strncmp(cstring, "<?xpacket begin=", 16) != 0)
     return "";
   cstring += 16;
@@ -629,9 +629,9 @@ template<typename S> static auto get_c_string_impl(const S &str) -> decltype(str
   return str.getCString();
 }
 
-const char * pdf::get_c_string(const pdf::String &str)
+const char * pdf::get_c_string(const pdf::String *str)
 {
-  return get_c_string_impl<pdf::String>(str);
+  return get_c_string_impl<pdf::String>(*str);
 }
 
 // vim:ts=2 sts=2 sw=2 et
