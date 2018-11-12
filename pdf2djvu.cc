@@ -456,7 +456,7 @@ public:
     switch (link_action->getKind())
     {
     case actionURI:
-      uri += dynamic_cast<pdf::link::URI*>(link_action)->getURI()->getCString();
+      uri += pdf::get_c_string(dynamic_cast<pdf::link::URI*>(link_action)->getURI());
       break;
     case actionGoTo:
     {
@@ -1396,7 +1396,7 @@ static int xmain(int argc, char * const argv[])
       #pragma omp critical
       {
         debug(0)--;
-        debug(1) << doc->getFileName()->getCString() << ":" << std::endl;
+        debug(1) << pdf::get_c_string(doc->getFileName()) << ":" << std::endl;
         debug(0)++;
       }
       out1.reset(new MainRenderer(paper_color, config.monochrome));

@@ -433,6 +433,14 @@ namespace pdf
 
   double get_path_area(pdf::splash::Path &path);
 
+  const char * get_c_string(const pdf::String &str);
+
+  inline const char * get_c_string(const pdf::String *str)
+  {
+    return get_c_string(*str);
+  }
+
+
 }
 
 #endif

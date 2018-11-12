@@ -226,7 +226,7 @@ const std::string pdf::Document::get_xmp()
   mstring.reset(this->readMetadata());
   if (mstring.get() == nullptr)
     return "";
-  const char *cstring = mstring->getCString();
+  const char *cstring = pdf::get_c_string(*mstring);
   if (strncmp(cstring, "<?xpacket begin=", 16) != 0)
     return "";
   cstring += 16;
@@ -393,7 +393,7 @@ pdf::Metadata::Metadata(pdf::Document &document)
     char tzs = 0; int tzh = 0, tzm = 0;
     if (!pdf::dict_lookup(info_dict, field.first, &object)->isString())
       continue;
-    const char *input = object.getString()->getCString();
+    const char *input = pdf::get_c_string(object.getString());
     if (input[0] == 'D' && input[1] == ':')
       input += 2;
     int year = scan_date_digits(input, 4);
@@ -617,6 +617,21 @@ namespace pdf
     }
     return stream;
   }
+}
+
+template<typename S> static auto get_c_string_impl(const S &str) -> decltype(str.c_str())
+{
+  return str.c_str();
+}
+
+template<typename S> static auto get_c_string_impl(const S &str) -> decltype(str.getCString())
+{
+  return str.getCString();
+}
+
+const char * pdf::get_c_string(const pdf::String &str)
+{
+  return get_c_string_impl<pdf::String>(str);
 }
 
 // vim:ts=2 sts=2 sw=2 et
