@@ -52,7 +52,7 @@ I need your help in updating the PO files.
 You can download current versions of the PO files here:
 EOF
 (
-    IFS=';';
+    IFS=';'
     printf 'https://github.com/jwilk/pdf2djvu/raw/master/%s\n' ${pofiles#;}
 )
 printf '\nThanks in advance!\n'
