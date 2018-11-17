@@ -139,7 +139,7 @@ static void report_posix_error(int fd, const char *context)
 static const char * get_signal_name(int sig)
 {
     switch (sig) {
-#define s(n) case n: return "" # n "";
+#define s(n) case n: return #n;
     // POSIX.1-1990:
     s(SIGHUP);
     s(SIGINT);
