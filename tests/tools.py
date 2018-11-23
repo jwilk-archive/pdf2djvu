@@ -180,7 +180,7 @@ class case(object):
     _poppler_version = None
 
     def get_pdf2djvu_command(self):
-        if re.compile(r'\A[[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
+        if re.compile(r'\A[a-zA-Z0-9_+/=.,:%-]+\Z').match(self._pdf2djvu_command):
             return (self._pdf2djvu_command,)
         return ('sh', '-c', self._pdf2djvu_command + ' "$@"', 'sh')
 
