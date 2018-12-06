@@ -32,7 +32,7 @@
 #include <GlobalParams.h>
 #include <PDFDoc.h>
 #include <goo/GooString.h>
-#include <goo/gtypes.h>
+#include <goo/gfile.h>
 #include <splash/SplashClip.h>
 #include <splash/SplashTypes.h>
 

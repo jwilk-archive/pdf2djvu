@@ -40,7 +40,7 @@
 #include <SplashOutputDev.h>
 #include <Stream.h>
 #include <goo/GooString.h>
-#include <goo/gtypes.h>
+#include <goo/gfile.h>
 #include <splash/Splash.h>
 #include <splash/SplashBitmap.h>
 #include <splash/SplashClip.h>
