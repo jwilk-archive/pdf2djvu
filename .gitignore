@@ -33,7 +33,7 @@
 /tools/config.*
 /tools/install-sh
 /win32/bin
-/win32/dcache
+/win32/src.tar
 /win32/dist
 /win32/etc
 /win32/include

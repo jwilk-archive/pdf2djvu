@@ -47,7 +47,7 @@ sha256sum="$2"
 set -e
 
 here=$(basename "$0")
-cd "$here/../dcache"
+cd "$here/../src.tar"
 
 if [ -e "$name" ] && echo "$sha256sum  $name" | sha256sum --strict -c
 then
@@ -56,7 +56,7 @@ fi
 
 if [ -z "${PDF2DJVU_DOWNLOAD-}" ]
 then
-    printf 'dcache/%s is missing.\n' "$name" >&2
+    printf 'src.tar/%s is missing.\n' "$name" >&2
     printf 'Set PDF2DJVU_DOWNLOAD=1 to download it automatically.\n' >&2
     exit 1
 fi

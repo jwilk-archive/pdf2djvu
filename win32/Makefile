@@ -128,7 +128,7 @@ install: src/poppler-data/install-stamp
 
 # pdf2djvu
 
-src/pdf2djvu/source-stamp: dcache/$(orig_src_tarball)
+src/pdf2djvu/source-stamp: src.tar/$(orig_src_tarball)
 	mkdir -p $(dir $@)
 	$(untar) $(<) -C $(dir $@)
 	rm -f $(dir $@)/paths.hh
@@ -192,7 +192,7 @@ src/libs-install-stamp: src/winiconv/install-stamp
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://poppler.freedesktop.org/poppler-0.62.0.tar.xz 5b9a73dfd4d6f61d165ada1e4f0abd2d420494bf9d0b1c15d0db3f7b83a729c6
-	$(untar) dcache/poppler-0.62.0.tar.xz -C $(dir $@)
+	$(untar) src.tar/poppler-0.62.0.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
@@ -238,7 +238,7 @@ src/poppler/install-stamp: src/poppler/build-stamp
 src/poppler-data/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz 1096a18161f263cccdc6d8a2eb5548c41ff8fcf9a3609243f1b6296abdf72872
-	$(untar) dcache/poppler-data-0.4.8.tar.gz -C $(dir $@)
+	$(untar) src.tar/poppler-data-0.4.8.tar.gz -C $(dir $@)
 	touch $(@)
 
 src/poppler-data/build-stamp: src/poppler-data/source-stamp
@@ -258,7 +258,7 @@ src/poppler-data/install-stamp: src/poppler-data/build-stamp
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f
-	$(untar) dcache/djvulibre-*.tar.gz -C $(dir $@)
+	$(untar) src.tar/djvulibre-*.tar.gz -C $(dir $@)
 	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	touch $(@)
@@ -292,7 +292,7 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.27/GraphicsMagick-1.3.27.tar.xz d03278d2790efc1dc72309f85a539810d2a81deb47932f7e6720d09ac72d0367
-	$(untar) dcache/GraphicsMagick-1.3.27.tar.xz -C $(dir $@)
+	$(untar) src.tar/GraphicsMagick-1.3.27.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
@@ -345,7 +345,7 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 src/expat/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-2.2.5.tar.bz2 d9dc32efba7e74f788fcc4f212a43216fc37cf5f23f4c2339664d473353aedf6
-	$(untar) dcache/expat-2.2.5.tar.bz2 -C $(dir $@)
+	$(untar) src.tar/expat-2.2.5.tar.bz2 -C $(dir $@)
 	touch $(@)
 
 src/expat/config.status: src/expat/source-stamp
@@ -368,7 +368,7 @@ src/expat/install-stamp: src/expat/build-stamp
 src/exiv2/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget http://www.exiv2.org/exiv2-0.25.tar.gz c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4
-	$(untar) dcache/exiv2-0.25.tar.gz -C $(dir $@)
+	$(untar) src.tar/exiv2-0.25.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/exiv2 quilt push -a
 	touch $(@)
 
@@ -396,7 +396,7 @@ src/exiv2/install-stamp: src/exiv2/build-stamp
 src/freetype/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://download.savannah.gnu.org/releases/freetype/freetype-2.9.tar.bz2 e6ffba3c8cef93f557d1f767d7bc3dee860ac7a3aaff588a521e081bc36f4c8a
-	$(untar) dcache/freetype-2.9.tar.bz2 -C $(dir $@)
+	$(untar) src.tar/freetype-2.9.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && ./autogen.sh
 	rm -rf $(dir $@)/builds/unix/*.cache/
 	touch $(@)
@@ -425,7 +425,7 @@ src/freetype/install-stamp: src/freetype/build-stamp
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.4.tar.bz2 668293fcc4b3c59765cdee5cee05941091c0879edcc24dfec5455ef83912e45c
-	$(untar) dcache/fontconfig-2.12.4.tar.bz2 -C $(dir $@)
+	$(untar) src.tar/fontconfig-2.12.4.tar.bz2 -C $(dir $@)
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	sed -i -e 's/"append"/"prepend"/g' $(dir $@)/conf.d/*-urw-aliases.conf
@@ -457,7 +457,7 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 src/gettext/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.19.8.1.tar.xz 105556dbc5c3fbbc2aa0edb46d22d055748b6f5c7cd7a8d99f8e7eb84e938be4
-	$(untar) dcache/gettext-0.19.8.1.tar.xz --exclude='gettext-tools' -C $(dir $@)
+	$(untar) src.tar/gettext-0.19.8.1.tar.xz --exclude='gettext-tools' -C $(dir $@)
 	sed -E -i -e '/(#undef|#define|extern .*) (v?sn?printf|[*]?setlocale)/d' $(dir $@)/gettext-runtime/intl/libgnuintl.in.h
 	sed -E -i -e 's/-D(ENABLE_RELOCATABLE)=1/-U\1/' $(dir $@)/gettext-runtime/intl/Makefile.in
 	touch $(@)
@@ -489,7 +489,7 @@ src/gettext/install-stamp: src/gettext/build-stamp
 src/winiconv/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://github.com/win-iconv/win-iconv/archive/v0.0.8.tar.gz -n win-iconv-0.0.8.tar.gz 23adea990a8303c6e69e32a64a30171efcb1b73824a1c2da1bbf576b0ae7c520
-	$(untar) dcache/win-iconv-0.0.8.tar.gz -C $(dir $@)
+	$(untar) src.tar/win-iconv-0.0.8.tar.gz -C $(dir $@)
 	touch $(@)
 
 src/winiconv/build-stamp: src/winiconv/source-stamp
@@ -506,7 +506,7 @@ src/winiconv/install-stamp: src/winiconv/build-stamp
 src/libjpeg/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://jpegclub.org/support/files/jpegsrc.v6b2.tar.gz 6d2be0db82dda2e50c908b72aa22ed8cf42cc5aa5ae5f2b081498be6ef16eabc
-	$(untar) dcache/jpegsrc.v6b2.tar.gz -C $(dir $@)
+	$(untar) src.tar/jpegsrc.v6b2.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/libjpeg quilt push -a
 	cd $(dir $@) && ACLOCAL=aclocal-1.11 AUTOMAKE=automake-1.11 autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
@@ -532,7 +532,7 @@ src/libjpeg/install-stamp: src/libjpeg/build-stamp
 src/openjpeg/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz -n openjpeg-2.3.0.tar.gz 3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a
-	$(untar) dcache/openjpeg-2.3.0.tar.gz -C $(dir $@)
+	$(untar) src.tar/openjpeg-2.3.0.tar.gz -C $(dir $@)
 	rm -rf $(dir $@)/thirdparty/*/
 	touch $(@)
 
@@ -574,7 +574,7 @@ standard-fonts += s050000l.pfb # Symbol -> Standard Symbols L
 src/urw-fonts/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://src.fedoraproject.org/repo/pkgs/urw-fonts/urw-fonts-1.0.7pre44.tar.bz2/51c6c2690593cd9bd92f197a6f2ff8bd/urw-fonts-1.0.7pre44.tar.bz2 df0ad8413f1e4bc0b6e5f964192879b0dc66d7be521f9666357ac30bad4c7a32
-	$(untar) dcache/urw-fonts-1.0.7pre44.tar.bz2 -C $(dir $@) --strip-components=0
+	$(untar) src.tar/urw-fonts-1.0.7pre44.tar.bz2 -C $(dir $@) --strip-components=0
 	touch $(@)
 
 src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
