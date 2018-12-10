@@ -25,7 +25,7 @@ endif
 
 djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
-WGET = wget
+download =
 untar = tar --strip-components=1 -xf
 ship_dll = cp bin/$1*.dll dist/ && $(STRIP) dist/$1*.dll && chmod a-x dist/$1*.dll
 
@@ -56,6 +56,10 @@ export VERBOSE = 1
 export WINEDEBUG ?= err+all,fixme-all
 export WINE = wine
 export WINESERVER = /usr/lib/wine/wineserver32
+
+ifneq "$(download)" ""
+export PDF2DJVU_DOWNLOAD = 1
+endif
 
 .PHONY: all
 all:

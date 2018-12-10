@@ -54,7 +54,14 @@ then
     exit 0
 fi
 
-${WGET:-wget} -c "$url" -O "$name"
+if [ -z "${PDF2DJVU_DOWNLOAD-}" ]
+then
+    printf 'dcache/%s is missing.\n' "$name" >&2
+    printf 'Set PDF2DJVU_DOWNLOAD=1 to download it automatically.\n' >&2
+    exit 1
+fi
+
+wget -c "$url" -O "$name"
 
 echo "$sha256sum  $name" | sha256sum --strict -c
 
