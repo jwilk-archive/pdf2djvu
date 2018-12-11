@@ -13,12 +13,12 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     assert_not_equal,
     case,
 )
-
-import re
 
 class test(case):
     # Bug: https://github.com/jwilk/pdf2djvu/issues/23

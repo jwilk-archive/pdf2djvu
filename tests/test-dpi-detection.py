@@ -13,11 +13,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     case,
 )
-
-import re
 
 class test(case):
     def test(self):
