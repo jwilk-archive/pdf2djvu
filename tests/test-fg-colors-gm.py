@@ -53,8 +53,9 @@ class test(case):
         def t(i):
             self.require_feature('GraphicsMagick')
             r = self.pdf2djvu('--fg-colors={0}'.format(i))
+            msg = 'The specified number of foreground colors is outside the allowed range: 1 .. 4080'
             r.assert_(
-                stderr=re.compile('^The specified number of foreground colors is outside the allowed range: 1 .. 4080\n'),
+                stderr=re.compile('^' + re.escape(msg) + '\n'),
                 rc=1,
             )
         t('-1')
