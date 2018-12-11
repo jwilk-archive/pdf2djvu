@@ -282,8 +282,8 @@ class case(object):
         assert_equal(r.stderr, '')
         assert_equal(r.rc, 0)
         xmp_lines = [line for line in r.stdout.splitlines() if line.startswith('(xmp "')]
-        if len(xmp_lines) == 0:
-            return
+        if not xmp_lines:
+            return None
         [xmp_line] = xmp_lines
         assert_equal(xmp_line[-2:], '")')
         xmp = xmp_line[5:-1]
