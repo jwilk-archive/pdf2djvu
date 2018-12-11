@@ -186,8 +186,7 @@ class case(object):
         result = inspect.getsourcefile(type(self))
         if strip_py and result.endswith('.py'):
             return result[:-3]
-        else:
-            return result
+        return result
 
     def get_pdf_path(self):
         return self.get_source_path(strip_py=True) + '.pdf'
