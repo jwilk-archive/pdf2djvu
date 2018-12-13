@@ -19,7 +19,7 @@ import xml.etree.cElementTree as etree
 
 from tools import (
     assert_equal,
-    assert_true,
+    assert_fail,
     case,
 )
 
@@ -41,7 +41,7 @@ class test(case):
                 assert_equal(elem.text, self.changelog_version)
                 break
         else:
-            assert_true(False, msg="missing <refmiscinfo class='version'>")
+            assert_fail("missing <refmiscinfo class='version'>")
 
     def test_executable(self):
         r = self.pdf2djvu('--version')
