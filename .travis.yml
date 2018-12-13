@@ -85,9 +85,9 @@ script:
 - $if_lpr perl -pi -e 's/^#ifdef SIGPOLL$/#if 1/' sys-command-posix.cc  # "ifdef SIGPOLL" confuses cppcheck
 - $if_lpr cppcheck --error-exitcode=1 *.cc
 - $if_lpr private/check-rst
-- $if_lpr python -m pydiatra tests/
-- $if_lpr python -m pyflakes tests/
 - $if_lpr pushd tests/
+- $if_lpr python -m pydiatra .
+- $if_lpr python -m pyflakes .
 - $if_lpr python -m pylint *.py
 - $if_lpr popd
 - $if_lpr make -C doc
