@@ -72,7 +72,7 @@ install:
 - popd
 - python -m pip install --user nose
 - $if_lpr python -m pip install --user docutils
-- $if_lpr python -m pip install --user pydiatra pyflakes
+- $if_lpr python -m pip install --user pydiatra pyflakes pylint
 before_script:
 - private/autogen
 script:
@@ -87,6 +87,9 @@ script:
 - $if_lpr private/check-rst
 - $if_lpr python -m pydiatra tests/
 - $if_lpr python -m pyflakes tests/
+- $if_lpr pushd tests/
+- $if_lpr python -m pylint *.py
+- $if_lpr popd
 - $if_lpr make -C doc
 - $if_lpr make -C doc check
 - make install
