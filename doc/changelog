@@ -1,8 +1,10 @@
 pdf2djvu (0.9.12) UNRELEASED; urgency=low
 
   * Fix build failure with Poppler ≥ 0.72.
+  * Windows: don't download sources without explicit user's consent.
+  * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 06 Dec 2018 19:50:50 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 13 Dec 2018 20:53:36 +0100
 
 pdf2djvu (0.9.11) unstable; urgency=low
 
