@@ -15,6 +15,7 @@
 
 from __future__ import print_function
 
+import ast
 import codecs
 import collections
 import inspect
@@ -290,7 +291,7 @@ class case(object):
         [xmp_line] = xmp_lines
         assert_equal(xmp_line[-2:], '")')
         xmp = xmp_line[5:-1]
-        xmp = eval(xmp)
+        xmp = ast.literal_eval(xmp)
         return xmp
 
     def require_poppler(self, *version):
