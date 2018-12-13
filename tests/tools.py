@@ -39,6 +39,9 @@ exec b''  # Python 2.6 or 2.7 is required
 
 re_type = type(re.compile(''))
 
+def assert_fail(msg):
+    assert_true(False, msg=msg)  # pylint: disable=redundant-unittest-assert
+
 def noseimport(vmaj, vmin, name=None):
     def wrapper(f):
         if sys.version_info >= (vmaj, vmin):
@@ -383,6 +386,8 @@ __all__ = [
     'assert_is_not_none',
     'assert_multi_line_equal',
     'assert_regex',
+    # misc assert:
+    'assert_fail',
     # helper classes:
     'ipc_result',
     'case',
