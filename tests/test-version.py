@@ -30,8 +30,8 @@ class test(case):
 
     def __init__(self):
         path = os.path.join(srcdir, 'doc', 'changelog')
-        with open(path) as file:
-            line = file.readline()
+        with open(path) as fp:
+            line = fp.readline()
         self.changelog_version = line.split()[1].strip('()')
 
     def test_manpage(self):
