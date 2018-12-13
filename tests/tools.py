@@ -36,7 +36,8 @@ from nose.tools import (
     assert_true,
 )
 
-exec b''  # Python 2.6 or 2.7 is required
+if not isinstance(b'', str):  # Python >= 2.6 is required
+    raise RuntimeError('Python 2.X is required')
 
 re_type = type(re.compile(''))
 
