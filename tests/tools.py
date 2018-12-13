@@ -97,7 +97,7 @@ def assert_regex(text, regex):
         regex = re.compile(regex)
     if not regex.search(text):
         message = "Regex didn't match: {0!r} not found in {1!r}".format(regex.pattern, text)
-        assert_true(False, msg=message)
+        assert_fail(message)
 
 def _get_signal_names():
     signame_pattern = re.compile('^SIG[A-Z0-9]*$')
