@@ -36,7 +36,7 @@ class test(case):
 
     def test_manpage(self):
         path = os.path.join(srcdir, 'doc', 'manpage.xml')
-        for event, elem in etree.iterparse(path):
+        for dummy_event, elem in etree.iterparse(path):
             if elem.tag == 'refmiscinfo' and elem.get('class') == 'version':
                 assert_equal(elem.text, self.changelog_version)
                 break
