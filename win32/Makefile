@@ -104,7 +104,8 @@ zip_opts = -9 -X -r
 
 .PHONY: binary-dist
 binary-dist: install
-	mkdir -p $(zipball_topdir)
+	rm -rf $(zipball_topdir)
+	mkdir $(zipball_topdir)
 	! strings -f dist/*.exe dist/*.dll | grep -F '$(CURDIR)'
 	cp -rl dist/* $(zipball_topdir)
 	chmod a-x $(zipball_topdir)/*.exe
