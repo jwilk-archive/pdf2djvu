@@ -1,0 +1,24 @@
+Add strndup(3) implementation.
+
+Last-Update: 2018-12-15
+
+--- a/poppler/GlobalParams.cc
++++ b/poppler/GlobalParams.cc
+@@ -697,6 +697,17 @@
+   return lang;
+ }
+ 
++static char *strndup(const char *s, size_t n)
++{
++  size_t len = strnlen(s, n);
++  char *ds = (char*) malloc(len + 1);
++  if (ds == NULL)
++    return NULL;
++  memcpy(ds, s, len);
++  ds[len] = '\0';
++  return ds;
++}
++
+ static FcPattern *buildFcPattern(GfxFont *font, const GooString *base14Name)
+ {
+   int weight = -1,

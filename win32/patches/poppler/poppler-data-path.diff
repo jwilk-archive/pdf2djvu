@@ -4,7 +4,7 @@ Last-Update: 2018-01-17
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -173,11 +173,6 @@
+@@ -141,11 +141,6 @@
  
    p = _mbsrchr ((unsigned char *) retval, '\\');
    *p = '\0';

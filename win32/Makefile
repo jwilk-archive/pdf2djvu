@@ -191,8 +191,8 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-0.62.0.tar.xz 5b9a73dfd4d6f61d165ada1e4f0abd2d420494bf9d0b1c15d0db3f7b83a729c6
-	$(untar) src.tar/poppler-0.62.0.tar.xz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-0.72.0.tar.xz c1747eb8f26e9e753c4001ed951db2896edc1021b6d0f547a0bd2a27c30ada51
+	$(untar) src.tar/poppler-0.72.0.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
@@ -224,7 +224,10 @@ src/poppler/Makefile: src/openjpeg/install-stamp
 	find $(dir $@) -name build.make -print0 \
 	| xargs -0 sed -i -e 's,\([ 	]\)\(/[^ 	]\+/\($(CC)\|$(CXX)\)\) ,\1$(CURDIR)/tools/enforce-relative-paths \2 ,'
 
-src/poppler/build-stamp: src/poppler/Makefile
+include/dummy-mutex: misc/dummy-mutex.hh
+	install -m 644 $(<) $(@)
+
+src/poppler/build-stamp: src/poppler/Makefile include/dummy-mutex
 	$(MAKE) -C $(dir $@)
 	touch $(@)
 

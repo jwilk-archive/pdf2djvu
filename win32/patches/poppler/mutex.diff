@@ -1,0 +1,81 @@
+Use dummy implementation of mutexes.
+
+Last-Update: 2018-12-15
+
+--- a/poppler/Annot.h
++++ b/poppler/Annot.h
+@@ -42,7 +42,7 @@
+ 
+ #include <memory>
+ #include <atomic>
+-#include <mutex>
++#include <dummy-mutex>
+ #include <vector>
+ 
+ #include "Object.h"
+--- a/poppler/Array.h
++++ b/poppler/Array.h
+@@ -29,7 +29,7 @@
+ #define ARRAY_H
+ 
+ #include <atomic>
+-#include <mutex>
++#include <dummy-mutex>
+ #include <vector>
+ 
+ #include "poppler-config.h"
+--- a/poppler/CairoFontEngine.h
++++ b/poppler/CairoFontEngine.h
+@@ -30,7 +30,7 @@
+ #ifndef CAIROFONTENGINE_H
+ #define CAIROFONTENGINE_H
+ 
+-#include <mutex>
++#include <dummy-mutex>
+ 
+ #include "poppler-config.h"
+ #include "goo/gtypes.h"
+--- a/poppler/Dict.h
++++ b/poppler/Dict.h
+@@ -31,7 +31,7 @@
+ #define DICT_H
+ 
+ #include <atomic>
+-#include <mutex>
++#include <dummy-mutex>
+ #include <string>
+ #include <vector>
+ #include <utility>
+--- a/poppler/GlobalParams.h
++++ b/poppler/GlobalParams.h
+@@ -44,7 +44,7 @@
+ #include "UnicodeMap.h"
+ #include <unordered_map>
+ #include <string>
+-#include <mutex>
++#include <dummy-mutex>
+ 
+ class GooString;
+ class GooList;
+--- a/poppler/PDFDoc.h
++++ b/poppler/PDFDoc.h
+@@ -41,7 +41,7 @@
+ #ifndef PDFDOC_H
+ #define PDFDOC_H
+ 
+-#include <mutex>
++#include <dummy-mutex>
+ 
+ #include "poppler-config.h"
+ #include <stdio.h>
+--- a/poppler/Page.h
++++ b/poppler/Page.h
+@@ -33,7 +33,7 @@
+ #ifndef PAGE_H
+ #define PAGE_H
+ 
+-#include <mutex>
++#include <dummy-mutex>
+ 
+ #include "poppler-config.h"
+ #include "Object.h"
