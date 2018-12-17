@@ -454,8 +454,8 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	install -d dist/etc/fonts/conf.d/
 	$(MAKE) -C $(dir $@)/ install RUN_FC_CACHE_TEST=false
 	$(call ship_dll,libfontconfig)
-	cp etc/fonts/fonts.conf dist/etc/fonts/
-	cp etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
+	install -m 644 etc/fonts/fonts.conf dist/etc/fonts/
+	install -m 644 etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
 	touch $(@)
 
 # GNU gettext
