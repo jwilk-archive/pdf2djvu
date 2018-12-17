@@ -47,6 +47,7 @@ sha256sum="$2"
 set -e
 
 here=$(basename "$0")
+mkdir -p "$here/../src.tar"
 cd "$here/../src.tar"
 
 if [ -e "$name" ] && echo "$sha256sum  $name" | sha256sum --strict -c
