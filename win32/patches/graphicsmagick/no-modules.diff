@@ -1,0 +1,15 @@
+Disable module loading.
+
+Last-Update: 2018-12-17
+
+--- a/magick/studio.h
++++ b/magick/studio.h
+@@ -413,7 +413,7 @@
+ #  define PATH_MAX 4096
+ #endif
+ 
+-#if defined(HasLTDL) || ( defined(MSWINDOWS) && defined(_DLL) )
++#if 0
+ #  define SupportMagickModules
+ #endif
+ 

@@ -295,8 +295,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.27/GraphicsMagick-1.3.27.tar.xz d03278d2790efc1dc72309f85a539810d2a81deb47932f7e6720d09ac72d0367
-	$(untar) src.tar/GraphicsMagick-1.3.27.tar.xz -C $(dir $@)
+	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.31/GraphicsMagick-1.3.31.tar.xz 096bbb59d6f3abd32b562fc3b34ea90d88741dc5dd888731d61d17e100394278
+	$(untar) src.tar/GraphicsMagick-1.3.31.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
@@ -314,12 +314,10 @@ src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
 			--without-bzlib \
 			--without-dps \
 			--without-fpx \
-			--without-gslib \
 			--without-jbig \
 			--without-webp \
 			--without-jpeg \
 			--without-jp2 \
-			--without-lcms \
 			--without-lcms2 \
 			--without-lzma \
 			--without-png \
