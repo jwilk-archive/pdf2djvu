@@ -1,0 +1,53 @@
+Adjust configuration paths.
+
+Load configuration from <dist>/share/GraphicsMagick/.
+Don't load it from the current working directory.
+
+Last-Update: 2018-12-17
+
+--- a/magick/blob.c
++++ b/magick/blob.c
+@@ -1999,6 +1999,7 @@
+ 
+ #else /* !defined(UseInstalledMagick) */
+ 
++#if 0  
+   {
+     const char
+       *magick_home;
+@@ -2024,6 +2025,7 @@
+ #endif /* defined(POSIX) */
+       }
+     }
++  
+ 
+   if (getenv("HOME") != (char *) NULL)
+     {
+@@ -2034,6 +2036,7 @@
+         *getenv("HOME") == '/' ? "/.magick" : "",DirectorySeparator);
+       AddConfigurePath(path_map,&path_index,path,exception);
+     }
++#endif
+ 
+   if (*SetClientPath((char *) NULL) != '\0')
+     {
+@@ -2053,16 +2056,18 @@
+       FormatString(path,"%.1024s/share/%s/",prefix,MagickShareConfigSubDir);
+       AddConfigurePath(path_map,&path_index,path,exception);
+ #else /* defined(POSIX) */
+-      FormatString(path,"%.1024s%s",SetClientPath((char *) NULL),
++      FormatString(path,"%.1024s/share/GraphicsMagick/%s",SetClientPath((char *) NULL),
+         DirectorySeparator);
+       AddConfigurePath(path_map,&path_index,path,exception);
+ #endif /* !defined(POSIX) */
+     }
+ 
++#if 0
+   /*
+     Search current directory.
+   */
+   AddConfigurePath(path_map,&path_index,"",exception);
++#endif
+ #endif /* !defined(UseInstalledMagick) */
+ 
+   path_map_iterator=MagickMapAllocateIterator(path_map);
