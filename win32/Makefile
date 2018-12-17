@@ -285,8 +285,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 	$(MAKE) -C $(dir $@)/tools install
 	set -e && \
 	for tool in $(djvulibre_tools); do \
-		cp bin/$$tool.exe bin/$$tool; \
-		cp bin/$$tool.exe dist/; \
+		install bin/$$tool.exe bin/$$tool; \
+		install bin/$$tool.exe dist/; \
 		$(STRIP) dist/$$tool.exe; \
 	done
 	$(call ship_dll,libdjvulibre)
