@@ -75,7 +75,7 @@ all:
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
 src_tarball_name = pdf2djvu-win32-source-$(version)
-tar_opts = --owner root --group root --mode a+rX --format ustar --sort name
+tar_opts = --owner root --group root --mode u=rwX,go=rX --format ustar --sort name
 xz_opts = -8e
 
 .PHONY: source-dist
@@ -110,7 +110,7 @@ binary-dist: install
 	! strings -l e -f dist/*.exe dist/*.dll | grep -F '$(CURDIR)'
 	cp -rl dist/* $(zipball_topdir)
 	chmod a-x $(zipball_topdir)/*.exe
-	chmod -R a+rX $(zipball_topdir)
+	chmod -R u=rwX,go=rX $(zipball_topdir)
 	zip $(zip_opts) $(zipball_name).zip $(zipball_topdir)
 	rm -r $(zipball_topdir)
 
