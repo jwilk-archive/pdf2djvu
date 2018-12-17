@@ -1,7 +1,6 @@
 pdf2djvu (0.9.12) UNRELEASED; urgency=low
 
   * Fix build failure with Poppler ≥ 0.72.
-  * Windows: don't download sources without explicit user's consent.
   * Improve the test suite.
   * Upgrade libraries bundled with the Windows package:
     - Poppler 0.62.
@@ -11,6 +10,8 @@ pdf2djvu (0.9.12) UNRELEASED; urgency=low
   * Windows: fix GraphicsMagick configuration search path.
   * Windows: install miscellaneous documentation files.
     Regression introduced in 0.8.1.
+  * Windows build system: don't download sources without explicit user's
+    consent.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Mon, 17 Dec 2018 12:31:40 +0100
 
