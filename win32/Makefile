@@ -588,7 +588,7 @@ src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	install -d dist/fonts/ dist/doc/
-	cp $(addprefix $(dir $@)/,$(standard-fonts)) dist/fonts/
+	install -m 644 $(addprefix $(dir $@)/,$(standard-fonts)) dist/fonts/
 	rst2html doc/COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $(@)
 
