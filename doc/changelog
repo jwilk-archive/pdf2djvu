@@ -320,6 +320,7 @@ pdf2djvu (0.8.1) unstable; urgency=low
   * Build with “-Werror=narrowing”.
   * Document what software is required to run the tests.
   * Windows: fix loading Poppler data files.
+  * Windows: don't install build-related documentation.
   * Improve the test suite.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Thu, 13 Aug 2015 17:48:55 +0200
