@@ -107,6 +107,7 @@ binary-dist: install
 	rm -rf $(zipball_topdir)
 	mkdir $(zipball_topdir)
 	! strings -f dist/*.exe dist/*.dll | grep -F '$(CURDIR)'
+	! strings -l e -f dist/*.exe dist/*.dll | grep -F '$(CURDIR)'
 	cp -rl dist/* $(zipball_topdir)
 	chmod a-x $(zipball_topdir)/*.exe
 	chmod -R a+rX $(zipball_topdir)
