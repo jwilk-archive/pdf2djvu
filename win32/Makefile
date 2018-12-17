@@ -156,7 +156,7 @@ src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	touch $(@)
 
 src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
-	mkdir -p dist/doc/
+	install -d dist/doc/
 	$(MAKE) install -C $(dir $@)
 	$(STRIP) dist/pdf2djvu.exe
 	xsltproc --nonet $(docbook_xsl) src/pdf2djvu/doc/manpage.xml > dist/doc/manpage.html
@@ -185,7 +185,7 @@ src/libs-install-stamp: src/expat/install-stamp
 src/libs-install-stamp: src/exiv2/install-stamp
 src/libs-install-stamp: src/poppler/install-stamp
 src/libs-install-stamp: src/winiconv/install-stamp
-	mkdir -p dist/doc/
+	install -d dist/doc/
 	rst2html doc/COPYING.libs.txt > dist/doc/COPYING.libs.html
 	touch $(@)
 
@@ -252,9 +252,9 @@ src/poppler-data/build-stamp: src/poppler-data/source-stamp
 
 src/poppler-data/install-stamp: src/poppler-data/build-stamp
 	$(MAKE) -C $(dir $@) install prefix=$(usr)
-	mkdir -p dist/share/
+	install -d dist/share/
 	cp -a share/poppler dist/share/
-	mkdir -p dist/doc/
+	install -d dist/doc/
 	rst2html doc/COPYING.poppler-data.txt > dist/doc/COPYING.poppler-data.html
 	touch $(@)
 
@@ -280,7 +280,7 @@ src/djvulibre/build-stamp: src/djvulibre/config.status
 	touch $(@)
 
 src/djvulibre/install-stamp: src/djvulibre/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@)/libdjvu install
 	$(MAKE) -C $(dir $@)/tools install
 	set -e && \
@@ -337,7 +337,7 @@ src/graphicsmagick/build-stamp: src/graphicsmagick/config.status
 	touch $(@)
 
 src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libGraphicsMagick)
 	rm dist/libGraphicsMagickWand*.dll
@@ -364,7 +364,7 @@ src/expat/build-stamp: src/expat/config.status
 	touch $(@)
 
 src/expat/install-stamp: src/expat/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libexpat)
 	touch $(@)
@@ -392,7 +392,7 @@ src/exiv2/build-stamp: src/exiv2/config.status
 	touch $(@)
 
 src/exiv2/install-stamp: src/exiv2/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libexiv2)
 	touch $(@)
@@ -421,7 +421,7 @@ src/freetype/build-stamp: src/freetype/config.status
 	touch $(@)
 
 src/freetype/install-stamp: src/freetype/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libfreetype)
 	touch $(@)
@@ -451,7 +451,7 @@ src/fontconfig/build-stamp: src/fontconfig/config.status
 	touch $(@)
 
 src/fontconfig/install-stamp: src/fontconfig/build-stamp
-	mkdir -p dist/etc/fonts/conf.d/
+	install -d dist/etc/fonts/conf.d/
 	$(MAKE) -C $(dir $@)/ install RUN_FC_CACHE_TEST=false
 	$(call ship_dll,libfontconfig)
 	cp etc/fonts/fonts.conf dist/etc/fonts/
@@ -485,7 +485,7 @@ src/gettext/build-stamp: src/gettext/config.status
 	touch $(@)
 
 src/gettext/install-stamp: src/gettext/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@)/gettext-runtime/intl/ install
 	$(call ship_dll,libintl)
 	touch $(@)
@@ -528,7 +528,7 @@ src/libjpeg/build-stamp: src/libjpeg/config.status
 	touch $(@)
 
 src/libjpeg/install-stamp: src/libjpeg/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libjpeg)
 	touch $(@)
@@ -554,7 +554,7 @@ src/openjpeg/build-stamp: src/openjpeg/Makefile
 	touch $(@)
 
 src/openjpeg/install-stamp: src/openjpeg/build-stamp
-	mkdir -p dist/
+	install -d dist/
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libopenjp2)
 	touch $(@)
@@ -587,7 +587,7 @@ src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 	touch $(@)
 
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
-	mkdir -p dist/fonts/ dist/doc/
+	install -d dist/fonts/ dist/doc/
 	cp $(addprefix $(dir $@)/,$(standard-fonts)) dist/fonts/
 	rst2html doc/COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $(@)
