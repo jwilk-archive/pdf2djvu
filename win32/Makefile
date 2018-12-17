@@ -341,6 +341,8 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 	$(MAKE) -C $(dir $@) install
 	$(call ship_dll,libGraphicsMagick)
 	rm dist/libGraphicsMagickWand*.dll
+	install -d dist/share/GraphicsMagick
+	install -m 644 share/GraphicsMagick-1.3.31/config/*.mgk dist/share/GraphicsMagick
 	touch $(@)
 
 # Expat
