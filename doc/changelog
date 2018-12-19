@@ -4,6 +4,7 @@ pdf2djvu (0.9.12) UNRELEASED; urgency=low
   * Improve the test suite.
   * Upgrade libraries bundled with the Windows package:
     - Poppler 0.62;
+    - poppler-data 0.4.9;
     - GraphicsMagick 1.3.31;
     - FreeType 2.9.1;
     - Expat 2.2.6.
@@ -13,7 +14,7 @@ pdf2djvu (0.9.12) UNRELEASED; urgency=low
   * Windows build system: don't download sources without explicit user's
     consent.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 17 Dec 2018 12:31:40 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 19 Dec 2018 21:03:48 +0100
 
 pdf2djvu (0.9.11) unstable; urgency=low
 
