@@ -242,8 +242,8 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/poppler-data/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz 1096a18161f263cccdc6d8a2eb5548c41ff8fcf9a3609243f1b6296abdf72872
-	$(untar) src.tar/poppler-data-0.4.8.tar.gz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-data-0.4.9.tar.gz 1f9c7e7de9ecd0db6ab287349e31bf815ca108a5a175cf906a90163bdbe32012
+	$(untar) src.tar/poppler-data-0.4.9.tar.gz -C $(dir $@)
 	touch $(@)
 
 src/poppler-data/build-stamp: src/poppler-data/source-stamp
