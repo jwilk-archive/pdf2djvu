@@ -56,12 +56,10 @@ fi
 pwd="$PWD"
 commit=${1:-HEAD}
 commit=$(git describe "$commit")
-read name version release urgency <<EOF
+IFS='(); ' read name version release urgency <<EOF
 $(git cat-file blob "$commit:doc/changelog" | head -n1)
 EOF
-version=${version#'('}
-version=${version%')'}
-if [ "$release" = 'UNRELEASED;' ]
+if [ "$release" = 'UNRELEASED' ]
 then
     date=$(git rev-list -1 --format=%cI "$commit" | grep -o '^....-..-..' | tr -d -)
     version="${version}rc${date}"
