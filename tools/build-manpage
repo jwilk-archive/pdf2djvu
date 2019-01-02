@@ -42,10 +42,14 @@ PS4='$ '
 set -x
 $xmllint "$src"
 $xsltproc "$xsl" "$src"
-perl -pi -e '# work-arounds for DocBook XSL capitalization bugs
+perl -pi -e '
 if (/^[.]SH /) {
+    # work-arounds for DocBook XSL capitalization bugs
     s/(\\[(][,~\x27][a-z])/\U$1/g; # https://bugs.debian.org/758262#20
     s/\\[(]ss/SS/g; # https://bugs.debian.org/773444
-}' "$dst"
+}
+'"# prefer ' to \(aq when used as an apostrophe"'
+s/([a-z])\\[*][(]Aq([a-z])/$1\x27$2/gi
+' "$dst"
 
 # vim:ts=4 sts=4 sw=4 et
