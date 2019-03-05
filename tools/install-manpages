@@ -28,7 +28,7 @@ do
     basename=$(basename "$manpage")
     suffix=${basename#*.}
     locale=${suffix%.*}
-    if [ "$locale" = "$suffix" ] && locale= || locale=$locale/
+    [ "$locale" = "$suffix" ] && locale= || locale=$locale/
     section=${suffix#*.}
     basename=${basename%%.*}
     (
