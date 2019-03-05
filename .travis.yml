@@ -54,6 +54,7 @@ before_install:
 - export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
 - export CPATH=~/.local/include/
 - export LD_LIBRARY_PATH=~/.local/lib/
+- echo '54.72.225.196 www.exiv2.org' | sudo tee -a /etc/hosts  # https://github.com/Exiv2/exiv2/issues/736
 install:
 - wget http://www.exiv2.org/releases/exiv2-${EXIV2_VERSION}.tar.gz
 - tar -xvvf exiv2-*.tar.gz
