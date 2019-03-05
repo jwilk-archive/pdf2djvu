@@ -28,14 +28,19 @@ do
     basename=$(basename "$manpage")
     suffix=${basename#*.}
     locale=${suffix%.*}
-    [ "$locale" = "$suffix" ] && locale=
+    if [ "$locale" = "$suffix" ]
+    then
+       locale=
+    else
+       locale=${locale}/
+    fi
     section=${suffix#*.}
     basename=${basename%%.*}
     (
         PS4='$ '
         set -x
-        $INSTALL -d "$mandir/$locale/man$section"
-        $INSTALL -m 644 "$manpage" "$mandir/$locale/man$section/$basename.$section"
+        $INSTALL -d "$mandir/${locale}man$section"
+        $INSTALL -m 644 "$manpage" "$mandir/${locale}man$section/$basename.$section"
     )
 done
 
