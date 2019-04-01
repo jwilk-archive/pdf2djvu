@@ -58,7 +58,7 @@ Korean), the poppler-data_ package must be installed.
 .. _gettext:
    https://www.gnu.org/software/gettext/
 .. _Exiv2:
-   http://www.exiv2.org/
+   https://www.exiv2.org/
 .. _GraphicsMagick:
    http://www.graphicsmagick.org/
 .. _OpenMP:

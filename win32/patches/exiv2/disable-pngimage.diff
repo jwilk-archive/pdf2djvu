@@ -1,6 +1,6 @@
 exiv2.hpp: exclude pngimage.hpp.
 
-Bug: http://dev.exiv2.org/issues/1103
+Bug: https://dev.exiv2.org/issues/1103
 
 --- a/include/exiv2/exiv2.hpp
 +++ b/include/exiv2/exiv2.hpp

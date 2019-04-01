@@ -1,6 +1,6 @@
 Get rid of EXIV2BIN; use EXIV2EXE everywhere.
 
-Forwarded: http://dev.exiv2.org/issues/1102
+Forwarded: https://dev.exiv2.org/issues/1102
 
 --- a/src/Makefile
 +++ b/src/Makefile

@@ -1,6 +1,6 @@
 Compile C files needed for exiv2 binary without libtool
 
-Forwarded: http://dev.exiv2.org/issues/1101
+Forwarded: https://dev.exiv2.org/issues/1101
 
 --- a/src/Makefile
 +++ b/src/Makefile

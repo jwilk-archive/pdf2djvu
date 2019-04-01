@@ -1,6 +1,6 @@
 Don't put localtime.c EXIVCSRC. It's already a part of the library.
 
-Forwarded: http://dev.exiv2.org/issues/1101
+Forwarded: https://dev.exiv2.org/issues/1101
 
 --- a/src/Makefile
 +++ b/src/Makefile

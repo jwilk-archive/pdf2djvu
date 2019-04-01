@@ -55,10 +55,10 @@ before_install:
 - export CPATH=~/.local/include/
 - export LD_LIBRARY_PATH=~/.local/lib/
 install:
-- wget http://www.exiv2.org/releases/exiv2-${EXIV2_VERSION}.tar.gz
+- wget https://www.exiv2.org/releases/exiv2-${EXIV2_VERSION}.tar.gz
 - tar -xvvf exiv2-*.tar.gz
 - pushd exiv2-*/
-- find . -name 'exiv2.hpp' | xargs sed -i -e '/"pngimage[.]hpp"/d'  # http://dev.exiv2.org/issues/1103
+- find . -name 'exiv2.hpp' | xargs sed -i -e '/"pngimage[.]hpp"/d'  # https://dev.exiv2.org/issues/1103
 - ./configure --prefix ~/.local --disable-static --without-zlib --disable-lensdata --disable-nls || cat config.log /fail
 - make
 - make install
