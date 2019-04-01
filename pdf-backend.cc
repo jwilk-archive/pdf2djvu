@@ -631,4 +631,19 @@ const char * pdf::get_c_string(const pdf::String *str)
 }
 #endif
 
+template <typename C> static auto find_page_impl(C *catalog, pdf::Ref pgref) -> decltype(catalog->findPage(0, 0))
+{
+  return catalog->findPage(pgref.num, pgref.gen);
+}
+
+template <typename C> static auto find_page_impl(C *catalog, pdf::Ref pgref) -> decltype(catalog->findPage(pgref))
+{
+  return catalog->findPage(pgref);
+}
+
+int pdf::find_page(pdf::Catalog *catalog, pdf::Ref pgref)
+{
+  return find_page_impl<pdf::Catalog>(catalog, pgref);
+}
+
 // vim:ts=2 sts=2 sw=2 et

@@ -87,7 +87,7 @@ static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *cata
     if (dest->isPageRef())
     {
       pdf::Ref pageref = dest->getPageRef();
-      page = catalog->findPage(pageref.num, pageref.gen);
+      page = pdf::find_page(catalog, pageref);
     }
     else
       page = dest->getPageNum();

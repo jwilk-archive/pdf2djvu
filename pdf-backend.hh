@@ -436,6 +436,8 @@ namespace pdf
 
   const char * get_c_string(const pdf::String *str);
 
+  int find_page(pdf::Catalog *catalog, pdf::Ref pgref);
+
 }
 
 #endif
