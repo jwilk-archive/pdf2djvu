@@ -82,7 +82,7 @@ static const std::string argv_to_command_line(const std::vector<std::string> &ar
     //    number of backslashes is odd, the last backslash escapes the next
     //    double quotation mark as described in rule 3.
     //
-    // See <https://msdn.microsoft.com/en-us/library/ms880421.aspx>.
+    // See <https://docs.microsoft.com/en-us/cpp/c-language/parsing-c-command-line-arguments?view=vs-2017>.
     for (const std::string &arg : argv) {
         int backslashed = 0;
         bool need_quote = arg.find_first_of(" \t") != std::string::npos;
