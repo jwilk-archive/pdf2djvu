@@ -82,6 +82,7 @@ namespace pdf
   typedef ::Catalog Catalog;
   typedef ::GooString String;
   typedef ::Goffset Offset;
+  typedef ::Ref Ref;
 
 /* type definitions — annotations
  * ==============================
