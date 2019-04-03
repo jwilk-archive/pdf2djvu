@@ -14,9 +14,9 @@
 
 #include "image-filter.hh"
 
+#include <bitset>
 #include <cassert>
 #include <cstddef>
-#include <bitset>
 #include <map>
 #include <ostream>
 #include <vector>
