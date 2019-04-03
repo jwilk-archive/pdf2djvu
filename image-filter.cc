@@ -14,6 +14,7 @@
 
 #include "image-filter.hh"
 
+#include <cassert>
 #include <cstddef>
 #include <bitset>
 #include <map>
@@ -489,6 +490,7 @@ void GraphicsMagickQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *o
     image.syncPixels();
   }
   image.quantizeColorSpace(Magick::TransparentColorspace);
+  assert(this->config.fg_colors > 0);
   image.quantizeColors(this->config.fg_colors);
   image.quantize();
   image.colorSpace(Magick::RGBColorspace);
