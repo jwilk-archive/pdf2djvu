@@ -14,9 +14,9 @@
 
 #include "pdf-unicode.hh"
 
-#include <cstddef>
 #include <cassert>
 #include <climits>
+#include <cstddef>
 #include <sstream>
 
 #include <stdint.h>
