@@ -44,9 +44,9 @@ public:
 
   enum
   {
-    FG_COLORS_DEFAULT = UINT_MAX,
-    FG_COLORS_WEB = UINT_MAX - 1,
-    FG_COLORS_BLACK = UINT_MAX - 2,
+    FG_COLORS_DEFAULT = INT_MIN,
+    FG_COLORS_WEB = INT_MIN + 1,
+    FG_COLORS_BLACK = INT_MIN + 2,
   };
   enum text_t
   {
@@ -71,7 +71,7 @@ public:
   std::pair<int, int> preferred_page_size;
   bool use_media_box;
   int bg_subsample;
-  unsigned int fg_colors;
+  int fg_colors;
   bool monochrome;
   int loss_level;
   bool antialias;

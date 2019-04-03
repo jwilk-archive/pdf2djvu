@@ -167,7 +167,7 @@ tp string::as(const std::string &s)
   return n;
 }
 
-static unsigned int parse_fg_colors(const std::string &s)
+static int parse_fg_colors(const std::string &s)
 {
   if (s == "web")
     return Config::FG_COLORS_WEB;
@@ -175,11 +175,11 @@ static unsigned int parse_fg_colors(const std::string &s)
     return Config::FG_COLORS_DEFAULT;
   else if (s == "black")
     return Config::FG_COLORS_BLACK;
-  long n = string::as<long>(s);
-  if (n < 1 || n > static_cast<long>(djvu::max_fg_colors))
+  int n = string::as<int>(s);
+  if (n < 1 || n > djvu::max_fg_colors)
     throw Config::Error(string_printf(
-      _("The specified number of foreground colors is outside the allowed range: %u .. %u"),
-      1U, djvu::max_fg_colors
+      _("The specified number of foreground colors is outside the allowed range: %d .. %d"),
+      1, djvu::max_fg_colors
     ));
   return n;
 }

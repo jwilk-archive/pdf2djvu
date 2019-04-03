@@ -458,8 +458,8 @@ msgstr "Ergebnis zu groß"
 
 #: config.cc
 #, c-format
-msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
-msgstr "Die angegebene Anzahl der Vordergrundfarben liegt außerhalb des erlaubten Bereichs: %u … %u"
+msgid "The specified number of foreground colors is outside the allowed range: %d .. %d"
+msgstr "Die angegebene Anzahl der Vordergrundfarben liegt außerhalb des erlaubten Bereichs: %d … %d"
 
 #: config.cc
 #, c-format

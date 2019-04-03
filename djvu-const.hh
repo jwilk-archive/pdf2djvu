@@ -25,7 +25,7 @@ namespace djvu
    * See https://sourceforge.net/p/djvu/bugs/103/ for details.
    */
 
-  static const unsigned int max_fg_colors = 4080;
+  static const int max_fg_colors = 4080;
 
   static const int max_subsample_ratio = 12;
 

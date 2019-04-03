@@ -458,8 +458,8 @@ msgstr "Результат слишком велик"
 
 #: config.cc
 #, c-format
-msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
-msgstr "Указанное количество цветов переднего плана находится за пределами разрешённого диапазона: %u .. %u"
+msgid "The specified number of foreground colors is outside the allowed range: %d .. %d"
+msgstr "Указанное количество цветов переднего плана находится за пределами разрешённого диапазона: %d .. %d"
 
 #: config.cc
 #, c-format

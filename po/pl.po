@@ -460,8 +460,8 @@ msgstr "Wynik liczbowy poza zakresem"
 
 #: config.cc
 #, c-format
-msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
-msgstr "Podana liczba kolorów pierwszego planu jest spoza dozwolonego zakresu: %u .. %u"
+msgid "The specified number of foreground colors is outside the allowed range: %d .. %d"
+msgstr "Podana liczba kolorów pierwszego planu jest spoza dozwolonego zakresu: %d .. %d"
 
 #: config.cc
 #, c-format

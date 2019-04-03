@@ -467,8 +467,8 @@ msgstr "Resultado muito grande"
 
 #: config.cc
 #, c-format
-msgid "The specified number of foreground colors is outside the allowed range: %u .. %u"
-msgstr "O número especificado de cores do primeiro plano está fora do limite permitido: %u .. %u"
+msgid "The specified number of foreground colors is outside the allowed range: %d .. %d"
+msgstr "O número especificado de cores do primeiro plano está fora do limite permitido: %d .. %d"
 
 #: config.cc
 #, c-format
