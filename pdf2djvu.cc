@@ -1342,7 +1342,7 @@ static int xmain(int argc, char * const argv[])
     djvm.reset(new IndirectDjVm(*output_file));
   }
   if (config.pages.size() == 0)
-    config.pages.push_back(std::make_pair(1, n_pages));
+    config.pages.push_back({1, n_pages});
   for (const std::pair<int, int> &page : config.pages)
   for (int n = page.first; n <= n_pages && n <= page.second; n++)
   {

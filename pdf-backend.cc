@@ -366,14 +366,14 @@ static int scan_date_digits(const char * &input, int n)
 
 pdf::Metadata::Metadata(pdf::Document &document)
 {
-  string_fields.push_back(std::make_pair("Title", &this->title));
-  string_fields.push_back(std::make_pair("Subject", &this->subject));
-  string_fields.push_back(std::make_pair("Keywords", &this->keywords));
-  string_fields.push_back(std::make_pair("Author", &this->author));
-  string_fields.push_back(std::make_pair("Creator", &this->creator));
-  string_fields.push_back(std::make_pair("Producer", &this->producer));
-  date_fields.push_back(std::make_pair("CreationDate", &this->creation_date));
-  date_fields.push_back(std::make_pair("ModDate", &this->mod_date));
+  string_fields.push_back({"Title", &this->title});
+  string_fields.push_back({"Subject", &this->subject});
+  string_fields.push_back({"Keywords", &this->keywords});
+  string_fields.push_back({"Author", &this->author});
+  string_fields.push_back({"Creator", &this->creator});
+  string_fields.push_back({"Producer", &this->producer});
+  date_fields.push_back({"CreationDate", &this->creation_date});
+  date_fields.push_back({"ModDate", &this->mod_date});
 
   pdf::OwnedObject info;
   document.get_doc_info(info);

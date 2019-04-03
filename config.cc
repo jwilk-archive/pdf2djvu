@@ -46,7 +46,7 @@ Config::Config()
   this->verbose = 1;
   this->dpi = 300;
   this->guess_dpi = false;
-  this->preferred_page_size = std::make_pair(0, 0);
+  this->preferred_page_size = {0, 0};
   this->use_media_box = false;
   this->bg_subsample = 3;
   this->fg_colors = this->FG_COLORS_DEFAULT;
@@ -127,7 +127,7 @@ static void parse_pages(const std::string &s, std::vector<std::pair<int, int>> &
     {
       if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
         bad_pages();
-      result.push_back(std::make_pair(value[0], value[1]));
+      result.push_back({value[0], value[1]});
       value[0] = value[1] = 0;
       state = 0;
     }
@@ -138,7 +138,7 @@ static void parse_pages(const std::string &s, std::vector<std::pair<int, int>> &
     value[1] = value[0];
   if (value[0] < 1 || value[1] < 1 || value[0] > value[1])
     bad_pages();
-  result.push_back(std::make_pair(value[0], value[1]));
+  result.push_back({value[0], value[1]});
 }
 
 static std::pair<int, int>parse_page_size(const std::string &s)
@@ -148,7 +148,7 @@ static std::pair<int, int>parse_page_size(const std::string &s)
   char c;
   stream >> x >> c >> y;
   if (x > 0 && y > 0 && c == 'x' && stream.eof() && !stream.fail())
-    return std::make_pair(x, y);
+    return {x, y};
   else
     throw Config::Error(_("Unable to parse page size"));
 }
