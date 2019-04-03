@@ -573,9 +573,8 @@ msgid "Warning: Unable to convert link with a JavaScript action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją JavaScript"
 
 #: pdf2djvu.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a hide action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza z nazwaną akcją"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją ukrycia"
 
 #: pdf2djvu.cc
 msgid "Warning: Unable to convert link with a launch action"
