@@ -499,6 +499,11 @@ public:
       // L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
       debug(1) << _("Warning: Unable to convert link with a set-OCG-state action") << std::endl;
       return;
+#if POPPLER_VERSION >= 6400
+    case actionHide:
+      debug(1) << _("Warning: Unable to convert link with a hide action") << std::endl;
+      return;
+#endif
     case actionUnknown:
     default:
       debug(1) << _("Warning: Unknown link action") << std::endl;
