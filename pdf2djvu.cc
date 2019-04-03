@@ -1219,7 +1219,7 @@ static int xmain(int argc, char * const argv[])
     std::cout << get_multiline_version();
     exit(0);
   }
-  catch (const Config::NeedHelp &ex)
+  catch (const Config::NeedHelp &)
   {
     config.usage();
     exit(0);
