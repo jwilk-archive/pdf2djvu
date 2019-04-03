@@ -50,6 +50,7 @@ before_install:
 - if [[ $POPPLER_VERSION != $last_poppler_release ]]; then if_lpr=:; fi
 - if [[ $POPPLER_VERSION = git ]]; then unless_git=:; else if_git=:; fi
 - if [[ $POPPLER_VERSION = git ]] || [[ $POPPLER_VERSION = 0.[6-9]* ]]; then if_autoconf=:; else if_cmake=:; fi
+- if [[ $POPPLER_VERSION = git ]]; then CXXFLAGS+=' -Werror=switch-enum'; fi
 - if [[ $CXX = clang* ]]; then configure_options='--disable-openmp'; CXX="$CXX -stdlib=libc++"; fi
 - export PKG_CONFIG_PATH=~/.local/lib/pkgconfig/
 - export CPATH=~/.local/include/
