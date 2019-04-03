@@ -468,8 +468,8 @@ msgstr "Die angegebene Auflösung liegt außerhalb des erlaubten Bereichs: %d �
 
 #: config.cc
 #, c-format
-msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr "Das angegebene Verhältnis der Unterabtastung (subsampling) liegt außerhalb des erlaubten Bereichs: %u … %u"
+msgid "The specified subsampling ratio is outside the allowed range: %d .. %d"
+msgstr "Das angegebene Verhältnis der Unterabtastung (subsampling) liegt außerhalb des erlaubten Bereichs: %d … %d"
 
 #. L10N: Windows error message for EMLINK
 #: system.cc

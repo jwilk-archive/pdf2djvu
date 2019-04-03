@@ -27,7 +27,7 @@ namespace djvu
 
   static const unsigned int max_fg_colors = 4080;
 
-  static const unsigned int max_subsample_ratio = 12;
+  static const int max_subsample_ratio = 12;
 
   static const char shared_ant_file_name[] = "shared_anno.iff";
 

@@ -473,8 +473,8 @@ msgstr "Зазначена роздільна здатність знаходи�
 
 #: config.cc
 #, c-format
-msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr "Задане співвідношення підвибірки знаходиться поза межами дозволеного діапазону: %u .. %u"
+msgid "The specified subsampling ratio is outside the allowed range: %d .. %d"
+msgstr "Задане співвідношення підвибірки знаходиться поза межами дозволеного діапазону: %d .. %d"
 
 #. L10N: Windows error message for EMLINK
 #: system.cc

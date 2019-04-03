@@ -184,12 +184,12 @@ static unsigned int parse_fg_colors(const std::string &s)
   return n;
 }
 
-static unsigned int parse_bg_subsample(const std::string &s)
+static int parse_bg_subsample(const std::string &s)
 {
-  long n = string::as<long>(s);
-  if (n < 1 || n > static_cast<long>(djvu::max_subsample_ratio))
+  int n = string::as<int>(s);
+  if (n < 1 || n > djvu::max_subsample_ratio)
     throw Config::Error(string_printf(
-      _("The specified subsampling ratio is outside the allowed range: %u .. %u"),
+      _("The specified subsampling ratio is outside the allowed range: %d .. %d"),
       1, djvu::max_subsample_ratio
     ));
   return n;

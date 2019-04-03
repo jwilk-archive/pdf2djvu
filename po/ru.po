@@ -468,8 +468,8 @@ msgstr "Указанное разрешение находится за пред
 
 #: config.cc
 #, c-format
-msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr "Заданное соотношение подвыборки находится за пределами разрешённого диапазона: %u .. %u"
+msgid "The specified subsampling ratio is outside the allowed range: %d .. %d"
+msgstr "Заданное соотношение подвыборки находится за пределами разрешённого диапазона: %d .. %d"
 
 #. L10N: Windows error message for EMLINK
 #: system.cc

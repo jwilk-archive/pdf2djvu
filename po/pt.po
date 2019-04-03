@@ -477,8 +477,8 @@ msgstr "A resolução especificada está fora do limite permitido: %d .. %d"
 
 #: config.cc
 #, c-format
-msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr "O rácio de sub-amostragem especificado está fora do limite permitido: %u .. %u"
+msgid "The specified subsampling ratio is outside the allowed range: %d .. %d"
+msgstr "O rácio de sub-amostragem especificado está fora do limite permitido: %d .. %d"
 
 #. L10N: Windows error message for EMLINK
 #: system.cc

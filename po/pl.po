@@ -470,8 +470,8 @@ msgstr "Podana rozdzielczość jest spoza dozwolonego zakresu: %d .. %d"
 
 #: config.cc
 #, c-format
-msgid "The specified subsampling ratio is outside the allowed range: %u .. %u"
-msgstr "Podany współczynnik próbkowania jest spoza dozwolonego zakresu: %u .. %u"
+msgid "The specified subsampling ratio is outside the allowed range: %d .. %d"
+msgstr "Podany współczynnik próbkowania jest spoza dozwolonego zakresu: %d .. %d"
 
 #. L10N: Windows error message for EMLINK
 #: system.cc

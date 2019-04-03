@@ -70,7 +70,7 @@ public:
   bool guess_dpi;
   std::pair<int, int> preferred_page_size;
   bool use_media_box;
-  unsigned int bg_subsample;
+  int bg_subsample;
   unsigned int fg_colors;
   bool monochrome;
   int loss_level;
