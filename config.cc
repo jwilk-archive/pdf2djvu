@@ -72,29 +72,29 @@ namespace string
 
 static void parse_hyperlinks_options(std::string s, Config::Hyperlinks &options)
 {
-  std::vector<std::string> split;
+  std::vector<std::string> items;
   std::replace(s.begin(), s.end(), '_', '-');
-  string::split(s, ',', split);
-  for (const std::string &s : split)
+  string::split(s, ',', items);
+  for (const std::string &item : items)
   {
-    if (s == "border-avis")
+    if (item == "border-avis")
     {
       options.border_always_visible = true;
       continue;
     }
-    else if (s == "no" || s == "none")
+    else if (item == "no" || item == "none")
     {
       options.extract = false;
       continue;
     }
     else if
     (
-      s.length() == 7 &&
-      s[0] == '#' &&
-      s.find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
+      item.length() == 7 &&
+      item[0] == '#' &&
+      item.find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos
     )
     {
-      options.border_color = s;
+      options.border_color = item;
       continue;
     }
     throw Config::Error(_("Unable to parse hyperlinks options"));
