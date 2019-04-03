@@ -261,7 +261,7 @@ void DefaultQuantizer::operator()(pdf::Renderer *out_fg, pdf::Renderer *out_bg, 
   size_t color_counter = 0;
   std::bitset<1 << 18> original_colors;
   std::bitset<1 << 18> quantized_colors;
-  std::vector<std::vector<Run> > runs(height);
+  std::vector<std::vector<Run>> runs(height);
   for (int i = 0; i < 3; i++)
     background_color[i] = p_bg[i];
   for (int y = 0; y < height; y++)

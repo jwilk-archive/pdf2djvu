@@ -106,7 +106,7 @@ static void bad_pages()
   throw Config::Error(_("Unable to parse page numbers"));
 }
 
-static void parse_pages(const std::string &s, std::vector< std::pair<int, int> > &result)
+static void parse_pages(const std::string &s, std::vector<std::pair<int, int>> &result)
 {
   int state = 0;
   int value[2] = { 0, 0 };

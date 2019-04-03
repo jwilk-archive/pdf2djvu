@@ -81,7 +81,7 @@ public:
   bool extract_outline;
   bool no_render;
   char *bg_slices;
-  std::vector< std::pair<int, int> > pages;
+  std::vector<std::pair<int, int>> pages;
   std::vector<const char*> filenames;
   std::unique_ptr<string_format::Template> page_id_template;
   std::unique_ptr<string_format::Template> page_title_template;
