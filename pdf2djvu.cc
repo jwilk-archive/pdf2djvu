@@ -539,7 +539,7 @@ public:
         bexpr = sexpr::cons(symbol_border, bexpr);
       }
       expr = sexpr::cons(bexpr, expr);
-    };
+    }
     {
       sexpr::Ref rexpr = sexpr::nil;
       rexpr = sexpr::cons(sexpr::integer(h), rexpr);

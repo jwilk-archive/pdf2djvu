@@ -108,7 +108,7 @@ std::string xmp::transform(const std::string &ibytes, const pdf::Metadata &metad
     if (data.findKey(Exiv2::XmpKey("Xmp.xmpMM.History")) == data.end()) {
         Exiv2::Value::AutoPtr empty_seq = Exiv2::Value::create(Exiv2::xmpSeq);
         data.add(Exiv2::XmpKey("Xmp.xmpMM.History"), empty_seq.get());
-    };
+    }
     data["Xmp.xmpMM.InstanceID"] = instance_id;
     original_document_id = maybe_get(data, "Xmp.xmpMM.OriginalDocumentID");
     if (original_document_id.length() == 0)
