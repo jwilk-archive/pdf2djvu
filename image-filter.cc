@@ -17,11 +17,10 @@
 #include <bitset>
 #include <cassert>
 #include <cstddef>
+#include <cstdint>
 #include <map>
 #include <ostream>
 #include <vector>
-
-#include <stdint.h>
 
 #include "autoconf.hh"
 #include "config.hh"

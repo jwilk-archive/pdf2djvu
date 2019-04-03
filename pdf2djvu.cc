@@ -17,6 +17,7 @@
 #include <cassert>
 #include <cerrno>
 #include <cstddef>
+#include <cstdint>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
@@ -33,8 +34,6 @@
 #if _OPENMP
 #include <omp.h>
 #endif
-
-#include <stdint.h>
 
 #include "config.hh"
 #include "debug.hh"

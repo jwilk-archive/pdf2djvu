@@ -17,9 +17,8 @@
 #include <cassert>
 #include <climits>
 #include <cstddef>
+#include <cstdint>
 #include <sstream>
-
-#include <stdint.h>
 
 #include "autoconf.hh"
 

@@ -15,10 +15,9 @@
 #ifndef PDF2DJVU_PDF_DOCUMENT_MAP_HH
 #define PDF2DJVU_PDF_DOCUMENT_MAP_HH
 
+#include <cstdint>
 #include <string>
 #include <vector>
-
-#include <stdint.h>
 
 namespace pdf
 {

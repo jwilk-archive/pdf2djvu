@@ -17,14 +17,13 @@
 #define PDF2DJVU_PDF_BACKEND_H
 
 #include <cstddef>
+#include <cstdint>
 #include <ctime>
 #include <ostream>
 #include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
-
-#include <stdint.h>
 
 #include "autoconf.hh"
 

@@ -68,8 +68,8 @@ void uuid_unparse_lower(uuid_t &uu, char *out)
 
 #include <cassert>
 #include <cerrno>
+#include <cstdint>
 
-#include <stdint.h>
 #include <uuid.h>
 
 static void throw_uuid_error(const char *context, uint32_t rc)
