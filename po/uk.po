@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.13\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2016-12-08 00:14+0100\n"
+"POT-Creation-Date: 2019-04-03 18:06+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -576,6 +576,11 @@ msgstr "Повторний заголовок сторінки: %s"
 #: pdf2djvu.cc
 #, fuzzy
 msgid "Warning: Unable to convert link with a JavaScript action"
+msgstr "Попередження: неможливо перетворити посилання з дією"
+
+#: pdf2djvu.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a hide action"
 msgstr "Попередження: неможливо перетворити посилання з дією"
 
 #: pdf2djvu.cc
