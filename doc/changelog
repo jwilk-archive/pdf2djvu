@@ -1,8 +1,15 @@
 pdf2djvu (0.9.13) UNRELEASED; urgency=low
 
-  * 
+  [ Jakub Wilk ]
+  * Improve warning message for (unhandled) hide actions.
+  * Update the Polish translation.
+  * Use HTTPS for exiv2.org URLs.
+  * Add support for heap profiling using gperftools.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 05 Jan 2019 23:19:54 +0100
+  [ Samy Mahmoudi ]
+  * Improve build-time logging.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 23 Apr 2019 16:56:16 +0200
 
 pdf2djvu (0.9.12) unstable; urgency=low
 
