@@ -66,6 +66,6 @@ Korean), the poppler-data_ package must be installed.
 .. _nose:
    https://nose.readthedocs.io/
 .. _poppler-data:
-   https://poppler.freedesktop.org/poppler-data-0.4.8.tar.gz
+   https://poppler.freedesktop.org/poppler-data-0.4.9.tar.gz
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et tw=72
