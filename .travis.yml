@@ -11,11 +11,8 @@ jobs:
   - env: POPPLER_VERSION=0.62.0 EXIV2_VERSION=0.25
   - env: POPPLER_VERSION=0.64.0 EXIV2_VERSION=0.25
   - env: POPPLER_VERSION=0.70.0 EXIV2_VERSION=0.25
-    compiler: clang
   - env: POPPLER_VERSION=0.72.0 EXIV2_VERSION=0.25
-    compiler: clang
   - env: POPPLER_VERSION=0.76.0 EXIV2_VERSION=0.25
-    compiler: clang
   - env: POPPLER_VERSION=0.77.0 EXIV2_VERSION=0.25
   - env: POPPLER_VERSION=git EXIV2_VERSION=0.25
     compiler: clang
