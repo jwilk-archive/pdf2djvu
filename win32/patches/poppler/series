@@ -1,3 +1,4 @@
 poppler-data-path.diff
 strndup.diff
 mutex.diff
+locale-open.diff
