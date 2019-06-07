@@ -5,11 +5,17 @@ pdf2djvu (0.9.13) UNRELEASED; urgency=low
   * Update the Polish translation.
   * Use HTTPS for exiv2.org URLs.
   * Add support for heap profiling using gperftools.
+  * Windows: fix reading files with non-ASCII characters in names.
+    https://github.com/jwilk/pdf2djvu/issues/138
+  * Improve the test suite:
+    + Don't enforce the C locale.
+    + Make it easy to pass arguments to nose.
+      (make test noseargs=...)
 
   [ Samy Mahmoudi ]
   * Improve build-time logging.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 23 Apr 2019 16:56:16 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Jun 2019 19:21:23 +0200
 
 pdf2djvu (0.9.12) unstable; urgency=low
 
