@@ -28,12 +28,14 @@ in_files = $(wildcard *.in)
 
 generated_files = $(in_files:.in=) $(pdf_files)
 
+noseargs =
+
 .PHONY: all
 ifeq "$(origin pdf2djvu)" "file"
 all: $(pdf2djvu)
 endif
 all: $(generated_files)
-	$(PYTHON) -c 'import nose; nose.main()' -v
+	$(PYTHON) -c 'import nose; nose.main()' -v $(noseargs)
 
 .PHONY: prepare
 prepare: $(generated_files)
