@@ -1,4 +1,4 @@
-# Copyright © 2009-2015 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2009-2019 Jakub Wilk <jwilk@jwilk.net>
 #
 # This file is distributed under the same license as the pdf2djvu package.
 #
@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.13\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2016-10-03 15:53+0200\n"
-"PO-Revision-Date: 2015-05-25 16:43+0200\n"
+"PO-Revision-Date: 2019-06-07 16:23+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -594,7 +594,6 @@ msgid "<varname>dpage</varname>"
 msgstr "<varname>dpage</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
 msgid "page number in the DjVu document"
 msgstr "numer strony w dokumencie DjVu"
 
@@ -607,7 +606,6 @@ msgid "<varname>spage</varname>"
 msgstr "<varname>spage</varname>"
 
 #. type: Content of: <refentry><refsection><refsection><variablelist><varlistentry><listitem><para>
-#, fuzzy
 msgid "page number in the PDF document"
 msgstr "numer strony w dokumencie PDF"
 
