@@ -16,8 +16,6 @@ include $(srcdir)/autoconf.mk
 
 PYTHON = python
 
-export LC_ALL = C
-
 export pdf2djvu = ../pdf2djvu$(EXEEXT)
 
 test_scripts = $(wildcard test-*.py)
