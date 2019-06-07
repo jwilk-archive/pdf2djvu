@@ -19,7 +19,6 @@ import shutil
 import tempfile
 
 from tools import (
-    assert_equal,
     case,
     SkipTest,
 )
