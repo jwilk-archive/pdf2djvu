@@ -11,11 +11,15 @@ pdf2djvu (0.9.13) UNRELEASED; urgency=low
     + Don't enforce the C locale.
     + Make it easy to pass arguments to nose.
       (make test noseargs=...)
+  * Upgrade libraries bundled with the Windows package:
+    - Poppler 0.77;
+    - FreeType 2.10;
+    - OpenJPEG 2.3.1.
 
   [ Samy Mahmoudi ]
   * Improve build-time logging.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Jun 2019 19:21:23 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 10 Jun 2019 17:13:03 +0200
 
 pdf2djvu (0.9.12) unstable; urgency=low
 
