@@ -1,6 +1,7 @@
 pdf2djvu (0.9.13) UNRELEASED; urgency=low
 
   [ Jakub Wilk ]
+  * Fix build failure with Poppler ≥ 0.76.
   * Improve warning message for (unhandled) hide actions.
   * Windows: fix reading files with non-ASCII characters in names.
     https://github.com/jwilk/pdf2djvu/issues/138
@@ -14,12 +15,13 @@ pdf2djvu (0.9.13) UNRELEASED; urgency=low
       (make test noseargs=...)
   * Update the Polish translation.
   * Use HTTPS for exiv2.org URLs.
+  * Update poppler-data URL.
   * Add support for heap profiling using gperftools.
 
   [ Samy Mahmoudi ]
   * Improve build-time logging.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 10 Jun 2019 17:13:03 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 10 Jun 2019 19:00:21 +0200
 
 pdf2djvu (0.9.12) unstable; urgency=low
 
