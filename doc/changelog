@@ -2,19 +2,19 @@ pdf2djvu (0.9.13) UNRELEASED; urgency=low
 
   [ Jakub Wilk ]
   * Improve warning message for (unhandled) hide actions.
-  * Update the Polish translation.
-  * Use HTTPS for exiv2.org URLs.
-  * Add support for heap profiling using gperftools.
   * Windows: fix reading files with non-ASCII characters in names.
     https://github.com/jwilk/pdf2djvu/issues/138
-  * Improve the test suite:
-    + Don't enforce the C locale.
-    + Make it easy to pass arguments to nose.
-      (make test noseargs=...)
   * Upgrade libraries bundled with the Windows package:
     - Poppler 0.77;
     - FreeType 2.10;
     - OpenJPEG 2.3.1.
+  * Improve the test suite:
+    + Don't enforce the C locale.
+    + Make it easy to pass arguments to nose.
+      (make test noseargs=...)
+  * Update the Polish translation.
+  * Use HTTPS for exiv2.org URLs.
+  * Add support for heap profiling using gperftools.
 
   [ Samy Mahmoudi ]
   * Improve build-time logging.
