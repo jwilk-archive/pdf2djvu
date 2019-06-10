@@ -535,8 +535,8 @@ src/libjpeg/install-stamp: src/libjpeg/build-stamp
 
 src/openjpeg/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz -n openjpeg-2.3.0.tar.gz 3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a
-	$(untar) src.tar/openjpeg-2.3.0.tar.gz -C $(dir $@)
+	tools/wget https://github.com/uclouvain/openjpeg/archive/v2.3.1.tar.gz -n openjpeg-2.3.1.tar.gz 63f5a4713ecafc86de51bfad89cc07bb788e9bba24ebbf0c4ca637621aadb6a9
+	$(untar) src.tar/openjpeg-2.3.1.tar.gz -C $(dir $@)
 	rm -rf $(dir $@)/thirdparty/*/
 	touch $(@)
 
