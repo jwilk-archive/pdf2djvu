@@ -191,8 +191,8 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-0.72.0.tar.xz c1747eb8f26e9e753c4001ed951db2896edc1021b6d0f547a0bd2a27c30ada51
-	$(untar) src.tar/poppler-0.72.0.tar.xz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-0.77.0.tar.xz 7267eb4cbccd64a58244b8211603c1c1b6bf32c7f6a4ced2642865346102f36b
+	$(untar) src.tar/poppler-0.77.0.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
@@ -215,7 +215,7 @@ src/poppler/Makefile: src/openjpeg/install-stamp
 		-DENABLE_QT5=OFF \
 		-DENABLE_SPLASH=ON \
 		-DENABLE_UTILS=OFF \
-		-DENABLE_XPDF_HEADERS=ON \
+		-DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
 		-DFONT_CONFIGURATION=fontconfig \
 		-DTESTDATADIR=/nonexistent \
 		-DWITH_NSS3=OFF \

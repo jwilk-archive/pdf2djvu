@@ -1,10 +1,10 @@
 Use dummy implementation of mutexes.
 
-Last-Update: 2018-12-15
+Last-Update: 2019-06-10
 
 --- a/poppler/Annot.h
 +++ b/poppler/Annot.h
-@@ -42,7 +42,7 @@
+@@ -43,7 +43,7 @@
  
  #include <memory>
  #include <atomic>
@@ -34,7 +34,7 @@ Last-Update: 2018-12-15
 +#include <dummy-mutex>
  
  #include "poppler-config.h"
- #include "goo/gtypes.h"
+ #include <cairo-ft.h>
 --- a/poppler/Dict.h
 +++ b/poppler/Dict.h
 @@ -31,7 +31,7 @@
@@ -54,9 +54,9 @@ Last-Update: 2018-12-15
  #include <string>
 -#include <mutex>
 +#include <dummy-mutex>
+ #include <vector>
  
  class GooString;
- class GooList;
 --- a/poppler/PDFDoc.h
 +++ b/poppler/PDFDoc.h
 @@ -41,7 +41,7 @@
