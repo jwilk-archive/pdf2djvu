@@ -21,6 +21,7 @@
 
 #include <cassert>
 #include <cerrno>
+#include <cstring>
 
 #include <rpc.h>
 
