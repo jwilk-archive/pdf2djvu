@@ -107,7 +107,7 @@ public:
     }
     size_t operator()(const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft)
     {
-        // POSIX requires that “inbuf” type is “char **”.
+        // POSIX requires that “inbuf” type must be “char **”.
         // But on MacOS X, it is “const char **”.
         // This adapter automatically converts “const char **”
         // to whichever type is needed.
