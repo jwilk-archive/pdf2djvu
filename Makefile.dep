@@ -56,6 +56,7 @@ pdf-unicode.o: pdf-unicode.cc
 pdf-unicode.o: pdf-unicode.hh
 pdf2djvu.o: autoconf.hh
 pdf2djvu.o: config.hh
+pdf2djvu.o: const-adapter.hh
 pdf2djvu.o: debug.hh
 pdf2djvu.o: djvu-const.hh
 pdf2djvu.o: djvu-outline.hh
@@ -93,6 +94,7 @@ sys-command-posix.o: string-printf.hh
 sys-command-posix.o: sys-command-posix.cc
 sys-command-posix.o: system.hh
 sys-command-win32.o: sys-command-win32.cc
+sys-encoding.o: const-adapter.hh
 sys-encoding.o: sys-encoding.cc
 sys-encoding.o: system.hh
 sys-time.o: autoconf.hh

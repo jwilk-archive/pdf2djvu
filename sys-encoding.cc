@@ -27,6 +27,8 @@
 #include <windows.h>
 #endif
 
+#include "const-adapter.hh"
+
 namespace encoding {
 
 #if WIN32
@@ -111,23 +113,7 @@ public:
         // But on MacOS X, it is “const char **”.
         // This adapter automatically converts “const char **”
         // to whichever type is needed.
-        class const_adapter
-        {
-        protected:
-            const char **s;
-        public:
-            const_adapter(const char **s)
-            : s(s)
-            { }
-            operator char ** () const
-            {
-                return const_cast<char **>(s);
-            }
-            operator const char** () const
-            {
-                return s;
-            }
-        };
+        typedef const_adapter<const char **, char **> const_adapter;
         return iconv(this->cd, const_adapter(inbuf), inbytesleft, outbuf, outbytesleft);
     }
 };

@@ -36,6 +36,7 @@
 #endif
 
 #include "config.hh"
+#include "const-adapter.hh"
 #include "debug.hh"
 #include "djvu-const.hh"
 #include "djvu-outline.hh"
@@ -344,23 +345,7 @@ public:
       this->skipped_elements = true;
       return;
     }
-    class const_adapter
-    {
-    protected:
-      const int *i;
-    public:
-      const_adapter(const int *i)
-      : i(i)
-      { }
-      operator int * () const
-      {
-        return const_cast<int *>(i);
-      }
-      operator const int* () const
-      {
-        return i;
-      }
-    };
+    typedef const_adapter<const int *, int *> const_adapter;
     Renderer::drawImage(state, object, stream, width, height, color_map,
       interpolate, const_adapter(mask_colors), inline_image);
   }
