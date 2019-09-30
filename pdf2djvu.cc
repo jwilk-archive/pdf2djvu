@@ -344,7 +344,7 @@ public:
       return;
     }
     Renderer::drawImage(state, object, stream, width, height, color_map,
-        interpolate, mask_colors, inline_image);
+      interpolate, mask_colors, inline_image);
   }
 
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
