@@ -16,6 +16,7 @@
 #ifndef PDF2DJVU_PDF_BACKEND_H
 #define PDF2DJVU_PDF_BACKEND_H
 
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <ctime>
@@ -237,6 +238,8 @@ namespace pdf
       case splashModeXBGR8:
         this->byte_width = width * 4;
         break;
+      default:
+        assert(0 && "unexpected splash mode");
       }
     }
 
