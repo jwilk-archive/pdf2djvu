@@ -35,7 +35,7 @@ python-nose
 '
 pkgs_prepare_tests='
 fonts-linuxlibertine
-python-imaging
+python-pil
 texlive-base
 texlive-fonts-recommended
 texlive-luatex
