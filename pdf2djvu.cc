@@ -335,16 +335,42 @@ public:
     return;
   }
 
+  // POPPLER_VERSION >= 8200
   void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
-    pdf::gfx::ImageColorMap *color_map, bool interpolate, int *mask_colors, bool inline_image)
+    pdf::gfx::ImageColorMap *color_map, bool interpolate, const int *mask_colors, bool inline_image)
   {
     if (is_foreground_color_map(color_map) || config.no_render)
     {
       this->skipped_elements = true;
       return;
     }
+    class const_adapter
+    {
+    protected:
+      const int *i;
+    public:
+      const_adapter(const int *i)
+      : i(i)
+      { }
+      operator int * () const
+      {
+        return const_cast<int *>(i);
+      }
+      operator const int* () const
+      {
+        return i;
+      }
+    };
     Renderer::drawImage(state, object, stream, width, height, color_map,
-      interpolate, mask_colors, inline_image);
+      interpolate, const_adapter(mask_colors), inline_image);
+  }
+
+  // POPPLER_VERSION < 8200
+  void drawImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
+    pdf::gfx::ImageColorMap *color_map, bool interpolate, int *mask_colors, bool inline_image)
+  {
+    this->drawImage(state, object, stream, width, height, color_map,
+      interpolate, const_cast<const int*>(mask_colors), inline_image);
   }
 
   void drawMaskedImage(pdf::gfx::State *state, pdf::Object *object, pdf::Stream *stream, int width, int height,
