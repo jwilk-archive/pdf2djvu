@@ -56,7 +56,6 @@ pdf-unicode.o: pdf-unicode.cc
 pdf-unicode.o: pdf-unicode.hh
 pdf2djvu.o: autoconf.hh
 pdf2djvu.o: config.hh
-pdf2djvu.o: const-adapter.hh
 pdf2djvu.o: debug.hh
 pdf2djvu.o: djvu-const.hh
 pdf2djvu.o: djvu-outline.hh
