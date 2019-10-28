@@ -58,7 +58,7 @@ namespace pdf
         Unicode* data;
         int length_;
     public:
-        explicit FullNFKC(Unicode *, int length);
+        explicit FullNFKC(const Unicode *, int length);
         ~FullNFKC();
         int length() const
         {
@@ -79,7 +79,7 @@ namespace pdf
     protected:
         std::basic_string<Unicode> string;
     public:
-        explicit MinimalNFKC(Unicode *, int length);
+        explicit MinimalNFKC(const Unicode *, int length);
         int length() const;
         operator const Unicode*() const;
     };

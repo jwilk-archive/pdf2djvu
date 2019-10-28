@@ -124,11 +124,11 @@ std::string pdf::string_as_utf8(pdf::Object &object)
  * ===================
  */
 
-pdf::FullNFKC::FullNFKC(Unicode *unistr, int length)
+pdf::FullNFKC::FullNFKC(const Unicode *unistr, int length)
 : data(nullptr), length_(0)
 {
     assert(length >= 0);
-    this->data = unicodeNormalizeNFKC(unistr, length, &this->length_, nullptr);
+    this->data = unicodeNormalizeNFKC(const_cast<Unicode *>(unistr), length, &this->length_, nullptr);
 }
 
 pdf::FullNFKC::~FullNFKC()
@@ -140,7 +140,7 @@ pdf::FullNFKC::~FullNFKC()
  * ======================
  */
 
-pdf::MinimalNFKC::MinimalNFKC(Unicode *unistr, int length)
+pdf::MinimalNFKC::MinimalNFKC(const Unicode *unistr, int length)
 {
     this->string.append(unistr, length);
 }
