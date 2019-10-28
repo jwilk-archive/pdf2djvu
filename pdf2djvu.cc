@@ -389,8 +389,13 @@ public:
 
   bool interpretType3Chars() { return false; }
 
+#if POPPLER_VERSION >= 8200
+  void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
+    CharCode code, int n_bytes, const Unicode *unistr, int length)
+#else
   void drawChar(pdf::gfx::State *state, double x, double y, double dx, double dy, double origin_x, double origin_y,
     CharCode code, int n_bytes, Unicode *unistr, int length)
+#endif
   {
     double pox, poy, pdx, pdy, px, py, pw, ph;
     x -= origin_x; y -= origin_y;
