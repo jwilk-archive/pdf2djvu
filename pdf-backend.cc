@@ -101,9 +101,23 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
 }
 #endif
 
+template <typename T> T new_global_params();
+
+// POPPLER_VERSION >= 8300
+template <> std::unique_ptr<GlobalParams> new_global_params<std::unique_ptr<GlobalParams>>()
+{
+  return std::unique_ptr<GlobalParams>(new GlobalParams);
+}
+
+// POPPLER_VERSION < 8300
+template <> GlobalParams* new_global_params<GlobalParams*>()
+{
+  return new GlobalParams;
+}
+
 pdf::Environment::Environment()
 {
-  globalParams = new GlobalParams();
+  globalParams = new_global_params<decltype(globalParams)>();
   setErrorCallback(poppler_error_handler, nullptr);
 }
 
