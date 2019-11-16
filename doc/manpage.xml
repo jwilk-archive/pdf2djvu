@@ -558,7 +558,7 @@
         <varlistentry>
             <term><varname>TMPDIR</varname></term>
             <!-- As per IEEE Std 1003.1, 2004 Edition, “8.3 Other Environment Variables”:
-            http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html#tag_08_03
+            https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html#tag_08_03
             -->
             <listitem>
                 <para>
