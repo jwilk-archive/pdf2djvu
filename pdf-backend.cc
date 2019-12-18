@@ -504,10 +504,14 @@ bool pdf::get_glyph(splash::Splash *splash, splash::Font *font,
 void pdf::Renderer::convert_path(pdf::gfx::State *state, splash::Path &splash_path)
 {
   /* Source was copied from <poppler/SplashOutputDev.c>. */
+  // for POPPLER_VERSION >= 8300:
+  //   const pdf::gfx::Path *path
   auto path = state->getPath();
   int n_subpaths = path->getNumSubpaths();
   for (int i = 0; i < n_subpaths; i++)
   {
+    // for POPPLER_VERSION >= 8300:
+    //   const pdf::gfx::Subpath *subpath
     auto subpath = path->getSubpath(i);
     if (subpath->getNumPoints() > 0)
     {
