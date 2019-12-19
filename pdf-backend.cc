@@ -101,7 +101,6 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
 }
 #endif
 
-
 pdf::Environment::Environment()
 {
 #if POPPLER_VERSION >= 8300
