@@ -1,3 +1,9 @@
+pdf2djvu (0.9.16) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 30 Dec 2019 08:54:48 +0100
+
 pdf2djvu (0.9.15) unstable; urgency=low
 
   * Fix build failure with Poppler ≥ 0.83.
