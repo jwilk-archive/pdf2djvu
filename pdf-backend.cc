@@ -1,4 +1,4 @@
-/* Copyright © 2007-2019 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2007-2020 Jakub Wilk <jwilk@jwilk.net>
  * Copyright © 2009 Mateusz Turcza
  *
  * This file is part of pdf2djvu.
