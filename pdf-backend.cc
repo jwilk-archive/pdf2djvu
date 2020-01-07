@@ -48,7 +48,7 @@
  * ======================
  */
 
-static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, const char *message)
+static void poppler_error_handler_new(ErrorCategory category, pdf::Offset pos, const char *message)
 {
   std::string format;
   const char *category_name = _("PDF error");
@@ -94,12 +94,29 @@ static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offse
   error_log << std::endl;
 }
 
+static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, const char *message)
+{
+  poppler_error_handler_new(category, pos, message);
+}
+
 #if POPPLER_VERSION < 7000
 static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, char *message)
 {
   poppler_error_handler(data, category, pos, const_cast<const char *>(message));
 }
 #endif
+
+// for POPPLER_VERSION >= 8500:
+template <typename T1, typename T2> static auto set_error_callback(T1 callback1, T2 callback2) -> decltype(setErrorCallback(callback2))
+{
+  setErrorCallback(callback2);
+}
+
+// for POPPLER_VERSION < 8500:
+template <typename T1, typename T2> static auto set_error_callback(T1 callback1, T2 callback2) -> decltype(setErrorCallback(callback1, nullptr))
+{
+  setErrorCallback(callback1, nullptr);
+}
 
 pdf::Environment::Environment()
 {
@@ -108,7 +125,11 @@ pdf::Environment::Environment()
 #else
   globalParams = new GlobalParams;
 #endif
+#if POPPLER_VERSION >= 7000
+  set_error_callback(poppler_error_handler, poppler_error_handler_new);
+#else
   setErrorCallback(poppler_error_handler, nullptr);
+#endif
 }
 
 void pdf::Environment::set_antialias(bool value)
