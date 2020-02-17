@@ -73,6 +73,20 @@ public:
   { }
 };
 
+// for POPPLER_VERSION < 8600
+template <typename T>
+void unique_reset(std::unique_ptr<T> &up, T* ptr)
+{
+  up.reset(ptr);
+}
+
+// for POPPLER_VERSION >= 8600
+template <typename T>
+void unique_reset(std::unique_ptr<T> &up, std::unique_ptr<T> ptr)
+{
+  up = std::move(ptr);
+}
+
 static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *catalog)
 {
   std::unique_ptr<pdf::link::Destination> dest;
@@ -81,7 +95,7 @@ static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *cata
 #endif
   pdf::link::Destination *orig_dest = goto_link->getDest();
   if (orig_dest == nullptr)
-    dest.reset(catalog->findDest(goto_link->getNamedDest()));
+    unique_reset(dest, catalog->findDest(goto_link->getNamedDest()));
   else
     dest.reset(orig_dest->copy());
   if (dest.get() != nullptr)
