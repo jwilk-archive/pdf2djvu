@@ -53,11 +53,7 @@ std::string pdf::string_as_utf8(const pdf::String *string)
      */
     const static uint32_t replacement_character = 0xFFFD;
     const char *cstring = pdf::get_c_string(string);
-#if POPPLER_VERSION < 3500
-    size_t clength = const_cast<pdf::String *>(string)->getLength();
-#else
     size_t clength = string->getLength();
-#endif
     std::ostringstream stream;
     if (clength >= 2 && (cstring[0] & 0xFF) == 0xFE && (cstring[1] & 0xFF) == 0xFF) {
         /* UTF-16-BE Byte Order Mark */

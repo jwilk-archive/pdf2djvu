@@ -122,12 +122,6 @@ pdf::Environment::Environment()
 void pdf::Environment::set_antialias(bool value)
 {
   this->antialias = value;
-#if POPPLER_VERSION < 3100
-  if (!globalParams->setAntialias(const_cast<char*>(value ? "yes" : "no")))
-    throw UnableToSetParameter(_("Unable to set antialias parameter"));
-  if (!globalParams->setVectorAntialias(const_cast<char*>(value ? "yes" : "no")))
-    throw UnableToSetParameter(_("Unable to set vector antialias parameter"));
-#endif
 }
 
 
@@ -470,10 +464,8 @@ bool pdf::Environment::antialias = false;
 pdf::Renderer::Renderer(pdf::splash::Color &paper_color, bool monochrome)
 : pdf::splash::OutputDevice(monochrome ? splashModeMono1 : splashModeRGB8, 4, false, paper_color)
 {
-#if POPPLER_VERSION >= 3100
   this->setFontAntialias(pdf::Environment::antialias);
   this->setVectorAntialias(pdf::Environment::antialias);
-#endif
 }
 
 void pdf::Renderer::drawLink(pdf::link::Link *link, pdf::Catalog *catalog)

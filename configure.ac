@@ -73,7 +73,7 @@ do
 done
 AC_MSG_RESULT([ok])
 
-PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.24.0])
+PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.35.0])
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of Poppler])
 poppler_version=$(IFS=.; set -- $poppler_version; printf '%d' $(( ((100 * $1) + $2) * 100 + $3 )) )
