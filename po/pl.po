@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.17\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2019-04-03 18:06+0200\n"
+"POT-Creation-Date: 2020-03-02 17:45+0100\n"
 "PO-Revision-Date: 2016-12-08 00:17+0100\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
@@ -529,14 +529,6 @@ msgstr "Błąd przetwarzania rozmiaru strony"
 #: config.cc
 msgid "Unable to parse page title template specification"
 msgstr "Błąd przetwarzania specyfikacji szablonu tytułu strony"
-
-#: pdf-backend.cc
-msgid "Unable to set antialias parameter"
-msgstr "Nie można ustawić parametru antyaliasingu"
-
-#: pdf-backend.cc
-msgid "Unable to set vector antialias parameter"
-msgstr "Nie można ustawić parametru antyaliasingu grafiki wektorowej"
 
 #: pdf2djvu.cc
 msgid "Unexpected output from djvused"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.17\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2019-04-03 18:06+0200\n"
+"POT-Creation-Date: 2020-03-02 17:45+0100\n"
 "PO-Revision-Date: 2016-12-09 15:41+0200\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -527,14 +527,6 @@ msgstr "Seitengröße konnte nicht ausgewertet werden"
 #: config.cc
 msgid "Unable to parse page title template specification"
 msgstr "Seitentitel-Schablonenangabe konnte nicht ausgewertet werden"
-
-#: pdf-backend.cc
-msgid "Unable to set antialias parameter"
-msgstr "Kantenglättungsparameter kann nicht gesetzt werden"
-
-#: pdf-backend.cc
-msgid "Unable to set vector antialias parameter"
-msgstr "Vektorkantenglättungsparameter kann nicht gesetzt werden"
 
 #: pdf2djvu.cc
 msgid "Unexpected output from djvused"
