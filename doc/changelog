@@ -1,8 +1,15 @@
 pdf2djvu (0.9.17) UNRELEASED; urgency=low
 
-  * 
+  * Fix build failure with Poppler ≥ 0.86.
+    Thanks to David B. Evans for the bug report.
+    https://github.com/jwilk/pdf2djvu/issues/142
+  * Drop support for Poppler < 0.35.
+  * Upgrade libraries bundled with the Windows package:
+    - Poppler to 0.86.1;
+    - Expat to 2.2.9;
+    - FreeType to 2.10.1.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 29 Feb 2020 22:11:27 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 02 Mar 2020 17:10:13 +0100
 
 pdf2djvu (0.9.16) unstable; urgency=low
 
