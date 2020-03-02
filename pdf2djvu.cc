@@ -475,7 +475,11 @@ public:
     switch (link_action->getKind())
     {
     case actionURI:
+#if POPPLER_VERSION >= 8600
+      uri = dynamic_cast<pdf::link::URI*>(link_action)->getURI();
+#else
       uri += pdf::get_c_string(dynamic_cast<pdf::link::URI*>(link_action)->getURI());
+#endif
       break;
     case actionGoTo:
     {
