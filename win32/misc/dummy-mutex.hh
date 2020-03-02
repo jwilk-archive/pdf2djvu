@@ -30,6 +30,15 @@ namespace std {
         }
     };
 
+    class mutex {
+    public:
+        void lock() { }
+        void unlock() { }
+        bool try_lock() {
+            return true;
+        }
+    };
+
 }
 
 #endif

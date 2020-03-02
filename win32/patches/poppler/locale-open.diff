@@ -1,10 +1,10 @@
 Don't use Unicode API for opening files.
 
-Last-Update: 2019-06-07
+Last-Update: 2020-03-02
 
 --- a/poppler/PDFDoc.cc
 +++ b/poppler/PDFDoc.cc
-@@ -147,7 +147,7 @@
+@@ -148,7 +148,7 @@
  #endif
  
    // try to open file

@@ -1,10 +1,10 @@
 Add strndup(3) implementation.
 
-Last-Update: 2018-12-15
+Last-Update: 2020-03-02
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -697,6 +697,17 @@
+@@ -689,6 +689,17 @@
    return lang;
  }
  
@@ -19,6 +19,6 @@ Last-Update: 2018-12-15
 +  return ds;
 +}
 +
- static FcPattern *buildFcPattern(GfxFont *font, const GooString *base14Name)
+ static FcPattern *buildFcPattern(const GfxFont *font, const GooString *base14Name)
  {
    int weight = -1,
