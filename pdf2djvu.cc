@@ -718,9 +718,21 @@ static void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog
         pdf::OwnedObject destination;
         std::unique_ptr<pdf::link::Action> link_action;
         if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
+        {
+#if POPPLER_VERSION >= 8600
+          link_action = pdf::link::Action::parseDest(&destination);
+#else
           link_action.reset(pdf::link::Action::parseDest(&destination));
+#endif
+        }
         else if (!pdf::dict_lookup(current, "A", &destination)->isNull())
+        {
+#if POPPLER_VERSION >= 8600
+          link_action = pdf::link::Action::parseAction(&destination);
+#else
           link_action.reset(pdf::link::Action::parseAction(&destination));
+#endif
+        }
         else
           throw NoPageForBookmark();
         if (link_action.get() == nullptr || link_action->getKind() != actionGoTo)
