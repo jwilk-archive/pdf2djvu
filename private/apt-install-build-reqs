@@ -77,13 +77,14 @@ do
     esac
 done
 
+set -e -u
+
 [ "$opt_tests" ] && pkgs="$pkgs $pkgs_tests"
 [ "$opt_vcs" ] && pkgs="$pkgs $pkgs_autotools"
 [ "$opt_vcs" ] && [ "$opt_tests" ] && pkgs="$pkgs $pkgs_prepare_tests"
 [ "$opt_man" ] && pkgs="$pkgs $pkgs_man"
 
 PS4='# '
-set -e
 (
     set -x
     apt-get install $pkgs
