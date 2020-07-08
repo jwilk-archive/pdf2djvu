@@ -40,14 +40,22 @@ texlive-base
 texlive-fonts-recommended
 texlive-luatex
 '
+pkgs_man='
+docbook-xml
+docbook-xsl
+gettext
+libxml2-utils
+po4a
+xsltproc
+'
 pkgs="$pkgs_base"
 
 usage()
 {
-    printf '%s [--vcs] [--tests]\n' "$0"
+    printf '%s [--vcs] [--tests] [--man]\n' "$0"
 }
 
-args=$(getopt -n "$0" -o 'h' --long 'help,vcs,tests' -- "$@")
+args=$(getopt -n "$0" -o 'h' --long 'help,vcs,man,tests' -- "$@")
 if [ $? -ne 0 ]
 then
     usage >&2
@@ -55,6 +63,7 @@ then
 fi
 opt_vcs=
 opt_tests=
+opt_man=
 eval set -- "$args"
 while true
 do
@@ -62,6 +71,7 @@ do
         -h|--help) usage; exit 0;;
         --vcs) opt_vcs=y; shift;;
         --tests) opt_tests=y ; shift;;
+        --man) opt_man=y; shift;;
         --) shift; break;;
         *) printf '%s: internal error (%s)\n' "$0" "$1" >&2; exit 1;;
     esac
@@ -70,6 +80,7 @@ done
 [ "$opt_tests" ] && pkgs="$pkgs $pkgs_tests"
 [ "$opt_vcs" ] && pkgs="$pkgs $pkgs_autotools"
 [ "$opt_vcs" ] && [ "$opt_tests" ] && pkgs="$pkgs $pkgs_prepare_tests"
+[ "$opt_man" ] && pkgs="$pkgs $pkgs_man"
 
 PS4='# '
 set -e
