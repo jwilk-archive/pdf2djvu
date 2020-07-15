@@ -189,7 +189,7 @@ P_MAYBE_ADD_CXXFLAGS(
 # Output files:
 
 AC_CONFIG_FILES([autoconf.mk])
-AC_CONFIG_HEADER([autoconf.hh])
+AC_CONFIG_HEADERS([autoconf.hh])
 AC_OUTPUT
 
 # Final remarks:
