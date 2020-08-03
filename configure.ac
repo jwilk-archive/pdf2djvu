@@ -76,8 +76,22 @@ AC_MSG_RESULT([ok])
 PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.35.0])
 poppler_version=$($PKG_CONFIG --modversion poppler-splash)
 AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of Poppler])
+parse_poppler_version()
+{
+  test $# -eq 3 || return 1
+  printf '%s' "${1#0}"
+  shift
+  for v in "$@"
+  do
+    case $v in
+    ?) printf '0%s' "$v";;
+    ??) printf '%s' "$v";;
+    *) return 1;
+    esac
+  done
+}
 AS_IF(
-  [poppler_version=$(IFS=.; set -- $poppler_version; printf '%d' $(( ((100 * $1) + $2) * 100 + $3 )) )],
+  [poppler_version=$(IFS=.; parse_poppler_version $poppler_version)],
   [:],
   [AC_MSG_ERROR([could not parse Poppler version])]
 )
