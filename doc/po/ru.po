@@ -50,7 +50,7 @@ msgstr "&version;"
 
 #. type: Content of: <refentry><refnamediv><refpurpose>
 msgid "creates DjVu files from PDF files"
-msgstr "создаёт DjVu-файлы из PDF-фалов"
+msgstr "создаёт DjVu-файлы из PDF-файлов"
 
 #. type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
 msgid "<command>&p;</command> <arg choice='opt'> <group choice='req'> <arg choice='plain'><option>-o</option></arg> <arg choice='plain'><option>--output</option></arg> </group> <arg choice='plain'><replaceable>output-djvu-file</replaceable></arg> </arg> <arg choice='opt' rep='repeat'><replaceable>option</replaceable></arg> <arg choice='plain' rep='repeat'><replaceable>pdf-file</replaceable></arg>"
