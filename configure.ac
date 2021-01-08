@@ -73,8 +73,8 @@ do
 done
 AC_MSG_RESULT([ok])
 
-PKG_CHECK_MODULES([POPPLER], [poppler-splash >= 0.35.0])
-poppler_version=$($PKG_CONFIG --modversion poppler-splash)
+PKG_CHECK_MODULES([POPPLER], [poppler >= 0.35.0])
+poppler_version=$($PKG_CONFIG --modversion poppler)
 AC_DEFINE_UNQUOTED([POPPLER_VERSION_STRING], ["$poppler_version"], [Define to the version of Poppler])
 parse_poppler_version()
 {
