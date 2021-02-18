@@ -137,7 +137,7 @@ public:
   File(const Directory& directory, const std::string &name);
   virtual ~File()
   { }
-  File::streamoff size();
+  std::streamoff size();
   void reopen(std::fstream::openmode mode = std::fstream::openmode());
   const std::string& get_basename() const;
   operator const std::string& () const;

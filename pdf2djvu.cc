@@ -194,9 +194,9 @@ public:
     return this->file->get_basename();
   }
 
-  File::streamoff size()
+  std::streamoff size()
   {
-    File::streamoff result;
+    std::streamoff result;
     this->file->reopen();
     result = this->file->size();
     this->file->close();
@@ -1128,7 +1128,7 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     bzz << "-e" << bzz_file << "-";
     bzz(index_file);
   }
-  File::streamoff dirm_off = this->index_file.size();
+  std::streamoff dirm_off = this->index_file.size();
   this->index_file.seekp(20, std::ios::beg);
   for (int i = 3; i >= 0; i--)
     this->index_file << static_cast<char>(((dirm_off - 24) >> (8 * i)) & 0xFF);
@@ -1143,12 +1143,12 @@ void IndirectDjVm::create(const std::vector<Component> &components, bool bare)
     DjVuCommand bzz("bzz");
     bzz << "-e" << bzz_file << "-";
     bzz(index_file);
-    File::streamoff outline_off = index_file.size();
+    std::streamoff outline_off = index_file.size();
     this->index_file.seekp(dirm_off + 4, std::ios::beg);
     for (int i = 3; i >= 0; i--)
       this->index_file << static_cast<char>(((outline_off - dirm_off - 8) >> (8 * i)) & 0xFF);
   }
-  File::streamoff off = this->index_file.size();
+  std::streamoff off = this->index_file.size();
   this->index_file.seekp(8, std::ios::beg);
   for (int i = 3; i >= 0; i--)
     this->index_file << static_cast<char>(((off - 12) >> (8 * i)) & 0xFF);

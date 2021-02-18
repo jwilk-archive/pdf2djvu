@@ -378,11 +378,11 @@ File::File(const Directory& directory, const std::string &name)
   this->open(stream.str(), this->get_default_open_mode());
 }
 
-File::streamoff File::size()
+std::streamoff File::size()
 {
-  File::streampos orig_pos = this->tellg();
+  std::streampos orig_pos = this->tellg();
   this->seekg(0, std::ios::end);
-  File::streamoff result = this->tellg();
+  std::streamoff result = this->tellg();
   this->seekg(orig_pos);
   return result;
 }
