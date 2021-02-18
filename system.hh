@@ -39,14 +39,10 @@ public:
   { }
 };
 
-#if defined(__GNUC__)
-__attribute__((noreturn))
-#endif
+[[noreturn]]
 void throw_posix_error(const std::string &context);
 #ifdef WIN32
-#if defined(__GNUC__)
-__attribute__((noreturn))
-#endif
+[[noreturn]]
 void throw_win32_error(const std::string &context);
 #endif
 
