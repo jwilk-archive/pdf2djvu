@@ -371,7 +371,7 @@ src/expat/install-stamp: src/expat/build-stamp
 
 src/exiv2/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://www.exiv2.org/releases/exiv2-0.25.tar.gz c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4
+	tools/wget https://web.archive.org/web/0/https://www.exiv2.org/releases/exiv2-0.25.tar.gz c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4
 	$(untar) src.tar/exiv2-0.25.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/exiv2 quilt push -a
 	touch $(@)
