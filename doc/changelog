@@ -1,8 +1,14 @@
 pdf2djvu (0.9.18) UNRELEASED; urgency=low
 
-  * 
+  [ Ilia Gobjila ]
+  * Fix typo in the Russian documentation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 04 Sep 2020 10:55:36 +0200
+  [ Atri Bhattacharya ]
+  * Fix configure check for Poppler ≥ 20.12.
+    Thanks to Evangelos Foutras for the bug report.
+    https://github.com/jwilk/pdf2djvu/issues/144
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 30 Apr 2021 20:26:13 +0200
 
 pdf2djvu (0.9.17.1) unstable; urgency=low
 
