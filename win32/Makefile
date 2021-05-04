@@ -260,8 +260,8 @@ src/poppler-data/install-stamp: src/poppler-data/build-stamp
 
 src/djvulibre/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.27/djvulibre-3.5.27.tar.gz e69668252565603875fb88500cde02bf93d12d48a3884e472696c896e81f505f
-	$(untar) src.tar/djvulibre-*.tar.gz -C $(dir $@)
+	tools/wget https://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.28/djvulibre-3.5.28.tar.gz fcd009ea7654fde5a83600eb80757bd3a76998e47d13c66b54c8db849f8f2edc
+	$(untar) src.tar/djvulibre-3.5.28.tar.gz -C $(dir $@)
 	sed -i -e 's/[A-Z]\+_EXPORT/DLL_EXPORT/' $(dir $@)/libdjvu/*.h
 	sed -i -e 's/#if.*def.*AUTOCONF.*/#if 0/' $(dir $@)/libdjvu/DjVuMessage.cpp
 	touch $(@)
