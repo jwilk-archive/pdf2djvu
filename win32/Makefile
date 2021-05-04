@@ -347,8 +347,8 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 
 src/expat/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://github.com/libexpat/libexpat/releases/download/R_2_2_9/expat-2.2.9.tar.bz2 f1063084dc4302a427dabcca499c8312b3a32a29b7d2506653ecc8f950a9a237
-	$(untar) src.tar/expat-2.2.9.tar.bz2 -C $(dir $@)
+	tools/wget https://github.com/libexpat/libexpat/releases/download/R_2_3_0/expat-2.3.0.tar.xz caa34f99b6e3bcea8502507eb6549a0a84510b244a748dfb287271b2d47467a9
+	$(untar) src.tar/expat-2.3.0.tar.xz -C $(dir $@)
 	touch $(@)
 
 src/expat/config.status: src/expat/source-stamp
