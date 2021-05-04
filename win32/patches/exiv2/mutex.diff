@@ -1,0 +1,23 @@
+Use Windows synchronization API.
+
+Last-Update; 2021-05-04
+
+--- a/include/exiv2/rwlock.hpp
++++ b/include/exiv2/rwlock.hpp
+@@ -21,14 +21,14 @@
+ #ifndef RW_LOCK_HPP
+ #define RW_LOCK_HPP
+ 
+-#ifdef _MSC_VER
++#ifdef _WIN32
+ #include <windows.h>
+ #else
+ #include <pthread.h>
+ #endif
+ 
+ namespace Exiv2 {
+-#ifdef _MSC_VER
++#ifdef _WIN32
+         /*!
+          @brief Class to provide a Read-Write Lock
+         */

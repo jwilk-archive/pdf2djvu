@@ -1,4 +1,1 @@
-EXIV2COBJ-no-libtool.diff
-EXIVCSRC-no-localtime.diff
-EXIV2EXE.diff
-disable-pngimage.diff
+mutex.diff

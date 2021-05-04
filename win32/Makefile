@@ -371,21 +371,22 @@ src/expat/install-stamp: src/expat/build-stamp
 
 src/exiv2/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://web.archive.org/web/0/https://www.exiv2.org/releases/exiv2-0.25.tar.gz c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4
-	$(untar) src.tar/exiv2-0.25.tar.gz -C $(dir $@)
+	tools/wget https://github.com/Exiv2/exiv2/archive/refs/tags/v0.27.3.tar.gz -n exiv2-0.27.3.tar.gz 6398bc743c32b85b2cb2a604273b8c90aa4eb0fd7c1700bf66cbb2712b4f00c1
+	$(untar) src.tar/exiv2-0.27.3.tar.gz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/exiv2 quilt push -a
 	touch $(@)
 
-src/exiv2/config.status: src/exiv2/source-stamp
-src/exiv2/config.status: src/expat/install-stamp
-	cd $(dir $@) && \
-		./configure --host=$(host) --prefix=$(usr) \
-		--disable-static \
-		--without-zlib \
-		--disable-lensdata \
-		--disable-nls
+src/exiv2/Makefile: src/exiv2/source-stamp
+src/exiv2/Makefile: src/expat/install-stamp
+	cd $(dir $@) && cmake $(cmake_options) . \
+		-DEXIV2_BUILD_EXIV2_COMMAND=OFF \
+		-DEXIV2_BUILD_SAMPLES=OFF \
+		-DEXIV2_ENABLE_PNG=OFF \
+		-DEXIV2_ENABLE_PRINTUCS2=OFF \
+		-DEXIV2_ENABLE_LENSDATA=OFF \
+		-DEXIV2_ENABLE_DYNAMIC_RUNTIME=OFF
 
-src/exiv2/build-stamp: src/exiv2/config.status
+src/exiv2/build-stamp: src/exiv2/Makefile
 	$(MAKE) -C $(dir $@)
 	touch $(@)
 
