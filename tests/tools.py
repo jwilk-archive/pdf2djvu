@@ -212,6 +212,7 @@ class case(object):
                 env['LC_ALL'] = _get_locale_for_encoding(value)
                 continue
             raise TypeError('{key!r} is an invalid keyword argument for this function'.format(key=key))
+        env['LANGUAGE'] = 'en'
         print('$', ' '.join(map(pipes.quote, commandline)))
         try:
             child = ipc.Popen(list(commandline),
