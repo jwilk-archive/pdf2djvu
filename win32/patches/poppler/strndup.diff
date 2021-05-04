@@ -1,11 +1,11 @@
 Add strndup(3) implementation.
 
-Last-Update: 2020-03-02
+Last-Update: 2021-05-04
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -689,6 +689,17 @@
-   return lang;
+@@ -688,6 +688,17 @@ static const char *getFontLang(const Gfx
+     return lang;
  }
  
 +static char *strndup(const char *s, size_t n)
@@ -21,4 +21,4 @@ Last-Update: 2020-03-02
 +
  static FcPattern *buildFcPattern(const GfxFont *font, const GooString *base14Name)
  {
-   int weight = -1,
+     int weight = -1, slant = -1, width = -1, spacing = -1;

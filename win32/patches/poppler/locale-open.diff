@@ -1,15 +1,15 @@
 Don't use Unicode API for opening files.
 
-Last-Update: 2020-03-02
+Last-Update: 2021-05-04
 
 --- a/poppler/PDFDoc.cc
 +++ b/poppler/PDFDoc.cc
-@@ -148,7 +148,7 @@
+@@ -156,7 +156,7 @@ PDFDoc::PDFDoc(const GooString *fileName
  #endif
  
-   // try to open file
+     // try to open file
 -#ifdef _WIN32
 +#if 0
-   wchar_t *wFileName = (wchar_t*)utf8ToUtf16(fileName->c_str());
-   file = GooFile::open(wFileName);
-   gfree(wFileName);
+     wchar_t *wFileName = (wchar_t *)utf8ToUtf16(fileName->c_str());
+     file = GooFile::open(wFileName);
+     gfree(wFileName);

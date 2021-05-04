@@ -1,10 +1,10 @@
 Use dummy implementation of mutexes.
 
-Last-Update: 2020-03-02
+Last-Update: 2021-05-04
 
 --- a/poppler/Annot.h
 +++ b/poppler/Annot.h
-@@ -44,7 +44,7 @@
+@@ -49,7 +49,7 @@
  
  #include <memory>
  #include <atomic>
@@ -48,7 +48,7 @@ Last-Update: 2020-03-02
  #include <utility>
 --- a/poppler/GlobalParams.h
 +++ b/poppler/GlobalParams.h
-@@ -46,7 +46,7 @@
+@@ -47,7 +47,7 @@
  #include <unordered_map>
  #include <string>
  #include <memory>
@@ -59,7 +59,7 @@ Last-Update: 2020-03-02
  class GooString;
 --- a/poppler/PDFDoc.h
 +++ b/poppler/PDFDoc.h
-@@ -42,7 +42,7 @@
+@@ -43,7 +43,7 @@
  #ifndef PDFDOC_H
  #define PDFDOC_H
  
@@ -67,10 +67,10 @@ Last-Update: 2020-03-02
 +#include <dummy-mutex>
  
  #include "poppler-config.h"
- #include <cstdio>
+ #include "poppler_private_export.h"
 --- a/poppler/Page.h
 +++ b/poppler/Page.h
-@@ -35,7 +35,7 @@
+@@ -36,7 +36,7 @@
  #define PAGE_H
  
  #include <memory>
