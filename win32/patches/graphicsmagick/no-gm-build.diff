@@ -4,7 +4,7 @@ Last-Update: 2015-08-21
 
 --- a/magick/command.c
 +++ b/magick/command.c
-@@ -17088,6 +17088,7 @@
+@@ -17126,6 +17126,7 @@ static MagickPassFail VersionCommand(Ima
  #endif /* defined(HasZLIB) */
    PrintFeature("ZLIB", supported);
  
@@ -12,7 +12,7 @@ Last-Update: 2015-08-21
  #if defined(GM_BUILD_HOST)
    (void) fprintf(stdout,"\nHost type: %.1024s\n", GM_BUILD_HOST);
  #endif /* defined(GM_BUILD_HOST) */
-@@ -17125,6 +17126,7 @@
+@@ -17163,6 +17164,7 @@ static MagickPassFail VersionCommand(Ima
  #if defined(GM_BUILD_LIBS)
    (void) fprintf(stdout,"  LIBS     = %.1024s\n", GM_BUILD_LIBS);
  #endif /* defined(GM_BUILD_LIBS) */

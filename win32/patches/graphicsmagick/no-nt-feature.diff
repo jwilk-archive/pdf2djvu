@@ -1,0 +1,45 @@
+Disable some Windows-specific features.
+
+Last-Update: 2021-05-04
+--- a/magick/nt_feature.c
++++ b/magick/nt_feature.c
+@@ -33,7 +33,7 @@
+ */
+ 
+ #include "magick/studio.h"
+-#if defined(MSWINDOWS) || defined(__CYGWIN__)
++#if 0
+ /*
+   Include declarations.
+ */
+--- a/magick/magick.c
++++ b/magick/magick.c
+@@ -1378,7 +1378,7 @@ MagickExport MagickBool
+ IsMagickConflict(const char *magick)
+ {
+   assert(magick != (char *) NULL);
+-#if defined(MSWINDOWS) || defined(__CYGWIN__)
++#if 0
+   return(NTIsMagickConflict(magick));
+ #endif
+   return(MagickFalse);
+--- a/magick/type.c
++++ b/magick/type.c
+@@ -172,7 +172,7 @@ MagickExport const TypeInfo *GetTypeInfo
+       if (type_list == (TypeInfo *) NULL)
+         {
+           (void) ReadTypeConfigureFile(TypeFilename,0,exception);
+-#if defined(MSWINDOWS) || defined(__CYGWIN__)
++#if 0
+           {
+             TypeInfo
+               *type_info;
+@@ -633,7 +633,7 @@ static unsigned int ReadTypeConfigureFil
+   (void) LogMagickEvent(ConfigureEvent,GetMagickModule(),
+     "File path=\"%.1024s\", recursion depth=%lu",basename,depth);
+   (void) strlcpy(path,basename,sizeof(path));
+-#if defined(MSWINDOWS)
++#if 0
+   /*
+     For Windows, cache the location of the Ghostscript fonts.
+   */

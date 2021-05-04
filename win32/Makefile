@@ -240,8 +240,8 @@ src/poppler/install-stamp: src/poppler/build-stamp
 
 src/poppler-data/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-data-0.4.9.tar.gz 1f9c7e7de9ecd0db6ab287349e31bf815ca108a5a175cf906a90163bdbe32012
-	$(untar) src.tar/poppler-data-0.4.9.tar.gz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-data-0.4.10.tar.gz 6e2fcef66ec8c44625f94292ccf8af9f1d918b410d5aa69c274ce67387967b30
+	$(untar) src.tar/poppler-data-0.4.10.tar.gz -C $(dir $@)
 	touch $(@)
 
 src/poppler-data/build-stamp: src/poppler-data/source-stamp
@@ -294,8 +294,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.31/GraphicsMagick-1.3.31.tar.xz 096bbb59d6f3abd32b562fc3b34ea90d88741dc5dd888731d61d17e100394278
-	$(untar) src.tar/GraphicsMagick-1.3.31.tar.xz -C $(dir $@)
+	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.36/GraphicsMagick-1.3.36.tar.xz 5d5b3fde759cdfc307aaf21df9ebd8c752e3f088bb051dd5df8aac7ba7338f46
+	$(untar) src.tar/GraphicsMagick-1.3.36.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
@@ -340,7 +340,7 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 	$(call ship_dll,libGraphicsMagick)
 	rm dist/libGraphicsMagickWand*.dll
 	install -d dist/share/GraphicsMagick
-	install -m 644 share/GraphicsMagick-1.3.31/config/*.mgk dist/share/GraphicsMagick
+	install -m 644 share/GraphicsMagick-1.3.36/config/*.mgk dist/share/GraphicsMagick
 	touch $(@)
 
 # Expat
