@@ -1,0 +1,14 @@
+Don't use const in the prototype.
+
+Last-Update: 2021-05-04
+
+--- a/iconv.h
++++ b/iconv.h
+@@ -1,6 +1,7 @@
+ #ifndef _LIBICONV_H
+ #define _LIBICONV_H
+ #include <stddef.h>
++#define WINICONV_CONST
+ #ifndef WINICONV_CONST
+ # ifdef ICONV_CONST
+ #  define WINICONV_CONST ICONV_CONST

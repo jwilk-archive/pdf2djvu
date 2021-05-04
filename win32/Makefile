@@ -494,6 +494,7 @@ src/winiconv/source-stamp:
 	mkdir -p $(dir $@)
 	tools/wget https://github.com/win-iconv/win-iconv/archive/v0.0.8.tar.gz -n win-iconv-0.0.8.tar.gz 23adea990a8303c6e69e32a64a30171efcb1b73824a1c2da1bbf576b0ae7c520
 	$(untar) src.tar/win-iconv-0.0.8.tar.gz -C $(dir $@)
+	cd $(dir $@) && QUILT_PATCHES=../../patches/winiconv quilt push -a
 	touch $(@)
 
 src/winiconv/build-stamp: src/winiconv/source-stamp
