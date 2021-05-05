@@ -598,7 +598,7 @@ src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 src/mingwrt/install-stamp:
 	mkdir -p $(dir $@) bin/ dist/
 	cp $(shell $(CXX) -print-file-name=libstdc++-6.dll) bin/
-	cp $(shell $(CXX) -print-file-name=libgcc_s_dw2-1.dll) bin/
+	cp $(or $(wildcard $(shell $(CXX) -print-file-name=libgcc_s_dw2-1.dll) $(shell $(CXX) -print-file-name=libgcc_s_sjlj-1.dll))) bin/
 	$(call ship_dll,libstdc++)
 	$(call ship_dll,libgcc_s)
 	touch $(@)
