@@ -381,14 +381,14 @@ def assert_uuid_urn(uuid):
 __all__ = [
     # nose:
     'assert_equal',
-    'assert_not_equal',
-    'assert_true',
     'assert_in',
     'assert_is',
     'assert_is_none',
     'assert_is_not_none',
     'assert_multi_line_equal',
+    'assert_not_equal',
     'assert_regex',
+    'assert_true',
     # misc assert:
     'assert_fail',
     # helper classes:
