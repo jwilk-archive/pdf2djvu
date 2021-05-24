@@ -8,7 +8,18 @@ pdf2djvu (0.9.18) UNRELEASED; urgency=low
     Thanks to Evangelos Foutras for the bug report.
     https://github.com/jwilk/pdf2djvu/issues/144
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 30 Apr 2021 20:26:13 +0200
+  [ Jakub Wilk ]
+  * Upgrade libraries bundled with the Windows package:
+    - Poppler to 21.05;
+    - DjVuLibre to 3.5.28;
+    - GraphicsMagick to 1.3.36;
+    - Expat to 2.3.0;
+    - Exiv2 to 0.27.3;
+    - FreeType to 2.10.4;
+    - OpenJPEG to 2.4.0.
+  * Drop support for Python 2.6.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 24 May 2021 16:32:02 +0200
 
 pdf2djvu (0.9.17.1) unstable; urgency=low
 
