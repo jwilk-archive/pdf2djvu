@@ -13,6 +13,7 @@ pdf2djvu (0.9.18) UNRELEASED; urgency=low
     https://github.com/jwilk/pdf2djvu/issues/146
   * Upgrade libraries bundled with the Windows package:
     - Poppler to 21.06;
+    - poppler-data to 0.4.10;
     - DjVuLibre to 3.5.28;
     - GraphicsMagick to 1.3.36;
     - Expat to 2.4.1;
@@ -21,7 +22,7 @@ pdf2djvu (0.9.18) UNRELEASED; urgency=low
     - OpenJPEG to 2.4.0.
   * Drop support for Python 2.6.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Jun 2021 17:49:03 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Jun 2021 20:01:10 +0200
 
 pdf2djvu (0.9.17.1) unstable; urgency=low
 
