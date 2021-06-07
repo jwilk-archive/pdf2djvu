@@ -214,8 +214,8 @@ src/poppler/Makefile: src/openjpeg/install-stamp
 		-DENABLE_LIBOPENJPEG=openjpeg2 \
 		-DENABLE_QT5=OFF \
 		-DENABLE_SPLASH=ON \
-		-DENABLE_UTILS=OFF \
 		-DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
+		-DENABLE_UTILS=OFF \
 		-DFONT_CONFIGURATION=fontconfig \
 		-DTESTDATADIR=/nonexistent \
 		-DWITH_NSS3=OFF \
