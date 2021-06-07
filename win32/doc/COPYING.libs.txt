@@ -19,15 +19,13 @@ libpoppler-\*.dll
 =================
 
 | Copyright © 1996-2011 Glyph & Cog, LLC
-| Copyright © 2005-2020 `The Poppler Developers <https://poppler.freedesktop.org>`_
+| Copyright © 2005-2021 `The Poppler Developers <https://poppler.freedesktop.org>`_
 
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; version 2 dated June, 1991.
+Xpdf is licensed under the GNU General Public License (GPL), version 2
+or 3.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
+Changes made under the Poppler project are licensed under GPL version 2 or
+later.
 
 libfreetype\*.dll
 =================
@@ -35,33 +33,35 @@ libfreetype\*.dll
 | Copyright © 1990-1998 The Open Group
 | Copyright © 1995-2002 Jean-loup Gailly
 | Copyright © 1995-2002 Mark Adler
-| Copyright © 1996-2019 Just van Rossum
-| Copyright © 1996-2019 Robert Wilhelm
-| Copyright © 1996-2019 Werner Lemberg
-| Copyright © 1996-2019 David Turner
+| Copyright © 1996-2020 Just van Rossum
+| Copyright © 1996-2020 Robert Wilhelm
+| Copyright © 1996-2020 Werner Lemberg
+| Copyright © 1996-2020 David Turner
 | Copyright © 2000 Computing Research Labs, New Mexico State University
 | Copyright © 2000-2012 Francesco Zappa Nardelli
-| Copyright © 2002-2019 Roberto Alameda
+| Copyright © 2002-2020 Roberto Alameda
 | Copyright © 2003 Huw D M Davies
-| Copyright © 2003-2019 Masatake YAMATO
-| Copyright © 2003-2019 Redhat K.K.
-| Copyright © 2004-2019 George Williams
-| Copyright © 2004-2019 Albert Chin-A-Young
-| Copyright © 2004-2019 suzuki toshiya
+| Copyright © 2003-2020 Masatake YAMATO
+| Copyright © 2003-2020 Redhat K.K.
+| Copyright © 2004-2020 George Williams
+| Copyright © 2004-2020 Albert Chin-A-Young
+| Copyright © 2004-2020 suzuki toshiya
 | Copyright © 2005-2019 Detlef Würkner
 | Copyright © 2007 Dmitry Timoshkov
-| Copyright © 2007-2019 Rahul Bhalerao
-| Copyright © 2007-2019 Derek Clegg
-| Copyright © 2007-2019 Michael Toftdal
+| Copyright © 2007-2020 Rahul Bhalerao
+| Copyright © 2007-2020 Derek Clegg
+| Copyright © 2007-2020 Michael Toftdal
 | Copyright © 2007-2014 Adobe Systems Incorporated.
-| Copyright © 2009-2019 Mickey Gabel
-| Copyright © 2009-2019 Oran Agra
-| Copyright © 2010-2019 Joel Klinghed
+| Copyright © 2009-2020 Mickey Gabel
+| Copyright © 2009-2020 Oran Agra
+| Copyright © 2010-2020 Joel Klinghed
 | Copyright © 2012 Intel Corporation
-| Copyright © 2013-2019 Google, Inc.
+| Copyright © 2013-2020 Google, Inc.
 | Copyright © 2018-2019 Nikhil Ramakrishnan
-| Copyright © 2018-2019 Armin Hasitzka
+| Copyright © 2018-2020 Armin Hasitzka
 | Copyright © 2019 Oliver Nightingale
+| Copyright © 2019-2020 by Nikhil Ramakrishnan
+
 
 The FreeType 2 font engine is copyrighted work and cannot be used legally
 without a software license. In order to make this project usable to a vast
@@ -171,6 +171,10 @@ are granted under this license.
 | Copyright © 2001-2003, David Janssens
 | Copyright © 2011-2012, Centre National d'Etudes Spatiales (CNES), France
 | Copyright © 2012, CS Systemes d'Information, France
+| Copyright © 2006-2015 Mathieu Malaterre <mathieu.malaterre@gmail.com>
+| Copyright © 2015 Matthieu Darbois
+| Copyright © 2016 Even Rouault
+| Copyright © 2017 IntoPIX SA
 
 All rights reserved.
 
@@ -201,7 +205,7 @@ libexpat-\*.dll
 ===============
 
 | Copyright © 1998-2000 Thai Open Source Software Center Ltd and Clark Cooper
-| Copyright © 2001-2017 Expat maintainers.
+| Copyright © 2001-2019 Expat maintainers.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in
@@ -224,7 +228,7 @@ SOFTWARE.
 libexiv2-\*.dll
 ===============
 
-Copyright © 2004-2015 Andreas Huggel <ahuggel@gmx.net>
+Copyright © 2004-2019 Exiv2 authors
 
 Exiv2 is free software; you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
