@@ -205,6 +205,7 @@ src/poppler/Makefile: src/openjpeg/install-stamp
 		cmake $(cmake_options) . \
 		-DBUILD_CPP_TESTS=OFF \
 		-DBUILD_GTK_TESTS=OFF \
+		-DBUILD_MANUAL_TESTS=OFF \
 		-DBUILD_QT5_TESTS=OFF \
 		-DENABLE_BOOST=OFF \
 		-DENABLE_CMS=none \
@@ -214,6 +215,7 @@ src/poppler/Makefile: src/openjpeg/install-stamp
 		-DENABLE_LIBCURL=OFF \
 		-DENABLE_LIBOPENJPEG=openjpeg2 \
 		-DENABLE_QT5=OFF \
+		-DENABLE_QT6=OFF \
 		-DENABLE_SPLASH=ON \
 		-DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
 		-DENABLE_UTILS=OFF \
