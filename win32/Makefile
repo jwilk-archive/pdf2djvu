@@ -388,6 +388,8 @@ src/exiv2/Makefile: src/expat/install-stamp
 		-DEXIV2_ENABLE_PRINTUCS2=OFF \
 		-DEXIV2_ENABLE_LENSDATA=OFF \
 		-DEXIV2_ENABLE_DYNAMIC_RUNTIME=OFF
+	find $(dir $@) -name build.make -print0 \
+	| xargs -0 sed -i -e 's, \(/[^ ]\+/\($(CC)\|$(CXX)\)\) , $(CURDIR)/tools/enforce-relative-paths \1 ,'
 
 src/exiv2/build-stamp: src/exiv2/Makefile
 	$(MAKE) -C $(dir $@)
