@@ -9,6 +9,8 @@ pdf2djvu (0.9.18) UNRELEASED; urgency=low
     https://github.com/jwilk/pdf2djvu/issues/144
 
   [ Jakub Wilk ]
+  * Fix build failure with GCC 11.
+    https://github.com/jwilk/pdf2djvu/issues/146
   * Upgrade libraries bundled with the Windows package:
     - Poppler to 21.05;
     - DjVuLibre to 3.5.28;
@@ -19,7 +21,7 @@ pdf2djvu (0.9.18) UNRELEASED; urgency=low
     - OpenJPEG to 2.4.0.
   * Drop support for Python 2.6.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 24 May 2021 16:32:02 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Jun 2021 16:56:36 +0200
 
 pdf2djvu (0.9.17.1) unstable; urgency=low
 
