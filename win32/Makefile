@@ -69,7 +69,7 @@ all:
 
 .PHONY: clean
 
-# Source tarballs
+# source tarballs
 
 src_tarball_topdir = pdf2djvu-win32-source-$(version)
 src_tarball_name = pdf2djvu-win32-source-$(version)
@@ -94,7 +94,7 @@ clean-source:
 	rm -rf $(src_tarball_topdir)
 	rm -f $(src_tarball_name).tar.xz
 
-# Binary zipballs
+# binary zipballs
 
 zipball_topdir = pdf2djvu-$(version)
 zipball_name = pdf2djvu-win32-$(version)
@@ -171,7 +171,7 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/changelog > dist/doc/changelog.txt
 	touch $(@)
 
-# Various libraries
+# various libraries
 
 src/libs-install-stamp: src/djvulibre/install-stamp
 src/libs-install-stamp: src/fontconfig/install-stamp
