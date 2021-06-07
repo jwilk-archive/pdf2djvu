@@ -1,4 +1,4 @@
-pdf2djvu (0.9.18) UNRELEASED; urgency=low
+pdf2djvu (0.9.18) unstable; urgency=low
 
   [ Ilia Gobjila ]
   * Fix typo in the Russian documentation.
@@ -22,7 +22,7 @@ pdf2djvu (0.9.18) UNRELEASED; urgency=low
     - OpenJPEG to 2.4.0.
   * Drop support for Python 2.6.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Jun 2021 20:01:10 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 07 Jun 2021 20:04:15 +0200
 
 pdf2djvu (0.9.17.1) unstable; urgency=low
 
