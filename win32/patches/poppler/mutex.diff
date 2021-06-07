@@ -1,6 +1,6 @@
 Use dummy implementation of mutexes.
 
-Last-Update: 2021-05-04
+Last-Update: 2021-06-07
 
 --- a/poppler/Annot.h
 +++ b/poppler/Annot.h
@@ -59,7 +59,7 @@ Last-Update: 2021-05-04
  class GooString;
 --- a/poppler/PDFDoc.h
 +++ b/poppler/PDFDoc.h
-@@ -43,7 +43,7 @@
+@@ -44,7 +44,7 @@
  #ifndef PDFDOC_H
  #define PDFDOC_H
  

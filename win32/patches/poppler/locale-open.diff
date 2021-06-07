@@ -1,10 +1,10 @@
 Don't use Unicode API for opening files.
 
-Last-Update: 2021-05-04
+Last-Update: 2021-06-07
 
 --- a/poppler/PDFDoc.cc
 +++ b/poppler/PDFDoc.cc
-@@ -156,7 +156,7 @@ PDFDoc::PDFDoc(const GooString *fileName
+@@ -157,7 +157,7 @@ PDFDoc::PDFDoc(const GooString *fileName
  #endif
  
      // try to open file
