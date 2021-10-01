@@ -12,7 +12,7 @@ dnl | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 dnl | General Public License for more details.
 
 AC_PREREQ(2.62)
-AC_INIT([pdf2djvu], [0.9.18], [https://github.com/jwilk/pdf2djvu/issues], [pdf2djvu], [http://jwilk.net/software/pdf2djvu])
+AC_INIT([pdf2djvu], [0.9.18.1], [https://github.com/jwilk/pdf2djvu/issues], [pdf2djvu], [http://jwilk.net/software/pdf2djvu])
 AC_CONFIG_AUX_DIR([tools])
 AC_CONFIG_MACRO_DIR([m4])
 AC_LANG([C++])
