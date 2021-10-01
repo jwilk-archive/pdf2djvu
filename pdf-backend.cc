@@ -229,7 +229,11 @@ void pdf::Document::get_page_size(int n, bool crop, double &width, double &heigh
 const std::string pdf::Document::get_xmp()
 {
   std::unique_ptr<const pdf::String> mstring;
+#if POPPLER_VERSION >= 211000
+  mstring = this->readMetadata();
+#else
   mstring.reset(this->readMetadata());
+#endif
   if (mstring.get() == nullptr)
     return "";
   const char *cstring = pdf::get_c_string(mstring.get());
