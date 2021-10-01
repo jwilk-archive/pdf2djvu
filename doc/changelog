@@ -1,6 +1,6 @@
 pdf2djvu (0.9.18.1) UNRELEASED; urgency=low
 
-  * 
+  * Fix build failure with Poppler ≥ 21.10.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 01 Oct 2021 19:59:15 +0200
 
