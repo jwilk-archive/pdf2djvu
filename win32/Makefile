@@ -23,6 +23,10 @@ orig_src_tarball := $(shell ../private/build-source-tarball --print-name)
 version = $(word 2,$(subst .tar, ,$(subst -, ,$(orig_src_tarball))))
 endif
 
+ifeq "$(orig_src_tarball)" ""
+$(error cannot determine orig source tarball name)
+endif
+
 djvulibre_tools = bzz c44 cjb2 csepdjvu djvuextract djvumake djvused djvmcvt
 
 download =
