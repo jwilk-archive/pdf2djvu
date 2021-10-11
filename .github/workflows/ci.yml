@@ -1,0 +1,163 @@
+name: CI
+on:
+- push
+- pull_request
+jobs:
+  main:
+    strategy:
+      matrix:
+        include:
+        - poppler: 0.35.0
+          os: ubuntu-18.04
+          pylint: pylint
+        - poppler: 0.57.0
+          os: ubuntu-18.04
+        - poppler: 0.58.0
+          os: ubuntu-18.04
+        - poppler: 0.62.0
+          os: ubuntu-18.04
+        - poppler: 0.64.0
+        - poppler: 0.70.0
+        - poppler: 0.72.0
+        - poppler: 0.76.0
+        - poppler: 0.82.0
+        - poppler: 0.83.0
+        - poppler: 0.85.0
+        - poppler: 0.86.1
+        - poppler: 21.10.0
+          cppcheck: cppcheck
+          docs: docs
+        - poppler: git
+          cc: clang
+    runs-on: ${{matrix.os || 'ubuntu-20.04'}}
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up ccache
+      uses: actions/cache@v2
+      with:
+        path: ~/.ccache
+        key: ccache-${{matrix.os || 'ubuntu-20.04'}}-${{matrix.cc || 'gcc'}}-poppler${{matrix.poppler}}
+    - name: add /usr/lib/ccache to $PATH
+      run: |
+        echo "/usr/lib/ccache:$PATH" >> $GITHUB_PATH
+    - name: install deps
+      run:
+        sudo apt-get install
+          autoconf
+          automake
+          ccache
+          cppcheck
+          djvulibre-bin
+          docbook-xml
+          docbook-xsl
+          fonts-linuxlibertine
+          gettext
+          libdjvulibre-dev
+          libexiv2-dev
+          libfontconfig1-dev
+          libgraphicsmagick++1-dev
+          libopenjp2-7-dev
+          libxml2-utils
+          locales-all
+          pkg-config
+          python-nose
+          python-pil
+          texlive-base
+          texlive-fonts-recommended
+          texlive-luatex
+          uuid-dev
+          xsltproc
+    - name: set up C++ compiler
+      run: |
+        CC=${{matrix.cc || 'gcc'}}
+        echo CC=$CC >> $GITHUB_ENV
+        CXX=${{(matrix.cc && format('{0}++', matrix.cc)) || 'g++'}}
+        echo CXX=$CXX >> $GITHUB_ENV
+    - name: download and unpack Poppler source tarball
+      run: |
+        wget https://poppler.freedesktop.org/poppler-${{matrix.poppler}}.tar.xz
+        tar -xvvf poppler-*.tar.*
+      if: matrix.poppler != 'git'
+    - name: clone Poppler git repo
+      run:
+        git clone https://anongit.freedesktop.org/git/poppler/poppler.git poppler-git
+      if: matrix.poppler == 'git'
+    - name: configure Poppler
+      run: |
+        cd poppler-*/
+        cmake . -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DCMAKE_VERBOSE_MAKEFILE=ON -DENABLE_XPDF_HEADERS=ON -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DBUILD_GTK_TESTS=OFF -DBUILD_QT4_TESTS=OFF -DBUILD_QT5_TESTS=OFF -DBUILD_QT6_TESTS=OFF -DBUILD_CPP_TESTS=OFF -DBUILD_MANUAL_TESTS=OFF -DENABLE_SPLASH=ON -DENABLE_UTILS=OFF -DENABLE_CPP=OFF -DENABLE_GLIB=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF -DENABLE_LIBCURL=OFF -DENABLE_ZLIB=OFF -DENABLE_BOOST=OFF
+    - name: build and install Poppler
+      run: |
+        cd poppler-*/
+        make
+        make install
+        echo CPATH=~/.local/include/ >> $GITHUB_ENV
+        echo PKG_CONFIG_PATH=~/.local/lib/pkgconfig/ >> $GITHUB_ENV
+        echo LD_LIBRARY_PATH=~/.local/lib/ >> $GITHUB_ENV
+    - name: remove Poppler source
+      run:
+        rm -rf poppler-*
+    - name: check the changelog
+      run:
+        dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
+    - name: generate autotools stuff
+      run:
+        private/autogen
+    - name: configure
+      run:
+        ./configure --prefix ~/.local $configure_options || cat config.log /fail
+    - name: build
+      run:
+        make
+    - name: smoke test
+      run:
+        ./pdf2djvu --version
+    - name: set up Python
+      run: |
+        sudo apt-get install python-is-python2
+        python --version
+      if: matrix.os != 'ubuntu-18.04'
+    - name: run tests
+      run: |
+        make -C tests prepare
+        make test
+    - name: build docs
+      run: |
+        make -C doc
+      if: matrix.docs
+    - name: install
+      run:
+        make install
+    - name: check whether the executbele was installed correctly
+      run: |
+        cd /
+        pdf2djvu --version
+    - name: check whether the man page was installed correctly
+      run: |
+        cd /
+        man 1 pdf2djvu | grep -A 10 -w PDF2DJVU
+      env:
+        MANPATH: /home/runner/.local/share/man
+        MANWIDTH: 80
+      if: matrix.docs
+    - name: run cppcheck
+      run:
+        cppcheck --error-exitcode=1 *.cc
+      if: matrix.cppcheck
+    - name: check docs
+      run: |
+        sudo apt-get install python-docutils
+        private/check-rst
+        make -C doc check
+      if: matrix.docs
+    - name: check Python code
+      run: |
+        sudo apt-get install python-pip
+        python -m pip install --user pydiatra pyflakes pylint
+        cd tests
+        python -m pydiatra .
+        python -m pyflakes .
+        python -m pylint *.py
+      if: matrix.pylint
+
+# vim:ts=2 sts=2 sw=2 et
