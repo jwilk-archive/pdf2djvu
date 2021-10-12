@@ -7,24 +7,17 @@ jobs:
     strategy:
       matrix:
         include:
-        - poppler: 0.35.0
+        - poppler: 0.35.0 # oldest supported release
           os: ubuntu-18.04
           pylint: pylint
-        - poppler: 0.57.0
+        - poppler: 0.48.0 # Debian 9 "Stretch"
           os: ubuntu-18.04
-        - poppler: 0.58.0
+        - poppler: 0.62.0 # Ubuntu 18.04 LTS "Bionic Beaver"
           os: ubuntu-18.04
-        - poppler: 0.62.0
-          os: ubuntu-18.04
-        - poppler: 0.64.0
-        - poppler: 0.70.0
-        - poppler: 0.72.0
-        - poppler: 0.76.0
-        - poppler: 0.82.0
-        - poppler: 0.83.0
-        - poppler: 0.85.0
-        - poppler: 0.86.1
-        - poppler: 21.10.0
+        - poppler: 0.71.0 # Debian 10 "Buster"
+        - poppler: 0.86.1 # Ubuntu 20.04 LTS "Focal Fossa"
+        - poppler: 20.09.0 # Debian 11 "Bullseye"
+        - poppler: 21.10.0 # newest tested release
           cppcheck: cppcheck
           docs: docs
         - poppler: git
