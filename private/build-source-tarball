@@ -81,9 +81,8 @@ git archive "$commit" --prefix="$name-$version/" | tar -C "$sourceroot" -xf -
 cd "$sourceroot"/*
 
 # Remove files that only useful in a VCS checkout:
-rm .git*
+rm -r .git*
 rm .mailmap
-rm .travis.yml
 rm private/build-source-tarball
 
 # Move documentation to doc/:
