@@ -121,7 +121,7 @@ jobs:
     - name: install
       run:
         make install
-    - name: check whether the executbele was installed correctly
+    - name: check whether the executable was installed correctly
       run: |
         cd /
         pdf2djvu --version
