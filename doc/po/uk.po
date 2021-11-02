@@ -592,7 +592,7 @@ msgstr "Специфікатор ширини поля — це ціле дес�
 
 #. type: Content of: <refentry><refsection><refsection><para>
 msgid "The width specification is optionally followed by an asterisk (<literal>*</literal>) character, which increases the minimum field width to the width of the longest possible content of the variable."
-msgstr "Після специфікатора ширини поля може розташовуватися знак зірочки (<literal>*</literal>), що збільшує мінімальну ширину поля до максимально можливої ​​довжини змінної."
+msgstr "Після специфікатора ширини поля може розташовуватися знак зірочки (<literal>*</literal>), що збільшує мінімальну ширину поля до максимально можливої довжини змінної."
 
 #. type: Content of: <refentry><refsection><refsection><title>
 msgid "Available variables"
