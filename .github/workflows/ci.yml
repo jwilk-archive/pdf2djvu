@@ -55,7 +55,6 @@ jobs:
           pkg-config
           python-nose
           python-pil
-          texlive-base
           texlive-fonts-recommended
           texlive-luatex
           uuid-dev
