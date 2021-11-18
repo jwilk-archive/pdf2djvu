@@ -13,6 +13,8 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 
+import re
+
 from tools import (
     assert_regex,
     case,
@@ -27,7 +29,7 @@ class test(case):
     def test_no_verbatim(self):
         self.require_feature('Exiv2')
         r = self.pdf2djvu()
-        r.assert_(stderr='XMP metadata error: XMP Toolkit error 201: XML parsing failure\n')
+        r.assert_(stderr=re.compile(r'\AXMP metadata error: XMP Toolkit error 201: .*\n\Z'))
         xmp = self.extract_xmp()
         assert_regex(xmp, '<broken')
 
