@@ -8,23 +8,31 @@ jobs:
       matrix:
         include:
         - poppler: poppler-0.35.0 # oldest supported release
+          exiv2: exiv2-0.21
           os: ubuntu-18.04
           pylint: pylint
         - poppler: poppler-0.48.0 # Debian 9 "Stretch"
+          exiv2: exiv2-0.25
           os: ubuntu-18.04
         - poppler: poppler-0.62.0 # Ubuntu 18.04 LTS "Bionic Beaver"
+          exiv2: exiv2-0.25
           os: ubuntu-18.04
         - poppler: poppler-0.71.0 # Debian 10 "Buster"
+          exiv2: exiv2-0.25
           os: ubuntu-20.04
         - poppler: poppler-0.86.1 # Ubuntu 20.04 LTS "Focal Fossa"
+          exiv2: exiv2-0.27.2
           os: ubuntu-20.04
         - poppler: poppler-20.09.0 # Debian 11 "Bullseye"
+          exiv2: exiv2-0.27.3
           os: ubuntu-20.04
         - poppler: poppler-21.10.0 # newest tested release
+          exiv2: exiv2-0.27.5
           os: ubuntu-20.04
           cppcheck: cppcheck
           docs: docs
         - poppler: poppler-git
+          exiv2: exiv2-git
           os: ubuntu-20.04
           cc: clang
     runs-on: ${{matrix.os}}
@@ -34,7 +42,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.ccache
-        key: ccache-${{matrix.os}}-${{matrix.cc || 'gcc'}}-${{matrix.poppler}}
+        key: ccache-${{matrix.os}}-${{matrix.cc || 'gcc'}}-${{matrix.poppler}}-${{matrix.exiv2}}
     - name: add /usr/lib/ccache to $PATH
       run: |
         echo "/usr/lib/ccache:$PATH" >> $GITHUB_PATH
@@ -51,7 +59,6 @@ jobs:
           fonts-linuxlibertine
           gettext
           libdjvulibre-dev
-          libexiv2-dev
           libfontconfig1-dev
           libgraphicsmagick++1-dev
           libopenjp2-7-dev
@@ -94,6 +101,35 @@ jobs:
     - name: remove Poppler source
       run:
         rm -rf poppler-*
+    - name: download and unpack Exiv2 source tarball
+      run: |
+        case ${{matrix.exiv2}} in
+          exiv2-0.2[0-6]) url='https://www.exiv2.org/releases/${{matrix.exiv2}}.tar.gz';;
+          *) url='https://www.exiv2.org/builds//${{matrix.exiv2}}-Source.tar.gz';;
+        esac
+        wget "$url"
+        tar -xvvf exiv2-*.tar.*
+      if: matrix.exiv2 != 'exiv2-git'
+    - name: clone Exiv2 git repo
+      run:
+        git clone https://github.com/Exiv2/exiv2 exiv2-git
+      if: matrix.exiv2 == 'exiv2-git'
+    - name: configure Exiv2
+      run: |
+        cd exiv2-*/
+        case ${{matrix.exiv2}} in
+          exiv2-0.2[0-6]) ./configure --prefix ~/.local --disable-static --without-zlib --disable-lensdata --disable-nls || cat config.log /fail;;
+          *) cmake . -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_INSTALL_PREFIX=~/.local -DCMAKE_VERBOSE_MAKEFILE=ON -DEXIV2_ENABLE_PNG=OFF -DEXIV2_ENABLE_NLS=OFF -DEXIV2_ENABLE_PRINTUCS2=OFF -DEXIV2_ENABLE_LENSDATA=OFF -DEXIV2_BUILD_EXIV2_COMMAND=OFF -DEXIV2_BUILD_SAMPLES=OFF;;
+        esac
+    - name: build and install Exiv2
+      run: |
+        cd exiv2-*/
+        find . -name 'exiv2.hpp' | xargs sed -i -e '/"pngimage[.]hpp"/d'  # https://dev.exiv2.org/issues/1103
+        make
+        make install
+    - name: remove Exiv2 source
+      run:
+        rm -rf exiv2-*
     - name: check the changelog
       run:
         dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
