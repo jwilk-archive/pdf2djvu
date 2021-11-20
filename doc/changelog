@@ -1,13 +1,14 @@
 pdf2djvu (0.9.18.2) UNRELEASED; urgency=low
 
   * Document minimum required Exiv2 version.
+  * Fix build failure with upcoming Exiv2 1.0.
   * Remove spurious zero-width spaces from the Ukrainian manual page.
   * Improve the test suite:
     + Fix test failure with Exiv2 ≥ 0.27.5.
       Thanks to Kamil Cukrowski for the bug report and the initial patch.
       https://github.com/jwilk/pdf2djvu/issues/149
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 20 Nov 2021 17:07:53 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 20 Nov 2021 19:45:31 +0100
 
 pdf2djvu (0.9.18.1) unstable; urgency=low
 
