@@ -15,21 +15,26 @@ jobs:
         - poppler: 0.62.0 # Ubuntu 18.04 LTS "Bionic Beaver"
           os: ubuntu-18.04
         - poppler: 0.71.0 # Debian 10 "Buster"
+          os: ubuntu-20.04
         - poppler: 0.86.1 # Ubuntu 20.04 LTS "Focal Fossa"
+          os: ubuntu-20.04
         - poppler: 20.09.0 # Debian 11 "Bullseye"
+          os: ubuntu-20.04
         - poppler: 21.10.0 # newest tested release
+          os: ubuntu-20.04
           cppcheck: cppcheck
           docs: docs
         - poppler: git
+          os: ubuntu-20.04
           cc: clang
-    runs-on: ${{matrix.os || 'ubuntu-20.04'}}
+    runs-on: ${{matrix.os}}
     steps:
     - uses: actions/checkout@v2
     - name: set up ccache
       uses: actions/cache@v2
       with:
         path: ~/.ccache
-        key: ccache-${{matrix.os || 'ubuntu-20.04'}}-${{matrix.cc || 'gcc'}}-poppler${{matrix.poppler}}
+        key: ccache-${{matrix.os}}-${{matrix.cc || 'gcc'}}-poppler${{matrix.poppler}}
     - name: add /usr/lib/ccache to $PATH
       run: |
         echo "/usr/lib/ccache:$PATH" >> $GITHUB_PATH
