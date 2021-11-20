@@ -7,24 +7,24 @@ jobs:
     strategy:
       matrix:
         include:
-        - poppler: 0.35.0 # oldest supported release
+        - poppler: poppler-0.35.0 # oldest supported release
           os: ubuntu-18.04
           pylint: pylint
-        - poppler: 0.48.0 # Debian 9 "Stretch"
+        - poppler: poppler-0.48.0 # Debian 9 "Stretch"
           os: ubuntu-18.04
-        - poppler: 0.62.0 # Ubuntu 18.04 LTS "Bionic Beaver"
+        - poppler: poppler-0.62.0 # Ubuntu 18.04 LTS "Bionic Beaver"
           os: ubuntu-18.04
-        - poppler: 0.71.0 # Debian 10 "Buster"
+        - poppler: poppler-0.71.0 # Debian 10 "Buster"
           os: ubuntu-20.04
-        - poppler: 0.86.1 # Ubuntu 20.04 LTS "Focal Fossa"
+        - poppler: poppler-0.86.1 # Ubuntu 20.04 LTS "Focal Fossa"
           os: ubuntu-20.04
-        - poppler: 20.09.0 # Debian 11 "Bullseye"
+        - poppler: poppler-20.09.0 # Debian 11 "Bullseye"
           os: ubuntu-20.04
-        - poppler: 21.10.0 # newest tested release
+        - poppler: poppler-21.10.0 # newest tested release
           os: ubuntu-20.04
           cppcheck: cppcheck
           docs: docs
-        - poppler: git
+        - poppler: poppler-git
           os: ubuntu-20.04
           cc: clang
     runs-on: ${{matrix.os}}
@@ -34,7 +34,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.ccache
-        key: ccache-${{matrix.os}}-${{matrix.cc || 'gcc'}}-poppler${{matrix.poppler}}
+        key: ccache-${{matrix.os}}-${{matrix.cc || 'gcc'}}-${{matrix.poppler}}
     - name: add /usr/lib/ccache to $PATH
       run: |
         echo "/usr/lib/ccache:$PATH" >> $GITHUB_PATH
@@ -72,13 +72,13 @@ jobs:
         echo CXX=$CXX >> $GITHUB_ENV
     - name: download and unpack Poppler source tarball
       run: |
-        wget https://poppler.freedesktop.org/poppler-${{matrix.poppler}}.tar.xz
+        wget https://poppler.freedesktop.org/${{matrix.poppler}}.tar.xz
         tar -xvvf poppler-*.tar.*
-      if: matrix.poppler != 'git'
+      if: matrix.poppler != 'poppler-git'
     - name: clone Poppler git repo
       run:
         git clone https://anongit.freedesktop.org/git/poppler/poppler.git poppler-git
-      if: matrix.poppler == 'git'
+      if: matrix.poppler == 'poppler-git'
     - name: configure Poppler
       run: |
         cd poppler-*/
