@@ -1,3 +1,9 @@
+pdf2djvu (0.9.18.3) UNRELEASED; urgency=low
+
+  * 
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Jan 2022 12:14:21 +0100
+
 pdf2djvu (0.9.18.2) unstable; urgency=low
 
   * Document minimum required Exiv2 version.
