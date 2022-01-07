@@ -186,7 +186,8 @@ jobs:
     - name: check Python code
       run: |
         sudo apt-get install python-pip
-        python -m pip install --user pydiatra pyflakes pylint
+        python -m pip install --user pydiatra pyflakes
+        python -m pip install --user 'lazy-object-proxy<1.7.0' pylint
         cd tests
         python -m pydiatra .
         python -m pyflakes .
