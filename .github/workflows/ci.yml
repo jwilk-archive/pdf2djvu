@@ -107,11 +107,13 @@ jobs:
         rm -rf poppler-*
     - name: download and unpack Exiv2 source tarball
       run: |
-        case ${{matrix.exiv2}} in
-          exiv2-0.2[0-6]) url='https://www.exiv2.org/releases/${{matrix.exiv2}}.tar.gz';;
-          *) url='https://www.exiv2.org/builds//${{matrix.exiv2}}-Source.tar.gz';;
+        v=${{matrix.exiv2}}
+        v=${v#exiv2-}
+        case $v in
+          0.2[0-6]) s='';;
+          *) s='-Source';;
         esac
-        wget "$url"
+        wget "https://github.com/Exiv2/exiv2/releases/download/v${v}/exiv2-${v}${s}.tar.gz"
         tar -xvvf exiv2-*.tar.*
       if: matrix.exiv2 != 'exiv2-git'
     - name: clone Exiv2 git repo
