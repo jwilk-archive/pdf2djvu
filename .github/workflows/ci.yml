@@ -46,6 +46,10 @@ jobs:
     - name: add /usr/lib/ccache to $PATH
       run: |
         echo "/usr/lib/ccache:$PATH" >> $GITHUB_PATH
+    - name: set up APT
+      run: |
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
+        sudo apt-get update
     - name: install deps
       run:
         sudo apt-get install
