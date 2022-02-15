@@ -25,7 +25,7 @@ public:
     {
         return const_cast<T>(x);
     }
-    operator ConstT  () const
+    operator ConstT () const
     {
         return x;
     }
