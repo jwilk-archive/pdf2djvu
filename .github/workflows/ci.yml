@@ -195,7 +195,7 @@ jobs:
         python -m pip install --user pydiatra pyflakes
         python -m pip install --user 'lazy-object-proxy<1.7.0' pylint
         cd tests
-        python -m pydiatra .
+        python -m pydiatra -v .
         python -m pyflakes .
         python -m pylint *.py
       if: matrix.pylint
