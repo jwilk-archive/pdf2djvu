@@ -149,7 +149,7 @@ public:
 };
 
 pdf::Document::Document(const std::string &file_name)
-: ::PDFDoc(unique_ptr_adapter<pdf::String>(new pdf::String(file_name.c_str())), nullptr, nullptr)
+: ::PDFDoc(unique_ptr_adapter<pdf::String>(new pdf::String(file_name.c_str())))
 {
   if (!this->isOk())
     throw LoadError();
