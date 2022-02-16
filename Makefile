@@ -35,11 +35,11 @@ $(exe): debug.o
 $(exe): djvu-outline.o
 $(exe): i18n.o
 $(exe): image-filter.o
+$(exe): main.o
 $(exe): pdf-backend.o
 $(exe): pdf-document-map.o
 $(exe): pdf-dpi.o
 $(exe): pdf-unicode.o
-$(exe): pdf2djvu.o
 $(exe): sexpr.o
 $(exe): string-format.o
 $(exe): string-printf.o
