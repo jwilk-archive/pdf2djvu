@@ -89,7 +89,7 @@ static int get_page_for_goto_link(pdf::link::GoTo *goto_link, pdf::Catalog *cata
 #endif
   }
   else
-    dest.reset(orig_dest->copy());
+    dest.reset(new pdf::link::Destination(*orig_dest));
   if (dest.get() != nullptr)
   {
     int page;
