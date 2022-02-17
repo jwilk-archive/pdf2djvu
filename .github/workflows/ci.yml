@@ -123,8 +123,6 @@ jobs:
     - name: clone Exiv2 git repo
       run: |
         git clone https://github.com/Exiv2/exiv2 exiv2-git
-        cd exiv2-git
-        sed -i -e '/(PUBLIC_HEADERS$/ a\' -e '../include/exiv2/image_types.hpp' src/CMakeLists.txt  # https://github.com/Exiv2/exiv2/issues/2105
       if: matrix.exiv2 == 'exiv2-git'
     - name: configure Exiv2
       run: |
