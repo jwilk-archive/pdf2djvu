@@ -129,27 +129,12 @@ void pdf::Environment::set_antialias(bool value)
  * ===================
  */
 
-template <typename T>
-class unique_ptr_adapter
-{
-protected:
-  std::unique_ptr<T> uptr;
-public:
-  unique_ptr_adapter(T *ptr)
-  : uptr(ptr)
-  { }
-  operator std::unique_ptr<T> ()
-  {
-    return std::move(this->uptr);
-  }
-  operator T* ()
-  {
-    return this->uptr.release();
-  }
-};
-
 pdf::Document::Document(const std::string &file_name)
-: ::PDFDoc(unique_ptr_adapter<pdf::String>(new pdf::String(file_name.c_str())))
+#if POPPLER_VERSION >= 220300
+: ::PDFDoc(std::make_unique<pdf::String>(file_name.c_str()))
+#else
+: ::PDFDoc(new pdf::String(file_name.c_str()))
+#endif
 {
   if (!this->isOk())
     throw LoadError();
