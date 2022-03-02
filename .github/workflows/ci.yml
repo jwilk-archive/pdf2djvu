@@ -26,7 +26,7 @@ jobs:
         - poppler: poppler-20.09.0 # Debian 11 "Bullseye"
           exiv2: exiv2-0.27.3
           os: ubuntu-20.04
-        - poppler: poppler-21.10.0 # newest tested release
+        - poppler: poppler-22.03.0 # newest tested release
           exiv2: exiv2-0.27.5
           os: ubuntu-20.04
           cppcheck: cppcheck
