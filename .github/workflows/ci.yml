@@ -10,7 +10,6 @@ jobs:
         - poppler: poppler-0.35.0 # oldest supported release
           exiv2: exiv2-0.21
           os: ubuntu-18.04
-          pylint: pylint
         - poppler: poppler-0.48.0 # Debian 9 "Stretch"
           exiv2: exiv2-0.25
           os: ubuntu-18.04
@@ -193,15 +192,32 @@ jobs:
         private/check-rst
         make -C doc check
       if: matrix.docs
-    - name: check Python code
+  Python:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up Python 2.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.7
+    - name: run pydiatra
       run: |
-        sudo apt-get install python-pip
-        python -m pip install pydiatra pyflakes
-        python -m pip install 'lazy-object-proxy<1.7.0' pylint
+        python -m pip install pydiatra
         cd tests
         python -m pydiatra -v .
+    - name: run pyflakes
+      run: |
+        python -m pip install pyflakes
+        cd tests
         python -m pyflakes .
+    - name: pip install deps
+      run: |
+        python -m pip install nose
+        python -m pip install Pillow
+    - name: run pylint
+      run: |
+        python -m pip install 'lazy-object-proxy<1.7.0' pylint
+        cd tests
         python -m pylint *.py
-      if: matrix.pylint
 
 # vim:ts=2 sts=2 sw=2 et
