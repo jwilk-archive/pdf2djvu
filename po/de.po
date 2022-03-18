@@ -1,4 +1,5 @@
 # Copyright © 2011-2016 Chris Leick <c.leick@vollbio.de>
+#             2020 Helge Kreutzmann <debian@helgefjell.de>
 #
 # This file is distributed under the same license as the pdf2djvu package.
 #
@@ -7,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.18.3\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2022-04-19 13:55+0200\n"
-"PO-Revision-Date: 2016-12-09 15:41+0200\n"
+"PO-Revision-Date: 2020-12-26 09:03+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -563,9 +564,8 @@ msgid "Warning: Unable to convert link with a JavaScript action"
 msgstr "Warnung: Verweis mit einer JavaScript-Aktion kann nicht umgewandelt werden"
 
 #: main.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a hide action"
-msgstr "Warnung: Verweis mit einer benannten Aktion kann nicht umgewandelt werden"
+msgstr "Warnung: Verweis mit einer Verberge-Aktion kann nicht umgewandelt werden"
 
 #: main.cc
 msgid "Warning: Unable to convert link with a launch action"
