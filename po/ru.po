@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.18.3\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2020-03-02 17:45+0100\n"
+"POT-Creation-Date: 2022-04-19 13:55+0200\n"
 "PO-Revision-Date: 2016-12-13 19:08+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
@@ -60,7 +60,7 @@ msgstr " -o, --output=ФАЙЛ"
 msgid "\"%s\" is not a valid number"
 msgstr "\"%s\" не является правильным числом"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
 msgstr "%.3f бит/пиксел; %.3f:1, %.2f%% сохранено, %ju байт исходно, %zu байт результат"
@@ -83,7 +83,7 @@ msgstr "%s ..."
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "%zu bytes out"
 msgid_plural "%zu bytes out"
@@ -125,7 +125,7 @@ msgstr "Обрыв канала"
 msgid "Cannot allocate memory"
 msgstr "Невозможно выделить память"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Cannot find link destination"
 msgstr "Назначение ссылки не найдено"
 
@@ -148,12 +148,12 @@ msgstr "Слишком длинное оглавление документа"
 msgid "Domain error"
 msgstr "Ошибка области определения"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Повторный идентификатор страницы: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Duplicate page: %d"
 msgstr "Повторяющаяся страница: %d"
@@ -215,7 +215,7 @@ msgstr "Слишком длинное имя файла"
 msgid "Function not implemented"
 msgstr "Функция не реализована"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "I won't write DjVu data to a terminal."
 msgstr "Я не буду писать DjVu в терминал."
 
@@ -254,7 +254,7 @@ msgstr "Исходный файл такой же как результирую�
 msgid "Input/output error"
 msgstr "Ошибка ввода/вывода"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Input/output error (%s)"
 msgstr "Ошибка ввода/вывода (%s)"
@@ -320,7 +320,7 @@ msgstr "Не указано имя входного файла"
 msgid "No locks available"
 msgstr "Нет доступных блокировок"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "No page for a bookmark"
 msgstr "Нет страницы для закладки"
 
@@ -353,7 +353,7 @@ msgstr "Нет такого файла или каталога"
 msgid "No such process"
 msgstr "Нет такого процесса"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "No title for a bookmark"
 msgstr "Нет названия для закладки"
 
@@ -418,7 +418,7 @@ msgstr "Идентификатор страницы должен включат�
 msgid "Page identifier must end with the '.djvu' or the '.djv' extension"
 msgstr "Идентификатор страницы должен заканчиваться расширением '.djvu' или '.djv'"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Page not found"
 msgstr "Страница не найдена"
 
@@ -528,15 +528,15 @@ msgstr "Невозможно разобрать размер страницы"
 msgid "Unable to parse page title template specification"
 msgstr "Невозможно разобрать спецификацию шаблона названия страницы"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Unexpected output from djvused"
 msgstr "Неожиданный вывод из djvused"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Unexpected subsampled bitmap height"
 msgstr "Неожиданная высота разделённого растрового изображения"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Unexpected subsampled bitmap width"
 msgstr "Неожиданная ширина разделённого растрового изображения"
 
@@ -548,55 +548,55 @@ msgstr "Неизвестный параметр"
 msgid "Usage: "
 msgstr "Использование:"
 
-#: pdf2djvu.cc system.cc
+#: main.cc system.cc
 #, c-format
 msgid "Warning: %s"
 msgstr "Предупреждение: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Warning: Ignoring duplicate page title: %s"
 msgstr "Предупреждение: игнорирую повторный заголовок страницы: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a JavaScript action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с выполнением JavaScript"
 
-#: pdf2djvu.cc
+#: main.cc
 #, fuzzy
 msgid "Warning: Unable to convert link with a hide action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a launch action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с действием запуска"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a multimedia action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с мультимедийным действием"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Предупреждение: невозможно преобразовать ссылку на внешний документ"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a set-OCG-state action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с действием OCG"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link without an action"
 msgstr "Предупреждение: невозможно преобразовать ссылку без действия"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unknown link action"
 msgstr "Предупреждение: неизвестное действие ссылки"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Предупреждение: метаданные[%s] являются недопустимой датой"
@@ -609,11 +609,11 @@ msgstr "ошибка метаданных XMP"
 msgid "XMP metadata warning"
 msgstr "предупреждение об ошибке метаданных XMP"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "adding non-raster data with `djvused`"
 msgstr "добавление нерастровых данных с `djvused`"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "creating multi-page indirect document (%zu page)"
 msgid_plural "creating multi-page indirect document (%zu pages)"
@@ -621,45 +621,45 @@ msgstr[0] "создание многостраничного раздельно�
 msgstr[1] "создание многостраничного раздельного документа (%zu страницы)"
 msgstr[2] "создание многостраничного раздельного документа (%zu страниц)"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "creating new background image with `c44`"
 msgstr "создание нового фонового изображения с `c44`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "encoding layers with `csepdjvu`"
 msgstr "кодирование слоёв с `csepdjvu`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "encoding monochrome image with `cjb2`"
 msgstr "кодирование монохромного изображения с `cjb2`"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "estimated resolution: %d dpi"
 msgstr "ожидаемое разрешение: %d dpi"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting XMP metadata"
 msgstr "извлечение метаданных XMP"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting annotations"
 msgstr "извлечение аннотаций"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting document outline"
 msgstr "извлечение оглавления документа"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting document-information metadata"
 msgstr "извлечение метаданных информации документа"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "guessed resolution: %s dpi"
 msgstr "предполагаемое разрешение: %s dpi"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "image size: %dx%d"
 msgstr "размер изображения: %dx%d"
@@ -672,7 +672,7 @@ msgstr "целочисленное переполнение"
 msgid "no such variable"
 msgstr "нет такой переменной"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "page #%d -> #%d"
 msgstr "страница #%d -> #%d"
@@ -685,7 +685,7 @@ msgstr "pdf2djvu предназначен для запуска из коман�
 msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
 msgstr "pdf2djvu скомпилирован без GraphicsMagick; улучшенное квантование цвета отключено."
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
 msgstr "pdf2djvu скомпилирован без поддержки OpenMP; многопоточность отключена."
 
@@ -697,55 +697,55 @@ msgstr "pdf2djvu скомпилирован без поддержки обнов
 msgid "possibly memory allocation error"
 msgstr "вероятно, ошибка выделения памяти"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "preparing data for `csepdjvu`"
 msgstr "подготовка данных для `csepdjvu`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "re-assembling page with `djvumake`"
 msgstr "пересборка страницы с `djvumake`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "recovering image chunks with `djvuextract`"
 msgstr "восстановление кусков рисунка с `djvuextract`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "recovering images with `djvuextract`"
 msgstr "восстановление рисунков с `djvuextract`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "recovering text with `djvused`"
 msgstr "восстановление текста с `djvused`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "rendering background image"
 msgstr "рендеринг фонового изображения"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "rendering page (1st pass)"
 msgstr "рендеринг страницы (1-ый проход)"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "rendering page (2nd pass)"
 msgstr "рендеринг страницы (2-ой проход)"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "setting metadata with `djvused`"
 msgstr "присвоение метаданных с `djvused`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing background image"
 msgstr "сохранение фонового изображения"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing dummy background image"
 msgstr "сохранение пустого фонового изображения"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing foreground image"
 msgstr "сохранение изображения переднего плана"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing text layer"
 msgstr "сохранение текстового слоя"
 
@@ -757,7 +757,7 @@ msgstr "ошибка типа: ожидалось число, а не строк
 msgid "type error: expected string, not number"
 msgstr "ошибка типа: ожидалась строка, а не число"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "unable to guess resolution"
 msgstr "невозможно оценить разрешение"
 

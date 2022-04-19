@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.18.3\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2020-03-02 17:45+0100\n"
+"POT-Creation-Date: 2022-04-19 13:55+0200\n"
 "PO-Revision-Date: 2016-12-08 10:40+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -70,7 +70,7 @@ msgstr " -o, --output=FICHEIRO"
 msgid "\"%s\" is not a valid number"
 msgstr "\"%s\" não é um número válido"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "%.3f bits/pixel; %.3f:1, %.2f%% saved, %ju bytes in, %zu bytes out"
 msgstr "%.3f bits/pixel; %.3f:1, %.2f%% gravados %ju bytes dentro, %zu bytes fora"
@@ -93,7 +93,7 @@ msgstr "%s ..."
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "%zu bytes out"
 msgid_plural "%zu bytes out"
@@ -134,7 +134,7 @@ msgstr "Pipe quebrado"
 msgid "Cannot allocate memory"
 msgstr "Incapaz de alocar memória"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Cannot find link destination"
 msgstr "Incapaz de encontrar ligação ao destino"
 
@@ -157,12 +157,12 @@ msgstr "Linha de contorno do documento muito larga"
 msgid "Domain error"
 msgstr "Erro do domínio"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Duplicate page identifier: %s"
 msgstr "Duplicar identificador de pagina: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Duplicate page: %d"
 msgstr "Duplicar página: %d"
@@ -224,7 +224,7 @@ msgstr "Nome de ficheiro demasiado longo"
 msgid "Function not implemented"
 msgstr "Função não implementada"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "I won't write DjVu data to a terminal."
 msgstr "Eu não escrevo dados DjVu num terminal."
 
@@ -263,7 +263,7 @@ msgstr "O ficheiro a ler é o mesmo que o ficheiro a escrever: %s"
 msgid "Input/output error"
 msgstr "Erro de entrada/saída"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Input/output error (%s)"
 msgstr "Erro de entrada/saída (%s)"
@@ -329,7 +329,7 @@ msgstr "Não foi especificado nenhum nome de ficheiro para saída"
 msgid "No locks available"
 msgstr "Nenhuma tranca disponível"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "No page for a bookmark"
 msgstr "Nenhuma página para um favorito"
 
@@ -362,7 +362,7 @@ msgstr "Não existe tal ficheiro ou directório"
 msgid "No such process"
 msgstr "Não existe tal processo"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "No title for a bookmark"
 msgstr "Nenhum título para um favorito"
 
@@ -427,7 +427,7 @@ msgstr "O identificador de página tem de consistir apenas de letras, dígitos e
 msgid "Page identifier must end with the '.djvu' or the '.djv' extension"
 msgstr "O identificador de página tem de acabar com a extensão '.djvu' ou '.djv'"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Page not found"
 msgstr "Página não encontrada"
 
@@ -537,15 +537,15 @@ msgstr "Incapaz de analisar tamanho de página"
 msgid "Unable to parse page title template specification"
 msgstr "Incapaz de analisar especificação de modelo de título de página"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Unexpected output from djvused"
 msgstr "Resultados inesperados de djvused"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Unexpected subsampled bitmap height"
 msgstr "Altura de mapa de bits de sub-amostragem inesperada"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Unexpected subsampled bitmap width"
 msgstr "Largura de mapa de bits de sub-amostragem inesperada"
 
@@ -557,55 +557,55 @@ msgstr "Opção desconhecida"
 msgid "Usage: "
 msgstr "Utilização: "
 
-#: pdf2djvu.cc system.cc
+#: main.cc system.cc
 #, c-format
 msgid "Warning: %s"
 msgstr "Aviso: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Warning: Ignoring duplicate page title: %s"
 msgstr "Aviso: A ignorar título de página duplicado: %s"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a JavaScript action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção de JavaScript"
 
-#: pdf2djvu.cc
+#: main.cc
 #, fuzzy
 msgid "Warning: Unable to convert link with a hide action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a launch action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção de lançamento"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a multimedia action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção multimedia"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a named action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção go-to remota"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link with a set-OCG-state action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção \"definir-estado-OCG\""
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unable to convert link without an action"
 msgstr "Aviso: Incapaz de converter ligação sem uma acção"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "Warning: Unknown link action"
 msgstr "Aviso: Acção de ligação desconhecida"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "Warning: metadata[%s] is not a valid date"
 msgstr "Aviso: os meta-dados[%s] não são uma data válida"
@@ -618,56 +618,56 @@ msgstr "Erro dos meta dados do XMP"
 msgid "XMP metadata warning"
 msgstr "Aviso de meta dados do XMP"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "adding non-raster data with `djvused`"
 msgstr "a adicionar dados não-raster com o `djvused`"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "creating multi-page indirect document (%zu page)"
 msgid_plural "creating multi-page indirect document (%zu pages)"
 msgstr[0] "a criar documento indirecto de multi-páginas (%zu página)"
 msgstr[1] "a criar documento indirecto de multi-páginas (%zu páginas)"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "creating new background image with `c44`"
 msgstr "a criar nova imagem de fundo com o `c44`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "encoding layers with `csepdjvu`"
 msgstr "a codificar camadas com o `csepdjvu`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "encoding monochrome image with `cjb2`"
 msgstr "a codificar imagem monocromática com o `cjb2`"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "estimated resolution: %d dpi"
 msgstr "resolução estimada: %d dpi"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting XMP metadata"
 msgstr "a extrair meta-dados XMP"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting annotations"
 msgstr "a extrair anotações"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting document outline"
 msgstr "a extrair bordos do documento"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "extracting document-information metadata"
 msgstr "a extrair meta-dados de informação do documento"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "guessed resolution: %s dpi"
 msgstr "resolução adivinhada: %s dpi"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "image size: %dx%d"
 msgstr "tamanho de imagem: %dx%d"
@@ -680,7 +680,7 @@ msgstr "overflow do número inteiro"
 msgid "no such variable"
 msgstr "tal variável não existe"
 
-#: pdf2djvu.cc
+#: main.cc
 #, c-format
 msgid "page #%d -> #%d"
 msgstr "página #%d -> #%d"
@@ -693,7 +693,7 @@ msgstr "pdf2djvu destina-se a ser accionado a partir da linha de comandos."
 msgid "pdf2djvu was built without GraphicsMagick; advanced color quantization is disabled."
 msgstr "pdf2djvu foi compilado sem GraphicsMagick; a quantização de cores avançada está desactivada."
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "pdf2djvu was built without OpenMP support; multi-threading is disabled."
 msgstr "pdf2djvu foi compilado sem suporte a OpenMP, a s múltiplas linhas de execução estão desactivas."
 
@@ -705,55 +705,55 @@ msgstr "pdf2djvu foi compilado sem suporte para actualizar XMP."
 msgid "possibly memory allocation error"
 msgstr "possível erro de alocação de memória"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "preparing data for `csepdjvu`"
 msgstr "a preparar dados para o `csepdjvu`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "re-assembling page with `djvumake`"
 msgstr "a re-montar a página com o  `djvumake`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "recovering image chunks with `djvuextract`"
 msgstr "a recuperar pedaços de imagem com o `djvuextract`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "recovering images with `djvuextract`"
 msgstr "a recuperar imagens com o `djvuextract`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "recovering text with `djvused`"
 msgstr "a recuperar texto com o `djvused`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "rendering background image"
 msgstr "a renderizar imagem de fundo"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "rendering page (1st pass)"
 msgstr "a renderizar página (1º passo)"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "rendering page (2nd pass)"
 msgstr "a renderizar página (2º passo)"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "setting metadata with `djvused`"
 msgstr "a definir meta-dados com o `djvused`"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing background image"
 msgstr "a gravar imagem de fundo"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing dummy background image"
 msgstr "a gravar imagem fantoche de fundo"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing foreground image"
 msgstr "a gravar imagem de primeiro plano"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "storing text layer"
 msgstr "a gravar camada de texto"
 
@@ -765,7 +765,7 @@ msgstr "erro de escrita: esperado número, não uma string"
 msgid "type error: expected string, not number"
 msgstr "erro de escrita: esperada string, não um número"
 
-#: pdf2djvu.cc
+#: main.cc
 msgid "unable to guess resolution"
 msgstr "incapaz de adivinhar a resolução"
 
