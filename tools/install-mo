@@ -25,7 +25,7 @@ localedir="$1"
 shift
 for mofile in "$@"
 do
-    basename=$(basename "$mofile")
+    basename=${mofile##*/}
     locale=${basename%.*}
     (
         PS4='$ '
