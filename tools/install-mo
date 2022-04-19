@@ -15,7 +15,7 @@
 
 usage()
 {
-    printf '%s <localedir> <mofile>...\n' "$0"
+    printf '%s LOCALE-DIR MO-FILE...\n' "$0"
 }
 
 set -e -u
