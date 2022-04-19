@@ -25,7 +25,7 @@ mandir="$1"
 shift
 for manpage in "$@"
 do
-    basename=$(basename "$manpage")
+    basename=${manpage##*/}
     suffix=${basename#*.}
     locale=${suffix%.*}
     if [ "$locale" = "$suffix" ]
