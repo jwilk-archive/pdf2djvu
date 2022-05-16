@@ -319,7 +319,7 @@ def xml_find_text(xml, tag):
     [elem] = xml.findall('.//' + tag, xml_ns)
     return elem.text
 
-_uuid_regex = (
+_uuid_regexp = (
     r'\Aurn:uuid:XXXXXXXX-XXXX-4XXX-[89ab]XXX-XXXXXXXXXXXX\Z'
     .replace('X', '[0-9a-f]')
 )
@@ -327,7 +327,7 @@ _uuid_regex = (
 def assert_uuid_urn(uuid):
     return assert_regex(
         uuid,
-        _uuid_regex,
+        _uuid_regexp,
     )
 
 __all__ = [

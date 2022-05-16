@@ -27,8 +27,8 @@ class test(case):
             url=url,
             border=border,
         )
-        regex = re.escape(template).replace('NNN', '[0-9]+')
-        result.assert_(stdout=re.compile(regex))
+        regexp = re.escape(template).replace('NNN', '[0-9]+')
+        result.assert_(stdout=re.compile(regexp))
 
     def test(self):
         # Bug: https://github.com/jwilk/pdf2djvu/issues/3
