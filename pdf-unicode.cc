@@ -81,10 +81,6 @@ std::string pdf::string_as_utf8(const pdf::String *string)
                 code_shift = 0x10000 + ((code & 0x3FF) << 10);
                 continue;
             }
-            if ((code & 0xFFFE) == 0xFFFE) {
-                /* non-character */
-                code = replacement_character;
-            }
             if (code < 0x80) {
                 char ascii = code;
                 stream << ascii;
