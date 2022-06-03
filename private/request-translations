@@ -20,7 +20,7 @@ pofiles=''
 translators=''
 if [ $# -eq 0 ]
 then
-    printf 'Usage: %s <po-file>...\n' "$0" >&2
+    printf 'Usage: %s PO-FILE...\n' "$0" >&2
     exit 1
 fi
 for po in "$@"
