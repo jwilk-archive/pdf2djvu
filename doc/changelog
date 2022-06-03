@@ -1,8 +1,8 @@
-pdf2djvu (0.9.18.3) UNRELEASED; urgency=low
+pdf2djvu (0.9.19) UNRELEASED; urgency=low
 
   * 
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Jan 2022 12:14:21 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 03 Jun 2022 20:01:11 +0200
 
 pdf2djvu (0.9.18.2) unstable; urgency=low
 

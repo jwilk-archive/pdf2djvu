@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pdf2djvu 0.9.18.3\n"
+"Project-Id-Version: pdf2djvu 0.9.19\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2022-04-19 13:55+0200\n"
 "PO-Revision-Date: 2020-12-26 09:03+0100\n"
