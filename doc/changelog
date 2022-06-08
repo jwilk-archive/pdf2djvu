@@ -2,6 +2,7 @@ pdf2djvu (0.9.19) UNRELEASED; urgency=low
 
   [ Jakub Wilk ]
   * Fix build failure with Poppler ≥ 22.03.
+    https://github.com/jwilk/pdf2djvu/issues/153
   * When converting PDF strings to UTF-8, keep non-characters intact.
   * Improve the configure script:
     + Use HTTPS for jwilk.net.
