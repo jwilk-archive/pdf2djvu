@@ -25,6 +25,9 @@ jobs:
         - poppler: poppler-20.09.0 # Debian 11 "Bullseye"
           exiv2: exiv2-0.27.3
           os: ubuntu-20.04
+        - poppler: poppler-22.02.0 # Ubuntu 22.04 LTS "Jammy Jellyfish"
+          exiv2: exiv2-0.27.5
+          os: ubuntu-22.04
         - poppler: poppler-22.03.0 # newest tested release
           exiv2: exiv2-0.27.5
           os: ubuntu-20.04
@@ -68,8 +71,6 @@ jobs:
           libxml2-utils
           locales-all
           pkg-config
-          python-nose
-          python-pil
           texlive-fonts-recommended
           texlive-luatex
           uuid-dev
@@ -156,9 +157,20 @@ jobs:
         ./pdf2djvu --version
     - name: set up Python
       run: |
-        sudo apt-get install python-is-python2
+        sudo apt-get install python2
+        sudo ln -sf python2 /usr/bin/python
         python --version
       if: matrix.os != 'ubuntu-18.04'
+    - name: install Python deps
+      run: |
+        sudo apt-get install python-nose python-pil
+      if: matrix.os != 'ubuntu-22.04'
+    - name: install Python deps
+      run: |
+        sudo apt-get install python-pip
+        python -m pip install nose
+        python -m pip install Pillow
+      if: matrix.os == 'ubuntu-22.04'
     - name: run tests
       run: |
         make -C tests prepare
