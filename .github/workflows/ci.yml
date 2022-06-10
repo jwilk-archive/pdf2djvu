@@ -149,7 +149,8 @@ jobs:
       run:
         private/autogen
     - name: configure
-      run:
+      run: |
+        CXXFLAGS+=' -Werror=switch-enum'
         ./configure --prefix ~/.local $configure_options || cat config.log /fail
     - name: build
       run:
