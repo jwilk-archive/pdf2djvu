@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.19\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2022-06-11 18:10+0200\n"
-"PO-Revision-Date: 2016-12-08 00:17+0100\n"
+"PO-Revision-Date: 2022-06-11 18:12+0200\n"
 "Last-Translator: Jakub Wilk <jwilk@jwilk.net>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -585,9 +585,8 @@ msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź-do"
 
 #: main.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a reset-form action"
-msgstr "Ostrzeżenie: Nie można przekonwertować łącza ze zdalną akcją idź-do"
+msgstr "Ostrzeżenie: Nie można przekonwertować łącza z akcją resetowania formularza"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: main.cc
