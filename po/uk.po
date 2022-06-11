@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.19\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
-"POT-Creation-Date: 2022-04-19 13:55+0200\n"
+"POT-Creation-Date: 2022-06-11 18:10+0200\n"
 "PO-Revision-Date: 2015-03-26 15:30+0300\n"
 "Last-Translator: Serhij Dubyk <serhijdubyk@gmail.com>\n"
 "Language-Team: Ukrainian Linux Team <translation@linux.org.ua>\n"
@@ -591,6 +591,11 @@ msgstr "Попередження: неможливо перетворити по
 
 #: main.cc
 msgid "Warning: Unable to convert link with a remote go-to action"
+msgstr "Попередження: неможливо перетворити посилання на зовнішній документ"
+
+#: main.cc
+#, fuzzy
+msgid "Warning: Unable to convert link with a reset-form action"
 msgstr "Попередження: неможливо перетворити посилання на зовнішній документ"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
