@@ -102,10 +102,12 @@ jobs:
         echo CPATH=~/.local/include/ >> $GITHUB_ENV
         echo PKG_CONFIG_PATH=~/.local/lib/pkgconfig/ >> $GITHUB_ENV
         echo LD_LIBRARY_PATH=~/.local/lib/ >> $GITHUB_ENV
+        CXXFLAGS='-g -O2'
         if grep -rwm1 std::optional .;
         then
-          echo CXXFLAGS='-g -O2 -std=gnu++17' | tee -a $GITHUB_ENV;
+          CXXFLAGS+=' -std=gnu++17'
         fi
+        echo "CXXFLAGS=$CXXFLAGS" | tee -a $GITHUB_ENV;
     - name: remove Poppler source
       run:
         rm -rf poppler-*
