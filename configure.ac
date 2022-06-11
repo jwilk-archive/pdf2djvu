@@ -199,6 +199,7 @@ P_CHECK_FUNC(
 P_MAYBE_ADD_CXXFLAGS(
   [-Wall],
   [-Wempty-body],
+  [-Wswitch-enum],
   [-Werror=misleading-indentation],
   [-Werror=narrowing],
   [-Werror=overloaded-virtual],
