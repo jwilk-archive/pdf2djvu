@@ -31,7 +31,6 @@ jobs:
         - poppler: poppler-22.03.0 # newest tested release
           exiv2: exiv2-0.27.5
           os: ubuntu-20.04
-          cppcheck: cppcheck
           docs: docs
         - poppler: poppler-git
           exiv2: exiv2-git
@@ -58,7 +57,6 @@ jobs:
           autoconf
           automake
           ccache
-          cppcheck
           djvulibre-bin
           docbook-xml
           docbook-xsl
@@ -197,16 +195,26 @@ jobs:
         MANPATH: /home/runner/.local/share/man
         MANWIDTH: 80
       if: matrix.docs
-    - name: run cppcheck
-      run:
-        cppcheck --error-exitcode=1 *.cc
-      if: matrix.cppcheck
     - name: check docs
       run: |
         sudo apt-get install python-docutils
         private/check-rst
         make -C doc check
       if: matrix.docs
+  cppcheck:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up APT
+      run: |
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
+        sudo apt-get update
+    - name: install cppcheck
+      run:
+        sudo apt-get install cppcheck
+    - name: run cppcheck
+      run:
+        cppcheck --error-exitcode=1 *.cc
   Python:
     runs-on: ubuntu-20.04
     steps:
