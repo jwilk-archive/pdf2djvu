@@ -214,7 +214,7 @@ jobs:
         sudo apt-get install cppcheck
     - name: run cppcheck
       run:
-        cppcheck --error-exitcode=1 *.cc
+        private/cppcheck
   Python:
     runs-on: ubuntu-20.04
     steps:
