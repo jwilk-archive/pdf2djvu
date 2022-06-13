@@ -318,10 +318,9 @@ void Config::read_config(int argc, char * const argv[])
     { "words", 0, nullptr, OPT_TEXT_WORDS },
     { nullptr, 0, nullptr, '\0' }
   };
-  int c;
   while (true)
   {
-    c = getopt_long(argc, argv, "i:o:d:qvp:j:h", options, nullptr);
+    int c = getopt_long(argc, argv, "i:o:d:qvp:j:h", options, nullptr);
     if (c < 0)
       break;
     if (c == 0)
