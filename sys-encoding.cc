@@ -95,7 +95,7 @@ class IConv
 protected:
     iconv_t cd;
 public:
-    IConv(const char *tocode, const char *fromcode="")
+    explicit IConv(const char *tocode, const char *fromcode="")
     {
         this->cd = iconv_open(tocode, fromcode);
         if (this->cd == reinterpret_cast<void*>(-1))

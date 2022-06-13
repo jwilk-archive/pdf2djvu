@@ -18,7 +18,7 @@ class const_adapter
 protected:
     ConstT x;
 public:
-    const_adapter(ConstT x)
+    explicit const_adapter(ConstT x)
     : x(x)
     { }
     operator T () const

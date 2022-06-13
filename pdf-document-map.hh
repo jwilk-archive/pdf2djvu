@@ -45,7 +45,7 @@ namespace pdf
         std::vector<std::string> labels;
         std::vector<int> indices;
     public:
-        DocumentMap(const std::vector<const char *> &paths);
+        explicit DocumentMap(const std::vector<const char *> &paths);
         intmax_t get_byte_size()
         {
             return this->byte_size;

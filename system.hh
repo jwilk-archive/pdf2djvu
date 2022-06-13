@@ -49,7 +49,7 @@ void throw_win32_error(const std::string &context);
 class NoSuchFileOrDirectory : public POSIXError
 {
 public:
-  NoSuchFileOrDirectory(const std::string &context)
+  explicit NoSuchFileOrDirectory(const std::string &context)
   : POSIXError(context)
   { }
 };
@@ -57,7 +57,7 @@ public:
 class NotADirectory : public POSIXError
 {
 public:
-  NotADirectory(const std::string &context)
+  explicit NotADirectory(const std::string &context)
   : POSIXError(context)
   { }
 };
@@ -75,7 +75,7 @@ public:
   class CommandFailed : public std::runtime_error
   {
   public:
-    CommandFailed(const std::string &message)
+    explicit CommandFailed(const std::string &message)
     : std::runtime_error(message)
     { }
   };
@@ -155,7 +155,7 @@ public:
   TemporaryFile(const Directory& directory, const std::string &name)
   : File(directory, name)
   { }
-  TemporaryFile(const std::string &name)
+  explicit TemporaryFile(const std::string &name)
   : File(name)
   { }
   TemporaryFile();

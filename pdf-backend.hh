@@ -130,7 +130,7 @@ namespace pdf
   class Renderer : public pdf::splash::OutputDevice
   {
   public:
-    Renderer(pdf::splash::Color &paper_color, bool monochrome = false);
+    explicit Renderer(pdf::splash::Color &paper_color, bool monochrome = false);
 
     void processLink(pdf::link::Link *link)
     {
@@ -294,7 +294,7 @@ namespace pdf
     class UnableToSetParameter : public std::runtime_error
     {
     public:
-      UnableToSetParameter(const std::string &message)
+      explicit UnableToSetParameter(const std::string &message)
       : std::runtime_error(message)
       { }
     };
@@ -308,7 +308,7 @@ namespace pdf
   class Document : public ::PDFDoc
   {
   public:
-    Document(const std::string &file_name);
+    explicit Document(const std::string &file_name);
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
     void get_page_size(int n, bool crop, double &width, double &height);
     const std::string get_xmp();
@@ -370,7 +370,7 @@ namespace pdf
     typedef std::pair<const char *, pdf::Timestamp *> date_field;
     std::vector<date_field> date_fields;
   public:
-    Metadata(pdf::Document &document);
+    explicit Metadata(pdf::Document &document);
     std::string title;
     std::string subject;
     std::string keywords;

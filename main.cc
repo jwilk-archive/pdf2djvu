@@ -672,7 +672,7 @@ public:
 class BookmarkError : public std::runtime_error
 {
 public:
-  BookmarkError(const std::string &message)
+  explicit BookmarkError(const std::string &message)
   : std::runtime_error(message)
   { }
 };
@@ -680,7 +680,7 @@ public:
 class NoPageForBookmark : public BookmarkError
 {
 public:
-  NoPageForBookmark()
+  explicit NoPageForBookmark()
   : BookmarkError(_("No page for a bookmark"))
   { }
 };
@@ -885,7 +885,7 @@ std::string DjVuCommand::dir_name(paths::djvulibre_bindir);
 class DuplicatePage : public std::runtime_error
 {
 public:
-  DuplicatePage(int n)
+  explicit DuplicatePage(int n)
   : std::runtime_error(string_printf(_("Duplicate page: %d"), n))
   { }
 };
@@ -897,7 +897,7 @@ protected:
   class DuplicateId : public std::runtime_error
   {
   public:
-    DuplicateId(const std::string &id)
+    explicit DuplicateId(const std::string &id)
     : std::runtime_error(string_printf(_("Duplicate page identifier: %s"), id.c_str()))
     { }
   };
