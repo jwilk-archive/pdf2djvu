@@ -25,7 +25,7 @@ fi
 
 exec cppcheck \
     --error-exitcode=1 \
-    --suppress='uninitvar:sys-encoding.cc:144' \
+    --suppress='uninitvar:sys-encoding.cc:143' \
     --suppress='syntaxError:string-format.cc:211' \
     "$@"
 

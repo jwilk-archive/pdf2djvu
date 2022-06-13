@@ -64,7 +64,6 @@ std::ostream &operator <<(std::ostream &stream, const proxy<native, terminal> &c
     if (length == 0)
         return stream;
     stream.flush();
-    std::vector<char> buffer(length * 2);
     std::vector<wchar_t> wide_buffer(length);
     wide_length = MultiByteToWideChar(
         CP_ACP, 0,
