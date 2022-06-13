@@ -1375,7 +1375,7 @@ static int xmain(int argc, char * const argv[])
         std::string output_directory_name;
         split_path(config.output, output_directory_name, index_file_name);
         if (index_file_name.length() == 0)
-          throw no_such_directory_exception;
+          throw;
         output_dir.reset(new Directory(output_directory_name));
       }
     }
