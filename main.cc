@@ -157,7 +157,7 @@ protected:
   bool title_set;
   File *file;
 public:
-  explicit Component(File &file, const std::string title = "")
+  explicit Component(File &file, const std::string &title = "")
   : title(title), title_set(false),
     file(&file)
   {

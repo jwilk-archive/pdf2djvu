@@ -91,7 +91,7 @@ public:
   {
     this->call(nullptr, nullptr, !quiet);
   }
-  static std::string filter(const std::string &command_line, const std::string string);
+  static std::string filter(const std::string &command_line, const std::string &string);
 };
 
 class Directory

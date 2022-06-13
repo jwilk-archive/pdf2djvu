@@ -254,7 +254,7 @@ unsigned long WINAPI filter_writer(void *data_)
     return 0;
 }
 
-std::string Command::filter(const std::string &command_line, const std::string string)
+std::string Command::filter(const std::string &command_line, const std::string &string)
 {
     int status = 0;
     unsigned long rc;

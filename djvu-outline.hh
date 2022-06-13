@@ -47,7 +47,7 @@ namespace djvu
     : public OutlineBase
     {
     public:
-        OutlineItem(std::string description, std::string url)
+        OutlineItem(const std::string &description, const std::string &url)
         : description(description),
           url(url)
         { }

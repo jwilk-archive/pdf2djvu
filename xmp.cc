@@ -47,7 +47,7 @@ static std::string maybe_get(Exiv2::XmpData &data, const char *key)
     return it->toString();
 }
 
-static void set_history(Exiv2::XmpData &data, long n, const char *event, const std::string value)
+static void set_history(Exiv2::XmpData &data, long n, const char *event, const std::string &value)
 {
     const std::string key = string_printf("Xmp.xmpMM.History[%ld]/stEvt:%s", n, event);
     data[key] = value;

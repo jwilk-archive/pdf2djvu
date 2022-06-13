@@ -375,7 +375,7 @@ void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
     }
 }
 
-std::string Command::filter(const std::string &command_line, const std::string string)
+std::string Command::filter(const std::string &command_line, const std::string &string)
 {
     std::istringstream stdin_(string);
     std::ostringstream stdout_;
