@@ -30,11 +30,11 @@ jobs:
           os: ubuntu-22.04
         - poppler: poppler-22.03.0 # newest tested release
           exiv2: exiv2-0.27.5
-          os: ubuntu-20.04
+          os: ubuntu-22.04
           docs: docs
         - poppler: poppler-git
           exiv2: exiv2-git
-          os: ubuntu-20.04
+          os: ubuntu-22.04
           cc: clang
     runs-on: ${{matrix.os}}
     steps:
@@ -197,7 +197,7 @@ jobs:
       if: matrix.docs
     - name: check docs
       run: |
-        sudo apt-get install python-docutils
+        python -m pip install docutils
         private/check-rst
         make -C doc check
       if: matrix.docs
