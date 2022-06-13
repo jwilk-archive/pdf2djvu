@@ -281,9 +281,6 @@ pdf::Timestamp pdf::Timestamp::now()
 {
   pdf::Timestamp result;
   result.dummy = false;
-  result.tz_sign = '+';
-  result.tz_hour = 0;
-  result.tz_minute = 0;
   time_t unix_now = time(nullptr);
   if (unix_now == static_cast<time_t>(-1))
     throw_posix_error("time()");
