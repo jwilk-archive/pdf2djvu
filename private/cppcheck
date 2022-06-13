@@ -24,6 +24,7 @@ then
 fi
 
 exec cppcheck \
+    --enable=warning \
     --error-exitcode=1 \
     --suppress='uninitvar:sys-encoding.cc:143' \
     --suppress='syntaxError:string-format.cc:211' \
