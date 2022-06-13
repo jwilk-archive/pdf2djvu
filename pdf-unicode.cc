@@ -91,8 +91,8 @@ std::string pdf::string_as_utf8(const pdf::String *string)
                     if (code < (1U << (5 * nbytes + 1)))
                         break;
                 buffer[0] = (0xFF00 >> nbytes) & 0xFF;
-                for (size_t i = nbytes - 1; i; i--) {
-                    buffer[i] = 0x80 | (code & 0x3F);
+                for (size_t j = nbytes - 1; j; j--) {
+                    buffer[j] = 0x80 | (code & 0x3F);
                     code >>= 6;
                 }
                 buffer[0] |= code;
