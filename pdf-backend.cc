@@ -273,7 +273,11 @@ const std::string pdf::Document::get_xmp()
  */
 
 pdf::Timestamp::Timestamp()
-: dummy(true)
+: dummy(true),
+  timestamp{},
+  tz_sign(0),
+  tz_hour(0),
+  tz_minute(0)
 { }
 
 pdf::Timestamp pdf::Timestamp::now()
