@@ -1,4 +1,4 @@
-/* Copyright © 2015-2019 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2015-2022 Jakub Wilk <jwilk@jwilk.net>
  *
  * This file is part of pdf2djvu.
  *
