@@ -121,7 +121,7 @@ std::string Command::repr()
     );
 }
 
-void Command::call(std::istream *stdin_, std::ostream *stdout_, bool stderr_)
+void Command::call(const std::istream *stdin_, std::ostream *stdout_, bool stderr_)
 {
     assert(stdin_ == nullptr); // stdin support not implemented yet
     int status = 0;

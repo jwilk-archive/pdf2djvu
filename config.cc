@@ -195,7 +195,7 @@ static int parse_bg_subsample(const std::string &s)
   return n;
 }
 
-static void validate_page_id_template(string_format::Template &page_id_template)
+static void validate_page_id_template(const string_format::Template &page_id_template)
 {
   string_format::Bindings bindings;
   bindings["max_spage"] = 0U;
