@@ -54,7 +54,6 @@ static void poppler_error_handler(ErrorCategory category, pdf::Offset pos, const
 static void poppler_error_handler(void *data, ErrorCategory category, pdf::Offset pos, const char *message)
 #endif
 {
-  std::string format;
   const char *category_name = _("PDF error");
   switch (category)
   {
