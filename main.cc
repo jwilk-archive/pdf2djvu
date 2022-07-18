@@ -1713,6 +1713,10 @@ static int xmain(int argc, char * const argv[])
     error_log << ex << std::endl;
     exit(1);
   }
+  catch (...)
+  {
+    throw;
+  }
 #ifdef USE_HEAP_PROFILING
   HeapProfilerDump("after last page");
 #endif
