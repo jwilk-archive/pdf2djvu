@@ -1504,6 +1504,11 @@ static int xmain(int argc, char * const argv[])
     { /* Render the page second time, without skipping any elements. */
       debug(3) << _("rendering page (2nd pass)") << std::endl;
       doc->display_page(out1.get(), m, dpi, dpi, crop, false);
+      if (out1->getBitmapWidth() != width || out1->getBitmapHeight() != height)
+      {
+        errno = ENOMEM;
+        throw_posix_error("");
+      }
     }
     debug(3) << _("preparing data for `csepdjvu`") << std::endl;
     debug(0)++;
