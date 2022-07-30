@@ -33,35 +33,38 @@ libfreetype\*.dll
 | Copyright © 1990-1998 The Open Group
 | Copyright © 1995-2002 Jean-loup Gailly
 | Copyright © 1995-2002 Mark Adler
-| Copyright © 1996-2020 Just van Rossum
-| Copyright © 1996-2020 Robert Wilhelm
-| Copyright © 1996-2020 Werner Lemberg
-| Copyright © 1996-2020 David Turner
+| Copyright © 1996-2022 Just van Rossum
+| Copyright © 1996-2022 Robert Wilhelm
+| Copyright © 1996-2022 Werner Lemberg
+| Copyright © 1996-2022 David Turner
 | Copyright © 2000 Computing Research Labs, New Mexico State University
 | Copyright © 2000-2012 Francesco Zappa Nardelli
-| Copyright © 2002-2020 Roberto Alameda
+| Copyright © 2002-2022 Roberto Alameda
 | Copyright © 2003 Huw D M Davies
-| Copyright © 2003-2020 Masatake YAMATO
-| Copyright © 2003-2020 Redhat K.K.
-| Copyright © 2004-2020 George Williams
-| Copyright © 2004-2020 Albert Chin-A-Young
-| Copyright © 2004-2020 suzuki toshiya
-| Copyright © 2005-2019 Detlef Würkner
+| Copyright © 2003-2022 Masatake YAMATO
+| Copyright © 2003-2022 Redhat K.K.
+| Copyright © 2004-2022 George Williams
+| Copyright © 2004-2022 Albert Chin-A-Young
+| Copyright © 2004-2022 suzuki toshiya
+| Copyright © 2005-2022 Detlef Würkner
 | Copyright © 2007 Dmitry Timoshkov
-| Copyright © 2007-2020 Rahul Bhalerao
-| Copyright © 2007-2020 Derek Clegg
-| Copyright © 2007-2020 Michael Toftdal
+| Copyright © 2007-2022 Rahul Bhalerao
+| Copyright © 2007-2022 Derek Clegg
+| Copyright © 2007-2022 Michael Toftdal
 | Copyright © 2007-2014 Adobe Systems Incorporated.
-| Copyright © 2009-2020 Mickey Gabel
-| Copyright © 2009-2020 Oran Agra
-| Copyright © 2010-2020 Joel Klinghed
+| Copyright © 2009-2022 Mickey Gabel
+| Copyright © 2009-2022 Oran Agra
+| Copyright © 2010-2022 Joel Klinghed
 | Copyright © 2012 Intel Corporation
-| Copyright © 2013-2020 Google, Inc.
-| Copyright © 2018-2019 Nikhil Ramakrishnan
-| Copyright © 2018-2020 Armin Hasitzka
+| Copyright © 2013-2022 Google, Inc.
+| Copyright © 2018-2022 Nikhil Ramakrishnan
+| Copyright © 2018-2022 Armin Hasitzka
+| Copyright © 2018-2022 Dominik Röttsches
 | Copyright © 2019 Oliver Nightingale
 | Copyright © 2019-2020 by Nikhil Ramakrishnan
-
+| Copyright © 2019 Sony Interactive Entertainment Inc.
+| Copyright © 2019 nyorain
+| Copyright © 2022 Moazin Khatti
 
 The FreeType 2 font engine is copyrighted work and cannot be used legally
 without a software license. In order to make this project usable to a vast
