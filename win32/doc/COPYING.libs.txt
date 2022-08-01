@@ -178,6 +178,9 @@ are granted under this license.
 | Copyright © 2015 Matthieu Darbois
 | Copyright © 2016 Even Rouault
 | Copyright © 2017 IntoPIX SA
+| Copyright © 2021 Aous Naman
+| Copyright © 2021 Kakadu Software Pty Ltd, Australia
+| Copyright © 2021 The University of New South Wales, Australia
 
 All rights reserved.
 
