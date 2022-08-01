@@ -208,7 +208,7 @@ libexpat-\*.dll
 ===============
 
 | Copyright © 1998-2000 Thai Open Source Software Center Ltd and Clark Cooper
-| Copyright © 2001-2019 Expat maintainers.
+| Copyright © 2001-2022 Expat maintainers.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in
