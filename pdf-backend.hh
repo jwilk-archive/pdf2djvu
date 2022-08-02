@@ -263,13 +263,6 @@ namespace pdf
   };
 
 
-/* class pdf::OwnedObject : pdf::Object
- * ====================================
- */
-
-typedef ::Object OwnedObject;
-
-
 /* class pdf::Environment
  * ======================
  */
@@ -301,7 +294,7 @@ typedef ::Object OwnedObject;
     void display_page(Renderer *renderer, int npage, double hdpi, double vdpi, bool crop, bool do_links);
     void get_page_size(int n, bool crop, double &width, double &height);
     const std::string get_xmp();
-    void get_doc_info(pdf::OwnedObject &info)
+    void get_doc_info(pdf::Object &info)
     {
 #if POPPLER_VERSION < 5800
       this->getDocInfo(&info);

@@ -389,21 +389,21 @@ pdf::Metadata::Metadata(pdf::Document &document)
   date_fields.push_back({"CreationDate", &this->creation_date});
   date_fields.push_back({"ModDate", &this->mod_date});
 
-  pdf::OwnedObject info;
+  pdf::Object info;
   document.get_doc_info(info);
   if (!info.isDict())
     return;
   pdf::Dict *info_dict = info.getDict();
   for (auto &field : this->string_fields)
   {
-    pdf::OwnedObject object;
+    pdf::Object object;
     if (!pdf::dict_lookup(info_dict, field.first, &object)->isString())
       continue;
     *(field.second) = pdf::string_as_utf8(object);
   }
   for (auto &field : this->date_fields)
   {
-    pdf::OwnedObject object;
+    pdf::Object object;
     char tzs = 0; int tzh = 0, tzm = 0;
     if (!pdf::dict_lookup(info_dict, field.first, &object)->isString())
       continue;

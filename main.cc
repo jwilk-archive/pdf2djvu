@@ -712,7 +712,7 @@ static void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog
     {
       std::string title_str;
       {
-        pdf::OwnedObject title;
+        pdf::Object title;
         if (!pdf::dict_lookup(current, "Title", &title)->isString())
           throw NoTitleForBookmark();
         title_str = pdf::string_as_utf8(title);
@@ -720,7 +720,7 @@ static void pdf_outline_to_djvu_outline(pdf::Object *node, pdf::Catalog *catalog
 
       int page;
       {
-        pdf::OwnedObject destination;
+        pdf::Object destination;
         std::unique_ptr<pdf::link::Action> link_action;
         if (!pdf::dict_lookup(current, "Dest", &destination)->isNull())
         {
