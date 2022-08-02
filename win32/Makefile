@@ -15,6 +15,8 @@ usr = $(CURDIR)
 host = i686-w64-mingw32
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
+rst2html = $(notdir $(shell command -v rst2html || echo rst2html.py))
+
 ifeq "$(wildcard ../.git)" ""
 version := $(shell IFS='()' read _ v _ < ../doc/changelog && echo $$v)
 orig_src_tarball = pdf2djvu-$(version).tar.xz
@@ -157,6 +159,7 @@ src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
 	touch $(@)
 
+
 src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	install -d dist/doc/
 	$(MAKE) install -C $(dir $@)
@@ -171,7 +174,7 @@ src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/COPYING > dist/doc/COPYING.txt
 	cd src/pdf2djvu/doc && \
 		ls README credits djvudigital \
-		| xargs -I{file} -t rst2html {file} $(usr)/dist/doc/{file}.html
+		| xargs -I{file} -t $(rst2html) {file} $(usr)/dist/doc/{file}.html
 	sed -e 's/$$/\r/' < src/pdf2djvu/doc/changelog > dist/doc/changelog.txt
 	touch $(@)
 
@@ -188,7 +191,7 @@ src/libs-install-stamp: src/exiv2/install-stamp
 src/libs-install-stamp: src/poppler/install-stamp
 src/libs-install-stamp: src/winiconv/install-stamp
 	install -d dist/doc/
-	rst2html doc/COPYING.libs.txt > dist/doc/COPYING.libs.html
+	$(rst2html) doc/COPYING.libs.txt > dist/doc/COPYING.libs.html
 	touch $(@)
 
 # Poppler
@@ -260,7 +263,7 @@ src/poppler-data/install-stamp: src/poppler-data/build-stamp
 	install -d dist/share/
 	cp -a share/poppler dist/share/
 	install -d dist/doc/
-	rst2html doc/COPYING.poppler-data.txt > dist/doc/COPYING.poppler-data.html
+	$(rst2html) doc/COPYING.poppler-data.txt > dist/doc/COPYING.poppler-data.html
 	touch $(@)
 
 # DjVuLibre
@@ -599,7 +602,7 @@ src/urw-fonts/build-stamp: src/urw-fonts/source-stamp
 src/urw-fonts/install-stamp: src/urw-fonts/build-stamp
 	install -d dist/fonts/ dist/doc/
 	install -m 644 $(addprefix $(dir $@)/,$(standard-fonts)) dist/fonts/
-	rst2html doc/COPYING.fonts.txt > dist/doc/COPYING.fonts.html
+	$(rst2html) doc/COPYING.fonts.txt > dist/doc/COPYING.fonts.html
 	touch $(@)
 
 # MinGW runtime
