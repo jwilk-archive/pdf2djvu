@@ -1,4 +1,4 @@
-# Copyright © 2014-2016 Américo Monteiro <a_monteiro@gmx.com>
+# Copyright © 2014-2022 Américo Monteiro <a_monteiro@gmx.com>
 #
 # This file is part of pdf2djvu.
 #
@@ -16,9 +16,9 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.19\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2022-06-11 18:10+0200\n"
-"PO-Revision-Date: 2016-12-08 10:40+0000\n"
+"PO-Revision-Date: 2022-08-02 22:19+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
-"Language-Team: Portuguese <traduz@debianpt.org>\n"
+"Language-Team: Portuguese <>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -335,7 +335,7 @@ msgstr "Nenhuma página para um favorito"
 
 #: config.hh
 msgid "No pages selected"
-msgstr "Nenhuma página seleccionada"
+msgstr "Nenhuma página selecionada"
 
 #. L10N: Windows error message for ENOSPC
 #: system.cc
@@ -572,9 +572,8 @@ msgid "Warning: Unable to convert link with a JavaScript action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção de JavaScript"
 
 #: main.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a hide action"
-msgstr "Aviso: Incapaz de converter ligação com uma acção nomeada"
+msgstr "Aviso: Incapaz de converter ligação com uma acção de esconder"
 
 #: main.cc
 msgid "Warning: Unable to convert link with a launch action"
@@ -593,9 +592,8 @@ msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Aviso: Incapaz de converter ligação com uma acção go-to remota"
 
 #: main.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a reset-form action"
-msgstr "Aviso: Incapaz de converter ligação com uma acção go-to remota"
+msgstr "Aviso: Incapaz de converter ligação com uma acção de reiniciar formulário"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: main.cc
