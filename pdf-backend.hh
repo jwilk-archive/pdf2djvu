@@ -267,18 +267,7 @@ namespace pdf
  * ====================================
  */
 
-#if POPPLER_VERSION < 5800
-  class OwnedObject : public Object
-  {
-  public:
-    ~OwnedObject()
-    {
-      this->free();
-    }
-  };
-#else
-  typedef ::Object OwnedObject;
-#endif
+typedef ::Object OwnedObject;
 
 
 /* class pdf::Environment

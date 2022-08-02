@@ -581,12 +581,8 @@ double pdf::get_path_area(splash::Path &path)
 
 pdf::Object *pdf::dict_lookup(pdf::Object &dict, const char *key, pdf::Object *object)
 {
-#if POPPLER_VERSION < 5800
-  return dict.dictLookup(const_cast<char*>(key), object);
-#else
   *object = dict.dictLookup(const_cast<char*>(key));
   return object;
-#endif
 }
 
 pdf::Object *pdf::dict_lookup(pdf::Object *dict, const char *key, pdf::Object *object)
@@ -596,12 +592,8 @@ pdf::Object *pdf::dict_lookup(pdf::Object *dict, const char *key, pdf::Object *o
 
 pdf::Object *pdf::dict_lookup(pdf::Dict *dict, const char *key, pdf::Object *object)
 {
-#if POPPLER_VERSION < 5800
-  return dict->lookup(const_cast<char*>(key), object);
-#else
   *object = dict->lookup(const_cast<char*>(key));
   return object;
-#endif
 }
 
 
