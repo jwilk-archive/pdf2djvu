@@ -56,7 +56,7 @@ export CPATH = $(usr)/include
 export LDFLAGS = -L$(usr)/lib
 
 export CFLAGS = -Os
-export CXXFLAGS = -Os
+export CXXFLAGS = -Os -std=gnu++17
 
 export V = 1
 export VERBOSE = 1
