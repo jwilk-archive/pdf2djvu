@@ -15,7 +15,9 @@ usr = $(CURDIR)
 host = i686-w64-mingw32
 docbook_xsl = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
 
-rst2html = $(notdir $(shell command -v rst2html || echo rst2html.py))
+rst2html = $(notdir $(shell command -v rst2html || echo rst2html.py)) \
+	--input-encoding=UTF-8 \
+	--strict
 
 ifeq "$(wildcard ../.git)" ""
 version := $(shell IFS='()' read _ v _ < ../doc/changelog && echo $$v)
