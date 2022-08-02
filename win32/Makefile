@@ -136,7 +136,7 @@ install: src/poppler-data/install-stamp
 
 # pdf2djvu
 
-src/pdf2djvu/source-stamp: src.tar/$(orig_src_tarball)
+src/pdf2djvu/source-stamp: ../dist/$(orig_src_tarball)
 	mkdir -p $(dir $@)
 	$(untar) $(<) -C $(dir $@)
 	rm -f $(dir $@)/paths.hh
