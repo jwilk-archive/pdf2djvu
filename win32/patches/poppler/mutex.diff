@@ -1,10 +1,10 @@
 Use dummy implementation of mutexes.
 
-Last-Update: 2021-06-07
+Last-Update: 2022-08-02
 
 --- a/poppler/Annot.h
 +++ b/poppler/Annot.h
-@@ -49,7 +49,7 @@
+@@ -53,7 +53,7 @@
  
  #include <memory>
  #include <atomic>
@@ -12,7 +12,7 @@ Last-Update: 2021-06-07
 +#include <dummy-mutex>
  #include <vector>
  
- #include "Object.h"
+ #include "AnnotStampImageHelper.h"
 --- a/poppler/Array.h
 +++ b/poppler/Array.h
 @@ -29,7 +29,7 @@
@@ -26,15 +26,15 @@ Last-Update: 2021-06-07
  #include "poppler-config.h"
 --- a/poppler/CairoFontEngine.h
 +++ b/poppler/CairoFontEngine.h
-@@ -30,7 +30,7 @@
- #ifndef CAIROFONTENGINE_H
+@@ -32,7 +32,7 @@
  #define CAIROFONTENGINE_H
  
+ #include <memory>
 -#include <mutex>
 +#include <dummy-mutex>
+ #include <unordered_map>
+ #include <vector>
  
- #include "poppler-config.h"
- #include <cairo-ft.h>
 --- a/poppler/Dict.h
 +++ b/poppler/Dict.h
 @@ -31,7 +31,7 @@
@@ -59,15 +59,15 @@ Last-Update: 2021-06-07
  class GooString;
 --- a/poppler/PDFDoc.h
 +++ b/poppler/PDFDoc.h
-@@ -44,7 +44,7 @@
- #ifndef PDFDOC_H
- #define PDFDOC_H
+@@ -49,7 +49,7 @@
  
+ #include <algorithm>
+ #include <cstdio>
 -#include <mutex>
 +#include <dummy-mutex>
  
  #include "poppler-config.h"
- #include "poppler_private_export.h"
+ 
 --- a/poppler/Page.h
 +++ b/poppler/Page.h
 @@ -36,7 +36,7 @@

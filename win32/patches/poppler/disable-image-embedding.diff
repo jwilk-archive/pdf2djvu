@@ -1,0 +1,52 @@
+Disable ImageEmbeddingUtils.
+
+Last-Update: 2022-08-02
+
+--- a/poppler/ImageEmbeddingUtils.cc
++++ b/poppler/ImageEmbeddingUtils.cc
+@@ -10,6 +10,8 @@
+ //
+ //========================================================================
+ 
++#if 0
++
+ #include <config.h>
+ 
+ #include <memory>
+@@ -422,3 +424,5 @@ Ref embed(XRef *xref, const std::string
+ }
+ 
+ }
++
++#endif
+--- a/poppler/ImageEmbeddingUtils.h
++++ b/poppler/ImageEmbeddingUtils.h
+@@ -8,6 +8,8 @@
+ //
+ //========================================================================
+ 
++#if 0
++
+ #ifndef IMAGE_EMBEDDING_UTILS_H
+ #define IMAGE_EMBEDDING_UTILS_H
+ 
+@@ -34,3 +36,5 @@ Ref POPPLER_PRIVATE_EXPORT embed(XRef *x
+ 
+ }
+ #endif
++
++#endif
+--- a/poppler/PDFDoc.cc
++++ b/poppler/PDFDoc.cc
+@@ -2159,10 +2159,7 @@ bool PDFDoc::sign(const char *saveFilena
+     }
+     Ref imageResourceRef = Ref::INVALID();
+     if (!imagePath.empty()) {
+-        imageResourceRef = ImageEmbeddingUtils::embed(xref, imagePath);
+-        if (imageResourceRef == Ref::INVALID()) {
+-            return false;
+-        }
++        abort();
+     }
+ 
+     Form *form = catalog->getCreateForm();

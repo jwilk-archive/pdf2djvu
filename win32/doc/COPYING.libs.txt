@@ -19,7 +19,7 @@ libpoppler-\*.dll
 =================
 
 | Copyright © 1996-2011 Glyph & Cog, LLC
-| Copyright © 2005-2021 `The Poppler Developers <https://poppler.freedesktop.org>`_
+| Copyright © 2005-2022 `The Poppler Developers <https://poppler.freedesktop.org>`_
 
 Xpdf is licensed under the GNU General Public License (GPL), version 2
 or 3.

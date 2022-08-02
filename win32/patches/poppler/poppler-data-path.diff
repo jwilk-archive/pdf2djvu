@@ -1,23 +1,20 @@
 Adapt get_poppler_datadir() to pdf2djvu needs.
 
-Last-Update: 2021-10-04
+Last-Update: 2022-08-02
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -131,15 +131,10 @@ static const char *get_poppler_datadir(v
-         return retval;
+@@ -126,11 +126,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL,
  
-     if (!GetModuleFileNameA(hmodule, (CHAR *)retval, sizeof(retval) - 20))
+ static std::string get_poppler_localdir(const std::string &suffix)
+ {
+-    const std::string binSuffix("\\bin");
++    const std::string binSuffix("");
+     std::string retval(MAX_PATH, '\0');
+ 
+     if (!GetModuleFileNameA(hmodule, retval.data(), retval.size())) {
 -        return POPPLER_DATADIR;
 +        abort();
+     }
  
-     p = _mbsrchr((unsigned char *)retval, '\\');
-     *p = '\0';
--    p = _mbsrchr((unsigned char *)retval, '\\');
--    if (p) {
--        if (stricmp((const char *)(p + 1), "bin") == 0)
--            *p = '\0';
--    }
-     strcat(retval, "\\share\\poppler");
- 
-     beenhere = 1;
+     const std::string::size_type p = retval.rfind('\\');

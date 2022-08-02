@@ -1,10 +1,10 @@
 Add strndup(3) implementation.
 
-Last-Update: 2021-05-04
+Last-Update: 2022-08-02
 
 --- a/poppler/GlobalParams.cc
 +++ b/poppler/GlobalParams.cc
-@@ -688,6 +688,17 @@ static const char *getFontLang(const Gfx
+@@ -715,6 +715,17 @@ static const char *getFontLang(const Gfx
      return lang;
  }
  

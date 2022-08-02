@@ -200,8 +200,8 @@ src/libs-install-stamp: src/winiconv/install-stamp
 
 src/poppler/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://poppler.freedesktop.org/poppler-21.06.0.tar.xz 4b440708eafdf07a1405e06744c66ac54a5af51a0e38ab17a46fbaff47278342
-	$(untar) src.tar/poppler-21.06.0.tar.xz -C $(dir $@)
+	tools/wget https://poppler.freedesktop.org/poppler-22.08.0.tar.xz b493328721402f25cb7523f9cdc2f7d7c59f45ad999bde75c63c90604db0f20b
+	$(untar) src.tar/poppler-22.08.0.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/poppler quilt push -a
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
 	touch $(@)
