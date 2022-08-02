@@ -28,6 +28,21 @@ sub relativize
     my ($path) = @_;
     if ($path =~ m{\A\Q$root\E/}) {
         $path = File::Spec->abs2rel($path)
+    } elsif ($path =~ /\A@/) {
+        $path = substr($path, 1);
+        my $tmppath = "$path.tmp";
+        open(my $fh, '<', $path) or die "$path: $!";
+        {
+            local $/ = undef;
+            $_ = <$fh>;
+            s{(?:\A|[\s"'])(?:-I)?\K(\Q$root\E)(?=/|\s|\z)}{File::Spec->abs2rel($1)}eg;
+        }
+        close($fh);
+        open($fh, '>', "$path.tmp") or die "$path.tmp: $!";
+        print {$fh} $_;
+        close($fh);
+        rename("$path.tmp", "$path.rel") or die "$path.rel: $!";
+        $path = "\@$path.rel";
     }
     return $path;
 }
