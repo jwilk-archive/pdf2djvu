@@ -21,7 +21,7 @@ use File::Spec qw();
 use FindBin qw();
 
 my $here = $FindBin::Bin;
-my $root = realpath("$here/../src");
+my $root = realpath("$here/..");
 
 sub relativize
 {
