@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e -u
+rm -rf *.cache
+rm -rf m4 aclocal.m4
+rm -f autoconf.hh.in
+rm -f configure
+cd tools
+rm -f config.guess config.sub config.rpath
+rm -f install-sh
