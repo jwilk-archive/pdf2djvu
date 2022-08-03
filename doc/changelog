@@ -4,13 +4,28 @@ pdf2djvu (0.9.19) UNRELEASED; urgency=low
   * Fix build failure with Poppler ≥ 22.03.
     https://github.com/jwilk/pdf2djvu/issues/153
   * When converting PDF strings to UTF-8, keep non-characters intact.
+  * Improve warning message for (unhandled) reset-form actions.
+  * Improve handling of Poppler memory allocation failures.
+  * Update the Polish translation.
+  * Drop support for Poppler < 0.62.
   * Improve the configure script:
     + Use HTTPS for jwilk.net.
+    + Enable -Wswitch-enum.
+  * Upgrade libraries bundled with the Windows package:
+    - Poppler to 22.08;
+    - poppler-data to 0.4.11;
+    - Expat to 2.4.8;
+    - Exiv2 to 0.27.5.;
+    - FreeType to 2.12.1;
+    - OpenJPEG to 2.5.0.
 
   [ Helge Kreutzmann ]
   * Update the German translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 03 Jun 2022 20:04:34 +0200
+  [ Américo Monteiro ]
+  * Update the Portuguese translation.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 03 Aug 2022 09:14:54 +0200
 
 pdf2djvu (0.9.18.2) unstable; urgency=low
 
