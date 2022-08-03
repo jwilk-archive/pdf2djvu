@@ -306,8 +306,8 @@ src/djvulibre/install-stamp: src/djvulibre/build-stamp
 
 src/graphicsmagick/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.36/GraphicsMagick-1.3.36.tar.xz 5d5b3fde759cdfc307aaf21df9ebd8c752e3f088bb051dd5df8aac7ba7338f46
-	$(untar) src.tar/GraphicsMagick-1.3.36.tar.xz -C $(dir $@)
+	tools/wget https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.38/GraphicsMagick-1.3.38.tar.xz d60cd9db59351d2b9cb19beb443170acaa28f073d13d258f67b3627635e32675
+	$(untar) src.tar/GraphicsMagick-1.3.38.tar.xz -C $(dir $@)
 	cd $(dir $@) && QUILT_PATCHES=../../patches/graphicsmagick quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/magick/*~
@@ -340,7 +340,8 @@ src/graphicsmagick/config.status: src/graphicsmagick/source-stamp
 			--without-xml \
 			--without-zlib \
 			--without-x \
-			--without-png
+			--without-png \
+			--without-gdi32
 
 src/graphicsmagick/build-stamp: src/graphicsmagick/config.status
 	$(MAKE) -C $(dir $@)
@@ -352,7 +353,7 @@ src/graphicsmagick/install-stamp: src/graphicsmagick/build-stamp
 	$(call ship_dll,libGraphicsMagick)
 	rm dist/libGraphicsMagickWand*.dll
 	install -d dist/share/GraphicsMagick
-	install -m 644 share/GraphicsMagick-1.3.36/config/*.mgk dist/share/GraphicsMagick
+	install -m 644 share/GraphicsMagick-1.3.38/config/*.mgk dist/share/GraphicsMagick
 	touch $(@)
 
 # Expat
