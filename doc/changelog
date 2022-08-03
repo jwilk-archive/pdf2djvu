@@ -15,6 +15,7 @@ pdf2djvu (0.9.19) UNRELEASED; urgency=low
     - Poppler to 22.08;
     - poppler-data to 0.4.11;
     - Expat to 2.4.8;
+    - GraphicsMagick to 1.3.38;
     - Exiv2 to 0.27.5.;
     - FreeType to 2.12.1;
     - OpenJPEG to 2.5.0.
@@ -25,7 +26,7 @@ pdf2djvu (0.9.19) UNRELEASED; urgency=low
   [ Américo Monteiro ]
   * Update the Portuguese translation.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 03 Aug 2022 09:14:54 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 03 Aug 2022 11:18:10 +0200
 
 pdf2djvu (0.9.18.2) unstable; urgency=low
 
