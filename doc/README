@@ -27,7 +27,7 @@ The following software is required to build pdf2djvu:
 * C++11 compiler;
 * GNU make;
 * DjVuLibre_ (≥ 3.5.25), both the library and the command line tools;
-* Poppler_ (≥ 0.35), including xpdf headers;
+* Poppler_ (≥ 0.62), including xpdf headers;
 * pkg-config_.
 
 The following software is recommended:
