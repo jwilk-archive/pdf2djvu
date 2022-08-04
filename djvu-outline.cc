@@ -91,6 +91,7 @@ djvu::Outline::operator bool() const
 
 std::ostream& djvu::operator<<(std::ostream &stream, const djvu::OutlineItem &item)
 {
+    // https://sourceforge.net/p/djvu/bugs/346/
     // DjVu Reference (§8.3.3) says that each bookmark starts with:
     // • BYTE nChildren — number of immediate child bookmark records
     // • INT24 nDesc — size of description text
