@@ -8,25 +8,32 @@ jobs:
       matrix:
         include:
         - poppler: poppler-0.62.0 # Ubuntu 18.04 LTS "Bionic Beaver"; oldest supported release
+          poppler-data: poppler-data-0.4.8
           exiv2: exiv2-0.21
           os: ubuntu-18.04
         - poppler: poppler-0.71.0 # Debian 10 "Buster"
+          poppler-data: poppler-data-0.4.9
           exiv2: exiv2-0.25
           os: ubuntu-20.04
         - poppler: poppler-0.86.1 # Ubuntu 20.04 LTS "Focal Fossa"
+          poppler-data: poppler-data-0.4.9
           exiv2: exiv2-0.27.2
           os: ubuntu-20.04
         - poppler: poppler-20.09.0 # Debian 11 "Bullseye"
+          poppler-data: poppler-data-0.4.10
           exiv2: exiv2-0.27.3
           os: ubuntu-20.04
         - poppler: poppler-22.02.0 # Ubuntu 22.04 LTS "Jammy Jellyfish"
+          poppler-data: poppler-data-0.4.11
           exiv2: exiv2-0.27.5
           os: ubuntu-22.04
         - poppler: poppler-22.03.0 # newest tested release
+          poppler-data: poppler-data-0.4.11
           exiv2: exiv2-0.27.5
           os: ubuntu-22.04
           docs: docs
         - poppler: poppler-git
+          poppler-data: poppler-data-git
           exiv2: exiv2-git
           os: ubuntu-22.04
           cc: clang
@@ -103,6 +110,22 @@ jobs:
     - name: remove Poppler source
       run:
         rm -rf poppler-*
+    - name: download and unpack poppler-data source tarball
+      run: |
+        wget https://poppler.freedesktop.org/${{matrix.poppler-data}}.tar.gz
+        tar -xvvf poppler-data-*.tar.*
+      if: matrix.poppler-data != 'poppler-data-git'
+    - name: clone poppler-data git repo
+      run:
+        git clone https://anongit.freedesktop.org/git/poppler/poppler-data.git poppler-data-git
+      if: matrix.poppler-data == 'poppler-data-git'
+    - name: install poppler-data
+      run: |
+        cd poppler-data-*/
+        make install prefix=~/.local
+    - name: remove poppler-data source
+      run:
+        rm -rf poppler-data-*
     - name: download and unpack Exiv2 source tarball
       run: |
         v=${{matrix.exiv2}}
