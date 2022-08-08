@@ -310,6 +310,23 @@ def count_ppm_colors(b):
         for key, value in result.iteritems()
     )
 
+_pgm_re = re.compile(r'P5\s+(\d+)\s+(\d+)\s+255\n(.*)\Z', re.DOTALL)
+def read_pgm(b):
+    match = _pgm_re.match(b)
+    assert_is_not_none(match)
+    (width, height, pixels) = match.groups()
+    width = int(width)
+    height = int(height)
+    pixels = memoryview(pixels)
+    pixels = [
+        pixels[i:(i + width)]
+        for i in range(0, len(pixels), width)
+    ]
+    for line in pixels:
+        assert_equal(len(line), width)
+    assert_equal(len(pixels), height)
+    return pixels
+
 xml_ns = dict(
     dc='http://purl.org/dc/elements/1.1/',
     xmpMM='http://ns.adobe.com/xap/1.0/mm/',
@@ -352,6 +369,7 @@ __all__ = [
     'rainbow',
     'checkboard',
     'count_ppm_colors',
+    'read_pgm',
     # XMP:
     'assert_uuid_urn',
     'xml_find_text',
