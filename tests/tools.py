@@ -223,14 +223,13 @@ class case(object):
     def ls(self):
         return self.djvused('ls', encoding='UTF-8')
 
-    def decode(self, mode=None, fmt='ppm'):
+    def decode(self, mode='color', fmt='ppm'):
         args = []
-        if mode is not None:
-            args += ['-mode={m}'.format(m=mode)]
         return self.run(
             'ddjvu',
             self.get_djvu_path(),
             '-format={f}'.format(f=fmt),
+            '-mode={m}'.format(m=mode),
             '-subsample=1',
             *args
         )
