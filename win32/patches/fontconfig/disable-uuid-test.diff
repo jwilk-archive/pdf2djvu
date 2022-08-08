@@ -1,0 +1,53 @@
+Disable the uuid test.
+
+Last-Update: 2022-08-08
+
+--- a/test/test-hash.c
++++ b/test/test-hash.c
+@@ -47,6 +47,7 @@ fini (Test *test)
+ static FcBool
+ test_add (Test *test, FcChar8 *key, FcBool replace)
+ {
++#if 0
+     uuid_t uuid;
+     void *u;
+     FcBool (*hash_add) (FcHashTable *, void *, void *);
+@@ -65,11 +66,15 @@ test_add (Test *test, FcChar8 *key, FcBo
+     FcHashUuidFree (u);
+ 
+     return ret;
++#endif
++
++    return FcTrue;
+ }
+ 
+ static FcBool
+ test_remove (Test *test, FcChar8 *key)
+ {
++#if 0
+     void *u;
+ 
+     if (!FcHashTableFind (test->table, key, &u))
+@@ -79,6 +84,7 @@ test_remove (Test *test, FcChar8 *key)
+ 	return FcFalse;
+     if (FcHashTableFind (test->table, key, &u))
+ 	return FcFalse;
++#endif
+ 
+     return FcTrue;
+ }
+@@ -86,6 +92,7 @@ test_remove (Test *test, FcChar8 *key)
+ int
+ main (void)
+ {
++#if 0
+     Test *test;
+     uuid_t uuid;
+     int ret = 0;
+@@ -184,4 +191,6 @@ bail:
+     fini (test);
+ 
+     return ret;
++#endif
++    return 0;
+ }

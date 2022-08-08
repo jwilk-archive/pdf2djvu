@@ -445,11 +445,11 @@ src/freetype/install-stamp: src/freetype/build-stamp
 
 src/fontconfig/source-stamp:
 	mkdir -p $(dir $@)
-	tools/wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.4.tar.bz2 668293fcc4b3c59765cdee5cee05941091c0879edcc24dfec5455ef83912e45c
-	$(untar) src.tar/fontconfig-2.12.4.tar.bz2 -C $(dir $@)
+	tools/wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.13.1.tar.bz2 f655dd2a986d7aa97e052261b36aa67b0a64989496361eca8d604e6414006741
+	$(untar) src.tar/fontconfig-2.13.1.tar.bz2 -C $(dir $@)
+	cd $(dir $@) && QUILT_PATCHES=../../patches/fontconfig quilt push -a
 	cd $(dir $@) && autoreconf -vfi
 	rm -rf $(dir $@)/*.cache $(dir $@)/*~
-	sed -i -e 's/"append"/"prepend"/g' $(dir $@)/conf.d/*-urw-aliases.conf
 	touch $(@)
 
 src/fontconfig/config.status: src/fontconfig/source-stamp
@@ -471,6 +471,7 @@ src/fontconfig/install-stamp: src/fontconfig/build-stamp
 	$(call ship_dll,libfontconfig)
 	install -m 644 etc/fonts/fonts.conf dist/etc/fonts/
 	install -m 644 etc/fonts/conf.d/[3-6]*.conf dist/etc/fonts/conf.d/
+	install -m 644 misc/[3-6]*.conf dist/etc/fonts/conf.d/
 	touch $(@)
 
 # GNU gettext

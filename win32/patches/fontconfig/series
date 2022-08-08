@@ -1,0 +1,3 @@
+disable-uuid-test.diff
+test-mkdir.diff
+no-fc-templatedir.diff

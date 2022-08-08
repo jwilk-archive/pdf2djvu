@@ -1,0 +1,14 @@
+Don't load config from (build-time hardcoded) FC_TEMPLATEDIR.
+
+Last-Update: 2022-08-08
+
+--- a/src/fcinit.c
++++ b/src/fcinit.c
+@@ -94,7 +94,6 @@ FcInitLoadOwnConfig (FcConfig *config)
+ 
+ 	return fallback;
+     }
+-    (void) FcConfigParseOnly (config, (const FcChar8 *)FC_TEMPLATEDIR, FcFalse);
+ 
+     if (config->cacheDirs && config->cacheDirs->num == 0)
+     {

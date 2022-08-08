@@ -1,0 +1,18 @@
+tests: provide mktemp() implementation.
+
+Last-Update: 2022-08-08
+
+--- a/test/test-bz106632.c
++++ b/test/test-bz106632.c
+@@ -44,6 +44,11 @@
+ #undef FcPatternDestroy
+ #include <fontconfig/fontconfig.h>
+ 
++#ifdef _WIN32
++#include <direct.h>
++#define mkdir(path,mode) _mkdir(path)
++#endif
++
+ #ifdef HAVE_MKDTEMP
+ #define fc_mkdtemp	mkdtemp
+ #else
