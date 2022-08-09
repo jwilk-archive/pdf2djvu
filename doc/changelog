@@ -265,7 +265,7 @@ pdf2djvu (0.9.6) unstable; urgency=low
     - GraphicsMagick 1.3.26;
     - Expat 2.2.3;
     - FreeType 2.8;
-    - fontconfig 2.12.4.
+    - Fontconfig 2.12.4.
   * Windows: build Poppler against OpenJPEG 2.1.2.
   * Improve the test suite.
 
@@ -291,7 +291,7 @@ pdf2djvu (0.9.5) unstable; urgency=low
     - GraphicsMagick 1.3.25;
     - Expat 2.2.0;
     - FreeType 2.6.5;
-    - fontconfig 2.12.1;
+    - Fontconfig 2.12.1;
     - gettext 0.19.8.1.
   * Improve documentation:
     + Don't mention “--page-title-template=” as a way of disabling page
@@ -735,9 +735,9 @@ pdf2djvu (0.7.7) unstable; urgency=low
 pdf2djvu (0.7.6) unstable; urgency=low
 
   * Improve Windows font support.
-    + Compile libxml2 with --with-sax1, which is needed by fontconfig.
+    + Compile libxml2 with --with-sax1, which is needed by Fontconfig.
       https://bugs.freedesktop.org/show_bug.cgi?id=34266
-    + Ship more complete configuration for fontconfig.
+    + Ship more complete configuration for Fontconfig.
     + Ship substitutes for all 35 standard PostScript fonts.
   * Tests: output error log if a test failed.
 
@@ -854,7 +854,7 @@ pdf2djvu (0.5.9) unstable; urgency=low
 pdf2djvu (0.5.8) unstable; urgency=low
 
   * Fix some rounding bugs.
-  * Windows: fix fontconfig configuration and install URW fonts.
+  * Windows: fix Fontconfig configuration and install URW fonts.
     https://github.com/jwilk/pdf2djvu/issues/39
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 17 May 2009 10:11:53 +0200
