@@ -161,7 +161,6 @@ src/pdf2djvu/build-stamp: src/pdf2djvu/config.status
 	$(MAKE) djvulibre_bindir=. localedir=./locale -C $(dir $@)
 	touch $(@)
 
-
 src/pdf2djvu/install-stamp: src/pdf2djvu/build-stamp
 	install -d dist/doc/
 	$(MAKE) install -C $(dir $@)
