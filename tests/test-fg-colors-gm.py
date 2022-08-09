@@ -19,7 +19,7 @@ from tools import (
     assert_equal,
     assert_in,
     case,
-    count_ppm_colors,
+    count_colors,
 )
 
 class test(case):
@@ -33,11 +33,9 @@ class test(case):
                 '--dpi=72',
                 '--fg-colors={0}'.format(i)
             ).assert_()
-            r = self.decode()
-            r.assert_(stdout=None)
-            r = self.decode(mode='foreground')
-            r.assert_(stdout=None)
-            colors = count_ppm_colors(r.stdout)
+            image = self.decode()
+            image = self.decode(mode='foreground')
+            colors = count_colors(image)
             if isinstance(n, tuple):
                 assert_in(len(colors), n)
             else:

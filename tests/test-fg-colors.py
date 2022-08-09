@@ -16,7 +16,7 @@
 from tools import (
     assert_equal,
     case,
-    count_ppm_colors,
+    count_colors,
 )
 
 class test(case):
@@ -33,11 +33,9 @@ class test(case):
             '--dpi=72',
             '--fg-colors={method}'.format(method=method)
         ).assert_()
-        r = self.decode()
-        r.assert_(stdout=None)
-        r = self.decode(mode='foreground')
-        r.assert_(stdout=None)
-        colors = count_ppm_colors(r.stdout)
+        image = self.decode()
+        image = self.decode(mode='foreground')
+        colors = count_colors(image)
         assert_equal(len(colors), n)
 
 # vim:ts=4 sts=4 sw=4 et

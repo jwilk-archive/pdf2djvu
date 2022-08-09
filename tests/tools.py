@@ -19,7 +19,6 @@ import ast
 import codecs
 import collections
 import inspect
-import itertools
 import locale
 import os
 import pipes
@@ -225,7 +224,7 @@ class case(object):
 
     def decode(self, mode='color', fmt='ppm'):
         args = []
-        return self.run(
+        r = self.run(
             'ddjvu',
             self.get_djvu_path(),
             '-format={f}'.format(f=fmt),
@@ -233,6 +232,9 @@ class case(object):
             '-subsample=1',
             *args
         )
+        r.assert_(stdout=None)
+        reader = dict(ppm=_read_ppm, pgm=_read_pgm)[fmt]
+        return reader(r.stdout)
 
     def extract_xmp(self):
         r = self.djvused('output-ant')
@@ -295,22 +297,35 @@ def checkboard(width, height):
             pixels[x, y] = color
     return image
 
-_ppm_re = re.compile(r'P6\s+\d+\s+\d+\s+255\s(.*)\Z', re.DOTALL)
-def count_ppm_colors(b):
+_ppm_re = re.compile(r'P6\s+(\d+)\s+(\d+)\s+255\s(.*)\Z', re.DOTALL)
+def _read_ppm(b):
     match = _ppm_re.match(b)
     assert_is_not_none(match)
-    pixels = match.group(1)
-    ipixels = iter(pixels)
+    (width, height, pixels) = match.groups()
+    width = int(width)
+    height = int(height)
+    pixels = memoryview(pixels)
+    pixels = [
+        [
+            pixels[(i + j):(i + j + 3)].tobytes()
+            for i in range(0, width * 3, 3)
+        ]
+        for j in range(0, len(pixels), width * 3)
+    ]
+    for line in pixels:
+        assert_equal(len(line), width)
+    assert_equal(len(pixels), height)
+    return pixels
+
+def count_colors(image):
     result = collections.defaultdict(int)
-    for pixel in itertools.izip(ipixels, ipixels, ipixels):
-        result[pixel] += 1
-    return dict(
-        (''.join(key), value)
-        for key, value in result.iteritems()
-    )
+    for line in image:
+        for pixel in line:
+            result[pixel] += 1
+    return result
 
 _pgm_re = re.compile(r'P5\s+(\d+)\s+(\d+)\s+255\n(.*)\Z', re.DOTALL)
-def read_pgm(b):
+def _read_pgm(b):
     match = _pgm_re.match(b)
     assert_is_not_none(match)
     (width, height, pixels) = match.groups()
@@ -367,8 +382,7 @@ __all__ = [
     # image handling:
     'rainbow',
     'checkboard',
-    'count_ppm_colors',
-    'read_pgm',
+    'count_colors',
     # XMP:
     'assert_uuid_urn',
     'xml_find_text',

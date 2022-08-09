@@ -20,7 +20,6 @@ import itertools
 from tools import (
     assert_fail,
     case,
-    read_pgm,
 )
 
 def print_pgm(image):
@@ -43,9 +42,7 @@ class test(case):
 
     def test(self):
         self.pdf2djvu('--dpi=150')
-        r = self.decode(fmt='pgm')
-        r.assert_(stdout=None)
-        image = read_pgm(r.stdout)
+        image = self.decode(fmt='pgm')
         print_pgm(image)
         for line in image:
             sig = ''.join(pixel for (pixel, _) in itertools.groupby(line))

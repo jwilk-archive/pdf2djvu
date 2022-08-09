@@ -16,7 +16,7 @@
 from tools import (
     case,
     assert_greater,
-    count_ppm_colors,
+    count_colors,
 )
 
 class test(case):
@@ -27,11 +27,9 @@ class test(case):
 
     def test(self):
         self.pdf2djvu()
-        r = self.decode()
-        r.assert_(stdout=None)
-        r = self.decode(mode='foreground')
-        r.assert_(stdout=None)
-        colors = count_ppm_colors(r.stdout)
+        image = self.decode()
+        image = self.decode(mode='foreground')
+        colors = count_colors(image)
         assert_greater(colors.get('\xFF\0\0', 0), 5000)
 
 # vim:ts=4 sts=4 sw=4 et
