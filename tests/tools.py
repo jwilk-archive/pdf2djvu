@@ -252,9 +252,9 @@ class case(object):
     def require_poppler(self, *version):
         if self._poppler_version is None:
             r = self.pdf2djvu('--version')
-            r.assert_(stderr=re.compile('^pdf2djvu '), rc=0)
-            print(r.stderr)
-            match = re.compile('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
+            r.assert_(stdout=re.compile('^pdf2djvu '), rc=0)
+            print(r.stdout)
+            match = re.compile('^[+] Poppler ([0-9.]+)$', re.M).search(r.stdout)
             self._poppler_version = tuple(int(x) for x in match.group(1).split('.'))
         if self._poppler_version < version:
             str_version = str.join('.', (str(v) for v in version))
