@@ -27,7 +27,7 @@ expected_outline_sexpr = ('''\
  ("Lorem"
   "#p0001.djvu"
 '''
-+ '\n'.join(item_template.format(i) for i in range(0, b))
++ str.join('\n', (item_template.format(i) for i in range(0, b)))
 + ' ) )\n'
 )
 

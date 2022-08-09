@@ -124,7 +124,7 @@ def _get_locale_for_encoding(encoding):
     finally:
         locale.setlocale(locale.LC_ALL, old_locale)
     raise SkipTest(
-        'locale {loc} is required'.format(loc=' or '.join(candidates))
+        'locale {loc} is required'.format(loc=str.join(' or ', candidates))
     )
 
 class case(object):
@@ -164,7 +164,7 @@ class case(object):
                 continue
             raise TypeError('{key!r} is an invalid keyword argument for this function'.format(key=key))
         env['LANGUAGE'] = 'en'
-        print('$', ' '.join(map(pipes.quote, commandline)))
+        print('$', str.join(' ', map(pipes.quote, commandline)))
         try:
             child = ipc.Popen(list(commandline),
                 stdout=ipc.PIPE,
@@ -257,7 +257,7 @@ class case(object):
             match = re.compile('^[+] Poppler ([0-9.]+)$', re.M).search(r.stderr)
             self._poppler_version = tuple(int(x) for x in match.group(1).split('.'))
         if self._poppler_version < version:
-            str_version = '.'.join(str(v) for v in version)
+            str_version = str.join('.', (str(v) for v in version))
             raise SkipTest('Poppler >= {ver} is required'.format(ver=str_version))
 
     def require_feature(self, feature):
