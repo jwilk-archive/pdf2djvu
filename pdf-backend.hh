@@ -236,12 +236,12 @@ namespace pdf
         this->byte_width = width * 3;
         break;
       case splashModeXBGR8:
-#if POPPLER_VERSION >= 8100 || defined(SPLASH_CYMK)
+#if POPPLER_VERSION >= 8100 || defined(SPLASH_CMYK)
       case splashModeCMYK8:
 #endif
         this->byte_width = width * 4;
         break;
-#if POPPLER_VERSION >= 8100 || defined(SPLASH_CYMK)
+#if POPPLER_VERSION >= 8100 || defined(SPLASH_CMYK)
       case splashModeDeviceN8:
 #endif
       default:
