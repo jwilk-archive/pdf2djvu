@@ -50,7 +50,7 @@ class test(case):
     #
     # * Wine fonts are not present in the Windows system font directory (C:\Windows\Fonts).
     # * Fontconfig looks for system fonts only in that directory:
-    #   https://gitlab.com/inkscape/inkscape/-/issues/50
+    #   https://gitlab.freedesktop.org/fontconfig/fontconfig/issues/32
     # * Poppler doesn't seem to like using a PostScript font as fallback.
     #
     # Work-around:
