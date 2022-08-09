@@ -43,8 +43,6 @@ class test(case):
 
     def test(self):
         self.pdf2djvu('--dpi=150')
-        r = self.decode()
-        r.assert_(stdout=None)
         r = self.decode(fmt='pgm')
         r.assert_(stdout=None)
         image = read_pgm(r.stdout)
