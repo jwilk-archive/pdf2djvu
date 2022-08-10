@@ -37,9 +37,6 @@ po4a-update-po = po4a-updatepo \
 	$(po4a-getext-options) \
 	--msgmerge-opt="$(msgmerge_opts)"
 
-po4a-gettextize = po4a-gettextize \
-	$(po4a-getext-options)
-
 po4a-translate = po4a-translate \
 	$(po4a-common-options)
 
@@ -59,7 +56,8 @@ pdf2djvu.%.1: %.xml
 xml: $(xml_files)
 
 manpage.pot: $(source)
-	$(po4a-gettextize) -m $(<) -p $(@)
+	rm -f $(@)
+	$(po4a-update-po) -m $(<) -p $(@)
 	perl -pi -e 's/^([#][.])\s*(\S.*\S)\s*$$/$$1 $$2\n/' $(@)
 
 $(po_files): %.po: $(source)
