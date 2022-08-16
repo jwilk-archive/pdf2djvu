@@ -28,7 +28,7 @@ def print_pgm(image):
     for line in image:
         print('|', end='')
         for px in line:
-            if px == '\xff':
+            if px == '\xFF':
                 print('  ', end='')
             elif px == '\0':
                 print('[]', end='')
@@ -46,7 +46,7 @@ class test(case):
         print_pgm(image)
         for line in image:
             sig = str.join('', (pixel for (pixel, _) in itertools.groupby(line)))
-            if sig not in {'\xff', '\xff\x00\xff', '\xff\x00\xff\x00\xff'}:
+            if sig not in {'\xFF', '\xFF\x00\xFF', '\xFF\x00\xFF\x00\xFF'}:
                 assert_fail('image does not look like uppercase delta')
 
 # vim:ts=4 sts=4 sw=4 et
