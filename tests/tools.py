@@ -54,11 +54,11 @@ type(assert_multi_line_equal.__self__).maxDiff = None
 
 def _get_signal_names():
     signame_pattern = re.compile('^SIG[A-Z0-9]*$')
-    data = dict(
-        (name, getattr(signal, name))
+    data = {
+        name: getattr(signal, name)
         for name in dir(signal)
         if signame_pattern.match(name)
-    )
+    }
     try:
         if data['SIGABRT'] == data['SIGIOT']:
             del data['SIGIOT']
@@ -69,7 +69,7 @@ def _get_signal_names():
             del data['SIGCLD']
     except KeyError:
         pass
-    return dict((no, name) for name, no in data.iteritems())
+    return {no: name for name, no in data.iteritems()}
 
 class _ipc_rc(int):
 
