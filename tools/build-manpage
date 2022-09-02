@@ -50,6 +50,7 @@ if (/^[.]SH /) {
 }
 '"# prefer ' to \(aq when used as an apostrophe"'
 s/([a-z])\\[*][(]Aq([a-z])/$1\x27$2/gi;
+s#^\\%(https?://.*)#.UR $1\n.UE#g;
 ' "$dst"
 
 # vim:ts=4 sts=4 sw=4 et
