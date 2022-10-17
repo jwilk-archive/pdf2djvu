@@ -39,13 +39,13 @@ Superiorities of pdf2djvu
 
 
 .. _DjVuLibre:
-   http://djvu.sourceforge.net/
+   https://djvu.sourceforge.net/
 
 .. _sophisticated layer separation algorithm:
    https://leon.bottou.org/papers/bottou-2001
 
 .. _Ghostscript driver:
-   http://djvu.sourceforge.net/gsdjvu.html
+   https://djvu.sourceforge.net/gsdjvu.html
 
 .. _bug report:
    https://sourceforge.net/p/djvu/bugs/109/

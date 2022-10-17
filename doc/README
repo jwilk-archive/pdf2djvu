@@ -50,7 +50,7 @@ Korean), the poppler-data_ package must be installed.
 .. ---------------------------------------------------------------------
 
 .. _DjVuLibre:
-   http://djvu.sourceforge.net/
+   https://djvu.sourceforge.net/
 .. _poppler:
    https://poppler.freedesktop.org/
 .. _pkg-config:
