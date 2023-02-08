@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pdf2djvu 0.9.19\n"
 "Report-Msgid-Bugs-To: https://github.com/jwilk/pdf2djvu/issues\n"
 "POT-Creation-Date: 2022-06-11 18:10+0200\n"
-"PO-Revision-Date: 2016-12-13 19:08+0300\n"
+"PO-Revision-Date: 2023-02-08 19:47+0300\n"
 "Last-Translator: Kyrill Detinov <lazy.kent@opensuse.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -563,9 +563,8 @@ msgid "Warning: Unable to convert link with a JavaScript action"
 msgstr "Предупреждение: невозможно преобразовать ссылку с выполнением JavaScript"
 
 #: main.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a hide action"
-msgstr "Предупреждение: невозможно преобразовать ссылку с действием"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием скрытия"
 
 #: main.cc
 msgid "Warning: Unable to convert link with a launch action"
@@ -584,9 +583,8 @@ msgid "Warning: Unable to convert link with a remote go-to action"
 msgstr "Предупреждение: невозможно преобразовать ссылку на внешний документ"
 
 #: main.cc
-#, fuzzy
 msgid "Warning: Unable to convert link with a reset-form action"
-msgstr "Предупреждение: невозможно преобразовать ссылку на внешний документ"
+msgstr "Предупреждение: невозможно преобразовать ссылку с действием очистки формы"
 
 #. L10N: OCG stands for “Optional Content Group” (see PDF Reference v1.7, §4.10.1)
 #: main.cc
